@@ -11,6 +11,8 @@ class AddSomeColumnsToUsers extends Migration
      *
      * @return void
      */
+
+    /*UsStatus= ON/OFF*/
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
