@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "308aea794be2a451e01b94a3b1b82063",
+    "content-hash": "407d7c683fb32c498d49447d18e85c0b",
     "packages": [
         {
             "name": "acacha/admin-lte-template-laravel",
@@ -654,6 +654,38 @@
                 "trusted proxy"
             ],
             "time": "2018-02-07T20:20:57+00:00"
+        },
+        {
+            "name": "grimmlink/jquery-slimscroll",
+            "version": "v1.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/grimmlink/jquery-slimscroll.git",
+                "reference": "9b6acd42c737ff3fcea92563d1496850e26f513f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/grimmlink/jquery-slimscroll/zipball/9b6acd42c737ff3fcea92563d1496850e26f513f",
+                "reference": "9b6acd42c737ff3fcea92563d1496850e26f513f",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Shim repository for https://github.com/rochal/jQuery-slimScroll",
+            "keywords": [
+                "jquery-plugin",
+                "scroll",
+                "scrollable",
+                "scrollbar",
+                "scroller",
+                "scrolling",
+                "slimscroll",
+                "ui"
+            ],
+            "time": "2016-08-12T10:16:47+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
