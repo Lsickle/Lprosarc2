@@ -16,11 +16,11 @@ class AddSomeColumnsToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->char('UsType', 64);
-            $table->char('UsAvatar', 255);
-            $table->char('UsQuestion', 128);
-            $table->char('UsAnswer', 128);
-            $table->char('UsStatus', 8);
+            $table->string('UsType', 64);
+            $table->string('UsAvatar', 255);
+            $table->string('UsQuestion', 128);
+            $table->string('UsAnswer', 128);
+            $table->string('UsStatus', 8);
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -36,7 +36,11 @@ class AddSomeColumnsToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('UsType');
+            $table->dropColumn('UsAvatar');
+            $table->dropColumn('UsQuestion');
+            $table->dropColumn('UsAnswer');
+            $table->dropColumn('UsStatus');
         });
     }
 }

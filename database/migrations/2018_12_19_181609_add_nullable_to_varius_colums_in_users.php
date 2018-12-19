@@ -14,7 +14,11 @@ class AddNullableToVariusColumsInUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('UsType', 64)->nullable()->change();
+            $table->string('UsAvatar', 255)->nullable()->change();
+            $table->string('UsQuestion', 128)->nullable()->change();
+            $table->string('UsAnswer', 128)->nullable()->change();
+            $table->string('UsStatus', 8)->nullable()->change();
         });
     }
 
@@ -26,7 +30,11 @@ class AddNullableToVariusColumsInUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('UsType', 64)->change();
+            $table->string('UsAvatar', 255)->change();
+            $table->string('UsQuestion', 128)->change();
+            $table->string('UsAnswer', 128)->change();
+            $table->string('UsStatus', 8)->change();
         });
     }
 }
