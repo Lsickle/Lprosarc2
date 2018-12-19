@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class cliente extends Model
 {
-    //
+	protected $table = 'clientes';
+	protected $fillable = ['CliNit', 'CliName', 'CliShortname', 'CliCode','CliType', 'CliCategoria','CliAuditable', 'slug'];
+	protected $primaryKey = 'ID_Cli';
+	/**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+	public function getRouteKeyName()
+	{
+	    return 'slug';
+	}
 }
