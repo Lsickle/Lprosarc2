@@ -59,12 +59,16 @@ class clientcontoller extends Controller
         $Cliente = new Cliente();
         if ($request->input('CliAuditable')=='on') {
             $Cliente->CliAuditable='1';
+        }
+        else{
+            $Cliente->CliAuditable='0';
         };
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
+        $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
         $Cliente->save();
         return redirect()->route('clientes.index');
         // return 'Saved';
