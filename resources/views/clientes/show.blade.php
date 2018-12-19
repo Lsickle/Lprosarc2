@@ -35,9 +35,9 @@
                 </li>
               </ul>
 
-          	<a href="/clientes/{{$cliente->slug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+          	<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
 						<br>
-			<form action="/clientes/{{$cliente->slug}}" class="form-group" method="POST">
+			<form action="/clientes/{{$cliente->CliSlug}}" class="form-group" method="POST">
 				@csrf
 				@method('DELETE')
 					<button type="submit" class="btn btn-danger btn-block">Borrar</button>

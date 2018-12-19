@@ -35,7 +35,7 @@
 								<div class="box-body">
 									<div class="form-group">
 										<label for="ClienteInputNit">NIT</label>
-										<input required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
+										<input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputRazon">Razon social</label>

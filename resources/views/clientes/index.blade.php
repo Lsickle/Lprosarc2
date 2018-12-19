@@ -51,7 +51,7 @@
           							@else
           								<td>NO</td>
           							@endif
-                          <td>{{$cliente->slug}}</td>
+                          <td>{{$cliente->CliSlug}}</td>
 		                </tr>
 					@endforeach
             	</tbody>
