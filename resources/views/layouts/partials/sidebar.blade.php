@@ -46,8 +46,10 @@
                             </span>
                           </a>
                           <ul class="treeview-menu">
-                            <li><a href="../sclientes/create"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
-                            <li><a href="#"><i class='fa fa-map-marker'></i>{{ trans('adminlte_lang::message.csedeupdate') }}</a></li>
+                            {{-- listado de sedes --}}
+                            <li><a href="#"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
+                            {{-- registro de sedes --}}
+                            <li><a href="../sclientes/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
                           </ul>
                         </li>
                         {{-- <li><a href="#"><i class='fa fa-warehouse'></i>{{ trans('adminlte_lang::message.clientupdate') }}</a></li> --}}
