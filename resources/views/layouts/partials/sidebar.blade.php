@@ -36,11 +36,22 @@
                 <li class="treeview">
                     <a href="#"><i class='fa fa-id-card'></i> <span>{{ trans('adminlte_lang::message.clientmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="../clientes"><i class='fa fa-plus-square'></i>{{ trans('adminlte_lang::message.clientindex') }}</a></li>
-                        <li><a href="../clientes/create"><i class='fa fa-plus-square'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.clientupdate') }}</a></li>
-                        <li><a href="../sclientes/create"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-map-marker'></i>{{ trans('adminlte_lang::message.csedeupdate') }}</a></li>
+                        <li><a href="../clientes"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.clientindex') }}</a></li>
+                        <li><a href="../clientes/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
+                        {{-- SEDES --}}
+                        <li class="treeview">
+                          <a href="#"><i class="fa fa-building"></i>Sedes
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                          <ul class="treeview-menu">
+                            <li><a href="../sclientes/create"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
+                            <li><a href="#"><i class='fa fa-map-marker'></i>{{ trans('adminlte_lang::message.csedeupdate') }}</a></li>
+                          </ul>
+                        </li>
+                        {{-- <li><a href="#"><i class='fa fa-warehouse'></i>{{ trans('adminlte_lang::message.clientupdate') }}</a></li> --}}
+                        
                     </ul>
                 </li>
                 <li class="treeview">
