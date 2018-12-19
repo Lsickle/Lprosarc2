@@ -35,15 +35,15 @@
 								<div class="box-body">
 									<div class="form-group">
 										<label for="ClienteInputNit">NIT</label>
-										<input name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
+										<input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputRazon">Razon social</label>
-										<input name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
+										<input required="true" name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
 									</div>
 									<div class="form-group">
 										<label for="">Nombre Corto</label>
-										<input name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
+										<input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputCategoria">Categoria</label>
@@ -72,7 +72,7 @@
 			                                 <input id="ClienteInputTipo" style="display:none;" type="checkbox" name="CliAuditable">
 			                            </div>
 			                            <div >
-			                            	<input  hidden="false" type="text" name="slug" value="temp">
+			                            	<input  hidden="false" type="text" name="CliSlug" value="temp">
 			                            </div>
 									</div>
 									{{-- <div class="form-group">
