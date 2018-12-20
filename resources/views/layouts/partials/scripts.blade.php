@@ -35,12 +35,12 @@
     //   'autoWidth'   : false
     // })
     //<!-- checkin imput -->
-    $('input[name="CliAuditable"]').iCheck({
+/*    $('input[name="CliAuditable"]').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
-  })
+  });*/
 </script>
   
 <script>
@@ -50,7 +50,7 @@ $(document).ready(function(){
 </script>
 
 <!-- checkin imput -->
-{{-- <script>
+<script>
   $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
@@ -58,7 +58,7 @@ $(document).ready(function(){
       increaseArea: '20%' // optional
     });
   });
-</script> --}}
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
