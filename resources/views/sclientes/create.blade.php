@@ -32,53 +32,55 @@
 							<!-- form start -->
 							<form role="form">
 								<div class="box-body">
-									<div class="form-group">
-										<label for="ClienteInputRazon">SedeName</label>
-										<input type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputNombre">SedeAddress</label>
-										<input type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputNombre">SedePhone1</label>
-										<input type="Email" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputNombre">SedeExt1</label>
-										<input type="tel" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputNombre">SedePhone2</label>
-										<input type="number" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputNombre">SedeExt2</label>
-										<input type="tel" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputNombre">SedeEmail</label>
-										<input type="number" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputNombre">SedeCelular</label>
-										<input type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-md-6">
-										<label for="ClienteInputTipo">Municipio</label>
-										<select class="form-control" id="ClienteInputTipo" placeholder="biologico">
-											<option>biologico</option>
-											<option>industrial</option>
-											<option>medicamentos</option>
-											<option>otros</option>
-										</select>
-									</div>
 
 									<div class="form-group">
+										<label for="sedeinputname">SedeName</label>
+										<input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputcelular">SedeCelular</label>
+										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputcliente">cliente</label>
+										<select class="form-control" id="sedeinputcliente" placeholder="cliente" name="cliente" required="true">
+										<option>cliente 1</option>
+										<option>cliente 2</option>
+										<option>cliente 3</option>
+										<option>cliente 4</option>
+										</select>
+									</div>
+									<div class="form-group" style="margin-top: 9rem">
+										<label for="sedeinputaddress">SedeAddress</label>
+										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
+									</div>
+									<div class="form-group">
+										<label for="sedeinputphone1">SedePhone1</label>
+										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputext1">SedeExt1</label>
+										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputphone2">SedePhone2</label>
+										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="031-4123141" name="SedePhone2" maxlength="16">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputext2">SedeExt2</label>
+										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputemail">SedeEmail</label>
+										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
+									</div>
+									
+
+									{{-- <div class="form-group">
 										<label for="exampleInputFile">Documento requerido</label>
 										<input type="file" id="exampleInputFile">
 										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div>
+									</div> --}}
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">

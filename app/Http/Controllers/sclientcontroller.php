@@ -13,7 +13,8 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        //
+        $clientes = sede::all();
+        return view('sclientes.index', compact('sedes'));
     }
 
     /**
@@ -23,6 +24,7 @@ class sclientcontroller extends Controller
      */
     public function create()
     {
+        // $Sede->cliente = cliente::with('clientes')->get(); 
         return view('sclientes.create');
     }
 
@@ -34,7 +36,22 @@ class sclientcontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Sede = new sede();
+        if ($request->input('CliAuditable')=='on') {
+            $Sede->CliAuditable='1';
+        }
+        else{
+            $Sede->CliAuditable='0';
+        };
+        $Sede->CliNit = $request->input('CliNit');
+        $Sede->CliName = $request->input('CliName');
+        $Sede->CliShortname = $request->input('CliShortname');
+        $Sede->CliCategoria = $request->input('CliCategoria');
+        $Sede->CliType = $request->input('CliType');
+        $Sede->CliSlug = 'Cli-'.$request->input('CliShortname');
+        $Sede->save();
+        return redirect()->route('clientes.index');
+
     }
 
     /**

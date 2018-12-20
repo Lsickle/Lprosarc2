@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.clientmenu') }}
+	{{ trans('adminlte_lang::message.sclientmenu') }}
 @endsection
 
 
@@ -14,17 +14,22 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">lista de clientes</h3>
+              <h3 class="box-title">Lista de sedes por cliente</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Categoria</th>
                   <th>Nombre</th>
-                  <th>NIT</th>
-                  <th>Creado el</th>
+                  <th>Direccion</th>
+                  <th>Telefono 1</th>
+                  <th>Ext1</th>
+                  <th>Telefono 2</th>
+                  <th>Ext2</th>
+                  <th>Sede Email</th>
+                  <th>Sede Celular</th>
+                  <th>Cliente</th>
                   <th>Auditable</th>
                   <th>edicion</th>
                 </tr>
@@ -40,29 +45,39 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($clientes as $cliente)
+                	@foreach($sedes as $sede)
 						        <tr>
-		                  <td>{{$cliente->CliCategoria}}</td>
-		                  <td>{{$cliente->CliShortname}}</td>
-		                  <td>{{$cliente->CliNit}}</td>
-		                  <td>{{$cliente->created_at}}</td>
-		                  	@if($cliente->CliAuditable==1)
+		                  <td>{{$sede->SedeName}}</td>
+		                  <td>{{$sede->SedeAddress}}</td>
+		                  <td>{{$sede->SedePhone1}}</td>
+		                  <td>{{$sede->SedeExt1}}</td>
+                      <td>{{$sede->SedePhone2}}</td>
+                      <td>{{$sede->SedeExt2}}</td>
+                      <td>{{$sede->SedeEmail}}</td>
+                      <td>{{$sede->SedeCelular}}</td>
+                      <td>{{$sede->Cliente}}</td>
+		                  	@if($sede->CliAuditable==1)
           								<td>Si</td>
           							@else
           								<td>NO</td>
           							@endif
-                          <td>{{$cliente->CliSlug}}</td>
+                          <td>{{$sede->SedeSlug}}</td>
 		                </tr>
 					@endforeach
             	</tbody>
                 <tfoot>
                 <tr>
-                  <th>Categoria</th>
                   <th>Nombre</th>
-                  <th>NIT</th>
-                  <th>Creado el</th>
+                  <th>Direccion</th>
+                  <th>Telefono 1</th>
+                  <th>Ext1</th>
+                  <th>Telefono 2</th>
+                  <th>Ext2</th>
+                  <th>Sede Email</th>
+                  <th>Sede Celular</th>
+                  <th>Cliente</th>
                   <th>Auditable</th>
-                  <th>edicion</th
+                  <th>edicion</th>
                 </tr>
                 </tfoot>
               </table>

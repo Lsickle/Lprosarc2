@@ -63,3 +63,15 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
+<script">
+  $(function () {
+    $('#example1').DataTable({
+      "columnDefs": [ {
+        "targets": 5,
+        "data": "SedeSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+</script>

@@ -26,8 +26,7 @@ class CreateSedesTable extends Migration
             $table->unsignedInteger('Cliente');
             $table->string('SedeSlug')->unique();
             $table->foreign('Cliente')->references('ID_Cli')->on('clientes');
-            $table->timestamps();
-            
+            $table->timestamps();  
         });
     }
 
