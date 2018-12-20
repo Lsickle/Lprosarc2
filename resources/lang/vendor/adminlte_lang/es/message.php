@@ -138,6 +138,7 @@ return [
     'clientupdate'            => 'Actualizacion',
     'clientaudit'             => 'Auditable',
     'csederegister'           => 'registro de sede',
+    'csedeindex'              => 'lista de sedes',
     'csedeupdate'             => 'Actualizar sede',
     'genermenu'               => 'Generadores',
     'generregister'           => 'Registro',
