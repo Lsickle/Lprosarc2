@@ -23,7 +23,7 @@ class sede extends Model
 
 	public function clientes()
 	{
-	 return $this>belongsTo('App\cliente','ID_Cli');
+	 return $this>belongsTo('cliente','ID_Cli');
 	}
 
 }

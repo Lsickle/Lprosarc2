@@ -55,7 +55,8 @@ class sclientcontroller extends Controller
         $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->Cliente = $request->input('Cliente');
+        $nit = $request->input('Cliente');
+        $Sede->Cliente = Cliente::whereCliNit($nit)->get('ID_Cli');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
         $Sede->save();
         return redirect()->route('sclientes.index');

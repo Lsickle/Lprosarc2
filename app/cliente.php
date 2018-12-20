@@ -21,6 +21,6 @@ class cliente extends Model
 
 	public function sede()
     {
-        return $this->hasMany('App/sede', 'ID_Sede');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+        return $this->hasMany('sede', 'ID_Sede');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
     }
 }
