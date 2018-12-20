@@ -55,11 +55,18 @@ class sclientcontroller extends Controller
         $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $nit = $request->input('Cliente');
-        $Sede->Cliente = Cliente::whereCliNit($nit)->get('ID_Cli');
+        $nit = $request->input('cliente');
+        $Clientes = Cliente::all();
+        $DatosClientes = $Clientes->where('CliNit', $nit);
+        $testid = $DatosClientes->mapWithKeys(function ($item) {
+                return $item['ID_Cli'];
+        });
+        return $testid;
+        $Sede->Cliente = $DatosClientes->get('ID_Cli');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
-        $Sede->save();
-        return redirect()->route('sclientes.index');
+        // $Sede->save();
+        // return redirect()->route('sclientes.index');
+        // return $testid;
 
     }
 
