@@ -34,7 +34,7 @@
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="{{ url('home') }}"><i class='fa fa-home'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li>
                 <li class="treeview">
-                    <a href="#"><i {{-- class='fa fa-id-card' --}} class='fa fa-map-marked-alt'></i> <span>{{ trans('adminlte_lang::message.clientmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i {{-- class='fa fa-id-card' --}} class='fa fa-id-card'></i> <span>{{ trans('adminlte_lang::message.clientmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="../clientes"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.clientindex') }}</a></li>
                         <li><a href="../clientes/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
@@ -47,7 +47,7 @@
                           </a>
                           <ul class="treeview-menu">
                             {{-- listado de sedes --}}
-                            <li><a href="#"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
+                            <li><a href="../sclientes"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
                             {{-- registro de sedes --}}
                             <li><a href="../sclientes/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
                           </ul>

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Sede;
+
+use App\Cliente;
+
 class sclientcontroller extends Controller
 {
     /**
@@ -13,7 +17,7 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        $clientes = sede::all();
+        $sedes = Sede::all();
         return view('sclientes.index', compact('sedes'));
     }
 
@@ -36,21 +40,25 @@ class sclientcontroller extends Controller
      */
     public function store(Request $request)
     {
-        $Sede = new sede();
-        if ($request->input('CliAuditable')=='on') {
-            $Sede->CliAuditable='1';
-        }
-        else{
-            $Sede->CliAuditable='0';
-        };
-        $Sede->CliNit = $request->input('CliNit');
-        $Sede->CliName = $request->input('CliName');
-        $Sede->CliShortname = $request->input('CliShortname');
-        $Sede->CliCategoria = $request->input('CliCategoria');
-        $Sede->CliType = $request->input('CliType');
-        $Sede->CliSlug = 'Cli-'.$request->input('CliShortname');
+        $Sede = new Sede();
+        // if ($request->input('CliAuditable')=='on') {
+        //     $Sede->CliAuditable='1';
+        // }
+        // else{
+        //     $Sede->CliAuditable='0';
+        // };
+        $Sede->SedeName = $request->input('SedeName');
+        $Sede->SedeAddress = $request->input('SedeAddress');
+        $Sede->SedePhone1 = $request->input('SedePhone1');
+        $Sede->SedeExt1 = $request->input('SedeExt1');
+        $Sede->SedePhone2 = $request->input('SedePhone2');
+        $Sede->SedeExt2 = $request->input('SedeExt2');
+        $Sede->SedeEmail = $request->input('SedeEmail');
+        $Sede->SedeCelular = $request->input('SedeCelular');
+        $Sede->Cliente = $request->input('Cliente');
+        $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
         $Sede->save();
-        return redirect()->route('clientes.index');
+        return redirect()->route('sclientes.index');
 
     }
 

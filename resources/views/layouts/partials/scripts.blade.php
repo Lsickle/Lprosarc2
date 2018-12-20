@@ -46,6 +46,10 @@
 <script>
 $(document).ready(function(){
     $('input[name="CliNit"]').mask('999.999.999.999-9');
+    $('input[name="cliente"]').mask('999.999.999.999-9');
+    $('input[name="SedePhone2"]').mask('(999)-999 9999');
+    $('input[name="SedePhone1"]').mask('(999)-999 9999');
+    $('input[name="SedeCelular"]').mask('(999)-999 9999');
 });
 </script>
 
@@ -63,9 +67,9 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
-<script">
+<script>
   $(function () {
-    $('#example1').DataTable({
+    $('#example2').DataTable({
       "columnDefs": [ {
         "targets": 5,
         "data": "SedeSlug",
@@ -75,3 +79,5 @@ $(document).ready(function(){
       }]
     });
 </script>
+
+

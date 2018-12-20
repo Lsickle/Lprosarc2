@@ -8,7 +8,7 @@ class sede extends Model
 {
     protected $table='sedes';
 
-    protected $fillable['SedeName','SedeAddress','SedePhone1','SedeExt1', 'SedePhone2','SedeExt2', 'SedeEmail', 'SedeCelular', 'Cliente', 'SedeSlug'];
+    protected $fillable=['SedeName', 'SedeAddress', 'SedePhone1', 'SedeExt1', 'SedePhone2',' SedeExt2', 'SedeEmail', 'SedeCelular', 'Cliente', 'SedeSlug'];
 
     protected $primaryKey = 'ID_Sede';
     	/**
@@ -21,10 +21,9 @@ class sede extends Model
 	    return 'SedeSlug';
 	}
 
-	// public function clientes(){
-	//  return 
-	// $this>belongsTo(
-	// 'App\cliente','ID_Cli')
-	// }
+	public function clientes()
+	{
+	 return $this>belongsTo('App\cliente','ID_Cli');
+	}
 
 }

@@ -60,7 +60,7 @@
 	create table Sede(
 		ID_Sede int auto_increment unique,
 		SedeName varchar(128), /*nombre de la sede*/
-		SedeAddress varchar(128), /*direccion*/
+		SedeAddress varchar(255), /*direccion*/
 		SedePhone1 varchar(32), /*telefono fijo 1*/
 		SedeExt1 int(8),
 		SedePhone2 varchar(32), /*telefono fijo 2*/

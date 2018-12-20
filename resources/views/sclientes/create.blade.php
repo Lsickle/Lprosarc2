@@ -30,48 +30,52 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form">
+							<form role="form" action="/sclientes" method="POST" enctype="multipart/form-data">
 								<div class="box-body">
 
 									<div class="form-group">
-										<label for="sedeinputname">SedeName</label>
+										<label for="sedeinputname">Nombre de Sede</label>
 										<input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputcelular">SedeCelular</label>
+										<label for="sedeinputcelular">N° Celular</label>
 										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputcliente">cliente</label>
-										<select class="form-control" id="sedeinputcliente" placeholder="cliente" name="cliente" required="true">
-										<option>cliente 1</option>
-										<option>cliente 2</option>
-										<option>cliente 3</option>
-										<option>cliente 4</option>
+										<label for="sedeinputcliente">Nit del cliente</label>
+										<input type="text" class="form-control" id="sedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
+									</div>
+									<div class="col-md-6">
+										<label for="sedemunicipio">Municipio</label>
+										<select class="form-control" id="sedemunicipio" placeholder="Funza" name="Municipio" required="true">
+										<option>Mosquera</option>
+										<option>Madrid</option>
+										<option>Funza</option>
+										<option>Faca</option>
 										</select>
 									</div>
-									<div class="form-group" style="margin-top: 9rem">
-										<label for="sedeinputaddress">SedeAddress</label>
+									<div class="col-md-6">
+										<label for="sedeinputaddress">Direccion</label>
 										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
 									</div>
-									<div class="form-group">
-										<label for="sedeinputphone1">SedePhone1</label>
+									<div class="col-md-6">
+										<label for="sedeinputphone1">telf local 1</label>
 										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputext1">SedeExt1</label>
+										<label for="sedeinputext1">Ext 1</label>
 										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputphone2">SedePhone2</label>
-										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="031-4123141" name="SedePhone2" maxlength="16">
+										<label for="sedeinputphone2">telf local 2</label>
+										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputext2">SedeExt2</label>
+										<label for="sedeinputext2">Ext 2</label>
 										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4">
 									</div>
-									<div class="col-md-6">
-										<label for="sedeinputemail">SedeEmail</label>
+									<div class="form-group" style="margin-top: 10em">
+										<label for="sedeinputemail">Email de la Sede</label>
 										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
 									</div>
 									

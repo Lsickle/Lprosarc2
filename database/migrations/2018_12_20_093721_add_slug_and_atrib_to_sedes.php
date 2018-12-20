@@ -14,10 +14,10 @@ class AddSlugAndAtribToSedes extends Migration
     public function up()
     {
         Schema::table('sedes', function (Blueprint $table) {
+            $table->string('SedePhone1')->nullable()->change();
             $table->unsignedSmallInteger('SedeExt1')->nullable()->change();
             $table->string('SedePhone2')->nullable()->change();
             $table->unsignedSmallInteger('SedeExt2')->nullable()->change();
-            $table->string('SedeEmail')->nullable()->change();
             $table->string('SedeCelular')->nullable()->change();
         });
     }
@@ -30,10 +30,10 @@ class AddSlugAndAtribToSedes extends Migration
     public function down()
     {
         Schema::table('sedes', function (Blueprint $table) {
+            $table->string('SedePhone1')->change();
             $table->unsignedSmallInteger('SedeExt1')->change();
             $table->string('SedePhone2')->change();
             $table->unsignedSmallInteger('SedeExt2')->change();
-            $table->string('SedeEmail')->change();
             $table->string('SedeCelular')->change();
         });
     }

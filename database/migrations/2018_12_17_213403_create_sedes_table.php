@@ -15,15 +15,15 @@ class CreateSedesTable extends Migration
     {
         Schema::create('sedes', function (Blueprint $table) {
             $table->increments('ID_Sede')->unique();
-            $table->string('SedeName');
+            $table->string('SedeName', 128);
             $table->string('SedeAddress');
-            $table->string('SedePhone1');
+            $table->string('SedePhone1' 32);
             $table->unsignedSmallInteger('SedeExt1');
-            $table->string('SedePhone2');
+            $table->string('SedePhone2' 32);
             $table->unsignedSmallInteger('SedeExt2');
-            $table->string('SedeEmail');
-            $table->string('SedeCelular');
-            $table->unsignedInteger('Cliente');
+            $table->string('SedeEmail', 128);
+            $table->string('SedeCelular', 32);
+            $table->string('Cliente', 32);
             $table->string('SedeSlug')->unique();
             $table->foreign('Cliente')->references('ID_Cli')->on('clientes');
             $table->timestamps();  
