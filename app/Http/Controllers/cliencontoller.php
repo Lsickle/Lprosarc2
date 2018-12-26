@@ -84,6 +84,7 @@ class clientcontoller extends Controller
     {
         //
         return view('clientes.show', compact('cliente'));
+        // return $cliente;
     }
 
     /**

@@ -17,6 +17,19 @@
 <!-- funcion para flitrado de tablas -->
 <script>
   $(function () {
+    $('#example2').DataTable({
+      "columnDefs": [ {
+        "targets": 10,
+        "data": "SedeSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script>
+<script>
+  $(function () {
     $('#example1').DataTable({
       "columnDefs": [ {
         "targets": 5,
@@ -67,18 +80,6 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
-<script>
-  $(function () {
-    $('#example2').DataTable({
-      "columnDefs": [ {
-        "targets": 0,
-        "data": "SedeSlug",
-        "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
-        }  
-      }]
-    });
-  });
-</script>
+
 
 

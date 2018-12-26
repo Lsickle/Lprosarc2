@@ -21,7 +21,6 @@
               <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>edicion</th>
                   <th>Nombre</th>
                   <th>Direccion</th>
                   <th>Telefono 1</th>
@@ -32,6 +31,7 @@
                   <th>Sede Celular</th>
                   <th>Cliente</th>
                   <th>Auditable</th>
+                  <th>edicion</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,29 +45,28 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($sedes as $sede)
+                	@foreach($sedes as $Sede)
 						        <tr>
-                      <td>{{$sede->SedeSlug}}</td>
-		                  <td>{{$sede->SedeName}}</td>
-		                  <td>{{$sede->SedeAddress}}</td>
-		                  <td>{{$sede->SedePhone1}}</td>
-		                  <td>{{$sede->SedeExt1}}</td>
-                      <td>{{$sede->SedePhone2}}</td>
-                      <td>{{$sede->SedeExt2}}</td>
-                      <td>{{$sede->SedeEmail}}</td>
-                      <td>{{$sede->SedeCelular}}</td>
-                      <td>{{$sede->CliShortname}}</td>
-	                  	@if($sede->CliAuditable==1)
+		                  <td>{{$Sede->SedeName}}</td>
+		                  <td>{{$Sede->SedeAddress}}</td>
+		                  <td>{{$Sede->SedePhone1}}</td>
+		                  <td>{{$Sede->SedeExt1}}</td>
+                      <td>{{$Sede->SedePhone2}}</td>
+                      <td>{{$Sede->SedeExt2}}</td>
+                      <td>{{$Sede->SedeEmail}}</td>
+                      <td>{{$Sede->SedeCelular}}</td>
+                      <td>{{$Sede->CliShortname}}</td>
+	                  	@if($Sede->CliAuditable==1)
         								<td>Si</td>
         							@else
         								<td>NO</td>
         							@endif
+                      <td>{{$Sede->SedeSlug}}</td>
 		                </tr>
 			          	@endforeach
             	</tbody>
                 <tfoot>
                 <tr>
-                  <th>edicion</th>
                   <th>Nombre</th>
                   <th>Direccion</th>
                   <th>Telefono 1</th>
@@ -78,6 +77,7 @@
                   <th>Sede Celular</th>
                   <th>Cliente</th>
                   <th>Auditable</th>
+                  <th>edicion</th>
                 </tr>
                 </tfoot>
               </table>
