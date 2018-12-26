@@ -94,7 +94,11 @@ class sclientcontroller extends Controller
      */
     public function edit($id)
     {
-        //
+        $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
+        
+        $Sede = Sede::where('SedeSlug',$id)->first();
+
+        return view('sclientes.edit', compact('Sede', 'Clientes'));
     }
 
     /**
