@@ -71,13 +71,14 @@ $(document).ready(function(){
   $(function () {
     $('#example2').DataTable({
       "columnDefs": [ {
-        "targets": 5,
+        "targets": 0,
         "data": "SedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });
+  });
 </script>
 
 

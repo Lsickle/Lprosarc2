@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Sede;
 use App\Cliente;
@@ -15,8 +15,17 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        $sedes = Sede::all();
+        // $sedes = Sede::all();
+
+        $sedes = DB::table('sedes')
+            ->join('clientes', 'sedes.Cliente', '=', 'clientes.ID_Cli')
+            ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname', 'clientes.CliAuditable')
+            ->get();
+
         return view('sclientes.index', compact('sedes'));
+
+
+       
     }
 
     /**

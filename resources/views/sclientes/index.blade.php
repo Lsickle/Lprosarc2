@@ -17,10 +17,11 @@
               <h3 class="box-title">Lista de sedes por cliente</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive">
-              <table id="example2" class=" table table-bordered table-striped">
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>edicion</th>
                   <th>Nombre</th>
                   <th>Direccion</th>
                   <th>Telefono 1</th>
@@ -31,7 +32,6 @@
                   <th>Sede Celular</th>
                   <th>Cliente</th>
                   <th>Auditable</th>
-                  <th>edicion</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +47,7 @@
 						</div> --}}
                 	@foreach($sedes as $sede)
 						        <tr>
+                      <td>{{$sede->SedeSlug}}</td>
 		                  <td>{{$sede->SedeName}}</td>
 		                  <td>{{$sede->SedeAddress}}</td>
 		                  <td>{{$sede->SedePhone1}}</td>
@@ -55,18 +56,18 @@
                       <td>{{$sede->SedeExt2}}</td>
                       <td>{{$sede->SedeEmail}}</td>
                       <td>{{$sede->SedeCelular}}</td>
-                      <td>{{$sede->Cliente}}</td>
-		                  	@if($sede->CliAuditable==1)
-          								<td>Si</td>
-          							@else
-          								<td>NO</td>
-          							@endif
-                          <td>{{$sede->SedeSlug}}</td>
+                      <td>{{$sede->CliShortname}}</td>
+	                  	@if($sede->CliAuditable==1)
+        								<td>Si</td>
+        							@else
+        								<td>NO</td>
+        							@endif
 		                </tr>
-					@endforeach
+			          	@endforeach
             	</tbody>
                 <tfoot>
                 <tr>
+                  <th>edicion</th>
                   <th>Nombre</th>
                   <th>Direccion</th>
                   <th>Telefono 1</th>
@@ -77,7 +78,6 @@
                   <th>Sede Celular</th>
                   <th>Cliente</th>
                   <th>Auditable</th>
-                  <th>edicion</th>
                 </tr>
                 </tfoot>
               </table>
