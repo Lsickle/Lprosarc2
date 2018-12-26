@@ -25,5 +25,9 @@ class sede extends Model
 	{
 	 return $this>belongsTo('cliente','ID_Cli');
 	}
+	public function generador()
+    {
+        return $this->hasMany('generador', 'ID_Gener');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+    }
 
 }

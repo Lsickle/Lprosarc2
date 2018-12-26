@@ -82,15 +82,14 @@
 		create table Generador(
 		ID_Gener int auto_increment unique,
 		GenerName varchar(256),
-		GenerShortname varchar(32),
+		GenerShortname varchar(64),
 		GenerCode varchar(32), /*codigo del generador ejem: "PL 1 AND"-.S" */
 		GenerType varchar(32),/*tipo de empresa: organico; biologico; industrial; medicamentos; otros ETC...*/
-		GenerNit bigint, /*nit*/
+		GenerNit varchar(20), /*nit*/
 		GenerAuditable boolean, /*¿cliente requiere tratamientos auditables?*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		FK_GenerCli int, /*foranea de la tabla Sede*/
-		FK_GenerMun int, /*foranea de la tabla municipio*/
 		primary key (ID_Gener),
 		foreign key (FK_GenerCli) references Sede(ID_Sede) ON UPDATE CASCADE
 	)

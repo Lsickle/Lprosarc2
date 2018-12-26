@@ -15,7 +15,7 @@ class genercontroller extends Controller
      */
     public function index()
     {
-        //
+    
     }
 
     /**
