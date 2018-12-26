@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Sede;
-
 use App\Cliente;
 
 class sclientcontroller extends Controller
@@ -28,8 +26,9 @@ class sclientcontroller extends Controller
      */
     public function create()
     {
+        $Clientes = Cliente::all();
         // $Sede->cliente = cliente::with('clientes')->get(); 
-        return view('sclientes.create');
+        return view('sclientes.create', compact('Clientes'));
     }
 
     /**
@@ -55,18 +54,12 @@ class sclientcontroller extends Controller
         $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $nit = $request->input('cliente');
-        $Clientes = Cliente::all();
-        $DatosClientes = $Clientes->where('CliNit', $nit);
-        $testid = $DatosClientes->mapWithKeys(function ($item) {
-                return $item['ID_Cli'];
-        });
-        return $testid;
-        $Sede->Cliente = $DatosClientes->get('ID_Cli');
+        $Sede->Cliente = $request->input('clientename');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
-        // $Sede->save();
-        // return redirect()->route('sclientes.index');
+        $Sede->save();
+        return redirect()->route('sclientes.index');
         // return $testid;
+        // return $request;
 
     }
 

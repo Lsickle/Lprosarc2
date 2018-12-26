@@ -42,10 +42,10 @@
 										<label for="sedeinputcelular">N° Celular</label>
 										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
 									</div>
-									<div class="col-md-6">
+									{{-- <div class="col-md-6">
 										<label for="sedeinputcliente">Nit del cliente</label>
 										<input type="text" class="form-control" id="sedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
-									</div>
+									</div> --}}
 									<div class="col-md-6">
 										<label for="sedemunicipio">Municipio</label>
 										<select class="form-control" id="sedemunicipio" placeholder="Funza" name="Municipio" required="true">
@@ -53,6 +53,14 @@
 										<option>Madrid</option>
 										<option>Funza</option>
 										<option>Faca</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="clientname">Cliente</label>
+										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
+											@foreach($Clientes as $cliente)
+												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
+											@endforeach()
 										</select>
 									</div>
 									<div class="col-md-6">
