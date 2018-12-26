@@ -26,4 +26,4 @@ Route::group(['middleware' => 'auth'], function () {
 Route::resource('/clientes', 'clientcontoller');
 Route::resource('/sclientes', 'sclientcontroller');
 Route::resource('/Generadores', 'genercontroller');
-Route::resource('/seneradores', 'sgenercontroller');
+Route::resource('/sgeneradores', 'sgenercontroller');

@@ -75,13 +75,15 @@ class sclientcontroller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * idate(format)
      * @return \Illuminate\Http\Response
      */
-    public function show(Sede $Sede)
+    public function show($id)
     {
-        // return view('sclientes.show', compact('Sede'));
-        return $Sede;
+        $Sede = Sede::where('SedeSlug',$id)->first();
+
+        return view('sclientes.show', compact('Sede'));
+        // return $datosede;
     }
 
     /**
