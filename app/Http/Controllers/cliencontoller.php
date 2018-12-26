@@ -107,9 +107,14 @@ class clientcontoller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente)
-    {
-        $cliente = cliente::find($cliente->ID_Cli);
+    {   
         $cliente->fill($request->except('created_at'));
+        if ($request->CliAuditable=='on') {
+            $cliente->CliAuditable='1';
+        }
+        else{
+            $cliente->CliAuditable='0';
+        };
         $cliente->save();
         return redirect()->route('clientes.index');
     }

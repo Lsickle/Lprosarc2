@@ -1,4 +1,4 @@
-@extends('layouts.app')
+  @extends('layouts.app')
 
 @section('htmlheader_title')
 	{{ trans('adminlte_lang::message.clientmenu') }}

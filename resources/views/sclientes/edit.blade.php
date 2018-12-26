@@ -30,8 +30,9 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/sclientes" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/sclientes/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data">
 								@csrf
+								@method('PUT')
 								<div class="box-body">
 
 									<div class="form-group">
