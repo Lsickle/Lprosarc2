@@ -141,6 +141,7 @@ return [
     'csedeindex'              => 'lista de sedes',
     'csedeupdate'             => 'Actualizar sede',
     'genermenu'               => 'Generadores',
+    'generindex'              => 'lista de Generadores',
     'generregister'           => 'Registro',
     'generupdate'             => 'Actualizacion',
     'gsederegister'           => 'registro de sede',

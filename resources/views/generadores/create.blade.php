@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.Generregistertittle') }}
+{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.Generregistertittle') }}
+{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,78 +12,76 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos Básicos del Generador</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangGenerador.basicinfo') }}</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
+						{{-- <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+						<i class="fa fa-times"></i></button> --}}
 					</div>
 				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box box-success">
 							<div class="box-header with-border">
-								<h3 class="box-title">Quick Example</h3>
+								<h3 class="box-title">{{ trans('adminlte_lang::LangGenerador.complete') }}</h3>
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form">
+							<form role="form" action="/Generadores" method="POST" enctype="multipart/form-data">
+								@csrf
 								<div class="box-body">
 									<div class="form-group">
-										<label for="ClienteInputNit">NIT</label>
-										<input autofocus="true" type="number" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-Y">
+										<label for="GenerInputNit">NIT</label>
+										<input minlength="17" maxlength="17" required="true" name="GenerNit" autofocus="true" type="text" class="form-control" id="GenerInputNit" placeholder="XXX.XXX.XXX.XXX-X">
 									</div>
 									<div class="form-group">
-										<label for="ClienteInputRazon">Razon social</label>
-										<input type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
+										<label for="GenerInputRazon">Razon social</label>
+										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="ALIMENTOS BALANCEADOS TEQUENDAMA S.A.">
 									</div>
 									<div class="form-group">
-										<label for="ClienteInputNombre">Nombre Corto</label>
-										<input type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
+										<label for="">Nombre Corto</label>
+										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="ALBATEQ SA">
 									</div>
-									<div class="form-group">
-										<label for="ClienteInputCategoria">Categoria</label>
-										<select class="form-control" id="ClienteInputCategoria" placeholder="Cliente">
-											<option>cliente</option>
-											<option>generador</option>
-											<option>transportador</option>
-											<option>Proveedor</option>
-											<option>otro</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputTipo">Tipo de empresa</label>
-										<select class="form-control" id="ClienteInputTipo" placeholder="biologico">
+									<div class="col-xs-6">
+										<label for="GenerInputTipo">Tipo de empresa</label>
+										<select name="GenerType" class="form-control" id="GenerInputTipo" placeholder="biologico">
 											<option>biologico</option>
 											<option>industrial</option>
 											<option>medicamentos</option>
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="col-xs-8">
-									   <div class="checkbox icheck">
-									      <label class="">
-									         <div class="icheckbox_square-blue checked" style="position: relative;">
-									         	<input type="checkbox" name="remember" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-									         	<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-									         	</ins>
-									         </div>
-									         Auditoria permanente
-									      </label>
-									   </div>
+									<div class="col-xs-6">
+										<label for="GenerInputTipo">Cliente</label>
+										<select name="GenerCli" class="form-control" id="GenerInputTipo" placeholder="biologico">
+											@foreach($Sedes as $sede)
+											<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+											@endforeach()
+										</select>
 									</div>
-									<div class="form-group">
+									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+									   <div class="icheck form-group">
+			                                <label for="GenerInputTipo">
+			                                   {{trans('adminlte_lang::message.clientaudit')}}
+			                                </label>
+			                                 <input id="GenerInputTipo" style="display:none;" type="checkbox" name="GenerAuditable">
+			                            </div>
+			                            <div >
+			                            	<input  hidden="false" type="text" name="GenerSlug" value="temp">
+			                            </div>
+									</div>
+									{{-- <div class="form-group">
 										<label for="exampleInputFile">Documento requerido</label>
-										<input type="file" id="exampleInputFile">
+										<input name="" type="file" id="exampleInputFile">
 										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div>
+									</div> --}}
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>
 						</div>

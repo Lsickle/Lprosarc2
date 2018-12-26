@@ -59,7 +59,8 @@
                 <li class="treeview">
                     <a href="#"><i class='fa fa-industry'></i> <span>{{ trans('adminlte_lang::message.genermenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="../generadores/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.generregister') }}</a></li>
+                        <li><a href="../Generadores/"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.generindex') }}</a></li>
+                        <li><a href="../Generadores/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.generregister') }}</a></li>
                         <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.generupdate') }}</a></li>
                         <li><a href="../sgeneradores/create"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.gsederegister') }}</a></li>
                         <li><a href="#"><i class='fa fa-map-marker'></i>{{ trans('adminlte_lang::message.gsedeupdate') }}</a></li>

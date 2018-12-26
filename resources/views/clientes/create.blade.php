@@ -45,7 +45,7 @@
 										<label for="">Nombre Corto</label>
 										<input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
 									</div>
-									<div class="form-group">
+									<div class="col-xs-6">
 										<label for="ClienteInputCategoria">Categoria</label>
 										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente">
 											<option>cliente</option>
@@ -55,8 +55,8 @@
 											<option>otro</option>
 										</select>
 									</div>
-									<div class="form-group">
-										<label for="ClienteInputTipo">Tipo de empresa</label>
+									<div class="col-xs-6">
+										<label for="ClienteInputTipo">Tipo de cliente</label>
 										<select name="CliType" class="form-control" id="ClienteInputTipo" placeholder="biologico">
 											<option>biologico</option>
 											<option>industrial</option>
@@ -64,7 +64,7 @@
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="col-xs-8">
+									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 									   <div class="icheck form-group">
 			                                <label for="ClienteInputTipo">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
@@ -82,7 +82,7 @@
 									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>

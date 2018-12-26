@@ -17,6 +17,19 @@
 <!-- funcion para flitrado de tablas -->
 <script>
   $(function () {
+    $('#example3').DataTable({
+      "columnDefs": [ {
+        "targets": 7,
+        "data": "SedeSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script>
+<script>
+  $(function () {
     $('#example2').DataTable({
       "columnDefs": [ {
         "targets": 10,
@@ -63,6 +76,7 @@ $(document).ready(function(){
     $('input[name="SedePhone2"]').mask('(999)-999 9999');
     $('input[name="SedePhone1"]').mask('(999)-999 9999');
     $('input[name="SedeCelular"]').mask('(999)-999 9999');
+    $('input[name="GenerNit"]').mask('999.999.999.999-9');
 });
 </script>
 

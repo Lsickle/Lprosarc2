@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Sede;
-use App\Cliente;
+use App\generador;
 
 class sclientcontroller extends Controller
 {
