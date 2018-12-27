@@ -29,5 +29,9 @@ class sede extends Model
     {
         return $this->hasMany('generador', 'ID_Gener');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
     }
+    public function declaracion()
+    {
+        return $this->hasMany('Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+    }
 
 }

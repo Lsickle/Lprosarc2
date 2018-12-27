@@ -27,4 +27,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    //se especifica la raclacion con la tabla declaraciones
+    public function declaracion()
+    {
+        return $this->hasMany('Declaration', 'ID_Declar');//como user tiene muchas declaraciones
+    }
 }

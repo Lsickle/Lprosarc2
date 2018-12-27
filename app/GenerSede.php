@@ -25,6 +25,11 @@ class GenerSede extends Model
 	{
 	 return $this>belongsTo('generador','ID_Gener');
 	}
+	public function declaracion()
+    {
+        return $this->hasMany('Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+    }
+
 	// public function generador()
  //    {
  //        return $this->hasMany('generador', 'ID_Gener');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
