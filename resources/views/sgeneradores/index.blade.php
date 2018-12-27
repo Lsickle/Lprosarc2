@@ -61,7 +61,7 @@
         							@else
         								<td>NO</td>
         							@endif
-                      <td>{{$GSede->SedeSlug}}</td>
+                      <td>{{$GSede->GSedeSlug}}</td>
 		                </tr>
 			          	@endforeach
             	</tbody>

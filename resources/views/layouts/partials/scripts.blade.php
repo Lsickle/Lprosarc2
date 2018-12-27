@@ -19,7 +19,7 @@
   $(function () {
     $('#example4').DataTable({
       "columnDefs": [ {
-        "targets": 7,
+        "targets": 10,
         "data": "SedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
