@@ -25,7 +25,7 @@ class genercontroller extends Controller
 
         $Generadors = DB::table('Generadors')
             ->join('sedes', 'Generadors.GenerCli', '=', 'sedes.ID_Sede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.Cliente')
             ->select('Generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.Cliente', 'clientes.CliShortname')
             ->get();
         // $Generadors = generador::all();
@@ -76,7 +76,8 @@ class genercontroller extends Controller
      */
     public function show($id)
     {
-        //
+        $generadors = generador::where('GenerSlug',$id)->first();
+        return view('generadores.show', compact('generadors'));
     }
 
     /**
@@ -87,7 +88,11 @@ class genercontroller extends Controller
      */
     public function edit($id)
     {
-        //
+        $Sedes = Sede::select('ID_Sede','SedeName')->get();
+        
+        $generadors = generador::where('GenerSlug',$id)->first();
+
+        return view('generadores.edit', compact('Sedes', 'generadors'));
     }
 
     /**
@@ -99,7 +104,18 @@ class genercontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $generador = generador::where('GenerSlug',$id)->first();
+        $generador->fill($request->except('created_at'));
+        $generador->GenerCli = $request->input('GenerCli');
+        if ($request->input('GenerAuditable')=='on') {
+            $generador->GenerAuditable='1';
+        }
+        else{
+            $generador->GenerAuditable='0';
+        };
+        $generador->GenerSlug = 'Gener-'.$request->input('GenerShortname');
+        $generador->save();
+        return redirect()->route('Generadores.index');
     }
 
     /**

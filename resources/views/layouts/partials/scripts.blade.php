@@ -33,9 +33,9 @@
     $('#example3').DataTable({
       "columnDefs": [ {
         "targets": 7,
-        "data": "SedeSlug",
+        "data": "GenerSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });
