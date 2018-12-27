@@ -13,7 +13,12 @@ class sgenercontroller extends Controller
      */
     public function index()
     {
-        //
+        $Gsedes = DB::table('gener_sedes')
+            ->join('generadors', 'gener_sedes.Generador', '=', 'generadors.ID_Gener')
+            ->select('gener_sedes.*', 'clientes.ID_Gener', 'generadors.GenerShortname', 'clientes.CliAuditable')
+            ->get();
+
+        return view('sgeneradores.index', compact('Gsedes'));
     }
 
     /**
