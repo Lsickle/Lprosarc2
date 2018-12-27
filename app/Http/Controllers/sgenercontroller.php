@@ -102,7 +102,11 @@ class sgenercontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $GSede = GenerSede::where('GSedeSlug',$id)->first();
+        $GSede->fill($request->except('created_at'));
+        $GSede->Generador = $request->input('genername');
+        $GSede->save();
+        return redirect()->route('sgeneradores.index');
     }
 
     /**
