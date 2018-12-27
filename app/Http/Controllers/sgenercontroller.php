@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\generador;
+use App\GenerSede;
 
 class sgenercontroller extends Controller
 {
@@ -15,7 +18,7 @@ class sgenercontroller extends Controller
     {
         $Gsedes = DB::table('gener_sedes')
             ->join('generadors', 'gener_sedes.Generador', '=', 'generadors.ID_Gener')
-            ->select('gener_sedes.*', 'clientes.ID_Gener', 'generadors.GenerShortname', 'clientes.CliAuditable')
+            ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname', 'generadors.GenerAuditable')
             ->get();
 
         return view('sgeneradores.index', compact('Gsedes'));

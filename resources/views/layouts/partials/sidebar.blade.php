@@ -61,9 +61,20 @@
                     <ul class="treeview-menu">
                         <li><a href="../Generadores/"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.generindex') }}</a></li>
                         <li><a href="../Generadores/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.generregister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.generupdate') }}</a></li>
-                        <li><a href="../sgeneradores/create"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.gsederegister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-map-marker'></i>{{ trans('adminlte_lang::message.gsedeupdate') }}</a></li>
+                        {{-- SEDES --}}
+                        <li class="treeview">
+                          <a href="#"><i class="fa fa-building"></i>Sede Generador
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                          <ul class="treeview-menu">
+                            {{-- listado de sedes --}}
+                            <li><a href="../sgeneradores"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
+                            {{-- registro de sedes --}}
+                            <li><a href="../sgeneradores/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
+                          </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">

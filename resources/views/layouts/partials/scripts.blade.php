@@ -17,6 +17,19 @@
 <!-- funcion para flitrado de tablas -->
 <script>
   $(function () {
+    $('#example4').DataTable({
+      "columnDefs": [ {
+        "targets": 7,
+        "data": "SedeSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script> 
+<script>
+  $(function () {
     $('#example3').DataTable({
       "columnDefs": [ {
         "targets": 7,

@@ -14,11 +14,11 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de sedes por cliente</h3>
+              <h3 class="box-title">Lista de sedes por Generador</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-striped">
+              <table id="example4" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Nombre</th>
@@ -29,7 +29,7 @@
                   <th>Ext2</th>
                   <th>Sede Email</th>
                   <th>Sede Celular</th>
-                  <th>Cliente</th>
+                  <th>Generador</th>
                   <th>Auditable</th>
                   <th>edicion</th>
                 </tr>
@@ -45,23 +45,23 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($sedes as $Sede)
+                	@foreach($Gsedes as $GSede)
 						        <tr>
-		                  <td>{{$Sede->SedeName}}</td>
-		                  <td>{{$Sede->SedeAddress}}</td>
-		                  <td>{{$Sede->SedePhone1}}</td>
-		                  <td>{{$Sede->SedeExt1}}</td>
-                      <td>{{$Sede->SedePhone2}}</td>
-                      <td>{{$Sede->SedeExt2}}</td>
-                      <td>{{$Sede->SedeEmail}}</td>
-                      <td>{{$Sede->SedeCelular}}</td>
-                      <td>{{$Sede->CliShortname}}</td>
-	                  	@if($Sede->CliAuditable==1)
+		                  <td>{{$GSede->GSedeName}}</td>
+		                  <td>{{$GSede->GSedeAddress}}</td>
+		                  <td>{{$GSede->GSedePhone1}}</td>
+		                  <td>{{$GSede->GSedeExt1}}</td>
+                      <td>{{$GSede->GSedePhone2}}</td>
+                      <td>{{$GSede->GSedeExt2}}</td>
+                      <td>{{$GSede->GSedeEmail}}</td>
+                      <td>{{$GSede->GSedeCelular}}</td>
+                      <td>{{$GSede->GenerShortname}}</td>
+	                  	@if($GSede->GenerAuditable==1)
         								<td>Si</td>
         							@else
         								<td>NO</td>
         							@endif
-                      <td>{{$Sede->SedeSlug}}</td>
+                      <td>{{$GSede->SedeSlug}}</td>
 		                </tr>
 			          	@endforeach
             	</tbody>
@@ -75,7 +75,7 @@
                   <th>Ext2</th>
                   <th>Sede Email</th>
                   <th>Sede Celular</th>
-                  <th>Cliente</th>
+                  <th>Generador</th>
                   <th>Auditable</th>
                   <th>edicion</th>
                 </tr>
