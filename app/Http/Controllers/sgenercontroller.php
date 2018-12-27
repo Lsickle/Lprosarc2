@@ -30,8 +30,9 @@ class sgenercontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-         return view('sgeneradores.create');
+    {   
+        $generadors = generador::all();
+         return view('sgeneradores.create', compact('generadors'));
     }
 
     /**
@@ -42,7 +43,25 @@ class sgenercontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $GenerSede = new GenerSede();
+        // if ($request->input('CliAuditable')=='on') {
+        //     $GenerSede->CliAuditable='1';
+        // }
+        // else{
+        //     $GenerSede->CliAuditable='0';
+        // };
+        $GenerSede->GSedeName = $request->input('GSedeName');
+        $GenerSede->GSedeAddress = $request->input('GSedeAddress');
+        $GenerSede->GSedePhone1 = $request->input('GSedePhone1');
+        $GenerSede->GSedeExt1 = $request->input('GSedeExt1');
+        $GenerSede->GSedePhone2 = $request->input('GSedePhone2');
+        $GenerSede->GSedeExt2 = $request->input('GSedeExt2');
+        $GenerSede->GSedeEmail = $request->input('GSedeEmail');
+        $GenerSede->GSedeCelular = $request->input('GSedeCelular');
+        $GenerSede->Generador = $request->input('generadorname');
+        $GenerSede->GSedeSlug = 'GSede-'.$request->input('GSedeName');
+        $GenerSede->save();
+        return redirect()->route('sgeneradores.index');
     }
 
     /**

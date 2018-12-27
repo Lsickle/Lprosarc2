@@ -12,7 +12,7 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos de la sede de la empresa</h3>
+					<h3 class="box-title">Datos de la sede del generador</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -30,25 +30,25 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/sclientes" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/sgeneradores" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
 
 									<div class="form-group">
-										<label for="sedeinputname">Nombre de Sede</label>
-										<input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true">
+										<label for="GSedeinputname">Nombre de Sede</label>
+										<input type="text" class="form-control" id="GSedeinputname" placeholder="Prosarc" name="GSedeName" required="true">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputcelular">N° Celular</label>
-										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
+										<label for="GSedeinputcelular">N° Celular</label>
+										<input type="text" class="form-control" id="GSedeinputcelular" placeholder="3014145321" name="GSedeCelular">
 									</div>
 									{{-- <div class="col-md-6">
-										<label for="sedeinputcliente">Nit del cliente</label>
-										<input type="text" class="form-control" id="sedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
+										<label for="GSedeinputcliente">Nit del cliente</label>
+										<input type="text" class="form-control" id="GSedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
 									</div> --}}
 									<div class="col-md-6">
-										<label for="sedemunicipio">Municipio</label>
-										<select class="form-control" id="sedemunicipio" placeholder="Funza" name="Municipio" required="true">
+										<label for="GSedemunicipio">Municipio</label>
+										<select class="form-control" id="GSedemunicipio" placeholder="Funza" name="Municipio" required="true">
 										<option>Mosquera</option>
 										<option>Madrid</option>
 										<option>Funza</option>
@@ -57,35 +57,35 @@
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
-											@foreach($Clientes as $cliente)
-												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
+										<select class="form-control" id="clientname" placeholder="Funza" name="generadorname" required="true">
+											@foreach($generadors as $generador)
+												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
 											@endforeach()
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputaddress">Direccion</label>
-										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
+										<label for="GSedeinputaddress">Direccion</label>
+										<input type="text" class="form-control" id="GSedeinputaddress" placeholder="cll 23 #11c-03" name="GSedeAddress" required="true">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputphone1">telf local 1</label>
-										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16">
+										<label for="GSedeinputphone1">telf local 1</label>
+										<input type="tel" class="form-control" id="GSedeinputphone1" placeholder="031-4123141" name="GSedePhone1" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputext1">Ext 1</label>
-										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4">
+										<label for="GSedeinputext1">Ext 1</label>
+										<input type="text" class="form-control" id="GSedeinputext1" placeholder="1555" name="GSedeExt1" maxlength="4">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputphone2">telf local 2</label>
-										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16">
+										<label for="GSedeinputphone2">telf local 2</label>
+										<input type="tel" class="form-control" id="GSedeinputphone2" placeholder="(031)-412 3141" name="GSedePhone2" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputext2">Ext 2</label>
-										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4">
+										<label for="GSedeinputext2">Ext 2</label>
+										<input type="text" class="form-control" id="GSedeinputext2" placeholder="1555" name="GSedeExt2" maxlength="4">
 									</div>
 									<div class="form-group" style="margin-top: 10em">
-										<label for="sedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
+										<label for="GSedeinputemail">Email de la Sede</label>
+										<input type="email" class="form-control" id="GSedeinputemail" placeholder="Sistemas@Prosarc.com" name="GSedeEmail" required="true">
 									</div>
 									
 

@@ -90,6 +90,11 @@ $(document).ready(function(){
     $('input[name="SedePhone1"]').mask('(999)-999 9999');
     $('input[name="SedeCelular"]').mask('(999)-999 9999');
     $('input[name="GenerNit"]').mask('999.999.999.999-9');
+    $('input[name="GSedePhone2"]').mask('(999)-999 9999');
+    $('input[name="GSedePhone1"]').mask('(999)-999 9999');
+    $('input[name="GSedeCelular"]').mask('(999)-999 9999');
+    $('input[name="GSedeinputext1"]').mask('999-9');
+    $('input[name="GSedeinputext2"]').mask('999-9');
 });
 </script>
 
