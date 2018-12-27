@@ -17,6 +17,19 @@
 <!-- funcion para flitrado de tablas -->
 <script>
   $(function () {
+    $('#DeclarTable').DataTable({
+      "columnDefs": [ {
+        "targets": 11,
+        "data": "GSedeSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script> 
+<script>
+  $(function () {
     $('#example4').DataTable({
       "columnDefs": [ {
         "targets": 10,

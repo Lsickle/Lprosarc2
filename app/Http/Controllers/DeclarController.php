@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Sede;
+use App\generador;
+use App\Declaration;
 
 class DeclarController extends Controller
 {
@@ -13,7 +17,23 @@ class DeclarController extends Controller
      */
     public function index()
     {
-        //
+        $Declarations = DB::table('declarations')
+            ->join('gener_sedes', 'declarations.DeclarGenerSede', '=', 'gener_sedes.ID_GSede')
+            ->join('sedes', 'declarations.DeclarSede', '=', 'sedes.ID_Sede')
+            ->join('users', 'declarations.DeclarUser', '=', 'Users.id')
+            ->select('declarations.*',
+                     'users.id', 
+                     'users.name',
+                     'sedes.ID_Sede', 
+                     'sedes.SedeName' , 
+                     'sedes.Cliente', 
+                     'gener_sedes.ID_GSede', 
+                     'gener_sedes.GSedeName', 
+                     'gener_sedes.Generador'
+                 )
+            ->get();
+
+        return view('declaraciones.index', compact('Declarations'));
     }
 
     /**
