@@ -16,5 +16,8 @@ return [
     'declarlist'    => 'Lista de Declaraciones',
     'basicinfo'    => 'Datos Básicos',
     'complete'    => 'Complete los siguientes campos',
-    
+    'declaregistertittle'    => 'Crear Declaración',
+    'boxregistertittle'    => 'Crear Declaración de Residuos',
+    'box-title'    => 'Datos de la declaracion de residuos',
+    'innerbox-title'    => 'complete todos los campos a continuacion',
 ];

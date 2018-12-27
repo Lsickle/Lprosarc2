@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Sede;
-use App\generador;
+use App\GenerSede;
 use App\Declaration;
 
 class DeclarController extends Controller
@@ -43,7 +43,10 @@ class DeclarController extends Controller
      */
     public function create()
     {
-        //
+        $sedes = sede::all();
+        $generadores = GenerSede::all();
+        // $Sede->cliente = cliente::with('clientes')->get(); 
+        return view('declaraciones.create', compact('sedes', 'generadores'));
     }
 
     /**
