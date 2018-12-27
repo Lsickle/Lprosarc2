@@ -72,7 +72,10 @@ class sgenercontroller extends Controller
      */
     public function show($id)
     {
-        //
+        $GSede = GenerSede::where('GSedeSlug',$id)->first();
+
+        return view('sgeneradores.show', compact('GSede'));
+        // return $datosede;
     }
 
     /**
@@ -83,7 +86,11 @@ class sgenercontroller extends Controller
      */
     public function edit($id)
     {
-        //
+        $generadores = generador::select('ID_Gener','GenerShortname')->get();
+        
+        $GSede = GenerSede::where('GSedeSlug',$id)->first();
+
+        return view('sgeneradores.edit', compact('GSede', 'generadores'));
     }
 
     /**

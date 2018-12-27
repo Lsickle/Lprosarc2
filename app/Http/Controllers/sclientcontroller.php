@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Sede;
 use App\generador;
+use App\cliente;
 
 class sclientcontroller extends Controller
 {
@@ -35,7 +36,7 @@ class sclientcontroller extends Controller
      */
     public function create()
     {
-        $Clientes = Cliente::all();
+        $Clientes = cliente::all();
         // $Sede->cliente = cliente::with('clientes')->get(); 
         return view('sclientes.create', compact('Clientes'));
     }
@@ -110,7 +111,11 @@ class sclientcontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Sede = Sede::where('SedeSlug',$id)->first();
+        $Sede->fill($request->except('created_at'));
+        $Sede->Cliente = $request->input('clientename');
+        $Sede->save();
+        return redirect()->route('sclientes.index');
     }
 
     /**

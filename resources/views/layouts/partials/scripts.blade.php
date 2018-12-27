@@ -20,9 +20,9 @@
     $('#example4').DataTable({
       "columnDefs": [ {
         "targets": 10,
-        "data": "SedeSlug",
+        "data": "GSedeSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });

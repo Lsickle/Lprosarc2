@@ -19,13 +19,13 @@
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
 
-              <h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
+              <h3 class="profile-username text-center">{{$GSede->GSedeName}}</h3>
 
-              <p class="text-muted text-center">{{$Sede->SedeAddress}}</p>
+              <p class="text-muted text-center">{{$GSede->GSedeAddress}}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>sedes</b> <a class="pull-right">1,322</a>
+                  <b>Gsedes</b> <a class="pull-right">1,322</a>
                 </li>
                 <li class="list-group-item">
                   <b>Following</b> <a class="pull-right">543</a>
@@ -35,9 +35,9 @@
                 </li>
               </ul>
 
-          	<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+          	<a href="/sgeneradores/{{$GSede->GSedeSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
 						<br>
-			<form action="/sclientes/{{$Sede->SedeSlug}}" class="form-group" method="POST">
+			<form action="/sgeneradores/{{$GSede->GSedeSlug}}" class="form-group" method="POST">
 				@csrf
 				@method('DELETE')
 					<button type="submit" class="btn btn-danger btn-block">Borrar</button>

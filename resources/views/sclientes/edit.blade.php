@@ -41,7 +41,7 @@
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputcelular">N° Celular</label>
-										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" value="{{$Sede->SedeName}}">
+										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" value="{{$Sede->SedeCelular}}">
 									</div>
 									{{-- <div class="col-md-6">
 										<label for="sedeinputcliente">Nit del cliente</label>
@@ -66,27 +66,27 @@
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputaddress">Direccion</label>
-										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true" value="{{$Sede->SedeName}}">
+										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true" value="{{$Sede->SedeAddress}}">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputphone1">telf local 1</label>
-										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16" value="{{$Sede->SedeName}}">
+										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16" value="{{$Sede->SedePhone1}}">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputext1">Ext 1</label>
-										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4" value="{{$Sede->SedeName}}">
+										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4" value="{{$Sede->SedeExt1}}">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputphone2">telf local 2</label>
-										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16" value="{{$Sede->SedeName}}">
+										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16" value="{{$Sede->SedePhone2}}">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputext2">Ext 2</label>
-										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4" value="{{$Sede->SedeName}}">
+										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4" value="{{$Sede->SedeExt2}}">
 									</div>
 									<div class="form-group" style="margin-top: 10em">
 										<label for="sedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true" value="{{$Sede->SedeName}}">
+										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true" value="{{$Sede->SedeEmail}}">
 									</div>
 									
 
