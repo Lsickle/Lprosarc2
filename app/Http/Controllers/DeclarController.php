@@ -84,10 +84,22 @@ class DeclarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    {   
+
         $declaration = Declaration::where('DeclarSlug',$id)->first();
 
-        return view('declaraciones.show', compact('declaration'));
+        $declarationData = Declaration::where('DeclarSlug',$id)
+            //datos de cliente y su sede
+            ->join('sedes', 'declarations.DeclarSede', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.Cliente')
+            //datos de generador y su sede
+            ->join('gener_sedes', 'declarations.DeclarGenerSede', '=', 'gener_sedes.ID_GSede')
+            ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.Generador')
+            //seleccionar todo XD
+            ->select('declarations.*', 'sedes.*', 'clientes.*', 'gener_sedes.*', 'generadors.*' )
+            ->get();
+        return $declarationData;
+        return view('declaraciones.show', compact('declaration','declarationData'));
     }
 
     /**
@@ -110,7 +122,7 @@ class DeclarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
