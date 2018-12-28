@@ -86,7 +86,7 @@ class DeclarController extends Controller
     public function show($id)
     {   
 
-        $declaration = Declaration::where('DeclarSlug',$id)->first();
+        // $declaration = Declaration::where('DeclarSlug',$id)->first();
 
         $declarationData = Declaration::where('DeclarSlug',$id)
             //datos de cliente y su sede
@@ -97,9 +97,9 @@ class DeclarController extends Controller
             ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.Generador')
             //seleccionar todo XD
             ->select('declarations.*', 'sedes.*', 'clientes.*', 'gener_sedes.*', 'generadors.*' )
-            ->get();
-        return $declarationData;
-        return view('declaraciones.show', compact('declaration','declarationData'));
+            ->first();
+        // return $declarationData;
+        return view('declaraciones.show', compact('declarationData'));
     }
 
     /**
