@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Sede;
 use App\GenerSede;
 use App\Declaration;
-
+use App\generador;
+    
 class DeclarController extends Controller
 {
     /**
@@ -45,7 +46,6 @@ class DeclarController extends Controller
     {
         $sedes = sede::all();
         $generadores = GenerSede::all();
-        // $Sede->cliente = cliente::with('clientes')->get(); 
         return view('declaraciones.create', compact('sedes', 'generadores'));
     }
 
@@ -57,7 +57,24 @@ class DeclarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Declaration = new Declaration();
+        $Declaration->DeclarApply = $request->input('DeclarApply');
+        $Declaration->DeclarTipo = $request->input('DeclarTipo');
+        $Declaration->DeclarName = $request->input('DeclarName');
+        $Declaration->DeclarStatus = 'pendiente';
+        $Declaration->DeclarFrecuencia = $request->input('DeclarFrecuencia');
+        if ($request->input('DeclarAuditable')=='on') {
+            $Declaration->DeclarAuditable='1';
+        }
+        else{
+            $Declaration->DeclarAuditable='0';
+        };
+        $Declaration->DeclarSede = $request->input('DeclarSede');
+        $Declaration->DeclarGenerSede = $request->input('DeclarGenerSede');
+        $Declaration->DeclarUser = $request->input('DeclarUser');
+        $Declaration->DeclarSlug = 'Declar-'.$request->input('DeclarName');
+        $Declaration->save();
+        return redirect()->route('declaraciones.index');
     }
 
     /**
@@ -68,7 +85,9 @@ class DeclarController extends Controller
      */
     public function show($id)
     {
-        //
+        $declaration = Declaration::where('DeclarSlug',$id)->first();
+
+        return view('declaraciones.show', compact('declaration'));
     }
 
     /**
@@ -103,5 +122,15 @@ class DeclarController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getSGener(Request $request)
+    {
+        
+        $sedes_id = $request->input('ID_Sede');
+        $gener = generador::where('GenerCli','=',$sedes_id)->get();
+        $sedegener = GenerSede::where('Generador','=',$gener)->get();
+        // $Sede->cliente = cliente::with('clientes')->get(); 
+        return view('declaraciones.create', compact('sedes', 'sedegener'));
+
     }
 }

@@ -38,7 +38,7 @@
 										<option>Previo Aviso</option>
 										</select>
 									</div>
-									<div class="form-group">
+									<div class="col-md-6">
 										<label for="declartipo">Tipo</label>
 										<select class="form-control" id="declartipo" placeholder="Previo Aviso" name="DeclarTipo" required="true">
 										<option>indutrial</option>
@@ -52,7 +52,7 @@
 										<label for="declartipo">Nombre</label>
 										<input type="text" class="form-control" id="declartipo" placeholder="declaracion ppal" name="DeclarName">
 									</div>
-									<div class="form-group">
+									<div class="col-md-6">
 										<label for="decstatus">Status</label>
 										<select class="form-control" id="decstatus" placeholder="incompleta" name="DeclarStatus" required="true">
 										<option>aprobada</option>
@@ -61,6 +61,7 @@
 										<option>incompleta</option>
 										</select>
 									</div>
+									<div class="col-md-6">
 										<label for="decfrec">Frecuencia</label>
 										{{-- <select class="form-control" id="decstatus" placeholder="incompleta" name="DeclarStatus" required="true">
 										<option>mensual</option>
@@ -69,13 +70,11 @@
 										<option>por solicitud</option>
 										<option>N° dias</option>
 										</select> --}}
-										<input id="decfrec" list="decfrecuency" name="DeclarFrecuencia" class="form-control" placeholder="N° dias">
+										<input id="decfrec" list="decfrecuency" name="DeclarFrecuencia" placeholder="N° de dias" maxlength="14"class="form-control" type="number">
 										<datalist id="decfrecuency">
-										  <option value="mensual">
-										  <option value="quincenal">
-										  <option value="semanal">
-										  <option value="por solicitud">
-										  <option value="N° dias">
+										  <option value="15">
+										  <option value="30">
+										  <option value="7">
 										</datalist>
 									</div>
 									
@@ -94,44 +93,21 @@
 									</div> --}}
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="DeclarSede" required="true">
+										<select class="form-control" id="clientname" name="DeclarSede" required="true">
 											@foreach($sedes as $sede)
 												<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="clientname">Generador</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="DeclarSede" required="true">
+										<label for="genername">Generador</label>
+										<select class="form-control" id="genername" name="DeclarGenerSede">
 											@foreach($generadores as $generador)
 												<option value="{{$generador->ID_GSede}}">{{$generador->GSedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
-									<div class="col-md-6">
-										<label for="sedeinputaddress">Direccion</label>
-										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputphone1">telf local 1</label>
-										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputext1">Ext 1</label>
-										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputphone2">telf local 2</label>
-										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputext2">Ext 2</label>
-										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4">
-									</div>
-									<div class="form-group" style="margin-top: 10em">
-										<label for="sedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
-									</div>
+									
 									
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 									   <div class="icheck form-group">
@@ -142,6 +118,7 @@
 			                            </div>
 			                            <div >
 			                            	<input  hidden="false" type="text" name="DeclarSlug" value="temp">
+			                            	<input  hidden="false" type="text" name="DeclarUser" value="{{ $user->id }}">
 			                            </div>
 									</div>
 									{{-- <div class="form-group">

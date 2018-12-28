@@ -22,7 +22,7 @@
         "targets": 11,
         "data": "GSedeSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/declaraciones/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });
@@ -109,6 +109,43 @@ $(document).ready(function(){
     $('input[name="GSedeinputext1"]').mask('999-9');
     $('input[name="GSedeinputext2"]').mask('999-9');
 });
+</script>
+{{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
+<script type="text/javascript">
+ {{-- $("select[name='DeclarSede']").change(function (){
+    var DeclarSede_id = $("select[name='DeclarSede']").val();
+    if (DeclarSede_id !== '' && DeclarSede_id !== null) {
+      $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
+      $ajax({
+        type: 'GET',
+        url: {{ url("/declaraciones/create") }},
+        data: { id:DeclarSede_id },
+      }).done(function (data) {
+        $.each(data, function(key, value){
+          $("select[name='DeclarGenerSede']")
+          .apend($("<option></option>")
+          .attr("value",key)
+          .text(value));
+        });
+      }).fail(function(jqXHR, textStatus){
+        console.log(jqXHR);
+      });
+    } else {
+      $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
+    }
+  });--}}
+      $('select[name="DeclarSede"]').on('change', function(e){
+        console.log(e);
+        var ID_Sede = e.target.value;
+
+        $.POST('/declaraciones' + ID_Sede, function(data) {
+            console.log(data);
+            $('select[name="DeclarGenerSede"]').empty();
+            $.each(data, function(index,subCatObj){
+                $('select[name="DeclarGenerSede"]').append(''+subCatObj.name+'');
+            });
+        });
+    });
 </script>
 
 <!-- checkin imput -->
