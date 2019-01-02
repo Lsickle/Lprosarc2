@@ -93,7 +93,7 @@
                     <a href="#" data-toggle="tab">Sede Principal</a>
                   </li>
                   <li>
-                    <a href="#" data-toggle="tab">Sedes de Declaracion</a>
+                    <a href="#" data-toggle="tab">Sede de Declaracion</a>
                   </li>
                 </ul>
               </div>
