@@ -14,8 +14,22 @@
 <!-- DataTables -->
 <script src="js/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 <!-- funcion para flitrado de tablas -->
 <script>
+  $(function () {
+    $('#RespelTable').DataTable({
+      "columnDefs": [ {
+        "targets": 0,
+        "data": "RespelName",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/respels/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script>
+{{-- <script>
   $(function () {
     $('#DeclarTable').DataTable({
       "columnDefs": [ {
@@ -27,7 +41,7 @@
       }]
     });
   });
-</script> 
+</script>  --}}
 <script>
   $(function () {
     $('#example4').DataTable({

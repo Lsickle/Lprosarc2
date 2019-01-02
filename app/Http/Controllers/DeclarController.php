@@ -85,6 +85,17 @@ class DeclarController extends Controller
      */
     public function show($id)
     {   
+        $Respels = DB::table('respels')
+            ->join('requerimientos', 'respels.RespelReq', '=', 'requerimientos.ID_Req')
+            ->join('declarations', 'respels.RespelDeclar', '=', 'declarations.ID_Declar')
+            ->join('gener_sedes', 'respels.RespelGenerSede', '=', 'gener_sedes.ID_GSede')
+            ->select('respels.*',
+                     'requerimientos.*',
+                     'declarations.*',
+                     'gener_sedes.*'
+                 )
+            ->get();
+
 
         // $declaration = Declaration::where('DeclarSlug',$id)->first();
 
@@ -99,7 +110,7 @@ class DeclarController extends Controller
             ->select('declarations.*', 'sedes.*', 'clientes.*', 'gener_sedes.*', 'generadors.*' )
             ->first();
         // return $declarationData;
-        return view('declaraciones.show', compact('declarationData'));
+        return view('declaraciones.show', compact('declarationData', 'Respels'));
     }
 
     /**

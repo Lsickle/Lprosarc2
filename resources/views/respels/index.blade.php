@@ -14,7 +14,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">{{ trans('adminlte_lang::LangDeclar.declarlist') }}</h3>
+              <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -33,6 +33,7 @@
                   <th>Creado el</th>
                   <th>Actualizado el</th>
                   <th>edicion</th>
+
                 </tr>
                 </thead>
                 <tbody>

@@ -78,8 +78,8 @@
       <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
           <li><a href="#ClienteFicha" data-toggle="tab">Cliente</a></li>
-          <li class="active"><a href="#activity" data-toggle="tab">Generador</a></li>
-          <li><a href="#timeline" data-toggle="tab">Residuos</a></li>
+          <li><a href="#activity" data-toggle="tab">Generador</a></li>
+          <li class="active"><a href="#Residuos" data-toggle="tab">Residuos</a></li>
           <li><a href="#settings" data-toggle="tab">Hojas de seguridad</a></li>
           <li><a href="#settings" data-toggle="tab">Tarjeta de emergencia</a></li>
         </ul>
@@ -108,88 +108,88 @@
             
           </div>
           <!-- /.tab-pane -->
-          <div class="tab-pane" id="timeline">
-            <!-- The timeline -->
-            <ul class="timeline timeline-inverse">
-              <!-- timeline time label -->
-              <li class="time-label">
-                <span class="bg-red">
-                  10 Feb. 2014
-                </span>
-              </li>
-              <!-- /.timeline-label -->
-              <!-- timeline item -->
-              <li>
-                <i class="fa fa-envelope bg-blue"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                  <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                  <div class="timeline-body">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                    quora plaxo ideeli hulu weebly balihoo...
+          <div class="tab-pane" id="Residuos">
+            <div class="row">
+              <div class="col-md-12 col-md-offset-0">
+                <!-- /.box -->
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
                   </div>
-                  <div class="timeline-footer">
-                    <a class="btn btn-primary btn-xs">Read more</a>
-                    <a class="btn btn-danger btn-xs">Delete</a>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <table id="RespelTable" {{-- class="table table-bordered table-striped table-sm"  --}}class="display nowrap table-bordered table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Descripcion</th>
+                          <th>Clasificacion 4741</th>
+                          <th>Peligrosidad</th>
+                          <th>Estado</th>
+                          <th>Hoja de Seguridad</th>
+                          <th>Tarj de Emergencia</th>
+                          <th>Auditable</th>
+                          <th>Generado por</th>
+                          <th>Creado el</th>
+                          <th>Actualizado el</th>
+                          <th>edicion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{-- <div class="row">
+                          <div class="card text-center" style="width: 18rem; margin-top:3rem;">
+                            <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
+                            <div class="card-body">
+                              <h5 class="card-title">{{$cliente->CliShortname}}</h5>
+                              <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
+                              <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
+                            </div>
+                          </div>
+                        </div> --}}
+                        @foreach($Respels as $respel)
+                        <tr>
+                          <td>{{$respel->RespelName}}</td>
+                          <td>{{$respel->RespelDescrip}}</td>
+                          <td>{{$respel->RespelClasf4741}}</td>
+                          <td>{{$respel->RespelIgrosidad}}</td>
+                          <td>{{$respel->RespelEstado}}</td>
+                          <td>{{$respel->RespelHojaSeguridad}}</td>
+                          <td>{{$respel->RespelTarj}}</td>
+                          @if($respel->DeclarAuditable==1)
+                          <td>Si</td>
+                          @else
+                          <td>NO</td>
+                          @endif
+                          <td>{{$respel->GSedeName}}</td>
+                          <td>{{$respel->created_at}}</td>
+                          <td>{{$respel->updated_at}}</td>
+                          <td>{{$respel->RespelSlug}}</td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Clasificacion 4741</th>
+                        <th>Peligrosidad</th>
+                        <th>Estado</th>
+                        <th>Hoja de Seguridad</th>
+                        <th>Tarj de Emergencia</th>
+                        <th>Auditable</th>
+                        <th>Generado por</th>
+                        <th>Creado el</th>
+                        <th>Actualizado el</th>
+                        <th>edicion</th>
+                      </tr>
+                      </tfoot>
+                    </table>
                   </div>
+                  <!-- /.box-body -->
                 </div>
-              </li>
-              <!-- END timeline item -->
-              <!-- timeline item -->
-              <li>
-                <i class="fa fa-user bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-                  <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                  </h3>
-                </div>
-              </li>
-              <!-- END timeline item -->
-              <!-- timeline item -->
-              <li>
-                <i class="fa fa-comments bg-yellow"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-                  <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                  <div class="timeline-body">
-                    Take me to your leader!
-                    Switzerland is small and neutral!
-                    We are more like Germany, ambitious and misunderstood!
-                  </div>
-                  <div class="timeline-footer">
-                    <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                  </div>
-                </div>
-              </li>
-              <!-- END timeline item -->
-              <!-- timeline time label -->
-              <li class="time-label">
-                <span class="bg-green">
-                  3 Jan. 2014
-                </span>
-              </li>
-              <!-- /.timeline-label -->
-              <!-- timeline item -->
-              <li>
-                <i class="fa fa-camera bg-purple"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-                  <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                  <div class="timeline-body">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                    <img src="http://placehold.it/150x100" alt="..." class="margin">
-                  </div>
-                </div>
-              </li>
-              <!-- END timeline item -->
-              <li>
-                <i class="fa fa-clock-o bg-gray"></i>
-              </li>
-            </ul>
+                <!-- /.box -->
+              </div>
+            </div>
           </div>
           <!-- /.tab-pane -->
           <div class="tab-pane" id="settings">

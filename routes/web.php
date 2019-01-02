@@ -28,3 +28,5 @@ Route::resource('/sclientes', 'sclientcontroller');
 Route::resource('/Generadores', 'genercontroller');
 Route::resource('/sgeneradores', 'sgenercontroller');
 Route::resource('/declaraciones', 'DeclarController');
+Route::resource('/respels', 'RespelController');
+Route::resource('/requerimientos', 'RequerimientoController');
