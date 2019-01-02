@@ -12,13 +12,18 @@
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <!-- DataTables -->
-<script src="js/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+{{-- cdn de datatable --}}
+{{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
+
 
 <!-- funcion para flitrado de tablas -->
 <script>
   $(function () {
     $('#RespelTable').DataTable({
+      "scrollX": true,
       "columnDefs": [ {
         "targets": 0,
         "data": "RespelName",

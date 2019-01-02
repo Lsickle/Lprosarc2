@@ -118,7 +118,7 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
-                    <table id="RespelTable" {{-- class="table table-bordered table-striped table-sm"  --}}class="display nowrap table-bordered table-striped" style="width:100%">
+                    <table id="RespelTable" class="table table-bordered table-striped" style="width:100%">
                       <thead>
                         <tr>
                           <th>Nombre</th>
