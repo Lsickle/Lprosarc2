@@ -24,6 +24,7 @@
   $(function () {
     $('#RespelTable').DataTable({
       "scrollX": true,
+      "autoWidth": true,
       "columnDefs": [ {
         "targets": 0,
         "data": "RespelName",
@@ -33,8 +34,13 @@
       }]
     });
   });
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+     $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust()
+        .fixedColumns().relayout();
+  });
 </script>
-{{-- <script>
+<script>
   $(function () {
     $('#DeclarTable').DataTable({
       "columnDefs": [ {
@@ -46,7 +52,7 @@
       }]
     });
   });
-</script>  --}}
+</script> 
 <script>
   $(function () {
     $('#example4').DataTable({
