@@ -20,7 +20,7 @@ class CreateRespelsTable extends Migration
             $table->string('RespelClasf4741', 64)->nullable();
             $table->string('RespelIgrosidad', 128)->nullable();
             $table->string('RespelEstado', 32)->nullable();
-            $table->string('RespelHojaSeguridad', 128)->nullable();
+            $table->string('RespelHojaSeguridad', 128);
             $table->string('RespelTarj', 128)->nullable();
             $table->string('RespelSlug')->unique();
             $table->unsignedInteger('RespelDeclar');

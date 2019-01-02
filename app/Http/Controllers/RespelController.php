@@ -13,7 +13,18 @@ class RespelController extends Controller
      */
     public function index()
     {
-        //
+        $Respels = DB::table('respels')
+            ->join('requerimientos', 'respels.RespelReq', '=', 'requerimientos.ID_Req')
+            ->join('declarations', 'respels.RespelDeclar', '=', 'declarations.ID_Declar')
+            ->join('gener_sedes', 'respels.RespelGenerSede', '=', 'gener_sedes.ID_GSede')
+            ->select('respels.*',
+                     'requerimientos.*',
+                     'declarations.*',
+                     'gener_sedes.*'
+                 )
+            ->get();
+
+        return view('respels.index', compact('Respels'));
     }
 
     /**

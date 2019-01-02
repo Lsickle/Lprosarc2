@@ -13,7 +13,7 @@ class RequerimientoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
