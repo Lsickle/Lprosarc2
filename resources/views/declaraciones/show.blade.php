@@ -121,80 +121,32 @@
                   </div>
                   {{-- <div _ngcontent-c56="" class="col-md-12 col-lg-6 col-xxxl-3">
                     <nb-card _ngcontent-c56="" class="form-input-card" _nghost-c26="">
-                      <nb-card-header _ngcontent-c56="">
-                        Return Result From Dialog
-                      </nb-card-header>
-                      <nb-card-body _ngcontent-c56="" class="result-from-dialog">
-                        <button _ngcontent-c56="" nbbutton="" _nghost-c57="" tabindex="0">
-                          Enter Name
-                        </button>
-                        <br _ngcontent-c56="">
-                        <h3 _ngcontent-c56="" class="title">
-                          Names:
-                        </h3>
-                        <ul _ngcontent-c56=""><!---->
-                          <li _ngcontent-c56="" class="ng-star-inserted">
-                            luis
-                          </li>
-                          <li _ngcontent-c56="" class="ng-star-inserted">
-                            4123
-                          </li>
-                        </ul>
-                      </nb-card-body>
-                    </nb-card>
-                  </div> --}}
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                    <table id="RespelTable" class="table table-bordered table-striped" style="white-space:nowrap; width:100%">
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Descripcion</th>
-                          <th>Clasificacion 4741</th>
-                          <th>Peligrosidad</th>
-                          <th>Estado</th>
-                          <th>edicion</th>
-                          <th>Tarj de Emergencia</th>
-                          <th>Auditable</th>
-                          <th>Generado por</th>
-                          <th>Creado el</th>
-                          <th>Actualizado el</th>
-                          <th>Hoja de Seguridad</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {{-- <div class="row">
-                          <div class="card text-center" style="width: 18rem; margin-top:3rem;">
-                            <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">{{$cliente->CliShortname}}</h5>
-                              <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-                              <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-                            </div>
-                          </div>
-                        </div> --}}
-                        @foreach($Respels as $respel)
-                        <tr>
-                          <td>{{$respel->RespelName}}</td>
-                          <td>{{$respel->RespelDescrip}}</td>
-                          <td>{{$respel->RespelClasf4741}}</td>
-                          <td>{{$respel->RespelIgrosidad}}</td>
-                          <td>{{$respel->RespelEstado}}</td>
-                          <td>{{$respel->RespelSlug}}</td>
-                          <td>{{$respel->RespelTarj}}</td>
-                          @if($respel->DeclarAuditable==1)
-                          <td>Si</td>
-                          @else
-                          <td>NO</td>
-                          @endif
-                          <td>{{$respel->GSedeName}}</td>
-                          <td>{{$respel->created_at}}</td>
-                          <td>{{$respel->updated_at}}</td>
-                          <td>{{$respel->RespelHojaSeguridad}}</td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                      <tfoot>
+                    <nb-card-header _ngcontent-c56="">
+                    Return Result From Dialog
+                    </nb-card-header>
+                    <nb-card-body _ngcontent-c56="" class="result-from-dialog">
+                    <button _ngcontent-c56="" nbbutton="" _nghost-c57="" tabindex="0">
+                    Enter Name
+                    </button>
+                    <br _ngcontent-c56="">
+                    <h3 _ngcontent-c56="" class="title">
+                    Names:
+                    </h3>
+                    <ul _ngcontent-c56=""><!---->
+                    <li _ngcontent-c56="" class="ng-star-inserted">
+                      luis
+                    </li>
+                    <li _ngcontent-c56="" class="ng-star-inserted">
+                      4123
+                    </li>
+                  </ul>
+                  </nb-card-body>
+                  </nb-card>
+                </div> --}}
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table id="RespelTable" class="table table-bordered table-striped" style="white-space:nowrap; width:100%">
+                    <thead>
                       <tr>
                         <th>Nombre</th>
                         <th>Descripcion</th>
@@ -209,201 +161,148 @@
                         <th>Actualizado el</th>
                         <th>Hoja de Seguridad</th>
                       </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                  <!-- /.box-body -->
+                    </thead>
+                    <tbody>
+                      {{-- <div class="row">
+                        <div class="card text-center" style="width: 18rem; margin-top:3rem;">
+                          <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">{{$cliente->CliShortname}}</h5>
+                            <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
+                            <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
+                          </div>
+                        </div>
+                      </div> --}}
+                      @foreach($Respels as $respel)
+                      <tr>
+                        <td>{{$respel->RespelName}}</td>
+                        <td>{{$respel->RespelDescrip}}</td>
+                        <td>{{$respel->RespelClasf4741}}</td>
+                        <td>{{$respel->RespelIgrosidad}}</td>
+                        <td>{{$respel->RespelEstado}}</td>
+                        <td>{{$respel->RespelSlug}}</td>
+                        <td>{{$respel->RespelTarj}}</td>
+                        @if($respel->DeclarAuditable==1)
+                        <td>Si</td>
+                        @else
+                        <td>NO</td>
+                        @endif
+                        <td>{{$respel->GSedeName}}</td>
+                        <td>{{$respel->created_at}}</td>
+                        <td>{{$respel->updated_at}}</td>
+                        <td>{{$respel->RespelHojaSeguridad}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Descripcion</th>
+                      <th>Clasificacion 4741</th>
+                      <th>Peligrosidad</th>
+                      <th>Estado</th>
+                      <th>edicion</th>
+                      <th>Tarj de Emergencia</th>
+                      <th>Auditable</th>
+                      <th>Generado por</th>
+                      <th>Creado el</th>
+                      <th>Actualizado el</th>
+                      <th>Hoja de Seguridad</th>
+                    </tr>
+                    </tfoot>
+                  </table>
                 </div>
-                <!-- /.box -->
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+          </div>
+        </div>
+        <!-- /.tab-pane -->
+        <!-- tab-pane -->
+        <div class="tab-pane" id="addRowWizz">
+          <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
+          <div id="smartwizard">
+            <ul>
+              <li><a href="#step-1">Step Title<br /><small>Step description</small></a></li>
+              <li><a href="#step-2">Step Title<br /><small>Step description</small></a></li>
+              <li><a href="#step-3">Step Title<br /><small>Step description</small></a></li>
+              <li><a href="#step-4">Step Title<br /><small>Step description</small></a></li>
+            </ul>
+            
+            <div>
+              <div id="step-1" class="">
+                Step Content
+              </div>
+              <div id="step-2" class="">
+                Step Content
+              </div>
+              <div id="step-3" class="">
+                Step Content
+              </div>
+              <div id="step-4" class="">
+                Step Content
               </div>
             </div>
           </div>
-          <!-- /.tab-pane -->
-          <!-- tab-pane -->
-          <div class="tab-pane" id="addRowWizz">
-            <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
-                    <div id="wizard" class="form_wizard wizard_horizontal">
-                      <ul class="wizard_steps">
-                        <li>
-                          <a href="#step-1">
-                            <span class="step_no">1</span>
-                            <span class="step_descr">
-                                              Step 1<br />
-                                              <small>Step 1 description</small>
-                                          </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#step-2">
-                            <span class="step_no">2</span>
-                            <span class="step_descr">
-                                              Step 2<br />
-                                              <small>Step 2 description</small>
-                                          </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#step-3">
-                            <span class="step_no">3</span>
-                            <span class="step_descr">
-                                              Step 3<br />
-                                              <small>Step 3 description</small>
-                                          </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#step-4">
-                            <span class="step_no">4</span>
-                            <span class="step_descr">
-                                              Step 4<br />
-                                              <small>Step 4 description</small>
-                                          </span>
-                          </a>
-                        </li>
-                      </ul>
-                      <div id="step-1">
-                        <form class="form-horizontal form-label-left">
-
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <div id="gender" class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                                </label>
-                                <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                  <input type="radio" name="gender" value="female"> Female
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                            </div>
-                          </div>
-
-                        </form>
-
-                      </div>
-                      <div id="step-2">
-                        <h2 class="StepTitle">Step 2 Content</h2>
-                        <p>
-                          do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                      </div>
-                      <div id="step-3">
-                        <h2 class="StepTitle">Step 3 Content</h2>
-                        <p>
-                          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-                          eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                      </div>
-                      <div id="step-4">
-                        <h2 class="StepTitle">Step 4 Content</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                      </div>
-
-                    </div>
-          </div>
-          <!-- /.tab-pane -->
-          <!-- tab-pane -->
-          <div class="tab-pane" id="settings">
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" id="inputName" placeholder="Name">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputName" placeholder="Name">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-danger">Submit</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <!-- /.tab-pane -->
         </div>
-        <!-- /.tab-content -->
+        <!-- /.tab-pane -->
+        <!-- tab-pane -->
+        <div class="tab-pane" id="settings">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="inputName" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputName" placeholder="Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputName" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" placeholder="Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-danger">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /.tab-pane -->
       </div>
-      <!-- /.nav-tabs-custom -->
+      <!-- /.tab-content -->
     </div>
-    <!-- /.col -->
+    <!-- /.nav-tabs-custom -->
   </div>
-  <!-- /.row -->
-  @endsection
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+@endsection
