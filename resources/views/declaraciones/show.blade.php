@@ -116,6 +116,9 @@
                   <div class="box-header">
                     <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
                   </div>
+                  <div>
+                    <button class="btn btn-primary" id="addRow">Nuevo Residuo</button>
+                  </div>
                   <!-- /.box-header -->
                   <div class="box-body">
                     <table id="RespelTable" class="table table-bordered table-striped" style="white-space:nowrap; width:100%">
