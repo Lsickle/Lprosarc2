@@ -22,9 +22,12 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/css/skins/_all-skins.min.css">
+{{--     datatables styles --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+{{-- SmartWizard styles --}}
+    <link href="/js/jquery-smart-wizard/styles/smart_wizard.css" rel="stylesheet" type="text/css">
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
         window.trans = @php
