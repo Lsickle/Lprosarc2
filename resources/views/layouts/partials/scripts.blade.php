@@ -14,6 +14,9 @@
 <!-- DataTables -->
 <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
@@ -21,7 +24,7 @@
 
 <!-- funcion para flitrado de tablas -->
 <script>
-  $(document).ready(function() {
+/*  $(document).ready(function() {
       var t = $('#RespelTable').DataTable();
       var counter = 1;
    
@@ -39,25 +42,29 @@
    
       // Automatically add a first row of data
       $('#addRow').click();
-  } );
+  } );*/
   $(function () {
     $('#RespelTable').DataTable({
-      "scrollX": true,
+      "scrollX": false,
       "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "columnDefs": [ {
-        "targets": 0,
+        "targets": 5,
         "data": "RespelName",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/respels/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+        $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust()
+          .fixedColumns().relayout();
+    });
   });
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-     $($.fn.dataTable.tables(true)).DataTable()
-        .columns.adjust()
-        .fixedColumns().relayout();
-  });
+  
+  
 </script>
 <script>
   $(function () {
@@ -101,6 +108,8 @@
 <script>
   $(function () {
     $('#example2').DataTable({
+      "keys": true,
+      "scrollX": true,
       "columnDefs": [ {
         "targets": 10,
         "data": "SedeSlug",

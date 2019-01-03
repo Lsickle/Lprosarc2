@@ -129,13 +129,13 @@
                           <th>Clasificacion 4741</th>
                           <th>Peligrosidad</th>
                           <th>Estado</th>
-                          <th>Hoja de Seguridad</th>
+                          <th>edicion</th>
                           <th>Tarj de Emergencia</th>
                           <th>Auditable</th>
                           <th>Generado por</th>
                           <th>Creado el</th>
                           <th>Actualizado el</th>
-                          <th>edicion</th>
+                          <th>Hoja de Seguridad</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -156,7 +156,7 @@
                           <td>{{$respel->RespelClasf4741}}</td>
                           <td>{{$respel->RespelIgrosidad}}</td>
                           <td>{{$respel->RespelEstado}}</td>
-                          <td>{{$respel->RespelHojaSeguridad}}</td>
+                          <td>{{$respel->RespelSlug}}</td>
                           <td>{{$respel->RespelTarj}}</td>
                           @if($respel->DeclarAuditable==1)
                           <td>Si</td>
@@ -166,7 +166,7 @@
                           <td>{{$respel->GSedeName}}</td>
                           <td>{{$respel->created_at}}</td>
                           <td>{{$respel->updated_at}}</td>
-                          <td>{{$respel->RespelSlug}}</td>
+                          <td>{{$respel->RespelHojaSeguridad}}</td>
                         </tr>
                         @endforeach
                       </tbody>
@@ -177,13 +177,13 @@
                         <th>Clasificacion 4741</th>
                         <th>Peligrosidad</th>
                         <th>Estado</th>
-                        <th>Hoja de Seguridad</th>
+                        <th>edicion</th>
                         <th>Tarj de Emergencia</th>
                         <th>Auditable</th>
                         <th>Generado por</th>
                         <th>Creado el</th>
                         <th>Actualizado el</th>
-                        <th>edicion</th>
+                        <th>Hoja de Seguridad</th>
                       </tr>
                       </tfoot>
                     </table>
