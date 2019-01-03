@@ -18,16 +18,16 @@
 <script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 {{-- SmartWizard --}}
-<script src="/js/jquery-smart-wizard/js/jquery.smartWizard.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-smart-wizard/js/jquery.smartWizard.js') }}"></script>
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
-  $document.ready(function(){
+    $(document).ready(function() {
     //iniciar smart wizzard
-    $('#wizard').smartwizard();
+    $('#wizard').SmartWizard();
   })
 </script>
 

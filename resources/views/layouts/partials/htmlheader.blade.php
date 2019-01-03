@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 {{-- SmartWizard styles --}}
-    <link href="/js/jquery-smart-wizard/styles/smart_wizard.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="src="{{ asset('/js/jquery-smart-wizard/styles/smart_wizard.css') }}">
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
         window.trans = @php
