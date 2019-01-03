@@ -18,7 +18,7 @@
 <script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 {{-- SmartWizard --}}
-<script type="text/javascript" src="jquery.smartWizard.js"></script>
+<script src="/js/jquery-smart-wizard/js/jquery.smartWizard.js"></script>
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
