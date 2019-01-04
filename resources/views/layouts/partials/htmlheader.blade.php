@@ -27,7 +27,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 {{-- SmartWizard styles --}}
-{{--     <link rel="stylesheet" type="text/css" href="/js/jquery-smart-wizard/styles/smart_wizard.css"> --}}
+    <link href="/js/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" /> 
+    <link href="/js/smartwizard/dist/css/smart_wizard_theme_arrows.css" rel="stylesheet" type="text/css" /> 
+    <link href="/js/smartwizard/dist/css/smart_wizard_theme_circles.css" rel="stylesheet" type="text/css" /> 
+    <link href="/js/smartwizard/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" /> 
+{{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
         window.trans = @php
