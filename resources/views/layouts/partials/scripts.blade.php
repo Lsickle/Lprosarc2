@@ -22,6 +22,29 @@
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
+{{-- switchery --}}
+<script type="text/javascript" src="/js/switchery/standalone/switchery.js"></script>
+{{-- script para switchery --}}
+<script type="text/javascript">
+ var Switchery = require('switchery');
+/*   var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+  elems.forEach(function(html) {
+  var switchery = new Switchery(html);
+});*/
+$(document).ready(function() {
+    if ($(".js-switch")[0]) {
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        elems.forEach(function (html) {
+            var switchery = new Switchery(html, {
+                color: '#26B99A'
+            });
+
+        });
+        switchery.enable();
+    }
+});
+</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -68,11 +91,11 @@
         }  
       }]
     });
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust()
-          .fixedColumns().relayout();
-    });
+    // $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+    //     $($.fn.dataTable.tables(true)).DataTable()
+    //       .columns.adjust()
+    //       .fixedColumns().relayout();
+    // });
   });
   
   
@@ -215,7 +238,7 @@ $(document).ready(function(){
 <!-- checkin imput -->
 <script>
   $(function () {
-    $('input').iCheck({
+    $('#inputcheck').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional

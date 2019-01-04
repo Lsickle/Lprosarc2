@@ -235,7 +235,31 @@
                 Step Content
               </div>
               <div id="step-2" class="">
-                Step Content
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Switch</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="">
+                      <label>
+                        <input type="checkbox" class="js-switch" checked="true" /> Checked
+                      </label>
+                    </div>
+                    <div class="">
+                      <label>
+                        <input type="checkbox" class="js-switch" /> Unchecked
+                      </label>
+                    </div>
+                    <div class="">
+                      <label>
+                        <input type="checkbox" class="js-switch" disabled="disabled" /> Disabled
+                      </label>
+                    </div>
+                    <div class="">
+                      <label>
+                        <input type="checkbox" class="js-switch" disabled="disabled" checked="true" /> Disabled Checked
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div id="step-3" class="">
                 Step Content
@@ -284,7 +308,7 @@
               <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                    <input type="checkbox" id="inputcheck"> I agree to the <a href="#">terms and conditions</a>
                   </label>
                 </div>
               </div>
