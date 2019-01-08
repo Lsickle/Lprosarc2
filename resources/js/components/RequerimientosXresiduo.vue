@@ -50,9 +50,10 @@
 </template>
 
 <script type="text/javascript">
-	   export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+	import EventBus from '../event-bus';
+	export default {
+		mounted() {
+		    console.log('RequerimientosXresiduo Component mounted.')
+		}
+	}
 </script>
