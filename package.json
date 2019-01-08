@@ -17,6 +17,7 @@
     "axios": "^0.8",
     "babel-eslint": "^7.1.1",
     "bootstrap": "3.3.7",
+    "bootstrap-switch": "^3.3.4",
     "cross-env": "^5.0.1",
     "eslint": "^3.14.1",
     "eslint-config-standard": "^6.2.1",
