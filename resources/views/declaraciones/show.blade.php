@@ -240,22 +240,22 @@
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="">
                       <label>
-                        <input type="checkbox" class="js-switch" checked="true" /> Checked
+                        <input type="checkbox" class="testswitch"/> Checked
                       </label>
                     </div>
                     <div class="">
                       <label>
-                        <input type="checkbox" class="js-switch" /> Unchecked
+                        <input type="checkbox" class="testswitch"/> Unchecked
                       </label>
                     </div>
                     <div class="">
                       <label>
-                        <input type="checkbox" class="js-switch" disabled="disabled" /> Disabled
+                        <input type="checkbox" class="testswitch"/> Disabled
                       </label>
                     </div>
                     <div class="">
                       <label>
-                        <input type="checkbox" class="js-switch" disabled="disabled" checked="true" /> Disabled Checked
+                        <input type="checkbox" class="testswitch"/> Disabled Checked
                       </label>
                     </div>
                   </div>

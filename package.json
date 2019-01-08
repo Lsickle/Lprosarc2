@@ -39,6 +39,7 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "bootstrap-switch": "^3.3.4",
     "smartwizard": "^4.3.1"
   }
 }

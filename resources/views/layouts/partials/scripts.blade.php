@@ -3,6 +3,7 @@
 <!-- JQuery and bootstrap are required by Laravel 5.3 in resources/assets/js/bootstrap.js-->
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}" type="text/javascript"></script>
+
 <!-- jQuery 3 -->
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
 <!-- InputMask -->
@@ -11,40 +12,24 @@
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.date.extensions.js"></script>
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
 <!-- DataTables -->
 <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+
 {{-- SmartWizard --}}
 <script type="text/javascript" src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
+
+{{-- bootstrap-switch --}}
+<script type="text/javascript" src="/js/bootstrap-switch/dist/js/bootstrap-switch.js" ></script>
+
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
-{{-- switchery --}}
-<script type="text/javascript" src="/js/switchery/standalone/switchery.js"></script>
-{{-- script para switchery --}}
-<script type="text/javascript">
- var Switchery = require('switchery');
-/*   var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
-  elems.forEach(function(html) {
-  var switchery = new Switchery(html);
-});*/
-$(document).ready(function() {
-    if ($(".js-switch")[0]) {
-        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-        elems.forEach(function (html) {
-            var switchery = new Switchery(html, {
-                color: '#26B99A'
-            });
-
-        });
-        switchery.enable();
-    }
-});
-</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -249,6 +234,13 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
+
+{{-- bootstrap-switch  --}}
+<script type="text/javascript">
+  $(".testswitch").bootstrapSwitch({
+    animate: true,
+  });
+</script>
 
 
 

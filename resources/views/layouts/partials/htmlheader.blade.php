@@ -14,7 +14,8 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    {{-- bootstrap 3.3 --}}
+{{--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> --}}
     {{-- font awesome 5 --}}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     {{-- fuentes de google --}}
@@ -28,6 +29,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+{{-- bootstrap-switch --}}
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+
 {{-- SmartWizard styles --}}
     <link href="/js/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" /> 
     <link href="/js/smartwizard/dist/css/smart_wizard_theme_arrows.css" rel="stylesheet" type="text/css" /> 
