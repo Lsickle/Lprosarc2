@@ -3,11 +3,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">
-                    Componente de Ejemplo
-                    </div>
+                    <div class="card-header">Example Component With Vue 2</div>
+
                     <div class="card-body">
-                        Soy un componente de ejemplo
+                        I'm an example component.
                     </div>
                 </div>
             </div>

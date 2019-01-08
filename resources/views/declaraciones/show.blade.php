@@ -221,30 +221,30 @@
         <!-- /.tab-pane -->
         <!-- tab-pane -->
         <div class="tab-pane" id="addRowWizz">
-          <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
-          <div id="smartwizard">
-            <ul>
-              <li><a href="#step-1">Step Title<br /><small>Step description</small></a></li>
-              <li><a href="#step-2">Step Title<br /><small>Step description</small></a></li>
-              <li><a href="#step-3">Step Title<br /><small>Step description</small></a></li>
-              <li><a href="#step-4">Step Title<br /><small>Step description</small></a></li>
-            </ul>
-            
-            <div>
-              <div id="step-1" class="">
-                <example-component></example-component>
-              </div>
-              <div id="step-2" class="">
-                <example-component></example-component>
-              </div>
-              <div id="step-3" class="">
-                Step Content
-              </div>
-              <div id="step-4" class="">
-                Step Content
-              </div>
+            <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
+            <div id="smartwizard">
+              <ul>
+                <li><a href="#step-1">Step Title<br /><small>Step description</small></a></li>
+                <li><a href="#step-2">Step Title<br /><small>Step description</small></a></li>
+                <li><a href="#step-3">Step Title<br /><small>Step description</small></a></li>
+                <li><a href="#step-4">Step Title<br /><small>Step description</small></a></li>
+              </ul>
+                <div>
+                  <div id="step-1" class="">
+                    <respel-component></respel-component>
+                  </div>
+                  <div id="step-2" class="">
+                    <requirement-component></requirement-component>
+                  </div>
+                  <div id="step-3" class="">
+                    Step Content
+                  </div>
+                  <div id="step-4" class="">
+                    Step Content
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
             </div>
-          </div>
         </div>
         <!-- /.tab-pane -->
         <!-- tab-pane -->
