@@ -50,7 +50,6 @@
 </template>
 
 <script type="text/javascript">
-	import EventBus from '../event-bus';
 	export default {
 		mounted() {
 		    console.log('RequerimientosXresiduo Component mounted.')

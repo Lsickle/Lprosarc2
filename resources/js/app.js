@@ -17,9 +17,13 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('requirements-component', require('./components/RequerimientosXresiduo.vue'));
 
+// import MyComponent from './components/RequirementsComponent.vue';
+
+// Vue.component('requirements-component', MyComponent);
+
+Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('requirements-component', require('./components/RequirementsComponent.vue'));
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 

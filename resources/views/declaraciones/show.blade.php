@@ -232,10 +232,10 @@
             
             <div>
               <div id="step-1" class="">
-                Step Content
+                <example-component></example-component>
               </div>
               <div id="step-2" class="">
-                <requirements-component></requirements-component>
+                <example-component></example-component>
               </div>
               <div id="step-3" class="">
                 Step Content
