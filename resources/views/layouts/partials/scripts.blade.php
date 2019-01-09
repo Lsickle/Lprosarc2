@@ -104,6 +104,22 @@
 </script> 
 <script>
   $(function () {
+    $('#UserTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "responsive": true,
+      "columnDefs": [ {
+        "targets": 11,
+        "data": "UsSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script> 
+<script>
+  $(function () {
     $('#example4').DataTable({
       "scrollX": false,
       "autoWidth": true,
@@ -141,10 +157,8 @@
     $('#example2').DataTable({
       "scrollX": false,
       "autoWidth": true,
-      "keys": true,
       "responsive": true,
       "keys": true,
-      "scrollX": true,
       "columnDefs": [ {
         "targets": 10,
         "data": "SedeSlug",

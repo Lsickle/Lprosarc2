@@ -17,8 +17,8 @@ class RolesController extends Controller
     public function index()
     {
         $users = DB::table('role_user')
-            ->join('users', 'roles_user.user_id', '=', 'users.id')
-            ->join('roles', 'roles_user.role_id', '=', 'roles.id')
+            ->join('users', 'role_user.user_id', '=', 'users.id')
+            ->join('roles', 'role_user.role_id', '=', 'roles.id')
             ->select(   'users.name', 
                         'users.email', 
                         'users.created_at',  
@@ -28,8 +28,9 @@ class RolesController extends Controller
                         'users.UsQuestion', 
                         'users.UsAnswer', 
                         'users.UsStatus', 
+                        'users.UsSlug', 
                         'roles.name', 
-                        'roles.descripcion', 
+                        'roles.descripcion' 
                         )
             ->get();
 

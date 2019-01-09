@@ -1,7 +1,7 @@
   @extends('layouts.app')
 
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.clientmenu') }}
+	{{ trans('adminlte_lang::LangUsers.usermenu') }}
 @endsection
 
 
@@ -14,7 +14,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">lista de clientes</h3>
+              <h3 class="box-title">{{ trans('adminlte_lang::LangUsers.userlist') }}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -28,6 +28,7 @@
                   <th>Status</th>
                   <th>Rol</th>
                   <th>Descripcion Rol</th>
+                  <th>edicion</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,8 +49,9 @@
 		                  <td>{{$user->UsQuestion}}</td>
                       <td>{{$user->UsAnswer}}</td>
                       <td>{{$user->UsStatus}}</td>
-                      <td>{{$user->roles.name}}</td>
+                      <td>{{$user->name}}</td>
                       <td>{{$user->descripcion}}</td>
+                      <th>{{$user->UsSlug}}</th>
 		                </tr>
 					@endforeach
             	</tbody>
@@ -62,6 +64,7 @@
                   <th>Status</th>
                   <th>Rol</th>
                   <th>Descripcion Rol</th>
+                  <th>edicion</th>
                 </tr>
                 </tfoot>
               </table>
