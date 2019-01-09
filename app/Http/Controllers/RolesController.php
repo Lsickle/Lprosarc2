@@ -14,8 +14,9 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $users = DB::table('role_user')
             ->join('users', 'role_user.user_id', '=', 'users.id')
             ->join('roles', 'role_user.role_id', '=', 'roles.id')
@@ -32,9 +33,16 @@ class RolesController extends Controller
                         'roles.name', 
                         'roles.descripcion' 
                         )
-            ->get();
+        ->get();
 
+        if (!$request->User()) {
+          return redirect()->route('login');
+        }else{
+            $request->User()->authorizeRoles('admin');
+            // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
+        }
+        // return view('permisos.index', compact('users'));
     }
 
     /**
