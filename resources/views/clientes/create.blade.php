@@ -69,7 +69,7 @@
 			                                <label for="ClienteInputTipo">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
 			                                </label>
-			                                 <input id="ClienteInputTipo" style="display:none;" type="checkbox" name="CliAuditable">
+			                                 <input id="inputcheck" type="checkbox" name="CliAuditable">
 			                            </div>
 			                            <div >
 			                            	<input  hidden="false" type="text" name="CliSlug" value="temp">

@@ -19,7 +19,7 @@ return [
     'remember'                => 'Recuérdame',
     'buttonsign'              => 'Iniciar',
     'forgotpassword'          => 'Olvidé mi contraseña',
-    'registermember'          => 'Registar un nuevo Usuario',
+    'registermember'          => 'Registrar un nuevo Usuario',
     'terms'                   => 'Estoy de acuerdo con las',
     'conditions'              => 'Términos y Condiciones',
     'register'                => 'Registro',

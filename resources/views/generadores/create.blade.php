@@ -67,7 +67,7 @@
 			                                <label for="GenerInputTipo">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
 			                                </label>
-			                                 <input id="GenerInputTipo" style="display:none;" type="checkbox" name="GenerAuditable">
+			                                 <input id="inputcheck" type="checkbox" name="GenerAuditable">
 			                            </div>
 			                            <div >
 			                            	<input  hidden="false" type="text" name="GenerSlug" value="temp">
