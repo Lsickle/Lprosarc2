@@ -73,7 +73,7 @@
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputext1">Ext 1</label>
-										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4">
+										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" max="9999">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputphone2">telf local 2</label>
@@ -81,7 +81,7 @@
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputext2">Ext 2</label>
-										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4">
+										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999" >
 									</div>
 									<div class="form-group" style="margin-top: 10em">
 										<label for="sedeinputemail">Email de la Sede</label>

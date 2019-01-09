@@ -88,6 +88,10 @@
 <script>
   $(function () {
     $('#DeclarTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "columnDefs": [ {
         "targets": 11,
         "data": "GSedeSlug",
@@ -101,6 +105,10 @@
 <script>
   $(function () {
     $('#example4').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "columnDefs": [ {
         "targets": 10,
         "data": "GSedeSlug",
@@ -114,6 +122,10 @@
 <script>
   $(function () {
     $('#example3').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "columnDefs": [ {
         "targets": 7,
         "data": "GenerSlug",
@@ -127,6 +139,10 @@
 <script>
   $(function () {
     $('#example2').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "keys": true,
       "scrollX": true,
       "columnDefs": [ {
@@ -142,6 +158,10 @@
 <script>
   $(function () {
     $('#example1').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
       "columnDefs": [ {
         "targets": 5,
         "data": "CliSlug",
