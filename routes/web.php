@@ -30,3 +30,4 @@ Route::resource('/sgeneradores', 'sgenercontroller');
 Route::resource('/declaraciones', 'DeclarController');
 Route::resource('/respels', 'RespelController');
 Route::resource('/requerimientos', 'RequerimientoController');
+Route::resource('/permisos', 'RolesController');

@@ -9,14 +9,14 @@
     <div class="tab-content">
         <!-- Home tab content -->
         <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.recentactivity') }}</h3>
+            <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::LangUsers.usermenu') }}</h3>
             <ul class='control-sidebar-menu'>
                 <li>
-                    <a href='javascript::;'>
-                        <i class="menu-icon fa fa-birthday-cake bg-blue"></i>
+                    <a href='../permisos'>
+                        <i class="menu-icon fa fa-users bg-green"></i>
                         <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.birthday') }}</h4>
-                            <p>{{ trans('adminlte_lang::message.birthdaydate') }}</p>
+                            <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.userroles') }}</h4>
+                            <p>{{ trans('adminlte_lang::LangUsers.rolesdescrip') }}</p>
                         </div>
                     </a>
                 </li>
