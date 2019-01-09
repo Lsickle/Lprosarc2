@@ -83,7 +83,7 @@
 										<label for="sedeinputext2">Ext 2</label>
 										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999" >
 									</div>
-									<div class="form-group" style="margin-top: 10em">
+									<div class="form-group" style="margin-top: 1em">
 										<label for="sedeinputemail">Email de la Sede</label>
 										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
 									</div>
