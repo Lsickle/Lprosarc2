@@ -109,7 +109,7 @@
       "autoWidth": true,
       "responsive": true,
       "columnDefs": [ {
-        "targets": 11,
+        "targets": 7,
         "data": "UsSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";

@@ -27,7 +27,7 @@
                   <th>Respuesta</th>
                   <th>Status</th>
                   <th>Rol</th>
-                  <th>Descripcion Rol</th>
+                  <th>DescripcionRol</th>
                   <th>edicion</th>
                 </tr>
                 </thead>
@@ -63,7 +63,7 @@
                   <th>Respuesta</th>
                   <th>Status</th>
                   <th>Rol</th>
-                  <th>Descripcion Rol</th>
+                  <th>DescripcionRol</th>
                   <th>edicion</th>
                 </tr>
                 </tfoot>
