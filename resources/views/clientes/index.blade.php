@@ -26,7 +26,7 @@
                   <th>NIT</th>
                   <th>Creado el</th>
                   <th>Auditable</th>
-                  <th>edicion</th>
+                  <th>Mas...</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                   <th>NIT</th>
                   <th>Creado el</th>
                   <th>Auditable</th>
-                  <th>edicion</th
+                  <th>Mas...</th
                 </tr>
                 </tfoot>
               </table>
