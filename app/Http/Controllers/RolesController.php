@@ -26,8 +26,6 @@ class RolesController extends Controller
                         'users.updated_at', 
                         'users.UsType', 
                         'users.UsAvatar', 
-                        'users.UsQuestion', 
-                        'users.UsAnswer', 
                         'users.UsStatus', 
                         'users.UsSlug', 
                         'roles.name', 

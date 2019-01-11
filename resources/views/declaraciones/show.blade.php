@@ -117,7 +117,9 @@
                     <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
                   </div>
                   <div>
-                    <button class="btn btn-primary" id="addRow"><a href="#addRowWizz" data-toggle="tab">Nuevo Residuo</a></button>
+                    <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab">
+                      Reasignar Usuario
+                    </a>
                   </div>
                   {{-- <div _ngcontent-c56="" class="col-md-12 col-lg-6 col-xxxl-3">
                     <nb-card _ngcontent-c56="" class="form-input-card" _nghost-c26="">

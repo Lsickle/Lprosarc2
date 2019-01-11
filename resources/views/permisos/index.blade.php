@@ -15,7 +15,11 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">{{ trans('adminlte_lang::LangUsers.userlist') }}</h3>
+              <div style="margin-right:2em; float: right;">
+              <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab">Nuevo Residuo</a>
             </div>
+            </div>
+            
             <!-- /.box-header -->
             <div class="box-body">
               <table id="UserTable" class="table table-bordered table-striped">
@@ -23,8 +27,6 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Email</th>
-                  <th>Pregunta</th>
-                  <th>Respuesta</th>
                   <th>Status</th>
                   <th>Rol</th>
                   <th>DescripcionRol</th>
@@ -46,8 +48,6 @@
 						        <tr>
 		                  <td>{{$user->name}}</td>
 		                  <td>{{$user->email}}</td>
-		                  <td>{{$user->UsQuestion}}</td>
-                      <td>{{$user->UsAnswer}}</td>
                       <td>{{$user->UsStatus}}</td>
                       <td>{{$user->name}}</td>
                       <td>{{$user->descripcion}}</td>
@@ -59,8 +59,6 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Email</th>
-                  <th>Pregunta</th>
-                  <th>Respuesta</th>
                   <th>Status</th>
                   <th>Rol</th>
                   <th>DescripcionRol</th>

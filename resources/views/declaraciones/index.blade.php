@@ -16,6 +16,9 @@
             <div class="box-header">
               <h3 class="box-title">{{ trans('adminlte_lang::LangDeclar.declarlist') }}</h3>
             </div>
+            <div>
+              <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab">Nuevo Residuo</a>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="DeclarTable" class="table table-bordered table-striped">
