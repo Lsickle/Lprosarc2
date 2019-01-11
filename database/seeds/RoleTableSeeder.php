@@ -18,23 +18,58 @@ class RoleTableSeeder extends Seeder
         $role->save();
 
         $role = new Role();
-        $role->name = 'user';
-        $role->descripcion = 'User';
+        $role->name = 'Usuario';
+        $role->descripcion = 'Usuario';
         $role->save();
 
         $role = new Role();
-        $role->name = 'superuser';
-        $role->descripcion = 'programador';
+        $role->name = 'Cliente';
+        $role->descripcion = 'Cliente';
         $role->save();
 
         $role = new Role();
-        $role->name = 'jefelogistica';
-        $role->descripcion = 'jefe de logistica';
+        $role->name = 'Generador';
+        $role->descripcion = 'Generador';
         $role->save();
 
         $role = new Role();
-        $role->name = 'jefeoperacion';
-        $role->descripcion = 'jefe de operaciones';
+        $role->name = 'Programador';
+        $role->descripcion = 'Programador';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'JefeLogistica';
+        $role->descripcion = 'Jefe de Logistica';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'AuxiliarLogistica';
+        $role->descripcion = 'Auxiliar de Logistica';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'AsistenteLogistica';
+        $role->descripcion = 'Asistente de Logistica';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'JefeOperacion';
+        $role->descripcion = 'Jefe de Operaciones';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'SupervisorTurno';
+        $role->descripcion = 'Supervisor de Turno';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'EncargadoAlmacen';
+        $role->descripcion = 'encargado de almacen';
+        $role->save();
+
+        $role = new Role();
+        $role->name = 'EncargadoHorno';
+        $role->descripcion = 'encargado de horno';
         $role->save();
 
     }
