@@ -5,6 +5,8 @@ use App\Role;
 use App\User;
 use App\sede;
 use App\cliente;
+use App\generador;
+use App\GenerSede;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleTableSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(clientesTableSeeder::class);
+        $this->call(generadorsTableSeeder::class);
     }
 }

@@ -23,11 +23,11 @@ class GenerSede extends Model
 
 	public function generadors()
 	{
-	 return $this>belongsTo('generador','ID_Gener');
+	 return $this>belongsTo('Generador', 'ID_Gener');
 	}
 	public function declaracion()
     {
-        return $this->hasMany('Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
     }
 
 	// public function generador()

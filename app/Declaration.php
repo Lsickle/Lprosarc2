@@ -23,17 +23,17 @@ class Declaration extends Model
 	// especificar foranea del modelo sede
 	public function sedes()
 	{
-	 return $this>belongsTo('sede','ID_Sede');
+	 return $this>belongsTo('sede', 'ID_Sede');
 	}
 	// especificar foranea del modelo GenerSede
 	public function GenerSedes()
 	{
-	 return $this>belongsTo('GenerSede','ID_GSede');
+	 return $this>belongsTo('GenerSede', 'ID_GSede');
 	}
 	// especificar foranea del modelo Users
 	public function users()
 	{
-	 return $this>belongsTo('User','id');
+	 return $this>belongsTo('User', 'id');
 	}
 	// public function generador()
  //    {

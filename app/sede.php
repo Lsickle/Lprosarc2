@@ -27,11 +27,11 @@ class sede extends Model
 	}
 	public function generador()
     {
-        return $this->hasMany('generador', 'ID_Gener');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\generador', 'ID_Gener', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
     }
     public function declaracion()
     {
-        return $this->hasMany('Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('Declaration', 'ID_Declar', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
     }
 
 }

@@ -19,7 +19,7 @@ class Respel extends Model
 
 	public function requerimientos()
 	{
-	 return $this>belongsTo('RespelReq','ID_Req');
+	 return $this>belongsTo('RespelReq', 'ID_Req');
 	}
 
 }

@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 use Faker\Generator as Faker;
 
@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\sede::class, function (Faker $faker) {
 	$sedename=$faker->randomElement(['norte', 'sur','este', 'oeste', 'principal']);
-	$slug=$sedename.' '.$faker->unique()->numberBetween($min = 100, $max = 900);
+	$slug=$sedename.' '.$faker->unique()->numberBetween($min = 100, $max = 9000);
 	$sactualizado = $faker->dateTime($max = 'now');
 	$screado= $faker->dateTime($max = $sactualizado);
 

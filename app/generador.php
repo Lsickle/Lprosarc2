@@ -22,10 +22,10 @@ class generador extends Model
 	}
 	public function sedes()
 	{
-	 return $this>belongsTo('GenerCli','ID_Sede');//como generador pertenece a la sede de un cliente
+	 return $this>belongsTo('GenerCli', 'ID_Sede');//como generador pertenece a la sede de un cliente
 	}
-	// public function GenerSede()
- //    {
- //        return $this->hasMany('GenerSede', 'ID_GSede');//como generador tiene muchas sedes de generador // el busca automaticamente el campo ID_GSede
- //    }
+	public function GenerSede()
+    {
+        return $this->hasMany('App\GenerSede', 'ID_GSede', 'id');//como generador tiene muchas sedes de generador // el busca automaticamente el campo ID_GSede
+    }
 }
