@@ -36,7 +36,7 @@ class RolesController extends Controller
         if (!$request->User()) {
           return redirect()->route('login');
         }else{
-            $request->User()->authorizeRoles('admin');
+            $request->User()->authorizeRoles('admin' 'suser');
             // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
         }
