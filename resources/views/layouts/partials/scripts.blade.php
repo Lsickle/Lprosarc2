@@ -87,6 +87,23 @@
 </script>
 <script>
   $(function () {
+    $('#UsersTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
+      "columnDefs": [ {
+        "targets": 5,
+        "data": "UsSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+        }  
+      }]
+    });
+  });
+</script> 
+<script>
+  $(function () {
     $('#DeclarTable').DataTable({
       "scrollX": false,
       "autoWidth": true,
@@ -274,6 +291,11 @@ $(document).ready(function(){
   $(".testswitch").bootstrapSwitch({
     animate: true,
   });
+</script>
+
+script para botones del listado de usuarios
+<script type="text/javascript">
+  
 </script>
 
 

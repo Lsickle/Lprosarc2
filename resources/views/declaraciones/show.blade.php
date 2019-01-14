@@ -118,7 +118,7 @@
                   </div>
                   <div>
                     <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab">
-                      Reasignar Usuario
+                      Añadir residuo
                     </a>
                   </div>
                   {{-- <div _ngcontent-c56="" class="col-md-12 col-lg-6 col-xxxl-3">

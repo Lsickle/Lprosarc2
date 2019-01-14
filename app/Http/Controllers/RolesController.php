@@ -28,7 +28,7 @@ class RolesController extends Controller
                         'users.UsAvatar', 
                         'users.UsStatus', 
                         'users.UsSlug', 
-                        'roles.name', 
+                        'roles.name as rolname', 
                         'roles.descripcion' 
                         )
         ->get();
@@ -36,7 +36,7 @@ class RolesController extends Controller
         if (!$request->User()) {
           return redirect()->route('login');
         }else{
-            $request->User()->authorizeRoles('admin' 'suser');
+            $request->User()->authorizeRoles('admin','Programador');
             // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
         }

@@ -16,13 +16,13 @@
             <div class="box-header">
               <h3 class="box-title">{{ trans('adminlte_lang::LangUsers.userlist') }}</h3>
               <div style="margin-right:2em; float: right;">
-              <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab">Nuevo Residuo</a>
+              <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab"> persona Usuario</a>
             </div>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="UserTable" class="table table-bordered table-striped">
+              <table id="UsersTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Nombre</th>
@@ -49,7 +49,7 @@
 		                  <td>{{$user->name}}</td>
 		                  <td>{{$user->email}}</td>
                       <td>{{$user->UsStatus}}</td>
-                      <td>{{$user->name}}</td>
+                      <td>{{$user->rolname}}</td>
                       <td>{{$user->descripcion}}</td>
                       <th>{{$user->UsSlug}}</th>
 		                </tr>
