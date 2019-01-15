@@ -15,13 +15,17 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">{{ trans('adminlte_lang::LangUsers.userlist') }}</h3>
-              <div style="margin-right:2em; float: right;">
-              <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab"> persona Usuario</a>
-            </div>
             </div>
             
             <!-- /.box-header -->
             <div class="box-body">
+              <div style="margin-right:2em; float: right; margin-bottom:1em;">
+                <a class="btn btn-primary" href="#addRowWizz" data-toggle="tab"> persona Usuario</a>
+                <!-- Button to trigger modal -->
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalForm">
+                    añadir usuario 2
+                </button>
+              </div>
               <table id="UsersTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -74,4 +78,45 @@
 			</div>
 		</div>
 	</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="modalForm" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edicion de usuario</h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="inputName">Nombre</label>
+                        <input value="{{$user->name}} "type="text" class="form-control" id="inputName" placeholder="Enter your name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input value="{{$user->email}}" type="email" class="form-control" id="inputEmail" placeholder="Enter your email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMessage">Mensaje</label>
+                        <textarea class="form-control" id="inputMessage" placeholder="Enter your message"></textarea>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary submitBtn" onclick="submitContactForm()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

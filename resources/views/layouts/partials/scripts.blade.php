@@ -109,6 +109,10 @@
     //   }]
     // });
       var table = $('#UsersTable').DataTable({
+      "processing": true,
+      "language": {
+          "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
+      },
       "scrollX": false,
       "autoWidth": true,
       "select": true,
@@ -229,6 +233,10 @@
 <script>
   $(function () {
     $('#example1').DataTable({
+      "processing": true,
+      "language": {
+          "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
+      },
       "scrollX": false,
       "autoWidth": true,
       "keys": true,
