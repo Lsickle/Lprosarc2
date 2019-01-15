@@ -14,11 +14,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
 <!-- DataTables -->
-<script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
+{{-- <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script> --}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
 
 {{-- SmartWizard --}}
 <script type="text/javascript" src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
@@ -87,12 +90,33 @@
 </script>
 <script>
   $(function () {
-    $('#UsersTable').DataTable({
+
+    // $('#UsersTable').DataTable({
+    //   "scrollX": false,
+    //   "autoWidth": true,
+    //   "select": true,
+    //   "keys": true,
+    //   "responsive": true,
+    //   // "buttons": [
+    //   //     'copy', 'excel', 'pdf'
+    //   // ],
+    //   "columnDefs": [ {
+    //     "targets": 5,
+    //     "data": "UsSlug",
+    //     "render": function ( data, type, row, meta ) {
+    //       return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+    //     }  
+    //   }]
+    // });
+      var table = $('#UsersTable').DataTable({
       "scrollX": false,
       "autoWidth": true,
       "select": true,
       "keys": true,
       "responsive": true,
+      // "buttons": [
+      //     'copy', 'excel', 'pdf'
+      // ],
       "columnDefs": [ {
         "targets": 5,
         "data": "UsSlug",
@@ -101,7 +125,22 @@
         }  
       }]
     });
+   
+  new $.fn.dataTable.Buttons( table, {
+      buttons: [
+          'copy', 'excel', 'pdf'
+      ]
+  } );
+  // $('#UsersTable').DataTable( {
+  //     dom: 'Bfrtip',
+  //     buttons: [
+  //         'copy', 'excel', 'pdf'
+  //     ]
+  // } );
+  table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
   });
+
 </script> 
 <script>
   $(function () {
@@ -198,7 +237,7 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
         }  
       }]
     });
