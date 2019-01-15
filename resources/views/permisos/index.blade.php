@@ -30,7 +30,7 @@
                   <th>Status</th>
                   <th>Rol</th>
                   <th>DescripcionRol</th>
-                  <th>edicion</th>
+                  <th>Mas...</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                   <th>Status</th>
                   <th>Rol</th>
                   <th>DescripcionRol</th>
-                  <th>edicion</th>
+                  <th>Mas...</th>
                 </tr>
                 </tfoot>
               </table>

@@ -293,7 +293,7 @@ $(document).ready(function(){
   });
 </script>
 
-script para botones del listado de usuarios
+<!-- script para botones del listado de usuarios -->
 <script type="text/javascript">
   
 </script>

@@ -36,7 +36,7 @@ class RolesController extends Controller
         if (!$request->User()) {
           return redirect()->route('login');
         }else{
-            $request->User()->authorizeRoles('admin','Programador');
+            $request->User()->authorizeRoles(['admin','Programador']);
             // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
         }
@@ -70,9 +70,9 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('permisos.show', compact('user'));
     }
 
     /**
