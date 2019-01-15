@@ -90,6 +90,7 @@
     $('#UsersTable').DataTable({
       "scrollX": false,
       "autoWidth": true,
+      "select": true,
       "keys": true,
       "responsive": true,
       "columnDefs": [ {
