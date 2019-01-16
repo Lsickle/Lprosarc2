@@ -30,25 +30,25 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/permisos/{{$user->UsSlug}}" method="POST" enctype="multipart/form-data">
 								@csrf
 								@method('PUT')
 								<div class="box-body">
 									<div class="form-group">
 										<label for="ClienteInputNit">NIT</label>
-										<input name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-Y" value="{{$cliente->CliNit}}">
+										<input name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-Y" value="">
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputRazon">Razon social</label>
-										<input name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." value="{{$cliente->CliName}}">
+										<input name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." value="">
 									</div>
 									<div class="form-group">
 										<label for="">Nombre Corto</label>
-										<input name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" value="{{$cliente->CliShortname}}">
+										<input name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" value="">
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputCategoria">Categoria</label>
-										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente" value="{{$cliente->CliCategoria}}">
+										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente" value="">
 											<option>cliente</option>
 											<option>generador</option>
 											<option>transportador</option>
@@ -58,7 +58,7 @@
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputTipo">Tipo de empresa</label>
-										<select name="CliType" class="form-control" id="ClienteInputTipo" placeholder="biologico" value="{{$cliente->CliType}}">
+										<select name="CliType" class="form-control" id="ClienteInputTipo" placeholder="biologico" value="">
 											<option>biologico</option>
 											<option>industrial</option>
 											<option>medicamentos</option>

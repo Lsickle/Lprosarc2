@@ -33,8 +33,9 @@
                   <th>Email</th>
                   <th>Status</th>
                   <th>Rol</th>
-                  <th>DescripcionRol</th>
+                  <th>DescripcionRol</th> 
                   <th>Mas...</th>
+                  <th>Editar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -56,6 +57,7 @@
                       <td>{{$user->rolname}}</td>
                       <td>{{$user->descripcion}}</td>
                       <th>{{$user->UsSlug}}</th>
+                      <th>{{$user->UsSlug}}</th>
 		                </tr>
 					@endforeach
             	</tbody>
@@ -67,6 +69,7 @@
                   <th>Rol</th>
                   <th>DescripcionRol</th>
                   <th>Mas...</th>
+                  <th>Editar</th>
                 </tr>
                 </tfoot>
               </table>

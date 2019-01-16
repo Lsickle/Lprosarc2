@@ -121,13 +121,16 @@
       // "buttons": [
       //     'copy', 'excel', 'pdf'
       // ],
-      "columnDefs": [ {
-        "targets": 5,
+      "columnDefs": [
+       {"targets": 5,
         "data": "UsSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-        }  
-      }]
+          return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
+        {"targets": 6,
+        "data": "UsSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
+      ]
     });
    
   new $.fn.dataTable.Buttons( table, {

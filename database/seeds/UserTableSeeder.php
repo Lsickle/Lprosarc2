@@ -29,7 +29,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Luis';
-        $user->email = 'suser@mail.com';
+        $user->email = 'suser@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Luis1';
         $user->save();
@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'User';
-        $user->email = 'User@mail.com';
+        $user->email = 'User@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'User1';
         $user->save();
@@ -45,7 +45,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Leider';
-        $user->email = 'admin@mail.com';
+        $user->email = 'admin@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Leider1';
         $user->save();
@@ -53,7 +53,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Juan';
-        $user->email = 'jefelogistica@mail.com';
+        $user->email = 'jefelogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Juan1';
         $user->save();
@@ -61,7 +61,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Victor';
-        $user->email = 'jefeoperacion@mail.com';
+        $user->email = 'jefeoperacion@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Victor1';
         $user->save();
@@ -69,7 +69,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Duvan';
-        $user->email = 'asistentelogistica@mail.com';
+        $user->email = 'asistentelogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Duvan1';
         $user->save();
@@ -77,7 +77,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'TestClient';
-        $user->email = 'Cliente@mail.com';
+        $user->email = 'Cliente@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'TestClient1';
         $user->save();
@@ -85,7 +85,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'GeneradorProsarc';
-        $user->email = 'Generador@mail.com';
+        $user->email = 'Generador@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'GeneradorProsarc1';
         $user->save();
@@ -93,7 +93,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Peter';
-        $user->email = 'AuxiliarLogistica@mail.com';
+        $user->email = 'AuxiliarLogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Peter1';
         $user->save();
@@ -101,7 +101,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Camilo';
-        $user->email = 'Supervisor1Turno@mail.com';
+        $user->email = 'Supervisor1Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Camilo1';
         $user->save();
@@ -109,7 +109,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'William';
-        $user->email = 'Supervisor2Turno@mail.com';
+        $user->email = 'Supervisor2Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'William1';
         $user->save();
@@ -117,7 +117,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Camilo2';
-        $user->email = 'Supervisor3Turno@mail.com';
+        $user->email = 'Supervisor3Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Camilo21';
         $user->save();
@@ -125,7 +125,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Sandro';
-        $user->email = 'EncargadoAlmacen@mail.com';
+        $user->email = 'EncargadoAlmacen@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Sandro1';
         $user->save();
@@ -133,7 +133,7 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Horno';
-        $user->email = 'EncargadoHorno@mail.com';
+        $user->email = 'EncargadoHorno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Horno1';
         $user->save();

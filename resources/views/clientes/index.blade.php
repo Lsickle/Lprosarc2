@@ -53,7 +53,7 @@
           							@endif
                           <td>{{$cliente->CliSlug}}</td>
 		                </tr>
-					@endforeach
+					         @endforeach
             	</tbody>
                 <tfoot>
                 <tr>

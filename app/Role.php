@@ -11,6 +11,20 @@ class Role extends Model
     }
 
     protected $fillable = [
-        'name', 'descripcion'
+        'name', 'descripcion', 'UsSlug'
     ];
+
+
+
+    /**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+    public function getRouteKeyName()
+	{
+	    return 'UsSlug';
+	}
+
+
 }

@@ -43,7 +43,7 @@
 	create table Clientes(
 		ID_Cli int auto_increment unique,
 		CliNit bigint, /*nit*/
-		CliName varchar(256), /*razon social del cliente*/
+		CliName varchar(255), /*razon social del cliente*/
 		CliShortname varchar(32), /*nombre corto del cliente*/
 		CliCode varchar(32), /*codigo del cliente ejem: "PL 1 AND"-.S" */
 		CliType varchar(32),/*tipo de empresa: organico; biologico; industrial; medicamentos; otros ETC...*/
@@ -81,7 +81,7 @@
 	/*tabla de generadores de cada cliente*/
 		create table Generador(
 		ID_Gener int auto_increment unique,
-		GenerName varchar(256),
+		GenerName varchar(255),
 		GenerShortname varchar(64),
 		GenerCode varchar(32), /*codigo del generador ejem: "PL 1 AND"-.S" */
 		GenerType varchar(32),/*tipo de empresa: organico; biologico; industrial; medicamentos; otros ETC...*/
@@ -100,7 +100,7 @@
 	create table GenerSede(
 		ID_GSede int auto_increment unique,
 		GSedeName varchar(128),
-		GSedeAddress varchar(256),
+		GSedeAddress varchar(255),
 		GSedePhone varchar(32),
 		GSedePhoneExt varchar(8),/*numero de extencion*/
 		GSedeEmail varchar(128),	
@@ -130,7 +130,7 @@
 	/*oficinas o dependencias de un area*/
 	create table Oficce(
 		ID_Ofi int auto_increment unique,
-		OfiAddress varchar(256),
+		OfiAddress varchar(255),
 		OfiModule int, /*opcional:numero de modulos de la oficina*/
 		FK_OfiArea int, /*foranea de la tabla Area*/
 		primary key (ID_Ofi),
@@ -166,9 +166,9 @@
 		PersBirthday date,
 		PersPhoneNumber varchar(64),/*telefono fijo*/
 		PersCellphone varchar(64),/*telefono celular*/
-		PersAddress varchar(256),
-		PersEPS varchar(256),
-		PersARL varchar(256),
+		PersAddress varchar(255),
+		PersEPS varchar(255),
+		PersARL varchar(255),
 		PersBank varchar(128),
 		PersBankAccaunt int,
 		PersIngreso date, /*fecha de ingreso a Prosarc*/
@@ -232,9 +232,8 @@
 		email VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 		email_verified_at TIMESTAMP NULL DEFAULT NULL, /*fecha de validacion del usuario mediante el correo*/
 		password VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci', /*contraseña de acceso al sistema*/
-		UsAvatar varchar(256), /*ubicacion de la imagen de perfil de usuario*/
-		UsQuestion varchar(256), /*pregunta de seguridad*/
-		UsAnswer varchar(256), /*respuesta de seguridad*/
+		UsAvatar varchar(255), /*ubicacion de la imagen de perfil de usuario*/
+		Usrol varchar(255), /*ubicacion de la imagen de perfil de usuario*/
 		UsStatus varchar(16), /*conectado, desconectado*/
 		remember_token VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci', /*token de validacion para bloqueo de sesiones*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
@@ -444,7 +443,7 @@
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		DeclarApply varchar(16), /*aplicacion: siempre o previo aviso*/
 		DeclarTipo varchar(32), /*indutrial, aguas, servicios, hospitalario, cenizas y tierras*/
-		DeclarName varchar(256),
+		DeclarName varchar(255),
 		DeclarStatus varchar(16), /*aprobada, negada, pendiente, incompleta*/
 		DeclarFrecuencia int,/*cada cuantos dias se recolecta: mensual, quincenal, semanal, por solicitud, N° dias*/
 		FK_DeclarSede int,/*foranea de la tabla sede opcional para los clientes que tienen sedes*/
@@ -598,8 +597,8 @@
 		FotoTipoOther varchar(64), /*descripcion en caso de otro tipo de foto*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		FotoRmSrc varchar(256), /*direcion de la carperta donde se guardan las diferentes fotos para un recibo de material*/
-		FotoSrc varchar(256), /*nombre de la foto dentro de la carpeta especificada en FotoRmSrc*/
+		FotoRmSrc varchar(255), /*direcion de la carperta donde se guardan las diferentes fotos para un recibo de material*/
+		FotoSrc varchar(255), /*nombre de la foto dentro de la carpeta especificada en FotoRmSrc*/
 		FotoFormat varchar(32), /*jpg, gif, png, etc*/
 		FK_FotoRespel int,
 		primary key (ID_Foto),
@@ -616,7 +615,7 @@
 		VideoTipoOther varchar(64), /*descripcion en caso de otro tipo de video*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		VideoSrc varchar(256), /*direccion donde esta guardada la imagen*/
+		VideoSrc varchar(255), /*direccion donde esta guardada la imagen*/
 		VideoFormat varchar(32), /*mp4, mpeg, avi, wmv*/
 		FK_VideoRespel int,
 		primary key (ID_Video),
@@ -636,9 +635,9 @@
 		CertGr int, /*peso Tratado*/ /*no exceder el total tratado!!!*/
 		CertiEspName varchar(64), /*nombre del atributo requerido en el certificado*/
 		CertiEspValue varchar(64), /*valor del atributo requerido en el certificado*/
-		CertObservacion varchar(256), /*observacion adicional para el certificado*/
-		CertSrc varchar(256), /*direccion donde esta guardado el certificado */
-		CertAnexo varchar(256), /*direccion donde se almacena los anexos necesarios en PDF*/
+		CertObservacion varchar(255), /*observacion adicional para el certificado*/
+		CertSrc varchar(255), /*direccion donde esta guardado el certificado */
+		CertAnexo varchar(255), /*direccion donde se almacena los anexos necesarios en PDF*/
 		FK_CertRm int, /*foranea de la tabla recibo de material*/
 		FK_CertGener int, /*foranea de la tabla generador*/
 		FK_CertRespel int, /*foranea de la tabla residuos*//*se puede repetir el numero*/
@@ -660,9 +659,9 @@
 		ManifGr int, /*peso enviado a tratamiento*/ /*no exceder el total tratado!!!*/
 		ManifiEspName varchar(64), /*nombre del atributo requerido en el manifiesto*/
 		ManifiEspValue varchar(64), /*valor del atributo requerido en el manifiesto*/
-		ManifObservacion varchar(256), /*observacion adicional par el manifiesto*/
-		ManifSrc varchar(256), /*direccion donde esta guardado el manifiesto*/
-		CertAnexo varchar(256), /*direccion donde se almacena los anexos necesarios en PDF*/
+		ManifObservacion varchar(255), /*observacion adicional par el manifiesto*/
+		ManifSrc varchar(255), /*direccion donde esta guardado el manifiesto*/
+		CertAnexo varchar(255), /*direccion donde se almacena los anexos necesarios en PDF*/
 		FK_MAnifRespel int, /*foranea de la tabla residuos*/
 		FK_MAnifRm int, /*foranea de la tabla recibo de material*/
 		FK_MAnifGener int, /*foranea de la tabla generador*/
@@ -680,7 +679,7 @@
 	Create table QrCode(
 		ID_QrCode int auto_increment unique,
 		QrCodeEstiba int, /*numero de estiba de cada residuo(para los casos donde hay varias estibas por residuo)*/
-		QrCodeSrc varchar(256), /*direccion donde esta guardado el codigo qr para su reimpresion*/
+		QrCodeSrc varchar(255), /*direccion donde esta guardado el codigo qr para su reimpresion*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		FK_QrCodeRespel int, /*atributo para ingresar informacion en el codigo QR(cantidad pesada)*/
@@ -694,7 +693,7 @@
 	create table DiccionarioDatos(
 		ID_Dato int auto_increment unique,
 		DatoName varchar(32),/*nombre del campo en la base de datos*/
-		DatoDescrip varchar(256),/*indica lo que representa en el sistema*/
+		DatoDescrip varchar(255),/*indica lo que representa en el sistema*/
 		DatoAlias varchar(128),/*si tiene varios nombres en diferentes areas*/
 		DatoLongi int,/*tamaño del campo en numero de caracteres*/
 		DatoTipo varchar(32),/*tipo de dato ejem:varchar, si/no(boolean), int(numero entero)

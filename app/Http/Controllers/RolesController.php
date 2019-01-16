@@ -81,9 +81,9 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
-        //
+        return view('permisos.edit', compact('usuario'));
     }
 
     /**
