@@ -122,11 +122,11 @@
       //     'copy', 'excel', 'pdf'
       // ],
       "columnDefs": [
-       {"targets": 5,
+       {"targets": 4,
         "data": "UsSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
-        {"targets": 6,
+        {"targets": 5,
         "data": "UsSlug",
         "render": function ( data, type, row, meta ) {
           return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}

@@ -14,27 +14,27 @@ class RoleTableSeeder extends Seeder
     {
         $role = new Role();
         $role->name = 'admin';
-        $role->descripcion = 'Administrador';
+        $role->descripcion = 'Gerente de Planta';
         $role->save();
 
         $role = new Role();
         $role->name = 'Usuario';
-        $role->descripcion = 'Usuario';
+        $role->descripcion = 'Usuario general';
         $role->save();
 
         $role = new Role();
         $role->name = 'Cliente';
-        $role->descripcion = 'Cliente';
+        $role->descripcion = 'Cliente registrado';
         $role->save();
 
         $role = new Role();
         $role->name = 'Generador';
-        $role->descripcion = 'Generador';
+        $role->descripcion = 'Generador de residuos';
         $role->save();
 
         $role = new Role();
         $role->name = 'Programador';
-        $role->descripcion = 'Programador';
+        $role->descripcion = 'Programador de Software';
         $role->save();
 
         $role = new Role();
@@ -64,12 +64,12 @@ class RoleTableSeeder extends Seeder
 
         $role = new Role();
         $role->name = 'EncargadoAlmacen';
-        $role->descripcion = 'encargado de almacen';
+        $role->descripcion = 'Encargado de Almacen';
         $role->save();
 
         $role = new Role();
         $role->name = 'EncargadoHorno';
-        $role->descripcion = 'encargado de horno';
+        $role->descripcion = 'Encargado de Horno';
         $role->save();
 
     }

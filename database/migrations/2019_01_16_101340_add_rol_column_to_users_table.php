@@ -15,6 +15,7 @@ class AddRolColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('UsRol')->nullable();
+            $table->string('UsRolDesc')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddRolColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('UsRol');
+            $table->dropColumn('UsRolDesc');
         });
     }
 }

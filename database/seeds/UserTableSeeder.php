@@ -32,6 +32,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'suser@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Luis1';
+        $user->UsRol = 'Programador';
+        $user->UsRolDesc = 'Programador de Software';
         $user->save();
         $user->roles()->attach($role_suser);
 
@@ -40,6 +42,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'User@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'User1';
+        $user->UsRol = 'Usuario';
+        $user->UsRolDesc = 'Usuario general';
         $user->save();
         $user->roles()->attach($role_user);
 
@@ -48,6 +52,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'admin@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Leider1';
+        $user->UsRol = 'admin';
+        $user->UsRolDesc = 'Gerente de Planta';
         $user->save();
         $user->roles()->attach($role_admin);
 
@@ -56,6 +62,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'jefelogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Juan1';
+        $user->UsRol = 'JefeLogistica';
+        $user->UsRolDesc = 'Jefe de Logistica';
         $user->save();
         $user->roles()->attach($role_jlogistica);
 
@@ -64,6 +72,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'jefeoperacion@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Victor1';
+        $user->UsRol = 'JefeOperacion';
+        $user->UsRolDesc = 'Jefe de Operaciones';
         $user->save();
         $user->roles()->attach($role_joperacion);
 
@@ -72,6 +82,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'asistentelogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Duvan1';
+        $user->UsRol = 'AsistenteLogistica';
+        $user->UsRolDesc = 'Asistente de Logistica';
         $user->save();
         $user->roles()->attach($role_asistlogistica);
 
@@ -80,6 +92,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'Cliente@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'TestClient1';
+        $user->UsRol = 'Cliente';
+        $user->UsRolDesc = 'Cliente registrado';
         $user->save();
         $user->roles()->attach($role_client);
 
@@ -88,6 +102,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'Generador@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'GeneradorProsarc1';
+        $user->UsRol = 'Generador';
+        $user->UsRolDesc = 'Generador de residuos';
         $user->save();
         $user->roles()->attach($role_gener);
 
@@ -96,6 +112,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'AuxiliarLogistica@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Peter1';
+        $user->UsRol = 'AuxiliarLogistica';
+        $user->UsRolDesc = 'Auxiliar de Logistica';
         $user->save();
         $user->roles()->attach($role_auxlogistica);
 
@@ -104,6 +122,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'Supervisor1Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Camilo1';
+        $user->UsRol = 'SupervisorTurno';
+        $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
         $user->roles()->attach($role_sturno);
 
@@ -112,6 +132,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'Supervisor2Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'William1';
+        $user->UsRol = 'SupervisorTurno';
+        $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
         $user->roles()->attach($role_sturno);
 
@@ -120,6 +142,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'Supervisor3Turno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Camilo21';
+        $user->UsRol = 'SupervisorTurno';
+        $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
         $user->roles()->attach($role_sturno);
 
@@ -128,6 +152,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'EncargadoAlmacen@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Sandro1';
+        $user->UsRol = 'EncargadoAlmacen';
+        $user->UsRolDesc = 'Encargado de Almacen';
         $user->save();
         $user->roles()->attach($role_ealmacen);
 
@@ -136,6 +162,8 @@ class UserTableSeeder extends Seeder
         $user->email = 'EncargadoHorno@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Horno1';
+        $user->UsRol = 'EncargadoHorno';
+        $user->UsRolDesc = 'Encargado de Horno';
         $user->save();
         $user->roles()->attach($role_ehorno);
 

@@ -28,6 +28,8 @@ class RolesController extends Controller
                         'users.UsAvatar', 
                         'users.UsStatus', 
                         'users.UsSlug', 
+                        'users.UsRol', 
+                        'users.UsRolDesc', 
                         'roles.name as rolname', 
                         'roles.descripcion' 
                         )
