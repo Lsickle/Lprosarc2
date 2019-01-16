@@ -1,4 +1,4 @@
-@extends('adminlte::layouts.auth')
+@extends('layouts.auth')
 
 @section('htmlheader_title')
     Register
@@ -6,7 +6,7 @@
 
 @section('content')
 
-<body class="hold-transition register-page">
+<body class="hold-transition register-page style="background-image:url({{url('resources/assets/img/registerbackground.jpg')}})">
     <div id="app" v-cloak>
         <div class="register-box">
             <div class="register-logo">
@@ -31,7 +31,7 @@
 
                 {{-- @include('adminlte::auth.partials.social_login') --}}
 
-                <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membership') }}</a>
+                <a href="{{ url('/login') }}" class="btn btn-info btn-sm"><i class="fas fa-sign-in-alt"></i></a><a href="{{ url('/login') }}">¿Ya estas registrado?</a>
             </div><!-- /.form-box -->
         </div><!-- /.register-box -->
     </div>

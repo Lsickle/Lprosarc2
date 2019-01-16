@@ -23,6 +23,7 @@ return [
     'terms'                   => 'Estoy de acuerdo con las',
     'conditions'              => 'Términos y Condiciones',
     'register'                => 'Registro',
+    'login2'                  => ' LogIn',
     'login'                   => 'Iniciar Sesión',
     'membership'              => 'Ya estoy Registrado',
     'passwordclickreset'      => 'Haga clic aquí para restablecer la contraseña:',
