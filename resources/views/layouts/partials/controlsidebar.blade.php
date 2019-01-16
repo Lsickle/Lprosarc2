@@ -13,7 +13,7 @@
             <ul class='control-sidebar-menu'>
                 @if (Auth::user()->id == 1)
                     <li>
-                        <a href='../permisos'>
+                        <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>
                             <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.userroles') }}</h4>
@@ -23,7 +23,7 @@
                     </li>
                 @endif
                 <li>
-                    <a href='../permisos'>
+                    <a href='/permisos'>
                         <i class="menu-icon fa fa-users bg-green"></i>
                         <div class="menu-info">
                             <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.userroles') }}</h4>
@@ -67,7 +67,7 @@
             </form>
         </div><!-- /.tab-pane -->
     </div>
-</aside><!-- /.control-sidebar
+</aside><!-- /.control-sidebar -->
 
 <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->

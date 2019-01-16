@@ -33,11 +33,12 @@
                 <li class="header">{{ trans('adminlte_lang::message.header') }}</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="{{ url('home') }}"><i class='fa fa-home'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li>
+                @if(Auth::user()->id==1)
                 <li class="treeview">
                     <a href="#"><i {{-- class='fa fa-id-card' --}} class='fa fa-id-card'></i> <span>{{ trans('adminlte_lang::message.contacts') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/clientes"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.clientindex') }}</a></li>
-                        <li><a href="../clientes/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
+                        <li><a href="/clientes/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
                         {{-- SEDES --}}
                         <li class="treeview">
                           <a href="#"><i class="fa fa-building"></i>Sedes
@@ -47,20 +48,21 @@
                           </a>
                           <ul class="treeview-menu">
                             {{-- listado de sedes --}}
-                            <li><a href="../sclientes"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
+                            <li><a href="/sclientes"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
                             {{-- registro de sedes --}}
-                            <li><a href="../sclientes/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
+                            <li><a href="/sclientes/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
                           </ul>
                         </li>
                         {{-- <li><a href="#"><i class='fa fa-warehouse'></i>{{ trans('adminlte_lang::message.clientupdate') }}</a></li> --}}
                         
                     </ul>
                 </li>
+                @endif
                 <li class="treeview">
                     <a href="#"><i class='fa fa-industry'></i> <span>{{ trans('adminlte_lang::message.genermenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="../Generadores/"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.generindex') }}</a></li>
-                        <li><a href="../Generadores/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.generregister') }}</a></li>
+                        <li><a href="/Generadores/"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.generindex') }}</a></li>
+                        <li><a href="/Generadores/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.generregister') }}</a></li>
                         {{-- SEDES --}}
                         <li class="treeview">
                           <a href="#"><i class="fa fa-building"></i>Sede Generador
@@ -70,9 +72,9 @@
                           </a>
                           <ul class="treeview-menu">
                             {{-- listado de sedes --}}
-                            <li><a href="../sgeneradores"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
+                            <li><a href="/sgeneradores"><i class='fa fa-map'></i>{{ trans('adminlte_lang::message.csedeindex') }}</a></li>
                             {{-- registro de sedes --}}
-                            <li><a href="../sgeneradores/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
+                            <li><a href="/sgeneradores/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
                           </ul>
                         </li>
                     </ul>
