@@ -31,6 +31,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Luis';
         $user->email = 'suser@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Luis1';
         $user->save();
         $user->roles()->attach($role_suser);
 
@@ -38,6 +39,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'User';
         $user->email = 'User@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'User1';
         $user->save();
         $user->roles()->attach($role_user);
 
@@ -45,6 +47,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Leider';
         $user->email = 'admin@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Leider1';
         $user->save();
         $user->roles()->attach($role_admin);
 
@@ -52,6 +55,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Juan';
         $user->email = 'jefelogistica@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Juan1';
         $user->save();
         $user->roles()->attach($role_jlogistica);
 
@@ -59,6 +63,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Victor';
         $user->email = 'jefeoperacion@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Victor1';
         $user->save();
         $user->roles()->attach($role_joperacion);
 
@@ -66,6 +71,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Duvan';
         $user->email = 'asistentelogistica@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Duvan1';
         $user->save();
         $user->roles()->attach($role_asistlogistica);
 
@@ -73,13 +79,15 @@ class UserTableSeeder extends Seeder
         $user->name = 'TestClient';
         $user->email = 'Cliente@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'TestClient1';
         $user->save();
         $user->roles()->attach($role_client);
 
         $user = new User();
-        $user->name = 'Prosarc S.A.';
+        $user->name = 'GeneradorProsarc';
         $user->email = 'Generador@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'GeneradorProsarc1';
         $user->save();
         $user->roles()->attach($role_gener);
 
@@ -87,6 +95,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Peter';
         $user->email = 'AuxiliarLogistica@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Peter1';
         $user->save();
         $user->roles()->attach($role_auxlogistica);
 
@@ -94,6 +103,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Camilo';
         $user->email = 'Supervisor1Turno@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Camilo1';
         $user->save();
         $user->roles()->attach($role_sturno);
 
@@ -101,6 +111,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'William';
         $user->email = 'Supervisor2Turno@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'William1';
         $user->save();
         $user->roles()->attach($role_sturno);
 
@@ -108,13 +119,15 @@ class UserTableSeeder extends Seeder
         $user->name = 'Camilo2';
         $user->email = 'Supervisor3Turno@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Camilo21';
         $user->save();
         $user->roles()->attach($role_sturno);
 
         $user = new User();
-        $user->name = 'Almacen';
+        $user->name = 'Sandro';
         $user->email = 'EncargadoAlmacen@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Sandro1';
         $user->save();
         $user->roles()->attach($role_ealmacen);
 
@@ -122,6 +135,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Horno';
         $user->email = 'EncargadoHorno@mail.com';
         $user->password = bcrypt('secret');
+        $user->UsSlug = 'Horno1';
         $user->save();
         $user->roles()->attach($role_ehorno);
 
