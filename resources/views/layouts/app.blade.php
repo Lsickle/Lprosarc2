@@ -30,6 +30,9 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="skin-blue fixed sidebar-mini">
+    @section('scripts')
+    @include('layouts.partials.scripts')
+@show
 <div id="app" v-cloak>
     <div class="wrapper">
 
@@ -55,8 +58,6 @@ desired effect
 
 </div><!-- ./wrapper -->
 </div>
-@section('scripts')
-    @include('layouts.partials.scripts')
-@show
+
 </body>
 </html>

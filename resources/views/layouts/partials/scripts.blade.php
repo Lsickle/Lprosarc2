@@ -234,7 +234,10 @@
   });
 </script>
 <script>
-  $(function () {
+  // $(document).ready(function(){
+
+  // });
+  $(document).ready(function () {
     $('#example1').DataTable({
       "processing": true,
       "language": {

@@ -1,5 +1,5 @@
 <div class=" requirements-component form-group">
-	<label class="control-label col-md-3 col-sm-3 col-xs-12"><h4>Externos</h4></label>
+	<label class="control-label col-md-3 col-sm-3 col-xs-12"><h3>Externos</h3></label>
 	<div class="col-md-9 col-sm-9 col-xs-12">
 		<div class="">
 			<label>
@@ -22,7 +22,7 @@
 			</label>
 		</div>
 	</div>
-  <label class="control-label col-md-3 col-sm-3 col-xs-12"><h4>Internos</h4></label>
+  <label class="control-label col-md-3 col-sm-3 col-xs-12"><h3>Internos</h3></label>
   <div class="col-md-9 col-sm-9 col-xs-12">
     <div class="">
       <label>
