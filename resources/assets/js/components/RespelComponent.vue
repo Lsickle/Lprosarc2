@@ -12,6 +12,9 @@
 	</form>
 </template>
 <script type="text/javascript">
-	
-
+	export default {
+        mounted() {
+            console.log('RespelComponent mounted.')
+        }
+    }
 </script>

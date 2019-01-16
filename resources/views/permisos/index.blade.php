@@ -34,7 +34,7 @@
                   <th>Status</th>
                   <th>Rol</th> 
                   <th>Mas...</th>
-                  <th>Editar</th>
+                  <th>Editar Rol</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,7 +66,7 @@
                   <th>Status</th>
                   <th>Rol</th>
                   <th>Mas...</th>
-                  <th>Editar</th>
+                  <th>Editar Rol</th>
                 </tr>
                 </tfoot>
               </table>

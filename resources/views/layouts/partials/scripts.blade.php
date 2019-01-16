@@ -346,7 +346,9 @@ $(document).ready(function(){
 
 <!-- script para botones del listado de usuarios -->
 <script type="text/javascript">
-  
+    $('.radio1').on('switch-change', function () {
+        $('.radio1').bootstrapSwitch('toggleRadioState');
+    });
 </script>
 
 

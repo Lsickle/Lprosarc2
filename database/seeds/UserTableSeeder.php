@@ -53,7 +53,7 @@ class UserTableSeeder extends Seeder
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Leider1';
         $user->UsRol = 'admin';
-        $user->UsRolDesc = 'Gerente de Planta';
+        $user->UsRolDesc = 'Director de Planta';
         $user->save();
         $user->roles()->attach($role_admin);
 

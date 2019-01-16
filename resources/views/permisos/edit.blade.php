@@ -34,50 +34,27 @@
 								@csrf
 								@method('PUT')
 								<div class="box-body">
-									<div class="form-group">
-										<label for="ClienteInputNit">NIT</label>
-										<input name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-Y" value="">
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputRazon">Razon social</label>
-										<input name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." value="">
-									</div>
-									<div class="form-group">
-										<label for="">Nombre Corto</label>
-										<input name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" value="">
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputCategoria">Categoria</label>
-										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente" value="">
-											<option>cliente</option>
-											<option>generador</option>
-											<option>transportador</option>
-											<option>Proveedor</option>
-											<option>otro</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label for="ClienteInputTipo">Tipo de empresa</label>
-										<select name="CliType" class="form-control" id="ClienteInputTipo" placeholder="biologico" value="">
-											<option>biologico</option>
-											<option>industrial</option>
-											<option>medicamentos</option>
-											<option>otros</option>
-										</select>
-									</div>
-									<div class="col-xs-8">
-									   <div class="icheck form-group">
-			                                <label for="ClienteInputTipo">
-			                                   {{trans('adminlte_lang::message.clientaudit')}}
-			                                </label>
-			                                 <input id="ClienteInputTipo" style="display:none;" type="checkbox" name="CliAuditable">
-			                            </div>
-									</div>
-									{{-- <div class="form-group">
-										<label for="exampleInputFile">Documento requerido</label>
-										<input name="" type="file" id="exampleInputFile">
-										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div> --}}
+									<div class="tab-pane" id="addRowWizz">
+							            <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
+							            <div id="smartwizard">
+							              <ul>
+							                <li><a href="#step-1">Paso 1 <br /><small>Datos de la cuenta</small></a></li>
+							                <li><a href="#step-2">Paso 2<br /><small>rol y tipo</small></a></li>
+							                <li><a href="#step-3">paso 3<br /><small>status</small></a></li>
+							              </ul>
+							                <div>
+							                  <div id="step-1" class="">
+							                    @include('layouts.UserPartials.form1')
+							                  </div>
+							                  <div id="step-2" class="">
+							                    @include('layouts.UserPartials.form2')
+							                  </div>
+							                  <div id="step-3" class="">
+							                    @include('layouts.UserPartials.form3')
+							                  </div>
+							                </div>
+							            </div>
+							        </div>
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
