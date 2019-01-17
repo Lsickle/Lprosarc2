@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
-use App\Role;
 
 class RolesController extends Controller
 {
@@ -20,7 +19,8 @@ class RolesController extends Controller
         $users = DB::table('role_user')
             ->join('users', 'role_user.user_id', '=', 'users.id')
             ->join('roles', 'role_user.role_id', '=', 'roles.id')
-            ->select(   'users.name', 
+            ->select(   'users.id', 
+                        'users.name', 
                         'users.email', 
                         'users.created_at',  
                         'users.updated_at', 
@@ -29,9 +29,7 @@ class RolesController extends Controller
                         'users.UsStatus', 
                         'users.UsSlug', 
                         'users.UsRol', 
-                        'users.UsRolDesc', 
-                        'roles.name as rolname', 
-                        'roles.descripcion' 
+                        'users.UsRolDesc'
                         )
         ->get();
 
@@ -72,9 +70,10 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
-        return view('permisos.show', compact('user'));
+    public function show(User $users)
+    {   
+        return $users;
+        return view('permisos.show', compact('users'));
     }
 
     /**
@@ -83,9 +82,10 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $usuario)
-    {
-        return view('permisos.edit', compact('usuario'));
+    public function edit(User $users)
+    {   
+
+        return view('permisos.edit', compact('users'));
     }
 
     /**

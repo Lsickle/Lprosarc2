@@ -48,16 +48,16 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($users as $user)
+                	@foreach($usuarios as $usuario)
 						        <tr>
-		                  <td>{{$user->name}}</td>
-		                  <td>{{$user->email}}</td>
-                      <td>{{$user->UsStatus}}</td>
-                      <td>{{$user->UsRolDesc}}</td>
-                      <th>{{$user->UsSlug}}</th>
-                      <th>{{$user->UsSlug}}</th>
+		                  <td>{{$usuario->name}}</td>
+		                  <td>{{$usuario->email}}</td>
+                      <td>{{$usuario->UsStatus}}</td>
+                      <td>{{$usuario->UsRolDesc}}</td>
+                      <th>{{$usuario->UsSlug}}</th>
+                      <th>{{$usuario->UsSlug}}</th>
 		                </tr>
-					@endforeach
+					        @endforeach
             	</tbody>
                 <tfoot>
                 <tr>
