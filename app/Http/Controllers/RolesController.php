@@ -70,10 +70,10 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $users)
+    public function show($id)
     {   
-        return $users;
-        return view('permisos.show', compact('users'));
+        $user=User::find($id);
+        return view('permisos.show', compact('user'));
     }
 
     /**
@@ -82,10 +82,11 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $users)
+    public function edit($id)
     {   
-
-        return view('permisos.edit', compact('users'));
+        $user=User::find($id);
+        // return $user;
+        return view('permisos.edit', compact('user'));
     }
 
     /**
@@ -97,7 +98,16 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request;
+        $id->fill($request->except('created_at'));
+        if ($request->CliAuditable=='on') {
+            $id->CliAuditable='1';
+        }
+        else{
+            $id->CliAuditable='0';
+        };
+        $id->save();
+        return redirect()->route('permisos.index');
     }
 
     /**

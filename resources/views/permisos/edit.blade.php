@@ -30,7 +30,7 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/permisos/{{$user->UsSlug}}" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/permisos/{{$user->id}}" method="POST" enctype="multipart/form-data">
 								@csrf
 								@method('PUT')
 								<div class="box-body">
@@ -58,7 +58,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
+									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
 								</div>
 							</form>
 						</div>

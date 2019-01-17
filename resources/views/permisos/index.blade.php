@@ -48,14 +48,14 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($usuarios as $usuario)
+                	@foreach($users as $usuario)
 						        <tr>
 		                  <td>{{$usuario->name}}</td>
 		                  <td>{{$usuario->email}}</td>
                       <td>{{$usuario->UsStatus}}</td>
                       <td>{{$usuario->UsRolDesc}}</td>
-                      <th>{{$usuario->UsSlug}}</th>
-                      <th>{{$usuario->UsSlug}}</th>
+                      <th>{{$usuario->id}}</th>
+                      <th>{{$usuario->id}}</th>
 		                </tr>
 					        @endforeach
             	</tbody>

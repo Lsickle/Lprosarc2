@@ -123,11 +123,11 @@
       // ],
       "columnDefs": [
        {"targets": 4,
-        "data": "UsSlug",
+        "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
         {"targets": 5,
-        "data": "UsSlug",
+        "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
       ]
