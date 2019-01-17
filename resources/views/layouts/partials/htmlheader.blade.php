@@ -22,10 +22,10 @@
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
-    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    {{-- <link rel="stylesheet" href="/css/AdminLTE.min.css"> --}}
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/css/skins/_all-skins.css">
 {{--     datatables styles --}}
 {{--     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
