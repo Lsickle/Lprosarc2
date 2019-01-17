@@ -4,6 +4,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -13,7 +14,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     {{-- bootstrap 3.3 --}}
-{{--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> --}}
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> --}}
 {{-- bootstrap-switch --}}
     {{-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"> --}}
     <link rel="stylesheet" type="text/css" href="/js/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
@@ -22,7 +23,7 @@
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
-    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    {{-- <link rel="stylesheet" href="/css/AdminLTE.min.css"> --}}
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/css/skins/_all-skins.min.css">
@@ -36,8 +37,8 @@
 {{-- SmartWizard styles --}}
     <link href="/js/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" /> 
     <link href="/js/smartwizard/dist/css/smart_wizard_theme_arrows.css" rel="stylesheet" type="text/css" /> 
-    <link href="/js/smartwizard/dist/css/smart_wizard_theme_circles.css" rel="stylesheet" type="text/css" /> 
-    <link href="/js/smartwizard/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" /> 
+    {{-- <link href="/js/smartwizard/dist/css/smart_wizard_theme_circles.css" rel="stylesheet" type="text/css" />  --}}
+    {{-- <link href="/js/smartwizard/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />  --}}
 
 {{-- script de idioma --}}
     <script>
