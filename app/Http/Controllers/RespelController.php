@@ -35,7 +35,7 @@ class RespelController extends Controller
      */
     public function create()
     {
-        //
+        return view('respels.create');
     }
 
     /**

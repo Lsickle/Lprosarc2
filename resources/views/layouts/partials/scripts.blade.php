@@ -251,9 +251,14 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+        {"targets": 6,
+        "data": "CliSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
         }  
       }]
+
     });
     // $('#example2').DataTable({
     //   'paging'      : true,

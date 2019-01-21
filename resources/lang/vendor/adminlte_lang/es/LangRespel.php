@@ -12,12 +12,13 @@ return [
     | {{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
     */
 
-    'respelmenu'    => 'Residuos',
-    'Respellist'    => 'Lista de Residuos',
-    'basicinfo'    => 'Datos Básicos',
-    'complete'    => 'Complete los siguientes campos',
-    'declaregistertittle'    => 'Crear Declaración',
-    'boxregistertittle'    => 'Crear Declaración de Residuos',
-    'box-title'    => 'Datos de la declaracion de residuos',
-    'innerbox-title'    => 'complete todos los campos a continuacion',
+    'respelmenu'            => 'Residuos',
+    'Respellist'            => 'Lista de Residuos',
+    'Respelcreate'          => 'Registro de Residuos',
+    'basicinfo'             => 'Datos Básicos',
+    'complete'              => 'Complete los siguientes campos',
+    'declaregistertittle'   => 'Crear Declaración',
+    'boxregistertittle'     => 'Crear Declaración de Residuos',
+    'box-title'             => 'Datos de la declaracion de residuos',
+    'innerbox-title'        => 'complete todos los campos a continuacion',
 ];
