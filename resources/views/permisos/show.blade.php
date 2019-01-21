@@ -19,9 +19,9 @@
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
 
-              <h3 class="profile-username text-center">{{$cliente->CliShortname}}</h3>
+              <h3 class="profile-username text-center">{{$user->name}}</h3>
 
-              <p class="text-muted text-center">{{$cliente->CliCategoria}}</p>
+              <p class="text-muted text-center">{{$user->email}}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -35,14 +35,14 @@
                 </li>
               </ul>
 
-          	<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+          	<a href="/permisos/{{$user->id}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
 						<br>
-{{--             <form action="/sclientes/create" class="form-group" method="POST">
+{{--             <form action="/spermisos/create" class="form-group" method="POST">
               @csrf
-                <input type="text" name="CliSlug" value="{{$cliente->CliSlug}}" hidden="true">
+                <input type="text" name="CliSlug" value="{{$user->CliSlug}}" hidden="true">
                 <button type="submit" class="btn btn-primary btn-block">Agregar Sede</button>
             </form> --}}
-      			<form action="/clientes/{{$cliente->ID_Cli}}" class="form-group" method="POST">
+      			<form action="/permisos/{{$user->id}}" class="form-group" method="POST">
       				@csrf
       				@method('DELETE')
       					<button type="submit" class="btn btn-danger btn-block">Borrar</button>

@@ -84,7 +84,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'UsSlug'   => $data['name'].mt_rand(1,999),
             'UsRol'    => "Usuario",
-            'UsRolDesc'    => $data['email'],   
+            'UsRolDesc'    => "Usuario General",   
         ];
         if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];

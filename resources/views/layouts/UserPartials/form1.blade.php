@@ -1,10 +1,10 @@
 <div class="form-group">
 	<label>Nombre</label>
-	<input name="name" value="{{$user->name}}" type="text" class="form-control" placeholder="Nombre de usuario">
+	<input name="name" value="{{$user->name}}" type="text" class="form-control" placeholder="Nombre de usuario" required>
 </div>
 <div class="form-group">
 	<label>Email</label>
-	<input name="email" value="{{$user->email}}" type="text" class="form-control" placeholder="Correo electornico de usuario">
+	<input name="email" value="{{$user->email}}" type="text" class="form-control" placeholder="Correo electornico de usuario" required>
 </div>
 {{-- <div class="form-group">
 	<label >Rol</label>
@@ -33,11 +33,11 @@
 </div> --}}
 <div class="form-group">
 	<label>Fecha de registro</label>
-	<input name="created_at" value="{{$user->created_at}}" type="text" class="form-control disable">
+	<input name="created_at" value="{{$user->created_at}}" type="text" class="form-control" disabled>
 </div>
 <div class="form-group">
 	<label>Ultima Actualizacion</label>
-	<input name="updated_at" value="{{$user->updated_at}}" type="text" class="form-control disable">
+	<input name="updated_at" value="{{$user->updated_at}}" type="text" class="form-control" disabled>
 </div>
 {{-- <div class="form-group">
 	<label>Tipo de usuario</label>

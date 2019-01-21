@@ -11,7 +11,7 @@
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::LangUsers.usermenu') }}</h3>
             <ul class='control-sidebar-menu'>
-                @if (Auth::user()->id == 1)
+                @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin"||Auth::user()->UsRol == "JefeLogistica")
                     <li>
                         <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>
@@ -22,15 +22,6 @@
                         </a>
                     </li>
                 @endif
-                <li>
-                    <a href='/permisos'>
-                        <i class="menu-icon fa fa-users bg-green"></i>
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.userroles') }}</h4>
-                            <p>{{ trans('adminlte_lang::LangUsers.rolesdescrip') }}</p>
-                        </div>
-                    </a>
-                </li>
             </ul><!-- /.control-sidebar-menu -->
 
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.progress') }}</h3>

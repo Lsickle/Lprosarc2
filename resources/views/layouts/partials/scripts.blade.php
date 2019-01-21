@@ -111,7 +111,7 @@
     //   }]
     // });
       var table = $('#UsersTable').DataTable({
-      "processing": true,
+      // "processing": true,
       "language": {
           "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
       },
@@ -124,12 +124,12 @@
       //     'copy', 'excel', 'pdf'
       // ],
       "columnDefs": [
-       {"targets": 4,
-        "data": "UsSlug",
+       {"targets": 5,
+        "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
-        {"targets": 5,
-        "data": "UsSlug",
+        {"targets": 6,
+        "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
       ]
@@ -253,9 +253,14 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+        {"targets": 6,
+        "data": "CliSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
         }  
       }]
+
     });
     // $('#example2').DataTable({
     //   'paging'      : true,
@@ -350,19 +355,19 @@ $(document).ready(function(){
 </script>
 
 {{-- bootstrap-switch  --}}
-<script type="text/javascript">
+<script >
   $(".testswitch").bootstrapSwitch({
     animate: true,
   });
 </script>
 
 <!-- script para botones del listado de usuarios -->
-<script type="text/javascript">
-    $('.radio1').on('switch-change', function () {
-        $('.radio1').bootstrapSwitch('toggleRadioState');
-    });
+{{-- <script type="text/javascript">
+  $('.radio1').on('switch-change', function () {
+      $('.radio1').bootstrapSwitch('toggleRadioState');
+  });
 </script>
-
+ --}}
 
 
 

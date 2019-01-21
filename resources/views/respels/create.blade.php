@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientregistertittle') }}
+{{ trans('adminlte_lang::LangRespel.respelmenu') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.clientregistertittle') }}
+{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,7 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Modificar Datos de empresa</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -26,7 +26,7 @@
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Quick Example</h3>
+								<h3 class="box-title">Formulario de registro</h3>
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -35,12 +35,12 @@
 								@method('PUT')
 								<div class="box-body">
 									<div class="tab-pane" id="addRowWizz">
-							            <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>
+							            <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
 							            <div id="smartwizard">
 							              <ul>
-							                <li><a href="#step-1">Paso 1 <br /><small>Datos de la cuenta</small></a></li>
-							                <li><a href="#step-2">Paso 2<br /><small>rol y tipo</small></a></li>
-							                <li><a href="#step-3">paso 3<br /><small>status</small></a></li>
+							                <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la cuenta</small></a></li>
+							                <li><a href="#step-2"><b>Paso 2</b><br /><small>rol y tipo</small></a></li>
+							                <li><a href="#step-3"><b>paso 3</b><br /><small>status</small></a></li>
 							              </ul>
 							                <div>
 							                  <div id="step-1" class="">

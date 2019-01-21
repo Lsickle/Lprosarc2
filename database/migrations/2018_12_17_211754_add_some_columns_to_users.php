@@ -20,7 +20,7 @@ class AddSomeColumnsToUsers extends Migration
             $table->string('UsAvatar', 255);
             $table->string('UsQuestion', 128);
             $table->string('UsAnswer', 128);
-            $table->string('UsStatus', 8);
+            $table->string('UsStatus', 32);
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

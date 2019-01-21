@@ -80,6 +80,14 @@
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="#"><i class='fas fa-biohazard'></i> <span>{{ trans('adminlte_lang::langresiduos.residuolisttitle') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/respels"><i class='fa fa-search'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem1') }}</a></li>
+
+                        <li><a href="/respels/create"><i class='fa fa-file-text'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem2') }}</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
                     <a href="#"><i class='fa fa-list'></i> <span>{{ trans('adminlte_lang::message.declarationmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/declaraciones"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.declarread') }}</a></li>
@@ -89,16 +97,7 @@
                         
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#"><i class='fas fa-biohazard'></i> <span>{{ trans('adminlte_lang::langresiduos.residuolisttitle') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/respels"><i class='fa fa-search'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem1') }}</a></li>
-
-                        <li><a href="/respels/create"><i class='fa fa-file-text'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem2') }}</a></li>
-                        
-                        
-                    </ul>
-                </li>
+                
                 <li class="treeview">
                     <a href="#"><i class='fa fa-clipboard-list'></i> <span>{{ trans('adminlte_lang::message.ordermenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">

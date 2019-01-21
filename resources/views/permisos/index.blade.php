@@ -48,16 +48,33 @@
 								</div>
 							</div>
 						</div> --}}
-                	@foreach($users as $user)
+                @if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
+                	@foreach($users as $usuario)
 						        <tr>
-		                  <td>{{$user->name}}</td>
-		                  <td>{{$user->email}}</td>
-                      <td>{{$user->UsStatus}}</td>
-                      <td>{{$user->UsRolDesc}}</td>
-                      <th>{{$user->UsSlug}}</th>
-                      <th>{{$user->UsSlug}}</th>
+		                  <td>{{$usuario->name}}</td>
+		                  <td>{{$usuario->email}}</td>
+                      <td>{{$usuario->UsStatus}}</td>
+                      <td>{{$usuario->UsRolDesc}}</td>
+                      <td>{{$usuario->UsType}}</td>
+                      <th>{{$usuario->id}}</th>
+                      <th>{{$usuario->id}}</th>
 		                </tr>
-					@endforeach
+					        @endforeach
+                @else
+                  @foreach($users as $usuario)
+                    @if($usuario->UsRol !== "Programador" && $usuario->UsRol !== "admin" && $usuario->UsType !== "Interno")
+                      <tr>
+                        <td>{{$usuario->name}}</td>
+                        <td>{{$usuario->email}}</td>
+                        <td>{{$usuario->UsStatus}}</td>
+                        <td>{{$usuario->UsRolDesc}}</td>
+                        <td>{{$usuario->UsType}}</td>
+                        <th>{{$usuario->id}}</th>
+                        <th>{{$usuario->id}}</th>
+                      </tr>
+                    @endif()
+                  @endforeach
+                @endif() 
             	</tbody>
                 <tfoot>
                 <tr>

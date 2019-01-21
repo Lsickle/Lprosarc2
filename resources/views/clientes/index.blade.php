@@ -14,7 +14,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">lista de clientes</h3>
+              <h3 class="box-title">Lista de Contactos</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -27,6 +27,7 @@
                   <th>Creado el</th>
                   <th>Auditable</th>
                   <th>Mas...</th>
+                  <th>Editar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,7 +53,8 @@
           								<td>NO</td>
           							@endif
                           <td>{{$cliente->CliSlug}}</td>
-		                </tr>
+                          <td>{{$cliente->CliSlug}}</td>
+		                  </tr>
 					         @endforeach
             	</tbody>
                 <tfoot>
@@ -62,7 +64,8 @@
                   <th>NIT</th>
                   <th>Creado el</th>
                   <th>Auditable</th>
-                  <th>Mas...</th
+                  <th>Mas...</th>
+                  <th>Editar</th>
                 </tr>
                 </tfoot>
               </table>

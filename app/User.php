@@ -61,7 +61,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    public function getRouteKeyName()
+    {
+        return 'UsSlug';
+    }
     //se especifica la raclacion con la tabla declaraciones
     public function declaracion()
     {
