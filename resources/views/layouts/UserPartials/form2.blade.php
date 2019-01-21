@@ -10,7 +10,6 @@
     @else
       <div class="">
         <label>
-          <input  hidden class="" type="radio" name="UsRol" value=""/>
         </label>
       </div>
     @endif

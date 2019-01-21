@@ -36,7 +36,7 @@ class RolesController extends Controller
         if (!$request->User()) {
           return redirect()->route('login');
         }else{
-            $request->User()->authorizeRoles(['admin','Programador','JefeLogistica']);
+            $request->User()->authorizeRoles(['admin', 'Programador', 'JefeLogistica']);
             // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
         }
@@ -98,15 +98,90 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
-        $id->fill($request->except('created_at'));
-        if ($request->CliAuditable=='on') {
-            $id->CliAuditable='1';
-        }
-        else{
-            $id->CliAuditable='0';
+        // return $request;
+        $rolDescripcion="";
+        switch ($request->UsRol) {
+            case '':
+                $rolDescripcion="Sin Rol Asignado";
+                break;
+
+            case 'Usuario':
+                $rolDescripcion="Usuario general";
+                break;
+
+            case 'Cliente':
+                $rolDescripcion="Cliente registrado";
+                break; 
+
+            case 'Generador':
+                $rolDescripcion="Generador de residuos";
+                break; 
+
+            case 'Auditor':
+                $rolDescripcion="Auditor Externo";
+                break; 
+
+            case 'JefeLogistica':
+                $rolDescripcion="Jefe de Logistica";
+                break; 
+
+            case 'AuxiliarLogistica':
+                $rolDescripcion="Auxiliar de Logistica";
+                break; 
+
+            case 'JefeOperacion':
+                $rolDescripcion="Jefe de Operaciones";
+                break;    
+            
+            case 'SupervisorTurno':
+                $rolDescripcion="Supervisor de Turno";
+                break;    
+            
+            case 'EncargadoAlmacen':
+                $rolDescripcion="Encargado de Almacen";
+                break;    
+            
+            case 'AsistenteLogistica':
+                $rolDescripcion="Asistente de Logistica";
+                break;    
+            
+            case 'EncargadoHorno':
+                $rolDescripcion="Encargado de Horno";
+                break;    
+            
+            case 'Tesoreria':
+                $rolDescripcion="Tesoreria";
+                break;    
+            
+            case 'AdminCuenta':
+                $rolDescripcion="Administrador de cuenta";
+                break;    
+            
+            case 'AdminComercial':
+                $rolDescripcion="Director Comercial";
+                break;    
+            
+            case 'admin':
+                $rolDescripcion="Director de Planta";
+                break;    
+            
+            case 'Programador':
+                $rolDescripcion="Programador de Software";
+                break; 
+            
+            default:
+                $rolDescripcion="Sin Rol Asignado";
+                break;
         };
-        $id->save();
+        DB::table('users')
+        ->where('id', $id)
+        ->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'UsRol' => $request->UsRol,
+            'UsStatus' => $request->UsStatus,
+            'UsRolDesc' => $rolDescripcion,
+        ]);
         return redirect()->route('permisos.index');
     }
 
