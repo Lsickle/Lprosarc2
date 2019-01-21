@@ -341,7 +341,7 @@ $(document).ready(function(){
       fixed layout. -->
 
 {{-- bootstrap-switch  --}}
-<script type="text/javascript">
+<script >
   $(".testswitch").bootstrapSwitch({
     animate: true,
   });
