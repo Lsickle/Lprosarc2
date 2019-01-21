@@ -4,13 +4,13 @@
     @if ($user->UsRol=="")
     <div class="">
       <label>
-        <input hidden class="" type="radio" name="UsRol" value=""/>
+        <input checked class="" type="radio" name="UsRol" value=""/>Sin Rol Asignado
       </label>
     </div>
     @else
       <div class="">
         <label>
-          <input checked hidden class="" type="radio" name="UsRol" value=""/>
+          <input  hidden class="" type="radio" name="UsRol" value=""/>
         </label>
       </div>
     @endif
@@ -76,35 +76,6 @@
   <label class="control-label col-md-3 col-sm-3 col-xs-12"><h3>Internos</h3></label>
   <div class="col-md-9 col-sm-9 col-xs-12">
 
-    {{-- Swicht AdminPlanta --}}
-    @if ($user->UsRol=="AdminPlanta" || $user->UsRol=="Programador" )
-      <div class="">
-        <label>
-          <input checked class="testswitch" type="radio" name="UsRol" value="AdminPlanta"/> Director de Planta
-        </label>
-      </div>
-    @else
-      {{-- <div class="">
-        <label>
-          <input class="testswitch" type="radio" name="UsRol" value="AdminPlanta"/> Director de Planta
-        </label>
-      </div> --}}
-    @endif
-
-    {{-- Swicht Programador --}}
-    @if ($user->UsRol=="Programador")
-      <div class="">
-        <label>
-          <input checked class="testswitch" type="radio" name="UsRol" value="Programador"/> Programador de Software
-        </label>
-      </div>
-    @else
-      {{-- <div class="">
-        <label>
-          <input class="testswitch" type="radio" name="UsRol" value="Programador"/> Programador de Software
-        </label>
-      </div> --}}
-    @endif
 
     {{-- Swicht JefeLogistica --}}
     @if ($user->UsRol=="JefeLogistica")
@@ -241,22 +212,53 @@
         </label>
       </div>
     @endif
+    {{-- validacion de permisos para ver swicht de los siguientes roles--}}
+    @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
+      {{-- Swicht AdminComercial --}}
+      @if ($user->UsRol=="AdminComercial")
+        <div class="">
+          <label>
+            <input checked class="testswitch" type="radio" name="UsRol" value="AdminComercial"/> Director Comercial
+          </label>
+        </div>
+      @else
+        <div class="">
+          <label>
+            <input class="testswitch" type="radio" name="UsRol" value="AdminComercial"/> Director Comercial
+          </label>
+        </div>
+      @endif
 
-    {{-- Swicht AdminComercial --}}
-    @if ($user->UsRol=="AdminComercial"||$user->UsRol=="Programador")
-      <div class="">
-        <label>
-          <input checked class="testswitch" type="radio" name="UsRol" value="AdminComercial"/> Director Comercial
-        </label>
-      </div>
-    @else
-      {{-- <div class="">
-        <label>
-          <input class="testswitch" type="radio" name="UsRol" value="AdminComercial"/> Director Comercial
-        </label>
-      </div> --}}
+      {{-- Swicht AdminPlanta --}}
+      @if ($user->UsRol=="admin")
+        <div class="">
+          <label>
+            <input checked class="testswitch" type="radio" name="UsRol" value="admin"/> Director de Planta
+          </label>
+        </div>
+      @else
+        <div class="">
+          <label>
+            <input class="testswitch" type="radio" name="UsRol" value="admin"/> Director de Planta
+          </label>
+        </div>
+      @endif
+
+      {{-- Swicht Programador --}}
+      @if ($user->UsRol=="Programador")
+        <div class="">
+          <label>
+            <input checked class="testswitch" type="radio" name="UsRol" value="Programador"/> Programador de Software
+          </label>
+        </div>
+      @else
+        <div class="">
+          <label>
+            <input class="testswitch" type="radio" name="UsRol" value="Programador"/> Programador de Software
+          </label>
+        </div>
+      @endif
     @endif
-
   </div>
 </div>
 {{-- <script>
