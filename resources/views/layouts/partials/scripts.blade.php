@@ -109,7 +109,7 @@
     //   }]
     // });
       var table = $('#UsersTable').DataTable({
-      "processing": true,
+      // "processing": true,
       "language": {
           "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
       },
@@ -122,11 +122,11 @@
       //     'copy', 'excel', 'pdf'
       // ],
       "columnDefs": [
-       {"targets": 4,
+       {"targets": 5,
         "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
-        {"targets": 5,
+        {"targets": 6,
         "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}

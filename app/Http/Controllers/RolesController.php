@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class RolesController extends Controller
-{
+{   
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,23 +27,18 @@ class RolesController extends Controller
     public function index(Request $request)
     {
 
-        $users = DB::table('role_user')
-            ->join('users', 'role_user.user_id', '=', 'users.id')
-            ->join('roles', 'role_user.role_id', '=', 'roles.id')
-            ->select(   'users.id', 
-                        'users.name', 
-                        'users.email', 
-                        'users.created_at',  
-                        'users.updated_at', 
-                        'users.UsType', 
-                        'users.UsAvatar', 
-                        'users.UsStatus', 
-                        'users.UsSlug', 
-                        'users.UsRol', 
-                        'users.UsRolDesc'
-                        )
-        ->get();
-
+        $users = DB::table('users')->select('users.id', 
+                                            'users.name', 
+                                            'users.email', 
+                                            'users.created_at',  
+                                            'users.updated_at', 
+                                            'users.UsType', 
+                                            'users.UsAvatar', 
+                                            'users.UsStatus', 
+                                            'users.UsSlug', 
+                                            'users.UsRol', 
+                                            'users.UsRolDesc'
+                                            )->get();
         if (!$request->User()) {
           return redirect()->route('login');
         }else{
@@ -100,77 +106,96 @@ class RolesController extends Controller
     {
         // return $request;
         $rolDescripcion="";
+        $tipoUsuario="";
         switch ($request->UsRol) {
             case '':
                 $rolDescripcion="Sin Rol Asignado";
+                $tipoUsuario="Sin tipo aignado";
                 break;
 
             case 'Usuario':
                 $rolDescripcion="Usuario general";
+                $tipoUsuario="Externo";
                 break;
 
             case 'Cliente':
                 $rolDescripcion="Cliente registrado";
+                $tipoUsuario="Externo";
                 break; 
 
             case 'Generador':
                 $rolDescripcion="Generador de residuos";
+                $tipoUsuario="Externo";
                 break; 
 
             case 'Auditor':
                 $rolDescripcion="Auditor Externo";
+                $tipoUsuario="Externo";
                 break; 
 
             case 'JefeLogistica':
                 $rolDescripcion="Jefe de Logistica";
+                $tipoUsuario="Interno";
                 break; 
 
             case 'AuxiliarLogistica':
                 $rolDescripcion="Auxiliar de Logistica";
+                $tipoUsuario="Interno";
                 break; 
 
             case 'JefeOperacion':
                 $rolDescripcion="Jefe de Operaciones";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'SupervisorTurno':
                 $rolDescripcion="Supervisor de Turno";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'EncargadoAlmacen':
                 $rolDescripcion="Encargado de Almacen";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'AsistenteLogistica':
                 $rolDescripcion="Asistente de Logistica";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'EncargadoHorno':
                 $rolDescripcion="Encargado de Horno";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'Tesoreria':
                 $rolDescripcion="Tesoreria";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'AdminCuenta':
                 $rolDescripcion="Administrador de cuenta";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'AdminComercial':
                 $rolDescripcion="Director Comercial";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'admin':
                 $rolDescripcion="Director de Planta";
+                $tipoUsuario="Interno";
                 break;    
             
             case 'Programador':
                 $rolDescripcion="Programador de Software";
+                $tipoUsuario="Interno";
                 break; 
             
             default:
                 $rolDescripcion="Sin Rol Asignado";
+                $tipoUsuario="Interno";
                 break;
         };
         DB::table('users')
@@ -181,6 +206,9 @@ class RolesController extends Controller
             'UsRol' => $request->UsRol,
             'UsStatus' => $request->UsStatus,
             'UsRolDesc' => $rolDescripcion,
+            'UsType' => $tipoUsuario,
+            'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
+            'updated_by' => $request->updated_by,
         ]);
         return redirect()->route('permisos.index');
     }
@@ -195,4 +223,5 @@ class RolesController extends Controller
     {
         //
     }
+
 }

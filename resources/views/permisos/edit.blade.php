@@ -56,6 +56,7 @@
 							            </div>
 							        </div>
 								</div>
+								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>

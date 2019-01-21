@@ -55,18 +55,20 @@
 		                  <td>{{$usuario->email}}</td>
                       <td>{{$usuario->UsStatus}}</td>
                       <td>{{$usuario->UsRolDesc}}</td>
+                      <td>{{$usuario->UsType}}</td>
                       <th>{{$usuario->id}}</th>
                       <th>{{$usuario->id}}</th>
 		                </tr>
 					        @endforeach
                 @else
                   @foreach($users as $usuario)
-                    @if($usuario->UsRol !== "Programador" && $usuario->UsRol !== "admin")
+                    @if($usuario->UsRol !== "Programador" && $usuario->UsRol !== "admin" && $usuario->UsType !== "Interno")
                       <tr>
                         <td>{{$usuario->name}}</td>
                         <td>{{$usuario->email}}</td>
                         <td>{{$usuario->UsStatus}}</td>
                         <td>{{$usuario->UsRolDesc}}</td>
+                        <td>{{$usuario->UsType}}</td>
                         <th>{{$usuario->id}}</th>
                         <th>{{$usuario->id}}</th>
                       </tr>
