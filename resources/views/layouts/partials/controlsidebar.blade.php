@@ -11,7 +11,7 @@
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::LangUsers.usermenu') }}</h3>
             <ul class='control-sidebar-menu'>
-                @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
+                @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin"||Auth::user()->UsRol == "JefeLogistica")
                     <li>
                         <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>

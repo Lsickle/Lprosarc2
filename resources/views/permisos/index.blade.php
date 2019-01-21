@@ -48,6 +48,7 @@
 								</div>
 							</div>
 						</div> --}}
+                @if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
                 	@foreach($users as $usuario)
 						        <tr>
 		                  <td>{{$usuario->name}}</td>
@@ -58,6 +59,20 @@
                       <th>{{$usuario->id}}</th>
 		                </tr>
 					        @endforeach
+                @else
+                  @foreach($users as $usuario)
+                    @if($usuario->UsRol !== "Programador" && $usuario->UsRol !== "admin")
+                      <tr>
+                        <td>{{$usuario->name}}</td>
+                        <td>{{$usuario->email}}</td>
+                        <td>{{$usuario->UsStatus}}</td>
+                        <td>{{$usuario->UsRolDesc}}</td>
+                        <th>{{$usuario->id}}</th>
+                        <th>{{$usuario->id}}</th>
+                      </tr>
+                    @endif()
+                  @endforeach
+                @endif() 
             	</tbody>
                 <tfoot>
                 <tr>
