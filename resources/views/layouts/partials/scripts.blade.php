@@ -23,6 +23,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
 
+{{-- jquery-loading-overlay --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loadingoverlay.min.js" integrity="sha256-QWMh2Rb7imhX+Jbz2vTrQMZq89q749bcJSMoT+HqFnM=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loadingoverlay.js" integrity="sha256-vcjZcJVn4U6Vv+6rRlw9Tawh17NGK8m2k18oHsWES2I=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loading.gif"></script>
+
+
 {{-- SmartWizard --}}
 <script type="text/javascript" src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
 
@@ -42,6 +48,26 @@
     keyNavigation:true
   });
   });
+</script>
+
+
+{{-- funcion para precarga de tabla --}}
+<script type="text/javascript">
+  $t = $("#ContactTableout"); // CHANGE it to the table's id you have
+
+$("#overlay").css({
+  opacity : 0.5,
+  top     : $t.offset().top,
+  width   : $t.outerWidth(),
+  height  : $t.outerHeight()
+});
+
+$("#img-load").css({
+  top  : ($t.height() / 2),
+  left : ($t.width() / 2)
+});
+$("#overlay").fadeIn();
+$("#overlay").fadeOut();
 </script>
 
 <!-- funcion para flitrado de tablas -->

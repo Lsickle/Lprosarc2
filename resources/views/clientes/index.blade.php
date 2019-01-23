@@ -12,7 +12,7 @@
 
 				<!-- /.box -->
 
-          <div class="box">
+          <div class="box" id="RespelTableout">
             <div class="box-header">
               <h3 class="box-title">Lista de Contactos</h3>
             </div>
@@ -73,7 +73,10 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
+          <div id="overlay">
+            <img src="http://i59.tinypic.com/mm6691.gif" 
+              id="img-load" />
+          </div>
 			</div>
 		</div>
 	</div>

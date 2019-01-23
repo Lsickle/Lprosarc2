@@ -17,7 +17,7 @@
         	<p>JavaScript permite crear funcionalidades específicas en las páginas web y si por alguna razón es deshabilitado, el contenido o la funcionalidad de la página puede quedar limitada o no disponible</p><br>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/220px-Unofficial_JavaScript_logo_2.svg.png" alt="https://cdn.worldvectorlogo.com/logos/javascript.svg"/><br><br>
             Javascript está deshabilitado en su navegador web.<br />
-            Por favor, para ver correctamente la aplicacion <a href="../home"><b>SiG</b>ResP</a>:<br />
+            Para poder ver correctamente la aplicacion <a href="../home"><b>SiG</b>ResP</a> Por favor...<br />
             <h3>
             	<a href="http://www.enable-javascript.com/es/" 
             target="_blank"><b><i>Habilite Javascript</i></b>.<br /></a>
