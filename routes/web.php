@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 });
+Route::get('/noscriptpage', function () {
+    return view('noscriptpage');
+});
 Route::resource('/clientes', 'clientcontoller');
 Route::resource('/sclientes', 'sclientcontroller');
 Route::resource('/Generadores', 'genercontroller');
