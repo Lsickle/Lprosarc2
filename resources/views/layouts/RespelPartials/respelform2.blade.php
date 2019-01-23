@@ -3,32 +3,32 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Cargue
+          <input type="checkbox" class="fotoswitch" name="ReqFotoCargue" value="1" /> Cargue
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Descargue
+          <input type="checkbox" class="fotoswitch" name="ReqFotoDescargue" value="1" /> Descargue
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Pesaje
+          <input type="checkbox" class="fotoswitch" name="ReqFotoPesaje" value="1" /> Pesaje
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Reempacado
+          <input type="checkbox" class="fotoswitch" name="ReqFotoReempacado" value="1" /> Reempacado
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Mezclado
+          <input type="checkbox" class="fotoswitch" name="ReqFotoMezclado" value="1" /> Mezclado
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="fotoswitch"/> Destruccion
+          <input type="checkbox" class="fotoswitch" name="ReqFotoDestruccion" value="1" /> Destruccion
         </label>
       </div>
     </div>

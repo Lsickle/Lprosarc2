@@ -3,32 +3,32 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Cargue
+          <input type="checkbox" class="videoswitch" name="ReqVideoCargue" value="1"/> Cargue
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Descargue
+          <input type="checkbox" class="videoswitch" name="ReqVideoDescargue" value="1"/> Descargue
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Pesaje
+          <input type="checkbox" class="videoswitch" name="ReqVideoPesaje" value="1"/> Pesaje
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Reempacado
+          <input type="checkbox" class="videoswitch" name="ReqVideoReempacado" value="1"/> Reempacado
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Mezclado
+          <input type="checkbox" class="videoswitch" name="ReqVideoMezclado" value="1"/> Mezclado
         </label>
       </div>
       <div class="">
         <label>
-          <input type="checkbox" class="videoswitch"/> Destruccion
+          <input type="checkbox" class="videoswitch" name="ReqVideoDestruccion" value="1"/> Destruccion
         </label>
       </div>
     </div>

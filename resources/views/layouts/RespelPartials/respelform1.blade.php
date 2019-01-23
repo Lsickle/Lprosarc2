@@ -9,6 +9,7 @@
 <div class="form-group">
 	<label >Corriente de clasificacion 4741 de 2005</label>
 	<select name="YRespelClasf4741" class="form-control" placeholder="rol que desempeña en el proceso">
+		<option></option>
 		<option>Y1 Desechos clínicos resultantes de la
  atención médica prestada en hospitales, 
 centros médicos y clínicas </option>
@@ -97,6 +98,7 @@ mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44). </o
 <div class="form-group">
 	<label>Corriente de clasificacion 4741 de 2005</label>
 	<select name="ARespelClasf4741" class="form-control" placeholder="usuario interno/externo de Prosarc S.A.">
+		<option></option>
 		<optgroup label="A1 
 Desechos metálicos o que contengan metales">
 			<option><b>A1010</b> 
@@ -396,6 +398,7 @@ correspondiente apartado de la lista B B2060).   </option>
 		<option>Liquido</option>
 		<option>Solido</option>
 		<option>Gaseoso</option>
+		<option>Mezcla</option>
 	</select>
 </div>
 <div class="form-group">

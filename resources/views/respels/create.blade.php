@@ -30,14 +30,14 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/permisos" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
 									<div class="tab-pane" id="addRowWizz">
 							            <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
 							            <div id="smartwizard">
 							              <ul>
-							                <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del residuo</small></a></li>
+							                <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li>
 							                <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
 							                <li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
 							                <li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
