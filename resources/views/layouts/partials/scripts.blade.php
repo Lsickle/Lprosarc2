@@ -349,6 +349,36 @@ $(document).ready(function(){
 <script >
   $(".testswitch").bootstrapSwitch({
     animate: true,
+    labelText: '<i class="fas fa-arrows-alt-h"></i>',
+  });
+</script>
+
+<script >
+  $(".fotoswitch").bootstrapSwitch({
+    animate: true,
+    labelText: '<i class="fas fa-camera"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
+
+<script >
+  $(".videoswitch").bootstrapSwitch({
+    animate: true,
+    labelText: '<i class="fas fa-video"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
+
+
+<script >
+  $(".AllowUncheck").bootstrapSwitch({
+    animate: true,
+    radioAllOff: true,
+    labelText: '<i class="fas fa-eye"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
   });
 </script>
 
