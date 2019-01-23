@@ -68,7 +68,7 @@
 		                </tr>
 					@endforeach
             	</tbody>
-                <tfoot>
+                {{-- <tfoot>
                 <tr>
                   <th>Nombre</th>
                   <th>Descripcion</th>
@@ -83,7 +83,7 @@
                   <th>Actualizado el</th>
                   <th>edicion</th>
                 </tr>
-                </tfoot>
+                </tfoot> --}}
               </table>
             </div>
             <!-- /.box-body -->
