@@ -398,10 +398,14 @@ $(document).ready(function(){
 {{-- funcion para renderizar la tabla antes de que se muestren los datos --}}
 <script>
   $(document).ready(function renderTable(){
-      var b = document.querySelector("tbody");
+      var a = document.querySelector("#loadingTable");
+      var b = document.querySelector("#readyTable");
+      var c = document.querySelector("#readyHead");
       // b.setAttribute("name", "helloButton");  
       // alert('page loaded');  // alert to confirm the page is loaded    
+      a.setAttribute("hidden", "true");
       b.removeAttribute("hidden"); //enter the class or id of the particular html element which you wish to hide. 
+      c.removeAttribute("hidden");
   });
 </script>
   
