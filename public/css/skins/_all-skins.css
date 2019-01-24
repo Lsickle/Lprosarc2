@@ -1782,3 +1782,11 @@
     border-left: 1px solid #d2d6de;
   }
 }
+#overlay { 
+  display:none; 
+  position:absolute; 
+  background:#fff; 
+}
+#img-load { 
+  position:absolute; 
+}

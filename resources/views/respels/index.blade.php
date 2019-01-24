@@ -12,13 +12,13 @@
 
 				<!-- /.box -->
 
-          <div class="box">
+          <div class="box" id="ContactTableout">
             <div class="box-header">
               <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="DeclarTable" class="table table-bordered table-striped">
+              <table id="RespelTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Nombre</th>
@@ -68,7 +68,7 @@
 		                </tr>
 					@endforeach
             	</tbody>
-                <tfoot>
+                {{-- <tfoot>
                 <tr>
                   <th>Nombre</th>
                   <th>Descripcion</th>
@@ -83,13 +83,16 @@
                   <th>Actualizado el</th>
                   <th>edicion</th>
                 </tr>
-                </tfoot>
+                </tfoot> --}}
               </table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
+          <div id="overlay">
+            <img src="http://i59.tinypic.com/mm6691.gif" 
+              id="img-load" />
+          </div>
 			</div>
 		</div>
 	</div>

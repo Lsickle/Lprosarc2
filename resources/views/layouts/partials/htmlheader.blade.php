@@ -55,4 +55,8 @@
             echo json_encode($trans);
         @endphp
     </script>
+    <noscript>
+        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
+        {{-- @include('layouts.partials.noscript') --}}
+    </noscript>
 </head>

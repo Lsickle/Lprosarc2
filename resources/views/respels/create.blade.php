@@ -30,27 +30,30 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/permisos/{{$user->id}}" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
 								@csrf
-								@method('PUT')
 								<div class="box-body">
 									<div class="tab-pane" id="addRowWizz">
 							            <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
 							            <div id="smartwizard">
 							              <ul>
-							                <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la cuenta</small></a></li>
-							                <li><a href="#step-2"><b>Paso 2</b><br /><small>rol y tipo</small></a></li>
-							                <li><a href="#step-3"><b>paso 3</b><br /><small>status</small></a></li>
+							                <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li>
+							                <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
+							                <li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
+							                <li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
 							              </ul>
 							                <div>
 							                  <div id="step-1" class="">
-							                    @include('layouts.UserPartials.form1')
+							                    @include('layouts.RespelPartials.Respelform1')
 							                  </div>
 							                  <div id="step-2" class="">
-							                    @include('layouts.UserPartials.form2')
+							                    @include('layouts.RespelPartials.Respelform2')
 							                  </div>
 							                  <div id="step-3" class="">
-							                    @include('layouts.UserPartials.form3')
+							                    @include('layouts.RespelPartials.Respelform3')
+							                  </div>
+							                  <div id="step-4" class="">
+							                    @include('layouts.RespelPartials.Respelform4')
 							                  </div>
 							                </div>
 							            </div>
@@ -59,7 +62,7 @@
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
+									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
 								</div>
 							</form>
 						</div>
