@@ -12,7 +12,7 @@
 
 				<!-- /.box -->
 
-          <div class="box" id="RespelTableout">
+          <div class="box">
             <div class="box-header">
               <h3 class="box-title">Lista de Contactos</h3>
             </div>
@@ -30,7 +30,7 @@
                   <th>Editar</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody hidden onload="clienteTable()">
                 	{{-- <div class="row">
 							<div class="card text-center" style="width: 18rem; margin-top:3rem;">
 								<img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
@@ -57,7 +57,7 @@
 		                  </tr>
 					         @endforeach
             	</tbody>
-                <tfoot>
+                {{-- <tfoot>
                 <tr>
                   <th>Categoria</th>
                   <th>Nombre</th>
@@ -67,16 +67,12 @@
                   <th>Mas...</th>
                   <th>Editar</th>
                 </tr>
-                </tfoot>
+                </tfoot> --}}
               </table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-          <div id="overlay">
-            <img src="http://i59.tinypic.com/mm6691.gif" 
-              id="img-load" />
-          </div>
 			</div>
 		</div>
 	</div>

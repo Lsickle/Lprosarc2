@@ -23,10 +23,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
 
-{{-- jquery-loading-overlay --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loadingoverlay.min.js" integrity="sha256-QWMh2Rb7imhX+Jbz2vTrQMZq89q749bcJSMoT+HqFnM=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loadingoverlay.js" integrity="sha256-vcjZcJVn4U6Vv+6rRlw9Tawh17NGK8m2k18oHsWES2I=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/1.1/loading.gif"></script>
 
 
 {{-- SmartWizard --}}
@@ -50,25 +46,6 @@
   });
 </script>
 
-
-{{-- funcion para precarga de tabla --}}
-<script type="text/javascript">
-  $t = $("#ContactTableout"); // CHANGE it to the table's id you have
-
-$("#overlay").css({
-  opacity : 0.5,
-  top     : $t.offset().top,
-  width   : $t.outerWidth(),
-  height  : $t.outerHeight()
-});
-
-$("#img-load").css({
-  top  : ($t.height() / 2),
-  left : ($t.width() / 2)
-});
-$("#overlay").fadeIn();
-$("#overlay").fadeOut();
-</script>
 
 <!-- funcion para flitrado de tablas -->
 <script>
@@ -161,7 +138,7 @@ $("#overlay").fadeOut();
    
   new $.fn.dataTable.Buttons( table, {
       buttons: [
-          'copy', 'excel', 'pdf'
+          'copy', 'pdf'
       ]
   } );
   // $('#UsersTable').DataTable( {
@@ -209,12 +186,14 @@ $("#overlay").fadeOut();
   });
 </script> 
 <script>
+  // funcion para da formato a la tabla
   $(function () {
     $('#example4').DataTable({
       "scrollX": false,
       "autoWidth": true,
       "keys": true,
       "responsive": true,
+      "processing":true,
       "columnDefs": [ {
         "targets": 10,
         "data": "GSedeSlug",
@@ -415,6 +394,17 @@ $(document).ready(function(){
   });
 </script>
  --}}
+
+{{-- funcion para renderizar la tabla antes de que se muestren los datos --}}
+<script>
+  $(document).ready(function renderTable(){
+      var b = document.querySelector("tbody");
+      // b.setAttribute("name", "helloButton");  
+      // alert('page loaded');  // alert to confirm the page is loaded    
+      b.removeAttribute("hidden"); //enter the class or id of the particular html element which you wish to hide. 
+  });
+</script>
+  
 
 
 

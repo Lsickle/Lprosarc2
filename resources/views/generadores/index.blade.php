@@ -31,7 +31,7 @@
                   <th>edicion</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody  hidden onload="renderTable()">
                 	{{-- <div class="row">
 							<div class="card text-center" style="width: 18rem; margin-top:3rem;">
 								<img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
