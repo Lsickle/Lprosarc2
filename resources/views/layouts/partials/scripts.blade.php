@@ -36,6 +36,8 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
 
 
+{{-- slimScroll --}}
+<script type="text/javascript" src="resources/assets/js/jquery-slimscroll/jquery.slimscroll.js" ></script>
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
   $(document).ready(function(){
@@ -349,6 +351,13 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
+<script type="text/javascript">
+    $(Selector.sidebar).slimScroll({
+      height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
+      color : 'rgba(0,0,0,0.2)',
+      size  : '3px'
+    })
+</script>
 
 {{-- bootstrap-switch  --}}
 <script >

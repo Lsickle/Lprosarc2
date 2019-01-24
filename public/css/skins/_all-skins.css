@@ -57,9 +57,12 @@
   background: transparent;
 }
 .skin-blue .wrapper,
-.skin-blue .main-sidebar,
 .skin-blue .left-side {
   background-color: #222d32;
+}
+.skin-blue .main-sidebar{
+  height:100px;
+  overflow:auto;
 }
 .skin-blue .user-panel > .info,
 .skin-blue .user-panel > .info > a {
