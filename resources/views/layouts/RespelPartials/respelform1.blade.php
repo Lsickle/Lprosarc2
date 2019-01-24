@@ -9,8 +9,8 @@
 <div class="form-group">
 	<label >Corriente de clasificacion 4741 de 2005</label>
 	<select name="YRespelClasf4741" class="form-control" placeholder="rol que desempeña en el proceso">
-		<option></option>
-		<option>Y1 Desechos clínicos resultantes de la
+		<optgroup label="Seleccione...">
+			<option>Y1 Desechos clínicos resultantes de la
  atención médica prestada en hospitales, 
 centros médicos y clínicas </option>
 		<option>Y2  Desechos  resultantes  de  la  
@@ -93,12 +93,13 @@ las dibenzoparadioxinas policloradas </option>
 		<option>Y45     Compuesto
 s organohalogenados, que no sean las sustancias 
 mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44). </option>
+		</optgroup>
 	</select>
 </div>
 <div class="form-group">
 	<label>Corriente de clasificacion 4741 de 2005</label>
 	<select name="ARespelClasf4741" class="form-control" placeholder="usuario interno/externo de Prosarc S.A.">
-		<option></option>
+		<optgroup label="Seleccione..."></optgroup>
 		<optgroup label="A1 
 Desechos metálicos o que contengan metales">
 			<option><b>A1010</b> 
@@ -381,24 +382,28 @@ correspondiente apartado de la lista B B2060).   </option>
 <div class="form-group">
 	<label>Tipo de Peligrosidad</label>
 	<select name="RespelIgrosidad" class="form-control" placeholder="usuario interno/externo de Prosarc S.A.">
-		<option>Inflamable</option>
-		<option>Toxico</option>
-		<option>Biologico</option>
-		<option>corrosivo</option>
-		<option>reactivo</option>
-		<option>explosivo</option>
-		<option>infeccioso </option>
-		<option>radiactivo</option>
-		<option>Otro</option>
+		<optgroup label="Seleccione...">
+			<option>Inflamable</option>
+			<option>Toxico</option>
+			<option>Biologico</option>
+			<option>corrosivo</option>
+			<option>reactivo</option>
+			<option>explosivo</option>
+			<option>infeccioso </option>
+			<option>radiactivo</option>
+			<option>Otro</option>
+		</optgroup>
 	</select>
 </div>
 <div class="form-group">
 	<label>Estado del residuo</label>
 	<select name="RespelEstado" class="form-control" placeholder="usuario interno/externo de Prosarc S.A.">
-		<option>Liquido</option>
-		<option>Solido</option>
-		<option>Gaseoso</option>
-		<option>Mezcla</option>
+		<optgroup label="Seleccione...">
+			<option>Liquido</option>
+			<option>Solido</option>
+			<option>Gaseoso</option>
+			<option>Mezcla</option>
+		</optgroup>
 	</select>
 </div>
 <div class="form-group">
@@ -412,9 +417,11 @@ correspondiente apartado de la lista B B2060).   </option>
 <div class="form-group">
 	<label>RespelStatus</label>
 	<select name="RespelEstado" class="form-control" placeholder="usuario interno/externo de Prosarc S.A.">
-		<option>Aprobado</option>
-		<option>Negado</option>
-		<option>Pendiente</option>
-		<option>Incompleto</option>
+		<optgroup label="Seleccione...">
+			<option>Aprobado</option>
+			<option>Negado</option>
+			<option>Pendiente</option>
+			<option>Incompleto</option>
+		</optgroup>
 	</select>
 </div>
