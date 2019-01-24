@@ -32,8 +32,7 @@
 							<!-- form start -->
 							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="box-body"   hidden onload="renderTable()" id="readyTable">
-									{{-- <h1 id="loadingTable">LOADING...</h1> --}}
+								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 									<div class="fingerprint-spinner" id="loadingTable">
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
@@ -45,6 +44,7 @@
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 									</div>
+								<div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
 										<div id="smartwizard">

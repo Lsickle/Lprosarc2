@@ -244,15 +244,15 @@
   // });
   $(document).ready(function () {
     $('#example1').DataTable({
-      "processing": true,
-      "language": {
-          "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
-      },
+      // "processing": true,
+      // "language": {
+      //     "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
+      // },
       "scrollX": false,
-      "autoWidth": true,
-      "keys": true,
+          "autoWidth": true,
+               "keys": true,       
       "responsive": true,
-      "columnDefs": [ {
+                 "columnDefs": [ {
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
@@ -401,11 +401,13 @@ $(document).ready(function(){
       var a = document.querySelector("#loadingTable");
       var b = document.querySelector("#readyTable");
       var c = document.querySelector("#readyHead");
+      var d = document.querySelector("div.box-body");
       // b.setAttribute("name", "helloButton");  
       // alert('page loaded');  // alert to confirm the page is loaded    
       a.setAttribute("hidden", "true");
       b.removeAttribute("hidden"); //enter the class or id of the particular html element which you wish to hide. 
       c.removeAttribute("hidden");
+      d.removeAttribute("hidden");
   });
 </script>
   
