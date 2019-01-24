@@ -10,103 +10,66 @@
 	<label >Corriente de clasificacion Y</label>
 	<select name="YRespelClasf4741" class="form-control">
 		<optgroup label="Corriente de clasificacion Y segun Decreto Unico Ambiental del 2016">
-			<option>Y1 Desechos clínicos resultantes de la
-				atención médica prestada en hospitales,
-			centros médicos y clínicas </option>
-			<option>Y2  Desechos  resultantes  de  la
-				producción  y  preparación  de  productos
-			farmacéuticos  </option>
-			<option>Y3 Desechos de medicamentos
-			y productos farmacéuticos </option>
-			<option>Y4 Desechos resultantes de ¡a producci
-				ón, la preparación y la utilización de
-			biocidas y productos fitofarmacéuticos </option>
-			<option>Y5  Desechos  resultantes  de  la  fabr
-				icación,  preparación  y  utilización  de
-			productos químicos para la preservación de la madera </option>
-			<option>Y6 Desechos resultantes de la producci
-				ón, la preparación y la utilización de
-			disolventes orgánicos </option>
-			<option>Y7 Desechos, que contengan cianuros
-				, resultantes del tratamiento
-			térmico y las operaciones de temple </option>
+			<option>Selecione...</option>
+			<option>Y1 Desechos clínicos resultantes de la atención médica prestada en hospitales, centros médicos y clínicas </option>
+			<option>Y2 Desechos resultantes de la producción y preparación de productos farmacéuticos</option>
+			<option>Y3 Desechos de medicamentos y productos farmacéuticos</option>
+			<option>Y4 Desechos resultantes de ¡a producción, la preparación y la utilización de biocidas y productos fitofarmacéuticos</option>
+			<option>Y5 Desechos resultantes de la fabricación, preparación y utilización de productos químicos para la preservación de la madera</option>
+			<option>Y6 Desechos resultantes de la producción, la preparación y la utilización de disolventes orgánicos</option>
+			<option>Y7 Desechos, que contengan cianuros, resultantes del tratamiento térmico y las operaciones de temple</option>
 			<option>Y8 Desechos de aceites minerales no aptos para el uso a que estaban destinados</option>
 			<option>Y9 Mezclas y emulsiones de desechos de aceite y agua o de hidrocarburos y agua</option>
-			<option>Y10 Sustancias y artículos de desecho
-				que contengan, o es
-				tén contaminados
-				por,  bifeniíos  policlorados  (PCB),  terf
-				eniios  policlorados  (PCT)  o  bifeniíos
-			polibromados (PBB) </option>
-			<option>Y11 Residuos alquitranados
-				resultantes de la refinación, destilación o
-			cualquier otro tratamiento pirolítico </option>
-			<option>Y12 Desechos resultantes de la producción, preparación y utilización de tintas,
-			colorantes, pigmentos, pinturas, lacas o barnices </option>
-			<option>Y13 Desechos resultantes de la producción, preparación y utilización de
-			resinas, látex, plastificantes o colas y adhesivos </option>
-			<option>Y14 Sustancias químicas de desecho, no i
-				dentificadas o nuevas, resultantes de la
-				investigación y el desarrollo o de las
-				actividades de enseñanza y cuyos efectos
-			en el ser humano o el medio ambiente no se conozcan </option>
-			<option>Y15 Desechos de carácter explosivo que no estén sometidos a una legislación
-			diferente </option>
-			<option>Y16  Desechos  resultantes  de  la  pr
-				oducción;  preparación  y  utilización  de
-			productos químicos y materiales para fines fotográficos </option>
+			<option>Y10 Sustancias y artículos de desecho que contengan, o estén contaminados por, bifeniíos policlorados (PCB), terfeniios policlorados (PCT) o bifeniíos polibromados (PBB)</option>
+			<option>Y11 Residuos alquitranados resultantes de la refinación, destilación o cualquier otro tratamiento pirolítico</option>
+			<option>Y12 Desechos resultantes de la producción, preparación y utilización de tintas, colorantes, pigmentos, pinturas, lacas o barnices</option>
+			<option>Y13 Desechos resultantes de la producción, preparación y utilización de resinas, látex, plastificantes o colas y adhesivos</option>
+			<option>Y14 Sustancias químicas de desecho, no identificadas o nuevas, resultantes de la investigación y el desarrollo o de las actividades de enseñanza y cuyos efectos en el ser humano o el medio ambiente no se conozcan</option>
+			<option>Y15 Desechos de carácter explosivo que no estén sometidos a una legislación diferente</option>
+			<option>Y16 Desechos resultantes de la producción; preparación y utilización de productos químicos y materiales para fines fotográficos</option>
 			<option>Y17 Desechos resultantes del tratamiento de superficie de metales y plásticos</option>
-			<option>Y18 Residuos resultantes de las operaciones
-			de eliminación de desechos industriales </option>
-			<option>Y19  Metales
-			carbonilos  </option>
-			<option> Y
-			20 Berilio, compuestos de berilio </option>
+			<option>Y18 Residuos resultantes de las operaciones de eliminación de desechos industriales</option>
+			<option>Y19 Metales carbonilos</option>
+			<option>Y20 Berilio, compuestos de berilio</option>
 			<option>Y21 Compuestos de cromo hexavalente</option>
 			<option>Y22 Compuestos de cobre</option>
 			<option>Y23 Compuestos de zinc</option>
 			<option>Y24 Arsénico, compuestos de arsénico</option>
 			<option>Y25 Selenio, compuestos de selenio</option>
 			<option>Y26 Cadmio, compuestos de cadmio</option>
-			<option>Y27 Antimonio, compuestos de antimonio </option>
+			<option>Y27 Antimonio, compuestos de antimonio</option>
 			<option>Y28 Telurio, compuestos de telurio</option>
 			<option>Y29 Mercurio, compuestos de mercurio</option>
 			<option>Y30 Talio, compuestos de talío</option>
 			<option>Y31 Plomo, compuestos de plomo</option>
-			<option>Y32 Compuestos inorgánicos de flúor, c
-			on exclusión del fluoruro calcico </option>
-			<option>Y33 Cianuros inorgánicos </option>
+			<option>Y32 Compuestos inorgánicos de flúor, con exclusión del fluoruro calcico</option>
+			<option>Y33 Cianuros inorgánicos</option>
 			<option>Y34 Soluciones ácidas o ácidos en forma sólida</option>
 			<option>Y35 Soluciones básicas o bases en forma sólida</option>
-			<option>Y36 Asbesto (polvo y fibras) </option>
+			<option>Y36 Asbesto (polvo y fibras)</option>
 			<option>Y37 Compuestos orgánicos de fósforo</option>
 			<option>Y38 Cianuros orgánicos</option>
-			<option>Y39 Fenoles, compuestos fenólicos
-			, con inclusión de clorofenoles </option>
+			<option>Y39 Fenoles, compuestos fenólicos, con inclusión de clorofenoles</option>
 			<option>Y40 Éteres</option>
 			<option>Y41 Solventes orgánicos halogenados</option>
 			<option>Y42 Disolventes orgánicos, con exclusión de disolventes halogenados</option>
-			<option>Y43 Cualquier sustancia del grupo
-			de los dibenzofuranos policlorados </option>
-			<option>Y44 Cualquier sustancia del grupo de
-			las dibenzoparadioxinas policloradas </option>
-			<option>Y45     Compuesto
-				s organohalogenados, que no sean las sustancias
-			mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44). </option>
+			<option>Y43 Cualquier sustancia del grupo de los dibenzofuranos policlorados</option>
+			<option>Y44 Cualquier sustancia del grupo de las dibenzoparadioxinas policloradas</option>
+			<option>Y45 Compuestos organohalogenados, que no sean las sustancias mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44).</option>
 		</optgroup>
 	</select>
 </div>
 <div class="form-group">
 	<label>Corriente de clasificacion A</label>
 	<select name="ARespelClasf4741" class="form-control">
-		<option></option>
+		<option>Selecione...</option>
 		<optgroup label="A1
 			Desechos metálicos o que contengan metales">
 			<option><b>A1010</b>
 			Desechos metálicos y desechos que contengan aleaciones de cualquiera de las sustancias siguientes: Antimonio, Arsénico, Berilio, Cadmio, Plomo, Mercurio, Selenio, Telurio, Talio, pero excluidos los desechos que figuran específicamente en la lista B.</option>
 			<option><b> A1020</b> Desechos que tengan como constitu
 				yentes o contaminantes, excluidos
-				los   desechos   de   metal   en   forma   masiva,   cualquiera   de   las   sustancias
+				los  desechos   de   metal   en   forma   masiva,   cualquiera   de   las   sustancias
 				siguientes:
 				Antimonio; compuestos de antimonio
 				-  Berilio;  compuestos  de  berilio
@@ -398,6 +361,7 @@
 	<label>Estado del residuo</label>
 	<select name="RespelEstado" class="form-control">
 		<optgroup label="Seleccione el estado físico del residuo">
+			<option>Selecione...</option>
 			<option>Liquido</option>
 			<option>Solido</option>
 			<option>Gaseoso</option>
@@ -418,6 +382,7 @@
 	<label>Estado de aprobación</label>
 	<select name="RespelEstado" class="form-control">
 		<optgroup label="Estado de aprobación por parte de Prosarc">
+			<option>Selecione...</option>
 			<option>Aprobado</option>
 			<option>Negado</option>
 			<option>Pendiente</option>
