@@ -198,6 +198,15 @@ class RolesController extends Controller
                 $tipoUsuario="Interno";
                 break;
         };
+        if ($request->hasfile('UsAvatar')) {
+            $file = $request->file('UsAvatar');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/',$name);
+        }
+        else{
+            $name = public_path().'/images/default.jpg';
+
+        }
         DB::table('users')
         ->where('id', $id)
         ->update([
@@ -209,6 +218,7 @@ class RolesController extends Controller
             'UsType' => $tipoUsuario,
             'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             'updated_by' => $request->updated_by,
+            'UsAvatar' => $name,
         ]);
         return redirect()->route('permisos.index');
     }
