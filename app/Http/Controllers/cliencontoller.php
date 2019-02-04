@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Cliente;
+use App\audit;
+use Illuminate\Support\Facades\Auth;
 
 class clientcontoller extends Controller
 {
@@ -116,6 +118,13 @@ class clientcontoller extends Controller
             $cliente->CliAuditable='0';
         };
         $cliente->save();
+        $log = new audit();
+        $log->AuditTabla="clientes";
+        $log->AuditRegistro=$cliente->ID_Cli;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+        // return $log->Auditlog;
         return redirect()->route('clientes.index');
     }
 
