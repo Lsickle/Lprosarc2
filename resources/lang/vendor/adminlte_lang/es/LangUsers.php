@@ -19,4 +19,6 @@ return [
     'rolesdescrip'    => 'registro de roles y permisos de usuarios',
     'rolestitle'    => 'registro de roles y permisos de usuarios',
     'rolessubtitle'    => 'registro de roles y permisos de usuarios',
+    'auditmenu'    => 'Auditoria de cambios',
+    'auditmenudescription'    => 'lista de cambios y actualizaciones de cada Usuario',
 ];

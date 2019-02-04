@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Cliente;
 use App\audit;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\auditController;
 
 class clientcontoller extends Controller
 {
@@ -118,6 +119,7 @@ class clientcontoller extends Controller
             $cliente->CliAuditable='0';
         };
         $cliente->save();
+        /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="clientes";
         $log->AuditRegistro=$cliente->ID_Cli;

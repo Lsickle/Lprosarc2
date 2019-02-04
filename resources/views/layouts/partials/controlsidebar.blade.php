@@ -22,6 +22,17 @@
                         </a>
                     </li>
                 @endif
+                 @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
+                    <li>
+                        <a href='/audits'>
+                            <i class="menu-icon fas fa-user-secret bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.auditmenu') }}</h4>
+                                <p>{{ trans('adminlte_lang::LangUsers.auditmenudescription') }}</p>
+                            </div>
+                        </a>
+                    </li>
+                @endif
             </ul><!-- /.control-sidebar-menu -->
 
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.progress') }}</h3>
