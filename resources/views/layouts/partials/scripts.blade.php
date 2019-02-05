@@ -447,7 +447,8 @@ $(document).ready(function(){
     $('#auditstable').DataTable( {
       "scrollX": false,
       "autoWidth": true,
-      "keys": true
+      "keys": true,
+      "responsive": true
       // "columnDefs": [ {
       //   "targets": 5,
       //   "data": "id",
