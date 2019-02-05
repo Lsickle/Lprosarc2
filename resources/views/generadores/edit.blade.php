@@ -71,7 +71,7 @@
 			                                 <input id="GenerInputTipo" style="display:none;" type="checkbox" name="GenerAuditable">
 			                            </div>
 			                            <div >
-			                            	<input  hidden="false" type="text" name="GenerSlug" value="temp">
+			                            	<input  hidden="false" type="text" name="GenerSlug" value="{{$generadors->GenerSlug}}">
 			                            </div>
 									</div>
 									{{-- <div class="form-group">

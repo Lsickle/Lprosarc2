@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use lprosarc\Cliente;
 use App\Sede;
 use App\generador;
+use App\audit;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\auditController;
 
 
 class genercontroller extends Controller
@@ -115,6 +118,14 @@ class genercontroller extends Controller
         };
         $generador->GenerSlug = 'Gener-'.$request->input('GenerShortname');
         $generador->save();
+        /*codigo para incluir la actualizacion en la tabla de auditoria*/
+        $log = new audit();
+        $log->AuditTabla="generadors";
+        $log->AuditRegistro=$generador->ID_Gener;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        // return $log->Auditlog;
         return redirect()->route('Generadores.index');
     }
 
