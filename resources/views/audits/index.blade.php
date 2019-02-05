@@ -44,23 +44,28 @@
                 <td>{{$auditoria->AuditTabla}}</td>
                 <td>{{$auditoria->AuditRegistro}}</td>
                 <td>{{$auditoria->AuditUser}}</td>
-                <td>{{$auditoria->Auditlog}}</td>
+                <td>
+                
+                @foreach ($auditoria->Auditlog as $key=>$val)
+                          <b>{{ $key }}</b>:{{ $val }}<br>
+                @endforeach
+                </td>
               </tr>
               @endforeach
             </tbody>
             {{-- <tfoot>
             <tr>
-              <th>ID</th>
-              <th>Creado</th>
-              <th>Tabla</th>
-              <th>Registro</th>
-              <th>Usuario</th>
-              <th>LOG</th>
+                <th>ID</th>
+                <th>Creado</th>
+                <th>Tabla</th>
+                <th>Registro</th>
+                <th>Usuario</th>
+                <th>ver</th>
+                <th>LOG</th>
             </tr>
             </tfoot> --}}
           </table>
         </div>
-        <!-- /.box-body -->
       </div>
       <!-- /.box -->
     </div>

@@ -420,23 +420,40 @@ $(document).ready(function(){
   });
 </script>
 {{-- renderizado datatable para tabla de auditorias --}}
-<script>
+{{-- <script>
   $(document).ready(function () {
     $('#auditstable').DataTable({
       "scrollX": false,
       "autoWidth": true,
       "keys": true,       
       "responsive": true,
-      // "columnDefs": [ {
-      //   "targets": 5,
-      //   "data": "CliSlug",
-      //   "render": function ( data, type, row, meta ) {
-      //     return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+      "columnDefs": [ {
+        "targets": 5,
+        "data": "id",
+        "render": function ( data, type, row, meta ) {
+          return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +'Modal>Ver</button>";}}
       //   {"targets": 6,
       //   "data": "CliSlug",
       //   "render": function ( data, type, row, meta ) {
       //     return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
       //   }  
+      // }
+      ]
+    });
+  });
+</script> --}}
+<script>
+  $(document).ready(function() {
+    $('#auditstable').DataTable( {
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true
+      // "columnDefs": [ {
+      //   "targets": 5,
+      //   "data": "id",
+      //   "render": function ( data, type, row, meta ) {
+      //     return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +"Modal>Ver</button>";
+      //   }
       // }]
     });
   });
