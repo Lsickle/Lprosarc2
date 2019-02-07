@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.auditmenu') }}
+{{ trans('adminlte_lang::LangAudit.auditmenu') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -9,7 +9,7 @@
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Lista de Cambios y Actualizaciones</h3>
+          <h3 class="box-title">{{ trans('adminlte_lang::LangAudit.auditTittle') }}</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
