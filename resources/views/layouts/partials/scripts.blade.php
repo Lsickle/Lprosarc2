@@ -80,7 +80,7 @@
         "targets": 5,
         "data": "RespelName",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/respels/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
       }]
     });

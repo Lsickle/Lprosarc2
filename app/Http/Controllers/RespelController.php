@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Respel;
 
 class RespelController extends Controller
 {
@@ -14,16 +15,18 @@ class RespelController extends Controller
      */
     public function index()
     {
-        $Respels = DB::table('respels')
-            ->join('requerimientos', 'respels.RespelReq', '=', 'requerimientos.ID_Req')
-            ->join('declarations', 'respels.RespelDeclar', '=', 'declarations.ID_Declar')
-            ->join('gener_sedes', 'respels.RespelGenerSede', '=', 'gener_sedes.ID_GSede')
-            ->select('respels.*',
-                     'requerimientos.*',
-                     'declarations.*',
-                     'gener_sedes.*'
-                 )
-            ->get();
+        // $Respels = DB::table('respels')
+        //     ->join('requerimientos', 'respels.RespelReq', '=', 'requerimientos.ID_Req')
+        //     ->join('declarations', 'respels.RespelDeclar', '=', 'declarations.ID_Declar')
+        //     ->join('gener_sedes', 'respels.RespelGenerSede', '=', 'gener_sedes.ID_GSede')
+        //     ->select('respels.*',
+        //              'requerimientos.*',
+        //              'declarations.*',
+        //              'gener_sedes.*'
+        //          )
+        //     ->get();
+
+        $Respels = Respel::all();  
 
         return view('respels.index', compact('Respels'));
     }
@@ -47,7 +50,30 @@ class RespelController extends Controller
     public function store(Request $request)
     {   
 
-        return $request;
+        // return $request;
+
+         if ($request->hasfile('RespelHojaSeguridad')) {
+            $file = $request->file('RespelHojaSeguridad');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/',$name);
+        }
+        else{
+            $name = public_path().'/images/default.png';
+
+        }
+       
+        $respel = new Respel();
+        $respel->RespelName = $request->input('RespelName');
+        $respel->RespelDescrip = $request->input('RespelDescrip');
+        $respel->RespelClasf4741 = $request->input('RespelClasf4741');
+        $respel->RespelIgrosidad = $request->input('RespelIgrosidad');
+        $respel->RespelEstado = $request->input('RespelEstado');
+        $respel->RespelHojaSeguridad = $name;
+        $respel->RespelTarj = $request->input('RespelTarj');
+        $respel->RespelSlug = "slug".$request->input('RespelName');
+        $respel->save();
+         return redirect()->route('respels.index');
+
     }
 
     /**
