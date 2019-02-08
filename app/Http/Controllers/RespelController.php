@@ -25,7 +25,7 @@ class RespelController extends Controller
         //              'gener_sedes.*'
         //          )
         //     ->get();
-
+        /*se cambio la consulta de forma temporal para probar el index*/
         $Respels = Respel::all();  
 
         return view('respels.index', compact('Respels'));
