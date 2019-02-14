@@ -17,6 +17,8 @@
             <thead>
               <tr>
                 <th>Nombre</th>
+                <th>region</th>
+                <th>capital</th>
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
