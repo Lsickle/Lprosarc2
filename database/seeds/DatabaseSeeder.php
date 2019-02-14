@@ -7,6 +7,8 @@ use App\sede;
 use App\cliente;
 use App\generador;
 use App\GenerSede;
+use App\departamento;
+use App\Municipios;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,5 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(clientesTableSeeder::class);
         $this->call(generadorsTableSeeder::class);
+        $this->call(DepartamentosTableSeeder::class);
+        $this->call(MunicipiosTableSeeder::class);
     }
 }
