@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\departament;
 
-class lugar2 extends Controller
+class departamentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,8 @@ class lugar2 extends Controller
      */
     public function index()
     {
-        
-            $departament = departament::all();
-            return view('place.departament', compact('departament'));
-        
+        $departament = departament::all();
+        return view('place.departament', compact('departament'));
     }
 
     /**
