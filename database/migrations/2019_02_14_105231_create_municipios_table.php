@@ -18,8 +18,7 @@ class CreateMunicipiosTable extends Migration
             $table->timestamps();
             $table->string('MunName');
             $table->unsignedInteger('FK_MunCity');
-            
-            $table->foreign('FK_MunCity')->references('ID_Depart')->on('departamento');
+            $table->foreign('FK_MunCity')->references('ID_Depart')->on('departamentos');
         });
     }
 
