@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Cargo;
 
 class CargoController extends Controller
 {
@@ -12,7 +15,11 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        //
+        $Cargos = DB::table('cargos')
+            ->join('oficces','cargos.CargOfi', '=', 'areas.ID_Area')
+            ->select('areas.AreaName','cargos.OfiModule')
+            ->get();
+        return view('cargos.index', compact('Cargos'));
     }
 
     /**
@@ -21,7 +28,10 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        //
+        $Oficces = DB::table('oficces')
+            ->select('ID_Ofi', 'OfiModule')
+            ->get();
+        return view('cargos.create', compact('Oficces'));
     }
 
     /**
@@ -31,7 +41,13 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        //
+        $cargo = new Cargo();
+        $cargo->CargName = $request->input('NomCarg');
+        $cargo->CargSalary= $request->input('CargSalary');
+        $cargo->CargGrade = $request->input('CargGrade');
+        $cargo->CargOfi= $request->input('SelectOfi');
+        $cargo->save();
+        return redirect()->route('cargos.index');
     }
 
     /**
