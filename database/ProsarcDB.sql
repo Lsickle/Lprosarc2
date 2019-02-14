@@ -1,6 +1,6 @@
-	drop DATABASE Lprosarc;
-	create DATABASE Lprosarc;
-	use Lprosarc;
+	drop DATABASE Prosarcdb;
+	create DATABASE Prosarcdb;
+	use Prosarcdb;
 	Create table Country(
 		ID_Country int auto_increment unique,
 		CountryName varchar(64),
