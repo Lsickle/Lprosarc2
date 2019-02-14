@@ -39,7 +39,9 @@ Route::resource('/respels', 'RespelController');
 Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/permisos', 'RolesController');
 Route::resource('/audits', 'auditController');
+Route::resource('/place/departament', 'lugar2');
 Route::resource('/areas','areacontroller');
+
 
 Auth::routes();
 
