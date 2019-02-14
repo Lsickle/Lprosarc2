@@ -88,6 +88,14 @@
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="#"><i class='fas fa-biohazard'></i> <span>Areas</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/areas"><i class='fa fa-search'></i>Listar Areas</a></li>
+
+                        <li><a href="/areas/create"><i class='fa fa-file-text'></i>Crear Areas</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
                     <a href="#"><i class='fa fa-list'></i> <span>{{ trans('adminlte_lang::message.declarationmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/declaraciones"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.declarread') }}</a></li>
