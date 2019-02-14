@@ -9,20 +9,20 @@
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Lista de Departamentos</h3>
+          <h3 class="box-title">Lista de -municipios</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
           <table id="example1" class="table table-compact table-bordered table-striped">
             <thead>
               <tr>
-                <th>Nombre del departamento</th>
-                <th>Nombre</th>
+                <th>nombre</th>
+                {{-- <th>Nombre</th>
                 <th>NIT</th>
                 <th>Creado el</th>
                 <th>Auditable</th>
                 <th>Mas...</th>
-                <th>Editar</th>
+                <th>Editar</th> --}}
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -48,16 +48,13 @@
                   </div>
                 </div>
               </div> --}}
-              @foreach($departament as $departament)
+              @foreach($municipios as $municipio)
               <tr>
-                <td>{{$departament->DepartName}}</td>
-                <td>{{$departament->DepartRegionName}}</td>
-                <td>{{$departament->DepartCapitalName}}</td>
-                {{-- <td>{{$place->CliCategoria}}</td>
-                <td>{{$place->CliShortname}}</td>
+                <td>{{$municipio->MunName}}</td>
+                {{-- <td>{{$place->CliShortname}}</td>
                 <td>{{$place->CliNit}}</td>
-                <td>{{$place->created_at}}</td>
-                @if($place->CliAuditable==1)
+                <td>{{$place->created_at}}</td> --}}
+                {{-- @if($place->CliAuditable==1)
                 <td>Si</td>
                 @else
                 <td>NO</td>
