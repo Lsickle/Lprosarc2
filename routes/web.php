@@ -39,7 +39,11 @@ Route::resource('/respels', 'RespelController');
 Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/permisos', 'RolesController');
 Route::resource('/audits', 'auditController');
+Route::resource('/place/departament', 'DepartamentoController');
 Route::resource('/areas','areacontroller');
+Route::resource('/place/municipal','municipalityController');
+
+
 
 Route::resource('/oficces','OficceController');
 Route::resource('/cargos','CargoController');
