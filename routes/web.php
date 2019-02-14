@@ -41,6 +41,8 @@ Route::resource('/permisos', 'RolesController');
 Route::resource('/audits', 'auditController');
 Route::resource('/place/departament', 'lugar2');
 Route::resource('/areas','areacontroller');
+Route::resource('/place/municipal','municipalityController');
+
 
 
 Auth::routes();
