@@ -12,6 +12,8 @@
 	create table Departamento(
 		ID_Depart int auto_increment unique,
 		DepartName varchar(64),
+		DepartRegionName varchar(64),
+		DepartCapitalName varchar(64),
 		FK_DepartCountry int,
 		primary key(ID_Depart),
 		foreign key (FK_DepartCountry) references Country(ID_Country) ON UPDATE CASCADE
@@ -19,22 +21,22 @@
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
 
-	create table Ciudad(
-		ID_City int auto_increment unique,
-		CityName varchar(64),
-		FK_CitiDepart int,
-		primary key(ID_City),
-		foreign key (FK_CitiDepart) references Departamento(ID_Depart) ON UPDATE CASCADE
-	)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
+	-- create table Ciudad(
+	-- 	ID_City int auto_increment unique,
+	-- 	CityName varchar(64),
+	-- 	FK_CitiDepart int,
+	-- 	primary key(ID_City),
+	-- 	foreign key (FK_CitiDepart) references Departamento(ID_Depart) ON UPDATE CASCADE
+	-- )
+	-- 	COLLATE='utf8mb4_unicode_ci'
+	-- 	ENGINE=InnoDB;
 
 	create table Municipio(
 		ID_Mun int auto_increment unique,
 		MunName varchar(64),
 		FK_MunCity int,
 		primary key(ID_Mun),
-		foreign key (FK_MunCity) references Ciudad(ID_City) ON UPDATE CASCADE
+		foreign key (FK_MunCity) references Departamento(ID_Depart) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
