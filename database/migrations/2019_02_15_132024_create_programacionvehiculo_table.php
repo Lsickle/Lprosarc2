@@ -13,8 +13,8 @@ class CreateProgramacionvehiculoTable extends Migration
      */
     public function up()
     {
-        Schema::create('programacionvehiculos', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('ProgVehiculos', function (Blueprint $table) {
+            $table->increments('ID_ProgVeh');
             $table->timestamps();
             $table->date('ProgVehFecha');
             $table->integer('progVehKm');
