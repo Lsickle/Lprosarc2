@@ -19,8 +19,10 @@
             <table id="example1" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Modulo</th>
-                  <th>Area</th>
+                  <th>Nombre</th>
+                  <th>Grado</th>
+                  <th>Oficina</th>
+                  <th>Salario</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -45,10 +47,12 @@
                     </div>
                   </div>
                 </div> --}}
-                @foreach($cargos as $Oficce)
+                @foreach($Cargos as $Cargo)
                 <tr>
-                  <td>{{$Oficce->OfiModule}}</td>
-                  <td>{{$Oficce->AreaName}}</td>
+                  <td>{{$Cargo->CargName}}</td>
+                  <td>{{$Cargo->CargGrade}}</td>
+                  <td>{{$Cargo->OfiModule}}</td>
+                  <td>{{$Cargo->CargSalary}}</td>
                 </tr>
                 @endforeach
               </tbody>
