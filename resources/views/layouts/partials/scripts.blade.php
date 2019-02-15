@@ -459,6 +459,40 @@ $(document).ready(function(){
     });
   });
 </script>
+<script>
+    $(document).ready(function() {
+      $('#departamentTable').DataTable( {
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true
+        // "columnDefs": [ {
+        //   "targets": 5,
+        //   "data": "id",
+        //   "render": function ( data, type, row, meta ) {
+        //     return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +"Modal>Ver</button>";
+        //   }
+        // }]
+      });
+    });
+  </script>
+  <script>
+      $(document).ready(function() {
+        $('#municipalityTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+          // "columnDefs": [ {
+          //   "targets": 5,
+          //   "data": "id",
+          //   "render": function ( data, type, row, meta ) {
+          //     return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +"Modal>Ver</button>";
+          //   }
+          // }]
+        });
+      });
+    </script>
   
 
 
