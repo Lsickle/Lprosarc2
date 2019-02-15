@@ -213,7 +213,7 @@
 	create table DiasFestivos(
 		ID_festivo int auto_increment unique,
 		FestivoDate date,
-		FestivoYear int,
+		FestivoType varchar(32),/*Tipo de festipo ejem: Bancario, Nacional, etc...*/
 		primary key(ID_festivo)
 	)
 		COLLATE='utf8mb4_unicode_ci'
