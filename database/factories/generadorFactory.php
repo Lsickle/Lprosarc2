@@ -9,7 +9,7 @@ $factory->define(App\generador::class, function (Faker $faker) {
 	$cactualizado = $faker->dateTime($max = 'now');
 	$ccreado= $faker->dateTime($max = $cactualizado);
 	$GenerName=$title.' '.$sufixcompany;
-	$GenerClisede = $faker->numberBetween($min = 1, $max = 600);
+	$GenerClisede = $faker->numberBetween($min = 1, $max = 60);
     return [
        	'GenerNit'=> $faker->numerify('###.###.###.###-#'),
         'GenerName'=> $GenerName,
