@@ -88,11 +88,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Amagá',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Amagá';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -114,11 +109,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Angostura';
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Anorí',
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
@@ -188,11 +178,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Cáceres',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Cáceres';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -233,10 +218,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Carolina',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-    $municipio = new Municipio();
     $municipio->MunName = 'Carolina';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -250,10 +231,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
-    $municipio = new Municipio();
-    $municipio->MunName = 'Cisneros',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
     $municipio = new Municipio();
     $municipio->MunName = 'Cisneros';
     $municipio->FK_MunCity = '2';
@@ -285,16 +262,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Don Matías';
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Ebéjico',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'El Bagre',
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
@@ -334,10 +301,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Gómez Plata',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-    $municipio = new Municipio();
     $municipio->MunName = 'Gómez Plata';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -367,11 +330,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Itagui',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Itagui';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -388,21 +346,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'La Ceja';
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'La Estrella',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'La Pintada',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'La Unión',
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
@@ -432,11 +375,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Marinilla',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Marinilla';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -452,22 +390,12 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Mutatá',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Mutatá';
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
     $municipio = new Municipio();
     $municipio->MunName = 'Nariño';
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Necoclí',
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
@@ -557,11 +485,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'San Luis',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'San Luis';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -577,10 +500,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'San Roque',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-    $municipio = new Municipio();
     $municipio->MunName = 'San Roque';
     $municipio->FK_MunCity = '2';
     $municipio->save();
@@ -594,10 +513,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
-    $municipio = new Municipio();
-    $municipio->MunName = 'Santo Domingo',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
     $municipio = new Municipio();
     $municipio->MunName = 'Santo Domingo';
     $municipio->FK_MunCity = '2';
@@ -622,10 +537,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
-    $municipio = new Municipio();
-    $municipio->MunName = 'Tarazá',
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
     $municipio = new Municipio();
     $municipio->MunName = 'Tarazá';
     $municipio->FK_MunCity = '2';
@@ -687,11 +598,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Yarumal';
-    $municipio->FK_MunCity = '2';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Yolombó',
     $municipio->FK_MunCity = '2';
     $municipio->save();
 
@@ -787,11 +693,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Cravo Norte';
-    $municipio->FK_MunCity = '3';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Fortul',
     $municipio->FK_MunCity = '3';
     $municipio->save();
 
@@ -901,11 +802,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Suan',
-    $municipio->FK_MunCity = '5';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Suan';
     $municipio->FK_MunCity = '5';
     $municipio->save();
@@ -931,22 +827,12 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Ponedera',
-    $municipio->FK_MunCity = '5';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Ponedera';
     $municipio->FK_MunCity = '5';
     $municipio->save();
 
     $municipio = new Municipio();
     $municipio->MunName = 'Juan de Acosta';
-    $municipio->FK_MunCity = '5';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Palmar de Varela',
     $municipio->FK_MunCity = '5';
     $municipio->save();
 
@@ -1066,10 +952,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Río Viejo',
-    $municipio->FK_MunCity = '7';
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Río Viejo';
     $municipio->FK_MunCity = '7';
 
@@ -1161,10 +1043,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio = new Municipio();
     $municipio->MunName = 'Santa Rosa del Sur';
     $municipio->FK_MunCity = '7';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Hatillo de Loba',
     $municipio->save();
 
     $municipio = new Municipio();
@@ -1488,11 +1366,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Oicatá',
-    $municipio->FK_MunCity = '8';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Oicatá';
     $municipio->FK_MunCity = '8';
     $municipio->save();
@@ -1559,11 +1432,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Ramiriquí';
-    $municipio->FK_MunCity = '8';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Ráquira',
     $municipio->FK_MunCity = '8';
     $municipio->save();
 
@@ -2053,11 +1921,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Támara',
-    $municipio->FK_MunCity = '11';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Támara';
     $municipio->FK_MunCity = '11';
     $municipio->save();
@@ -2104,11 +1967,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Recetor';
-    $municipio->FK_MunCity = '11';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Sabanalarga',
     $municipio->FK_MunCity = '11';
     $municipio->save();
 
@@ -2173,11 +2031,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Bolívar',
-    $municipio->FK_MunCity = '12';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Bolívar';
     $municipio->FK_MunCity = '12';
     $municipio->save();
@@ -2214,11 +2067,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Florencia';
-    $municipio->FK_MunCity = '12';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Guachené',
     $municipio->FK_MunCity = '12';
     $municipio->save();
 
@@ -2488,11 +2336,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'La Jagua de Ibirico',
-    $municipio->FK_MunCity = '13';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'La Jagua de Ibirico';
     $municipio->FK_MunCity = '13';
     $municipio->save();
@@ -2603,11 +2446,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Río Quito',
-    $municipio->FK_MunCity = '14';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Río Quito';
     $municipio->FK_MunCity = '14';
     $municipio->save();
@@ -2619,11 +2457,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Sipí';
-    $municipio->FK_MunCity = '14';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Unguía',
     $municipio->FK_MunCity = '14';
     $municipio->save();
 
@@ -2703,11 +2536,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Cotorra',
-    $municipio->FK_MunCity = '15';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Cotorra';
     $municipio->FK_MunCity = '15';
     $municipio->save();
@@ -2724,11 +2552,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Momil';
-    $municipio->FK_MunCity = '15';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Moñitos',
     $municipio->FK_MunCity = '15';
     $municipio->save();
 
@@ -2929,11 +2752,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'Chocontá';
-    $municipio->FK_MunCity = '16';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Cogua',
     $municipio->FK_MunCity = '16';
     $municipio->save();
 
@@ -3463,11 +3281,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Miraflores',
-    $municipio->FK_MunCity = '18';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Miraflores';
     $municipio->FK_MunCity = '18';
     $municipio->save();
@@ -3963,11 +3776,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Lejanías',
-    $municipio->FK_MunCity = '22';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Lejanías';
     $municipio->FK_MunCity = '22';
     $municipio->save();
@@ -4428,11 +4236,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Teorama',
-    $municipio->FK_MunCity = '24';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Teorama';
     $municipio->FK_MunCity = '24';
     $municipio->save();
@@ -4714,11 +4517,6 @@ class MunicipiosTableSeeder extends Seeder
 
     $municipio = new Municipio();
     $municipio->MunName = 'La Celia';
-    $municipio->FK_MunCity = '27';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'La Virginia',
     $municipio->FK_MunCity = '27';
     $municipio->save();
 
@@ -5038,11 +4836,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'Oiba',
-    $municipio->FK_MunCity = '28';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'Oiba';
     $municipio->FK_MunCity = '28';
     $municipio->save();
@@ -5258,11 +5051,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'La Unión',
-    $municipio->FK_MunCity = '29';
-    $municipio->save();
-
-    $municipio = new Municipio();
     $municipio->MunName = 'La Unión';
     $municipio->FK_MunCity = '29';
     $municipio->save();
@@ -5401,11 +5189,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->MunName = 'Chaparral';
     $municipio->FK_MunCity = '30';
     $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Coello',
-    $municipio->FK_MunCity = '30';
-    $municipio->save();0
 
     $municipio = new Municipio();
     $municipio->MunName = 'Coello';
@@ -5643,11 +5426,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->save();
 
     $municipio = new Municipio();
-    $municipio->MunName = 'La Unión',
-    $municipio->FK_MunCity = '31';
-    $municipio->save();1
-
-    $municipio = new Municipio();
     $municipio->MunName = 'La Unión';
     $municipio->FK_MunCity = '31';
     $municipio->save();
@@ -5695,12 +5473,6 @@ class MunicipiosTableSeeder extends Seeder
     $municipio = new Municipio();
     $municipio->MunName = 'Obando';
     $municipio->FK_MunCity = '31';
-    $municipio->save();
-
-    $municipio = new Municipio();
-    $municipio->MunName = 'Bolívar',
-    $municipio->FK_MunCity = '31';
-    $municipio->save();1
     $municipio->save();
 
     $municipio = new Municipio();
