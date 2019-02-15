@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\area;
+use App\Area;
 
 
-class areacontroller extends Controller{
+class AreaController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +40,7 @@ class areacontroller extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $area = new area();
+        $area = new Area();
         $area->AreaName = $request->input('NomArea');
         $area->AreaSede= $request->input('AreaSede');
         $area->save();
