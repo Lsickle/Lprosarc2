@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class area extends Model{
+class Area extends Model{
     protected $table='areas';
     protected $fillable = ['AreaName','AreaSede'];
     protected $primaryKey = 'ID_Area';

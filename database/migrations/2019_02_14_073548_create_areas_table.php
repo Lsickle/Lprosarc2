@@ -16,8 +16,8 @@ class CreateAreasTable extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->increments('ID_Area')->unique();
             $table->string('AreaName');
-            $table->unsignedInteger('AreaSede');
-            $table->unsignedInteger('GenerSede');
+            $table->unsignedInteger('AreaSede')->nullable();
+            $table->unsignedInteger('GenerSede')->nullable();
             $table->foreign('AreaSede')->references('ID_Sede')->on('sedes');
             $table->foreign('GenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->timestamps();

@@ -15,7 +15,6 @@ class CreateOficcesTable extends Migration
     {
         Schema::create('oficces', function (Blueprint $table) {
             $table->increments('ID_Ofi')->unique();
-            $table->string('OfiAddress');
             $table->unsignedTinyInteger('OfiModule')->nullable();
             $table->unsignedInteger('OfiArea');
             $table->foreign('OfiArea')->references('ID_Area')->on('areas');
