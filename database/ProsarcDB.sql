@@ -1,13 +1,13 @@
-	drop DATABASE Prosarcdb;
+		drop DATABASE Prosarcdb;
 	create DATABASE Prosarcdb;
 	use Prosarcdb;
-	Create table Country(
-		ID_Country int auto_increment unique,
-		CountryName varchar(64),
-		primary key(ID_Country)
-	)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
+	-- Create table Country(
+	-- 	ID_Country int auto_increment unique,
+	-- 	CountryName varchar(64),
+	-- 	primary key(ID_Country)
+	-- )
+	-- 	COLLATE='utf8mb4_unicode_ci'
+	-- 	ENGINE=InnoDB;
 
 	create table Departamento(
 		ID_Depart int auto_increment unique,
@@ -129,17 +129,17 @@
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
 
-	/*oficinas o dependencias de un area*/
-	create table Oficce(
-		ID_Ofi int auto_increment unique,
-		OfiAddress varchar(255),
-		OfiModule int, /*opcional:numero de modulos de la oficina*/
-		FK_OfiArea int, /*foranea de la tabla Area*/
-		primary key (ID_Ofi),
-		foreign key (FK_OfiArea) references Area(ID_Area) ON UPDATE CASCADE
-	)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
+	-- /*oficinas o dependencias de un area*/
+	-- create table Oficce(
+	-- 	ID_Ofi int auto_increment unique,
+	-- 	OfiAddress varchar(255),
+	-- 	OfiModule int, /*opcional:numero de modulos de la oficina*/
+	-- 	FK_OfiArea int, /*foranea de la tabla Area*/
+	-- 	primary key (ID_Ofi),
+	-- 	foreign key (FK_OfiArea) references Area(ID_Area) ON UPDATE CASCADE
+	-- )
+	-- 	COLLATE='utf8mb4_unicode_ci'
+	-- 	ENGINE=InnoDB;
 
 	/*tabla de cargos o jerarquias*/
 	create table Cargo(
@@ -149,7 +149,7 @@
 		CargGrade varchar(128), /*grado de instruccion*/
 		FK_CargOfi int, /*el cargo corresponde a un area especifica*/
 		primary key	(ID_Carg),
-		foreign key (FK_CargOfi) references Oficce(ID_Ofi) ON UPDATE CASCADE
+		foreign key (FK_CargOfi) references Area(ID_Area) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -264,10 +264,11 @@
 	create table Vehiculo(
 		ID_Vehic int auto_increment	unique,
 		VehicPlaca varchar(16) unique,
+		VehicInternExtern boolean,
 		VehicTipo varchar(64), /*furgon, mula, sencillo, turbo etc...*/
 		VehicCapacidad varchar(64),
-		FK_VehiSede int, /*foranea de la tabla sede*/
 		VehicKmActual int, /*km actual de vehiculo*/
+		FK_VehiSede int, /*foranea de la tabla sede*/
 		primary key (ID_Vehic),
 		foreign key (FK_VehiSede) references Sede(ID_Sede) ON UPDATE CASCADE
 	)
@@ -336,11 +337,12 @@
 		ActModel varchar(64),
 		ActTalla varchar(16),
 		ActObserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
-		FK_ActPerson int,/*persona a la que esta asignado el activo (opcional)*/
+		-- FK_ActPerson int,persona a la que esta asignado el activo (opcional)
 		FK_ActSub int, /*forana de la tabla SubCatAct */
 		primary key (ID_Act),
-		foreign key (FK_ActSub) references SubCatAct(ID_SubCat) ON UPDATE CASCADE,
-		foreign key (FK_ActPerson) references Personal(ID_Pers) ON UPDATE CASCADE
+		foreign key (FK_ActSub) references SubCatAct(ID_SubCat) ON UPDATE CASCADE
+		/*se pasa la relacion a la tabla de movimientos para asignar el activo al personal*/
+		-- foreign key (FK_ActPerson) references Personal(ID_Pers) ON UPDATE CASCADE 
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -351,7 +353,9 @@
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		FK_MovInv int, /*foranea de la tabla InventarioAct*/
+		FK_ActPerson int,/*persona a la que esta asignado el activo (opcional)*/
 		primary key (ID_MovAct),
+		foreign key (FK_ActPerson) references Personal(ID_Pers) ON UPDATE CASCADE
 		foreign key (FK_MovInv) references Activo(ID_Act) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
