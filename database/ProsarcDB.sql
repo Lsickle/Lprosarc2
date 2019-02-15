@@ -264,10 +264,11 @@
 	create table Vehiculo(
 		ID_Vehic int auto_increment	unique,
 		VehicPlaca varchar(16) unique,
+		VehicInternExtern boolean,
 		VehicTipo varchar(64), /*furgon, mula, sencillo, turbo etc...*/
 		VehicCapacidad varchar(64),
-		FK_VehiSede int, /*foranea de la tabla sede*/
 		VehicKmActual int, /*km actual de vehiculo*/
+		FK_VehiSede int, /*foranea de la tabla sede*/
 		primary key (ID_Vehic),
 		foreign key (FK_VehiSede) references Sede(ID_Sede) ON UPDATE CASCADE
 	)
