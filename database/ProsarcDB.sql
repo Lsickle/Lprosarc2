@@ -191,12 +191,23 @@
 		CapaExpire date, /*fecha de vencimiento*/
 		FK_CapaTeacher int, /*empresa que dicta la capacitacion*/
 		FK_CapaPers int, /*persona que posee la capacitacion*/
-		primary key	(ID_Capa),
-		foreign key (FK_CapaTeacher) references Sede(ID_Sede) ON UPDATE CASCADE,
-		foreign key (FK_CapaPers) references Personal(ID_Pers) ON UPDATE CASCADE
+		primary key	(ID_Capa)
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
+
+	/*tabla para romper la relacion de muchos a muchos de la tabla Capacitacion*/
+	Create table CapacitacionPersonal(
+		ID_CapPers int auto_increment unique,
+		FK_Sede int,
+		FK_Capa int,
+		FK_Pers int,
+		foreign key (FK_Sede) references Sede(ID_Sede) ON UPDATE CASCADE,
+		foreign key (FK_Capa) references Capacitacion(ID_Capa) ON UPDATE CASCADE,
+		foreign key (FK_Pers) references Personal(ID_Pers) ON UPDATE CASCADE
+	)
+		COLLATE='utf8mb4_unicode_ci'
+		ENGINE=InnoDB
 
 	/*tabla para registro y consulta de dias festivos (no relacionar)*/
 	create table DiasFestivos(
