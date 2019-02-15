@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Municipios;
+use App\Municipio;
 
 class municipalityController extends Controller
 {
@@ -14,7 +14,7 @@ class municipalityController extends Controller
      */
     public function index()
     {
-        $municipios = Municipios::all();
+        $municipios = Municipio::all();
         return view('place.municipality', compact('municipios'));
     }
 
