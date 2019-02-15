@@ -34,7 +34,7 @@
 										<input required="true" name="NomCarg" autofocus="true" type="text" class="form-control" id="NombreCargo" >
 									</div>
 									<div class="col-xs-6">
-										<label for="CargoSalary">Salario del Cargo</label>
+										<label for="CargoSalary">Salario del Cargo ($)</label>
 										<input required="true" name="CargSalary" autofocus="true" type="number" class="form-control" id="CargoSalary" >
 									</div>
 									<div class="col-xs-6">
