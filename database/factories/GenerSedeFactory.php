@@ -7,7 +7,7 @@ $factory->define(App\GenerSede::class, function (Faker $faker) {
 	$gslug=$gsedename.' '.$faker->unique()->numberBetween($min = 100, $max = 9000);
 	$gsactualizado = $faker->dateTime($max = 'now');
 	$gscreado= $faker->dateTime($max = $gsactualizado);
-
+	/*cellpart hace referencia a una parte de una numero celular ejemplo:cellpart1=316 cellpart2=40135421*/
 	$cellpart2=$faker->optional($weight = 0.9)->numerify('#######');/*10% chance of NULL*/
 
 	if ($cellpart2!=null) {

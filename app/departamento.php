@@ -12,8 +12,8 @@ class departamento extends Model
     
     protected $primaryKey = 'ID_Depart';
 
-    public function Municipio()
+    public function Municipios()
     {
-        return $this->hasMany('App\Municipios', 'ID_Mun', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Municipio', 'ID_Mun', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
     }
 }
