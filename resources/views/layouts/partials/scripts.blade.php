@@ -297,6 +297,7 @@ $(document).ready(function(){
     $('input[name="GSedeCelular"]').mask('(999)-999 9999');
     $('input[name="GSedeinputext1"]').mask('999-9');
     $('input[name="GSedeinputext2"]').mask('999-9');
+    $('input[name="CargSalary"]').mask('000.000.000.000');
 });
 </script>
 {{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
@@ -459,7 +460,23 @@ $(document).ready(function(){
     });
   });
 </script>
-  
-
-
-
+<script>
+  $(document).ready(function () {
+    $('#AreaTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
+    });
+  });
+</script>  
+<script>
+  $(document).ready(function () {
+    $('#CargosTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true,
+    });
+  });
+</script>  

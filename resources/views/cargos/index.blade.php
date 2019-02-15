@@ -16,7 +16,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="example1" class="table table-compact table-bordered table-striped">
+            <table id="CargosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Nombre</th>
