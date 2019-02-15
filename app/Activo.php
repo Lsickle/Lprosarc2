@@ -15,7 +15,7 @@ class Activo extends Model
 
 	public function SubcategoriaActivo()
 	{
-	 return $this>belongsTo('SubcategoriaActivo','ID_SubCat');
+	 return $this>belongsTo('App\SubcategoriaActivo','ID_SubCat');
 	}
 
 }

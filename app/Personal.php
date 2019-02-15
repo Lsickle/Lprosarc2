@@ -12,4 +12,12 @@ class Personal extends Model{
     public function cargos(){
     	return $this>belongsTo('FK_PersCargo','ID_Carg');
     }
+    public function TrainingPersonal()
+    {
+        return $this->hasMany('App\TrainingPersonal', 'ID_CapPers', 'id');//como personal tiene muchas capacitaciones de personal 
+    }
+    public function MovimientoActivo()
+    {
+        return $this->hasMany('App\MovimientoActivo.php', 'ID_MovAct', 'id');//como personal tiene muchas movimiento de active 
+    }
 }

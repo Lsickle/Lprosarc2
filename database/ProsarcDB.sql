@@ -360,7 +360,7 @@
 
 	create table MovimientosAct(
 		ID_MovAct int auto_increment unique,
-		MovTipo boolean, /*tipo de movimiento Entrada/Salida*/
+		MovTipo varchar(32), /*tipo de movimiento Entrada/Salida*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		FK_MovInv int, /*foranea de la tabla InventarioAct*/
