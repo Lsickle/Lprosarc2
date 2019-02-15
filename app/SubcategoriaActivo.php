@@ -1,0 +1,25 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class SubcategoriaActivo extends Model
+{
+    protected $table = 'subcategoria_activos';
+
+	protected $fillable = ['SubCatName'];
+	
+	protected $primaryKey = 'ID_SubCat';
+
+
+	public function CategoriaActivo()
+	{
+	 return $this>belongsTo('CategoriaActivo','ID_CatAct');
+	}
+
+	public function Activo()
+    {
+        return $this->hasMany('App\Activo', 'ID_Act', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+    }
+}
