@@ -25,13 +25,20 @@ class sede extends Model
 	{
 	 return $this>belongsTo('cliente','ID_Cli');
 	}
+
 	public function generador()
     {
         return $this->hasMany('App\generador', 'ID_Gener', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
-    }
+	}
+	
     public function declaracion()
     {
         return $this->hasMany('Declaration', 'ID_Declar', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+	}
+	
+	public function Quotations()
+    {
+        return $this->hasMany('App\Quotation', 'ID_Cotiz', 'id');//sede tiene muchas cotizaciones
     }
     public function trainings(){
     	return $this>hasMany('App\TrainingPersonal','ID_CapPers','id');//como sedes tiene muchas capacitaciones de personal.
