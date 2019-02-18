@@ -12,7 +12,7 @@ class ProgramacionVehiculo extends Model
 
     protected $primaryKey = 'ID_ProgVeh';
     
-    // public function(){
-    //     return $this->hasMany('App\Vehiculo')
-    // }
+    public function ReciboMaterial(){
+        return $this->hasMany('App\ReciboMaterial','Id_Rm','id')//como programcion de vihiculos tiene mucuhos recibos de material
+    }
 }

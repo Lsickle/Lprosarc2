@@ -25,4 +25,7 @@ class cliente extends Model
     {
         return $this->hasMany('App\sede', 'ID_Sede', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
     }
+    public function ReciboMaterial(){
+    	return $this->hasMany('App\ReciboMaterial','Id_Rm','id');//como clientes tienen muchos recibos de material
+    }
 }
