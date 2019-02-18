@@ -213,7 +213,7 @@
 	create table DiasFestivos(
 		ID_festivo int auto_increment unique,
 		FestivoDate date,
-		FestivoYear int,
+		FestivoType varchar(32),/*Tipo de festipo ejem: Bancario, Nacional, etc...*/
 		primary key(ID_festivo)
 	)
 		COLLATE='utf8mb4_unicode_ci'
@@ -234,12 +234,11 @@
 		primary key (ID_Horario),
 		foreign key (FK_HoraPers) references Personal(ID_Pers) ON UPDATE CASCADE
 	)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
+AsisLLATE='utf8mb4_unicode_ci'
+		AsisNE=InnoDB;
 
-	/*tabla de usuarios con acceso al aplicativo*/
-	create table Users(
-		id INT(10) NOT NULL AUTO_INCREMENT,
+Asisabla de usuarios con acceso al aplicativo*/
+	Asiste table UsersAsisid INT(10) NOTAsisL AUTO_INCREMENT,
 		UsType varchar(64), /*tipo de usuario: comercial, logistica, operaciones, mantenimiento, almacen, direccion, administrador, desarollador, cliente, transporte, SIG(sistema integral de gestion)[andres romero:calidad, documentacion]*/
 		name VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 		email VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
@@ -260,14 +259,14 @@
 		ENGINE=InnoDB;
 
 	/*tabla para registro de llegadas y salidas del personal prosarc*/
-	create table turno(
-		ID_Turn int auto_increment unique,
-		TurnLlegada timestamp, /*fecha y hora registrada de llegada*/
-		TurnSalida timestamp, /*fecha y hora registrada de salida*/
-		TurnNocturnas int, /*cantidad de horas nocturnas laboradas*/
-		FK_TurnPers int,
-		primary key (ID_Turn),
-		foreign key (FK_TurnPers) references Personal(ID_Pers) ON UPDATE CASCADE
+	create table Asistencia(
+		ID_Asis int auto_increment unique,
+		AsisLlegada timestamp, /*fecha y hora registrada de llegada*/
+		AsisSalida timestamp, /*fecha y hora registrada de salida*/
+		AsisNocturnas int, /*cantidad de horas nocturnas laboradas*/
+		FK_AsisPers int,
+		primary key (ID_Asis),
+		foreign key (FK_AsisPers) references Personal(ID_Pers) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
