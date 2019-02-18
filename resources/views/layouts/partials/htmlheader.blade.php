@@ -13,8 +13,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {{-- bootstrap 3.3 --}}
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> --}}
+
+    
+    {{-- bootstrap 4.3.1 --}}
+    <link rel="stylesheet" type="text/css" href="">
+
 {{-- bootstrap-switch --}}
     {{-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"> --}}
     <link rel="stylesheet" type="text/css" href="/js/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
@@ -28,11 +31,10 @@
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/css/skins/_all-skins.css">
 {{--     datatables styles --}}
-{{--     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> --}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.css"/>
- 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.css"/> --}}
 
 {{-- SmartWizard styles --}}
     <link href="/js/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" /> 

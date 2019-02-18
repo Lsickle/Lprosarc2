@@ -42,8 +42,8 @@ Route::resource('/audits', 'auditController');
 Route::resource('/place/departament', 'DepartamentoController');
 Route::resource('/areas','AreaController');
 Route::resource('/place/municipal','municipalityController');
-Route::resource('/oficces','OficceController');
 Route::resource('/cargos','CargoController');
+Route::resource('/personal', 'PersonalController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
