@@ -570,20 +570,20 @@ Asisabla de usuarios con acceso al aplicativo*/
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
 
-	/*tabla de actualizaciones de un recibo de material*/
-	create table RmHistory(
-		ID_RmHistory int auto_increment unique,
-		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		RmStatusActual varchar(64), /*status al que es actualizado*/
-		FK_UpdatedBy int, /*quien actualizo el recibo por ultima vez*/
-		FK_HistoRm int, /*quien actualizo el recibo por ultima vez*/
-		primary key (ID_RmHistory),
-		foreign key (FK_UpdatedBy) references Users(id) ON UPDATE CASCADE,
-		foreign key (FK_HistoRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE
-	)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
+	-- /*tabla de actualizaciones de un recibo de material*/
+	-- create table RmHistory(
+	-- 	ID_RmHistory int auto_increment unique,
+	-- 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+	-- 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+	-- 	RmStatusActual varchar(64), /*status al que es actualizado*/
+	-- 	FK_UpdatedBy int, /*quien actualizo el recibo por ultima vez*/
+	-- 	FK_HistoRm int, /*quien actualizo el recibo por ultima vez*/
+	-- 	primary key (ID_RmHistory),
+	-- 	foreign key (FK_UpdatedBy) references Users(id) ON UPDATE CASCADE,
+	-- 	foreign key (FK_HistoRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE
+	-- )
+	-- 	COLLATE='utf8mb4_unicode_ci'
+	-- 	ENGINE=InnoDB;
 
 	/*tabla de cantidades por cada residuo enviado*/
 	create table ResEnvio(
@@ -713,8 +713,6 @@ Asisabla de usuarios con acceso al aplicativo*/
 		DatoAlias varchar(128),/*si tiene varios nombres en diferentes areas*/
 		DatoLongi int,/*tamaño del campo en numero de caracteres*/
 		DatoTipo varchar(32),/*tipo de dato ejem:varchar, si/no(boolean), int(numero entero)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
 		 ect...*/
 		DatoEstructura varchar(64),/*indica a que proceso o tabla pertenece el dato*/
 		DatoRelacion varchar(32),/*indica el tipo de relacion sobre otros datos, segun se lista a continuacion
