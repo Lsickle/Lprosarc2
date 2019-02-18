@@ -234,11 +234,11 @@
 		primary key (ID_Horario),
 		foreign key (FK_HoraPers) references Personal(ID_Pers) ON UPDATE CASCADE
 	)
-AsisLLATE='utf8mb4_unicode_ci'
-		AsisNE=InnoDB;
+		COLLATE='utf8mb4_unicode_ci'
+		ENGINE=InnoDB;
 
-Asisabla de usuarios con acceso al aplicativo*/
-	Asiste table UsersAsisid INT(10) NOTAsisL AUTO_INCREMENT,
+		/*Tabla de usuarios con acceso al aplicativo*/
+		Create table UsersAsisid INT(10) NOTAsisL AUTO_INCREMENT,
 		UsType varchar(64), /*tipo de usuario: comercial, logistica, operaciones, mantenimiento, almacen, direccion, administrador, desarollador, cliente, transporte, SIG(sistema integral de gestion)[andres romero:calidad, documentacion]*/
 		name VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 		email VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
@@ -431,23 +431,23 @@ Asisabla de usuarios con acceso al aplicativo*/
 		ENGINE=InnoDB;
 
 	/*tabla para registrar los activos tenologicos de las diferentes oficinas de la empresa*/
-	create table InventarioIt(
-		ID_It int auto_increment unique,
-		ItBrand varchar(64),
-		ItModel varchar(64),
-		ItSerial varchar(64),
-		ItNumber varchar(32),
-		ItOs varchar(32),
-		ItRam int,
-		ItScreen varchar(32),
-		ItAccessory1 varchar(64),
-		ItAccessory2 varchar(64),
-		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		Itobserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
-		FK_ItPerson int,/*persona a la que esta asignado el activo*/
-		primary key (ID_It),
-		foreign key (FK_ItPerson) references Personal(ID_Pers) ON UPDATE CASCADE
+	create table InventarioTecnologia(
+		ID_Tecn int auto_increment unique,
+		TecnBrand varchar(64),
+		TecnModel varchar(64),
+		TecnSerial varchar(64),
+		TecnNumber varchar(32),
+		TecnOs varchar(32),
+		TecnRam int,
+		TecnScreen varchar(32),
+		TecnAccessory1 varchar(64),
+		TecnAccessory2 varchar(64),
+		created_Tecn TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+		updated_Tecn TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+		Tecnobserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
+		FK_TecnPerson int,/*persona a la que esta asignado el activo*/
+		primary key (ID_Tecn),
+		foreign key (FK_TecnPerson) references Personal(ID_Pers) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
