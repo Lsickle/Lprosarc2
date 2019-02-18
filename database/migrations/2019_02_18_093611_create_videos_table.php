@@ -13,7 +13,6 @@ class CreateVideosTable extends Migration
      */
     public function up()
     {
-        /*falta la foranea de la tabla resEnvio*/
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('ID_Video');
             $table->timestamps();
@@ -22,6 +21,8 @@ class CreateVideosTable extends Migration
             $table->string('VideoTipoOther',64);
             $table->string('VideoSrc',255);
             $table->string('VideoFormat',32);
+            $table->unsignedInteger('FK_VideoRespel');
+            $table->foreign('FK_VideoRespel')->references('ID_ResEnv')->on('res_envios');
         });
     }
 
