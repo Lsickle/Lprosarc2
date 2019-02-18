@@ -2,10 +2,11 @@
 
 <!-- JQuery and bootstrap are required by Laravel 5.3 in resources/assets/js/bootstrap.js-->
 <!-- Laravel App -->
-<script src="{{ url (mix('/js/app.js')) }}" type="text/javascript"></script>
+<script src="{{ url (mix('/js/app.js')) }}"></script>
 
 <!-- jQuery 3 -->
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+<script src="node_modules/jquery/dist/jquery.js"></script>
+
 <!-- InputMask -->
 {{-- <script src="js/inputmask/dist/jquery.inputmask.bundle.js"></script>
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.js"></script>
@@ -13,23 +14,29 @@
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
+{{-- Popper JS --}}
+<script src="node_modules/popper.js/dist/popper.js"></script>
+
+{{-- bootstrap 4.3.1 --}}
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
 <!-- DataTables -->
 {{-- <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script> --}}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
 
 
 
 {{-- SmartWizard --}}
-<script type="text/javascript" src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
+<script src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
 
 {{-- bootstrap-switch --}}
-<script type="text/javascript" src="/js/bootstrap-switch/dist/js/bootstrap-switch.js" ></script>
+<script src="/js/bootstrap-switch/dist/js/bootstrap-switch.js" ></script>
 
 {{-- cdn de datatable --}}
 {{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
@@ -37,7 +44,8 @@
 
 
 {{-- slimScroll --}}
-<script type="text/javascript" src="resources/assets/js/jquery-slimscroll/jquery.slimscroll.js" ></script>
+<script src="resources/assets/js/jquery-slimscroll/jquery.slimscroll.js" ></script>
+
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
   $(document).ready(function(){
