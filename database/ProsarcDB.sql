@@ -667,8 +667,7 @@
 		ManifNumero int, /*numero de manifiesto en membrete*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		ManifKg int, /*peso del residuo enviado a tratamiento *//*no exceder el total tratado!!!*/
-		ManifGr int, /*peso enviado a tratamiento*/ /*no exceder el total tratado!!!*/
+		ManifKg int, /*peso enviado a tratamiento*/ /*no exceder el total tratado!!!*/
 		ManifiEspName varchar(64), /*nombre del atributo requerido en el manifiesto*/
 		ManifiEspValue varchar(64), /*valor del atributo requerido en el manifiesto*/
 		ManifObservacion varchar(255), /*observacion adicional par el manifiesto*/

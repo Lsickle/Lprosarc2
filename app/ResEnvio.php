@@ -10,6 +10,9 @@ class ResEnvio extends Model{
     protected $primaryKey = 'ID_ResEnv';
 
     public function ReciboMaterial(){
-    	return $this->belogsTo('App\ReciboMaterial','Id_Rm');
+    	return $this->belogsTo('App\ReciboMaterial','ID_Rm');
+    }
+    public function Manifiesto(){
+    	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como recibo de envio tiene muchos manifiestos
     }
 }
