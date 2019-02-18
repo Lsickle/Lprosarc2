@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class generador extends Model
+class Generador extends Model
 {
     protected $table = 'generadors';
 
@@ -22,7 +22,7 @@ class generador extends Model
 	}
 	public function sedes()
 	{
-	 return $this>belongsTo('GenerCli', 'ID_Sede');//como generador pertenece a la sede de un cliente
+	 return $this>belongsTo('App\Sede', 'ID_Sede');//como generador pertenece a la sede de un cliente
 	}
 	public function GenerSede()
     {

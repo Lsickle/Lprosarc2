@@ -10,7 +10,7 @@ class Assistance extends Model{
     protected $primaryKey = 'ID_Asis';
 
     public function personals(){
-    	return $this>belongsTo('FK_AsisPers','ID_Pers');
+    	return $this>belongsTo('App\Personal','ID_Pers');
     }
 
 }

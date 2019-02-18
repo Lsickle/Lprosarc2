@@ -16,4 +16,8 @@ class ProgramacionVehiculo extends Model
     {
         return $this->hasMany('App\ordenCompra', 'ID_Orden', 'id');
     }
+    
+    public function MantenVehics(){
+        return $this->hasMany('App\MantenimientoVehiculo', 'ID_Mv', 'id');
+    }
 }

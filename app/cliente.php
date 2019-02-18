@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class cliente extends Model
+class Cliente extends Model
 {
 	protected $table = 'clientes';
 
@@ -23,6 +23,13 @@ class cliente extends Model
 
 	public function sede()
     {
-        return $this->hasMany('App\sede', 'ID_Sede', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Sede', 'ID_Sede', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+    }
+    public function ReciboMaterial(){
+    	return $this->hasMany('App\ReciboMaterial','Id_Rm','id');//como clientes tienen muchos recibos de material
+	}
+	
+	public  function Tratamientos(){
+        return $this->hasMany('App\Tratamiento', 'ID_Trat', 'id');//como cliente puede proveher muchos residuos
     }
 }
