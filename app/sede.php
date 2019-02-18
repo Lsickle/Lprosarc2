@@ -51,7 +51,4 @@ class Sede extends Model
     public function Manifiesto(){
     	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
     }
-    public function Manifiesto(){
-    	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
-    }
 }
