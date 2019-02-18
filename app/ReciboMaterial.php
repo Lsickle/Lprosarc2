@@ -27,4 +27,7 @@ class ReciboMaterial extends Model{
     public function ResEnvio(){
         return $this->hasMany('App\ResEnvio','Id_ResEnv','id')//como recibo material tiene muchos envios 
     }
+    public function Manifiesto(){
+        return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como recibo material tiene muchos manifiestos
+    }
 }
