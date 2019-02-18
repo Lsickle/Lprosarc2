@@ -13,7 +13,6 @@ class CreateVideosTable extends Migration
      */
     public function up()
     {
-        /*falta la foranea de la tabla resEnvio*/
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('ID_Video');
             $table->timestamps();
