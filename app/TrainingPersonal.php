@@ -11,12 +11,12 @@ class TrainingPersonal extends Model{
 
 
 	 public function sedes(){
-    	return $this>belongsTo('FK_Sede','ID_Sede');
+    	return $this>belongsTo('App\Sede','ID_Sede');
     }
     public function trainings(){
-    	return $this>belongsTo('FK_Capa','ID_Capa');
+    	return $this>belongsTo('App\Training','ID_Capa');
     }
     public function personals(){
-    	return $this>belongsTo('FK_Pers','ID_Pers');
+    	return $this>belongsTo('App\Personal','ID_Pers');
     }
 }

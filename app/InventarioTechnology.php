@@ -10,6 +10,6 @@ class InventarioTechnology extends Model{
     protected $primaryKey = 'ID_Tecn';
 
     public function personals(){
-    	return $this>belongsTo('FK_TecnPerson','ID_Pers');
+    	return $this>belongsTo('App\Personal','ID_Pers');
     }
 }
