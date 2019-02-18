@@ -70,4 +70,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('Declaration', 'ID_Declar');//como user tiene muchas declaraciones
     }
+    public function OrdenCompras()
+    {
+        return $this->hasMany('App\ordenCompra', 'ID_Orden', 'id');
+    }
 }

@@ -12,7 +12,8 @@ class ProgramacionVehiculo extends Model
 
     protected $primaryKey = 'ID_ProgVeh';
     
-    // public function(){
-    //     return $this->hasMany('App\Vehiculo')
-    // }
+    public function OrdenCompras()
+    {
+        return $this->hasMany('App\ordenCompra', 'ID_Orden', 'id');
+    }
 }
