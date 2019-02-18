@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class sede extends Model
+class Sede extends Model
 {
     protected $table='sedes';
 
@@ -23,7 +23,7 @@ class sede extends Model
 
 	public function clientes()
 	{
-	 return $this>belongsTo('cliente','ID_Cli');
+	 return $this>belongsTo('App\Cliente','ID_Cli');
 	}
 
 	public function generador()
@@ -33,7 +33,7 @@ class sede extends Model
 	
     public function declaracion()
     {
-        return $this->hasMany('Declaration', 'ID_Declar', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Declaration', 'ID_Declar', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
 	}
 	
 	public function Quotations()

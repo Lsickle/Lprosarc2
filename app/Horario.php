@@ -10,6 +10,6 @@ class Horario extends Model{
     protected $primaryKey = 'ID_Horario';
 
     public function personals(){
-    	return $this>belongsTo('FK_HoraPers','ID_Pers');
+    	return $this>belongsTo('App\Personal','ID_Pers');
     }
 }
