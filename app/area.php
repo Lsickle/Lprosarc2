@@ -10,6 +10,6 @@ class Area extends Model{
     protected $primaryKey = 'ID_Area';
 
     public function sedes(){
-    	return $this>belongsTo('AreaSede','ID_Sede');
+    	return $this>belongsTo('App\Sede','ID_Sede');
     }
 }

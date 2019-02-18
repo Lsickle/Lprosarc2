@@ -23,7 +23,7 @@ class GenerSede extends Model
 
 	public function generadors()
 	{
-	 return $this>belongsTo('Generador', 'ID_Gener');
+	 return $this>belongsTo('App\Generador', 'ID_Gener');
 	}
 	public function declaracion()
     {

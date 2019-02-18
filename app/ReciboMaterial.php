@@ -10,19 +10,19 @@ class ReciboMaterial extends Model{
     protected $primaryKey = 'ID_Rm';
 
     public function declarations(){
-    	return $this->belongsTo('FK_RmDeclar','ID_Declar');
+    	return $this->belongsTo('App\Declaration','ID_Declar');
     }
     public function clientes(){
-    	return $this->belongsTo('FK_RmTransportador','ID_Cli');
+    	return $this->belongsTo('App\Cliente','ID_Cli');
     }
     public function personals(){
-    	return $this->belongsTo('FK_RmContact','ID_Pers');
+    	return $this->belongsTo('App\Personal','ID_Pers');
     }
     public function personals(){
-    	return $this->belongsTo('FK_RmConductor','ID_Pers');
+    	return $this->belongsTo('App\Personal','ID_Pers');
     }
     public function progvehiculos(){
-    	return $this->belongsTo('FK_RmProgVeh','ID_ProgVeh');
+    	return $this->belongsTo('App\ProgramacionVehiculo','ID_ProgVeh');
     }
     public function ResEnvio(){
         return $this->hasMany('App\ResEnvio','Id_ResEnv','id')//como recibo material tiene muchos envios 

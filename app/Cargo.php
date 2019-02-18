@@ -10,6 +10,6 @@ class Cargo extends Model{
     protected $primaryKey = 'ID_Carg';
 
     public function oficces(){
-    	return $this>belongsTo('CargOfi','ID_Ofi');
+    	return $this>belongsTo('App\Area','ID_Area');
     }
 }
