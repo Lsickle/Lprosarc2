@@ -53,6 +53,7 @@
                             <li><a href="/sclientes/create"><i class='fa fa-map-marked-alt'></i>{{ trans('adminlte_lang::message.csederegister') }}</a></li>
                           </ul>
                         </li>
+
                         {{-- <li><a href="#"><i class='fa fa-warehouse'></i>{{ trans('adminlte_lang::message.clientupdate') }}</a></li> --}}
                         
                     </ul>
@@ -161,6 +162,16 @@
                         <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                        <a href="#"><i class="fas fa-truck-moving"></i></i> <span>Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="/vehicle">Listado</a></li>
+                            <li><a href="/vehicle/create">Registro</a></li>
+                            <li><a href="/vehicle/create">Programción</a></li>
+                            <li><a href="/vehicle/create">Mantenimiento</a></li>
+                            
+                        </ul>
+                    </li>
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
