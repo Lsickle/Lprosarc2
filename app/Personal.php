@@ -24,4 +24,10 @@ class Personal extends Model{
     public function Horario(){
         return $this->hasMany('App\Horario','ID_Horario','id')//como personal tiene muchos horarios
     }
+    public function InventarioTecnologiy(){
+        return $this->hasMany('App\InventarioTecnologiy','Id_Tecn','id')//como personal tiene muchos inverios de tecnologia
+    }
+    public function ReciboMateria(){
+        return $this->hasMany('App\ReciboMateria','Id_Rm','id')//como personal tiene muchos recibos de material
+    }
 }
