@@ -27,5 +27,9 @@ class cliente extends Model
     }
     public function ReciboMaterial(){
     	return $this->hasMany('App\ReciboMaterial','Id_Rm','id');//como clientes tienen muchos recibos de material
+	}
+	
+	public  function Tratamientos(){
+        return $this->hasMany('App\Tratamiento', 'ID_Trat', 'id');//como cliente puede proveher muchos residuos
     }
 }

@@ -39,8 +39,13 @@ class sede extends Model
 	public function Quotations()
     {
         return $this->hasMany('App\Quotation', 'ID_Cotiz', 'id');//sede tiene muchas cotizaciones
-    }
+	}
+	
     public function trainings(){
     	return $this>hasMany('App\TrainingPersonal','ID_CapPers','id');//como sedes tiene muchas capacitaciones de personal.
+	}
+	
+	public function Vehiculos(){
+        return $this->hasMany('App\Vehiculo', 'ID_Vehic', 'id');
     }
 }
