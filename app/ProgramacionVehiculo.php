@@ -16,4 +16,8 @@ class ProgramacionVehiculo extends Model
     {
         return $this->hasMany('App\ordenCompra', 'ID_Orden', 'id');
     }
+  
+    public function ReciboMaterial(){
+        return $this->hasMany('App\ReciboMaterial','Id_Rm','id')//como programcion de vihiculos tiene mucuhos recibos de material
+    }
 }
