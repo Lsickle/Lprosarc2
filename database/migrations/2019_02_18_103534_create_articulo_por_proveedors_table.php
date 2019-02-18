@@ -28,6 +28,7 @@ class CreateArticuloPorProveedorsTable extends Migration
             $table->foreign('FK_ArtiActiv')->references('ID_Act')->on('Activos');
             $table->foreign('FK_AutorizedBy')->references('id')->on('Users');
             $table->foreign('FK_ArtCotiz')->references('ID_Cotiz')->on('Quotations');
+
         });
     }
 
