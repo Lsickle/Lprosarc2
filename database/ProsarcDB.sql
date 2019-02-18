@@ -589,13 +589,9 @@
 	create table ResEnvio(
 		ID_ResEnv int auto_increment unique,
 		RespelKgEnviado int, /*cantidad en Kilogramos enviado*/
-		RespelGrEnviado int, /*cantidad en gramos enviado*/
 		RespelKgRecibido int, /*cantidad en Kilogramos recibido*/
-		RespelGrRecibido int, /*cantidad en gramos recibido*/
 		RespelKgConciliado int, /*cantidad en Kilogramos Conciliado*/
-		RespelGrConciliado int, /*cantidad en gramos Conciliado*/
 		RespelKgTratado int, /*cantidad en Kilogramos Tratado*/
-		RespelGrTratado int, /*cantidad en gramos Tratado*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
 		FK_RespelEnvio int, /*foranea de la tabla ReciboMaterial*/
