@@ -11,4 +11,9 @@ class QrCode extends Model
     protected $table = ['QrCodeEstiba', 'QrCodeSrc'];
 
     protected $primaryKey = 'ID_QrCode';
+
+    public function ResEnvios()
+    {
+    	return $this->belogsTo('ResEnvio','ID_ResEnv');
+    }
 }

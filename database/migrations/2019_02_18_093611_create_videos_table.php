@@ -22,6 +22,8 @@ class CreateVideosTable extends Migration
             $table->string('VideoTipoOther',64);
             $table->string('VideoSrc',255);
             $table->string('VideoFormat',32);
+            $table->unsignedInteger('FK_VideoRespel');
+            $table->foreign('FK_VideoRespel')->references('ID_ResEnv')->on('res_envios');
         });
     }
 

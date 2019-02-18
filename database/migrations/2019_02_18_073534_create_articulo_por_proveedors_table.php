@@ -23,10 +23,10 @@ class CreateArticuloPorProveedorsTable extends Migration
             $table->integer('ArtiCostoUnid'); /*precio por unidad del articulo*/
             $table->integer('ArtiMinimo'); /*cantidad minima de compra*/
             $table->unsignedInteger('FK_ArtiActiv'); /*foranea de la tabla Activos*/
-            // $table->unsignedInteger('FK_ArtCotiz'); /*foranea de la tabla cotizacion*/
+            $table->unsignedInteger('FK_ArtCotiz'); /*foranea de la tabla Quotations*/
             $table->unsignedInteger('FK_AutorizedBy');/*compra de articulo autorizado por*/
             $table->foreign('FK_ArtiActiv')->references('ID_Act')->on('Activos');
-            // $table->foreign('FK_ArtCotiz')->references('ID_Pers')->on('Cotizacion');
+            $table->foreign('FK_ArtCotiz')->references('ID_Cotiz')->on('Quotations');
             $table->foreign('FK_AutorizedBy')->references('id')->on('Users');
         });
     }

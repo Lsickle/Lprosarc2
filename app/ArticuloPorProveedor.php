@@ -21,4 +21,9 @@ class ArticuloPorProveedor extends Model
     {
     	return $this->belongsTo('App\Activo', 'ID_Act', 'id')
     }
+
+    public function activo()
+    {
+        return $this->belongsTo('App\Quotation', 'ID_Cotiz', 'id')
+    }
 }
