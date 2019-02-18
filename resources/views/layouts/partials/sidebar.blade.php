@@ -7,7 +7,8 @@
             @if (! Auth::guest())
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="../../../images/{{ Auth::user()->UsAvatar }}" class="img-circle" alt="User Image" />
+                        <img src="../../../images/{{ Auth::user()->UsAvatar }}"
+                        class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
                         <p style="overflow: hidden;text-overflow: ellipsis;max-width: 160px;" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</p>
@@ -35,7 +36,7 @@
                 <li class="active"><a href="{{ url('home') }}"><i class='fa fa-home'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li>
                 @if(Auth::user()->id==1)
                 <li class="treeview">
-                    <a href="#"><i {{-- class='fa fa-id-card' --}} class='fa fa-id-card'></i> <span>{{ trans('adminlte_lang::message.contacts') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i class='fa fa-id-card'></i> <span>{{ trans('adminlte_lang::message.contacts') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/clientes"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.clientindex') }}</a></li>
                         <li><a href="/clientes/create"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.clientregister') }}</a></li>
@@ -91,24 +92,23 @@
                     <a href="#"><i class='fas fa-biohazard'></i> <span>Areas</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/areas"><i class='fa fa-search'></i>Listar Areas</a></li>
-
                         <li><a href="/areas/create"><i class='fa fa-file-text'></i>Crear Areas</a></li>
+                        <li class="treeview">
+                            <a href="#"><i class="fas fa-file-contract"></i> <span>Cargos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="/cargos"><i class='fa fa-search'></i>Listar Cargos</a></li>
+
+                                <li><a href="/cargos/create"><i class='fa fa-file-text'></i>Crear Cargos</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class='fas fa-biohazard'></i> <span>Oficinas</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i class='fas fa-biohazard'></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/oficces"><i class='fa fa-search'></i>Listar Oficinas</a></li>
+                        <li><a href="/personal"><i class='fa fa-search'></i>Listar Personal</a></li>
 
-                        <li><a href="/oficces/create"><i class='fa fa-file-text'></i>Crear Oficinas</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><i class='fas fa-biohazard'></i> <span>Cargos</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/cargos"><i class='fa fa-search'></i>Listar Cargos</a></li>
-
-                        <li><a href="/cargos/create"><i class='fa fa-file-text'></i>Crear Cargos</a></li>
+                        <li><a href="/personal/create"><i class='fa fa-file-text'></i>Crear Personal</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

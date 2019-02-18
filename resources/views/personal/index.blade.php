@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Cargos')
+@section('htmlheader_title','Personal')
 
-@section('contentheader_title', 'Cargos Finales')
+@section('contentheader_title', 'Areas Finales')
 
 @section('main-content')
-  <div class="container-fluid spark-screen">
+	<div class="container-fluid spark-screen">
     <div class="row">
       <div class="col-md-16 col-md-offset-0">
         <!-- /.box -->
@@ -19,10 +19,12 @@
             <table id="CargosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
+                  <th>Doctype</th>
+                  <th>Documento</th>
                   <th>Nombre</th>
-                  <th>Grado</th>
-                  <th>Area</th>
-                  <th>Salario</th>
+                  <th>Correo</th>
+                  <th>Telefono</th>
+                  <th>Cargo</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -47,12 +49,14 @@
                     </div>
                   </div>
                 </div> --}}
-                @foreach($Cargos as $Cargo)
+                @foreach($Personals as $Personal)
                 <tr>
-                  <td>{{$Cargo->CargName}}</td>
-                  <td>{{$Cargo->CargGrade}}</td>
-                  <td>{{$Cargo->AreaName}}</td>
-                  <td>{{$Cargo->CargSalary}}</td>
+                  <th>{{$Personal->PersDocType}}</th>
+                  <th>{{$Personal->PersDocNumber}}</th>
+                  <th>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</th>
+                  <th>{{$Personal->PersEmail}}</th>
+                  <th>{{$Personal->PersCellphone}}</th>
+                  <th>{{$Personal->CargName}}</th>
                 </tr>
                 @endforeach
               </tbody>
