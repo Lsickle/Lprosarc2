@@ -12,6 +12,8 @@ use App\Municipios;
 use App\Area;
 use App\Cargo;
 use App\Personal;
+use App\Training;
+use App\TrainingPersonal;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AreasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(PersonalsTableSeeder::class);
+        $this->call(TrainingsTableSeeder::class);
+        $this->call(TrainingPersonalsTableSeeder::class);
     }
 }

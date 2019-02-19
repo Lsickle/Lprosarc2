@@ -89,26 +89,20 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class='fas fa-biohazard'></i> <span>Areas</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i class="fas fa-tools"></i> <span>Cargo</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
+                        <li><a href="/cargos"><i class='fa fa-search'></i>Listar Cargos</a></li>
                         <li><a href="/areas"><i class='fa fa-search'></i>Listar Areas</a></li>
-                        <li><a href="/areas/create"><i class='fa fa-file-text'></i>Crear Areas</a></li>
-                        <li class="treeview">
-                            <a href="#"><i class="fas fa-file-contract"></i> <span>Cargos</span> <i class="fa fa-angle-left pull-right"></i></a>
-                            <ul class="treeview-menu">
-                                <li><a href="/cargos"><i class='fa fa-search'></i>Listar Cargos</a></li>
-
-                                <li><a href="/cargos/create"><i class='fa fa-file-text'></i>Crear Cargos</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class='fas fa-biohazard'></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="/personal"><i class="fas fa-users"></i> Personal</a>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/personal"><i class='fa fa-search'></i>Listar Personal</a></li>
-
-                        <li><a href="/personal/create"><i class='fa fa-file-text'></i>Crear Personal</a></li>
+                        <li><a href="/capacitacion"><i class='fa fa-search'></i>Listar Capacitaciones</a></li>
+                        <li><a href="/capacitacion-personal"><i class='fa fa-search'></i>Capacitaciones del personal</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

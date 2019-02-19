@@ -187,10 +187,6 @@
 		ID_Capa int auto_increment unique,
 		CapaName varchar(64), /*nombre de la capacitacion*/
 		CapaTipo boolean, /*interna o externa*//*internas: ARL EPS PROSARC Externa:Cliente*/
-		CapaDate date, /*fecha de aprovacion*/
-		CapaExpire date, /*fecha de vencimiento*/
-		FK_CapaTeacher int, /*empresa que dicta la capacitacion*/
-		FK_CapaPers int, /*persona que posee la capacitacion*/
 		primary key	(ID_Capa)
 	)
 		COLLATE='utf8mb4_unicode_ci'
@@ -199,6 +195,8 @@
 	/*tabla para romper la relacion de muchos a muchos de la tabla Capacitacion*/
 	Create table CapacitacionPersonal(
 		ID_CapPers int auto_increment unique,
+		CapaPersDate date, /*fecha de aprovacion*/
+		CapaPersExpire date, /*fecha de vencimiento*/
 		FK_Sede int,
 		FK_Capa int,
 		FK_Pers int,
