@@ -48,6 +48,8 @@ Route::resource('/vehicle/index','VehicleController');
 Route::resource('/vehicle/programacion','VehicProgController');
 Route::resource('/vehicle/mantenimiento','VehicManteController');
 
+Route::resource('/capacitacion','TrainingsController');
+Route::resource('/capacitacion-personal','TrainingPersonalsController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

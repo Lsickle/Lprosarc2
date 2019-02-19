@@ -18,7 +18,7 @@ class CreateCargosTable extends Migration
             $table->string('CargName',128);
             $table->bigInteger('CargSalary');
             $table->string('CargGrade',128);
-            $table->unsignedInteger('CargOfi');
+            $table->unsignedInteger('CargArea');
             $table->foreign('CargArea')->references('ID_Area')->on('areas');
             $table->timestamps();
         });

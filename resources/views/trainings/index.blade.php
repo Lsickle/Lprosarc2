@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Personal')
+@section('htmlheader_title','Capacitaciones')
 
-@section('contentheader_title', 'Personal')
+@section('contentheader_title', 'Capacitaciones')
 
 @section('main-content')
 	<div class="container-fluid spark-screen">
@@ -11,7 +11,7 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de personal</h3>
+            <h3 class="box-title">Lista de capacitaciones</h3>
             <a href="cargos/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
@@ -19,12 +19,13 @@
             <table id="CargosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Doctype</th>
-                  <th>Documento</th>
+                  {{-- <th>Persona</th>
+                  <th>Capacitacion</th>
+                  <th>Sede</th>
+                  <th>Aprovacion</th>
+                  <th>Vencimiento</th> --}}
                   <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Telefono</th>
-                  <th>Cargo</th>
+                  <th>Tipo</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,14 +41,14 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                @foreach($Personals as $Personal)
+                @foreach($Trainings as $Training)
                 <tr>
-                  <td>{{$Personal->PersDocType}}</td>
-                  <td>{{$Personal->PersDocNumber}}</td>
-                  <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
-                  <td>{{$Personal->PersEmail}}</td>
-                  <td>{{$Personal->PersCellphone}}</td>
-                  <td>{{$Personal->CargName}}</td>
+                  <td>{{$Training->CapaName}}</td>
+                  @if($Training->CapaTipo == 1)
+                    <td>Interno</td>
+                  @else
+                    <td>Externo</td>
+                  @endif
                 </tr>
                 @endforeach
               </tbody>
