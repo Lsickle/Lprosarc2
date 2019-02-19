@@ -19,15 +19,15 @@ class Personal extends Model{
         return $this->hasMany('App\MovimientoActivo.php', 'ID_MovAct', 'id');//como personal tiene muchas movimiento de active 
     }
     public function Assistence(){
-        return $this->hasMany('App\Assistence', 'ID_Asis','id')//como personal tiene muchas asistencias
+        return $this->hasMany('App\Assistence', 'ID_Asis','id');//como personal tiene muchas asistencias
     }
     public function Horario(){
-        return $this->hasMany('App\Horario','ID_Horario','id')//como personal tiene muchos horarios
+        return $this->hasMany('App\Horario','ID_Horario','id');//como personal tiene muchos horarios
     }
     public function InventarioTecnologiy(){
-        return $this->hasMany('App\InventarioTecnologiy','Id_Tecn','id')//como personal tiene muchos inverios de tecnologia
+        return $this->hasMany('App\InventarioTecnologiy','Id_Tecn','id');//como personal tiene muchos inverios de tecnologia
     }
     public function ReciboMateria(){
-        return $this->hasMany('App\ReciboMateria','Id_Rm','id')//como personal tiene muchos recibos de material
+        return $this->hasMany('App\ReciboMateria','Id_Rm','id');//como personal tiene muchos recibos de material
     }
 }

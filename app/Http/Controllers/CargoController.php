@@ -16,7 +16,7 @@ class CargoController extends Controller
      */
     public function index(){
         $Cargos = DB::table('cargos')
-            ->join('areas','cargos.CargOfi', '=', 'areas.ID_Area')
+            ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
             ->select('cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName')
             ->get();
         return view('cargos.index', compact('Cargos'));

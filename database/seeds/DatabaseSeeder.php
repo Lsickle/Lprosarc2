@@ -9,6 +9,9 @@ use App\generador;
 use App\GenerSede;
 use App\departamento;
 use App\Municipios;
+use App\Area;
+use App\Cargo;
+use App\Personal;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,5 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call(generadorsTableSeeder::class);
         $this->call(DepartamentosTableSeeder::class);
         $this->call(MunicipiosTableSeeder::class);
+        $this->call(AreasTableSeeder::class);
+        $this->call(CargosTableSeeder::class);
+        $this->call(PersonalsTableSeeder::class);
     }
 }
