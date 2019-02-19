@@ -17,8 +17,6 @@ class CreateTrainingsTable extends Migration
             $table->increments('ID_Capa');
             $table->string('CapaName',64);
             $table->boolean('CapaTipo');
-            $table->date('CapaDate');
-            $table->date('CapaExpire');
             $table->timestamps();
         });
     }
