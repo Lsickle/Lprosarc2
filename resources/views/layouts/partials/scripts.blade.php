@@ -516,3 +516,13 @@ $(document).ready(function(){
         });
       });
     </script>
+    <script>
+      $(document).ready(function() {
+        $('#vehicleindexTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+        });
+      });
+    </script>

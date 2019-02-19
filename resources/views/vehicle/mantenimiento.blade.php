@@ -12,7 +12,7 @@ Registro
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos de los vehiculos</h3>
+					<h3 class="box-title">Mantenimiento</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -31,42 +31,27 @@ Registro
 							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
-
-									{{-- <div class="col-md-6">
-										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
-											@foreach($Clientes as $cliente)
-												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
-											@endforeach()
-										</select>
-									</div> --}}
 									
 									<div class="col-md-6">
-										<label for="vehicinputext1">Numero de placa</label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
+										<label for="mantenputext0">Km ultimo mantenimiento</label>
+										<input type="number" class="form-control" id="mantenputext0" placeholder="999999" name="km" max="999999">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
+										<label for="mantenputext1">Cambio de Aceite</label>
+										<input type="date" class="form-control" id="mantenputext1" name="aceite">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
+										<label for="manteinputext2">Fecha ultima tecnico mecanica</label>
+										<input type="date" class="form-control" id="manteinputext2" name="tecmecanica" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
+										<label for="manteinputext3">Tanqueo</label>
+										<input type="date" class="form-control" id="manteinputext3" name="Tanqueo">
 									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="GenerInputTipo">
-												Interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="GenerAuditable">
-										 </div>
-										 <div >
-									
-									
+									<div class="col-md-6">
+										<label for="manteinputext4">Cantida de tanqueo</label>
+										<input type="number" class="form-control" id="manteinputext4" placeholder="100098" name="cantidad" required="true" max="999999">
+									</div>
 									
 								</div>
 								<!-- /.box-body -->

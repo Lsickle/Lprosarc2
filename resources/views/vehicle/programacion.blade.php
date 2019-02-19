@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Registro
+Programacion
 @endsection
 @section('contentheader_title')
 {{-- {{ trans('adminlte_lang::message.sclientregistertittle') }} --}}
@@ -12,7 +12,7 @@ Registro
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos de los vehiculos</h3>
+					<h3 class="box-title">Programacion</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -31,42 +31,44 @@ Registro
 							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
-
-									{{-- <div class="col-md-6">
-										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
-											@foreach($Clientes as $cliente)
-												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
-											@endforeach()
+									
+									<div class="col-md-6">
+										<label for="programnputext0">Km inicio del dia</label>
+										<input type="number" class="form-control" id="programnputext0" placeholder="999999" name="km" max="999999">
+									</div>
+									<div class="col-md-6">
+										<label for="programnputext1">Fecha Programacion</label>
+										<input type="date" class="form-control" id="programnputext1" name="date">
+									</div>
+									<div class="col-md-6">
+										<label for="programnputoption1">Turno</label>
+										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Municipio" required="true">
+											<option>Dia</option>
+											<option>Tarde</option>
 										</select>
-									</div> --}}
-									
-									<div class="col-md-6">
-										<label for="vehicinputext1">Numero de placa</label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
+										<label for="program">Tipo</label>
+										<select class="form-control" id="program" placeholder="Funza" name="Municipio" required="true">
+											<option>En Mantenimiento</option>
+											<option>Usando</option>
+										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
+										<label for="programnputoption2">Feriado</label>
+										<select class="form-control" id="programnputoption2" placeholder="Funza" name="Municipio" required="true">
+											<option>Festivo</option>
+											<option>Domingos</option>
+										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
+										<label for="programnputext3">Hora de llegada a planta</label>
+										<input type="datetime" class="form-control" id="programnputext3" name="Tanqueo">
 									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="GenerInputTipo">
-												Interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="GenerAuditable">
-										 </div>
-										 <div >
-									
-									
+									<div class="col-md-6">
+										<label for="programnputext4">Hora de salida de planta</label>
+										<input type="number" class="form-control" id="programnputext4" placeholder="100098" name="cantidad" required="true" max="999999">
+									</div>
 									
 								</div>
 								<!-- /.box-body -->

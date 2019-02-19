@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Vehiculo;
 
-class VehicleController extends Controller
+class VehicManteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class VehicleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
-            return view('vehicle.mantenimiento');
+    {
+        return view('vehicle.mantenimiento');
     }
 
     /**
@@ -24,9 +24,9 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('vehicle.create');
+        
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,7 +37,7 @@ class VehicleController extends Controller
     {
         //
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -45,14 +45,10 @@ class VehicleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
-        // Route::get('/vehicle/mantenimiento', function () {
-        // return view('vehicle.mantenimiento');
-        // }
-
-    
+    {
+        return view('vehicle.mantenimiento');
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -63,7 +59,7 @@ class VehicleController extends Controller
     {
         //
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
