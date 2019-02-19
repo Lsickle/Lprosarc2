@@ -51,12 +51,12 @@
                 </div> --}}
                 @foreach($Personals as $Personal)
                 <tr>
-                  <th>{{$Personal->PersDocType}}</th>
-                  <th>{{$Personal->PersDocNumber}}</th>
-                  <th>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</th>
-                  <th>{{$Personal->PersEmail}}</th>
-                  <th>{{$Personal->PersCellphone}}</th>
-                  <th>{{$Personal->CargName}}</th>
+                  <td>{{$Personal->PersDocType}}</td>
+                  <td>{{$Personal->PersDocNumber}}</td>
+                  <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
+                  <td>{{$Personal->PersEmail}}</td>
+                  <td>{{$Personal->PersCellphone}}</td>
+                  <td>{{$Personal->CargName}}</td>
                 </tr>
                 @endforeach
               </tbody>
