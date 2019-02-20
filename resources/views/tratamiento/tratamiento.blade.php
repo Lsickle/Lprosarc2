@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Registro
+Tratamiento
 @endsection
 @section('contentheader_title')
-Registro de vehiculos
+Registro del Tratamiento
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -28,44 +28,40 @@ Registro de vehiculos
 							
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/tratamiento" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
+									
 									<div class="col-md-6">
-										<label for="vehicinputext1">Numero de placa</label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
+										<label for="tratamientoinputext1">Nombre</label>
+										<input type="text" class="form-control" id="tratamientoinputext1" placeholder="Incineración" name="nombre">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
+										<label for="tratamientoinputext2">Proveedor</label>
+										<input type="text" class="form-control" id="tratamientoinputext2" placeholder="Bayer" name="provehedor">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
+										<label for="tratamientoinputext3">Tipo de resudio</label>
+										<input type="text" class="form-control" id="tratamientoinputext3" placeholder="Medicamentos" name="tipo">
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 										<div class="icheck form-group">
 											 <label for="inputcheck">
-												Interno
+												Manejo interno
 											 </label>
-											  <input id="inputcheck" type="checkbox" name="create">
+											  <input id="inputcheck" type="checkbox" name="manejo">
 										 </div>
 									</div>
 								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+								<div>
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary">Registrar</button>
+									</div>
 								</div>
+								<!-- /.box-body -->
 							</form>
 						</div>
 						<!-- /.box -->
-					</div>
-					</div>
-					</div>
 					</div>
 					<!-- /.box-body -->
 				</div>
