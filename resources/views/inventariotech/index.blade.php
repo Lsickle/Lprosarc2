@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Personal')
+@section('htmlheader_title','InventarioTech')
 
-@section('contentheader_title', 'Personal')
+@section('contentheader_title', 'InventarioTechnoligy')
 
 @section('main-content')
 	<div class="container-fluid spark-screen">
@@ -11,21 +11,19 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de personal</h3>
-            <a href="personal/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <h3 class="box-title">Inventario de tecnologia</h3>
+            <a href="/inventariotech/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="PersonalsTable" class="table table-compact table-bordered table-striped">
+            <table id="InventarioTechTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Doctype</th>
-                  <th>Documento</th>
-                  <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Telefono</th>
-                  <th>Cargo</th>
-                  <th>Ver más..</th>
+	              <th>Nombre</th>
+	              <th>Modelo</th>
+	              <th>Sistema Operativo</th>
+	              <th>Observaciones</th>
+	              <th>Ver más..</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -41,15 +39,13 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                @foreach($Personals as $Personal)
+                @foreach($Inventarios as $Inventario)
                 <tr>
-                  <td>{{$Personal->PersDocType}}</td>
-                  <td>{{$Personal->PersDocNumber}}</td>
-                  <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
-                  <td>{{$Personal->PersEmail}}</td>
-                  <td>{{$Personal->PersCellphone}}</td>
-                  <td>{{$Personal->CargName}}</td>
-                  <td>{{$Personal->PersSlug}}</td>
+                  <td>{{$Inventario->PersFirstName." ".$Inventario->PersLastName}}</td>
+                  <td>{{$Inventario->TecnBrand}}</td>
+                  <td>{{$Inventario->TecnOs}}</td>
+                  <td>{{$Inventario->Tecnobserv}}</td>
+                  <td>{{$Inventario->ID_Tecn}}</td>
                 </tr>
                 @endforeach
               </tbody>

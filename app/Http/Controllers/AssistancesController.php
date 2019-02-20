@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Assistance;
 
-use App\Personal;
-
-class PersonalController extends Controller
+class AssistancesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,11 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $Personals = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersEmail','personals.PersCellphone','personals.PersSlug','cargos.CargName')
-            ->get();
-        return view('personal.index', compact('Personals'));
+        $Asistencias = DB::table('assistances')
+        ->join('personals', 'FK_AsisPers', '=', 'ID_Pers')
+        ->select('assistances.AsisLlegada','assistances.AsisSalida','assistances.AsisNocturnas','personals.PersFirstName','personals.PersLastName')
+        ->get();
+        return view('assistances.index', compact('Asistencias'));
     }
 
     /**

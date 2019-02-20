@@ -51,9 +51,10 @@ Route::resource('/vehicle/mantenimiento','VehicManteController');
 Route::resource('/tratamiento','TratamientoController');
 Route::resource('/ordenCompra/orden','OrdenCompraController');
 Route::resource('/ordenCompra/cotizacion','CotizacionController');
-
+Route::resource('/asistencia', 'AssistancesController');
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');
+Route::resource('/inventariotech', 'InventarioTechonologiesController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
