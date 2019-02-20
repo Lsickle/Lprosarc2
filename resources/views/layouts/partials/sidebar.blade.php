@@ -90,24 +90,19 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class="fas fa-tools"></i> <span>Cargo</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/cargos"><i class='fas fa-list-alt'></i>Listar Cargos</a></li>
-                        <li><a href="/areas"><i class='fas fa-list-alt'></i>Listar Areas</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
                     <a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/personal"><i class="fas fa-list-alt"></i> Listar</a></li>
-                        <li><a href="/asistencia"><i class="fas fa-calendar-week"></i> Asistencia</a></li>
+                        <li><a href="/asistencia"><i class="fas fa-clipboard-check"></i> Asistencia</a></li>
+                        <li><a href="/cargos"><i class='fas fa-tools'></i> Cargos</a></li>
+                        <li><a href="/areas"><i class="fas fa-archive"></i> Areas</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/capacitacion"><i class='fa fa-search'></i>Listar Capacitaciones</a></li>
-                        <li><a href="/capacitacion-personal"><i class='fa fa-search'></i>Capacitaciones del personal</a></li>
+                        <li><a href="/capacitacion"><i class='fas fa-list-alt'></i> Listar</a></li>
+                        <li><a href="/capacitacion-personal"><i class="fas fa-user-check"></i> Capacitaciones del personal</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
