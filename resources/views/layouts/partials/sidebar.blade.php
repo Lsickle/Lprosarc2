@@ -175,6 +175,13 @@
                         <li><a href="/ordenCompra/cotizacion"><i class="fas fa-file-invoice"></i>   Cotizacion</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                        <a href="#"><i class="fas fa-money-bill-wave"></i></i> <span> Activos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="/activos"><i class="fas fa-file-invoice-dollar"></i><span> Lista</span></a></li>
+                            <li><a href="/activos/create"><i class="fas fa-file-invoice"></i> Añadir</a></li>
+                        </ul>
+                    </li>
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

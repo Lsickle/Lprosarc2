@@ -534,3 +534,13 @@ $(document).ready(function(){
         });
       });
     </script>
+    <script>
+      $(document).ready(function() {
+        $('#activoindexTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+        });
+      });
+    </script>
