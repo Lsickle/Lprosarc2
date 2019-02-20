@@ -159,7 +159,7 @@
                 <li class="treeview">
                         <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li><a href="/vehicle"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
+                            <li><a href="/vehicle/index"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
                             <li><a href="/vehicle/create"><i class="fas fa-plus-square"></i>   Registro</a></li>
                             <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
                             <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
