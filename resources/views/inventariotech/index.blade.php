@@ -12,11 +12,11 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Inventario de tecnologia</h3>
-            <a href="cargos/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <a href="/inventariotech/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="CargosTable" class="table table-compact table-bordered table-striped">
+            <table id="InventarioTechTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
 	              <th>Nombre</th>
