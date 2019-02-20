@@ -17,14 +17,13 @@ class CreateInventarioTechnologiesTable extends Migration
             $table->increments('ID_Tecn');
             $table->string('TecnBrand',64);
             $table->string('TecnModel',64);
-            $table->string('TecnSerial',64);
-            $table->string('TecnNumber',32);
+            $table->string('TecnSerial',64)->unique();
             $table->string('TecnOs',32);
             $table->Integer('TecnRam');
             $table->string('TecnScreen',32);
-            $table->string('TecnAccessory1',64);
-            $table->string('TecnAccessory2',64);
-            $table->string('Tecnobserv');
+            $table->string('TecnAccessory1',64)->nullable();
+            $table->string('TecnAccessory2',64)->nullable();
+            $table->string('Tecnobserv')->nullable();
             $table->unsignedInteger('FK_TecnPerson');
             $table->foreign('FK_TecnPerson')->references('Id_Pers')->on('personals');
             $table->timestamps();

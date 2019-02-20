@@ -96,6 +96,7 @@
                         <li><a href="/asistencia"><i class="fas fa-clipboard-check"></i> Asistencia</a></li>
                         <li><a href="/cargos"><i class='fas fa-tools'></i> Cargos</a></li>
                         <li><a href="/areas"><i class="fas fa-archive"></i> Areas</a></li>
+                        <li><a href="/inventariotech"><i class="fas fa-laptop"></i> Inventario Tecnologia</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

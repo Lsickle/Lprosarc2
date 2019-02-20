@@ -434,7 +434,6 @@
 		TecnBrand varchar(64),
 		TecnModel varchar(64),
 		TecnSerial varchar(64),
-		TecnNumber varchar(32),
 		TecnOs varchar(32),
 		TecnRam int,
 		TecnScreen varchar(32),

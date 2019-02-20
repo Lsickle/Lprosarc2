@@ -15,6 +15,7 @@ use App\Personal;
 use App\Training;
 use App\TrainingPersonal;
 use App\Assistance;
+use App\InventarioTechnology;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,5 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TrainingsTableSeeder::class);
         $this->call(TrainingPersonalsTableSeeder::class);
         $this->call(AssistancesTableSeeder::class);
+        $this->call(InventarioTechTableSeeder::class);
     }
 }
