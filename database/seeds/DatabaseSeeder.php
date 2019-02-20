@@ -16,6 +16,8 @@ use App\Training;
 use App\TrainingPersonal;
 use App\Assistance;
 use App\InventarioTechnology;
+use App\Vehiculo;
+use App\ProgramacionVehiculo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,5 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TrainingPersonalsTableSeeder::class);
         $this->call(AssistancesTableSeeder::class);
         $this->call(InventarioTechTableSeeder::class);
+        $this->call(VehicleTableSeeder::class);
+        $this->call(VehicProgTableSeeder::class);
     }
 }
