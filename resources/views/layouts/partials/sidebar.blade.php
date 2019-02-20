@@ -92,12 +92,16 @@
                 <li class="treeview">
                     <a href="#"><i class="fas fa-tools"></i> <span>Cargo</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/cargos"><i class='fa fa-search'></i>Listar Cargos</a></li>
-                        <li><a href="/areas"><i class='fa fa-search'></i>Listar Areas</a></li>
+                        <li><a href="/cargos"><i class='fas fa-list-alt'></i>Listar Cargos</a></li>
+                        <li><a href="/areas"><i class='fas fa-list-alt'></i>Listar Areas</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="/personal"><i class="fas fa-users"></i> Personal</a>
+                    <a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/personal"><i class="fas fa-list-alt"></i> Listar</a></li>
+                        <li><a href="/asistencia"><i class="fas fa-calendar-week"></i> Asistencia</a></li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span> <i class="fa fa-angle-left pull-right"></i></a>

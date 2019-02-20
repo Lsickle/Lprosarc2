@@ -14,6 +14,7 @@ use App\Cargo;
 use App\Personal;
 use App\Training;
 use App\TrainingPersonal;
+use App\Assistance;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonalsTableSeeder::class);
         $this->call(TrainingsTableSeeder::class);
         $this->call(TrainingPersonalsTableSeeder::class);
+        $this->call(AssistancesTableSeeder::class);
     }
 }

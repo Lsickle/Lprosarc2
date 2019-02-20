@@ -47,7 +47,7 @@ Route::resource('/personal', 'PersonalController');
 Route::resource('/vehicle/index','VehicleController');
 Route::resource('/vehicle/programacion','VehicProgController');
 Route::resource('/vehicle/mantenimiento','VehicManteController');
-
+Route::resource('/asistencia', 'AssistancesController');
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');
 Auth::routes();
