@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Personal;
+use App\InventarioTechnology;
 
-class PersonalController extends Controller
+class InventarioTechonologiesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $Personals = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersEmail','personals.PersCellphone','personals.PersSlug','cargos.CargName')
-            ->get();
-        return view('personal.index', compact('Personals'));
+        $Inventarios = DB::table('inventario_technologies')
+        ->join('personals', 'inventario_technologies.FK_TecnPerson', '=', 'ID_Pers')
+        ->select('inventario_technologies.ID_Tecn','inventario_technologies.TecnBrand','inventario_technologies.TecnOs','inventario_technologies.Tecnobserv','personals.PersFirstName','personals.PersLastName')
+        ->get();
+        return view('inventariotech.index', compact('Inventarios'));
     }
 
     /**

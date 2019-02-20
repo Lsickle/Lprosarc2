@@ -34,6 +34,7 @@ class CreatePersonalsTable extends Migration
             $table->string('PersBankAccaunt',64)->nullable();
             $table->date('PersIngreso')->nullable();
             $table->date('PersSalida')->nullable();
+            $table->string('PersSlug')->unique();
             $table->unsignedInteger('FK_PersCargo');
             $table->foreign('FK_PersCargo')->references('ID_Carg')->on('cargos');
             $table->timestamps();

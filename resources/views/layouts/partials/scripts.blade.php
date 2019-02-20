@@ -479,7 +479,7 @@ $(document).ready(function(){
       "responsive": true,
     });
   });
-</script>  
+</script>
 <script>
   $(document).ready(function () {
     $('#CargosTable').DataTable({
@@ -531,6 +531,70 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#PersonalsTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 6,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('#TrainingsTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('#TrainingPersonalsTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('#AssistancesTable').DataTable( {
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#InventarioTechTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
         });
       });
     </script>
