@@ -87,6 +87,8 @@
                         <li><a href="/respels"><i class='fa fa-search'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem1') }}</a></li>
 
                         <li><a href="/respels/create"><i class='fa fa-file-text'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem2') }}</a></li>
+                        
+                        <li><a href="/tratamiento"><i class="fas fa-vial"></i> Tratamientos</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
