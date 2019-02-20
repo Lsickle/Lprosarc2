@@ -13,7 +13,7 @@ class TratamientoController extends Controller
      */
     public function index()
     {
-        //
+        return view('tratamiento.tratamiento');
     }
 
     /**

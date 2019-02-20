@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Registro
+Cotizacion
 @endsection
 @section('contentheader_title')
-Registro de vehiculos
+Cotizacion
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -28,32 +28,25 @@ Registro de vehiculos
 							
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/ordenCompra" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
+									
 									<div class="col-md-6">
-										<label for="vehicinputext1">Numero de placa</label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
+										<label for="cotizacioninputext1">Numero de cotizacion</label>
+										<input type="text" class="form-control" id="cotizacioninputext1" placeholder="0000010" name="numcotizacion">
+									</div>
+                                    <div class="col-md-6">
+										<label for="program">Estado de cotizacion</label>
+										<select class="form-control" id="program" name="cotizacion" required="true">
+											<option>Seleccione...</option>
+											<option>Aprobada</option>
+											<option>Aprobada Parcial</option>
+										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
-									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
-									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="inputcheck">
-												Interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="create">
-										 </div>
+										<label for="cotizacioninputext3">Subtotal de cotizacion</label>
+										<input type="number" class="form-control" id="cotizacioninputext3" placeholder="988888" name="subtotal" max="999.999.999.999">
 									</div>
 								</div>
 								<!-- /.box-body -->
@@ -63,9 +56,6 @@ Registro de vehiculos
 							</form>
 						</div>
 						<!-- /.box -->
-					</div>
-					</div>
-					</div>
 					</div>
 					<!-- /.box-body -->
 				</div>
