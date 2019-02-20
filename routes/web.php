@@ -49,6 +49,8 @@ Route::resource('/vehicle/create','VehicCreateController');
 Route::resource('/vehicle/programacion','VehicProgController');
 Route::resource('/vehicle/mantenimiento','VehicManteController');
 Route::resource('/tratamiento','TratamientoController');
+Route::resource('/ordenCompra/orden','OrdenCompraController');
+Route::resource('/ordenCompra/cotizacion','CotizacionController');
 
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');

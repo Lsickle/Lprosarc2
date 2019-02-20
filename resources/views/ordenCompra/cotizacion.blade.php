@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Tratamiento
+Cotizacion
 @endsection
 @section('contentheader_title')
-Registro del Tratamiento
+Cotizacion
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -28,37 +28,31 @@ Registro del Tratamiento
 							
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/tratamiento" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/ordenCompra" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
 									
 									<div class="col-md-6">
-										<label for="tratamientoinputext1">Nombre</label>
-										<input type="text" class="form-control" id="tratamientoinputext1" placeholder="Incineración" name="nombre">
+										<label for="cotizacioninputext1">Numero de cotizacion</label>
+										<input type="text" class="form-control" id="cotizacioninputext1" placeholder="0000010" name="numcotizacion">
+									</div>
+                                    <div class="col-md-6">
+										<label for="program">Estado de cotizacion</label>
+										<select class="form-control" id="program" name="cotizacion" required="true">
+											<option>Seleccione...</option>
+											<option>Aprobada</option>
+											<option>Aprobada Parcial</option>
+										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="tratamientoinputext2">Proveedor</label>
-										<input type="text" class="form-control" id="tratamientoinputext2" placeholder="Bayer" name="provehedor">
-									</div>
-									<div class="col-md-6">
-										<label for="tratamientoinputext3">Tipo de resudio</label>
-										<input type="text" class="form-control" id="tratamientoinputext3" placeholder="Medicamentos" name="tipo">
-									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="inputcheck">
-												Manejo interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="manejo">
-										 </div>
-									</div>
-								</div>
-								<div>
-									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Registrar</button>
+										<label for="cotizacioninputext3">Subtotal de cotizacion</label>
+										<input type="number" class="form-control" id="cotizacioninputext3" placeholder="988888" name="subtotal" max="999.999.999.999">
 									</div>
 								</div>
 								<!-- /.box-body -->
+								<div class="box-footer">
+									<button type="submit" class="btn btn-primary">Registrar</button>
+								</div>
 							</form>
 						</div>
 						<!-- /.box -->
