@@ -540,13 +540,7 @@
 	/*tabla para el recibo de materiales*/
 	Create table ReciboMaterial(
 		ID_Rm int auto_increment unique, /*numero de consecutivo*/
-		RmStatus varchar(64), /*opciones: Pendiente; aprobado(tesoreria)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
-		 asignado(a vehiculo)
-		COLLATE='utf8mb4_unicode_ci'
-		ENGINE=InnoDB;
-		 recibido; tratado; Certificado; Cancelado*/
+		RmStatus varchar(64), /*opciones: Pendiente; aprobado(tesoreria)*/
 		RmTipo varchar(32), /*exclusivo, alquilado, externo, recorrido*/
 		RmAuditable boolean,
 		RmSalida time, /*hora de salida de planta*/
