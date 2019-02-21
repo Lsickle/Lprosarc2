@@ -18,6 +18,7 @@ use App\Assistance;
 use App\InventarioTechnology;
 use App\Vehiculo;
 use App\ProgramacionVehiculo;
+use App\MantenimientoVehiculo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,5 +44,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InventarioTechTableSeeder::class);
         $this->call(VehicleTableSeeder::class);
         $this->call(VehicProgTableSeeder::class);
+        $this->call(MantenVehicTableSeeder::class);
     }
 }

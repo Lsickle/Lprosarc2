@@ -76,8 +76,5 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->HoraMAntenimientoFin = "2018-02-15 17:38:10";
         $vehicleprog->FK_ProgVeh = "1";
         $vehicleprog->save();
-
-
-
     }
 }
