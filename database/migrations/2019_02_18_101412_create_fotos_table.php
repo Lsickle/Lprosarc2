@@ -22,7 +22,7 @@ class CreateFotosTable extends Migration
             $table->string('FotoSrc',255);
             $table->string('FotoFormat',32);
             $table->unsignedInteger('FK_FotoRespel');
-            $table->foreign('FK_FotoRespel')->references('ID_ResEnv')->on('res_envios');
+            $table->foreign('FK_FotoRespel')->references('ID_ResEnv')->on('respel_envios');
         });
     }
 
