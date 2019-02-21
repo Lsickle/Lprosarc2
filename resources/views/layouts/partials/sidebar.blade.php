@@ -92,10 +92,18 @@
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="#"><i class="fas fa-print"></i> <span>Recibos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/recibo-material"><i class="fas fa-radiation"></i> Materiales</a></li>
+                        <li><a href="/certificado"><i class="fas fa-certificate"></i> Certificados</a></li>
+                        <li><a href="/manifiesto"><i class='fas fa-tools'></i> Manifiestos</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
                     <a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/personal"><i class="fas fa-list-alt"></i> Listar</a></li>
-                        <li><a href="/asistencia"><i class="fas fa-clipboard-check"></i> Asistencia</a></li>
+                        <li><a href="/asistencia"><i class="fas fa-tasks"></i> Asistencia</a></li>
                         <li><a href="/cargos"><i class='fas fa-tools'></i> Cargos</a></li>
                         <li><a href="/areas"><i class="fas fa-archive"></i> Areas</a></li>
                         <li><a href="/inventariotech"><i class="fas fa-laptop"></i> Inventario Tecnologia</a></li>
