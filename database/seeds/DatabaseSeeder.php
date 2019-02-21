@@ -19,6 +19,9 @@ use App\InventarioTechnology;
 use App\Vehiculo;
 use App\ProgramacionVehiculo;
 use App\MantenimientoVehiculo;
+use App\ordenCompra;
+use App\Quotation;
+use App\Tratamiento;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,5 +48,8 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleTableSeeder::class);
         $this->call(VehicProgTableSeeder::class);
         $this->call(MantenVehicTableSeeder::class);
+        $this->call(OrdenCompraTableSeeder::class);
+        $this->call(CotizacionTableSeeder::class);
+        // $this->call(TratamientoTableSeeder::class);
     }
 }
