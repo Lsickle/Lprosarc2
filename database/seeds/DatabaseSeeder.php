@@ -22,6 +22,9 @@ use App\MantenimientoVehiculo;
 use App\ordenCompra;
 use App\Quotation;
 use App\Tratamiento;
+use App\CategoriaActivo;
+use App\SubcategoriaActivo;
+use App\Activo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -51,5 +54,8 @@ class DatabaseSeeder extends Seeder
         $this->call(OrdenCompraTableSeeder::class);
         $this->call(CotizacionTableSeeder::class);
         // $this->call(TratamientoTableSeeder::class);
+        $this->call(CategoriaActivoTableSeeder::class);
+        $this->call(SubCategoriaActivoTableSeeder::class);
+        $this->call(ActivoTableSeeder::class);
     }
 }

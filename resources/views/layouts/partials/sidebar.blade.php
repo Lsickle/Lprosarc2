@@ -162,7 +162,7 @@
                     <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/vehicle/index"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
-                        <li><a href="/vehicle/create"><i class='fa fa-plus'></i></i>   Registro</a></li>
+                        <li><a href="/vehicle/create"><i class='fa fa-plus'></i></i>Registro</a></li>
                         <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
                         <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
                         
@@ -171,17 +171,17 @@
                 <li class="treeview">
                     <a href="#"><i class="fas fa-money-bill-wave"></i></i> <span> Compra</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/ordenCompra/orden"><i class="fas fa-file-invoice-dollar"></i><span>   Orden</span></a></li>
-                        <li><a href="/ordenCompra/cotizacion"><i class="fas fa-file-invoice"></i>   Cotizacion</a></li>
+                        <li><a href="/Compra/orden"><i class="fas fa-file-invoice-dollar"></i><span>   Orden</span></a></li>
+                        <li><a href="/Compra/cotizacion"><i class="fas fa-file-invoice"></i>   Cotizacion</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
-                        <a href="#"><i class="fas fa-money-bill-wave"></i></i> <span> Activos</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="/activos"><i class="fas fa-file-invoice-dollar"></i><span> Lista</span></a></li>
-                            <li><a href="/activos/create"><i class="fas fa-file-invoice"></i> Añadir</a></li>
-                        </ul>
-                    </li>
+                    <a href="#"><i class="fas fa-laptop"></i><span> Activos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/activos"><i class="fas fa-list-alt"></i><span>  Inventario</span></a></li>
+                        <li><a href="/activos/create"><i class='fa fa-plus'></i><span>Añadir</span></a></li>
+                    </ul>
+                </li>
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

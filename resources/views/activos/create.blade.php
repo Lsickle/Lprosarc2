@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Registro
+Activos
 @endsection
 @section('contentheader_title')
-Registro de Activos
+Registros de Activos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,7 @@ Registro de Activos
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos</h3>
+					<h3 class="box-title">Registro de los Activos</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -25,47 +25,105 @@ Registro de Activos
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							
+							<div class="box-header with-border">
+								<h3 class="box-title">Formulario de registro</h3>
+							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="box-body">
-									<div class="col-md-6">
-										<label for="vehicinputext1"></label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
+								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
+									<div class="fingerprint-spinner" id="loadingTable">
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
-									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
-									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="inputcheck">
-												Interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="create">
-										 </div>
+								<div class="box-body" hidden onload="renderTable()" id="readyTable">
+									<div class="tab-pane" id="addRowWizz">
+										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del activo que desea registrar en cada paso</p>
+										<div id="smartwizard">
+											<ul>
+												<li><a href="#step-1"><b>Paso 1</b><br /><small>Categoria de activos</small></a></li>
+												<li><a href="#step-2"><b>Paso 2</b><br /><small>SubCategoria de activos</small></a></li>
+												<li><a href="#step-3"><b>paso 3</b><br /><small>Activos</small></a></li>
+											</ul>
+											<div>
+												<div id="step-1" class="">
+													<div class="col-md-6">
+														<label for="activo">Categoria</label>
+														<select class="form-control" id="activo" name="cotizacion" required="true">
+															<option>Seleccione...</option>
+															<option>Mueble</option>
+															<option>Tecnologia</option>
+														</select>
+													</div>
+												</div>
+												<div id="step-2" class="">
+													<div class="col-md-6">
+														<label for="activo">SubCategoria</label>
+														<select class="form-control" id="activo" name="cotizacion" required="true">
+															<option>Seleccione...</option>
+															<option>Sillas</option>
+															<option>Pc</option>
+														</select>
+													</div>
+												</div>
+												<div id="step-3" class="">
+													<div class="col-md-6">
+														<label for="ordeninputext3">Nombre del activo</label>
+														<input type="text" class="form-control" id="ordeninputext3" placeholder="0000099" name="factura">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Cantidad</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Serial de Prosarc</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Modelo</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Talla</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Observaciones</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="ordeninputext3">Serial Proveedor</label>
+														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="program">???Unidad</label>
+														<select class="form-control" id="program" name="cotizacion" required="true">
+															<option>Seleccione...</option>
+															<option>Unidad</option>
+															<option>Peso</option>
+														</select>
+													</div>
+												</div>
+												
+											</div>
+										</div>
 									</div>
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
 								</div>
 							</form>
 						</div>
 						<!-- /.box -->
-					</div>
-					</div>
-					</div>
 					</div>
 					<!-- /.box-body -->
 				</div>

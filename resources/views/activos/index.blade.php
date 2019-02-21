@@ -9,15 +9,19 @@ Activos
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Activos</h3>
+          <h3 class="box-title">Datos de los activos</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="activoindexTable" class="table table-compact table-bordered table-striped">
+          <table id="vehicleindexTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                  <th>Categoria</th>
-                  <th>Nombre</th>
+                    <th>Categoria</th>
+                    <th>SubCategoria</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Unidades</th>
+                    <th>Modelo</th>
                 </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -35,7 +39,11 @@ Activos
             <tfoot>
                 <tr>
                     <th>Categoria</th>
+                    <th>SubCategoria</th>
                     <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Unidades</th>
+                    <th>Modelo</th>
                 </tr>
             </tfoot>
           </table>
