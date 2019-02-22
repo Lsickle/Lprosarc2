@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ResEnvio extends Model{
+class RespelEnvio extends Model{
     protected $table='res_envios';
     protected $fillable = ['RespelKgEnviado','RespelKgRecibido','RespelKgConciliado','RespelKgTratado','FK_RespelEnvio'];
     protected $primaryKey = 'ID_ResEnv';

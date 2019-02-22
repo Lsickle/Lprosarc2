@@ -50,12 +50,14 @@ Route::resource('/vehicle/programacion','VehicProgController');
 Route::resource('/vehicle/mantenimiento','VehicManteController');
 Route::resource('/tratamiento','TratamientoController');
 Route::resource('/asistencia', 'AssistancesController');
-Route::resource('/Compra/orden','OrdenCompraController');
-Route::resource('/Compra/cotizacion','CotizacionController');
+Route::resource('/compra/orden','OrdenCompraController');
+Route::resource('/compra/cotizacion','CotizacionController');
 Route::resource('/activos','ActivoController');
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');
 Route::resource('/inventariotech', 'InventarioTechonologiesController');
+Route::resource('/recibo-material', 'ReciboMaterialController');
+Route::resource('/respel-envios', 'RespelEnviosController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

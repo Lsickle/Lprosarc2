@@ -20,7 +20,7 @@ class CreateQrCodesTable extends Migration
             $table->integer('QrCodeEstiba'); /*numero de estiba de cada residuo(para los casos donde hay varias estibas por residuo)*/
             $table->string('QrCodeSrc',255); /*direccion donde esta guardado el codigo qr para su reimpresion*/
             $table->unsignedInteger('FK_QrCodeRespel');/*foranea para ingresar informacion en el codigo QR(cantidad pesada)*/
-            $table->foreign('FK_QrCodeRespel')->references('ID_ResEnv')->on('res_envios'); 
+            $table->foreign('FK_QrCodeRespel')->references('ID_ResEnv')->on('respel_envios'); 
         });
     }
 

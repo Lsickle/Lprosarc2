@@ -26,6 +26,7 @@ class CreateReciboMaterialsTable extends Migration
             $table->unsignedInteger('FK_RmDeclar');
             $table->unsignedInteger('FK_RmConductor');
             $table->unsignedInteger('FK_RmProgVeh');
+            $table->string('RmSlug');
             $table->foreign('FK_RmDeclar')->references('ID_Declar')->on('declarations');
             $table->foreign('FK_RmTransportador')->references('ID_Cli')->on('clientes');
             $table->foreign('FK_RmContact')->references('ID_Pers')->on('personals');

@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SubcategoriaActivo;
+use Illuminate\Support\Facades\DB;
+use ReciboMaterial;
 
-class ActivoController extends Controller
+class ReciboMaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // $Activos = Activo::all();
-        // return view('activos.index', compact('Activos'));
-        return view('activos.index');
+    public function index(){
+        $RMaterials = DB::table('recibo_materials')
+            ->join('clientes', 'recibo_materials.FK_RmTransportador', '=', 'clientes.ID_Cli')
+            ->join('personals', 'recibo_materials.FK_RmConductor', '=', 'personals.ID_Pers')
+            ->select('recibo_materials.RmStatus','recibo_materials.RmSalida','recibo_materials.RmLlegada','personals.PersFirstName','personals.PersLastName','clientes.CliName')
+            ->get();
+        return view('reciboMaterials.index', compact('RMaterials'));
     }
 
     /**
@@ -26,9 +29,7 @@ class ActivoController extends Controller
      */
     public function create()
     {
-        // $SubCategActivos = SubcategoriaActivo::all();
-        // return view('activos.create', compact('SubCategActivos'));
-        return view('activos.create');
+        //
     }
 
     /**

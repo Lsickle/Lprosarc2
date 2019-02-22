@@ -28,7 +28,7 @@ class CreateCertificadosTable extends Migration
             $table->unsignedInteger('FK_CertRespel');
             $table->foreign('FK_CertRm')->references('ID_Rm')->on('recibo_materials');
             $table->foreign('FK_CertGener')->references('ID_GSede')->on('gener_sedes');
-            $table->foreign('FK_CertRespel')->references('ID_ResEnv')->on('res_envios');
+            $table->foreign('FK_CertRespel')->references('ID_ResEnv')->on('respel_envios');
             $table->timestamps();
         });
     }

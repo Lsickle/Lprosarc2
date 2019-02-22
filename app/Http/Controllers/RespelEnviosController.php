@@ -3,20 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SubcategoriaActivo;
+use Illuminate\Support\Facades\DB;
+use App\ResEnvio;
 
-class ActivoController extends Controller
+class RespelEnviosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // $Activos = Activo::all();
-        // return view('activos.index', compact('Activos'));
-        return view('activos.index');
+    public function index(){
+        $ResEnvios = DB::table('respel_envios')
+            ->join('recibo_materials', 'res_envios.FK_RespelEnvio', '=', 'recibo_materials.ID_Rm')
+            ->select('res_envios.RespelKgEnviado','res_envios.RespelKgRecibido','res_envios.RespelKgConciliado','res_envios.RespelKgTratado','recibo_materials.ID_Rm')
+            ->get();
+        return view('resEnvios.index', compact('ResEnvios'));
     }
 
     /**
@@ -26,9 +28,7 @@ class ActivoController extends Controller
      */
     public function create()
     {
-        // $SubCategActivos = SubcategoriaActivo::all();
-        // return view('activos.create', compact('SubCategActivos'));
-        return view('activos.create');
+        //
     }
 
     /**
