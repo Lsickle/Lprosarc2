@@ -22,7 +22,7 @@ class CreateRecursosTable extends Migration
             $table->string('RecSrc',255);
             $table->string('RecFormat',32);
             $table->unsignedInteger('FK_RecSol');
-            $table->foreign('FK_RecSol')->references('ID_SolRes')->on('solicitud_servicios');
+            $table->foreign('FK_RecSol')->references('ID_SolSer')->on('solicitud_servicios');
         });
     }
 
