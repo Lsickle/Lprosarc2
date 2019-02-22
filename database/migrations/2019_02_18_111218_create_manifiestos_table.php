@@ -26,7 +26,7 @@ class CreateManifiestosTable extends Migration
             $table->unsignedInteger('FK_MAnifRm');
             $table->unsignedInteger('FK_MAnifGener');
             $table->unsignedInteger('FK_ManifProvee');
-            $table->foreign('FK_MAnifRespel')->references('ID_ResEnv')->on('res_envios');
+            $table->foreign('FK_MAnifRespel')->references('ID_ResEnv')->on('respel_envios');
             $table->foreign('FK_MAnifRm')->references('ID_Rm')->on('recibo_materials');
             $table->foreign('FK_MAnifGener')->references('ID_GSede')->on('gener_sedes');
             $table->foreign('FK_ManifProvee')->references('ID_Sede')->on('sedes');

@@ -55,6 +55,8 @@ Route::resource('/asistencia', 'AssistancesController');
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');
 Route::resource('/inventariotech', 'InventarioTechonologiesController');
+Route::resource('/recibo-material', 'ReciboMaterialController');
+Route::resource('/respel-envios', 'RespelEnviosController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

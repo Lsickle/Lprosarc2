@@ -15,20 +15,13 @@ class CreateRespelsTable extends Migration
     {
         Schema::create('respels', function (Blueprint $table) {
             $table->increments('ID_Respel');
-            $table->string('RespelName', 128)->nullable();
-            $table->text('RespelDescrip')->nullable();
-            $table->string('RespelClasf4741', 64)->nullable();
-            $table->string('RespelIgrosidad', 128)->nullable();
-            $table->string('RespelEstado', 32)->nullable();
+            $table->string('RespelName', 128);
+            $table->text('RespelDescrip');
+            $table->string('RespelClasf4741', 64);
+            $table->string('RespelIgrosidad', 128);
             $table->string('RespelHojaSeguridad', 128);
-            $table->string('RespelTarj', 128)->nullable();
+            $table->string('RespelTarj', 128);
             $table->string('RespelSlug')->unique();
-            $table->unsignedInteger('RespelDeclar');
-            $table->unsignedInteger('RespelReq');
-            $table->unsignedInteger('RespelGenerSede');
-            $table->foreign('RespelDeclar')->references('ID_Declar')->on('declarations');
-            $table->foreign('RespelReq')->references('ID_Req')->on('requerimientos');
-            $table->foreign('RespelGenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->timestamps();
         });
     }

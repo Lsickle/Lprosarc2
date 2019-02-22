@@ -1,4 +1,4 @@
-		drop DATABASE Prosarcdb;
+drop DATABASE Prosarcdb;
 	create DATABASE Prosarcdb;
 	use Prosarcdb;
 	-- Create table Country(
@@ -42,7 +42,7 @@
 		ENGINE=InnoDB;
 
 	/*tabla de clientes proveedores etc*/
-	create table Clientes(
+	create table Cliente (
 		ID_Cli int auto_increment unique,
 		CliNit bigint, /*nit*/
 		CliName varchar(255), /*razon social del cliente*/
@@ -516,6 +516,7 @@
 		FK_RespelDeclar int, /*foranea de la tabla Declaracion*/
 		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
 		FK_RespelReq int, /*foranea de la tabla requerimiento*/
+		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
 		primary key (ID_Respel),
 		foreign key (FK_RespelDeclar) references Declaracion(ID_Declar) ON UPDATE CASCADE,
 		foreign key (FK_RespelReq) references Requerimiento(ID_Req) ON UPDATE CASCADE,
@@ -737,4 +738,3 @@
 	ENGINE=InnoDB
 	AUTO_INCREMENT=3
 	;
-
