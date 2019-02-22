@@ -16,20 +16,16 @@ class CreateManifiestosTable extends Migration
         Schema::create('manifiestos', function (Blueprint $table) {
             $table->increments('ID_Manif');
             $table->Integer('ManifNumero');
-            $table->Integer('ManifKg');
             $table->string('ManifiEspName',64);
             $table->string('ManifiEspValue',64);
             $table->string('ManifObservacion');
             $table->string('ManifSrc');
+            $table->boolean('ManiAuthJo');
+            $table->boolean('ManiAuthJl');
+            $table->boolean('ManiAuthDp');
             $table->string('CertAnexo');
-            $table->unsignedInteger('FK_MAnifRespel');
-            $table->unsignedInteger('FK_MAnifRm');
-            $table->unsignedInteger('FK_MAnifGener');
-            $table->unsignedInteger('FK_ManifProvee');
-            $table->foreign('FK_MAnifRespel')->references('ID_ResEnv')->on('respel_envios');
-            $table->foreign('FK_MAnifRm')->references('ID_Rm')->on('recibo_materials');
-            $table->foreign('FK_MAnifGener')->references('ID_GSede')->on('gener_sedes');
-            $table->foreign('FK_ManifProvee')->references('ID_Sede')->on('sedes');
+            $table->unsignedInteger('FK_ManiSolSer');
+            $table->foreign('FK_ManiSolSer')->references('ID_ResEnv')->on('solicitud_servicios');
             $table->timestamps();
         });
     }
