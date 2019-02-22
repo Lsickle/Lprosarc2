@@ -16,13 +16,7 @@
           <table id="municipalityTable" class="table table-compact table-bordered table-striped">
             <thead>
               <tr>
-                <th>nombre</th>
-                {{-- <th>Nombre</th>
-                <th>NIT</th>
-                <th>Creado el</th>
-                <th>Auditable</th>
-                <th>Mas...</th>
-                <th>Editar</th> --}}
+                <th>Nombre</th>
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -51,29 +45,11 @@
               @foreach($municipios as $municipio)
               <tr>
                 <td>{{$municipio->MunName}}</td>
-                {{-- <td>{{$place->CliShortname}}</td>
-                <td>{{$place->CliNit}}</td>
-                <td>{{$place->created_at}}</td> --}}
-                {{-- @if($place->CliAuditable==1)
-                <td>Si</td>
-                @else
-                <td>NO</td>
-                @endif
-                <td>{{$place->CliSlug}}</td>
-                <td>{{$place->CliSlug}}</td> --}}
+
               </tr>
               @endforeach
             </tbody>
             {{-- <tfoot>
-            <tr>
-              <th>Categoria</th>
-              <th>Nombre</th>
-              <th>NIT</th>
-              <th>Creado el</th>
-              <th>Auditable</th>
-              <th>Mas...</th>
-              <th>Editar</th>
-            </tr>
             </tfoot> --}}
           </table>
         </div>

@@ -18,8 +18,8 @@ class CreateVehiculoTable extends Migration
             $table->timestamps();
             $table->string('VehicPlaca',12);
             $table->boolean('VehicInternExtern');
-            $table->string('VehicTipo',60);
-            $table->string('VehicCapacidad',12);
+            $table->string('VehicTipo',64);
+            $table->string('VehicCapacidad',64);
             $table->integer('VehicKmActual');
             $table->unsignedInteger('FK_VehiSede');
 

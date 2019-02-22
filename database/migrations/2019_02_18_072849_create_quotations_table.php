@@ -17,10 +17,8 @@ class CreateQuotationsTable extends Migration
             $table->increments('ID_Cotiz');
             $table->timestamps();
             $table->integer('CotizNum');
-            $table->string('CotizStatus');
+            $table->string('CotizStatus', 32);
             $table->integer('CotizSubTotal');
-            // $table->timestamps('created_at');
-            // $table->timestamps('updated_at');
             $table->unsignedInteger('FK_CotizOrden');
             $table->unsignedInteger('FK_CotizSede');
            

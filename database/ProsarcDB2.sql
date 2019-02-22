@@ -8,9 +8,7 @@ create table Departamento(
 	DepartName varchar(64),
 	DepartRegionName varchar(64),
 	DepartCapitalName varchar(64),
-	FK_DepartCountry int,
 	primary key(ID_Depart),
-	foreign key (FK_DepartCountry) references Country(ID_Country) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -88,6 +86,8 @@ create table GenerSede(
 	GSedeAddress varchar(255),
 	GSedePhone varchar(32),
 	GSedePhoneExt varchar(8),/*numero de extencion*/
+	GSedePhone2 varchar(32),
+	GSedePhoneExt2 varchar(8),/*numero de extencion*/
 	GSedeEmail varchar(128),	
 	GSedeCelular varchar(32),
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
@@ -144,8 +144,11 @@ create table SolicitudServicio(
 		ID_Area int auto_increment unique,
 		AreaName varchar(128),
 		FK_AreaSede int, /*foranea de la tabla sede*/
+		FK_GenerSede int, /*foranea de la tabla Generador sede*/
 		primary key (ID_Area),
 		foreign key (FK_AreaSede) references Sede(ID_Sede) ON UPDATE CASCADE
+		foreign key (FK_GenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE
+		
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -345,7 +348,7 @@ create table SubCatAct(
 create table Activo(
 	ID_Act int auto_increment unique,
 	ActName varchar(128),
-	ActUnid boolean, /*unidad o peso*/
+	ActUnid varchar(128), /*unidad o peso*/
 	ActCant int, /*cantidad inicial registrada*/
 	ActSerialProsarc varchar(128),
 	ActSerialProveed varchar(128),

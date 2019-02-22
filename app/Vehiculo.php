@@ -8,7 +8,7 @@ class Vehiculo extends Model
 {
     protected $table = 'Vehiculos';
 
-    protected $table = ['VehicPlaca', 'VehicTipo', 'VehicCapacidad','VehicKmActual', 'VehicInternExtern' 'FK_VehiSede'];
+    protected $fillable = ['VehicPlaca', 'VehicTipo', 'VehicCapacidad','VehicKmActual', 'VehicInternExtern', 'FK_VehiSede'];
 
     public $primaryKey = 'ID_Vehic';
 
@@ -16,7 +16,4 @@ class Vehiculo extends Model
         return $this->hasMany('App\ProgramacionVehiculo', 'ID_ProgVeh', 'id');
     }
 
-    public function MantenVehics(){
-        return $this->hasMany('App\MantenimientoVehiculo', 'ID_Mv', 'id');
-    }
 }

@@ -18,10 +18,8 @@ class CreateOrderComprasTable extends Migration
             $table->increments('ID_Orden');
             $table->timestamps();
             $table->integer('OrdenNum');
-            $table->string('OrdenStatus');
-            // $table->timestamps('created_at');
-            // $table->timestamps('updated_at');
-            $table->string('OrdenInvoice');
+            $table->string('OrdenStatus',64);
+            $table->string('OrdenInvoice',32);
             $table->boolean('OrdenRecibida');
             $table->boolean('OrdenPagada');
             $table->integer('OrdenTotal');

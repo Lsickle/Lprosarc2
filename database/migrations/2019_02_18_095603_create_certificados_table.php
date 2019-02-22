@@ -15,20 +15,18 @@ class CreateCertificadosTable extends Migration
     {
         Schema::create('certificados', function (Blueprint $table) {
             $table->increments('ID_Cert');
-            $table->string('CertTipo',64);
             $table->Integer('CertNumero');
-            $table->Integer('CertKg');
             $table->string('CertiEspName',64);
             $table->string('CertiEspValue',64);
             $table->string('CertObservacion');
             $table->string('CertSrc');
+            $table->boolean('CertAuthJo');
+            $table->boolean('CertAuthJl');
+            $table->boolean('CertAuthDp');
             $table->string('CertAnexo');
-            $table->unsignedInteger('FK_CertRm');
-            $table->unsignedInteger('FK_CertGener');
-            $table->unsignedInteger('FK_CertRespel');
-            $table->foreign('FK_CertRm')->references('ID_Rm')->on('recibo_materials');
-            $table->foreign('FK_CertGener')->references('ID_GSede')->on('gener_sedes');
-            $table->foreign('FK_CertRespel')->references('ID_ResEnv')->on('respel_envios');
+            $table->unsignedInteger('FK_CertSolser');
+
+            $table->foreign('FK_CertSolser')->references('ID_SolSer')->on('solicitud_servicios');
             $table->timestamps();
         });
     }

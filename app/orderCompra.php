@@ -12,7 +12,7 @@ class OrderCompra extends Model
 
     protected $primarykey = 'ID_Orden';
 
-    public function Quotations()
+    public function Quotation()
     {
         return $this->hasMany('App\Quotation', 'ID_Cotiz', 'id');
     }

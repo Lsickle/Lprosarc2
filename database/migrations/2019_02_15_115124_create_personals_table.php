@@ -18,9 +18,9 @@ class CreatePersonalsTable extends Migration
             $table->boolean('PersType');
             $table->string('PersDocType',6);//Tipo de datos CC CE NIT RUT
             $table->string('PersDocNumber',25)->unique();
-            $table->string('PersFirstName');
-            $table->string('PersSecondName')->nullable();
-            $table->string('PersLastName');
+            $table->string('PersFirstName',64);
+            $table->string('PersSecondName',64)->nullable();
+            $table->string('PersLastName',64);
             $table->string('PersEmail');
             $table->string('PersLibreta',25)->nullable();
             $table->string('PersPase',5)->nullable();
