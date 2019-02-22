@@ -21,7 +21,7 @@ class CreateTratamientosTable extends Migration
             $table->unsignedInteger('FK_TratProv');
             $table->unsignedInteger('FK_TratRespel');
 
-            $table->foreign('FK_TratProv')->references('ID_Cli')->on('Clientes');
+            $table->foreign('FK_TratProv')->references('ID_Sede')->on('sedes');
             $table->foreign('FK_TratRespel')->references('ID_Respel')->on('Respels');
         });
     }
