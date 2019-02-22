@@ -42,7 +42,7 @@ drop DATABASE Prosarcdb;
 		ENGINE=InnoDB;
 
 	/*tabla de clientes proveedores etc*/
-	create table (
+	create table Cliente (
 		ID_Cli int auto_increment unique,
 		CliNit bigint, /*nit*/
 		CliName varchar(255), /*razon social del cliente*/
