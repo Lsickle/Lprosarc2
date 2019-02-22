@@ -12,7 +12,7 @@ Registros de Activos
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Registro de los Activos</h3>
+					<h3 class="box-title">Datos</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -25,15 +25,15 @@ Registros de Activos
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							<div class="box-header with-border">
+							{{-- <div class="box-header with-border">
 								<h3 class="box-title">Formulario de registro</h3>
-							</div>
+							</div> --}}
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									<div class="fingerprint-spinner" id="loadingTable">
+									{{-- <div class="fingerprint-spinner" id="loadingTable">
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
@@ -43,8 +43,8 @@ Registros de Activos
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div>
-								<div class="box-body" hidden onload="renderTable()" id="readyTable">
+									</div> --}}
+								{{-- <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del activo que desea registrar en cada paso</p>
 										<div id="smartwizard">
@@ -53,75 +53,81 @@ Registros de Activos
 												<li><a href="#step-2"><b>Paso 2</b><br /><small>SubCategoria de activos</small></a></li>
 												<li><a href="#step-3"><b>paso 3</b><br /><small>Activos</small></a></li>
 											</ul>
-											<div>
-												<div id="step-1" class="">
+											<div> --}}
+												{{-- <div id="step-1" class=""> --}}
 													<div class="col-md-6">
 														<label for="activo">Categoria</label>
-														<select class="form-control" id="activo" name="cotizacion" required="true">
+														<select class="form-control" id="activo" name="categoria" required="true">
 															<option>Seleccione...</option>
 															<option>Mueble</option>
 															<option>Tecnologia</option>
 														</select>
 													</div>
-												</div>
-												<div id="step-2" class="">
+												{{-- </div> --}}
+												{{-- <div id="step-2" class=""> --}}
 													<div class="col-md-6">
 														<label for="activo">SubCategoria</label>
-														<select class="form-control" id="activo" name="cotizacion" required="true">
+														<select class="form-control" id="activo" name="subcategoria" required="true">
 															<option>Seleccione...</option>
 															<option>Sillas</option>
 															<option>Pc</option>
+															{{-- @foreach ($SubCategActivos as $SubCategActivo)
+																<option>{{$SubCategActivo->SubCatName}}</option>
+															@endforeach --}}
 														</select>
 													</div>
-												</div>
-												<div id="step-3" class="">
+												{{-- </div> --}}
+												{{-- <div id="step-3" class=""> --}}
 													<div class="col-md-6">
-														<label for="ordeninputext3">Nombre del activo</label>
-														<input type="text" class="form-control" id="ordeninputext3" placeholder="0000099" name="factura">
+														<label for="activoinputext1">Nombre del activo</label>
+														<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="nombre">
 													</div>
 													<div class="col-md-6">
-														<label for="ordeninputext3">Cantidad</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="ordeninputext3">Serial de Prosarc</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="ordeninputext3">Modelo</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="ordeninputext3">Talla</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="ordeninputext3">Observaciones</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="ordeninputext3">Serial Proveedor</label>
-														<input type="number" class="form-control" id="ordeninputext3" placeholder="988888" name="capacidad" max="999.999.999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="program">???Unidad</label>
-														<select class="form-control" id="program" name="cotizacion" required="true">
+														<label for="activo">Forma del activo</label>
+														<select class="form-control" id="activo" name="Forma" required="true">
 															<option>Seleccione...</option>
 															<option>Unidad</option>
 															<option>Peso</option>
 														</select>
 													</div>
-												</div>
-												
-											</div>
+													<div class="col-md-6">
+														<label for="activoinputext2">Cantidad</label>
+														<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999.999">
+													</div>
+													<div class="col-md-6">
+														<label for="activoinputext3">Serial de Prosarc</label>
+														<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="serialPro">
+													</div>
+													<div class="col-md-6">
+														<label for="activoinputext4">Modelo</label>
+														<input type="number" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
+													</div>
+													<div class="col-md-6">
+														<label for="activoinputext5">Talla</label>
+														<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="talla">
+													</div>
+													<div class="col-md-6">
+														<label for="activoinputext6">Observaciones</label>
+														<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones sobre el activo" name="observacion">
+													</div>
+													<div class="col-md-6">
+														<label for="activoinputext7">Serial Proveedor</label>
+														<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="serialproveedor">
+													</div>
+													
+												{{-- </div> --}}
+											{{-- </div>
 										</div>
 									</div>
-								</div>
+								</div> --}}
 								<!-- /.box-body -->
+								
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
-								</div>
+									<button type="submit" class="btn btn-primary">Registrar</button>
+								</div>	
+							</div>
 							</form>
+						
 						</div>
 						<!-- /.box -->
 					</div>
