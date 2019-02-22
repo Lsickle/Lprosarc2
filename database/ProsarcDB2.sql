@@ -119,6 +119,26 @@ Create table Respel(
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
 
+/*tabla para la declaracion de residuos*/
+create table SolicitudServicio(
+	ID_SolSer int auto_increment unique,
+	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+	SolSerStatus varchar(16), /*aprobada, negada, pendiente, incompleta*/
+	SolSerTipo varchar(32), /*interno, alquilado, externo*/
+	SolSerAuditable boolean,
+	SolSerFrecuencia int,/*cada cuantos dias se recolecta: mensual, quincenal, semanal, por solicitud, N° dias*/
+	SolSerConducExter varchar, /*Nombre del conductor (El transportador es externo)*/
+	SolSerVehicExter varchar, /*Placa del vehiculo (El transportador es externo)*/
+	Fk_SolSerTransportador int, /*foranea de la tabla sede (Vehiculo externo)*/
+	FK_SolSerGenerSede int, /*foranea de la tabla GenerSede*/
+	primary key (ID_SolSer),
+	foreign key (Fk_SolSerTransportador) references Sedes(ID_Sede) ON UPDATE CASCADE,
+	foreign key (FK_SolSerGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE
+)
+	COLLATE='utf8mb4_unicode_ci'
+	ENGINE=InnoDB;
+
 /*areas o dependencias de un modulo*/
 	create table Area(
 		ID_Area int auto_increment unique,
@@ -272,13 +292,31 @@ create table ProgVehiculo(
 	ID_ProgVeh int auto_increment unique,
 	ProgVehFecha date, /*fecha de la progamacion*/
 	progVehKm int, /*km del vehiculo al inicio del dia*/
-	ProgVehTurno boolean, /*tarde o mañana*/
-	ProgVehtipo boolean, /*Trabaja o Mantenimiento*/
+	ProgVehTurno varchar, /*tarde o mañana*/
+	ProgVehtipo varchar, /*Trabaja o Mantenimiento*/
 	ProgVehEntrada datetime, /*hora de llegada a planta*/
 	ProgVehSalida datetime, /*hora de salida de planta*/
-	FK_ProgMan int,
+	FK_ProgVehiculo int, /*foranea de la tabla de vehiculo*/
+	FK_ProgConductor int, /*foranea de la tabla del personal cargo conductor*/
+	FK_ProgAyudante int, /*foranea de la tabla del personal rotatorio*/
+	FK_ProgMan int, /*foranea de la tabla mantenimiento de un vehiculo*/
 	primary key (ID_ProgVeh),
+	foreign key (FK_ProgVehiculo) references Vehiculos(ID_Vehic) ON UPDATE CASCADE,
+	foreign key (FK_ProgConductor) references Personal(ID_Pers) ON UPDATE CASCADE,
+	foreign key (FK_ProgAyudante) references Personal(ID_Pers) ON UPDATE CASCADE,
 	foreign key (FK_ProgMan) references MantenVehic(ID_Mv) ON UPDATE CASCADE
+)
+	COLLATE='utf8mb4_unicode_ci'
+	ENGINE=InnoDB;
+
+/*tabla de programacion del recorrido (Plan de transporte)*/
+create table Recorrido(
+	ID_Recor int auto_increment unique,
+	FK_RecorSolSer int, /*foranea de la tabla solicitud de servicio*/
+	FK_RecorProgveh int, /*foranea de la tabla programacion de un vehiculo*/
+	primary key (ID_Recor),
+	foreign key (RecorProgveh) references ProgVehiculo(ID_ProgVeh) ON UPDATE CASCADE,
+	foreign key (FK_RecorSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -314,9 +352,10 @@ create table Activo(
 	ActModel varchar(64),
 	ActTalla varchar(16),
 	ActObserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
-	-- FK_ActPerson int,persona a la que esta asignado el activo (opcional)
+	FK_ActSede int, /*empresa a la que perttenece el activo*/
 	FK_ActSub int, /*forana de la tabla SubCatAct */
 	primary key (ID_Act),
+	foreign key (FK_ActSede) references Sedes(ID_Sede) ON UPDATE CASCADE,
 	foreign key (FK_ActSub) references SubCatAct(ID_SubCat) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
@@ -415,22 +454,6 @@ create table InventarioTecnologia(
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
 
-/*tabla para la declaracion de residuos*/
-create table SolicitudServicio(
-	ID_SolSer int auto_increment unique,
-	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	SolSerStatus varchar(16), /*aprobada, negada, pendiente, incompleta*/
-	SolSerFrecuencia int,/*cada cuantos dias se recolecta: mensual, quincenal, semanal, por solicitud, N° dias*/
-	FK_SolSerRespel int,/*foranea de la tabla de residuos*/
-	FK_SolSerGenerSede int, /*foranea de la tabla GenerSede*/
-	primary key (ID_SolSer),
-	foreign key (FK_SolSerRespel) references Respel(ID_Respel) ON UPDATE CASCADE,
-	foreign key (FK_SolSerGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE
-)
-	COLLATE='utf8mb4_unicode_ci'
-	ENGINE=InnoDB;
-
 /*tabla de requermientos del cliente por residuo "¡¡PENDIENTE!!"*/
 create table Requerimiento(
 	ID_Req int auto_increment unique,
@@ -458,7 +481,9 @@ create table Requerimiento(
 	ReqMasPerson boolean, /*Personal adicional para cargue*/
 	ReqPlatform boolean, /*Vehículo con plataforma*/
 	ReqCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
-	primary key (ID_Req)
+	FK_ReqRespel int, /*foranea de la tabla respel*/
+	primary key (ID_Req),
+	foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -468,86 +493,47 @@ create table Tratamiento(
 		ID_Trat int auto_increment unique,
 		TratName varchar(64),
 		TratTipo boolean, /*interno o externo*/
-		FK_TratProv int, /*proveedor del tratamiento*/
+		FK_TratProv int, /*proveedor del tratamiento (externo)*/
 		FK_TratRespel int, /*residuo al que aplica*/
 		primary key	(ID_Trat),
-		foreign key (FK_TratProv) references Clientes(ID_Cli) ON UPDATE CASCADE,
+		foreign key (FK_TratProv) references Sedes(ID_Sede) ON UPDATE CASCADE,
 		foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
 
-/*tabla para el recibo de materiales*/
-Create table ReciboMaterial(
-	ID_Rm int auto_increment unique, /*numero de consecutivo*/
-	RmStatus varchar(64), /*opciones: Pendiente; aprobado(tesoreria)*/
-	RmTipo varchar(32), /*interno, alquilado, externo*/
-	RmAuditable boolean,
-	RmSalida time, /*hora de salida de planta*/
-	RmLlegada time, /*hora de llegada a planta*/
-	RmCobro varchar(128), 
-	FK_RmTransportador int, /*empresa que transporta los RESPEL a la planta de tratamiento*/
-	FK_RmSolSer int, /*foranea de la tabla declaraciones*/
-	FK_RmProgVeh int, /*fecha y vehiculo programado para la busqueda de los residuos*/
-	primary key (ID_Rm),
-	foreign key (FK_RmSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE,
-	foreign key (FK_RmTransportador) references Clientes(ID_Cli) ON UPDATE CASCADE,
-	foreign key (FK_RmProgVeh) references ProgVehiculo(ID_ProgVeh) ON UPDATE CASCADE
+/*tabla de cantidades por cada residuo saolicitados*/
+create table ResiduoSolicitud(
+	ID_ResSol int auto_increment unique,
+	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+	ResSolKgEnviado int, /*cantidad en Kilogramos enviado*/
+	ResSolKgRecibido int, /*cantidad en Kilogramos recibido*/
+	ResSolKgConciliado int, /*cantidad en Kilogramos Conciliado*/
+	ResSolKgTratado int, /*cantidad en Kilogramos Tratado*/
+	FK_ResSolRespel int, /*foranea de la tabla de residuos*/
+	FK_ResSolSolSer int, /*foranea de la tabla solicitud de servicio*/
+	primary key (ID_ResSol),
+	foreign key (FK_ResSolRespel) references Respel(ID_Respel) ON UPDATE CASCADE,
+	foreign key (FK_ResSolSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
 
-/*tabla de cantidades por cada residuo enviado*/
-create table RespelEnvio(
-	ID_ResEnv int auto_increment unique,
+/*tabla de fotoso  video por residuo*/
+create table Recurso(
+	ID_Rec int auto_increment unique,
+	RecName varchar(128),
+	RecCarte varchar(32), /*categoria de Foto y/o video*/
+	RecTipo varchar(64), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	RespelKgEnviado int, /*cantidad en Kilogramos enviado*/
-	RespelKgRecibido int, /*cantidad en Kilogramos recibido*/
-	RespelKgConciliado int, /*cantidad en Kilogramos Conciliado*/
-	RespelKgTratado int, /*cantidad en Kilogramos Tratado*/
-	FK_RespelDeclar int, /*foranea de la tabla Declaracion*/
-	FK_RespelReq int, /*foranea de la tabla requerimiento*/
-	FK_RespelRm int, /*foranea de la tabla recibo material*/
-	primary key (ID_ResEnv),
-	foreign key (FK_RespelDeclar) references Declaracion(ID_Declar) ON UPDATE CASCADE,
-	foreign key (FK_RespelReq) references Requerimiento(ID_Req) ON UPDATE CASCADE,
-	foreign key (FK_RespelRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE
-)
-	COLLATE='utf8mb4_unicode_ci'
-	ENGINE=InnoDB;
-
-/*tabla de fotos por residuo*/
-create table Foto(
-	ID_Foto int auto_increment unique,
-	FotoName varchar(128),
-	FotoTipo varchar(32), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
-	FotoTipoOther varchar(64), /*descripcion en caso de otro tipo de foto*/
-	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	FotoRmSrc varchar(255), /*direcion de la carperta donde se guardan las diferentes fotos para un recibo de material*/
-	FotoSrc varchar(255), /*nombre de la foto dentro de la carpeta especificada en FotoRmSrc*/
-	FotoFormat varchar(32), /*jpg, gif, png, etc*/
-	FK_FotoRespel int,
-	primary key (ID_Foto),
-	foreign key (FK_FotoRespel) references RespelEnvio(ID_ResEnv) ON UPDATE CASCADE
-)
-	COLLATE='utf8mb4_unicode_ci'
-	ENGINE=InnoDB;
-
-/*tabla de videos por residuo*/
-create table Video(
-	ID_Video int auto_increment unique,
-	VideoName varchar(128),
-	VideoTipo varchar(32), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
-	VideoTipoOther varchar(64), /*descripcion en caso de otro tipo de video*/
-	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	VideoSrc varchar(255), /*direccion donde esta guardada la imagen*/
-	VideoFormat varchar(32), /*mp4, mpeg, avi, wmv*/
-	FK_VideoRespel int,
-	primary key (ID_Video),
-	foreign key (FK_VideoRespel) references RespelEnvio(ID_ResEnv) ON UPDATE CASCADE
+	RecRmSrc varchar(255), /*direcion de la carperta donde se guardan las diferentes Recs para un recibo de material*/
+	RecSrc varchar(255), /*nombre de la Rec dentro de la carpeta especificada en RecRmSrc*/
+	RecFormat varchar(32), /*jpg, gif, png, etc*/
+	FK_RecRes int, /*foranea de la tabla residuo por solicitud*/
+	primary key (ID_Rec,
+	foreign key (FK_RecRes) references ResiduoSolicitud(ID_ResSol) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -555,23 +541,20 @@ create table Video(
 /*tabla de certificado por residuo la mayoria de los atributos son opcionales para generar registro*/
 create table Certificado(
 	ID_Cert int auto_increment unique,
-	/*CertTipo varchar(64), Por Residuo, Generador, ReciboMaterial, AreaEspecial*/
 	CertNumero int, /*numero de certificado en membrete*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	CertKg int, /*peso del residuo tratado *//*no exceder el total tratado!!!*/
 	CertiEspName varchar(64), /*nombre del atributo requerido en el certificado*/
 	CertiEspValue varchar(64), /*valor del atributo requerido en el certificado*/
 	CertObservacion varchar(255), /*observacion adicional para el certificado*/
 	CertSrc varchar(255), /*direccion donde esta guardado el certificado */
+	CertAuthJo boolean, /*aprovacion de el jefe de operaciones*/
+	CertAuthJl boolean, /*aprovacion de el jefe de logistica*/
+	CertAuthDp boolean, /*aprovacion de el director de planta*/
 	CertAnexo varchar(255), /*direccion donde se almacena los anexos necesarios en PDF*/
-	FK_CertRm int, /*foranea de la tabla recibo de material*/
-	FK_CertGener int, /*foranea de la tabla generador*/
-	FK_CertRespel int, /*foranea de la tabla residuos*//*se puede repetir el numero*/
+	FK_CertSolser int, /*foranea de la tabla solicitud del materiial*/
 	primary key (ID_Cert),
-	foreign key (FK_CertRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE,
-	foreign key (FK_CertGener) references GenerSede(ID_GSede) ON UPDATE CASCADE,
-	foreign key (FK_CertRespel) references ResEnvio(ID_ResEnv) ON UPDATE CASCADE
+	foreign key (FK_CertSolser) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -582,21 +565,17 @@ create table Manifiesto(
 	ManifNumero int, /*numero de manifiesto en membrete*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	ManifKg int, /*peso enviado a tratamiento*/ /*no exceder el total tratado!!!*/
 	ManifiEspName varchar(64), /*nombre del atributo requerido en el manifiesto*/
 	ManifiEspValue varchar(64), /*valor del atributo requerido en el manifiesto*/
 	ManifObservacion varchar(255), /*observacion adicional par el manifiesto*/
 	ManifSrc varchar(255), /*direccion donde esta guardado el manifiesto*/
+	ManiAuthJo boolean, /*aprovacion de el jefe de operaciones*/
+	ManiAuthJl boolean, /*aprovacion de el jefe de logistica*/
+	ManiAuthDp boolean, /*aprovacion de el director de planta*/
 	CertAnexo varchar(255), /*direccion donde se almacena los anexos necesarios en PDF*/
-	FK_MAnifRespel int, /*foranea de la tabla residuos*/
-	FK_MAnifRm int, /*foranea de la tabla recibo de material*/
-	FK_MAnifGener int, /*foranea de la tabla generador*/
-	FK_ManifProvee int, /*proveedor del tratamiento*/
+	FK_ManiSolser int, /*foranea de la tabla de solicitud de servicio*/
 	primary key (ID_Manif),
-	foreign key (FK_MAnifRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE,
-	foreign key (FK_MAnifGener) references GenerSede(ID_GSede) ON UPDATE CASCADE,
-	foreign key (FK_MAnifRespel) references ResEnvio(ID_ResEnv) ON UPDATE CASCADE,
-	foreign key (FK_ManifProvee) references Sede(ID_Sede) ON UPDATE CASCADE
+	foreign key (FK_ManiSolser) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -608,19 +587,9 @@ Create table QrCode(
 	QrCodeSrc varchar(255), /*direccion donde esta guardado el codigo qr para su reimpresion*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	FK_QrCodeRespel int, /*atributo para ingresar informacion en el codigo QR(cantidad pesada)*/
+	FK_QrCodeSolSer int, /*atributo para ingresar informacion en el codigo QR(cantidad pesada)*/
 	primary key (ID_QrCode),
-	foreign key (FK_QrCodeRespel) references ResEnvio(ID_ResEnv) ON UPDATE CASCADE 
+	foreign key (FK_QrCodeSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
-
-
-CREATE TABLE `password_resets` (
-	`email` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`token` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`created_at` TIMESTAMP NULL DEFAULT NULL,
-	INDEX `password_resets_email_index` (`email`)
-)
-COLLATE='utf8mb4_unicode_ci'
-ENGINE=InnoDB;
