@@ -42,7 +42,7 @@
 		ENGINE=InnoDB;
 
 	/*tabla de clientes proveedores etc*/
-	create table Clientes(
+	create table (
 		ID_Cli int auto_increment unique,
 		CliNit bigint, /*nit*/
 		CliName varchar(255), /*razon social del cliente*/
@@ -512,7 +512,9 @@
 		RespelEstado varchar(32), /*liquido; solido; gaseoso etc...*/
 		RespelHojaSeguridad varchar(128), /*ubicacion en servidor de la imagen de la hoja de seguridad*/
 		RespelTarj varchar(128), /*ubicacion en servidor de la imagen de la Tarjeta de emergencia*/
-		primary key (ID_Respel)
+		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
+		primary key (ID_Respel),
+		foreign key (FK_RespelGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -565,12 +567,10 @@
 		RespelKgConciliado int, /*cantidad en Kilogramos Conciliado*/
 		RespelKgTratado int, /*cantidad en Kilogramos Tratado*/
 		FK_RespelDeclar int, /*foranea de la tabla Declaracion*/
-		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
 		FK_RespelReq int, /*foranea de la tabla requerimiento*/
 		primary key (ID_ResEnv),
 		foreign key (FK_RespelDeclar) references Declaracion(ID_Declar) ON UPDATE CASCADE,
 		foreign key (FK_RespelReq) references Requerimiento(ID_Req) ON UPDATE CASCADE,
-		foreign key (FK_RespelGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE,
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
