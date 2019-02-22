@@ -346,7 +346,7 @@ drop DATABASE Prosarcdb;
 		ActTalla varchar(16),
 		ActObserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
 		-- FK_ActPerson int,persona a la que esta asignado el activo (opcional)
-		FK_ActSub int, /*forana de la tabla SubCatAct */
+		FK_SubCat int, /*forana de la tabla SubCatAct */
 		primary key (ID_Act),
 		foreign key (FK_ActSub) references SubCatAct(ID_SubCat) ON UPDATE CASCADE
 		/*se pasa la relacion a la tabla de movimientos para asignar el activo al personal*/

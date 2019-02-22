@@ -15,11 +15,12 @@ class CreateAreasTable extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->increments('ID_Area')->unique();
-            $table->string('AreaName');
-            $table->unsignedInteger('AreaSede')->nullable();
-            $table->unsignedInteger('GenerSede')->nullable();
-            $table->foreign('AreaSede')->references('ID_Sede')->on('sedes');
-            $table->foreign('GenerSede')->references('ID_GSede')->on('gener_sedes');
+            $table->string('AreaName',128);
+            $table->unsignedInteger('FK_AreaSede')->nullable();
+            $table->unsignedInteger('FK_GenerSede')->nullable();
+
+            $table->foreign('FK_AreaSede')->references('ID_Sede')->on('sedes');
+            $table->foreign('FK_GenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->timestamps();
         });
     }

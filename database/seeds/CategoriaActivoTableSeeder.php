@@ -14,17 +14,26 @@ class CategoriaActivoTableSeeder extends Seeder
     {
         $categactivo = new CategoriaActivo();
         $categactivo->CatName = "Tecnologia";
+        $categactivo->save();
         
         $categactivo = new CategoriaActivo();
         $categactivo->CatName = "Muebles";
+        $categactivo->save();
+
         
         $categactivo = new CategoriaActivo();
         $categactivo->CatName = "Aseo";
+        $categactivo->save();
+
         
         $categactivo = new CategoriaActivo();
         $categactivo->CatName = "Decorativo";
+        $categactivo->save();
+
         
         $categactivo = new CategoriaActivo();
         $categactivo->CatName = "Maquinaria";
+        $categactivo->save();
+
     }
 }

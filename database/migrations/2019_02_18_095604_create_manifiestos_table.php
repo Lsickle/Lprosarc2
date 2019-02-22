@@ -25,7 +25,7 @@ class CreateManifiestosTable extends Migration
             $table->boolean('ManiAuthDp');
             $table->string('CertAnexo');
             $table->unsignedInteger('FK_ManiSolSer');
-            $table->foreign('FK_ManiSolSer')->references('ID_ResEnv')->on('solicitud_servicios');
+            $table->foreign('FK_ManiSolSer')->references('ID_SolSer')->on('solicitud_servicios');
             $table->timestamps();
         });
     }
