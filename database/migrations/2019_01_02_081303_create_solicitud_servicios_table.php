@@ -15,20 +15,18 @@ class CreateSolicitudServiciosTable extends Migration
     {
         Schema::create('solicitud_servicios', function (Blueprint $table) {
             $table->increments('ID_SolSer');
-            $table->string('SolSerApply', 16)->nullable();
-            $table->string('SolSerTipo', 32);
-            $table->string('SolSerName');
-            $table->string('SolSerStatus', 16);
-            $table->unsignedTinyInteger('SolSerFrecuencia')->nullable();
-            $table->boolean('SolSerAuditable');
-            $table->unsignedInteger('SolSerSede');
-            $table->unsignedInteger('SolSerGenerSede')->nullable();
-            $table->unsignedInteger('SolSerUser');
             $table->timestamps();
+            $table->string('SolSerStatus', 16);
+            $table->string('SolSerTipo', 32);
+            $table->boolean('SolSerAuditable');
+            $table->unsignedTinyInteger('SolSerFrecuencia')->nullable();
+            $table->string('SolSerConducExter')->nullable();
+            $table->string('SolSerVehicExter')->nullable();
+            $table->unsignedInteger('Fk_SolSerTransportador');
+            $table->unsignedInteger('FK_SolSerGenerSede');
             $table->string('SolSerSlug')->unique();
-            $table->foreign('SolSerSede')->references('ID_Sede')->on('sedes');
-            $table->foreign('SolSerGenerSede')->references('ID_GSede')->on('gener_sedes');
-            $table->foreign('SolSerUser')->references('id')->on('users');
+            $table->foreign('Fk_SolSerTransportador')->references('ID_Sede')->on('sedes');
+            $table->foreign('FK_SolSerGenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

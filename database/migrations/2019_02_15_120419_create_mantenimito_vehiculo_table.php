@@ -16,17 +16,13 @@ class CreateMantenimitoVehiculoTable extends Migration
         Schema::create('MantenVehics', function (Blueprint $table) {
             $table->increments('ID_Mv');
             $table->timestamps();
-            $table->date('MvTecnicoMecanica');
             $table->integer('MvKm');
-            $table->date('MvAceite');
-            $table->date('Mvtanqueo');
-            $table->integer('MvtanqueoCant');
-            $table->unsignedInteger('FK_MvProgram');
-            $table->unsignedInteger('FK_ManVehiculo');
-            
-            
-            $table->foreign('FK_MvProgram')->references('ID_ProgVeh')->on('ProgVehiculos');
-            $table->foreign('FK_ManVehiculo')->references('ID_Vehic')->on('Vehiculos');
+            $table->boolean('MvStatus');
+            $table->string('MvType');
+            $table->dateTime('HoraMavInicio');
+            $table->dateTime('HoraMavFin');
+            $table->unsignedInteger('FK_VehMan');
+            $table->foreign('FK_VehMan')->references('ID_Vehic')->on('Vehiculos');
         });
     }
 
