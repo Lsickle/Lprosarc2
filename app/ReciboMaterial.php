@@ -10,16 +10,10 @@ class ReciboMaterial extends Model{
     protected $primaryKey = 'ID_Rm';
 
     public function declarations(){
-    	return $this->belongsTo('App\Declaration','ID_Declar');
+    	return $this->belongsTo('App\SolicitudServicio','ID_SolSer');
     }
     public function clientes(){
     	return $this->belongsTo('App\Cliente','ID_Cli');
-    }
-    public function personals(){
-    	return $this->belongsTo('App\Personal','ID_Pers');
-    }
-    public function personals(){
-    	return $this->belongsTo('App\Personal','ID_Pers');
     }
     public function progvehiculos(){
     	return $this->belongsTo('App\ProgramacionVehiculo','ID_ProgVeh');
