@@ -32,6 +32,7 @@ Registros de Activos
 							<!-- form start -->
 							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
 								@csrf
+								
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 									{{-- <div class="fingerprint-spinner" id="loadingTable">
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
@@ -54,78 +55,71 @@ Registros de Activos
 												<li><a href="#step-3"><b>paso 3</b><br /><small>Activos</small></a></li>
 											</ul>
 											<div> --}}
-												{{-- <div id="step-1" class=""> --}}
-													<div class="col-md-6">
-														<label for="activo">Categoria</label>
-														<select class="form-control" id="activo" name="categoria" required="true">
-															<option>Seleccione...</option>
-															<option>Mueble</option>
-															<option>Tecnologia</option>
-														</select>
-													</div>
-												{{-- </div> --}}
-												{{-- <div id="step-2" class=""> --}}
-													<div class="col-md-6">
-														<label for="activo">SubCategoria</label>
-														<select class="form-control" id="activo" name="subcategoria" required="true">
-															<option>Seleccione...</option>
-															<option>Sillas</option>
-															<option>Pc</option>
-															{{-- @foreach ($SubCategActivos as $SubCategActivo)
-																<option>{{$SubCategActivo->SubCatName}}</option>
-															@endforeach --}}
-														</select>
-													</div>
-												{{-- </div> --}}
-												{{-- <div id="step-3" class=""> --}}
-													<div class="col-md-6">
-														<label for="activoinputext1">Nombre del activo</label>
-														<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="nombre">
-													</div>
-													<div class="col-md-6">
-														<label for="activo">Forma del activo</label>
-														<select class="form-control" id="activo" name="Forma" required="true">
-															<option>Seleccione...</option>
-															<option>Unidad</option>
-															<option>Peso</option>
-														</select>
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext2">Cantidad</label>
-														<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999.999">
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext3">Serial de Prosarc</label>
-														<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="serialPro">
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext4">Modelo</label>
-														<input type="number" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext5">Talla</label>
-														<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="talla">
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext6">Observaciones</label>
-														<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones sobre el activo" name="observacion">
-													</div>
-													<div class="col-md-6">
-														<label for="activoinputext7">Serial Proveedor</label>
-														<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="serialproveedor">
-													</div>
-													
+								<div class="col-md-6">
+									<label for="activo">Categoria</label>
+									<select class="form-control" id="activo" name="categoria" required="true">
+										<option>Seleccione...</option>
+										@foreach ($SubActivos as $SubActivo)
+											<option>{{$SubActivo->CatName}}</option>																
+										@endforeach
+									</select>
+								</div>
+							{{-- </div> --}}
+								<div class="col-md-6">
+									<label for="activo">SubCategoria</label>
+									<select class="form-control" id="activo" name="subcategoria" required="true">
+										<option>Seleccione...</option>
+										@foreach ($SubActivos as $SubActivo)
+											<option>{{$SubActivo->SubCatName}}</option>																
+										@endforeach
+									</select>
+								</div>
+							{{-- </div> --}}
+								<div class="col-md-6">
+									<label for="activoinputext1">Nombre del activo</label>
+									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="nombre">
+								</div>
+								<div class="col-md-6">
+									<label for="activo">Forma del activo</label>
+									<select class="form-control" id="activo" name="Forma" required="true">
+										<option>Seleccione...</option>
+										<option>Unidad</option>
+										<option>Peso</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext2">Cantidad</label>
+									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999.999">
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext3">Serial de Prosarc</label>
+									<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="serialPro">
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext4">Modelo</label>
+									<input type="number" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext5">Talla</label>
+									<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="talla">
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext6">Observaciones</label>
+									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones sobre el activo" name="observacion">
+								</div>
+								<div class="col-md-6">
+									<label for="activoinputext7">Serial Proveedor</label>
+									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="serialproveedor">
+								</div>
 												{{-- </div> --}}
 											{{-- </div>
 										</div>
 									</div>
 								</div> --}}
 								<!-- /.box-body -->
-								
 								<div class="box-footer">
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>	
-							</div>
 							</form>
 						
 						</div>

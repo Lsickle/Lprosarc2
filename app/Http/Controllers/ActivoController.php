@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Activo;
 use App\SubcategoriaActivo;
+use App\CategoriaActivo;
+use Illuminate\Support\Facades\DB;
+
 
 class ActivoController extends Controller
 {
@@ -14,9 +18,13 @@ class ActivoController extends Controller
      */
     public function index()
     {
-        // $Activos = Activo::all();
-        // return view('activos.index', compact('Activos'));
-        return view('activos.index');
+        $SubActivos = DB::table('subcategoria_activos')
+            ->rightJoin('Activos', 'Activos.FK_SubCat', '=', 'subcategoria_activos.ID_SubCat')
+            ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
+            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+            ->get();
+
+        return view('activos.index', compact('SubActivos'));
     }
 
     /**
@@ -26,9 +34,13 @@ class ActivoController extends Controller
      */
     public function create()
     {
-        // $SubCategActivos = SubcategoriaActivo::all();
-        // return view('activos.create', compact('SubCategActivos'));
-        return view('activos.create');
+        $SubActivos = DB::table('subcategoria_activos')
+            ->rightJoin('Activos', 'Activos.FK_SubCat', '=', 'subcategoria_activos.ID_SubCat')
+            ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
+            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+            ->get();
+            
+        return view('activos.create', compact('SubActivos'));
     }
 
     /**

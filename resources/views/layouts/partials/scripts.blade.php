@@ -600,3 +600,20 @@ $(document).ready(function(){
         });
       });
     </script>
+    <script>
+      $(document).ready(function () {
+        $('#ActivoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
