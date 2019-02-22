@@ -13,9 +13,9 @@ class Activo extends Model
 	protected $primaryKey = 'ID_Act';
 
 
-	public function SubcategoriaActivo()
-	{
-	 return $this>belongsTo('App\SubcategoriaActivo','ID_SubCat');
-	}
+	// public function SubcategoriaActivo()
+	// {
+	//  return $this>belongsTo('App\SubcategoriaActivo','ID_SubCat');
+	// }
 
 }

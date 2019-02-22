@@ -16,7 +16,7 @@ class CreateHorariosTable extends Migration
         Schema::create('horarios', function (Blueprint $table) {
             $table->increments('ID_Horario');
             $table->date('HorarioFecha');
-            $table->string('Horariotipo');
+            $table->string('Horariotipo', 64);
             $table->string('HorariotipoOther');
             $table->boolean('HorarioFeriado');
             $table->dateTime('HorarioEntrada');
