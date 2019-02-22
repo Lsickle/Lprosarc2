@@ -1,4 +1,4 @@
-		drop DATABASE Prosarcdb;
+drop DATABASE Prosarcdb;
 	create DATABASE Prosarcdb;
 	use Prosarcdb;
 	-- Create table Country(
@@ -512,7 +512,14 @@
 		RespelEstado varchar(32), /*liquido; solido; gaseoso etc...*/
 		RespelHojaSeguridad varchar(128), /*ubicacion en servidor de la imagen de la hoja de seguridad*/
 		RespelTarj varchar(128), /*ubicacion en servidor de la imagen de la Tarjeta de emergencia*/
-		primary key (ID_Respel)
+		RespelStatus varchar(16), /*aprobada, negada, pendiente, incompleta*/
+		FK_RespelDeclar int, /*foranea de la tabla Declaracion*/
+		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
+		FK_RespelReq int, /*foranea de la tabla requerimiento*/
+		primary key (ID_Respel),
+		foreign key (FK_RespelDeclar) references Declaracion(ID_Declar) ON UPDATE CASCADE,
+		foreign key (FK_RespelReq) references Requerimiento(ID_Req) ON UPDATE CASCADE,
+		foreign key (FK_RespelGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -533,7 +540,13 @@
 	/*tabla para el recibo de materiales*/
 	Create table ReciboMaterial(
 		ID_Rm int auto_increment unique, /*numero de consecutivo*/
-		RmStatus varchar(64), /*opciones: Pendiente; aprobado(tesoreria)*/
+		RmStatus varchar(64), /*opciones: Pendiente; aprobado(tesoreria)
+		COLLATE='utf8mb4_unicode_ci'
+		ENGINE=InnoDB;
+		 asignado(a vehiculo)
+		COLLATE='utf8mb4_unicode_ci'
+		ENGINE=InnoDB;
+		 recibido; tratado; Certificado; Cancelado*/
 		RmTipo varchar(32), /*exclusivo, alquilado, externo, recorrido*/
 		RmAuditable boolean,
 		RmSalida time, /*hora de salida de planta*/
@@ -553,24 +566,34 @@
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
-		
+
+	-- /*tabla de actualizaciones de un recibo de material*/
+	-- create table RmHistory(
+	-- 	ID_RmHistory int auto_increment unique,
+	-- 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+	-- 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+	-- 	RmStatusActual varchar(64), /*status al que es actualizado*/
+	-- 	FK_UpdatedBy int, /*quien actualizo el recibo por ultima vez*/
+	-- 	FK_HistoRm int, /*quien actualizo el recibo por ultima vez*/
+	-- 	primary key (ID_RmHistory),
+	-- 	foreign key (FK_UpdatedBy) references Users(id) ON UPDATE CASCADE,
+	-- 	foreign key (FK_HistoRm) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE
+	-- )
+	-- 	COLLATE='utf8mb4_unicode_ci'
+	-- 	ENGINE=InnoDB;
+
 	/*tabla de cantidades por cada residuo enviado*/
-	create table RespelEnvio(
+	create table ResEnvio(
 		ID_ResEnv int auto_increment unique,
-		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
-		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-		RespelStatus varchar(16), /*aprobada, negada, pendiente, incompleta*/
 		RespelKgEnviado int, /*cantidad en Kilogramos enviado*/
 		RespelKgRecibido int, /*cantidad en Kilogramos recibido*/
 		RespelKgConciliado int, /*cantidad en Kilogramos Conciliado*/
 		RespelKgTratado int, /*cantidad en Kilogramos Tratado*/
-		FK_RespelDeclar int, /*foranea de la tabla Declaracion*/
-		FK_RespelGenerSede int, /*foranea de la tabla GenerSede para especificar areas, centros de costos, etc*/
-		FK_RespelReq int, /*foranea de la tabla requerimiento*/
+		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
+		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+		FK_RespelEnvio int, /*foranea de la tabla ReciboMaterial*/
 		primary key (ID_ResEnv),
-		foreign key (FK_RespelDeclar) references Declaracion(ID_Declar) ON UPDATE CASCADE,
-		foreign key (FK_RespelReq) references Requerimiento(ID_Req) ON UPDATE CASCADE,
-		foreign key (FK_RespelGenerSede) references GenerSede(ID_GSede) ON UPDATE CASCADE,
+		foreign key (FK_RespelEnvio) references ReciboMaterial(ID_Rm) ON UPDATE CASCADE
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
@@ -714,4 +737,3 @@
 	ENGINE=InnoDB
 	AUTO_INCREMENT=3
 	;
-
