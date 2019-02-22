@@ -278,8 +278,8 @@ create table MantenVehic(
 	MvKm int, /*km del vehiculo al momento del mantenimiento*/
 	MvStatus boolean, /*Pendiende o Realizado el mantenimiento*/
 	MvType varchar,/*Tipo de mantenimiento: Aceite, TecnoMecanica,Tanqueo, etc...*/
-	HoraMantenimientoInicio datetime, /*hora de inicio del mantenimiento*/
-	HoraMAntenimientoFin datetime, /*hora fin del mantenimiento*/
+	HoraMavInicio datetime, /*hora de inicio del mantenimiento*/
+	HoraMavFin datetime, /*hora fin del mantenimiento*/
 	FK_VehMan int, /*foranea de la tabla progvehiculo para validar la fecha del mantenimiento*/
 	primary key (ID_Mv),
 	foreign key (FK_VehMan) references Vehiculo(ID_Vehic) ON UPDATE CASCADE
@@ -352,7 +352,7 @@ create table Activo(
 	ActModel varchar(64),
 	ActTalla varchar(16),
 	ActObserv varchar(512),/*campo para anotaciones generales de los cambios en el registro*/
-	FK_ActSede int, /*empresa a la que perttenece el activo*/
+	FK_ActSede int, /*empresa a la que pertenece el activo*/
 	FK_ActSub int, /*forana de la tabla SubCatAct */
 	primary key (ID_Act),
 	foreign key (FK_ActSede) references Sedes(ID_Sede) ON UPDATE CASCADE,
@@ -503,19 +503,19 @@ create table Tratamiento(
 		ENGINE=InnoDB;
 
 /*tabla de cantidades por cada residuo saolicitados*/
-create table ResiduoSolicitud(
-	ID_ResSol int auto_increment unique,
+create table SolicitudResiduo(
+	ID_SolRes int auto_increment unique,
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	ResSolKgEnviado int, /*cantidad en Kilogramos enviado*/
-	ResSolKgRecibido int, /*cantidad en Kilogramos recibido*/
-	ResSolKgConciliado int, /*cantidad en Kilogramos Conciliado*/
-	ResSolKgTratado int, /*cantidad en Kilogramos Tratado*/
-	FK_ResSolRespel int, /*foranea de la tabla de residuos*/
-	FK_ResSolSolSer int, /*foranea de la tabla solicitud de servicio*/
-	primary key (ID_ResSol),
-	foreign key (FK_ResSolRespel) references Respel(ID_Respel) ON UPDATE CASCADE,
-	foreign key (FK_ResSolSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
+	SolResKgEnviado int, /*cantidad en Kilogramos enviado*/
+	SolResKgRecibido int, /*cantidad en Kilogramos recibido*/
+	SolResKgConciliado int, /*cantidad en Kilogramos Conciliado*/
+	SolResKgTratado int, /*cantidad en Kilogramos Tratado*/
+	FK_SolResRespel int, /*foranea de la tabla de residuos*/
+	FK_SolResSolSer int, /*foranea de la tabla solicitud de servicio*/
+	primary key (ID_SolRes),
+	foreign key (FK_SolResRespel) references Respel(ID_Respel) ON UPDATE CASCADE,
+	foreign key (FK_SolResSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -528,12 +528,12 @@ create table Recurso(
 	RecTipo varchar(64), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	RecRmSrc varchar(255), /*direcion de la carperta donde se guardan las diferentes Recs para un recibo de material*/
-	RecSrc varchar(255), /*nombre de la Rec dentro de la carpeta especificada en RecRmSrc*/
+	RecRmSrc varchar(255), /*direcion de la carperta donde */
+	RecSrc varchar(255), /*nombre del recurso donde se guardan los diferentes recursos para un recibo de material*/
 	RecFormat varchar(32), /*jpg, gif, png, etc*/
-	FK_RecRes int, /*foranea de la tabla residuo por solicitud*/
-	primary key (ID_Rec,
-	foreign key (FK_RecRes) references ResiduoSolicitud(ID_ResSol) ON UPDATE CASCADE
+	FK_RecSol int, /*foranea de la tabla residuo por solicitud*/
+	primary key (ID_Rec),
+	foreign key (FK_RecSol) references ResiduoSolicitud(ID_SolRes) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -573,9 +573,9 @@ create table Manifiesto(
 	ManiAuthJl boolean, /*aprovacion de el jefe de logistica*/
 	ManiAuthDp boolean, /*aprovacion de el director de planta*/
 	CertAnexo varchar(255), /*direccion donde se almacena los anexos necesarios en PDF*/
-	FK_ManiSolser int, /*foranea de la tabla de solicitud de servicio*/
+	FK_ManiSolSer int, /*foranea de la tabla de solicitud de servicio*/
 	primary key (ID_Manif),
-	foreign key (FK_ManiSolser) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
+	foreign key (FK_ManiSolSer) references SolicitudServicio(ID_SolSer) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
