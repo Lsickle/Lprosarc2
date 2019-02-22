@@ -14,7 +14,7 @@ class VehicleController extends Controller
      */
     public function index()
     { 
-            return view('vehicle.mantenimiento');
+            return view('vehicle.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('vehicle.create');
+        
     }
     
     /**

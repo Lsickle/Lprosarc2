@@ -87,13 +87,23 @@
                         <li><a href="/respels"><i class='fa fa-search'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem1') }}</a></li>
 
                         <li><a href="/respels/create"><i class='fa fa-file-text'></i>{{ trans('adminlte_lang::langresiduos.residuolistitem2') }}</a></li>
+                        
+                        <li><a href="/tratamiento"><i class="fas fa-vial"></i> Tratamientos</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-print"></i> <span>Recibos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/recibo-material"><i class="fas fa-radiation"></i> Materiales</a></li>
+                        <li><a href="/certificado"><i class="fas fa-certificate"></i> Certificados</a></li>
+                        <li><a href="/manifiesto"><i class='fas fa-tools'></i> Manifiestos</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/personal"><i class="fas fa-list-alt"></i> Listar</a></li>
-                        <li><a href="/asistencia"><i class="fas fa-clipboard-check"></i> Asistencia</a></li>
+                        <li><a href="/asistencia"><i class="fas fa-tasks"></i> Asistencia</a></li>
                         <li><a href="/cargos"><i class='fas fa-tools'></i> Cargos</a></li>
                         <li><a href="/areas"><i class="fas fa-archive"></i> Areas</a></li>
                         <li><a href="/inventariotech"><i class="fas fa-laptop"></i> Inventario Tecnologia</a></li>
@@ -157,15 +167,22 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                        <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="/vehicle"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
-                            <li><a href="/vehicle/create"><i class="fas fa-plus-square"></i>   Registro</a></li>
-                            <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
-                            <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
-                            
-                        </ul>
-                    </li>
+                    <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/vehicle/index"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
+                        <li><a href="/vehicle/create"><i class='fa fa-plus'></i></i>   Registro</a></li>
+                        <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
+                        <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-money-bill-wave"></i></i> <span> Compra</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/ordenCompra/orden"><i class="fas fa-file-invoice-dollar"></i><span>   Orden</span></a></li>
+                        <li><a href="/ordenCompra/cotizacion"><i class="fas fa-file-invoice"></i>   Cotizacion</a></li>
+                    </ul>
+                </li>
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
