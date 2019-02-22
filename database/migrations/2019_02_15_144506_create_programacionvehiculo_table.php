@@ -25,9 +25,9 @@ class CreateProgramacionvehiculoTable extends Migration
             $table->dateTime('ProgVehSalida');
             $table->dateTime('HoraMantenimientoInicio');
             $table->dateTime('HoraMAntenimientoFin');
-            $table->unsignedInteger('FK_ProgVeh');
+            $table->unsignedInteger('FK_ProgMan');
 
-            $table->foreign('FK_ProgVeh')->references('ID_Vehic')->on('Vehiculos');
+            $table->foreign('FK_ProgMan')->references('ID_Mv')->on('MantenVehics');
         });
     }
 
