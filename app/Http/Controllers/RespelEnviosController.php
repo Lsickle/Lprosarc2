@@ -16,6 +16,7 @@ class RespelEnviosController extends Controller
     public function index(){
         $ResEnvios = DB::table('respel_envios')
             ->join('recibo_materials', 'res_envios.FK_RespelEnvio', '=', 'recibo_materials.ID_Rm')
+            ->join('requerimientos', 'respel_envios.FK_RespelReq', '=', 'requerimientos.ID_Req')
             ->select('res_envios.RespelKgEnviado','res_envios.RespelKgRecibido','res_envios.RespelKgConciliado','res_envios.RespelKgTratado','recibo_materials.ID_Rm')
             ->get();
         return view('resEnvios.index', compact('ResEnvios'));

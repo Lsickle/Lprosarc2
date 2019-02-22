@@ -12,6 +12,9 @@ class RespelEnvio extends Model{
     public function ReciboMaterial(){
     	return $this->belogsTo('App\ReciboMaterial','ID_Rm');
     }
+    public function Requerimientos(){
+    	return $this->belogsTo('App\Requerimiento', 'ID_Req');
+    }
     public function Manifiesto(){
     	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como recibo de envio tiene muchos manifiestos
     }
