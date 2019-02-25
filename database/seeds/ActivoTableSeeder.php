@@ -21,7 +21,8 @@ class ActivoTableSeeder extends Seeder
         $activo->ActModel = "hhj";
         $activo->ActTalla = "676";
         $activo->ActObserv = "Creando un activo";
-        $activo->FK_SubCat = "1";
+        $activo->FK_ActSub = "1";
+        $activo->FK_ActSede = "1";
         $activo->save();
 
         $activo = new Activo();
@@ -33,7 +34,8 @@ class ActivoTableSeeder extends Seeder
         $activo->ActModel = "Unica";
         $activo->ActTalla = "XXL";
         $activo->ActObserv = "Creando una silla";
-        $activo->FK_SubCat = "5";
+        $activo->FK_ActSub = "5";
+        $activo->FK_ActSede = "5";
         $activo->save();
 
         $activo = new Activo();
@@ -45,7 +47,8 @@ class ActivoTableSeeder extends Seeder
         $activo->ActModel = "LL";
         $activo->ActTalla = "347";
         $activo->ActObserv = "Creando un cubo de agua";
-        $activo->FK_SubCat = "3";
+        $activo->FK_ActSub = "3";
+        $activo->FK_ActSede = "3";
         $activo->save();
 
         $activo = new Activo();
@@ -57,7 +60,8 @@ class ActivoTableSeeder extends Seeder
         $activo->ActModel = "ultima generacion";
         $activo->ActTalla = "78df";
         $activo->ActObserv = "Creando una mesa unica";
-        $activo->FK_SubCat = "2";
+        $activo->FK_ActSub = "2";
+        $activo->FK_ActSede = "2";
         $activo->save();
 
         $activo = new Activo();
@@ -69,7 +73,8 @@ class ActivoTableSeeder extends Seeder
         $activo->ActModel = "METALICOXLS";
         $activo->ActTalla = "100";
         $activo->ActObserv = "Creando un mapa";
-        $activo->FK_SubCat = "4";
+        $activo->FK_ActSub = "4";
+        $activo->FK_ActSede = "4";
         $activo->save();
     }
 }

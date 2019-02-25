@@ -8,7 +8,7 @@ class Sede extends Model
 {
     protected $table='sedes';
 
-    protected $fillable=['SedeName', 'SedeAddress', 'SedePhone1', 'SedeExt1', 'SedePhone2',' SedeExt2', 'SedeEmail', 'SedeCelular', 'Cliente', 'SedeSlug'];
+    protected $fillable=['SedeName', 'SedeAddress', 'SedePhone1', 'SedeExt1', 'SedePhone2',' SedeExt2', 'SedeEmail', 'SedeCelular', 'SedeSlug'];
 
     protected $primaryKey = 'ID_Sede';
     	/**

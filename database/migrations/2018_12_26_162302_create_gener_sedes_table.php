@@ -17,14 +17,14 @@ class CreateGenerSedesTable extends Migration
             $table->increments('ID_GSede')->unique();
             $table->string('GSedeName', 128);
             $table->string('GSedeAddress');
-            $table->string('GSedePhone1', 32)->nullable()->change();
-            $table->unsignedSmallInteger('GSedeExt1')->nullable()->change();
-            $table->string('GSedePhone2', 32)->nullable()->change();
-            $table->unsignedSmallInteger('GSedeExt2')->nullable()->change();
+            $table->string('GSedePhone1', 32)->nullable();
+            $table->unsignedSmallInteger('GSedeExt1')->nullable();
+            $table->string('GSedePhone2', 32)->nullable();
+            $table->unsignedSmallInteger('GSedeExt2')->nullable();
             $table->string('GSedeEmail', 128);
-            $table->string('GSedeCelular', 32)->nullable()->change();
+            $table->string('GSedeCelular', 32)->nullable();
             $table->unsignedInteger('FK_GSede');
-            $table->unsignedInteger('FK_GSedeMun');
+            $table->unsignedInteger('FK_GSedeMun')->nullable();
             $table->string('GSedeSlug')->unique();
 
             $table->foreign('FK_GSede')->references('ID_Gener')->on('generadors');

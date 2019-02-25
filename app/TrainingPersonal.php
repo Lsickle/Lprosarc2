@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingPersonal extends Model{
 
-    protected $table = 'training_personals';}
+    protected $table = 'training_personals';
 
     protected $fillable = ['CapaPersDate', 'CapaPersExpire'];
 
