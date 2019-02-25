@@ -22,8 +22,10 @@ class Respel extends Model
 	 return $this>belongsTo('App\Requerimiento', 'ID_Req');
 	}
 
-	public  function Tratamientos(){
-        return $this->hasMany('App\Tratamiento', 'ID_Trat', 'id');
+    public function Tratamiento(){
+    	return $this>hasMany('App\Tratamiento','ID_Trat','id');//como residuos tiene muchos tratamientos
     }
-
+    public function SolicitudResiduo(){
+        return $this>hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
+    }
 }

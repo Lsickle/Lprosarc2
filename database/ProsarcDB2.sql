@@ -460,17 +460,17 @@ create table InventarioTecnologia(
 /*tabla de requermientos del cliente por residuo "¡¡PENDIENTE!!"*/
 create table Requerimiento(
 	ID_Req int auto_increment unique,
-	ReqFotoCargue boolean,
+	/*ReqFotoCargue boolean,*/
 	ReqFotoDescargue boolean,
-	ReqFotoPesaje boolean,
-	ReqFotoReempacado boolean,
-	ReqFotoMezclado boolean,
+	/*ReqFotoPesaje boolean,*/
+	ReqFotoAlmacenado boolean,
+	/*ReqFotoMezclado boolean,*/
 	ReqFotoDestruccion boolean,
-	ReqVideoCargue boolean,
+	/*ReqVideoCargue boolean,*/
 	ReqVideoDescargue boolean,
-	ReqVideoPesaje boolean,
-	ReqVideoReempacado boolean,
-	ReqVideoMezclado boolean,
+	/*ReqVideoPesaje boolean,*/
+	ReqVideoAlmacenado boolean,
+	/*ReqVideoMezclado boolean,*/
 	ReqVideoDestruccion boolean,
 	ReqAuditoria boolean,
 	ReqAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/

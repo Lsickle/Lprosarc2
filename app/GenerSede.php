@@ -1,4 +1,4 @@
-<?php
+SolicitudServicio<?php
 
 namespace App;
 
@@ -25,16 +25,14 @@ class GenerSede extends Model
 	{
 	 return $this>belongsTo('App\Generador', 'ID_Gener');
 	}
-	public function declaracion()
+	public function SolicitudServicio()
     {
-        return $this->hasMany('App\Declaration', 'ID_Declar');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\SolicitudServicio', 'ID_SolSer');//como genersede tiene muchas solicitudes de servicio
     }
     public function Manifiesto(){
-    	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como generador sedes tiene muchos manifiestos
+    	return $this>hasMany('App\Manifiesto','ID_Manif','id');//como generador sedes tiene muchos manifiestos
     }
-
-	// public function generador()
- //    {
- //        return $this->hasMany('generador', 'ID_Gener');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
- //    }
+    public function Areas(){
+    	return $this>hasMany('App\GenerSede', 'ID_Area', 'id');//como genersedes tiene muchas areas
+    }
 }

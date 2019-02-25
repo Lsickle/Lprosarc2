@@ -21,34 +21,32 @@ class Sede extends Model
 	    return 'SedeSlug';
 	}
 
-	public function clientes()
-	{
+	public function clientes(){
 	 return $this>belongsTo('App\Cliente','ID_Cli');
 	}
 
-	public function generador()
-    {
+	public function generador(){
         return $this->hasMany('App\generador', 'ID_Gener', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
 	}
-	
-    public function declaracion()
-    {
-        return $this->hasMany('App\Declaration', 'ID_Declar', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+    public function SolicitudServicio(){
+        return $this->hasMany('App\SolicitudServicio', 'ID_SolSer', 'id');//como sede tiene muchas solicitudes de servicio
 	}
-	
-	public function Quotations()
-    {
+	public function Quotations(){
         return $this->hasMany('App\Quotation', 'ID_Cotiz', 'id');//sede tiene muchas cotizaciones
 	}
-	
     public function trainings(){
     	return $this>hasMany('App\TrainingPersonal','ID_CapPers','id');//como sedes tiene muchas capacitaciones de personal.
 	}
-	
 	public function Vehiculos(){
         return $this->hasMany('App\Vehiculo', 'ID_Vehic', 'id');
     }
     public function Manifiesto(){
     	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
+    }
+    public function Areas(){
+    	return $this>hasMany('App\Area', 'ID_Area', 'id'); //como sedes tiene muchas areas
+    }
+    public function Tratamiento(){
+    	return $this>hasMany('App\Tratamiento','ID_Trat','id');//como sedes tiene muchos tratamientos
     }
 }

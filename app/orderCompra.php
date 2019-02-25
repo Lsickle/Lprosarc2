@@ -12,8 +12,13 @@ class OrderCompra extends Model
 
     protected $primarykey = 'ID_Orden';
 
-    public function Quotation()
-    {
-        return $this->hasMany('App\Quotation', 'ID_Cotiz', 'id');
+    public function User(){
+    	return $this>belongsTo('App\User', 'id');
+    }
+    public function ProgVehiculo(){
+    	return $this>belongsTo('App\ProgramacionVehiculo', 'ID_ProgVeh');
+    }
+    public function Quotation(){
+        return $this>hasMany('App\Quotation', 'ID_Cotiz', 'id');
     }
 }

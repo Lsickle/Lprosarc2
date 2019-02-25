@@ -12,4 +12,13 @@ class Quotation extends Model
 
     protected $primarykey = 'ID_Cotiz';
 
+    public function Sede(){
+    	return $this>belongsTo('App\Sede', 'ID_Sede');
+    }
+    public function OrdenCompra(){
+    	return $this>belongsTo('App\OrderCompra','ID_Orden');
+    }
+    public function ArticuloProv(){
+    	return $this>hasMany('App\ArticuloPorProveedor','ID_ArtiProve', 'id'); //Como cotizacion tiene muchos articulos de proveedor
+    }
 }

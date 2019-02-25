@@ -6,10 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model{
     protected $table='areas';
-    protected $fillable = ['AreaName','AreaSede'];
+    protected $fillable = ['AreaName','FK_AreaSede'];
     protected $primaryKey = 'ID_Area';
 
-    public function sedes(){
+    public function Sedes(){
     	return $this>belongsTo('App\Sede','ID_Sede');
+    }
+    public function GenerSedes(){
+    	return $this>belongsTo('App\GenerSede','ID_GSede');
+    }
+    public fucntion Cargos(){
+    	return $this>hasMany('App\Cargo', 'ID_Carg', 'id');//Como una area tiene muchos cargos
     }
 }

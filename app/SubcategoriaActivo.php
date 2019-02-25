@@ -20,6 +20,6 @@ class SubcategoriaActivo extends Model
 
 	public function Activo()
     {
-        return $this->hasMany('App\Activo', 'ID_Act', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Activo', 'ID_Act', 'id');//como Subcategorias tiene muchos activos
     }
 }
