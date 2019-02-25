@@ -12,8 +12,8 @@ class QrCode extends Model
 
     protected $primaryKey = 'ID_QrCode';
 
-    public function ResEnvios()
+    public function SolicitudResiduo()
     {
-    	return $this->belogsTo('ResEnvio','ID_ResEnv');
+    	return $this->belogsTo('App\SolicitudResiduo','ID_SolSer', 'id');
     }
 }

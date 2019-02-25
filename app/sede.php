@@ -23,7 +23,11 @@ class Sede extends Model
 
 	public function clientes()
 	{
-	 return $this>belongsTo('App\Cliente','ID_Cli');
+	 return $this->belongsTo('App\Cliente','ID_Cli');
+	}
+	public function Municipios()
+	{
+	 return $this->belongsTo('App\Municipio','ID_Mun');
 	}
 
 	public function generador()
@@ -42,13 +46,13 @@ class Sede extends Model
 	}
 	
     public function trainings(){
-    	return $this>hasMany('App\TrainingPersonal','ID_CapPers','id');//como sedes tiene muchas capacitaciones de personal.
+    	return $this->hasMany('App\TrainingPersonal','ID_CapPers','id');//como sedes tiene muchas capacitaciones de personal.
 	}
 	
 	public function Vehiculos(){
         return $this->hasMany('App\Vehiculo', 'ID_Vehic', 'id');
     }
     public function Manifiesto(){
-    	return $this>hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
+    	return $this->hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
     }
 }
