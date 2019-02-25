@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ActivosController extends Controller
+class SolicitudServicioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class ActivosController extends Controller
      */
     public function index()
     {
-        return view('activos.index');
+        return view('solicitud.indexServicio');
     }
 
     /**
@@ -23,8 +23,7 @@ class ActivosController extends Controller
      */
     public function create()
     {
-        return view('activos.create');
-        
+        return view('solicitud.createServicio');                
     }
 
     /**
