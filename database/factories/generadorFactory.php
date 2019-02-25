@@ -17,7 +17,7 @@ $factory->define(App\generador::class, function (Faker $faker) {
         'GenerCode'=> $faker->optional($weight = 0.3)->bothify('Cli ##??'), /*70% chance of NULL*/
         'GenerType'=>  $faker->randomElement(['organico', 'biologico','industrial', 'medicamentos', 'otros']),
         'GenerAuditable'=> $faker->boolean($chanceOfGettingTrue = 50),
-        'GenerCli'=> $GenerClisede,
+        'FK_GenerCli'=> $GenerClisede,
         'created_at'=> $ccreado,
         'updated_at'=> $cactualizado,
         'GenerSlug'=> str_slug('cli'.$title.$slug)

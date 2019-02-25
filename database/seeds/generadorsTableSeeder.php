@@ -14,7 +14,7 @@ class generadorsTableSeeder extends Seeder
         factory(App\generador::class, 10)->create()->each(function(App\generador $Gen){
             $id= $Gen->ID_Gener;
             $Gen->GenerSede()->saveMany(factory(App\GenerSede::class, 3)->make([
-                'Generador' => $id,   
+                'FK_GSede' => $id,   
                 'ID_GSede' => null,/*function($countsede) {
                     return $countsede;
                     $countsede++;
