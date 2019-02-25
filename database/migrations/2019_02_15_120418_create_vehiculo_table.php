@@ -17,10 +17,10 @@ class CreateVehiculoTable extends Migration
             $table->increments('ID_Vehic');
             $table->timestamps();
             $table->string('VehicPlaca',12);
-            $table->boolean('VehicInternExtern');
             $table->string('VehicTipo',64);
             $table->string('VehicCapacidad',64);
             $table->integer('VehicKmActual');
+            $table->boolean('VehicInternExtern');
             $table->unsignedInteger('FK_VehiSede');
 
             $table->foreign('FK_VehiSede')->references('ID_Sede')->on('sedes');

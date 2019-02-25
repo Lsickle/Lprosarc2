@@ -10,7 +10,7 @@ class Personal extends Model{
     protected $primaryKey = 'ID_Pers';
 
     public function cargos(){
-    	return $this>belongsTo('App\Cargo','ID_Carg');
+    	return $this->belongsTo('App\Cargo','ID_Carg');
     }
     public function TrainingPersonal(){
         return $this->hasMany('App\TrainingPersonal', 'ID_CapPers', 'id');//como personal tiene muchas capacitaciones de personal 

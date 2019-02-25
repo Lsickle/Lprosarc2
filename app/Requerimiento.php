@@ -1,23 +1,21 @@
 <?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Requerimiento extends Model
-{
-    protected $table='Requerimientos';
-
-    protected $primaryKey = 'ID_Req';
-
-    /**
-	 * Get the route key for the model.
-	 *
-	 * @return string
-	 */
-	public function getRouteKeyName()
+	namespace App;
+	
+	use Illuminate\Database\Eloquent\Model;
+	
+	class Recurso extends Model
 	{
-	    return 'ReqSlug';
+		protected $table = 'requerimientos';
+	
+		protected $fillable = ['ReqFotoCargue', 'ReqFotoDescargue', 'ReqFotoPesaje','ReqFotoReempacado', 'ReqFotoMezclado', 'ReqFotoDestruccion', 
+		'ReqVideoCargue', 'ReqVideoDescargue', 'ReqVideoPesaje', 'ReqVideoReempacado', 'ReqVideoMezclado', 'ReqVideoDestruccion', 'ReqAuditoria', 
+		'ReqAuditoriaTipo', 'ReqDevolucion', 'ReqDevolucionTipo', 'ReqDatosPersonal', 'ReqPlanillas', 'ReqAlistamiento', 'ReqCapacitacion', 
+		'ReqBascula', 'ReqMasPerson', 'ReqPlatform', 'ReqCertiEspecial', 'ReqSlug'];
+	
+		public $primaryKey = 'ID_Rec';
+	
+		public function Respels()
+		{
+			return $this->belongsTo('App\Respel', 'ID_Respel', 'id');
+		}
 	}
-
-}
