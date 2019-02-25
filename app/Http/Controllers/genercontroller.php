@@ -27,9 +27,9 @@ class genercontroller extends Controller
         //     ->get();
 
         $Generadors = DB::table('Generadors')
-            ->join('sedes', 'Generadors.GenerCli', '=', 'sedes.ID_Sede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.Cliente')
-            ->select('Generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.Cliente', 'clientes.CliShortname')
+            ->join('sedes', 'Generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('Generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname')
             ->get();
         // $Generadors = generador::all();
         return view('generadores.index', compact('Generadors'));

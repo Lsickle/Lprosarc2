@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class SolicitudServicioController extends Controller
 {
@@ -13,7 +15,10 @@ class SolicitudServicioController extends Controller
      */
     public function index()
     {
-        return view('solicitud.indexServicio');
+        $Servicios = DB::table('solicitud_servicios')
+        ->select('solicitud_servicios.*')
+        ->get();
+        return view('solicitud.indexServicio', compact('Servicios'));
     }
 
     /**

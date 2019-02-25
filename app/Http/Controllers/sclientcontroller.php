@@ -19,7 +19,7 @@ class sclientcontroller extends Controller
         // $sedes = Sede::all();
 
         $sedes = DB::table('sedes')
-            ->join('clientes', 'sedes.Cliente', '=', 'clientes.ID_Cli')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname', 'clientes.CliAuditable')
             ->get();
 

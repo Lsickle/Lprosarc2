@@ -13,18 +13,19 @@ Solicitud de Servicios
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped">
+          <table id="solicitudservicioTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                  <th>Fecha creado</th>
-                  <th>Fecha mejorado</th>
                   <th>Estado</th>
                   <th>Tipo</th>
                   <th>Auditable</th>
                   <th>Frecuencia</th>
                   <th>Conductor Externo</th>
                   <th>Placa del vehiculo externo</th>
+                  <th>Fecha creado</th>
+                  <th>Fecha mejorado</th>
                 </tr>
+                
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
@@ -38,6 +39,23 @@ Solicitud de Servicios
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
+              @foreach ($Servicios as $Servicio)
+                    <tr>
+                      <th>{{$Servicio->SolSerStatus}}</th>
+                      <th>{{$Servicio->SolSerTipo}}</th>
+                      @if ($Servicio->SolSerAuditable == 1)
+                      <th>Si</th>                      
+                      @else
+                      <th>No</th>
+                      @endif
+                      <th>{{$Servicio->SolSerFrecuencia}} Días</th>
+                      <th>{{$Servicio->SolSerConducExter}}</th>
+                      <th>{{$Servicio->SolSerVehicExter}}</th>
+                      <th>{{$Servicio->created_at}}</th>
+                      <th>{{$Servicio->updated_at}}</th>
+                    </tr>
+                @endforeach
+                  </tbody>
             {{-- <tfoot>
                 <tr>
                   <th>Estado</th>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SolicitudResiduoController extends Controller
 {
@@ -13,7 +14,14 @@ class SolicitudResiduoController extends Controller
      */
     public function index()
     {
-        return view('solicitud.indexResiduo');
+        // ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
+        //     ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
+        //     ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+        //     ->get();
+        $Residuos = DB::table('solicitud_residuos')
+            ->select('solicitud_residuos.*')
+            ->get();
+        return view('solicitud.indexResiduo', compact('Residuos'));
     }
 
     /**
