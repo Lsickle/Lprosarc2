@@ -5,11 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Training extends Model{
+
     protected $table='trainings';
-    protected $fillable = ['CapaName','CapaTipo','CapaDate','CapaExpire','FK_CapaTeacher','FK_CapaPers'];
+
+    protected $fillable = ['CapaName','CapaTipo'];
+    
     protected $primaryKey = 'ID_Capa';
 
     public function trainings(){
-    	return $this>hasMany('App\TrainingPersonal','ID_CapPers','id');//como capacitaciones tiene muchas capacitaciones de personal.
+    	return $this->hasMany('App\TrainingPersonal','ID_CapPers','id');//como capacitaciones tiene muchas capacitaciones de personal.
     }
 }

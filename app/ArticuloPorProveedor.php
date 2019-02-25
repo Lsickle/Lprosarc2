@@ -14,7 +14,7 @@ class ArticuloPorProveedor extends Model
 
     public function user()
     {
-    	return $this->belongsTo('App\User, id')
+    	return $this->belongsTo('App\User', 'id')
     }
 
     public function activo()
@@ -22,7 +22,7 @@ class ArticuloPorProveedor extends Model
     	return $this->belongsTo('App\Activo', 'ID_Act', 'id')
     }
 
-    public function activo()
+    public function Quotation()
     {
         return $this->belongsTo('App\Quotation', 'ID_Cotiz', 'id')
     }

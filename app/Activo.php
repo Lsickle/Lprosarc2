@@ -11,11 +11,4 @@ class Activo extends Model
 	protected $fillable = ['ActName', 'ActUnid', 'ActCant', 'ActSerialProsarc', 'ActSerialProveed',' ActModel', 'ActTalla', 'ActObserv'];
 	
 	protected $primaryKey = 'ID_Act';
-
-
-	// public function SubcategoriaActivo()
-	// {
-	//  return $this>belongsTo('App\SubcategoriaActivo','ID_SubCat');
-	// }
-
 }
