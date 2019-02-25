@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $role_user = Role::where('name','Usuario')->first();
+        /*$role_user = Role::where('name','Usuario')->first();
         $role_admin = Role::where('name','admin')->first();
         $role_jlogistica = Role::where('name','JefeLogistica')->first();
         $role_joperacion = Role::where('name','JefeOperacion')->first();
@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder
         $role_asistlogistica = Role::where('name','AsistenteLogistica')->first();
         $role_sturno = Role::where('name','SupervisorTurno')->first();
         $role_ealmacen = Role::where('name','EncargadoAlmacen')->first();
-        $role_ehorno = Role::where('name','EncargadoHorno')->first();
+        $role_ehorno = Role::where('name','EncargadoHorno')->first();*/
 
         $user = new User();
         $user->name = 'Luis';
@@ -35,7 +35,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'Programador';
         $user->UsRolDesc = 'Programador de Software';
         $user->save();
-        $user->roles()->attach($role_suser);
+        /*$user->roles()->attach($role_suser);*/
 
         $user = new User();
         $user->name = 'User';
@@ -45,7 +45,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'Usuario';
         $user->UsRolDesc = 'Usuario general';
         $user->save();
-        $user->roles()->attach($role_user);
+        /*$user->roles()->attach($role_user);*/
 
         $user = new User();
         $user->name = 'Leider';
@@ -55,7 +55,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'admin';
         $user->UsRolDesc = 'Director de Planta';
         $user->save();
-        $user->roles()->attach($role_admin);
+        /*$user->roles()->attach($role_admin);*/
 
         $user = new User();
         $user->name = 'Juan';
@@ -65,7 +65,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'JefeLogistica';
         $user->UsRolDesc = 'Jefe de Logistica';
         $user->save();
-        $user->roles()->attach($role_jlogistica);
+        /*$user->roles()->attach($role_jlogistica);*/
 
         $user = new User();
         $user->name = 'Victor';
@@ -75,7 +75,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'JefeOperacion';
         $user->UsRolDesc = 'Jefe de Operaciones';
         $user->save();
-        $user->roles()->attach($role_joperacion);
+        /*$user->roles()->attach($role_joperacion);*/
 
         $user = new User();
         $user->name = 'Duvan';
@@ -85,7 +85,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'AsistenteLogistica';
         $user->UsRolDesc = 'Asistente de Logistica';
         $user->save();
-        $user->roles()->attach($role_asistlogistica);
+        /*$user->roles()->attach($role_asistlogistica);*/
 
         $user = new User();
         $user->name = 'TestClient';
@@ -95,7 +95,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'Cliente';
         $user->UsRolDesc = 'Cliente registrado';
         $user->save();
-        $user->roles()->attach($role_client);
+        /*$user->roles()->attach($role_client);*/
 
         $user = new User();
         $user->name = 'GeneradorProsarc';
@@ -105,7 +105,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'Generador';
         $user->UsRolDesc = 'Generador de residuos';
         $user->save();
-        $user->roles()->attach($role_gener);
+        /*$user->roles()->attach($role_gener);*/
 
         $user = new User();
         $user->name = 'Peter';
@@ -115,7 +115,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'AuxiliarLogistica';
         $user->UsRolDesc = 'Auxiliar de Logistica';
         $user->save();
-        $user->roles()->attach($role_auxlogistica);
+        /*$user->roles()->attach($role_auxlogistica);*/
 
         $user = new User();
         $user->name = 'Camilo';
@@ -125,7 +125,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
-        $user->roles()->attach($role_sturno);
+        /*$user->roles()->attach($role_sturno);*/
 
         $user = new User();
         $user->name = 'William';
@@ -135,7 +135,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
-        $user->roles()->attach($role_sturno);
+        /*$user->roles()->attach($role_sturno);*/
 
         $user = new User();
         $user->name = 'Camilo2';
@@ -145,7 +145,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
         $user->save();
-        $user->roles()->attach($role_sturno);
+        /*$user->roles()->attach($role_sturno);*/
 
         $user = new User();
         $user->name = 'Sandro';
@@ -155,7 +155,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'EncargadoAlmacen';
         $user->UsRolDesc = 'Encargado de Almacen';
         $user->save();
-        $user->roles()->attach($role_ealmacen);
+        /*$user->roles()->attach($role_ealmacen);*/
 
         $user = new User();
         $user->name = 'Horno';
@@ -165,7 +165,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'EncargadoHorno';
         $user->UsRolDesc = 'Encargado de Horno';
         $user->save();
-        $user->roles()->attach($role_ehorno);
+        /*$user->roles()->attach($role_ehorno);*/
 
     }
 }

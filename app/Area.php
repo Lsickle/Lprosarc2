@@ -15,7 +15,7 @@ class Area extends Model{
     public function GenerSedes(){
     	return $this->belongsTo('App\GenerSede','ID_GSede');
     }
-    public fucntion Cargos(){
+    public function Cargos(){
     	return $this->hasMany('App\Cargo', 'ID_Carg', 'id');//Como una area tiene muchos cargos
     }
 }

@@ -1,4 +1,4 @@
-SolicitudServicio<?php
+<?php
 
 namespace App;
 
