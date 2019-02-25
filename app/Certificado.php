@@ -6,16 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Certificado extends Model{
     protected $table='certificados';
-    protected $fillable = ['CertTipo','CertNumero','CertKg','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertAnexo','FK_CertRm','FK_CertGener','FK_CertRespel'];
+    protected $fillable = ['CertNumero','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertAuthJo','CertAuthJl','CertAuthDp','CertAnexo'];
     protected $primaryKey = 'ID_Cert';
 
-    public function ReciboMaterial(){
-    	return $this->belogsTo('App\ReciboMaterial','Id_Rm');
-    }
-     public function GenerSede(){
-    	return $this->belogsTo('App\GenerSede','Id_GSede');
-    }
-     public function ResEnvio(){
-    	return $this->belogsTo('App\ResEnvio','Id_ResEnv');
+    public function SolicitudServicio(){
+    	return $this->belogsTo('App\SolicitudServicio','ID_SolSer');
     }
 }

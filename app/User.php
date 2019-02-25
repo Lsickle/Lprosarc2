@@ -66,9 +66,9 @@ class User extends Authenticatable
         return 'UsSlug';
     }
     //se especifica la raclacion con la tabla declaraciones
-    public function declaracion()
+    public function ArticuloProv()
     {
-        return $this->hasMany('App\Declaration', 'ID_Declar');//como user tiene muchas declaraciones
+        return $this->hasMany('App\ArticuloPorProveedor', 'ID_ArtiProve', 'id');//como user tiene muchas declaraciones
     }
     public function OrdenCompras()
     {

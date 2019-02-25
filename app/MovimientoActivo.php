@@ -14,10 +14,10 @@ class MovimientoActivo extends Model
 	
 	public function Activo()
 	{
-	 return $this>belongsTo('App\Activo', 'ID_Act');//como movimiento_activos depende de un activo
+	 return $this->belongsTo('App\Activo', 'ID_Act');//como movimiento_activos depende de un activo
 	}
 	public function Personal()
 	{
-	 return $this>belongsTo('App\Personal', 'ID_Pers');//como movimiento_activos puede estar relacionado con Personal
+	 return $this->belongsTo('App\Personal', 'ID_Pers');//como movimiento_activos puede estar relacionado con Personal
 	}
 }

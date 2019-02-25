@@ -8,7 +8,11 @@ class MantenimientoVehiculo extends Model
 {
     protected $table = 'MantenVehics'; 
 
-    protected $filatable = ['MvTecnicoMecanica', 'MvKm', 'MvAceite', 'Mvtanqueo', 'MvtanqueoCant', 'FK_MvProgram'];
+    protected $filatable = ['MvKm', 'MvStatus', 'MvType', 'HoraMavInicio', 'HoraMavFin'];
 
     protected $primarykey = 'ID_Mv';
+
+    public function Vehiculo(){
+    	return $this->belongsTo('App\Vehiculo', 'ID_Vehic');
+    }
 }

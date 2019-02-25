@@ -17,8 +17,9 @@ class CreateRecursosTable extends Migration
             $table->increments('ID_Rec');
             $table->timestamps();
             $table->string('RecName',128);
+            $table->string('RecCarte',32);
             $table->string('RecTipo',32);
-            $table->string('RecTipoOther',64);
+            $table->string('RecRmSrc',64);
             $table->string('RecSrc',255);
             $table->string('RecFormat',32);
             $table->unsignedInteger('FK_RecSol');
