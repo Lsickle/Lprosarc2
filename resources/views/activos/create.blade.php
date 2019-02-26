@@ -97,7 +97,7 @@ Registros de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext4">Modelo</label>
-									<input type="number" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
+									<input type="text" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext5">Talla</label>
@@ -117,11 +117,11 @@ Registros de Activos
 									</div>
 								</div> --}}
 								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>	
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary">Registrar</button>
+									</div>	
 							</form>
-						
+							
 						</div>
 						<!-- /.box -->
 					</div>

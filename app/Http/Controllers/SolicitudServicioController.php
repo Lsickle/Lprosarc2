@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class ActivosController extends Controller
+
+class SolicitudServicioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,10 @@ class ActivosController extends Controller
      */
     public function index()
     {
-        return view('activos.index');
+        $Servicios = DB::table('solicitud_servicios')
+        ->select('solicitud_servicios.*')
+        ->get();
+        return view('solicitud.indexServicio', compact('Servicios'));
     }
 
     /**
@@ -23,8 +28,7 @@ class ActivosController extends Controller
      */
     public function create()
     {
-        return view('activos.create');
-        
+        return view('solicitud.createServicio');                
     }
 
     /**

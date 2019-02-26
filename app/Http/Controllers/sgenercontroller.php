@@ -17,7 +17,7 @@ class sgenercontroller extends Controller
     public function index()
     {
         $Gsedes = DB::table('gener_sedes')
-            ->join('generadors', 'gener_sedes.Generador', '=', 'generadors.ID_Gener')
+            ->join('generadors', 'gener_sedes.ID_GSede', '=', 'generadors.ID_Gener')
             ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname', 'generadors.GenerAuditable')
             ->get();
 

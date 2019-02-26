@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Activo;
-use App\SubcategoriaActivo;
-use App\CategoriaActivo;
 use Illuminate\Support\Facades\DB;
 
-
-class ActivoController extends Controller
+class SolicitudResiduoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +14,14 @@ class ActivoController extends Controller
      */
     public function index()
     {
-        $SubActivos = DB::table('subcategoria_activos')
-            ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
-            ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
-            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+        // ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
+        //     ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
+        //     ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+        //     ->get();
+        $Residuos = DB::table('solicitud_residuos')
+            ->select('solicitud_residuos.*')
             ->get();
-
-        return view('activos.index', compact('SubActivos'));
+        return view('solicitud.indexResiduo', compact('Residuos'));
     }
 
     /**
@@ -34,13 +31,7 @@ class ActivoController extends Controller
      */
     public function create()
     {
-        $SubActivos = DB::table('subcategoria_activos')
-            ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
-            ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
-            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
-            ->get();
-            
-        return view('activos.create', compact('SubActivos'));
+        return view('solicitud.createResiduo');
     }
 
     /**

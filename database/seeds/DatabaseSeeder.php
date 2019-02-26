@@ -57,5 +57,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
         $this->call(ActivoTableSeeder::class);
+        $this->call(SolicitudServicioTableSeeder::class);
+        $this->call(RespelTableSeeder::class);
+        $this->call(SolicitudResiduoTableSeeder::class);
     }
 }
