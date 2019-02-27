@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Manifiesto;
+use Illuminate\Support\Facades\DB;
 
-class VehicCreateController extends Controller
+
+class ManifiestoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +16,11 @@ class VehicCreateController extends Controller
      */
     public function index()
     {
-        return view('vehicle.create');
+        $Manifiestos = DB::table('manifiestos')
+            ->select('manifiestos.*')
+            ->get();
+
+        return view('resivos.indexManifiesto', compact('Manifiestos'));
     }
 
     /**

@@ -4,23 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use ReciboMaterial;
 
-class ReciboMaterialController extends Controller
+
+class CertificadoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        // $RMaterials = DB::table('recibo_materials')
-        //     ->join('clientes', 'recibo_materials.FK_RmTransportador', '=', 'clientes.ID_Cli')
-        //     ->join('personals', 'recibo_materials.FK_RmConductor', '=', 'personals.ID_Pers')
-        //     ->select('recibo_materials.RmStatus','recibo_materials.RmSalida','recibo_materials.RmLlegada','personals.PersFirstName','personals.PersLastName','clientes.CliName')
-        //     ->get();
-        // return view('reciboMaterials.index', compact('RMaterials'));
-        return view('reciboMaterials.index');
+    public function index()
+    {
+        $Certificados = DB::table('certificados')
+            ->select('certificados.*')
+            ->get();
+        return view('resivos.indexCertificado', compact('Certificados')); 
     }
 
     /**
@@ -30,7 +28,7 @@ class ReciboMaterialController extends Controller
      */
     public function create()
     {
-        //
+        return view('resivos.createCertificado');
     }
 
     /**

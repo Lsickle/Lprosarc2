@@ -96,6 +96,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/recibo-material"><i class="fas fa-radiation"></i> Materiales</a></li>
                         <li><a href="/certificado"><i class="fas fa-certificate"></i> Certificados</a></li>
+                        <li><a href="/certificado/create"><i class='fa fa-plus'></i> Crear Certificados</a></li>
                         <li><a href="/manifiesto"><i class='fas fa-tools'></i> Manifiestos</a></li>
                     </ul>
                 </li>
@@ -169,10 +170,10 @@
                 <li class="treeview">
                     <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/vehicle/index"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
+                        <li><a href="/vehicle"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
                         <li><a href="/vehicle/create"><i class='fa fa-plus'></i></i>Registro</a></li>
-                        <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
-                        <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
+                        <li><a href="/vehicle-programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
+                        <li><a href="/vehicle-mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
                         
                     </ul>
                 </li>

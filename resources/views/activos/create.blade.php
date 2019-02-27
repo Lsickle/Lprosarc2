@@ -25,42 +25,17 @@ Registros de Activos
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							{{-- <div class="box-header with-border">
-								<h3 class="box-title">Formulario de registro</h3>
-							</div> --}}
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
 								@csrf
-								
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									{{-- <div class="fingerprint-spinner" id="loadingTable">
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div> --}}
-								{{-- <div class="box-body" hidden onload="renderTable()" id="readyTable">
-									<div class="tab-pane" id="addRowWizz">
-										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del activo que desea registrar en cada paso</p>
-										<div id="smartwizard">
-											<ul>
-												<li><a href="#step-1"><b>Paso 1</b><br /><small>Categoria de activos</small></a></li>
-												<li><a href="#step-2"><b>Paso 2</b><br /><small>SubCategoria de activos</small></a></li>
-												<li><a href="#step-3"><b>paso 3</b><br /><small>Activos</small></a></li>
-											</ul>
-											<div> --}}
 								<div class="col-md-6">
 									<label for="activo">Categoria</label>
 									<select class="form-control" id="activo" name="categoria" required="true">
 										<option>Seleccione...</option>
-										@foreach ($SubActivos as $SubActivo)
-											<option>{{$SubActivo->CatName}}</option>																
+										@foreach ($Categorias as $Categoria)
+										
+											<option value="{{$Categoria->ID_CatAct}}">{{$Categoria->CatName}}</option>																
 										@endforeach
 									</select>
 								</div>
@@ -70,7 +45,7 @@ Registros de Activos
 									<select class="form-control" id="activo" name="subcategoria" required="true">
 										<option>Seleccione...</option>
 										@foreach ($SubActivos as $SubActivo)
-											<option>{{$SubActivo->SubCatName}}</option>																
+											 <option value="{{$SubActivo->ID_SubCat}}">{{$SubActivo->SubCatName}}</option>																
 										@endforeach
 									</select>
 								</div>
@@ -83,13 +58,13 @@ Registros de Activos
 									<label for="activo">Forma del activo</label>
 									<select class="form-control" id="activo" name="Forma" required="true">
 										<option>Seleccione...</option>
-										<option>Unidad</option>
-										<option>Peso</option>
+										<option value="0">Unidad</option>
+										<option value="1">Peso</option>
 									</select>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext2">Cantidad</label>
-									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999.999">
+									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999999">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext3">Serial de Prosarc</label>
@@ -105,28 +80,31 @@ Registros de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext6">Observaciones</label>
-									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones sobre el activo" name="observacion">
+									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones" name="observacion">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext7">Serial Proveedor</label>
 									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="serialproveedor">
 								</div>
-												{{-- </div> --}}
-											{{-- </div>
-										</div>
-									</div>
+								{{-- <div class="col-md-6">
+									<label for="activoinputext8">Sede</label>
+									<input type="text" class="form-control" id="activoinputext8" placeholder="Sede" name="Sede">
 								</div> --}}
-								<!-- /.box-body -->
-									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Registrar</button>
-									</div>	
-							</form>
-							
+								<div class="container-fluid spark-screen">
+									<div class="row">			
+										<div class="box-footer" style="float:right; margin-right:5%">
+											<button type="submit" class="btn btn-primary">Registrar</button>
+										</div>	
+							<!-- /.box-body -->
+									</div>
+								</div>
+							</div>						
+							<!-- /.box -->
 						</div>
-						<!-- /.box -->
-					</div>
-					<!-- /.box-body -->
-				</div>
+						</div>
+				
+						
+				</form>
 				<!-- /.box -->
 			</div>
 			<!--/.col (right) -->
