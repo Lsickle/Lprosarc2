@@ -40,19 +40,30 @@ Registro de vehiculos
 										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Toneladas)</label>
+										<label for="vehicinputext3">Capacidad (Kilos)</label>
 										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
 									</div>
 									<div class="col-md-6">
 										<label for="vehicinputext4">Kilometraje actual</label>
 										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
 									</div>
+									<div class="col-md-6">
+											<label for="vehicinputext5">Sede</label>
+											<select class="form-control" id="vehicinputext5" name="sede" required="true">
+												<option>Seleccione...</option>
+												<option value="1">Principal</option>
+												<option value="6">Norte</option>
+												<option value="2">Sur</option>
+												<option value="8">Este</option>
+												<option value="3">Oeste</option>
+											</select>
+									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 										<div class="icheck form-group">
 											 <label for="inputcheck">
 												Interno
 											 </label>
-											  <input id="inputcheck" type="checkbox" name="create">
+											  <input id="inputcheck" type="checkbox" name="InternoExterno">
 										 </div>
 									</div>
 								</div>

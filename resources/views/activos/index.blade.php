@@ -2,6 +2,9 @@
 @section('htmlheader_title')
 Activos
 @endsection
+@section('contentheader_title')
+Activos
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -25,30 +28,11 @@ Activos
                     <th>Serial Prosarc</th>
                     <th>Serial Proveedor</th>
                     <th>Más</th>
+                    <th>Editar</th>
                 </tr>
-              {{-- <tbody  hidden onload="renderTable()" id="readyTable"> --}}
-              @foreach ($SubActivos as $SubActivo)
-                  <th>{{$SubActivo->CatName}}</th>
-                  <th>{{$SubActivo->SubCatName}}</th>
-                  <th>{{$SubActivo->ActName}}</th>
-                  <th>{{$SubActivo->ActCant}}</th>
-                  
-                  @if($SubActivo->ActUnid == 1)
-                    <th>Unidades</th>
-                  @else
-                    <th>Peso</th>
-                  @endif
-
-                  <th>{{$SubActivo->ActModel}}</th>
-                  <th>{{$SubActivo->ActSerialProsarc}}</th>
-                  <th>{{$SubActivo->ActSerialProveed}}</th>
-                  {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                  {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                  {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
-                </tr>
-              @endforeach  
+              
             {{-- </thead> --}}
-          </tbody>
+          {{-- </tbody> --}}
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
@@ -61,6 +45,33 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
+              @foreach ($Activos as $Activo)
+                  <tr>
+                    <td>{{$Activo->CatName}}</td>
+                    <td>{{$Activo->SubCatName}}</td>
+                    <td>{{$Activo->ActName}}</td>
+                    <td>{{$Activo->ActCant}}</td>
+                    
+                    @if($Activo->ActUnid <> 1)
+                      <td>Unidades</td>
+                    @else
+                    <td> Peso</td>
+                    @endif
+
+                    <td>{{$Activo->ActModel}}</td>
+                    <td>{{$Activo->ActSerialProsarc}}</td>
+                    <td>{{$Activo->ActSerialProveed}}</td>
+                    <td></td>
+                    <td></td>
+                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
+                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
+                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
+                  </tr>
+                
+              @endforeach
+              {{-- @foreach ($Activos as $Activo)
+                  
+              @endforeach --}}
             {{-- <tfoot>
                 <tr>
                     <th>Categoria</th>

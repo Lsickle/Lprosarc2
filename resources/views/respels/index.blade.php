@@ -17,17 +17,19 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Descripcion</th>
+                {{-- <th>Descripcion</th> --}}
                 <th>Clasificacion 4741</th>
                 <th>Peligrosidad</th>
                 <th>Estado</th>
                 <th>Hoja de Seguridad</th>
                 <th>Tarj de Emergencia</th>
-                <th>Auditable</th>
+                {{-- <th>Auditable</th> --}}
+                <th>Estado</th>
                 <th>Generado por</th>
-                <th>Creado el</th>
+                {{-- <th>Creado el</th> --}}
                 <th>Actualizado el</th>
-                <th>edicion</th>
+                <th>Ver Más...</th>
+                <th>Edicion</th>
               </tr>
             </thead>
             <tbody hidden onload="renderTable()" id="readyTable">
@@ -56,21 +58,24 @@
               @foreach($Respels as $respel)
               <tr>
                 <td>{{$respel->RespelName}}</td>
-                <td>{{$respel->RespelDescrip}}</td>
+                {{-- <td>{{$respel->RespelDescrip}}</td> --}}
                 <td>{{$respel->RespelClasf4741}}</td>
                 <td>{{$respel->RespelIgrosidad}}</td>
                 <td>{{$respel->RespelEstado}}</td>
                 <td>{{$respel->RespelHojaSeguridad}}</td>
                 <td>{{$respel->RespelTarj}}</td>
-                @if($respel->DeclarAuditable==1)
+                <td>{{$respel->RespelStatus}}</td>
+                {{-- @if($respel->DeclarAuditable==1)
                 <td>Si</td>
                 @else
                 <td>NO</td>
-                @endif
+                @endif --}}
                 <td>{{$respel->GSedeName}}</td>
-                <td>{{$respel->created_at}}</td>
+                {{-- <td>{{$respel->created_at}}</td> --}}
                 <td>{{$respel->updated_at}}</td>
-                <td>{{$respel->RespelSlug}}</td>
+                <td></td>
+                <td></td>
+                {{-- <td>{{$respel->RespelSlug}}</td> --}}
               </tr>
               @endforeach
             </tbody>
