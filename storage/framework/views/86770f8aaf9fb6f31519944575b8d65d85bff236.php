@@ -2,51 +2,43 @@
 
 <!-- JQuery and bootstrap are required by Laravel 5.3 in resources/assets/js/bootstrap.js-->
 <!-- Laravel App -->
-<script src="{{ url (mix('/js/app.js')) }}"></script>
+<script src="<?php echo e(url (mix('/js/app.js'))); ?>"></script>
 
 <!-- jQuery 3 -->
 <script src="node_modules/jquery/dist/jquery.js"></script>
 
 <!-- InputMask -->
-{{-- <script src="js/inputmask/dist/jquery.inputmask.bundle.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.date.extensions.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
-{{-- Popper JS --}}
+
 <script src="node_modules/popper.js/dist/popper.js"></script>
 
-{{-- bootstrap 4.3.1 --}}
+
 <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
 <!-- DataTables -->
-{{-- <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script> --}}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
 
 
 
-{{-- SmartWizard --}}
+
 <script src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
 
-{{-- bootstrap-switch --}}
+
 <script src="/js/bootstrap-switch/dist/js/bootstrap-switch.js" ></script>
 
-{{-- cdn de datatable --}}
-{{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
 
 
-{{-- slimScroll --}}
+
+
+
 <script src="resources/assets/js/jquery-slimscroll/jquery.slimscroll.js" ></script>
 
-{{-- script para formulario en smart-wizzard --}}
+
 <script type="text/javascript">
   $(document).ready(function(){
     $('#smartwizard').smartWizard({
@@ -310,30 +302,9 @@ $(document).ready(function(){
     $('input[name="CargSalary"]').mask('000.000.000.000');
 });
 </script>
-{{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
+
 <script type="text/javascript">
- {{-- $("select[name='DeclarSede']").change(function (){
-    var DeclarSede_id = $("select[name='DeclarSede']").val();
-    if (DeclarSede_id !== '' && DeclarSede_id !== null) {
-      $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-      $ajax({
-        type: 'GET',
-        url: {{ url("/declaraciones/create") }},
-        data: { id:DeclarSede_id },
-      }).done(function (data) {
-        $.each(data, function(key, value){
-          $("select[name='DeclarGenerSede']")
-          .apend($("<option></option>")
-          .attr("value",key)
-          .text(value));
-        });
-      }).fail(function(jqXHR, textStatus){
-        console.log(jqXHR);
-      });
-    } else {
-      $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-    }
-  });--}}
+ 
       $('select[name="DeclarSede"]').on('change', function(e){
         console.log(e);
         var ID_Sede = e.target.value;
@@ -370,7 +341,7 @@ $(document).ready(function(){
     })
 </script>
 
-{{-- bootstrap-switch  --}}
+
 <script >
   $(".testswitch").bootstrapSwitch({
     animate: true,
@@ -408,14 +379,9 @@ $(document).ready(function(){
 </script>
 
 <!-- script para botones del listado de usuarios -->
-{{-- <script type="text/javascript">
-  $('.radio1').on('switch-change', function () {
-      $('.radio1').bootstrapSwitch('toggleRadioState');
-  });
-</script>
- --}}
 
-{{-- funcion para renderizar la tabla antes de que se muestren los datos --}}
+
+
 <script>
   $(document).ready(function renderTable(){
       var a = document.querySelector("#loadingTable");
@@ -430,29 +396,8 @@ $(document).ready(function(){
       d.removeAttribute("hidden");
   });
 </script>
-{{-- renderizado datatable para tabla de auditorias --}}
-{{-- <script>
-  $(document).ready(function () {
-    $('#auditstable').DataTable({
-      "scrollX": false,
-      "autoWidth": true,
-      "keys": true,       
-      "responsive": true,
-      "columnDefs": [ {
-        "targets": 5,
-        "data": "id",
-        "render": function ( data, type, row, meta ) {
-          return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +'Modal>Ver</button>";}}
-      //   {"targets": 6,
-      //   "data": "CliSlug",
-      //   "render": function ( data, type, row, meta ) {
-      //     return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-      //   }  
-      // }
-      ]
-    });
-  });
-</script> --}}
+
+
 <script>
   $(document).ready(function() {
     $('#auditstable').DataTable( {

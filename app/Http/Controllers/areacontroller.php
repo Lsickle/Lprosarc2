@@ -15,7 +15,7 @@ class AreaController extends Controller{
      */
     public function index(){        
         $Areas = DB::table('areas')
-            ->join('sedes', 'areas.AreaSede', '=', 'sedes.ID_Sede')
+            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
             ->select('areas.ID_Area', 'areas.AreaName','sedes.SedeName')
             ->get();
     	return view('areas.index', compact('Areas'));

@@ -8,7 +8,7 @@ class Assistance extends Model{
 
     protected $table = 'assistances';
 
-    protected $fillable = ['AsisLlegada','AsisSalida','AsisNocturnas'];
+    protected $fillable = ['AsisFecha','AsisLlegada','AsisSalida','AsisStatus','AsisNocturnas'];
 
     protected $primaryKey = 'ID_Asis';
 
