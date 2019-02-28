@@ -250,8 +250,10 @@ create table Horario(
 /*tabla para registro de llegadas y salidas del personal prosarc*/
 create table Asistencia(
 	ID_Asis int auto_increment unique,
+	AsisFecha date, /*fecha para poder filtrar por dias*/
 	AsisLlegada timestamp, /*fecha y hora registrada de llegada*/
 	AsisSalida timestamp, /*fecha y hora registrada de salida*/
+	AsisStatus boolean, /*se encuentra en la empresa o no*/
 	AsisNocturnas int, /*cantidad de horas nocturnas laboradas*/
 	FK_AsisPers int,
 	primary key (ID_Asis),
