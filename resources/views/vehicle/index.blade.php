@@ -13,13 +13,17 @@ Vehiculos
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="vehicleindexTable" class="table table-compact table-bordered table-striped">
+          <table id="VehicleTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
                   <th>Placa</th>
                   <th>Tipo</th>
                   <th>Capacidad</th>
                   <th>Km Actual</th>
+                  <th>Prosedencia</th>
+                  <th>Sede</th>
+                  <th>Fecha Registrado</th>
+                  <th>Editar</th>
                 </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -34,14 +38,31 @@ Vehiculos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-            <tfoot>
+              
+              @foreach ($Vehicles as $Vehicle)
+                <tr>
+                  <td>{{$Vehicle->VehicPlaca}}</td>   
+                  <td>{{$Vehicle->VehicTipo}}</td>   
+                  <td>{{$Vehicle->VehicCapacidad}} Kilos</td>   
+                  <td>{{$Vehicle->VehicKmActual}}</td> 
+                  @if ($Vehicle->VehicInternExtern == 1)
+                      <td>Interno</td>
+                  @else
+                      <td>Externo</td>
+                  @endif  
+                  <td>{{$Vehicle->SedeName}}</td> 
+                  <td>{{$Vehicle->created_at}}</td>  
+                  <td></td>  
+                </tr> 
+              @endforeach
+            {{-- <tfoot>
                 <tr>
                     <th>Placa</th>
                     <th>Tipo</th>
                     <th>Capacidad</th>
                     <th>Km Actual</th>
                 </tr>
-            </tfoot>
+            </tfoot> --}}
           </table>
         </div>
         <!-- /.box-body -->

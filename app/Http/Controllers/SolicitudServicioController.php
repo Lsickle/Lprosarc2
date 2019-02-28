@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\SolicitudServicio;
 
 
 class SolicitudServicioController extends Controller
@@ -39,7 +40,42 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $Servicios = DB::table('solicitud_servicios')
+        // ->select('solicitud_servicios.*')
+        // ->get();
+
+        // $Servicio = new SolicitudServicio();
+        // $Servicio->SolSerStatus = $request->input('Estado');
+        // $Servicio->SolSerTipo = $request->input('Tipo');
+
+        // if($request->input('auditable') == 'on'){
+        //     $Servicio->SolSerAuditable = '1';
+        // }else{
+        //     $Servicio->SolSerAuditable = '0';
+        // }
+
+        // $Servicio->SolSerFrecuencia = $request->input('Frecuencia');
+        // $Servicio->SolSerConducExter = $request->input('conductor');
+        // $Servicio->SolSerVehicExter = $request->input('placa');
+        // $Servicio->Fk_SolSerTransportador = 1;
+        // $Servicio->FK_SolSerGenerSede = 1;
+        // $aumento = 1;
+        // $Servicio->SolSerSlug = 0;
+        //     if ($Servicio->SolSerSlug <> $aumento){
+        //         while($aumento <> $Servicio->SolSerSlug){
+        //             $aumento1 = $aumento++;
+        //             $Servicio->SolSerSlug = $aumento1;};
+        //     }else{
+                    
+        //                 $Servicio->SolSerSlug = $aumento;
+                     
+                    
+        //     }
+        // $Servicio->save();
+
+        // return view('solicitud.indexServicio', compact('Servicios'));
+        // return redirect()->route('solicitud.indexServicio');
+
     }
 
     /**

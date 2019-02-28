@@ -96,6 +96,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/recibo-material"><i class="fas fa-radiation"></i> Materiales</a></li>
                         <li><a href="/certificado"><i class="fas fa-certificate"></i> Certificados</a></li>
+                        <li><a href="/certificado/create"><i class='fa fa-plus'></i> Crear Certificados</a></li>
                         <li><a href="/manifiesto"><i class='fas fa-tools'></i> Manifiestos</a></li>
                     </ul>
                 </li>
@@ -169,10 +170,10 @@
                 <li class="treeview">
                     <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="/vehicle/index"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
+                        <li><a href="/vehicle"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
                         <li><a href="/vehicle/create"><i class='fa fa-plus'></i></i>Registro</a></li>
-                        <li><a href="/vehicle/programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
-                        <li><a href="/vehicle/mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
+                        <li><a href="/vehicle-programacion"><i class="fas fa-calendar-alt"></i>   Programación</a></li>
+                        <li><a href="/vehicle-mantenimiento"><i class="fas fa-tools"></i>   Mantenimiento</a></li>
                         
                     </ul>
                 </li>
@@ -188,6 +189,8 @@
                     <ul class="treeview-menu">
                         <li><a href="/activos"><i class="fas fa-list-alt"></i><span>  Inventario</span></a></li>
                         <li><a href="/activos/create"><i class='fa fa-plus'></i><span>Añadir</span></a></li>
+                        <li><a href="/activos-movimiento"><i class="fas fa-list-alt"></i><span>  Lista ¿Donde están?</span></a></li>
+                        <li><a href="/activos-movimiento/create"><i class='fa fa-plus'></i><span>¿Donde están?</span></a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -197,6 +200,27 @@
                         <li><a href="/solicitud-residuo/create"><i class='fa fa-plus'></i><span> Añadir Residuo</span></a></li>
                         <li><a href="/solicitud-servicio"><i class="fas fa-file-signature"></i><span> Inventario de servicios</span></a></li>
                         <li><a href="/solicitud-servicio/create"><i class="fas fa-handshake"></i><span> Añadir servicio</span></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="far fa-newspaper"></i><span> Articulos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/articulos-proveedor"><i class="fas fa-list-alt"></i><span>  Buscar Articulo Proveedor</span></a></li>
+                        <li><a href="/articulos-proveedor/create"><i class='fa fa-plus'></i><span>  Añadir Articulo Proveedor</span></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-qrcode"></i><span> Codigo Qr</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/code"><i class="fas fa-list-alt"></i><span>  Listar</span></a></li>
+                        <li><a href="/code/create"><i class='fa fa-plus'></i><span>  Crear</span></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-user-clock"></i><span> Horario</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/horario"><i class="fas fa-list-alt"></i><span>  Listar</span></a></li>
+                        <li><a href="/horario/create"><i class='fa fa-plus'></i><span>  Crear</span></a></li>
                     </ul>
                 </li>
             </ul><!-- /.sidebar-menu -->

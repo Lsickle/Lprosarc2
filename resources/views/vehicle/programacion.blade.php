@@ -42,32 +42,34 @@ Programacion
 									</div>
 									<div class="col-md-6">
 										<label for="programnputoption1">Turno</label>
-										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Municipio" required="true">
+										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Turno" required="true">
+											<option>Seleccione...</option>
 											<option>Dia</option>
 											<option>Tarde</option>
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="program">Tipo</label>
-										<select class="form-control" id="program" placeholder="Funza" name="Municipio" required="true">
+										<select class="form-control" id="program" placeholder="Funza" name="Tipo" required="true">											
+											<option>Seleccione...</option>
 											<option>En Mantenimiento</option>
 											<option>Usando</option>
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="programnputoption2">Feriado</label>
-										<select class="form-control" id="programnputoption2" placeholder="Funza" name="Municipio" required="true">
+										<select class="form-control" id="programnputoption2" name="Feriado" required="true">
 											<option>Festivo</option>
 											<option>Domingos</option>
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="programnputext3">Hora de llegada a planta</label>
-										<input type="datetime" class="form-control" id="programnputext3" name="Tanqueo">
+										<input type="text" class="form-control" id="programnputext3" name="Llegada">
 									</div>
 									<div class="col-md-6">
 										<label for="programnputext4">Hora de salida de planta</label>
-										<input type="number" class="form-control" id="programnputext4" placeholder="100098" name="cantidad" required="true" max="999999">
+										<input type="text" class="form-control" id="programnputext4"  name="Salida">
 									</div>
 									
 								</div>

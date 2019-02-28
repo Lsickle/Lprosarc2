@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use ReciboMaterial;
+use App\Horario;
 
-class ReciboMaterialController extends Controller
+class HorarioController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        // $RMaterials = DB::table('recibo_materials')
-        //     ->join('clientes', 'recibo_materials.FK_RmTransportador', '=', 'clientes.ID_Cli')
-        //     ->join('personals', 'recibo_materials.FK_RmConductor', '=', 'personals.ID_Pers')
-        //     ->select('recibo_materials.RmStatus','recibo_materials.RmSalida','recibo_materials.RmLlegada','personals.PersFirstName','personals.PersLastName','clientes.CliName')
-        //     ->get();
-        // return view('reciboMaterials.index', compact('RMaterials'));
-        return view('reciboMaterials.index');
+    public function index()
+    {
+        $Horarios = DB::table('horarios')
+            ->Join('personals', 'horarios.FK_HoraPers', '=', 'personals.ID_Pers')
+            ->select('horarios.*', 'personals.PersFirstName')
+            ->get();
+
+        return view('horario.index', compact('Horarios'));
     }
 
     /**
@@ -30,7 +30,12 @@ class ReciboMaterialController extends Controller
      */
     public function create()
     {
-        //
+        $Horarios = DB::table('horarios')
+            ->rightJoin('personals', 'horarios.FK_HoraPers', '=', 'personals.ID_Pers')
+            ->select('horarios.*', 'personals.PersFirstName', 'personals.ID_Pers')
+            ->get();
+
+        return view('horario.create', compact('Horarios'));
     }
 
     /**

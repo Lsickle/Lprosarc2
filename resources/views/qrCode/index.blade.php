@@ -16,18 +16,14 @@ Activos
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="ActivoTable" class="table table-compact table-bordered table-striped">
+          <table id="QrCodesTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Forma</th>
-                    <th>Modelo</th>
-                    <th>Serial Prosarc</th>
-                    <th>Serial Proveedor</th>
-                    <th>Más</th>
+                    <th>Numero de estibas </th>
+                    <th>Direccion del codigo qr</th>
+                    <th>Fecha Creado</th>
+                    <th>Fecha Modificado</th>
+                    {{-- <th>Solicitud servicio</th> --}}
                     <th>Editar</th>
                 </tr>
               
@@ -45,27 +41,14 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach ($Activos as $Activo)
+              @foreach ($QrCodes as $QrCode)
                   <tr>
-                    <td>{{$Activo->CatName}}</td>
-                    <td>{{$Activo->SubCatName}}</td>
-                    <td>{{$Activo->ActName}}</td>
-                    <td>{{$Activo->ActCant}}</td>
-                    
-                    @if($Activo->ActUnid <> 1)
-                      <td>Unidades</td>
-                    @else
-                    <td> Peso</td>
-                    @endif
-
-                    <td>{{$Activo->ActModel}}</td>
-                    <td>{{$Activo->ActSerialProsarc}}</td>
-                    <td>{{$Activo->ActSerialProveed}}</td>
+                    <td>{{$QrCode->QrCodeEstiba}}</td>
+                    <td>{{$QrCode->QrCodeSrc}}</td>
+                    <td>{{$QrCode->created_at}}</td>
+                    <td>{{$QrCode->updated_at}}</td>
+                    {{-- <td>{{$QrCode->FK_QrCodeSolSer}}</td> --}}
                     <td></td>
-                    <td></td>
-                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
                   </tr>
                 
               @endforeach

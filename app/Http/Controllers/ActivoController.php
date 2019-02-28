@@ -18,13 +18,13 @@ class ActivoController extends Controller
      */
     public function index()
     {
-        $SubActivos = DB::table('subcategoria_activos')
+        $Activos = DB::table('subcategoria_activos')
             ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
             ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
-            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+            ->select('subcategoria_activos.*', 'categoria_activos.*', 'Activos.*')
             ->get();
 
-        return view('activos.index', compact('SubActivos'));
+        return view('activos.index', compact('Activos'));
     }
 
     /**
@@ -35,12 +35,14 @@ class ActivoController extends Controller
     public function create()
     {
         $SubActivos = DB::table('subcategoria_activos')
-            ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
-            ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
-            ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
+            ->select('subcategoria_activos.*')
             ->get();
-            
-        return view('activos.create', compact('SubActivos'));
+
+        $Categorias = DB::table('categoria_activos')
+            ->select('categoria_activos.*')
+            ->get();
+
+        return view('activos.create', compact('SubActivos'), compact('Categorias'));
     }
 
     /**
@@ -51,7 +53,20 @@ class ActivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Activo = new Activo();
+        $Activo->FK_ActSub = $request->input('subcategoria');
+        $Activo->ActName = $request->input('nombre');
+        $Activo->ActUnid = $request->input('Forma');
+        $Activo->ActCant = $request->input('cantidad');
+        $Activo->ActSerialProsarc = $request->input('serialPro');
+        $Activo->ActModel = $request->input('modelo');
+        $Activo->ActTalla = $request->input('talla');
+        $Activo->ActObserv = $request->input('observacion');
+        $Activo->ActSerialProveed = $request->input('serialproveedor');
+        $Activo->FK_ActSede = 1;
+        $Activo->save();
+
+        return redirect()->route('activos.index');
     }
 
     /**

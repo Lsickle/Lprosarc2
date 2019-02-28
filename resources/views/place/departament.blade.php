@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientmenu') }}
+Departamentos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -17,8 +17,8 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>region</th>
-                <th>capital</th>
+                <th>Region</th>
+                <th>Capital</th>
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -34,44 +34,19 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              {{-- <div class="row">
-                <div class="card text-center" style="width: 18rem; margin-top:3rem;">
-                  <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{$cliente->CliShortname}}</h5>
-                    <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-                    <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-                  </div>
-                </div>
-              </div> --}}
               @foreach($departament as $departament)
               <tr>
                 <td>{{$departament->DepartName}}</td>
                 <td>{{$departament->DepartRegionName}}</td>
                 <td>{{$departament->DepartCapitalName}}</td>
-                {{-- <td>{{$place->CliCategoria}}</td>
-                <td>{{$place->CliShortname}}</td>
-                <td>{{$place->CliNit}}</td>
-                <td>{{$place->created_at}}</td>
-                @if($place->CliAuditable==1)
-                <td>Si</td>
-                @else
-                <td>NO</td>
-                @endif
-                <td>{{$place->CliSlug}}</td>
-                <td>{{$place->CliSlug}}</td> --}}
               </tr>
               @endforeach
             </tbody>
             {{-- <tfoot>
             <tr>
-              <th>Categoria</th>
               <th>Nombre</th>
-              <th>NIT</th>
-              <th>Creado el</th>
-              <th>Auditable</th>
-              <th>Mas...</th>
-              <th>Editar</th>
+              <th>Region</th>
+              <th>Capital</th>
             </tr>
             </tfoot> --}}
           </table>

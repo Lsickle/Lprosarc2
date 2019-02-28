@@ -25,30 +25,28 @@ Solicitudes de servicios
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							
-							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/solicitud" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/solicitud-servicio" method="POST" enctype="multipart/form-data">
 								@csrf
 									<div class="col-md-6">
-											<label for="estado">Estado</label>
-											<select class="form-control" id="estado" name="Estado" required="true">
-												<option>Seleccione...</option>
-												<option>Aprobada</option>
-												<option>Negada</option>
-												<option>Pendiente</option>
-												<option>Incompleta</option>
-											</select>
-										</div>
+										<label for="estado">Estado</label>
+										<select class="form-control" id="estado" name="Estado" required="true">
+											<option>Seleccione...</option>
+											<option>Aprobada</option>
+											<option>Negada</option>
+											<option>Pendiente</option>
+											<option>Incompleta</option>
+										</select>
+									</div>
 									<div class="col-md-6">
-											<label for="Tipo">Tipo</label>
-											<select class="form-control" id="Tipo" name="Tipo" required="true">
-												<option>Seleccione...</option>
-												<option>Interno</option>
-												<option>Alquilado</option>
-												<option>Externo</option>
-											</select>
-										</div>
+										<label for="Tipo">Tipo</label>
+										<select class="form-control" id="Tipo" name="Tipo" required="true">
+											<option>Seleccione...</option>
+											<option>Interno</option>
+											<option>Alquilado</option>
+											<option>Externo</option>
+										</select>
+									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
 										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="Frecuencia">
@@ -61,32 +59,25 @@ Solicitudes de servicios
 										<label for="soliservicioinputext5">Placa del vehiculo externo</label>
 										<input type="text" class="form-control" id="soliservicioinputext5" placeholder="FDR-756" name="placa">
 									</div>
-								</div>
-								<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 										<div class="icheck form-group">
-											 <label for="inputcheck">
+											<label for="inputcheck">
 												Auditable
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="create">
-										 </div>
+											</label>
+											<input id="inputcheck" type="checkbox" name="auditable">
+										</div>
 									</div>
-									
-
-									
-								<!-- /.box-body -->
-							</form>
-						</div>
+									<div class="col-md-8">
 										<div class="box-footer">
 											<button type="submit" class="btn btn-primary">Registrar</button>
 										</div>
-									
-						<!-- /.box -->
+									</div>
+							</form>
+							</div>					
+							<!-- /.box -->
+						</div>
+						<!-- /.box-body -->
 					</div>
-					</div>
-					</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
 				<!-- /.box -->
 			</div>
 			<!--/.col (right) -->

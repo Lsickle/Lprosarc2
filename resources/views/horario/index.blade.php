@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Activos
+Horario
 @endsection
 @section('contentheader_title')
-Activos
+Horarios del personal
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,25 +12,25 @@ Activos
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Datos de los activos</h3>
+          <h3 class="box-title">Datos</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="ActivoTable" class="table table-compact table-bordered table-striped">
+          <table id="HorarioTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Forma</th>
-                    <th>Modelo</th>
-                    <th>Serial Prosarc</th>
-                    <th>Serial Proveedor</th>
-                    <th>Más</th>
+                    <th>Trabajador</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Otro tipo</th>
+                    <th>Feriado</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Permiso (Inicio)</th>
+                    <th>Permiso (Final</th>
                     <th>Editar</th>
                 </tr>
-              
+            </thead>
             {{-- </thead> --}}
           {{-- </tbody> --}}
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -45,41 +45,36 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach ($Activos as $Activo)
-                  <tr>
-                    <td>{{$Activo->CatName}}</td>
-                    <td>{{$Activo->SubCatName}}</td>
-                    <td>{{$Activo->ActName}}</td>
-                    <td>{{$Activo->ActCant}}</td>
-                    
-                    @if($Activo->ActUnid <> 1)
-                      <td>Unidades</td>
+              @foreach ($Horarios as $Horario)
+                <tr>
+                    <td>{{$Horario->PersFirstName}}</td>
+                    <td>{{$Horario->HorarioFecha}}</td>
+                    <td>{{$Horario->Horariotipo}}</td>
+                    <td>{{$Horario->HorariotipoOther}}</td>
+                    @if ($Horario->HorarioFeriado <> 1)
+                        <td>Domingo</td>
                     @else
-                    <td> Peso</td>
+                        <td>Festivo</td>
                     @endif
-
-                    <td>{{$Activo->ActModel}}</td>
-                    <td>{{$Activo->ActSerialProsarc}}</td>
-                    <td>{{$Activo->ActSerialProveed}}</td>
+                    <td>{{$Horario->HorarioEntrada}}</td>
+                    <td>{{$Horario->HorarioSalida}}</td>
+                    <td>{{$Horario->HoraPermisoInicio}}</td>
+                    <td>{{$Horario->HoraPermisoFin}}</td>
                     <td></td>
-                    <td></td>
-                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
-                  </tr>
-                
+                </tr>
               @endforeach
-              {{-- @foreach ($Activos as $Activo)
-                  
-              @endforeach --}}
             {{-- <tfoot>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Unidades</th>
-                    <th>Modelo</th>
+                    <th>Trabajador</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Otro tipo</th>
+                    <th>Feriado</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Permiso (Inicio)</th>
+                    <th>Permiso (Final</th>
+                    <th>Editar</th>
                 </tr>
             </tfoot> --}}
           </table>

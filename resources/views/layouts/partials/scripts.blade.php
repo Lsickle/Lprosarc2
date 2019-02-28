@@ -59,47 +59,38 @@
 
 <!-- funcion para flitrado de tablas -->
 <script>
-/*  $(document).ready(function() {
-      var t = $('#RespelTable').DataTable();
-      var counter = 1;
-   
-      $('#addRow').on( 'click', function () {
-          t.row.add( [
-              counter +'.1',
-              counter +'.2',
-              counter +'.3',
-              counter +'.4',
-              counter +'.5'
-          ] ).draw( false );
-   
-          counter++;
-      } );
-   
-      // Automatically add a first row of data
-      $('#addRow').click();
-  } );*/
-  $(function () {
+  // "columnDefs": [ {
+  //       "targets": 11,
+  //       "data": "RespelName",
+  //       "render": function ( data, type, row, meta ) {
+  //         return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Editar</a>";
+  //       }  
+  //   });
+  // $(document).ready(function(){
+
+  // });
+  $(document).ready(function () {
     $('#RespelTable').DataTable({
-      "scrollX": false,
-      "autoWidth": true,
-      "keys": true,
-      "responsive": true,
-      "columnDefs": [ {
-        "targets": 5,
-        "data": "RespelName",
+       "scrollX": false,
+        "autoWidth": true,
+        "keys": true,       
+       "responsive": true,
+        "columnDefs": [ {
+        "targets": 9,
+        "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Ver</a>";
-        }  
-      }]
+          return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+        {"targets": 10,
+        "data": "CliSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
+        {"targets": 4,
+        "data": "CliSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}}
+      ]
     });
-    // $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-    //     $($.fn.dataTable.tables(true)).DataTable()
-    //       .columns.adjust()
-    //       .fixedColumns().relayout();
-    // });
   });
-  
-  
 </script>
 <script>
   $(function () {
@@ -358,6 +349,24 @@ $(document).ready(function(){
     });
   });
 </script>
+<script>
+  $(function () {
+    $('#inputcheck1').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+<script>
+  $(function () {
+    $('#inputcheck2').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
@@ -526,11 +535,17 @@ $(document).ready(function(){
     </script>
     <script>
       $(document).ready(function() {
-        $('#vehicleindexTable').DataTable( {
+        $('#VehicleTable').DataTable( {
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+          "targets": 7,
+          "data": "CliSlug",
+          "render": function ( data, type, row, meta ) {
+          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}      
+          }]
         });
       });
     </script>
@@ -618,11 +633,14 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 4,
-            "data": "PersSlug",
-            "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
-              }
+          "targets": 8,
+          "data": "PersSlug",
+          "render": function ( data, type, row, meta ) {
+              return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+          {"targets": 9,
+          "data": "PersSlug",
+          "render": function ( data, type, row, meta ) {
+            return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]
         });
       });
@@ -635,10 +653,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 4,
+            "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
@@ -652,10 +670,112 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
+            "targets": 8,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#ManifiestoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 6,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#CertificadoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 7,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#MovimientoActivoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
             "targets": 4,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#ArticuloXProveedor').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 7,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#QrCodesTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#HorarioTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 9,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
