@@ -1,10 +1,8 @@
-@extends('layouts.app')
+<?php $__env->startSection('htmlheader_title','Asistencia'); ?>
 
-@section('htmlheader_title','Asistencia')
+<?php $__env->startSection('contentheader_title', 'Asistencia'); ?>
 
-@section('contentheader_title', 'Asistencia')
-
-@section('main-content')
+<?php $__env->startSection('main-content'); ?>
 	<div class="container-fluid spark-screen">
     <div class="row">
       <div class="col-md-16 col-md-offset-0">
@@ -25,7 +23,7 @@
                   </tr>
                 </thead>
                 <tbody  hidden onload="renderTable()" id="readyTable">
-                  {{-- <h1 id="loadingTable">LOADING...</h1> --}}
+                  
                   <div class="fingerprint-spinner" id="loadingTable">
                     <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
                     <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
@@ -37,18 +35,18 @@
                     <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                     <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   </div>
-                    @foreach($Asistencias as $Asistencia)
+                    <?php $__currentLoopData = $Asistencias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Asistencia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                      <td>{{$Asistencia->PersFirstName." ".$Asistencia->PersLastName}}</td>
-                      <td>{{$Asistencia->AsisLlegada}}</td>
-                      @if($Asistencia->AsisStatus == 0)
+                      <td><?php echo e($Asistencia->PersFirstName." ".$Asistencia->PersLastName); ?></td>
+                      <td><?php echo e($Asistencia->AsisLlegada); ?></td>
+                      <?php if($Asistencia->AsisStatus == 0): ?>
                         <td>No</td>
-                      @else
+                      <?php else: ?>
                         <td>Si</td>
-                      @endif
-                      <td>{{$Asistencia->AsisSalida}}</td>
+                      <?php endif; ?>
+                      <td><?php echo e($Asistencia->AsisSalida); ?></td>
                     </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
               </table>
           </div>
@@ -58,4 +56,6 @@
       </div>
     </div>
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -15,9 +15,11 @@ class CreateAssistancesTable extends Migration
     {
         Schema::create('assistances', function (Blueprint $table) {
             $table->increments('ID_Asis');
+            $table->date('AsisFecha');
             $table->dateTime('AsisLlegada');
-            $table->dateTime('AsisSalida');
-            $table->integer('AsisNocturnas');
+            $table->dateTime('AsisSalida')->nullable();
+            $table->integer('AsisNocturnas')->nullable();
+            $table->boolean('AsisStatus');
             $table->unsignedInteger('FK_AsisPers');
             $table->foreign('FK_AsisPers')->references('ID_Pers')->on('personals');
             $table->timestamps();
