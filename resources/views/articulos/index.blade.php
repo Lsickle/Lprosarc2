@@ -16,18 +16,16 @@ Activos
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="ActivoTable" class="table table-compact table-bordered table-striped">
+          <table id="ArticuloXProveedor" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
+                    <th>Forma </th>
                     <th>Cantidad</th>
-                    <th>Forma</th>
-                    <th>Modelo</th>
-                    <th>Serial Prosarc</th>
-                    <th>Serial Proveedor</th>
-                    <th>Más</th>
+                    <th>Precio</th>
+                    <th>Costo por Unid.</th>
+                    <th>Cant. min. compra</th>
+                    <th>Fecha creado</th>
+                    <th>Fecha Actualizado</th>
                     <th>Editar</th>
                 </tr>
               
@@ -45,41 +43,33 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach ($Activos as $Activo)
-                  <tr>
-                    <td>{{$Activo->CatName}}</td>
-                    <td>{{$Activo->SubCatName}}</td>
-                    <td>{{$Activo->ActName}}</td>
-                    <td>{{$Activo->ActCant}}</td>
-                    
-                    @if($Activo->ActUnid <> 1)
-                      <td>Unidades</td>
-                    @else
-                    <td> Peso</td>
-                    @endif
-
-                    <td>{{$Activo->ActModel}}</td>
-                    <td>{{$Activo->ActSerialProsarc}}</td>
-                    <td>{{$Activo->ActSerialProveed}}</td>
-                    <td></td>
-                    <td></td>
-                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
-                  </tr>
-                
+              
+              @foreach ($Proveedores as $Proveedor)
+              <tr>
+                @if ($Proveedor->ArtiUnidad <> 1)
+                    <td>Unidades</td>
+                @else
+                    <td>Peso</td>
+                @endif
+                <td>{{$Proveedor->ArtiCant}}</td>
+                <td>{{$Proveedor->ArtiPrecio}}</td>
+                <td>{{$Proveedor->ArtiCostoUnid}}</td>
+                <td>{{$Proveedor->ArtiMinimo}}</td>
+                <td>{{$Proveedor->created_at}}</td>
+                <td>{{$Proveedor->updated_at}}</td>
+                <td></td>
+              </tr>
               @endforeach
-              {{-- @foreach ($Activos as $Activo)
-                  
-              @endforeach --}}
             {{-- <tfoot>
-                <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
+               <tr>
+                    <th>Forma </th>
                     <th>Cantidad</th>
-                    <th>Unidades</th>
-                    <th>Modelo</th>
+                    <th>Precio</th>
+                    <th>Costo por Unid.</th>
+                    <th>Cant. min. compra</th>
+                    <th>Fecha creado</th>
+                    <th>Fecha Actualizado</th>
+                    <th>Editar</th>
                 </tr>
             </tfoot> --}}
           </table>

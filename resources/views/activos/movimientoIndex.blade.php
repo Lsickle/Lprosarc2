@@ -16,18 +16,13 @@ Activos
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="ActivoTable" class="table table-compact table-bordered table-striped">
+          <table id="MovimientoActivoTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Forma</th>
-                    <th>Modelo</th>
-                    <th>Serial Prosarc</th>
-                    <th>Serial Proveedor</th>
-                    <th>Más</th>
+                    <th>Nombre del activo</th>
+                    <th>Tipo</th>
+                    <th>Fecha Creacion</th>
+                    <th>Actualizado el</th>
                     <th>Editar</th>
                 </tr>
               
@@ -45,27 +40,14 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach ($Activos as $Activo)
+              @foreach ($Movimientos as $Movimiento)
                   <tr>
-                    <td>{{$Activo->CatName}}</td>
-                    <td>{{$Activo->SubCatName}}</td>
-                    <td>{{$Activo->ActName}}</td>
-                    <td>{{$Activo->ActCant}}</td>
-                    
-                    @if($Activo->ActUnid <> 1)
-                      <td>Unidades</td>
-                    @else
-                    <td> Peso</td>
-                    @endif
+                    <td>{{$Movimiento->ActName}}</td>
+                    <td>{{$Movimiento->MovTipo}}</td>
+                    <td>{{$Movimiento->created_at}}</td>
+                    <td>{{$Movimiento->updated_at}}</td>
+                    <td></td>
 
-                    <td>{{$Activo->ActModel}}</td>
-                    <td>{{$Activo->ActSerialProsarc}}</td>
-                    <td>{{$Activo->ActSerialProveed}}</td>
-                    <td></td>
-                    <td></td>
-                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
                   </tr>
                 
               @endforeach
@@ -74,12 +56,11 @@ Activos
               @endforeach --}}
             {{-- <tfoot>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Unidades</th>
-                    <th>Modelo</th>
+                    <th>Nombre del activo</th>
+                    <th>Tipo</th>
+                    <th>Fecha Creacion</th>
+                    <th>Actualizado el</th>
+                    <th>Editar</th>
                 </tr>
             </tfoot> --}}
           </table>

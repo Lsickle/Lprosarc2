@@ -28,7 +28,7 @@ Solicitudes de residuos
 							
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/solicitudResiduo" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/solicitud-residuo" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
 									<div class="col-md-6">
@@ -47,6 +47,14 @@ Solicitudes de residuos
 										<label for="soliresidinputext4">Kg Tratado</label>
 										<input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="tratado"  max="99999999">
 									</div>
+									{{-- <div class="col-md-6">
+										<label for="soliresidinputext4">Solicitud de servicio</label>
+										<input type="text" class="form-control" id="soliresidinputext4" placeholder="01" name="servicio" value="1">
+									</div>
+									<div class="col-md-6">
+										<label for="soliresidinputext4">Respel</label>
+										<input type="text" class="form-control" id="soliresidinputext4" placeholder="01" name="Respel" value="1">
+									</div> --}}
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">

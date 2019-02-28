@@ -18,24 +18,23 @@ class SubCategoriaActivoTableSeeder extends Seeder
         $subcatecactivo->save();
         
         $subcatecactivo = new SubcategoriaActivo();
-        $subcatecactivo->SubCatName = "Sentarse";
-        $subcatecactivo->FK_SubCat = "4";
+        $subcatecactivo->SubCatName = "Asientos";
+        $subcatecactivo->FK_SubCat = "2";
         $subcatecactivo->save();
         
         $subcatecactivo = new SubcategoriaActivo();
         $subcatecactivo->SubCatName = "Higine personal";
-        $subcatecactivo->FK_SubCat = "2";        
+        $subcatecactivo->FK_SubCat = "3";        
         $subcatecactivo->save();
         
         $subcatecactivo = new SubcategoriaActivo();
         $subcatecactivo->SubCatName = "Cuadros";
-        $subcatecactivo->FK_SubCat = "5";
+        $subcatecactivo->FK_SubCat = "4";
         $subcatecactivo->save();
         
         $subcatecactivo = new SubcategoriaActivo();
-        $subcatecactivo->SubCatName = "No lo se";
-        $subcatecactivo->FK_SubCat = "3";
+        $subcatecactivo->SubCatName = "Pulidora";
+        $subcatecactivo->FK_SubCat = "5";
         $subcatecactivo->save();
-
     }
 }

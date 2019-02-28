@@ -14,16 +14,16 @@ class ArticuloPorProveedor extends Model
 
     public function user()
     {
-    	return $this->belongsTo('App\User', 'id')
+    	return $this->belongsTo('App\User', 'id');
     }
 
     public function activo()
     {
-    	return $this->belongsTo('App\Activo', 'ID_Act', 'id')
+    	return $this->belongsTo('App\Activo', 'ID_Act', 'id');
     }
 
     public function Quotation()
     {
-        return $this->belongsTo('App\Quotation', 'ID_Cotiz', 'id')
+        return $this->belongsTo('App\Quotation', 'ID_Cotiz', 'id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\SolicitudResiduo;
 
 class SolicitudResiduoController extends Controller
 {
@@ -14,10 +15,6 @@ class SolicitudResiduoController extends Controller
      */
     public function index()
     {
-        // ->rightJoin('Activos', 'Activos.FK_ActSub', '=', 'subcategoria_activos.ID_SubCat')
-        //     ->leftJoin('categoria_activos', 'subcategoria_activos.FK_SubCat', '=', 'categoria_activos.ID_CatAct')
-        //     ->select('subcategoria_activos.*', 'categoria_activos.CatName', 'Activos.*')
-        //     ->get();
         $Residuos = DB::table('solicitud_residuos')
             ->select('solicitud_residuos.*')
             ->get();
@@ -42,7 +39,22 @@ class SolicitudResiduoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Residuos = DB::table('solicitud_residuos')
+            ->select('solicitud_residuos.*')
+            ->get();
+
+        $Residuo = new SolicitudResiduo();
+        $Residuo->SolResKgEnviado = $request->input('enviado');
+        $Residuo->SolResKgRecibido = $request->input('resibido');
+        $Residuo->SolResKgConciliado = $request->input('conciliado');
+        $Residuo->SolResKgTratado = $request->input('tratado');
+        $Residuo->SolResRespel = 1;
+        $Residuo->SolResSolSer = 1;
+        $Residuo->save();
+
+        return view('solicitud.indexResiduo', compact('Residuos'));
+        // return view('solicitud.indexResiduo');
+        // return redirect()->route('solicitud.indexResiduo');        
     }
 
     /**

@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use ReciboMaterial;
+use App\QrCode;
 
-class ReciboMaterialController extends Controller
+class QrCodesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        // $RMaterials = DB::table('recibo_materials')
-        //     ->join('clientes', 'recibo_materials.FK_RmTransportador', '=', 'clientes.ID_Cli')
-        //     ->join('personals', 'recibo_materials.FK_RmConductor', '=', 'personals.ID_Pers')
-        //     ->select('recibo_materials.RmStatus','recibo_materials.RmSalida','recibo_materials.RmLlegada','personals.PersFirstName','personals.PersLastName','clientes.CliName')
-        //     ->get();
-        // return view('reciboMaterials.index', compact('RMaterials'));
-        return view('reciboMaterials.index');
+    public function index()
+    {
+        $QrCodes = DB::table('qr_codes')
+            ->select('qr_codes.*')
+            ->get();
+
+        return view('qrCode.index', compact('QrCodes'));
     }
 
     /**
@@ -30,7 +29,7 @@ class ReciboMaterialController extends Controller
      */
     public function create()
     {
-        //
+        return view('qrCode.create');        
     }
 
     /**

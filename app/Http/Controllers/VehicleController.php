@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Vehiculo;
 
 class VehicleController extends Controller
@@ -14,7 +15,11 @@ class VehicleController extends Controller
      */
     public function index()
     { 
-            return view('vehicle.index');
+        $Vehicles = DB::table('vehiculos')
+            ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
+            ->select('vehiculos.*', 'sedes.SedeName')
+            ->get();
+        return view('vehicle.index', compact('Vehicles'));
     }
 
     /**
@@ -24,7 +29,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        
+        return view('vehicle.create');
     }
     
     /**
@@ -35,7 +40,20 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Vehicle = new Vehiculo();
+        if ($request->input('InternoExterno') == 'on') {
+            $Vehicle->VehicInternExtern = '1';
+        }else{
+            $Vehicle->VehicInternExtern = '0';
+        };
+        $Vehicle->VehicPlaca = $request->input('placa');
+        $Vehicle->VehicCapacidad = $request->input('capacidad');
+        $Vehicle->VehicKmActual = $request->input('kmactual');
+        $Vehicle->VehicTipo = $request->input('tipo');
+        $Vehicle->FK_VehiSede = $request->input('sede');
+        $Vehicle->save();
+        
+        return redirect()->route('vehicle.index');
     }
     
     /**
@@ -46,11 +64,7 @@ class VehicleController extends Controller
      */
     public function show($id)
     {   
-        // Route::get('/vehicle/mantenimiento', function () {
-        // return view('vehicle.mantenimiento');
-        // }
-
-    
+        //
     }
     
     /**

@@ -2,6 +2,9 @@
 @section('htmlheader_title')
 Solicitud de Servicios
 @endsection
+@section('contentheader_title')
+Servicios
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -9,11 +12,11 @@ Solicitud de Servicios
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Datos de la solicitud de servicios</h3>
+          <h3 class="box-title">Datos de las solicitudes de los servicios</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="solicitudservicioTable" class="table table-compact table-bordered table-striped">
+          <table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
                   <th>Estado</th>
@@ -24,6 +27,7 @@ Solicitud de Servicios
                   <th>Placa del vehiculo externo</th>
                   <th>Fecha creado</th>
                   <th>Fecha mejorado</th>
+                  <th>Editar</th>
                 </tr>
                 
             </thead>
@@ -41,18 +45,19 @@ Solicitud de Servicios
               </div>
               @foreach ($Servicios as $Servicio)
                     <tr>
-                      <th>{{$Servicio->SolSerStatus}}</th>
-                      <th>{{$Servicio->SolSerTipo}}</th>
+                      <td>{{$Servicio->SolSerStatus}}</td>
+                      <td>{{$Servicio->SolSerTipo}}</td>
                       @if ($Servicio->SolSerAuditable == 1)
-                      <th>Si</th>                      
+                      <td>Si</td>                      
                       @else
-                      <th>No</th>
+                      <td>No</td>
                       @endif
-                      <th>{{$Servicio->SolSerFrecuencia}} Días</th>
-                      <th>{{$Servicio->SolSerConducExter}}</th>
-                      <th>{{$Servicio->SolSerVehicExter}}</th>
-                      <th>{{$Servicio->created_at}}</th>
-                      <th>{{$Servicio->updated_at}}</th>
+                      <td>{{$Servicio->SolSerFrecuencia}} Días</td>
+                      <td>{{$Servicio->SolSerConducExter}}</td>
+                      <td>{{$Servicio->SolSerVehicExter}}</td>
+                      <td>{{$Servicio->created_at}}</td>
+                      <td>{{$Servicio->updated_at}}</td>
+                      <td></td>
                     </tr>
                 @endforeach
                   </tbody>
