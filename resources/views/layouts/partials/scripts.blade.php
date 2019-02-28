@@ -589,12 +589,22 @@ $(document).ready(function(){
       });
     </script>
     <script>
-      $(document).ready(function() {
-        $('#AssistancesTable').DataTable( {
+      $(document).ready(function () {
+        $('#Vigilante').DataTable({
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#AssistancesTable1').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
         });
       });
     </script>

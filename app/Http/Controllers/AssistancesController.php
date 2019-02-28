@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use App\Assistance;
 
 class AssistancesController extends Controller
@@ -15,8 +16,8 @@ class AssistancesController extends Controller
      */
     public function index(){
         $Asistencias = DB::table('assistances')
-        ->join('personals', 'FK_AsisPers', '=', 'ID_Pers')
-        ->select('assistances.AsisLlegada','assistances.AsisSalida','assistances.AsisNocturnas','personals.PersFirstName','personals.PersLastName')
+        ->join('personals', 'assistances.FK_AsisPers', '=', 'personals.ID_Pers')
+        ->select('personals.PersFirstName','personals.PersLastName','personals.PersDocNumber', 'assistances.AsisFecha', 'assistances.AsisLlegada', 'assistances.AsisSalida', 'assistances.AsisStatus')
         ->get();
         return view('assistances.index', compact('Asistencias'));
     }
@@ -26,9 +27,17 @@ class AssistancesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $Asistencias = DB::table('assistances')
+        ->select('FK_AsisPers','ID_Asis','AsisSalida','AsisLlegada')
+        ->where('AsisFecha',date('Y-m-d'))
+        ->orWhereRaw('DATEDIFF(DATE_ADD(NOW(), INTERVAL -1 DAY),AsisLlegada) = 0 and AsisSalida is null')
+        ->get();
+        $personal = DB::table('personals')
+        ->select('*')
+        ->get();/*
+        return $Asistencias;*/
+        return view('assistances.create',compact('personal','Asistencias'));
     }
 
     /**
@@ -37,9 +46,14 @@ class AssistancesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $Asistencia = new Assistance();
+        $Asistencia->AsisLlegada = now();
+        $Asistencia->AsisFecha = date('Y-m-d');
+        $Asistencia->AsisStatus = 1;
+        $Asistencia->FK_AsisPers = $request->input('AsisPers');
+        $Asistencia->save();
+        return redirect()->route('asistencia.create');
     }
 
     /**
@@ -48,9 +62,8 @@ class AssistancesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id){
+        
     }
 
     /**
@@ -59,9 +72,8 @@ class AssistancesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        return $id;
     }
 
     /**
@@ -71,9 +83,13 @@ class AssistancesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+        $Asistencia  = Assistance::where('ID_Asis',$id)->first();
+        $Asistencia->AsisSalida = now();
+        $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
+        $Asistencia->AsisStatus = 0;
+        $Asistencia->save();
+        return redirect()->route('asistencia.create');
     }
 
     /**
