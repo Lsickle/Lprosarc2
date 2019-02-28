@@ -71,14 +71,14 @@
                               <td>{{$persona->PersFirstName." ".$persona->PersLastName}}</td>
                               <td>{{$persona->PersDocNumber}}</td>
                               <td>
-                                <input type='submit' id='readyform' class='btn btn-block btn-success disabled' value='Entro'>
+                                <input type='submit' id='readyform' class='btn btn-block btn-success disabled' value='Llego'>
                               </td>
                               <td>
                                 <form id="readyform" action="/asistencia/{{$id}}" method="POST">
                                   @method('PUT')
                                   @csrf
                                   <input type="hidden"  value="{{$id}}" name='AsisPers'>
-                                  <input type='submit' id='readyform' class='btn btn-block btn-success' value='Sefue'>
+                                  <input type='submit' id='readyform' class='btn btn-block btn-success' value='Salio'>
                                 </form>
                               </td>
                             </tr>
