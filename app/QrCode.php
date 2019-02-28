@@ -8,7 +8,7 @@ class QrCode extends Model
 {
     protected $table = 'qr_codes';
     
-    protected $table = ['QrCodeEstiba', 'QrCodeSrc'];
+    protected $fillable = ['QrCodeEstiba', 'QrCodeSrc'];
 
     protected $primaryKey = 'ID_QrCode';
 

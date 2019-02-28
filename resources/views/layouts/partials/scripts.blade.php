@@ -703,3 +703,71 @@ $(document).ready(function(){
         });
       });
     </script>
+    <script>
+      $(document).ready(function () {
+        $('#MovimientoActivoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#ArticuloXProveedor').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 7,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#QrCodesTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#HorarioTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 9,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>

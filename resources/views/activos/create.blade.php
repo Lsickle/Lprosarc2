@@ -95,17 +95,12 @@ Registros de Activos
 										<div class="box-footer" style="float:right; margin-right:5%">
 											<button type="submit" class="btn btn-primary">Registrar</button>
 										</div>	
-							<!-- /.box-body -->
 									</div>
 								</div>
-							</div>						
-							<!-- /.box -->
-						</div>
-						</div>
-				
-						
-				</form>
-				<!-- /.box -->
+							</form>
+						</div>						
+					</div>
+				</div>
 			</div>
 			<!--/.col (right) -->
 		</div>

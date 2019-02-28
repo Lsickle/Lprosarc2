@@ -52,6 +52,7 @@ Route::resource('/asistencia', 'AssistancesController');
 Route::resource('/compra/orden','OrdenCompraController');
 Route::resource('/compra/cotizacion','CotizacionController');
 Route::resource('/activos','ActivoController');
+Route::resource('/activos-movimiento','MovimientoActivoController');
 Route::resource('/capacitacion','TrainingsController');
 Route::resource('/capacitacion-personal','TrainingPersonalsController');
 Route::resource('/inventariotech', 'InventarioTechonologiesController');
@@ -61,6 +62,9 @@ Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 Route::resource('/certificado', 'CertificadoController');
 Route::resource('/manifiesto', 'ManifiestoController');
+Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
+Route::resource('/code', 'QrCodesController');
+Route::resource('/horario', 'HorarioController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
