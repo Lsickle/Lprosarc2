@@ -190,6 +190,15 @@
                         <li><a href="/activos/create"><i class='fa fa-plus'></i><span>Añadir</span></a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#"><i class="fas fa-people-carry"></i><span> Solicitud</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="/solicitud-residuo"><i class="fas fa-list-alt"></i><span>  Inventario de Residuos</span></a></li>
+                        <li><a href="/solicitud-residuo/create"><i class='fa fa-plus'></i><span> Añadir Residuo</span></a></li>
+                        <li><a href="/solicitud-servicio"><i class="fas fa-file-signature"></i><span> Inventario de servicios</span></a></li>
+                        <li><a href="/solicitud-servicio/create"><i class="fas fa-handshake"></i><span> Añadir servicio</span></a></li>
+                    </ul>
+                </li>
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

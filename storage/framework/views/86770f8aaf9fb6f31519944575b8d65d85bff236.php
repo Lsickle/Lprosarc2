@@ -519,25 +519,25 @@ $(document).ready(function(){
       });
     </script>
     <script>
-      $(document).ready(function() {
-        $('#AssistancesTable').DataTable( {
+      $(document).ready(function () {
+        $('#Vigilante').DataTable({
           "scrollX": false,
-          "autoWidth": true,
-          "keys": true,
-          "responsive": true
+          "autoWidth": false,
+          "keys": false,
+          "responsive": true,
         });
       });
     </script>
     <script>
-  $(document).ready(function () {
-    $('#AssistancesTable1').DataTable({
-      "scrollX": false,
-      "autoWidth": true,
-      "keys": true,
-      "responsive": true,
-    });
-  });
-</script>
+      $(document).ready(function () {
+        $('#AssistancesTable1').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+        });
+      });
+    </script>
     <script>
       $(document).ready(function () {
         $('#InventarioTechTable').DataTable({
@@ -558,6 +558,40 @@ $(document).ready(function(){
     <script>
       $(document).ready(function () {
         $('#ActivoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#SolicitudresiduoTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#SolicitudservicioTable').DataTable({
           "scrollX": false,
           "autoWidth": true,
           "keys": true,

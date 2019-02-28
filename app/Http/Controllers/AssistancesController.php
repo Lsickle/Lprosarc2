@@ -29,17 +29,15 @@ class AssistancesController extends Controller
      */
     public function create(){
         $Asistencias = DB::table('assistances')
-        ->select('FK_AsisPers','ID_Asis','AsisSalida')
-        ->where([['AsisFecha', '=', date('Y-m-d')],['AsisSalida', '=', null]])
+        ->select('FK_AsisPers','ID_Asis','AsisSalida','AsisLlegada')
+        ->where('AsisFecha',date('Y-m-d'))
+        ->orWhereRaw('DATEDIFF(DATE_ADD(NOW(), INTERVAL -1 DAY),AsisLlegada) = 0 and AsisSalida is null')
         ->get();
         $personal = DB::table('personals')
         ->select('*')
-        ->get();
-        /*$contadorAsis = count($Asistencias);*/
-        $contadorPers = count($personal);
-        $contador = 0;
-        /*return $Asistencias;*/
-        return view('assistances.create',compact('Asistencias','personal','contador','contadorPers'));
+        ->get();/*
+        return $Asistencias;*/
+        return view('assistances.create',compact('personal','Asistencias'));
     }
 
     /**
