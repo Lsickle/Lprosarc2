@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\ResEnvio;
+use App\Recurso;
 
-class RespelEnviosController extends Controller
+class RecursoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,10 @@ class RespelEnviosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $ResEnvios = DB::table('respel_envios')
-            ->join('recibo_materials', 'res_envios.FK_RespelEnvio', '=', 'recibo_materials.ID_Rm')
-            ->join('requerimientos', 'respel_envios.FK_RespelReq', '=', 'requerimientos.ID_Req')
-            ->select('res_envios.RespelKgEnviado','res_envios.RespelKgRecibido','res_envios.RespelKgConciliado','res_envios.RespelKgTratado','recibo_materials.ID_Rm')
-            ->get();
-        return view('resEnvios.index', compact('ResEnvios'));
+        $Recursos = DB::table('recursos')
+        ->select('*')
+        ->get();
+        return view('recursos.index', compact('Recursos'));
     }
 
     /**

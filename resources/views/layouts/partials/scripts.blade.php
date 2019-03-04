@@ -660,12 +660,22 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
+            "targets": 4,
+            "data": "SolResSolSer",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+            },{
+            "targets": 5,
+            "data": "SolResRespel",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+            },{
             "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
-              }
-          }]
+                return "<a href='solicitud-residu/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
+            }
+          ]
         });
       });
     </script>
@@ -783,6 +793,40 @@ $(document).ready(function(){
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#RecursosTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 5,
+            "data": "FK_RecSol",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
+              }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('#RequerimientosTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 24,
+            "data": "FK_RecSol",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
               }
           }]
         });

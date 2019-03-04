@@ -118,56 +118,6 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class='fa fa-list'></i> <span>{{ trans('adminlte_lang::message.declarationmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="/declaraciones"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.declarread') }}</a></li>
-
-                        <li><a href="/declaraciones/create"><i class='fa fa-file-text'></i>{{ trans('adminlte_lang::message.declarregister') }}</a></li>
-                        
-                        
-                    </ul>
-                </li>
-                
-                <li class="treeview">
-                    <a href="#"><i class='fa fa-clipboard-list'></i> <span>{{ trans('adminlte_lang::message.ordermenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class='fa fa-plus'></i>{{ trans('adminlte_lang::message.orderregister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.orderread') }}</a></li>
-                        <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.orderupdate') }}</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><i class='fa fa-archive'></i> <span>{{ trans('adminlte_lang::message.certificatemenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class='fa fa-list-ul'></i>{{ trans('adminlte_lang::message.certiregister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.certiread') }}</a></li>
-                        <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.certiupdate') }}</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><i class='fa fa-archive'></i> <span>{{ trans('adminlte_lang::message.manifiestmenu') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class='fa fa-user-plus'></i>{{ trans('adminlte_lang::message.manifregister') }}</a></li>
-                        <li><a href="#"><i class='fa fa-search'></i>{{ trans('adminlte_lang::message.manifread') }}</a></li>
-                        <li><a href="#"><i class='fa fa-edit'></i>{{ trans('adminlte_lang::message.manifupdate') }}</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#"><i class='fa fa-archive'></i> <span>{{ trans('adminlte_lang::message.multilevel') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                        <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
                     <a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="/vehicle"><i class="fas fa-list-alt"></i><span>   Listado</span></a></li>
@@ -198,8 +148,10 @@
                     <ul class="treeview-menu">
                         <li><a href="/solicitud-residuo"><i class="fas fa-list-alt"></i><span>  Inventario de Residuos</span></a></li>
                         <li><a href="/solicitud-residuo/create"><i class='fa fa-plus'></i><span> Añadir Residuo</span></a></li>
+                        <li><a href="/requerimientos"><i class="fas fa-list-ol"></i><span>  Requerimientos de Residuos</span></a></li>
                         <li><a href="/solicitud-servicio"><i class="fas fa-file-signature"></i><span> Inventario de servicios</span></a></li>
                         <li><a href="/solicitud-servicio/create"><i class="fas fa-handshake"></i><span> Añadir servicio</span></a></li>
+                        <li><a href="/recurso"><i class="fas fa-video"></i><span> Recursos</span></a></li>
                     </ul>
                 </li>
                 <li class="treeview">
