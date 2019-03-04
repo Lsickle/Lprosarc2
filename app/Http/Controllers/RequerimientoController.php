@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Requerimiento;
 
 class RequerimientoController extends Controller
 {
@@ -11,9 +13,11 @@ class RequerimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        
+    public function index(){
+        $Requerimientos = DB::table('requerimientos')
+            ->select('*')
+            ->get();
+        return view('requerimientos.index', compact('Requerimientos'));
     }
 
     /**

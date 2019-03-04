@@ -15,14 +15,14 @@ class CreateRecursosTable extends Migration
     {
         Schema::create('recursos', function (Blueprint $table) {
             $table->increments('ID_Rec');
-            $table->timestamps();
             $table->string('RecName',128);
             $table->string('RecCarte',32);
             $table->string('RecTipo',32);
-            $table->string('RecRmSrc',64);
+            /*$table->string('RecRmSrc',64);*/
             $table->string('RecSrc',255);
             $table->string('RecFormat',32);
             $table->unsignedInteger('FK_RecSol');
+            $table->timestamps();
             $table->foreign('FK_RecSol')->references('ID_SolSer')->on('solicitud_servicios');
         });
     }

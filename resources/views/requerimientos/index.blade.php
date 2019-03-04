@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Cargos')
+@section('htmlheader_title','Requerimientos')
 
-@section('contentheader_title', 'Cargos Finales')
+@section('contentheader_title', 'Lista Requerimientos')
 
 @section('main-content')
   <div class="container-fluid spark-screen">
@@ -11,18 +11,39 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de Cargos</h3>
+            <h3 class="box-title">Requerimientos de los residuos</h3>
             <a href="cargos/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="CargosTable" class="table table-compact table-bordered table-striped">
+            <table id="RequerimientosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Grado</th>
-                  <th>Area</th>
-                  <th>Salario</th>
+                	<th>FotoCargue</th>
+                	<th>FotoDescargue</th>
+                  <th>FotoPesaje</th>
+            	    <th>FotoAlmacenado</th>
+                  <th>FotoMezclado</th>
+          	      <th>FotoDestruccion</th>
+                  <th>VideoCargue</th>
+                  <th>VideoDescargue</th>
+                  <th>VideoPesaje</th>
+                  <th>VideoAlmacenado</th>
+                  <th>VideoMezclado</th>
+                  <th>VideoDestruccion</th>
+                  <th>Auditoria</th>
+                  <th>AuditoriaTip</th>
+                  <th>Devolucion</th>
+                  <th>DevolucionTipo</th>
+                  <th>DatosPersonal</th>
+                  <th>Planillas</th>
+                  <th>Alistamiento</th>
+                  <th>Capacitacion</th>
+                  <th>Bascula</th>
+                  <th>MasPerson</th>
+                  <th>Platform</th>
+                  <th>CertiEspecial</th>
+                  <th>Residuo</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -38,14 +59,14 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                @foreach($Cargos as $Cargo)
+                {{-- @foreach($Cargos as $Cargo)
                 <tr>
                   <td>{{$Cargo->CargName}}</td>
                   <td>{{$Cargo->CargGrade}}</td>
                   <td>{{$Cargo->AreaName}}</td>
                   <td>{{$Cargo->CargSalary}}</td>
                 </tr>
-                @endforeach
+                @endforeach --}}
               </tbody>
             </table>
           </div>

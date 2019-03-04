@@ -1,32 +1,31 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Cargos')
+@section('htmlheader_title','Recursos')
 
-@section('contentheader_title', 'Cargos Finales')
+@section('contentheader_title', 'Lista de Recursos')
 
 @section('main-content')
-  <div class="container-fluid spark-screen">
+	 <div class="container-fluid spark-screen">
     <div class="row">
       <div class="col-md-16 col-md-offset-0">
-        <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de Cargos</h3>
-            <a href="cargos/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <h3 class="box-title">Recursos de los residuos</h3>
+            {{-- <a href="recurso/create" class="btn btn-primary" style="float: right;">Crear</a> --}}
           </div>
-          <!-- /.box-header -->
           <div class="box-body">
-            <table id="CargosTable" class="table table-compact table-bordered table-striped">
+            <table id="RecursosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Grado</th>
-                  <th>Area</th>
-                  <th>Salario</th>
+                  <th>Categoria</th>
+                  <th>Tipo</th>
+                  <th>Ruta</th>
+                  <th>Formato</th>
+                  <th>Residuo</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
-                {{-- <h1 id="loadingTable">LOADING...</h1> --}}
                 <div class="fingerprint-spinner" id="loadingTable">
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
@@ -38,20 +37,20 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                @foreach($Cargos as $Cargo)
+                @foreach($Recursos as $Recurso)
                 <tr>
-                  <td>{{$Cargo->CargName}}</td>
-                  <td>{{$Cargo->CargGrade}}</td>
-                  <td>{{$Cargo->AreaName}}</td>
-                  <td>{{$Cargo->CargSalary}}</td>
+                  <td>{{$Recurso->RecName}}</td>
+                  <td>{{$Recurso->RecCarte}}</td>
+                  <td>{{$Recurso->RecTipo}}</td>
+                  <td>{{$Recurso->RecSrc}}</td>
+                  <td>{{$Recurso->RecFormat}}</td>
+                  <td>{{$Recurso->FK_RecSol}}</td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
           </div>
-          <!-- /.box-body -->
         </div>
-        <!-- /.box -->
       </div>
     </div>
   </div>
