@@ -66,6 +66,7 @@ Route::resource('/manifiesto', 'ManifiestoController');
 Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 Route::resource('/code', 'QrCodesController');
 Route::resource('/horario', 'HorarioController');
+Route::resource('/asistencias', 'AsistenciaController');
 Route::resource('/recurso', 'RecursoController');
 Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/holidays', 'holidayController');

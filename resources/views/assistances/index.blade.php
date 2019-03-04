@@ -12,16 +12,27 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Asistencia del personal</h3>
+            @if (Auth::user()->UsRol == "Vigilante")
+              <a href="asistencia/create" class="btn btn-primary" style="float: right;">Supervisar</a>
+            @endif
           </div>
           <!-- /.box-header -->
           <div class="box-body">
               <table id="AssistancesTable1" class="table table-compact table-bordered table-striped">
                 <thead>
                   <tr>
-  	                <th>Nombre</th>
-    	              <th>Hora Llegada</th>
-                    <th>Trabajando</th>
-    	              <th>Hora Salida</th>
+                    {{-- @if ($) --}}
+                      <th>Nombre</th>
+                      <th>Hora Llegada</th>
+                      <th>Trabajando</th>
+                      <th>Hora Salida</th>
+                    {{-- @else --}}
+                        
+                    <th>Horas Trabajdas</th>
+                      @if (Auth::user()->UsRol == "Programador")
+                      <th>Editar</th>
+                      @endif
+                      {{-- @endif --}}
                   </tr>
                 </thead>
                 <tbody  hidden onload="renderTable()" id="readyTable">
@@ -47,6 +58,10 @@
                         <td>Si</td>
                       @endif
                       <td>{{$Asistencia->AsisSalida}}</td>
+                      <td>{{$Asistencia->AsisNocturnas}}</td>
+                      @if (Auth::user()->UsRol == "Programador")
+                      <td>{{$Asistencia->ID_Asis}}</td>
+                      @endif          
                     </tr>
                     @endforeach
                 </tbody>
