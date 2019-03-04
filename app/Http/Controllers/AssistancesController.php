@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Assistance;
 
@@ -17,8 +18,9 @@ class AssistancesController extends Controller
     public function index(){
         $Asistencias = DB::table('assistances')
         ->join('personals', 'assistances.FK_AsisPers', '=', 'personals.ID_Pers')
-        ->select('personals.PersFirstName','personals.PersLastName','personals.PersDocNumber', 'assistances.AsisFecha', 'assistances.AsisLlegada', 'assistances.AsisSalida', 'assistances.AsisStatus')
+        ->select('personals.PersFirstName','personals.PersLastName','personals.PersDocNumber', 'personals.PersSlug', 'assistances.*')
         ->get();
+
         return view('assistances.index', compact('Asistencias'));
     }
 
@@ -37,7 +39,12 @@ class AssistancesController extends Controller
         ->select('*')
         ->get();/*
         return $Asistencias;*/
-        return view('assistances.create',compact('personal','Asistencias'));
+        if(Auth::user()->UsRol == "Vigilante"){
+            return view('assistances.create',compact('personal','Asistencias'));
+        }
+        else{
+            return redirect()->route('asistencia.index');
+        }
     }
 
     /**
@@ -53,6 +60,7 @@ class AssistancesController extends Controller
         $Asistencia->AsisStatus = 1;
         $Asistencia->FK_AsisPers = $request->input('AsisPers');
         $Asistencia->save();
+        // return redirect()->route('asistencia.create', compact('Asistencia2'));
         return redirect()->route('asistencia.create');
     }
 
@@ -72,8 +80,15 @@ class AssistancesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
-        return $id;
+    // public function edit(Assistance $Asistencia){
+    public function edit($slug){
+        $Asistencias = DB::table('assistances')
+        ->select('ID_Asis','AsisSalida','AsisLlegada')
+        ->where('ID_Asis', '=', $slug)
+        ->get();
+        // var_dump($Asistencias);
+        // exit();
+        return view('assistances.edit', compact('Asistencias'));
     }
 
     /**
@@ -84,12 +99,30 @@ class AssistancesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $Asistencia  = Assistance::where('ID_Asis',$id)->first();
-        $Asistencia->AsisSalida = now();
-        $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
-        $Asistencia->AsisStatus = 0;
-        $Asistencia->save();
-        return redirect()->route('asistencia.create');
+        // return $request;
+            $Asistencia  = Assistance::where('ID_Asis',$id)->first();
+            if(!$request->input('llegada')){
+                $Asistencia->AsisSalida = now();
+                $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
+                $Asistencia->AsisStatus = 0;
+                $Asistencia->save();
+                return redirect()->route('asistencia.create');
+            }
+            else{
+                $Asistencia->AsisLlegada = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('llegada'));
+                $Asistencia->AsisSalida = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('salida'));
+                $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
+                $Asistencia->save();
+                return redirect()->route('asistencia.index');
+            }
+            
+
+
+       
+
+       
+        // return "Update";
+        
     }
 
     /**

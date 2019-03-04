@@ -605,6 +605,13 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
+          "columnDefs": [ {
+            "targets": 5,
+            "data": "ID_Asis",
+            "render": function ( data, type, row, meta ) {
+              return "<a href='/asistencia/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }]
         });
       });
     </script>

@@ -16,5 +16,8 @@ class Assistance extends Model{
     {
     	return $this->belongsTo('App\Personal','ID_Pers');
     }
-
+    public function getRouteKeyName()
+	{
+	    return 'ID_Asis';
+	}
 }

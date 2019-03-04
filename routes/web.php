@@ -65,6 +65,7 @@ Route::resource('/manifiesto', 'ManifiestoController');
 Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 Route::resource('/code', 'QrCodesController');
 Route::resource('/horario', 'HorarioController');
+Route::resource('/asistencias', 'AsistenciaController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
