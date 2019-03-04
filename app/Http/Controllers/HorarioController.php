@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Horario;
+use Illuminate\Support\Facades\Auth;
+use App\audit;
+
 
 class HorarioController extends Controller
 {

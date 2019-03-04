@@ -73,6 +73,15 @@ class clientcontoller extends Controller
         $Cliente->CliType = $request->input('CliType');
         $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
         $Cliente->save();
+
+        $log = new audit();
+        $log->AuditTabla="clientes";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Cliente->ID_Cli;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
         return redirect()->route('clientes.index');
         // return 'Saved';
     }
@@ -122,6 +131,7 @@ class clientcontoller extends Controller
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="clientes";
+        $log->AuditType="Modificado";
         $log->AuditRegistro=$cliente->ID_Cli;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request->all());

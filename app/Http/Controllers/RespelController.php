@@ -66,12 +66,23 @@ class RespelController extends Controller
         $respel->RespelName = $request->input('RespelName');
         $respel->RespelDescrip = $request->input('RespelDescrip');
         $respel->RespelClasf4741 = $request->input('RespelClasf4741');
+        // $respel->RespelClasf4741 = $request->input('YRespelClasf4741');
+        // $respel->RespelClasf4741 = $request->input('ARespelClasf4741');
         $respel->RespelIgrosidad = $request->input('RespelIgrosidad');
         $respel->RespelEstado = $request->input('RespelEstado');
         $respel->RespelHojaSeguridad = $name;
         $respel->RespelTarj = $request->input('RespelTarj');
         $respel->RespelSlug = "slug".$request->input('RespelName');
         $respel->save();
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
          return redirect()->route('respels.index');
 
     }

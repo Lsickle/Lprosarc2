@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\SolicitudResiduo;
+use App\audit;
+
 
 class SolicitudResiduoController extends Controller
 {
@@ -51,6 +54,14 @@ class SolicitudResiduoController extends Controller
         $Residuo->SolResRespel = 1;
         $Residuo->SolResSolSer = 1;
         $Residuo->save();
+
+        $log = new audit();
+        $log->AuditTabla="solicitud_residuos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Residuo->ID_SolRes;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
 
         return view('solicitud.indexResiduo', compact('Residuos'));
         // return view('solicitud.indexResiduo');

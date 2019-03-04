@@ -8,7 +8,7 @@ class Audit extends Model
 {
     protected $table = 'audits';
 
-    protected $fillable = ['AuditTabla', 'AuditRegistro', 'AuditUser', 'Auditlog'];
+    protected $fillable = ['AuditTabla', 'AuditType', 'AuditRegistro', 'AuditUser', 'Auditlog'];
 
     protected $casts = [
         'Auditlog' => 'json',

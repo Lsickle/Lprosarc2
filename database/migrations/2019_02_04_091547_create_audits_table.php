@@ -16,6 +16,7 @@ class CreateAuditsTable extends Migration
         Schema::create('audits', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('AuditType');
             $table->string('AuditTabla');
             $table->string('AuditRegistro');
             $table->string('AuditUser');

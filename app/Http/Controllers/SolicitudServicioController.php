@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\SolicitudServicio;
+use App\audit;
+
 
 
 class SolicitudServicioController extends Controller
@@ -40,41 +43,37 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        // $Servicios = DB::table('solicitud_servicios')
-        // ->select('solicitud_servicios.*')
-        // ->get();
+        $Servicios = DB::table('solicitud_servicios')
+        ->select('solicitud_servicios.*')
+        ->get();
 
-        // $Servicio = new SolicitudServicio();
-        // $Servicio->SolSerStatus = $request->input('Estado');
-        // $Servicio->SolSerTipo = $request->input('Tipo');
+        $Servicio = new SolicitudServicio();
+        $Servicio->SolSerStatus = $request->input('Estado');
+        $Servicio->SolSerTipo = $request->input('Tipo');
 
-        // if($request->input('auditable') == 'on'){
-        //     $Servicio->SolSerAuditable = '1';
-        // }else{
-        //     $Servicio->SolSerAuditable = '0';
-        // }
+        if($request->input('auditable') == 'on'){
+            $Servicio->SolSerAuditable = '1';
+        }else{
+            $Servicio->SolSerAuditable = '0';
+        }
 
-        // $Servicio->SolSerFrecuencia = $request->input('Frecuencia');
-        // $Servicio->SolSerConducExter = $request->input('conductor');
-        // $Servicio->SolSerVehicExter = $request->input('placa');
-        // $Servicio->Fk_SolSerTransportador = 1;
-        // $Servicio->FK_SolSerGenerSede = 1;
-        // $aumento = 1;
-        // $Servicio->SolSerSlug = 0;
-        //     if ($Servicio->SolSerSlug <> $aumento){
-        //         while($aumento <> $Servicio->SolSerSlug){
-        //             $aumento1 = $aumento++;
-        //             $Servicio->SolSerSlug = $aumento1;};
-        //     }else{
-                    
-        //                 $Servicio->SolSerSlug = $aumento;
-                     
-                    
-        //     }
-        // $Servicio->save();
+        $Servicio->SolSerFrecuencia = $request->input('Frecuencia');
+        $Servicio->SolSerConducExter = $request->input('conductor');
+        $Servicio->SolSerVehicExter = $request->input('placa');
+        $Servicio->Fk_SolSerTransportador = 1;
+        $Servicio->FK_SolSerGenerSede = 1;
+        // $Servicio->SolSerSlug = 'user';
+        $Servicio->save();
 
+        $log = new audit();
+        $log->AuditTabla="solicitud_servicios";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Servicio->ID_SolSer;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
         // return view('solicitud.indexServicio', compact('Servicios'));
-        // return redirect()->route('solicitud.indexServicio');
+        return redirect()->route('solicitud.indexServicio',  compact('Servicios'));
 
     }
 

@@ -8,6 +8,8 @@ use App\Sede;
 use App\GenerSede;
 use App\Declaration;
 use App\generador;
+use App\audit;
+use Illuminate\Support\Facades\Auth;
     
 class DeclarController extends Controller
 {
@@ -74,6 +76,14 @@ class DeclarController extends Controller
         $Declaration->DeclarUser = $request->input('DeclarUser');
         $Declaration->DeclarSlug = 'Declar-'.$request->input('DeclarName');
         $Declaration->save();
+
+        $log = new audit();
+        $log->AuditTabla="generadors";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Gener->ID_Gener;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
         return redirect()->route('declaraciones.index');
     }
 

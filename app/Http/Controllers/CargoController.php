@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\audit;
 use App\Cargo;
 
 class CargoController extends Controller
@@ -45,8 +46,17 @@ class CargoController extends Controller
         $cargo->CargName = $request->input('NomCarg');
         $cargo->CargSalary= $request->input('CargSalary');
         $cargo->CargGrade = $request->input('CargGrade');
-        $cargo->CargOfi= $request->input('SelectOfi');
+        $cargo->CargArea = $request->input('SelectArea');
         $cargo->save();
+
+        $log = new audit();
+        $log->AuditTabla="cargos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$cargo->ID_Carg;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
         return redirect()->route('cargos.index');
     }
 

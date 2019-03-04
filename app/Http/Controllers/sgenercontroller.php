@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\audit;
 use App\generador;
 use App\GenerSede;
 
@@ -61,6 +63,15 @@ class sgenercontroller extends Controller
         $GenerSede->Generador = $request->input('generadorname');
         $GenerSede->GSedeSlug = 'GSede-'.$request->input('GSedeName');
         $GenerSede->save();
+
+        $log = new audit();
+        $log->AuditTabla="gener_sedes";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$GenerSede->ID_GSede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
         return redirect()->route('sgeneradores.index');
     }
 
@@ -103,9 +114,21 @@ class sgenercontroller extends Controller
     public function update(Request $request, $id)
     {
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
+        // return $request;
         $GSede->fill($request->except('created_at'));
-        $GSede->Generador = $request->input('genername');
+        $GSede->FK_GSede = $request->input('FK_GSede');
+        // $GSede->FK_GSedeMun = $request->input('Municipio');
+        $GSede->FK_GSedeMun = '1';
         $GSede->save();
+
+        $log = new audit();
+        $log->AuditTabla = "gener_sedes";
+        $log->AuditType = "Modificado";
+        $log->AuditRegistro = $GSede->ID_GSede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        
         return redirect()->route('sgeneradores.index');
     }
 

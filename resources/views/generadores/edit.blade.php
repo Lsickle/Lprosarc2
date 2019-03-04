@@ -57,13 +57,23 @@
 									</div>
 									<div class="col-xs-6">
 										<label for="GenerInputTipo">Cliente</label>
-										<select name="GenerCli" class="form-control" id="GenerInputTipo" placeholder="biologico">
+										<select name="FK_GenerCli" class="form-control" id="GenerInputTipo" placeholder="biologico">
 											@foreach($Sedes as $sede)
 											<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+									<div class="col-xs-6">
+										<label for="GenerInputTipo">Auditable</label>
+										<select name="GenerAuditable" class="form-control" id="GenerInputTipo">
+											
+											<option>Seleccione..</option>
+											<option value="off">off</option>
+											<option value="on">on</option>
+											
+										</select>
+									</div>
+									{{-- <div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 									   <div class="icheck form-group">
 			                                <label for="GenerInputTipo">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
@@ -73,7 +83,7 @@
 			                            <div >
 			                            	<input  hidden="false" type="text" name="GenerSlug" value="{{$generadors->GenerSlug}}">
 			                            </div>
-									</div>
+									</div> --}}
 									{{-- <div class="form-group">
 										<label for="exampleInputFile">Documento requerido</label>
 										<input name="" type="file" id="exampleInputFile">

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\audit;
 use App\Activo;
 use App\SubcategoriaActivo;
 use App\CategoriaActivo;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class ActivoController extends Controller
 {
@@ -42,7 +43,7 @@ class ActivoController extends Controller
             ->select('categoria_activos.*')
             ->get();
 
-        return view('activos.create', compact('SubActivos'), compact('Categorias'));
+        return view('activos.create', compact('SubActivos', 'Categorias'));
     }
 
     /**
@@ -65,6 +66,14 @@ class ActivoController extends Controller
         $Activo->ActSerialProveed = $request->input('serialproveedor');
         $Activo->FK_ActSede = 1;
         $Activo->save();
+
+        $log = new audit();
+        $log->AuditTabla="activos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Activo->ID_Act;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
 
         return redirect()->route('activos.index');
     }

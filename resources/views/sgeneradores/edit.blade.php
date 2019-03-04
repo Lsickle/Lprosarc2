@@ -49,16 +49,16 @@
 									</div> --}}
 									<div class="col-md-6">
 										<label for="sedemunicipio">Municipio</label>
-										<select class="form-control" id="sedemunicipio" placeholder="Funza" name="Municipio" required="true">
-										<option>Mosquera</option>
-										<option>Madrid</option>
-										<option>Funza</option>
-										<option>Faca</option>
+										<select class="form-control" id="sedemunicipio" name="Municipio" required="true">
+											<option>Mosquera</option>
+											<option>Madrid</option>
+											<option>Funza</option>
+											<option>Faca</option>
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="genername" required="true">
+										<select class="form-control" id="clientname" name="FK_GSede" required="true">
 											@foreach($generadores as $generador)
 												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
 											@endforeach()
