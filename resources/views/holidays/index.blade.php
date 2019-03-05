@@ -1,30 +1,25 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Recibos')
+@section('htmlheader_title','Holiday')
 
-@section('contentheader_title', 'Recibos Material')
+@section('contentheader_title', 'Lista de festivos')
 
 @section('main-content')
-	<div class="container-fluid spark-screen">
+  <div class="container-fluid spark-screen">
     <div class="row">
       <div class="col-md-16 col-md-offset-0">
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de recibos del material</h3>
-            <a href="recibo-material/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <h3 class="box-title">Dias Festivos</h3>
+            <a href="areas/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="RMaterialsTable" class="table table-compact table-bordered table-striped">
+            <table id="AreaTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Tesoreria</th>
-                  <th>Hora Salida</th>
-                  <th>Hora Entrada</th>
-                  <th>Cliente</th>
-                  <th>Conductor</th>
-                  <th>Ver más..</th>
+                  <th>Fecha</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,17 +35,11 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                {{-- @foreach($Personals as $Personal)
+                @foreach($Holidays as $Holiday)
                 <tr>
-                  <td>{{$Personal->PersDocType}}</td>
-                  <td>{{$Personal->PersDocNumber}}</td>
-                  <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
-                  <td>{{$Personal->PersEmail}}</td>
-                  <td>{{$Personal->PersCellphone}}</td>
-                  <td>{{$Personal->CargName}}</td>
-                  <td>{{$Personal->PersSlug}}</td>
+                  <td>{{$Holiday->SedeName}}</td>
                 </tr>
-                @endforeach --}}
+                @endforeach
               </tbody>
             </table>
           </div>

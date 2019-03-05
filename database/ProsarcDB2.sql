@@ -528,13 +528,13 @@ create table SolicitudResiduo(
 /*tabla de fotoso  video por residuo*/
 create table Recurso(
 	ID_Rec int auto_increment unique,
-	RecName varchar(128),
+	RecName varchar(128), /*nombre del recurso*/
 	RecCarte varchar(32), /*categoria de Foto y/o video*/
 	RecTipo varchar(64), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	RecRmSrc varchar(255), /*direcion de la carperta donde */
-	RecSrc varchar(255), /*nombre del recurso donde se guardan los diferentes recursos para un recibo de material*/
+	/*RecRmSrc varchar(255), direcion de la carperta donde */
+	RecSrc varchar(255), /*ruta donde se guardan los diferentes recursos*/
 	RecFormat varchar(32), /*jpg, gif, png, etc*/
 	FK_RecSol int, /*foranea de la tabla residuo por solicitud*/
 	primary key (ID_Rec),
