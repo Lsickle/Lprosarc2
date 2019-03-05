@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Respel;
+use Illuminate\Support\Facades\Auth;
+use App\audit;
 
 class RespelController extends Controller
 {
@@ -55,7 +57,7 @@ class RespelController extends Controller
          if ($request->hasfile('RespelHojaSeguridad')) {
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/',$name);
+            $file->move(public_path().'/images/', $name);
         }
         else{
             $name = public_path().'/images/default.png';
@@ -65,13 +67,15 @@ class RespelController extends Controller
         $respel = new Respel();
         $respel->RespelName = $request->input('RespelName');
         $respel->RespelDescrip = $request->input('RespelDescrip');
-        $respel->RespelClasf4741 = $request->input('RespelClasf4741');
-        // $respel->RespelClasf4741 = $request->input('YRespelClasf4741');
-        // $respel->RespelClasf4741 = $request->input('ARespelClasf4741');
+        // $respel->RespelClasf4741 = $request->input('RespelClasf4741');
+        $respel->YRespelClasf4741 = $request->input('YRespelClasf4741');
+        $respel->ARespelClasf4741 = $request->input('ARespelClasf4741');
         $respel->RespelIgrosidad = $request->input('RespelIgrosidad');
+        $respel->RespelStatus = $request->input('RespelStatus');
         $respel->RespelEstado = $request->input('RespelEstado');
         $respel->RespelHojaSeguridad = $name;
-        $respel->RespelTarj = $request->input('RespelTarj');
+        $respel->RespelTarj = 1;
+        $respel->FK_RespelGenerSede = 1;
         $respel->RespelSlug = "slug".$request->input('RespelName');
         $respel->save();
 

@@ -15,7 +15,8 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Trapos';
         $Respel->RespelDescrip = 'Precaucion con el producto';
-        $Respel->RespelClasf4741 = 'Si';
+        $Respel->YRespelClasf4741 = 'Y10';
+        $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Infamable';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'Si';
@@ -28,7 +29,8 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Gasolina';
         $Respel->RespelDescrip = 'Precaucion';
-        $Respel->RespelClasf4741 = 'No';
+        $Respel->YRespelClasf4741 = 'Y14';
+        $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Toxico';
         $Respel->RespelEstado = 'Liquido';
         $Respel->RespelHojaSeguridad = 'Si';
@@ -41,7 +43,8 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Teccnologia';
         $Respel->RespelDescrip = 'N\A';
-        $Respel->RespelClasf4741 = 'Si';
+        $Respel->YRespelClasf4741 = 'Y14';
+        $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Electrico';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'No';
@@ -54,7 +57,8 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Cascos';
         $Respel->RespelDescrip = 'N\A';
-        $Respel->RespelClasf4741 = 'No';
+        $Respel->YRespelClasf4741 = 'Y14';
+        $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'N\A';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'No';
@@ -67,7 +71,8 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Relleno';
         $Respel->RespelDescrip = 'Olores nauseabundos';
-        $Respel->RespelClasf4741 = 'No';
+        $Respel->YRespelClasf4741 = 'Y14';
+        $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Muy Toxico';
         $Respel->RespelEstado = 'Gaseoso';
         $Respel->RespelHojaSeguridad = 'Si';

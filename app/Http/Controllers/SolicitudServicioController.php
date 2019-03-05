@@ -43,9 +43,9 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        $Servicios = DB::table('solicitud_servicios')
-        ->select('solicitud_servicios.*')
-        ->get();
+        // $Servicios = DB::table('solicitud_servicios')
+        // ->select('solicitud_servicios.*')
+        // ->get();
 
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = $request->input('Estado');
@@ -60,9 +60,11 @@ class SolicitudServicioController extends Controller
         $Servicio->SolSerFrecuencia = $request->input('Frecuencia');
         $Servicio->SolSerConducExter = $request->input('conductor');
         $Servicio->SolSerVehicExter = $request->input('placa');
-        $Servicio->Fk_SolSerTransportador = 1;
+        $Servicio->Fk_SolSerTransportador = 2;
         $Servicio->FK_SolSerGenerSede = 1;
-        // $Servicio->SolSerSlug = 'user';
+        //Revisar slug
+        $Servicio->SolSerSlug = 'user'. $Servicio->SolSerVehicExter;
+        
         $Servicio->save();
 
         $log = new audit();
@@ -73,7 +75,8 @@ class SolicitudServicioController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         // return view('solicitud.indexServicio', compact('Servicios'));
-        return redirect()->route('solicitud.indexServicio',  compact('Servicios'));
+        return redirect()->route('solicitud-servicio.index');
+        // return redirect()->route('solicitud.indexServicio',  compact('Servicios'));
 
     }
 

@@ -19,7 +19,7 @@ class sgenercontroller extends Controller
     public function index()
     {
         $Gsedes = DB::table('gener_sedes')
-            ->join('generadors', 'gener_sedes.ID_GSede', '=', 'generadors.ID_Gener')
+            ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
             ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname', 'generadors.GenerAuditable')
             ->get();
 
@@ -60,10 +60,12 @@ class sgenercontroller extends Controller
         $GenerSede->GSedeExt2 = $request->input('GSedeExt2');
         $GenerSede->GSedeEmail = $request->input('GSedeEmail');
         $GenerSede->GSedeCelular = $request->input('GSedeCelular');
-        $GenerSede->Generador = $request->input('generadorname');
         $GenerSede->GSedeSlug = 'GSede-'.$request->input('GSedeName');
+        $GenerSede->FK_GSede = $request->input('FK_GSede');
+        $GenerSede->FK_GSedeMun = '1';
         $GenerSede->save();
-
+        
+        // return $GenerSede;
         $log = new audit();
         $log->AuditTabla="gener_sedes";
         $log->AuditType="Creado";
@@ -114,12 +116,12 @@ class sgenercontroller extends Controller
     public function update(Request $request, $id)
     {
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
-        // return $request;
         $GSede->fill($request->except('created_at'));
         $GSede->FK_GSede = $request->input('FK_GSede');
         // $GSede->FK_GSedeMun = $request->input('Municipio');
-        $GSede->FK_GSedeMun = '1';
+        $GSede->FK_GSedeMun = '2';
         $GSede->save();
+        // return $GSede;
 
         $log = new audit();
         $log->AuditTabla = "gener_sedes";

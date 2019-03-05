@@ -21,7 +21,7 @@ class SolicitudResiduoController extends Controller
         $Residuos = DB::table('solicitud_residuos')
             ->select('solicitud_residuos.*')
             ->get();
-        return view('solicitud.indexResiduo', compact('Residuos'));
+        return view('solicitud.indexR', compact('Residuos'));
     }
 
     /**
@@ -42,16 +42,16 @@ class SolicitudResiduoController extends Controller
      */
     public function store(Request $request)
     {
-        $Residuos = DB::table('solicitud_residuos')
-            ->select('solicitud_residuos.*')
-            ->get();
+        // $Residuos = DB::table('solicitud_residuos')
+        //     ->select('solicitud_residuos.*')
+        //     ->get();
 
         $Residuo = new SolicitudResiduo();
         $Residuo->SolResKgEnviado = $request->input('enviado');
         $Residuo->SolResKgRecibido = $request->input('resibido');
         $Residuo->SolResKgConciliado = $request->input('conciliado');
         $Residuo->SolResKgTratado = $request->input('tratado');
-        $Residuo->SolResRespel = 1;
+        $Residuo->SolResRespel = 2;
         $Residuo->SolResSolSer = 1;
         $Residuo->save();
 
@@ -62,8 +62,8 @@ class SolicitudResiduoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-
-        return view('solicitud.indexResiduo', compact('Residuos'));
+        // return $Residuo;
+        return redirect()->route('solicitud-residuo.index'); 
         // return view('solicitud.indexResiduo');
         // return redirect()->route('solicitud.indexResiduo');        
     }
