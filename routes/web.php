@@ -69,6 +69,9 @@ Route::resource('/horario', 'HorarioController');
 Route::resource('/recurso', 'RecursoController');
 Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/holidays', 'holidayController');
+Route::get('/prueba', function () {
+    return view('PruebaFullCalendar.index');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

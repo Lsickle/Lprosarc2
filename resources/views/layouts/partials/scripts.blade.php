@@ -5,20 +5,27 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
 <!-- jQuery 3 -->
-<script src="node_modules/jquery/dist/jquery.js"></script>
+{{-- <script src="node_modules/jquery/dist/jquery.js"></script> --}}
 
 <!-- InputMask -->
 {{-- <script src="js/inputmask/dist/jquery.inputmask.bundle.js"></script>
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.js"></script>
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.date.extensions.js"></script>
 <script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script> --}}
 
 {{-- Popper JS --}}
-<script src="node_modules/popper.js/dist/popper.js"></script>
+{{-- <script src="node_modules/popper.js/dist/popper.js"></script> --}}
 
 {{-- bootstrap 4.3.1 --}}
-<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+{{-- <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script> --}}
+
+{{-- CDNS de FullCalendar --}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
 
 <!-- DataTables -->
 {{-- <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -137,11 +144,11 @@
       ]
     });
    
-  new $.fn.dataTable.Buttons( table, {
+  /*new $.fn.dataTable.Buttons( table, {
       buttons: [
           'copy', 'pdf'
       ]
-  } );
+  } );*/
   // $('#UsersTable').DataTable( {
   //     dom: 'Bfrtip',
   //     buttons: [
@@ -371,13 +378,13 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(Selector.sidebar).slimScroll({
       height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
       color : 'rgba(0,0,0,0.2)',
       size  : '3px'
     })
-</script>
+</script> --}}
 
 {{-- bootstrap-switch  --}}
 <script >
@@ -823,5 +830,28 @@ $(document).ready(function(){
               }
           }]
         });
+      });
+    </script>
+    <script>
+      $(function() {
+        $('#calendar').fullCalendar({
+          themeSystem: 'bootstrap4',
+          height:"auto",
+           header: {
+               left:   'prevYear,nextYear',
+               center: 'title',
+               right:  'today prev,next'
+            },
+            buttonText: {
+                today : 'Hoy'
+            },
+            aspectRatio : 2,
+            windowResize: function(view) {
+              alert('The calendar has adjusted to a window resize');
+            }
+          /*dayClick: function() {
+            alert('a day has been clicked!');
+          }*/
+        },'option' , 'contentHeight' , 650)
       });
     </script>
