@@ -55,15 +55,15 @@ class ActivoController extends Controller
     public function store(Request $request)
     {
         $Activo = new Activo();
-        $Activo->FK_ActSub = $request->input('subcategoria');
-        $Activo->ActName = $request->input('nombre');
-        $Activo->ActUnid = $request->input('Forma');
-        $Activo->ActCant = $request->input('cantidad');
-        $Activo->ActSerialProsarc = $request->input('serialPro');
-        $Activo->ActModel = $request->input('modelo');
-        $Activo->ActTalla = $request->input('talla');
-        $Activo->ActObserv = $request->input('observacion');
-        $Activo->ActSerialProveed = $request->input('serialproveedor');
+        $Activo->ActName = $request->input('ActName');
+        $Activo->ActUnid = $request->input('ActUnid');
+        $Activo->ActCant = $request->input('ActCant');
+        $Activo->ActSerialProsarc = $request->input('ActSerialProsarc');
+        $Activo->ActModel = $request->input('ActModel');
+        $Activo->ActTalla = $request->input('ActTalla');
+        $Activo->ActObserv = $request->input('ActObserv');
+        $Activo->ActSerialProveed = $request->input('ActSerialProveed');
+        $Activo->FK_ActSub = $request->input('FK_ActSub');
         $Activo->FK_ActSede = 1;
         $Activo->save();
 
@@ -97,7 +97,20 @@ class ActivoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $SubActivos = DB::table('subcategoria_activos')
+            ->select('subcategoria_activos.*')
+            ->get();
+
+        $Categorias = DB::table('categoria_activos')
+            ->select('categoria_activos.*')
+            ->get();
+
+        $Activos = DB::table('activos')
+            ->select('activos.*')
+            ->where('ID_Act', '=', $id)
+            ->get();
+
+        return view('activos.edit',  compact('Activos', 'SubActivos', 'Categorias'));
     }
 
     /**
@@ -109,7 +122,22 @@ class ActivoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Activo = Activo::where('ID_Act', $id)->first();
+        $Activo->fill($request->all());
+        $Activo->ActModel = $request->input('ActModel');
+        $Activo->FK_ActSub = $request->input('FK_ActSub');
+        $Activo->save();
+
+        // return $Activo;
+        $log = new audit();
+        $log->AuditTabla = "activos";
+        $log->AuditType = "Modificado";
+        $log->AuditRegistro = $Activo->ID_Act;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $request->all();
+        $log->save();
+
+        return redirect()->route('activos.index');
     }
 
     /**
