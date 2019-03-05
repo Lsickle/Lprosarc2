@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use ReciboMaterial;
+use App\Holiday;
 
-class ReciboMaterialController extends Controller
+class HolidayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +14,10 @@ class ReciboMaterialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        // $RMaterials = DB::table('recibo_materials')
-        //     ->join('clientes', 'recibo_materials.FK_RmTransportador', '=', 'clientes.ID_Cli')
-        //     ->join('personals', 'recibo_materials.FK_RmConductor', '=', 'personals.ID_Pers')
-        //     ->select('recibo_materials.RmStatus','recibo_materials.RmSalida','recibo_materials.RmLlegada','personals.PersFirstName','personals.PersLastName','clientes.CliName')
-        //     ->get();
-        // return view('reciboMaterials.index', compact('RMaterials'));
-        return view('reciboMaterials.index');
+        $Holidays = DB::table('holidays')
+        ->select('*')
+        ->get();
+        return view('holidays.index',compact('Holidays'));
     }
 
     /**

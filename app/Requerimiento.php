@@ -3,7 +3,7 @@
 	
 	use Illuminate\Database\Eloquent\Model;
 	
-	class Recurso extends Model
+	class Requerimiento extends Model
 	{
 		protected $table = 'requerimientos';
 	
@@ -12,7 +12,7 @@
 		'ReqAuditoriaTipo', 'ReqDevolucion', 'ReqDevolucionTipo', 'ReqDatosPersonal', 'ReqPlanillas', 'ReqAlistamiento', 'ReqCapacitacion', 
 		'ReqBascula', 'ReqMasPerson', 'ReqPlatform', 'ReqCertiEspecial', 'ReqSlug'];
 	
-		public $primaryKey = 'ID_Rec';
+		public $primaryKey = 'ID_Req';
 	
 		public function Respels()
 		{

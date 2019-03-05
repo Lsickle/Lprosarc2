@@ -19,7 +19,7 @@ class SolicitudResiduoController extends Controller
     public function index()
     {
         $Residuos = DB::table('solicitud_residuos')
-            ->select('solicitud_residuos.*')
+            ->select('*')
             ->get();
         return view('solicitud.indexR', compact('Residuos'));
     }

@@ -24,8 +24,8 @@ Residuos
                   <th>Kilogramos recibido</th>
                   <th>Kilogramos Conciliado</th>
                   <th>Tratado</th>
-                  <th>Fecha de creacion</th>
-                  <th>Fecha de actualizacion</th>
+                  <th>Solicitud de servicio</th>
+                  <th>Residuo</th>
                   <th>Editar</th>
                 </tr>
               </thead>
@@ -48,8 +48,8 @@ Residuos
                   <td>{{$Residuo->SolResKgRecibido}}</td>
                   <td>{{$Residuo->SolResKgConciliado}}</td>
                   <td>{{$Residuo->SolResKgTratado}} Kilogramo</td>
-                  <td>{{$Residuo->created_at}}</td>
-                  <td>{{$Residuo->updated_at}}</td>
+                  <td>{{$Residuo->SolResSolSer}}</td>
+                  <td>{{$Residuo->SolResRespel}}</td>
                   <td></td>
                 </tr>
                 @endforeach

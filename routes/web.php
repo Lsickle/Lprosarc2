@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
+
+
 });
 
 Auth::routes(['verify' => true]);
@@ -36,7 +38,6 @@ Route::resource('/Generadores', 'genercontroller');
 Route::resource('/sgeneradores', 'sgenercontroller');
 Route::resource('/declaraciones', 'DeclarController');
 Route::resource('/respels', 'RespelController');
-Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/permisos', 'RolesController');
 Route::resource('/audits', 'auditController');
 Route::resource('/place/departament', 'DepartamentoController');
@@ -66,6 +67,9 @@ Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 Route::resource('/code', 'QrCodesController');
 Route::resource('/horario', 'HorarioController');
 Route::resource('/asistencias', 'AsistenciaController');
+Route::resource('/recurso', 'RecursoController');
+Route::resource('/requerimientos', 'RequerimientoController');
+Route::resource('/holidays', 'holidayController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
