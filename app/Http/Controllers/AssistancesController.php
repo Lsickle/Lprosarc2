@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\audit;
 use Illuminate\Support\Carbon;
 use App\Assistance;
 
@@ -60,7 +61,15 @@ class AssistancesController extends Controller
         $Asistencia->AsisStatus = 1;
         $Asistencia->FK_AsisPers = $request->input('AsisPers');
         $Asistencia->save();
-        // return redirect()->route('asistencia.create', compact('Asistencia2'));
+
+        $log = new audit();
+        $log->AuditTabla="assistances";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Asistencia->ID_Asis;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        
         return redirect()->route('asistencia.create');
     }
 
@@ -101,11 +110,20 @@ class AssistancesController extends Controller
     public function update(Request $request, $id){
         // return $request;
             $Asistencia  = Assistance::where('ID_Asis',$id)->first();
+            $log = new audit();
+            $log->AuditTabla="assistances";
+            $log->AuditType="Modificado";
+            $log->AuditRegistro=$Asistencia->ID_Asis;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$request->all();
+            $log->save();
+
             if(!$request->input('llegada')){
                 $Asistencia->AsisSalida = now();
                 $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
                 $Asistencia->AsisStatus = 0;
                 $Asistencia->save();
+
                 return redirect()->route('asistencia.create');
             }
             else{
@@ -113,16 +131,11 @@ class AssistancesController extends Controller
                 $Asistencia->AsisSalida = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('salida'));
                 $Asistencia->AsisNocturnas = $Asistencia->AsisSalida->diffInHours($Asistencia->AsisLlegada);
                 $Asistencia->save();
+
                 return redirect()->route('asistencia.index');
             }
             
-
-
-       
-
-       
-        // return "Update";
-        
+            
     }
 
     /**

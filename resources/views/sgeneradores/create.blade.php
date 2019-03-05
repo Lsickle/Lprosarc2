@@ -57,7 +57,7 @@
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="generadorname" required="true">
+										<select class="form-control" id="clientname" placeholder="Funza" name="FK_GSede" required="true">
 											@foreach($generadors as $generador)
 												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
 											@endforeach()

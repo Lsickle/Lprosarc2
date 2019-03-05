@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Sede;
 use App\generador;
 use App\cliente;
+use App\audit;
+
 
 class sclientcontroller extends Controller
 {
@@ -64,9 +67,18 @@ class sclientcontroller extends Controller
         $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->Cliente = $request->input('clientename');
+        $Sede->FK_SedeCli = $request->input('clientename');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
         $Sede->save();
+
+        $log = new audit();
+        $log->AuditTabla="sedes";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Sede->ID_Sede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
         return redirect()->route('sclientes.index');
         // return $testid;
         // return $request;
@@ -113,8 +125,17 @@ class sclientcontroller extends Controller
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
         $Sede->fill($request->except('created_at'));
-        $Sede->Cliente = $request->input('clientename');
+        $Sede->FK_SedeCli = $request->input('clientename');
         $Sede->save();
+
+        $log = new audit();
+        $log->AuditTabla="sedes";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Sede->ID_Sede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
         return redirect()->route('sclientes.index');
     }
 

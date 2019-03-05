@@ -65,14 +65,22 @@
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="col-xs-8">
+									{{-- <div class="col-xs-8">
 									   <div class="icheck form-group">
 			                                <label for="ClienteInputTipo">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
 			                                </label>
 			                                 <input id="ClienteInputTipo" style="display:none;" type="checkbox" name="CliAuditable">
 			                            </div>
-									</div>
+									</div> --}}
+									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+										<div class="icheck form-group">
+											 <label for="ClienteInputTipo">
+												{{trans('adminlte_lang::message.clientaudit')}}
+											 </label>
+											  <input id="inputcheck" type="checkbox" name="CliAuditable">
+										 </div>
+									 </div>
 									{{-- <div class="form-group">
 										<label for="exampleInputFile">Documento requerido</label>
 										<input name="" type="file" id="exampleInputFile">

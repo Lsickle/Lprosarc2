@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Area;
+use App\audit;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class AreaController extends Controller{
@@ -42,8 +45,17 @@ class AreaController extends Controller{
     public function store(Request $request){
         $area = new Area();
         $area->AreaName = $request->input('NomArea');
-        $area->AreaSede= $request->input('AreaSede');
+        $area->FK_AreaSede= $request->input('AreaSede');
         $area->save();
+
+        $log = new audit();
+        $log->AuditTabla="areas";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$area->ID_Area;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        
         return redirect()->route('areas.index');
     }
 

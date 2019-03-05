@@ -43,7 +43,7 @@ class MovimientoActivoController extends Controller
             ->select('Cargos.CargName',  'personals.PersFirstName', 'personals.ID_Pers')
             ->get();
 
-    return view('activos.movimiento', compact('Movimientos'), compact('MovimientosAct'));
+    return view('activos.movimiento', compact('Movimientos', 'MovimientosAct'));
     }
 
     /**

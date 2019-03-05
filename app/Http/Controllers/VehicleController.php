@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Vehiculo;
+use App\audit;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -52,6 +54,14 @@ class VehicleController extends Controller
         $Vehicle->VehicTipo = $request->input('tipo');
         $Vehicle->FK_VehiSede = $request->input('sede');
         $Vehicle->save();
+
+        $log = new audit();
+        $log->AuditTabla="vehiculos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Vehicle->ID_Vehic;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
         
         return redirect()->route('vehicle.index');
     }

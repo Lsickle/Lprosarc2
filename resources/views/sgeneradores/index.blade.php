@@ -30,7 +30,7 @@
                   <th>Sede Email</th>
                   <th>Sede Celular</th>
                   <th>Generador</th>
-                  <th>Auditable</th>
+                  {{-- <th>Auditable</th> --}}
                   <th>edicion</th>
                 </tr>
                 </thead>
@@ -69,11 +69,11 @@
                       <td>{{$GSede->GSedeEmail}}</td>
                       <td>{{$GSede->GSedeCelular}}</td>
                       <td>{{$GSede->GenerShortname}}</td>
-	                  	@if($GSede->GenerAuditable==1)
+	                  	{{-- @if($GSede->GenerAuditable==1)
         								<td>Si</td>
         							@else
         								<td>NO</td>
-        							@endif
+        							@endif --}}
                       <td>{{$GSede->GSedeSlug}}</td>
 		                </tr>
 			          	@endforeach

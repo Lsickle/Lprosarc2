@@ -65,9 +65,18 @@ class genercontroller extends Controller
         $Gener->GenerName = $request->input('GenerName');
         $Gener->GenerShortname = $request->input('GenerShortname');
         $Gener->GenerType = $request->input('GenerType');
-        $Gener->GenerCli = $request->input('GenerCli');
+        $Gener->FK_GenerCli = $request->input('GenerCli');
         $Gener->GenerSlug = 'Gener-'.$request->input('GenerShortname');
         $Gener->save();
+
+        $log = new audit();
+        $log->AuditTabla="generadors";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Gener->ID_Gener;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+    
         return redirect()->route('Generadores.index');
     }
 
@@ -108,19 +117,21 @@ class genercontroller extends Controller
     public function update(Request $request, $id)
     {
         $generador = generador::where('GenerSlug',$id)->first();
+        // return $request;
         $generador->fill($request->except('created_at'));
-        $generador->GenerCli = $request->input('GenerCli');
-        if ($request->input('GenerAuditable')=='on') {
-            $generador->GenerAuditable='1';
+        if ($request->input('GenerAuditable') == 'on') {
+            $generador->GenerAuditable = '1';
         }
         else{
-            $generador->GenerAuditable='0';
+            $generador->GenerAuditable = '0';
         };
         $generador->GenerSlug = 'Gener-'.$request->input('GenerShortname');
+        $generador->FK_GenerCli = $request->input('FK_GenerCli');
         $generador->save();
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="generadors";
+        $log->AuditType="Modificado";
         $log->AuditRegistro=$generador->ID_Gener;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();

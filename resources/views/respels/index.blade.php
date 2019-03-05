@@ -18,7 +18,8 @@
               <tr>
                 <th>Nombre</th>
                 {{-- <th>Descripcion</th> --}}
-                <th>Clasificacion 4741</th>
+                <th>Clasificacion 4741 Y</th>
+                <th>Clasificacion 4741 A</th>
                 <th>Peligrosidad</th>
                 <th>Estado</th>
                 <th>Hoja de Seguridad</th>
@@ -59,7 +60,8 @@
               <tr>
                 <td>{{$respel->RespelName}}</td>
                 {{-- <td>{{$respel->RespelDescrip}}</td> --}}
-                <td>{{$respel->RespelClasf4741}}</td>
+                <td>{{$respel->YRespelClasf4741}}</td>
+                <td>{{$respel->ARespelClasf4741}}</td>
                 <td>{{$respel->RespelIgrosidad}}</td>
                 <td>{{$respel->RespelEstado}}</td>
                 <td>{{$respel->RespelHojaSeguridad}}</td>

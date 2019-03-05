@@ -76,15 +76,15 @@
         "keys": true,       
        "responsive": true,
         "columnDefs": [ {
-        "targets": 9,
+        "targets": 10,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
-        {"targets": 10,
+        {"targets": 11,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
-        {"targets": 4,
+        {"targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}}
@@ -196,7 +196,7 @@
       "responsive": true,
       "processing":true,
       "columnDefs": [ {
-        "targets": 10,
+        "targets": 9,
         "data": "GSedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";

@@ -47,8 +47,8 @@
 										</select>
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">
-										<label for="OfiSelect">Area</label>
-										<select name="SelectOfi" id="OfiSelect" class="form-control">
+										<label for="AreaSelect">Area</label>
+										<select name="SelectArea" id="AreaSelect" class="form-control">
 											@foreach($Areas as $Area)
 												<option value="{{$Area->ID_Area}}">{{$Area->AreaName}}</option>
 											@endforeach
