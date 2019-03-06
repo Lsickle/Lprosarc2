@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\audit;
 use App\generador;
 use App\GenerSede;
+use App\Departamento;
+use App\Municipio;
 
 class sgenercontroller extends Controller
 {
@@ -34,7 +36,16 @@ class sgenercontroller extends Controller
     public function create()
     {   
         $generadors = generador::all();
-         return view('sgeneradores.create', compact('generadors'));
+        $Departamentos = Departamento::all();
+        // $Municipios = Municipio::where('FK_MunCity', '=', 'ID_Depart')->first();
+        $Municipios = Municipio::all();
+        
+        // $Municipios = DB::table('municipios')
+        //     // ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart' )
+        //     ->select('municipios.*')
+        //     // ->where('FK_MunCity', '=', 'ID_Depart')
+        //     ->get();
+         return view('sgeneradores.create', compact('generadors', 'Departamentos', 'Municipios'));
     }
 
     /**
@@ -62,7 +73,7 @@ class sgenercontroller extends Controller
         $GenerSede->GSedeCelular = $request->input('GSedeCelular');
         $GenerSede->GSedeSlug = 'GSede-'.$request->input('GSedeName');
         $GenerSede->FK_GSede = $request->input('FK_GSede');
-        $GenerSede->FK_GSedeMun = '1';
+        $GenerSede->FK_GSedeMun = $request->input('FK_GSedeMun');
         $GenerSede->save();
         
         // return $GenerSede;
@@ -100,10 +111,15 @@ class sgenercontroller extends Controller
     public function edit($id)
     {
         $generadores = generador::select('ID_Gener','GenerShortname')->get();
-        
+    
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
 
-        return view('sgeneradores.edit', compact('GSede', 'generadores'));
+        $Departamentos = Departamento::all();
+
+        // $Municipios = Municipio::where('FK_MunCity', '=', 'ID_Depart')->first();
+        $Municipios = Municipio::all();
+
+        return view('sgeneradores.edit', compact('GSede', 'generadores', 'Departamentos', 'Municipios'));
     }
 
     /**
@@ -117,11 +133,10 @@ class sgenercontroller extends Controller
     {
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
         $GSede->fill($request->except('created_at'));
+        $GSede->GSedeExt2 = $request->input('GSedeExt2');
         $GSede->FK_GSede = $request->input('FK_GSede');
-        // $GSede->FK_GSedeMun = $request->input('Municipio');
-        $GSede->FK_GSedeMun = '2';
+        $GSede->FK_GSedeMun = $request->input('FK_GSedeMun');
         $GSede->save();
-        // return $GSede;
 
         $log = new audit();
         $log->AuditTabla = "gener_sedes";

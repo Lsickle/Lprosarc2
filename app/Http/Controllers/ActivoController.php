@@ -43,7 +43,19 @@ class ActivoController extends Controller
             ->select('categoria_activos.*')
             ->get();
 
-        return view('activos.create', compact('SubActivos', 'Categorias'));
+        // $Sedes = DB::table('sedes')
+        //     ->Join('Activos', 'Activos.FK_ActSede', '=', 'sedes.ID_Sede')
+        //     ->select('activos.*', 'sedes.SedeName', 'sedes.ID_Sede')
+        //     // ->select('sedes.*')
+        //     ->where('FK_SedeCli', '=', $id)
+        //     ->get();
+            $Sedes = DB::table('sedes')
+            ->leftJoin('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('sedes.*', 'clientes.ID_Cli')
+            ->where('FK_SedeCli', '=', 'ID_Cli')
+            ->get();
+
+        return view('activos.create', compact('SubActivos', 'Categorias', 'Sedes'));
     }
 
     /**
@@ -105,12 +117,17 @@ class ActivoController extends Controller
             ->select('categoria_activos.*')
             ->get();
 
+        $Sedes = DB::table('sedes')
+            ->select('sedes.SedeName', 'sedes.ID_Sede')
+            ->where('FK_SedeCli', '=', $id)
+            ->get();
+
         $Activos = DB::table('activos')
             ->select('activos.*')
             ->where('ID_Act', '=', $id)
             ->get();
 
-        return view('activos.edit',  compact('Activos', 'SubActivos', 'Categorias'));
+        return view('activos.edit',  compact('Activos', 'SubActivos', 'Categorias', 'Sedes'));
     }
 
     /**
@@ -126,6 +143,7 @@ class ActivoController extends Controller
         $Activo->fill($request->all());
         $Activo->ActModel = $request->input('ActModel');
         $Activo->FK_ActSub = $request->input('FK_ActSub');
+        $Activo->FK_ActSede = $request->input('FK_ActSede');
         $Activo->save();
 
         // return $Activo;

@@ -55,11 +55,21 @@ Registros de Activos
 									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="ActName">
 								</div>
 								<div class="col-md-6">
-									<label for="activo">Forma del activo</label>
-									<select class="form-control" id="activo" name="ActUnid" required="true">
+									<label for="activo2">Forma del activo</label>
+									<select class="form-control" id="activo2" name="ActUnid" required="true">
 										<option>Seleccione...</option>
 										<option value="0">Unidad</option>
 										<option value="1">Peso</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label for="activo3">Sede</label>
+									<select class="form-control" id="activo3" name="FK_ActSede" required="true">
+										<option>Seleccione...</option>
+										@foreach ($Sedes as $Sede)
+											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
+											
+										@endforeach
 									</select>
 								</div>
 								<div class="col-md-6">
@@ -86,10 +96,7 @@ Registros de Activos
 									<label for="activoinputext7">Serial Proveedor</label>
 									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="ActSerialProveed">
 								</div>
-								{{-- <div class="col-md-6">
-									<label for="activoinputext8">Sede</label>
-									<input type="text" class="form-control" id="activoinputext8" placeholder="Sede" name="Sede">
-								</div> --}}
+								
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">

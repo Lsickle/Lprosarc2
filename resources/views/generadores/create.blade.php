@@ -56,15 +56,16 @@
 									</div>
 									<div class="col-xs-6">
 										<label for="GenerInputTipo">Cliente</label>
-										<select name="GenerCli" class="form-control" id="GenerInputTipo" placeholder="biologico">
+										<select name="GenerCli" class="form-control" id="GenerInputTipo" >
+											<option>Seleccione...</option>
 											@foreach($Sedes as $sede)
-											<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+												<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 									   <div class="icheck form-group">
-			                                <label for="GenerInputTipo">
+			                                <label for="inputcheck">
 			                                   {{trans('adminlte_lang::message.clientaudit')}}
 			                                </label>
 			                                 <input id="inputcheck" type="checkbox" name="GenerAuditable">

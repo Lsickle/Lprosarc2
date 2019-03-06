@@ -8,7 +8,8 @@ use App\Sede;
 use App\generador;
 use App\cliente;
 use App\audit;
-
+use App\Departamento;
+use App\Municipio;
 
 class sclientcontroller extends Controller
 {
@@ -40,8 +41,12 @@ class sclientcontroller extends Controller
     public function create()
     {
         $Clientes = cliente::all();
+        $Departamentos = Departamento::all();
+        // $Municipios = Municipio::where('FK_MunCity', '=', 'ID_Depart')->first();
+        $Municipios = Municipio::all();
+
         // $Sede->cliente = cliente::with('clientes')->get(); 
-        return view('sclientes.create', compact('Clientes'));
+        return view('sclientes.create', compact('Clientes', 'Departamentos', 'Municipios'));
     }
 
     /**
@@ -67,8 +72,9 @@ class sclientcontroller extends Controller
         $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->FK_SedeCli = $request->input('clientename');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
+        $Sede->FK_SedeCli = $request->input('clientename');
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');        
         $Sede->save();
 
         $log = new audit();
@@ -111,7 +117,12 @@ class sclientcontroller extends Controller
         
         $Sede = Sede::where('SedeSlug',$id)->first();
 
-        return view('sclientes.edit', compact('Sede', 'Clientes'));
+        $Departamentos = Departamento::all();
+
+        // $Municipios = Municipio::where('FK_MunCity', '=', 'ID_Depart')->first();
+        $Municipios = Municipio::all();
+
+        return view('sclientes.edit', compact('Sede', 'Clientes', 'Departamentos', 'Municipios'));
     }
 
     /**
@@ -125,7 +136,9 @@ class sclientcontroller extends Controller
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
         $Sede->fill($request->except('created_at'));
+        $Sede->SedeExt2 = $request->input('SedeExt2');
         $Sede->FK_SedeCli = $request->input('clientename');
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
         $Sede->save();
 
         $log = new audit();

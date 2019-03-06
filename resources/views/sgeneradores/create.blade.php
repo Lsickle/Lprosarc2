@@ -47,17 +47,28 @@
 										<input type="text" class="form-control" id="GSedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
 									</div> --}}
 									<div class="col-md-6">
+										<label for="departamento">Departamento</label>
+										<select class="form-control" id="departamento" name="Departamento" required="true">
+											<option>Seleccione...</option>
+											@foreach ($Departamentos as $Departamento)		
+												<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+											@endforeach
+											
+										</select>
+									</div>
+									<div class="col-md-6">
 										<label for="GSedemunicipio">Municipio</label>
-										<select class="form-control" id="GSedemunicipio" placeholder="Funza" name="Municipio" required="true">
-										<option>Mosquera</option>
-										<option>Madrid</option>
-										<option>Funza</option>
-										<option>Faca</option>
+										<select class="form-control" id="GSedemunicipio" name="FK_GSedeMun" required="true">
+										<option>Seleccione...</option>
+										@foreach ($Municipios as $Municipio)
+											<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+										@endforeach
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="FK_GSede" required="true">
+										<select class="form-control" id="clientname" name="FK_GSede" required="true">
+											<option>Seleccione....</option>
 											@foreach($generadors as $generador)
 												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
 											@endforeach()
@@ -83,7 +94,8 @@
 										<label for="GSedeinputext2">Ext 2</label>
 										<input type="text" class="form-control" id="GSedeinputext2" placeholder="1555" name="GSedeExt2" maxlength="4">
 									</div>
-									<div class="form-group" style="margin-top: 10em">
+									{{-- <div class="form-group" style="margin-top: 10em"> --}}
+										<div class="col-md-6">
 										<label for="GSedeinputemail">Email de la Sede</label>
 										<input type="email" class="form-control" id="GSedeinputemail" placeholder="Sistemas@Prosarc.com" name="GSedeEmail" required="true">
 									</div>

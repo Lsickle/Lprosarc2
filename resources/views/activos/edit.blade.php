@@ -50,6 +50,16 @@ Editar datos de Activos
 										@endforeach
 									</select>
 								</div>
+								<div class="col-md-6">
+									<label for="activo3">Sede</label>
+									<select class="form-control" id="activo3" name="FK_ActSede" required="true">
+										<option>Seleccione...</option>
+										@foreach ($Sedes as $Sede)
+											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
+											
+										@endforeach
+									</select>
+								</div>
                             {{-- </div> --}}
                             
                                 
