@@ -342,8 +342,10 @@
 	</select>
 </div>
 <div class="form-group">
+	<label>Peligrosidad del residuo</label>
 	<select name="RespelIgrosidad" class="form-control">
 		<optgroup label="Seleccion el tipo de Peligrosidad del residuo">
+			<option>Selecione...</option>
 			<option>Inflamable</option>
 			<option>Toxico</option>
 			<option>Biologico</option>
@@ -365,6 +367,17 @@
 			<option value="Solido">Solido</option>
 			<option value="Gaseoso">Gaseoso</option>
 			<option value="Mezcla">Mezcla</option>
+		</optgroup>
+	</select>
+</div>
+<div class="form-group">
+	<label>Sede</label>
+	<select name="FK_RespelGenerSede" class="form-control">
+		<optgroup label="Seleccione la sede de la que proviene">
+			<option>Selecione...</option>
+			@foreach ($Sedes as $Sede)	
+				<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+			@endforeach
 		</optgroup>
 	</select>
 </div>

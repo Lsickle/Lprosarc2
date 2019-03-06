@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Respel;
+use App\Sede;
 use Illuminate\Support\Facades\Auth;
 use App\audit;
 
@@ -40,7 +41,14 @@ class RespelController extends Controller
      */
     public function create()
     {
-        return view('respels.create');
+        // $Sedes = DB::table('sedes')
+        //     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        //     ->select('sedes.*', 'clientes.*')
+        //     // ->where('FK_SedeCli', '=', 'ID_Cli')
+        //     ->get();
+        $Sedes = Sede::all();  
+
+        return view('respels.create', compact('Sedes'));
     }
 
     /**
@@ -75,7 +83,7 @@ class RespelController extends Controller
         $respel->RespelEstado = $request->input('RespelEstado');
         $respel->RespelHojaSeguridad = $name;
         $respel->RespelTarj = 1;
-        $respel->FK_RespelGenerSede = 1;
+        $respel->FK_RespelGenerSede = $request->input('FK_RespelGenerSede');
         $respel->RespelSlug = "slug".$request->input('RespelName');
         $respel->save();
 
@@ -110,7 +118,10 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Sedes = Sede::all();  
+        $Respels = Respel::all();  
+
+        return view('respels.edit', compact('Sedes', 'Respels'));
     }
 
     /**
@@ -122,7 +133,21 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Respels = Respel::where('ID_Respel', $id)->first();
+        $Respels->fill($request->all());
+        $Respels->save();
+
+        // return $id;
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Respels->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('respels.index');
     }
 
     /**

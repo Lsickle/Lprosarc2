@@ -30,7 +30,7 @@
                 {{-- <th>Creado el</th> --}}
                 <th>Actualizado el</th>
                 <th>Ver Más...</th>
-                <th>Edicion</th>
+                <th>Editar</th>
               </tr>
             </thead>
             <tbody hidden onload="renderTable()" id="readyTable">
@@ -76,7 +76,7 @@
                 {{-- <td>{{$respel->created_at}}</td> --}}
                 <td>{{$respel->updated_at}}</td>
                 <td></td>
-                <td></td>
+                <td>{{$respel->RespelSlug}}</td>
                 {{-- <td>{{$respel->RespelSlug}}</td> --}}
               </tr>
               @endforeach
@@ -94,7 +94,7 @@
               <th>Generado por</th>
               <th>Creado el</th>
               <th>Actualizado el</th>
-              <th>edicion</th>
+              <th>Editar</th>
             </tr>
             </tfoot> --}}
           </table>

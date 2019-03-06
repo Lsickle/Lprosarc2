@@ -81,9 +81,9 @@
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
         {"targets": 11,
-        "data": "CliSlug",
+        "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
+          return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
         {"targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {

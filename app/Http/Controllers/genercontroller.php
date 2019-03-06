@@ -100,6 +100,7 @@ class genercontroller extends Controller
      */
     public function edit($id)
     {
+        
         $Sedes = Sede::select('ID_Sede','SedeName')->get();
         
         $generadors = generador::where('GenerSlug',$id)->first();
