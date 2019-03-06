@@ -41,8 +41,8 @@ const { mix } = require('laravel-mix');
 if (mix.config.inProduction) {
   mix.version();
   mix.minify();
-}
-*/
+}*/
+
 
 
 mix.js('resources/assets/js/app.js', 'public/js')
@@ -60,9 +60,30 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/css/bootstrap.min.css',
        'resources/assets/css/pratt_landing.min.css'
    ], 'public/css/all-landing.css')
-   .combine([
-        'node_modules/jquery-slimscroll/jquery.slimscroll.min.js'
+   .scripts([
+        'node_modules/%40fortawesome/fontawesome-free/js/all.min.js',
+        'node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js',
+        'node_modules/jquery-slimscroll/jquery.slimscroll.min.js',
+        'node_modules/smartwizard/dist/js/jquery.smartWizard.min.js'
     ], 'public/js/dependencias.js')
+   .scripts([
+        'node_modules/datatables.net/js/jquery.dataTables.min.js',
+        'node_modules/datatables.net-autofill/js/dataTables.autoFill.js',
+        'node_modules/datatables.net-bs/js/dataTables.bootstrap.min.js',
+        'node_modules/datatables.net-dt/js/dataTables.dataTables.min.js',
+        'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js',
+        'node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.min.js',
+        'node_modules/datatables.net-scroller/js/dataTables.scroller.min.js',
+        'node_modules/datatables.net-buttons/js/dataTables.buttons.min.js',
+        'node_modules/datatables.net-buttons/js/buttons.html5.min.js',
+        'node_modules/datatables.net-buttons/js/buttons.flash.min.js',
+        'node_modules/datatables.net-buttons/js/buttons.colVis.min.js',
+        'node_modules/datatables.net-colreorder/js/dataTables.colReorder.min.js',
+        'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js',
+        'node_modules/datatables.net-keytable/js/dataTables.keyTable.min.js',
+        'node_modules/datatables.net-select/js/dataTables.select.min.js',
+        'node_modules/datatables.net-responsive/js/dataTables.responsive.min.js'
+    ], 'public/js/datatable-depen.js')
 
 if (mix.config.inProduction) {
   mix.version();
