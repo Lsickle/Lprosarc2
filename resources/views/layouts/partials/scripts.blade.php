@@ -378,13 +378,13 @@ $(document).ready(function(){
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $(Selector.sidebar).slimScroll({
-      height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
+      height: ($(window).height()-$(Selector.mainHeader).height()) + 'px',
       color : 'rgba(0,0,0,0.2)',
       size  : '3px'
     })
-</script> --}}
+</script>
 
 {{-- bootstrap-switch  --}}
 <script >

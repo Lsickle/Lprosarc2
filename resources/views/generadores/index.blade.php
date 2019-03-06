@@ -15,6 +15,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">lista de Generadores</h3>
+              <a href="/generadores/create" class="btn btn-primary" style="float: right;">Crear</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
