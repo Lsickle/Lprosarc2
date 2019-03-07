@@ -149,6 +149,17 @@ class genercontroller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id->delete();
+        return $id;
+
+        $log = new audit();
+        $log->AuditTabla="generadors";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$generador->ID_Gener;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('Generadores.index');
     }
 }

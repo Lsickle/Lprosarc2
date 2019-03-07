@@ -157,6 +157,17 @@ class sgenercontroller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id->delete();
+        return $id;
+        
+        $log = new audit();
+        $log->AuditTabla = "gener_sedes";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $GSede->ID_GSede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('sgeneradores.index');
     }
 }

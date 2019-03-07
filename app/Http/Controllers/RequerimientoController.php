@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;  
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;   
 use App\Requerimiento;
-
+use App\Respel;
+use App\audit;
+ 
 class RequerimientoController extends Controller
 {
     /**
@@ -14,9 +17,11 @@ class RequerimientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $Requerimientos = DB::table('requerimientos')
-            ->select('*')
-            ->get();
+        // $Requerimientos = DB::table('requerimientos')
+        //     ->select('*')
+        //     ->get();
+        $Requerimientos = Requerimiento::all();
+
         return view('requerimientos.index', compact('Requerimientos'));
     }
 
@@ -27,7 +32,7 @@ class RequerimientoController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -38,7 +43,54 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Requerimiento = new Requerimiento();
+        $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
+        $Requerimiento->ReqFotoDescargue = $request->input('ReqFotoDescargue');
+        $Requerimiento->ReqFotoPesaje = $request->input('ReqFotoPesaje');
+        $Requerimiento->ReqFotoReempacado = $request->input('ReqFotoReempacado');
+        $Requerimiento->ReqFotoMezclado = $request->input('ReqFotoMezclado');
+        $Requerimiento->ReqFotoDestruccion = $request->input('ReqFotoDestruccion');
+
+        $Requerimiento->ReqVideoCargue = $request->input('ReqVideoCargue');
+        $Requerimiento->ReqVideoDescargue = $request->input('ReqVideoDescargue');
+        $Requerimiento->ReqVideoPesaje = $request->input('ReqVideoPesaje');
+        $Requerimiento->ReqVideoReempacado = $request->input('ReqVideoReempacado');
+        $Requerimiento->ReqVideoMezclado = $request->input('ReqVideoMezclado');
+        $Requerimiento->ReqVideoDestruccion = $request->input('ReqVideoDestruccion');
+
+        $Requerimiento->ReqAuditoria = $request->input('ReqAuditoria');
+        $Requerimiento->ReqAuditoriaTipo = $request->input('ReqAuditoriaTipo');
+
+        $Requerimiento->ReqDevolucion = $request->input('ReqDevolucion');
+        $Requerimiento->ReqDevolucionTipo = $request->input('ReqDevolucionTipo');
+        // $Requerimiento->ReqDevolucionCant = $request->input('ReqDevolucionCant');
+        $Requerimiento->ReqDatosPersonal = $request->input('ReqDatosPersonal');
+        $Requerimiento->ReqPlanillas = $request->input('ReqPlanillas');
+        $Requerimiento->ReqAlistamiento = $request->input('ReqAlistamiento');
+        $Requerimiento->ReqCapacitacion = $request->input('ReqCapacitacion');
+        $Requerimiento->ReqBascula = $request->input('ReqBascula');
+        $Requerimiento->ReqMasPerson = $request->input('ReqMasPerson');
+        $Requerimiento->ReqPlatform = $request->input('ReqPlatform');
+        $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
+
+
+        // $Requerimiento->FK_ReqRespel = $request->input('FK_ReqRespel');
+        $Requerimiento->FK_ReqRespel = 1;
+
+        // Se utiliza del registor de respel
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName');
+        $Requerimiento->save();
+
+        $log = new audit();
+        $log->AuditTabla="requerimientos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Requerimiento->ID_Req;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('respels.index');
+        // return redirect()->route('requerimientos.index');
     }
 
     /**
@@ -60,7 +112,7 @@ class RequerimientoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Requerimientos = Requerimiento::all();        
     }
 
     /**
@@ -72,7 +124,16 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Requerimiento->fill($request->all());
+        $Requerimiento->save();
+
+        $log = new audit();
+        $log->AuditTabla="requerimientos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Requerimiento->ID_Req;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
     }
 
     /**
@@ -83,6 +144,15 @@ class RequerimientoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id->delete();
+        return $id;
+
+        $log = new audit();
+        $log->AuditTabla="requerimientos";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$Requerimiento->ID_Req;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
     }
 }

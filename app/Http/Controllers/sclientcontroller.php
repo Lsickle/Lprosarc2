@@ -160,6 +160,15 @@ class sclientcontroller extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $id->delete($id);
+        // return $id;
+
+        $log = new audit();
+        $log->AuditTabla="sedes";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$Sede->ID_Sede;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
     }
 }

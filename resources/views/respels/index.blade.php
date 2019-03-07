@@ -28,7 +28,7 @@
                 <th>Estado</th>
                 <th>Generado por</th>
                 {{-- <th>Creado el</th> --}}
-                <th>Actualizado el</th>
+                {{-- <th>Actualizado el</th> --}}
                 <th>Ver Más...</th>
                 <th>Editar</th>
               </tr>
@@ -56,6 +56,7 @@
                   </div>
                 </div>
               </div> --}}
+              
               @foreach($Respels as $respel)
               <tr>
                 <td>{{$respel->RespelName}}</td>
@@ -72,9 +73,9 @@
                 @else
                 <td>NO</td>
                 @endif --}}
-                <td>{{$respel->GSedeName}}</td>
+                <td>{{$respel->GenerName}}</td>
                 {{-- <td>{{$respel->created_at}}</td> --}}
-                <td>{{$respel->updated_at}}</td>
+                {{-- <td>{{$respel->updated_at}}</td> --}}
                 <td></td>
                 <td>{{$respel->RespelSlug}}</td>
                 {{-- <td>{{$respel->RespelSlug}}</td> --}}
