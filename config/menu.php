@@ -29,7 +29,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         /*PESTAÑA DE CLIENTES*/
         ->add(Menu::new()
                 /*"PREPEND SIRVE PARA COLOCAR UN ETIQUETA FUERA DEL MENU (ul)"*/
-            ->prepend('<a href="#"><i class="fa fa-id-card"></i><span>'.trans('adminlte_lang::message.contacts').'</span><i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fa fa-id-card"></i><span>'.trans('adminlte_lang::message.contacts').'</span><i class="fas fa-angle-left pull-right"></i></a>')
 
              /*LE ASIGNA UNA CLASE A ESA ETIQUETA CUANDO ¡NO! ESTA ACTIVA*/
             ->addParentClass('treeview')
@@ -42,7 +42,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 
             /*UN SUBMENU */
             ->add(Menu::new()
-                ->prepend('<a href="#"><i class="fa fa-building"></i> Sedes<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>')
+                ->prepend('<a href="#"><i class="fa fa-building"></i> Sedes<span class="pull-right-container"><i class="fas fa-angle-left pull-right"></i></span></a>')
                 ->addParentClass('treeview')
                 ->add(Link::toUrl('/sclientes', '<i class="fa fa-map"></i>'. trans('adminlte_lang::message.csedeindex')))
                 ->addClass('treeview-menu')
@@ -50,12 +50,12 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE GENERADORES*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.genermenu').'</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.genermenu').'</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/generadores', '<i class="fa fa-list-ul"></i>'. trans('adminlte_lang::message.generindex')))
             ->addClass('treeview-menu')
             ->add(Menu::new()
-                ->prepend('<a href="#"><i class="fa fa-building"></i>Sede Generador<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i> </span></a>')
+                ->prepend('<a href="#"><i class="fa fa-building"></i>Sede Generador<span class="pull-right-container"><i class="fas fa-angle-left pull-right"></i> </span></a>')
                 ->addParentClass('treeview')
                 ->add(Link::toUrl('/sgeneradores', '<i class="fa fa-map"></i>'. trans('adminlte_lang::message.csedeindex')))
                 ->addClass('treeview-menu')
@@ -63,7 +63,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE RESIDUOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-biohazard"></i> <span>'. trans('adminlte_lang::langresiduos.residuolisttitle').'</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-biohazard"></i> <span>'. trans('adminlte_lang::langresiduos.residuolisttitle').'</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/respels', '<i class="fa fa-search"></i>'. trans('adminlte_lang::langresiduos.residuolisttitle')))
             ->add(Link::toUrl('/requerimientos', '<i class="fas fa-list-ol"></i> Requerimientos de Residuos'))
@@ -72,7 +72,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE DOCUMENTOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-print"></i> <span>Documentos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-print"></i> <span>Documentos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/certificado', '<i class="fas fa-certificate"></i> Certificados'))
             ->add(Link::toUrl('/manifiesto', '<i class="fas fa-tools"></i> Manifiestos'))
@@ -80,7 +80,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE PERSONAL*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-users"></i> <span>Personal</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/asistencia', '<i class="fas fa-tasks"></i> Asistencia'))
@@ -91,7 +91,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE CAPACITACIONES*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/capacitacion', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/capacitacion-personal', '<i class="fas fa-user-check"></i> Capacitaciones del personal'))
@@ -99,7 +99,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -108,7 +108,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -117,7 +117,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -126,7 +126,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -135,7 +135,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -144,7 +144,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         )
         /*PESTAÑA DE VEHICULOS*/
         ->add(Menu::new()
-            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->prepend('<a href="#"><i class="fas fa-truck-moving"></i></i> <span> Vehiculos</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
             ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
@@ -179,12 +179,12 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         #adminlte_menu
         /*->add(Link::toUrl('/prueba', '<i class="fa fa-link"></i><span>/prueba</span>'))*/
         ->add(Menu::adminlteSeparator('SECONDARY MENU'))
-        ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-share"></i><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>')
+        ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-share"></i><span>Multilevel</span> <i class="fas fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::to('/prueba', 'Link1'))->addClass('treeview-menu')
             ->add(Link::to('/clientes', 'Link2'))
             ->url('/clientes/create', 'Google')
-            ->add(Menu::new()->prepend('<a href="#"><span>Multilevel 2</span> <i class="fa fa-angle-left pull-right"></i></a>')
+            ->add(Menu::new()->prepend('<a href="#"><span>Multilevel 2</span> <i class="fas fa-angle-left pull-right"></i></a>')
                 ->addParentClass('treeview')
                 ->add(Link::to('/link21', 'Link21'))->addClass('treeview-menu')
                 ->add(Link::to('/link22', 'Link22'))

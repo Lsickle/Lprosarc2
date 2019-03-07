@@ -13,8 +13,6 @@
 
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script> --}}
 
 {{-- Dependencias Package.json --}}
 <script src="/js/dependencias.js"></script>
