@@ -19,10 +19,17 @@
             <table id="RequerimientosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
+                  <th>Requerimientos de</th>
+                  <th>Fecha Creado</th>
+                  <th>Fecha Creado</th>
+                  <th>Fecha Modificado</th>
+                  <th>Ver mas</th>
+                  <th>Edit</th>
+                  
+            	    {{-- <th>FotoAlmacenado</th>
                 	<th>FotoCargue</th>
                 	<th>FotoDescargue</th>
                   <th>FotoPesaje</th>
-            	    <th>FotoAlmacenado</th>
                   <th>FotoMezclado</th>
           	      <th>FotoDestruccion</th>
                   <th>VideoCargue</th>
@@ -43,7 +50,7 @@
                   <th>MasPerson</th>
                   <th>Platform</th>
                   <th>CertiEspecial</th>
-                  <th>Residuo</th>
+                  <th>Residuo</th> --}}
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">

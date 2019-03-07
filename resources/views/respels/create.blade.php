@@ -50,15 +50,15 @@
 										<div id="smartwizard">
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li>
-												<li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
+												{{-- <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
 												<li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
-												<li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
+												<li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li> --}}
 											</ul>
 											<div>
 												<div id="step-1" class="">
 													@include('layouts.RespelPartials.Respelform1')
 												</div>
-												<div id="step-2" class="">
+												{{-- <div id="step-2" class="">
 													@include('layouts.RespelPartials.Respelform2')
 												</div>
 												<div id="step-3" class="">
@@ -66,7 +66,7 @@
 												</div>
 												<div id="step-4" class="">
 													@include('layouts.RespelPartials.Respelform4')
-												</div>
+												</div> --}}
 											</div>
 										</div>
 									</div>

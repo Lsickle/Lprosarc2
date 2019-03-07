@@ -41,8 +41,8 @@ Registros de Activos
 								</div>
 							{{-- </div> --}}
 								<div class="col-md-6">
-									<label for="activo">SubCategoria</label>
-									<select class="form-control" id="activo" name="subcategoria" required="true">
+									<label for="activo1">SubCategoria</label>
+									<select class="form-control" id="activo1" name="FK_ActSub" required="true">
 										<option>Seleccione...</option>
 										@foreach ($SubActivos as $SubActivo)
 											 <option value="{{$SubActivo->ID_SubCat}}">{{$SubActivo->SubCatName}}</option>																
@@ -52,44 +52,51 @@ Registros de Activos
 							{{-- </div> --}}
 								<div class="col-md-6">
 									<label for="activoinputext1">Nombre del activo</label>
-									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="nombre">
+									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="ActName">
 								</div>
 								<div class="col-md-6">
-									<label for="activo">Forma del activo</label>
-									<select class="form-control" id="activo" name="Forma" required="true">
+									<label for="activo2">Forma del activo</label>
+									<select class="form-control" id="activo2" name="ActUnid" required="true">
 										<option>Seleccione...</option>
 										<option value="0">Unidad</option>
 										<option value="1">Peso</option>
 									</select>
 								</div>
 								<div class="col-md-6">
+									<label for="activo3">Sede</label>
+									<select class="form-control" id="activo3" name="FK_ActSede" required="true">
+										<option>Seleccione...</option>
+										@foreach ($Sedes as $Sede)
+											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
+											
+										@endforeach
+									</select>
+								</div>
+								<div class="col-md-6">
 									<label for="activoinputext2">Cantidad</label>
-									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="cantidad" max="999999">
+									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="ActCant" max="999999">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext3">Serial de Prosarc</label>
-									<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="serialPro">
+									<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="ActSerialProsarc">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext4">Modelo</label>
-									<input type="text" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="modelo">
+									<input type="text" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="ActModel">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext5">Talla</label>
-									<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="talla">
+									<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="ActTalla">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext6">Observaciones</label>
-									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones" name="observacion">
+									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones" name="ActObserv">
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext7">Serial Proveedor</label>
-									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="serialproveedor">
+									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="ActSerialProveed">
 								</div>
-								{{-- <div class="col-md-6">
-									<label for="activoinputext8">Sede</label>
-									<input type="text" class="form-control" id="activoinputext8" placeholder="Sede" name="Sede">
-								</div> --}}
+								
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">

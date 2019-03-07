@@ -15,6 +15,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Lista de sedes por cliente</h3>
+              <a href="/sclientes/create" class="btn btn-primary" style="float: right;">Crear</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

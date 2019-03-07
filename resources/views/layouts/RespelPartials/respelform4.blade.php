@@ -8,7 +8,7 @@
       </div>
       <div class="">
         <label>
-          <input class="AllowUncheck" type="radio" value="Virtual" name="ReqAuditoria"/> Auditoria Virtual
+          <input class="AllowUncheck" type="radio" value="Virtual" name="ReqAuditoriaTipo"/> Auditoria Virtual
         </label>
       </div>
       
@@ -22,11 +22,11 @@
           <input type="text" maxlength="64" class="" name="ReqDevolucionTipo"/> tipo de elementos
         </label>
       </div>
-      <div class="">
+      {{-- <div class="">
         <label>
           <input type="number" class="" min="1" pattern="^[0-9]+" name="ReqDevolucionCant"/> cantidad de elementos
         </label>
-      </div>
+      </div> --}}
       <div class="">
         <label>
           <input type="checkbox" class="testswitch" name="ReqDatosPersonal" value="1"/> Datos del Personal 
