@@ -13,7 +13,7 @@
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
+            <i class="fas fa-bars"></i>
         </a>
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
