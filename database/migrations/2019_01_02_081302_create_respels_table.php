@@ -17,8 +17,8 @@ class CreateRespelsTable extends Migration
             $table->increments('ID_Respel');
             $table->string('RespelName', 128);
             $table->text('RespelDescrip');
-            $table->string('YRespelClasf4741', 12);
-            $table->string('ARespelClasf4741', 12);
+            $table->string('YRespelClasf4741', 12)->nullable();
+            $table->string('ARespelClasf4741', 12)->nullable();
             $table->string('RespelIgrosidad', 128);
             $table->string('RespelEstado',32);
             $table->string('RespelHojaSeguridad', 128);

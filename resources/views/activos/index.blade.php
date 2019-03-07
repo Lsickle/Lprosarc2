@@ -62,16 +62,13 @@ Activos
                     <td>{{$Activo->ActSerialProsarc}}</td>
                     <td>{{$Activo->ActSerialProveed}}</td>
                     <td></td>
-                    <td></td>
-                    {{-- <th>{{$SubActivo->ActUnid}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActTalla}}</th> --}}
-                    {{-- <th>{{$SubActivo->ActObserv}}</th> --}}
+                    <td>{{$Activo->ID_Act}}</td>
+                    {{-- <th>{{$Activo->ActUnid}}</th> --}}
+                    {{-- <th>{{$Activo->ActTalla}}</th> --}}
+                    {{-- <th>{{$Activo->ActObserv}}</th> --}}
                   </tr>
                 
               @endforeach
-              {{-- @foreach ($Activos as $Activo)
-                  
-              @endforeach --}}
             {{-- <tfoot>
                 <tr>
                     <th>Categoria</th>

@@ -146,8 +146,23 @@ class clientcontoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function destroy($id, Cliente $cliente)
     public function destroy($id)
     {
-        //
+        $id->delete();
+        // $cliente->delete();
+        // return $cliente;
+        return $id;
+
+        $log = new audit();
+        $log->AuditTabla="clientes";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$cliente->ID_Cli;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('clientes.index');
+
     }
 }

@@ -44,9 +44,9 @@
             </form> --}}
       			<form action="/clientes/{{$cliente->ID_Cli}}" class="form-group" method="POST">
       				@csrf
-      				@method('DELETE')
+              @method('DELETE')
       					<button type="submit" class="btn btn-danger btn-block">Borrar</button>
-      			</form>
+            </form>
       
 </div>
             <!-- /.box-body -->

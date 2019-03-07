@@ -48,17 +48,29 @@
 										<input type="text" class="form-control" id="sedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
 									</div> --}}
 									<div class="col-md-6">
+										<label for="Departamento">Departamentos</label>
+										<select class="form-control" id="Departamento" name="Departamento" required="true">
+											<option>Seleccione...</option>
+											@foreach ($Departamentos as $Departamento)
+												
+											<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6">
 										<label for="sedemunicipio">Municipio</label>
-										<select class="form-control" id="sedemunicipio" name="Municipio" required="true">
-											<option>Mosquera</option>
-											<option>Madrid</option>
-											<option>Funza</option>
-											<option>Faca</option>
+										<select class="form-control" id="sedemunicipio" name="FK_GSedeMun" required="true">
+											<option>Seleccione....</option>
+											@foreach ($Municipios as $Municipio)
+												
+											<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+											@endforeach
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
 										<select class="form-control" id="clientname" name="FK_GSede" required="true">
+												<option>Seleccione....</option>
 											@foreach($generadores as $generador)
 												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
 											@endforeach()
@@ -84,7 +96,8 @@
 										<label for="sedeinputext2">Ext 2</label>
 										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="GSedeExt2" maxlength="4" value="{{$GSede->GSedeExt2}}">
 									</div>
-									<div class="form-group" style="margin-top: 10em">
+									{{-- <div class="form-group" style="margin-top: 10em"> --}}
+									<div class="col-md-6">
 										<label for="sedeinputemail">Email de la Sede</label>
 										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="GSedeEmail" required="true" value="{{$GSede->GSedeEmail}}">
 									</div>
