@@ -70,7 +70,7 @@ Route::resource('/recurso', 'RecursoController');
 Route::resource('/requerimientos', 'RequerimientoController');
 Route::resource('/holidays', 'holidayController');
 Route::get('/prueba', function () {
-    return view('Prueba.index');
+    return view('PruebaFullCalendar.index');
 });
 Auth::routes();
 

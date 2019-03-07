@@ -799,6 +799,11 @@ $(document).ready(function(){
     <script>
       $(function() {
         $('#calendar').fullCalendar({
+          themeSystem: 'bootstrap4'
+        })
+      });
+    </script>
+    {{-- 
           themeSystem: 'bootstrap4',
           height:"auto",
            header: {
@@ -816,6 +821,4 @@ $(document).ready(function(){
           /*dayClick: function() {
             alert('a day has been clicked!');
           }*/
-        },'option' , 'contentHeight' , 650)
-      });
-    </script>
+        },'option' , 'contentHeight' , 650) --}}
