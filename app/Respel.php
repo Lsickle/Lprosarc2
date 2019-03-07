@@ -17,10 +17,14 @@ class Respel extends Model
 	    return 'RespelSlug';
     }
     
-	public function requerimientos()
+	public function GenerSede()
 	{
-	 return $this->belongsTo('App\Requerimiento', 'ID_Req');
+	 return $this->belongsTo('App\GenerSede', 'ID_GSede', 'id');
 	}
+
+    public function Requerimiento(){
+    	return $this->hasMany('App\Requerimiento','ID_Req', 'id');//como residuos tiene muchos requerimientos
+    }
 
     public function Tratamiento(){
     	return $this->hasMany('App\Tratamiento','ID_Trat','id');//como residuos tiene muchos tratamientos

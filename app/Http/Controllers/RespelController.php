@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Respel;
+use App\GenerSede;
 use Illuminate\Support\Facades\Auth;
 use App\audit;
 
@@ -28,7 +29,12 @@ class RespelController extends Controller
         //          )
         //     ->get();
         /*se cambio la consulta de forma temporal para probar el index*/
-        $Respels = Respel::all();  
+
+        $Respels = DB::table('respels')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'respels.FK_RespelGenerSede')
+            ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->select('respels.*', 'generadors.GenerName')
+            ->get();
 
         return view('respels.index', compact('Respels'));
     }
@@ -40,7 +46,12 @@ class RespelController extends Controller
      */
     public function create()
     {
-        return view('respels.create');
+        $GSedes = DB::table('gener_sedes')
+            ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+            ->select('gener_sedes.*', 'generadors.*')
+            // ->where('gener_sedes.FK_GSede', '=', 'generadors.ID_Gener') 
+            ->get();
+        return view('respels.create', compact('GSedes'));
     }
 
     /**
@@ -51,17 +62,22 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
-
-        // return $request;
-
-         if ($request->hasfile('RespelHojaSeguridad')) {
+        if ($request->hasfile('RespelHojaSeguridad')) {
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
             $file->move(public_path().'/images/', $name);
         }
         else{
             $name = public_path().'/images/default.png';
+        }
 
+        if ($request->hasfile('RespelTarj')) {
+            $file = $request->file('RespelTarj');
+            $tarj = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/', $tarj);
+        }
+        else{
+            $tarj = public_path().'/images/default.png';
         }
        
         $respel = new Respel();
@@ -74,8 +90,8 @@ class RespelController extends Controller
         $respel->RespelStatus = $request->input('RespelStatus');
         $respel->RespelEstado = $request->input('RespelEstado');
         $respel->RespelHojaSeguridad = $name;
-        $respel->RespelTarj = 1;
-        $respel->FK_RespelGenerSede = 1;
+        $respel->RespelTarj = $tarj;
+        $respel->FK_RespelGenerSede = $request->input('FK_RespelGenerSede');
         $respel->RespelSlug = "slug".$request->input('RespelName');
         $respel->save();
 
@@ -87,7 +103,7 @@ class RespelController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
-         return redirect()->route('respels.index');
+         return redirect()->route('requerimientos.create');
 
     }
 
@@ -110,7 +126,10 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Respels = Respel::all();  
+        $GSedes = GenerSede::all();
+
+        return view('respels.edit', compact('Respels', 'GSedes'));
     }
 
     /**
@@ -122,7 +141,19 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Respels = Respel::where('ID_Respel', $id)->first();
+        $Respels->fill($request->all());
+        $Respels->save();
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Respels->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -133,6 +164,17 @@ class RespelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id->delete();
+        return $id;
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$Respels->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('respels.index');
     }
 }

@@ -76,15 +76,19 @@
         "keys": true,       
        "responsive": true,
         "columnDefs": [ {
-        "targets": 10,
+        "targets": 9,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
-        {"targets": 11,
+        {"targets": 10,
+        "data": "RespelSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
+        {"targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
-        {"targets": 5,
+          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}},
+        {"targets": 6,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}}
@@ -645,9 +649,9 @@ $(document).ready(function(){
           "render": function ( data, type, row, meta ) {
               return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
           {"targets": 9,
-          "data": "PersSlug",
+          "data": "ID_Act",
           "render": function ( data, type, row, meta ) {
-            return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}
+            return "<a href='/activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]
         });
       });

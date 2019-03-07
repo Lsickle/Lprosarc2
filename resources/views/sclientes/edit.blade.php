@@ -48,14 +48,24 @@
 										<input type="text" class="form-control" id="sedeinputcliente" placeholder="XXX.XXX.XXX.XXX-X" name="cliente" required="true">
 									</div> --}}
 									<div class="col-md-6">
-										<label for="sedemunicipio">Municipio</label>
-										<select class="form-control" id="sedemunicipio" placeholder="Funza" name="Municipio" required="true">
-										<option>Mosquera</option>
-										<option>Madrid</option>
-										<option>Funza</option>
-										<option>Faca</option>
-										</select>
-									</div>
+											<label for="departamento">Departamento</label>
+											<select class="form-control" id="departamento" name="Departamento" required="true">
+												<option>Seleccione...</option>
+												@foreach ($Departamentos as $Departamento)		
+													<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+												@endforeach
+												
+											</select>
+										</div>
+										<div class="col-md-6">
+											<label for="GSedemunicipio">Municipio</label>
+											<select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required="true">
+											<option>Seleccione...</option>
+											@foreach ($Municipios as $Municipio)
+												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+											@endforeach
+											</select>
+										</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
 										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
@@ -84,7 +94,8 @@
 										<label for="sedeinputext2">Ext 2</label>
 										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4" value="{{$Sede->SedeExt2}}">
 									</div>
-									<div class="form-group" style="margin-top: 10em">
+									{{-- <div class="form-group" style="margin-top: 10em"> --}}
+									<div class="col-md-6">									
 										<label for="sedeinputemail">Email de la Sede</label>
 										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true" value="{{$Sede->SedeEmail}}">
 									</div>
