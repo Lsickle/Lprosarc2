@@ -50,7 +50,7 @@
         "targets": 9,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+          return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
         {"targets": 10,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
@@ -230,7 +230,7 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success'/>Ver</a>";}},
         {"targets": 6,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
@@ -533,7 +533,7 @@ $(document).ready(function(){
             "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -590,7 +590,7 @@ $(document).ready(function(){
             "targets": 4,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -607,7 +607,7 @@ $(document).ready(function(){
           "targets": 8,
           "data": "PersSlug",
           "render": function ( data, type, row, meta ) {
-              return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+              return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
           {"targets": 9,
           "data": "PersSlug",
           "render": function ( data, type, row, meta ) {
@@ -671,7 +671,7 @@ $(document).ready(function(){
             "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -688,7 +688,7 @@ $(document).ready(function(){
             "targets": 7,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
