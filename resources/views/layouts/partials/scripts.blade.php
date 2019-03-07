@@ -826,12 +826,15 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 24,
+          "columnDefs": [{
+            "targets": 3,
             "data": "FK_RecSol",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-              }
+                return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          {"targets": 4,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]
         });
       });

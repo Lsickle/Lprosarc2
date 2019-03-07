@@ -17,10 +17,11 @@ class RequerimientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        // $Requerimientos = DB::table('requerimientos')
-        //     ->select('*')
-        //     ->get();
-        $Requerimientos = Requerimiento::all();
+        $Requerimientos = DB::table('requerimientos')
+            ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
+            ->select('requerimientos.*', 'respels.RespelName')
+            ->get();
+        // $Requerimientos = Requerimiento::all();
 
         return view('requerimientos.index', compact('Requerimientos'));
     }
