@@ -102,8 +102,8 @@ class RespelController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-
-         return redirect()->route('requerimientos.create');
+        // return $respel;
+        return view('requerimientos.create');
 
     }
 

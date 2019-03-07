@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;   
 use App\Requerimiento;
-use App\Respel;
+// use App\Respel;
 use App\audit;
  
 class RequerimientoController extends Controller
@@ -19,7 +19,9 @@ class RequerimientoController extends Controller
     public function index(){
         $Requerimientos = DB::table('requerimientos')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
-            ->select('requerimientos.*', 'respels.RespelName')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'respels.FK_RespelGenerSede')
+            ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->select('requerimientos.*', 'generadors.GenerName')
             ->get();
         // $Requerimientos = Requerimiento::all();
 
@@ -33,7 +35,7 @@ class RequerimientoController extends Controller
      */
     public function create()
     {
-        return redirect()->route('respels.index');
+        return view('requerimientos.create');
     }
 
     /**
@@ -44,6 +46,11 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
+        $Requerimientos = DB::table('requerimientos')
+            ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
+            ->select('requerimientos.*', 'respels.RespelName')
+            ->get();
+
         $Requerimiento = new Requerimiento();
         $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
         $Requerimiento->ReqFotoDescargue = $request->input('ReqFotoDescargue');
@@ -79,7 +86,7 @@ class RequerimientoController extends Controller
         $Requerimiento->FK_ReqRespel = 1;
 
         // Se utiliza del registor de respel
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName');
+        $Requerimiento->ReqSlug = 'ReqSlug54';
         $Requerimiento->save();
 
         $log = new audit();
@@ -90,6 +97,7 @@ class RequerimientoController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
+        // return $respel;
         return redirect()->route('respels.index');
         // return redirect()->route('requerimientos.index');
     }

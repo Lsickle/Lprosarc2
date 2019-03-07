@@ -16,14 +16,14 @@ class CreateRespelsTable extends Migration
         Schema::create('respels', function (Blueprint $table) {
             $table->increments('ID_Respel');
             $table->string('RespelName', 128);
-            $table->text('RespelDescrip');
+            $table->text('RespelDescrip')->nullable();
             $table->string('YRespelClasf4741', 12)->nullable();
             $table->string('ARespelClasf4741', 12)->nullable();
             $table->string('RespelIgrosidad', 128);
             $table->string('RespelEstado',32);
             $table->string('RespelHojaSeguridad', 128);
             $table->string('RespelTarj', 128);
-            $table->string('RespelStatus',16);
+            $table->string('RespelStatus',16)->nullable();
             $table->unsignedInteger('FK_RespelGenerSede');
             $table->string('RespelSlug')->unique();
             $table->timestamps();

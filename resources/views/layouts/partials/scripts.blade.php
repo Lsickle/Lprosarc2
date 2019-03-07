@@ -798,11 +798,11 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 3,
+            "targets": 5,
             "data": "FK_RecSol",
             "render": function ( data, type, row, meta ) {
                 return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          {"targets": 4,
+          {"targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}

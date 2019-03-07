@@ -42,7 +42,7 @@ class UserTableSeeder extends Seeder
         $user->email = 'User@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'User1';
-        $user->UsRol = 'Usuario';
+        $user->UsRol = 'Vigilante';
         $user->UsRolDesc = 'Usuario general';
         $user->save();
         /*$user->roles()->attach($role_user);*/

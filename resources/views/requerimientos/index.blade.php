@@ -22,7 +22,9 @@
                   <th>Requerimientos de</th>
                   <th>Auditable</th>
                   <th>Tipo de Auditoria</th>
-                  <th>Ver mas</th>
+                  <th>Creado</th>
+                  <th>Mejorado</th>
+                  <th>Ver mas ...</th>
                   <th>Edit</th>
                   
             	    {{-- <th>FotoAlmacenado</th>
@@ -67,9 +69,15 @@
                 </div>
                 @foreach($Requerimientos as $Requerimiento)
                 <tr>
-                  <td>{{$Requerimiento->AreaName}}</td>
-                  <td>{{$Requerimiento->ReqAuditoriaRespelName}}</td>
+                  <td>{{$Requerimiento->GenerName}}</td>
+                  @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
+                      <td>Si</td>
+                  @else
+                      <td>No</td>                      
+                  @endif
                   <td>{{$Requerimiento->ReqAuditoriaTipo}}</td>
+                  <td>{{$Requerimiento->created_at}}</td>
+                  <td>{{$Requerimiento->updated_at}}</td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -80,7 +88,9 @@
                       {{-- <th>Requerimientos de</th>
                       <th>Auditable</th>
                       <th>Tipo de Auditoria</th>
-                      <th>Ver mas</th>
+                      <th>Creado</th>
+                      <th>Mejorado</th>
+                      <th>Ver mas ...</th>
                       <th>Edit</th> --}}
                       
                       {{-- <th>FotoAlmacenado</th>

@@ -30,7 +30,7 @@
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/requerimientos" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 									<div class="fingerprint-spinner" id="loadingTable">
