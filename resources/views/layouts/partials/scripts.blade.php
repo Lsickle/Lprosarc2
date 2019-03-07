@@ -4,47 +4,18 @@
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
-<!-- jQuery 3 -->
-<script src="node_modules/jquery/dist/jquery.js"></script>
+{{-- CDNS de FullCalendar --}}
+{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- InputMask -->
-{{-- <script src="js/inputmask/dist/jquery.inputmask.bundle.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.date.extensions.js"></script>
-<script src="js/inputmask/dist/inputmask/jquery.inputmask.extensions.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-{{-- Popper JS --}}
-<script src="node_modules/popper.js/dist/popper.js"></script>
-
-{{-- bootstrap 4.3.1 --}}
-<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
 
 <!-- DataTables -->
-{{-- <script src="/js/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="/js/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/keytable/2.4.1/js/dataTables.keyTable.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fh-3.1.4/kt-2.5.0/r-2.2.2/sl-1.2.6/datatables.min.js"></script>
+<script src="/js/datatable-depen.js"></script>
 
-
-
-{{-- SmartWizard --}}
-<script src="/js/smartwizard/dist/js/jquery.smartWizard.js"></script>
-
-{{-- bootstrap-switch --}}
-<script src="/js/bootstrap-switch/dist/js/bootstrap-switch.js" ></script>
-
-{{-- cdn de datatable --}}
-{{-- <script src="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
-
-
-{{-- slimScroll --}}
-<script src="resources/assets/js/jquery-slimscroll/jquery.slimscroll.js" ></script>
+{{-- Dependencias Package.json --}}
+<script src="/js/dependencias.js"></script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -79,7 +50,7 @@
         "targets": 9,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+          return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
@@ -141,11 +112,11 @@
       ]
     });
    
-  new $.fn.dataTable.Buttons( table, {
+  /*new $.fn.dataTable.Buttons( table, {
       buttons: [
           'copy', 'pdf'
       ]
-  } );
+  } );*/
   // $('#UsersTable').DataTable( {
   //     dom: 'Bfrtip',
   //     buttons: [
@@ -263,7 +234,7 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success'/>Ver</a>";}},
         {"targets": 6,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
@@ -377,7 +348,7 @@ $(document).ready(function(){
       fixed layout. -->
 <script type="text/javascript">
     $(Selector.sidebar).slimScroll({
-      height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
+      height: ($(window).height()-$(Selector.mainHeader).height()) + 'px',
       color : 'rgba(0,0,0,0.2)',
       size  : '3px'
     })
@@ -566,7 +537,7 @@ $(document).ready(function(){
             "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -630,7 +601,7 @@ $(document).ready(function(){
             "targets": 4,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='/inventariotech/" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -647,7 +618,7 @@ $(document).ready(function(){
           "targets": 8,
           "data": "PersSlug",
           "render": function ( data, type, row, meta ) {
-              return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";}},
+              return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
           {"targets": 9,
           "data": "ID_Act",
           "render": function ( data, type, row, meta ) {
@@ -711,7 +682,7 @@ $(document).ready(function(){
             "targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -728,7 +699,7 @@ $(document).ready(function(){
             "targets": 7,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='#" + data + "' class='btn btn-success' /*style='width:5em; height:2em '*/>Ver</a>";
+                return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";
               }
           }]
         });
@@ -839,3 +810,29 @@ $(document).ready(function(){
         });
       });
     </script>
+    <script>
+      $(function() {
+        $('#calendar').fullCalendar({
+          themeSystem: 'bootstrap4'
+        })
+      });
+    </script>
+    {{-- 
+          themeSystem: 'bootstrap4',
+          height:"auto",
+           header: {
+               left:   'prevYear,nextYear',
+               center: 'title',
+               right:  'today prev,next'
+            },
+            buttonText: {
+                today : 'Hoy'
+            },
+            aspectRatio : 2,
+            windowResize: function(view) {
+              alert('The calendar has adjusted to a window resize');
+            }
+          /*dayClick: function() {
+            alert('a day has been clicked!');
+          }*/
+        },'option' , 'contentHeight' , 650) --}}
