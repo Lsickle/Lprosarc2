@@ -141,8 +141,9 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $Requerimientos = Respel::all();
         $Respels = Respel::where('ID_Respel', $id)->first();
-        $Respels->fill($request->all());
+        $Respels->fill($request->all())->with('FK',  $Respels->RespelSlug);
         $Respels->save();
 
         $log = new audit();
@@ -153,7 +154,7 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        return redirect()->route('respels.index');
+        return view('requerimientos.edit', compact('Requerimientos'));
     }
 
     /**

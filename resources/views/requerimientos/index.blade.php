@@ -79,7 +79,7 @@
                   <td>{{$Requerimiento->created_at}}</td>
                   <td>{{$Requerimiento->updated_at}}</td>
                   <td></td>
-                  <td></td>
+                  <td>{{$Requerimiento->ReqSlug}}</td>
                 </tr>
                 @endforeach
               </tbody>

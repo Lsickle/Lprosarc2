@@ -803,9 +803,9 @@ $(document).ready(function(){
             "render": function ( data, type, row, meta ) {
                 return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
           {"targets": 6,
-            "data": "PersSlug",
+            "data": "FK_ReqRespel",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}
+                return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]
         });
       });

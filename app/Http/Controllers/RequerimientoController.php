@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Requerimiento;
 use App\Respel;
 use App\audit;
-// use App\Http\Controllers\respels;
+
 class RequerimientoController extends Controller
 {
     /**
@@ -110,7 +110,14 @@ class RequerimientoController extends Controller
      */
     public function edit($id)
     {
-        $Requerimientos = Requerimiento::all();        
+        $Respels = $request->input('FK_ReqRespel');
+        // $Requerimientos = Requerimiento::where();   
+        $Requerimientos = DB::table('requerimientos')
+            
+            ->select('requerimientos.*')
+            ->get();
+
+        return view('requerimientos.edit', compact('Requerimientos'));     
     }
 
     /**
@@ -122,7 +129,13 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $Respels= $request->input('FK_ReqRespel');
+        // $Respels = Respel::where(RespelSlug, $request->input('FK_ReqRespel'))
+        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
+        
         $Requerimiento->fill($request->all());
+        $Requerimiento->FK_ReqRespel = $Requerimientos;
+
         $Requerimiento->save();
 
         $log = new audit();
@@ -132,6 +145,7 @@ class RequerimientoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -147,7 +161,7 @@ class RequerimientoController extends Controller
 
         $log = new audit();
         $log->AuditTabla="requerimientos";
-        $log->AuditType="Creado";
+        $log->AuditType="Eliminado";
         $log->AuditRegistro=$Requerimiento->ID_Req;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();

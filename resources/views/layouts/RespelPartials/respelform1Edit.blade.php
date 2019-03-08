@@ -1,14 +1,14 @@
 @foreach ($Respels as $Respel)
 @endforeach
-<div class="form-group">
+<div class="col-md-12">
         <label>Nombre</label>
         <input name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$Respel->RespelName}}" required>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Descripcion</label>
         <input name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respel->RespelDescrip}}" required>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label >Corriente de clasificacion Y</label>
         <select name="YRespelClasf4741" class="form-control">
             <optgroup label="Corriente de clasificacion Y segun Decreto Unico Ambiental del 2016">
@@ -61,7 +61,7 @@
             </optgroup>
         </select>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Corriente de clasificacion A</label>
         <select name="ARespelClasf4741" class="form-control">
             <option>Selecione...</option>
@@ -343,7 +343,7 @@
             </optgroup>
         </select>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Peligrosidad del residuo</label>
         <select name="RespelIgrosidad" class="form-control" value="{{$Respel->RespelIgrosidad}}">
             <optgroup label="Seleccion el tipo de Peligrosidad del residuo">
@@ -360,7 +360,7 @@
             </optgroup>
         </select>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Estado del residuo</label>
         <select name="RespelEstado" class="form-control" value="{{$Respel->RespelEstado}}">
             <optgroup label="Seleccione el estado físico del residuo">
@@ -372,7 +372,7 @@
             </optgroup>
         </select>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Sede</label>
         <select name="FK_RespelGenerSede" class="form-control">
             <optgroup label="Seleccione la sede de la que proviene">
@@ -383,16 +383,16 @@
             </optgroup>
         </select>
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Hoja de seguridad</label>
         <input name="RespelHojaSeguridad" type="file" class="form-control" value="{{$Respel->RespelHojaSeguridad}}">
     </div>
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Tarjeta De Emergencia</label>
         <input name="RespelTarj" type="file" class="form-control" value="{{$Respel->RespelTarj}}">
     </div>
     @if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
-    <div class="form-group">
+    <div class="col-md-12">
         <label>Estado de aprobación</label>
         <select name="RespelStatus" class="form-control" value="{{$Respel->RespelStatus}}">
             <optgroup label="Estado de aprobación por parte de Prosarc">
