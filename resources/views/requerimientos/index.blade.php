@@ -83,15 +83,15 @@
                 </tr>
                 @endforeach
               </tbody>
-              <tfoot>
+              {{-- <tfoot>
                   <tr>
-                      {{-- <th>Requerimientos de</th>
+                      <th>Requerimientos de</th>
                       <th>Auditable</th>
                       <th>Tipo de Auditoria</th>
                       <th>Creado</th>
                       <th>Mejorado</th>
                       <th>Ver mas ...</th>
-                      <th>Edit</th> --}}
+                      <th>Edit</th>--}}
                       
                       {{-- <th>FotoAlmacenado</th>
                       <th>FotoCargue</th>
@@ -118,8 +118,9 @@
                       <th>Platform</th>
                       <th>CertiEspecial</th>
                       <th>Residuo</th> --}}
-                    </tr>
-              </tfoot>
+                      
+                    {{--</tr>
+              </tfoot> --}}
             </table>
           </div>
           <!-- /.box-body -->

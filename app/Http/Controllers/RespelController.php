@@ -103,7 +103,7 @@ class RespelController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         // return $respel;
-        return view('requerimientos.create');
+        return redirect()->route('requerimientos.create')->with('status', $request->input('RespelName'))->with('FK',  $respel->RespelSlug);
 
     }
 

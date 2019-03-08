@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;   
 use App\Requerimiento;
-// use App\Respel;
+use App\Respel;
 use App\audit;
- 
+// use App\Http\Controllers\respels;
 class RequerimientoController extends Controller
 {
     /**
@@ -46,10 +46,7 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
-        $Requerimientos = DB::table('requerimientos')
-            ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
-            ->select('requerimientos.*', 'respels.RespelName')
-            ->get();
+        $Requerimientos = Respel::where('RespelSlug',$request->input('FK_ReqRespel'))->first();
 
         $Requerimiento = new Requerimiento();
         $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
@@ -68,7 +65,6 @@ class RequerimientoController extends Controller
 
         $Requerimiento->ReqAuditoria = $request->input('ReqAuditoria');
         $Requerimiento->ReqAuditoriaTipo = $request->input('ReqAuditoriaTipo');
-
         $Requerimiento->ReqDevolucion = $request->input('ReqDevolucion');
         $Requerimiento->ReqDevolucionTipo = $request->input('ReqDevolucionTipo');
         // $Requerimiento->ReqDevolucionCant = $request->input('ReqDevolucionCant');
@@ -80,13 +76,8 @@ class RequerimientoController extends Controller
         $Requerimiento->ReqMasPerson = $request->input('ReqMasPerson');
         $Requerimiento->ReqPlatform = $request->input('ReqPlatform');
         $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
-
-
-        // $Requerimiento->FK_ReqRespel = $request->input('FK_ReqRespel');
-        $Requerimiento->FK_ReqRespel = 1;
-
-        // Se utiliza del registor de respel
-        $Requerimiento->ReqSlug = 'ReqSlug54';
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('ReqRespel');
+        $Requerimiento->FK_ReqRespel =  $Requerimientos->ID_Respel;
         $Requerimiento->save();
 
         $log = new audit();
@@ -97,9 +88,7 @@ class RequerimientoController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
-        // return $respel;
-        return redirect()->route('respels.index');
-        // return redirect()->route('requerimientos.index');
+        return redirect()->route('respels.index', compact('Requerimientos'));
     }
 
     /**
