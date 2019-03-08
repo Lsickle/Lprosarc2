@@ -22,9 +22,9 @@
                   <th>Doctype</th>
                   <th>Documento</th>
                   <th>Nombre</th>
-                  <th>Correo</th>
                   <th>Telefono</th>
                   <th>Cargo</th>
+                  <th>Editar</th>
                   <th>Ver más..</th>
                 </tr>
               </thead>
@@ -46,9 +46,9 @@
                   <td>{{$Personal->PersDocType}}</td>
                   <td>{{$Personal->PersDocNumber}}</td>
                   <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
-                  <td>{{$Personal->PersEmail}}</td>
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
+                  <td>{{$Personal->PersSlug}}</td>
                   <td>{{$Personal->PersSlug}}</td>
                 </tr>
                 @endforeach

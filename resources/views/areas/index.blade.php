@@ -21,6 +21,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Sede</th>
+                 {{--  <th>Ver...</th> --}}
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,6 +41,7 @@
                 <tr>
                   <td>{{$Area->AreaName}}</td>
                   <td>{{$Area->SedeName}}</td>
+                  {{-- <td>{{$Area->ID_Area}}</td> --}}
                 </tr>
                 @endforeach
               </tbody>
