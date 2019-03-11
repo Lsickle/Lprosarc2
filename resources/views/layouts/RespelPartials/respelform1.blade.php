@@ -379,11 +379,11 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Sede</label>
-	<select name="FK_RespelGenerSede" class="form-control">
+	<select name="FK_RespelSede" class="form-control">
 		<optgroup label="Seleccione la sede de la que proviene">
 			<option>Selecione...</option>
-			@foreach ($GSedes as $GSede)	
-				<option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
+			@foreach ($Sedes as $Sede)	
+				<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
 			@endforeach
 		</optgroup>
 	</select>

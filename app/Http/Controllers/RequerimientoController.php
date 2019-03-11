@@ -19,9 +19,9 @@ class RequerimientoController extends Controller
     public function index(){
         $Requerimientos = DB::table('requerimientos')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
-            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'respels.FK_RespelGenerSede')
-            ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-            ->select('requerimientos.*', 'generadors.GenerName')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('requerimientos.*', 'clientes.CliName')
             ->get();
         // $Requerimientos = Requerimiento::all();
 
@@ -110,14 +110,16 @@ class RequerimientoController extends Controller
      */
     public function edit($id)
     {
-        $Respels = $request->input('FK_ReqRespel');
-        // $Requerimientos = Requerimiento::where();   
+        // $Respels = $request->input('FK_ReqRespel');
+        // $Requerimientos = Requerimiento::where(); 
+        return $id;
         $Requerimientos = DB::table('requerimientos')
-            
             ->select('requerimientos.*')
+            ->where('')
             ->get();
 
-        return view('requerimientos.edit', compact('Requerimientos'));     
+        // return view('requerimientos/'.$Requerimientos->ReqSlug.'/edit', compact('Requerimientos', 'Respels'));  
+        return view('requerimientos.edit', compact('Requerimientos', 'Respels'));  
     }
 
     /**
@@ -129,9 +131,8 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $Respels= $request->input('FK_ReqRespel');
-        // $Respels = Respel::where(RespelSlug, $request->input('FK_ReqRespel'))
-        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
+        $Respels = Respel::where('RespelSlug', $request->input('FK_ReqRespel'))
+        $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
         
         $Requerimiento->fill($request->all());
         $Requerimiento->FK_ReqRespel = $Requerimientos;

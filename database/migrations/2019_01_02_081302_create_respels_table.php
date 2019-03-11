@@ -24,10 +24,11 @@ class CreateRespelsTable extends Migration
             $table->string('RespelHojaSeguridad', 128);
             $table->string('RespelTarj', 128);
             $table->string('RespelStatus',16)->nullable();
-            $table->unsignedInteger('FK_RespelGenerSede');
+            $table->unsignedInteger('FK_RespelSede');
             $table->string('RespelSlug')->unique();
             $table->timestamps();
-            $table->foreign('FK_RespelGenerSede')->references('ID_GSede')->on('gener_sedes');
+            $table->foreign('FK_RespelSede')->references('ID_Sede')->on('sedes');
+            // $table->foreign('FK_RespelGenerSede')->references('ID_GSede')->on('gener_sedes');
         });
     }
     /**

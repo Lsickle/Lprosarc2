@@ -72,8 +72,9 @@ Reepel-Editar
 											</div>
 										</div>
 									</div>
-								<input hidden type="text" name="FK_ReqRespel" value="{{session('FK')}}">								
+								{{-- <input hidden type="text" name="FK_ReqRespel" value="{{Auth::respels()->ID_Respel}}">								 --}}
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+								<input hidden type="text" name="updated_by" value="{{session('FK')}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">

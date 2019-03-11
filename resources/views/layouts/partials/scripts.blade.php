@@ -50,7 +50,7 @@
         "targets": 9,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
+          return "<a method='get' href='#" + data + "' class='btn btn-success'>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
@@ -803,7 +803,7 @@ $(document).ready(function(){
             "render": function ( data, type, row, meta ) {
                 return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
           {"targets": 6,
-            "data": "FK_ReqRespel",
+            "data": "ReqSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]

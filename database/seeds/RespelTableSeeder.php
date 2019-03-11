@@ -23,7 +23,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'Si';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user00';
-        $Respel->FK_RespelGenerSede = '2';
+        $Respel->FK_RespelSede = '2';
         $Respel->save();
 
         $Respel = new Respel();
@@ -37,7 +37,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'No';
         $Respel->RespelStatus = 'Negada';
         $Respel->RespelSlug = 'user02';
-        $Respel->FK_RespelGenerSede = '4';
+        $Respel->FK_RespelSede = '4';
         $Respel->save();
 
         $Respel = new Respel();
@@ -51,7 +51,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'No';
         $Respel->RespelStatus = 'Pendiente';
         $Respel->RespelSlug = 'user03';
-        $Respel->FK_RespelGenerSede = '3';
+        $Respel->FK_RespelSede = '3';
         $Respel->save();
 
         $Respel = new Respel();
@@ -65,7 +65,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'Si';
         $Respel->RespelStatus = 'Incompleta';
         $Respel->RespelSlug = 'user04';
-        $Respel->FK_RespelGenerSede = '1';
+        $Respel->FK_RespelSede = '1';
         $Respel->save();
 
         $Respel = new Respel();
@@ -79,7 +79,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'Si';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user05';
-        $Respel->FK_RespelGenerSede = '5';
+        $Respel->FK_RespelSede = '5';
         $Respel->save();
     }
 }

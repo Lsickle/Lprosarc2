@@ -69,7 +69,7 @@
                 </div>
                 @foreach($Requerimientos as $Requerimiento)
                 <tr>
-                  <td>{{$Requerimiento->GenerName}}</td>
+                  <td>{{$Requerimiento->CliName}}</td>
                   @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
                       <td>Si</td>
                   @else

@@ -25,6 +25,8 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
+							{{-- {{$Usuario}} --}}
+
 							{{-- <div class="box-header with-border">
 								<h3 class="box-title">Formulario de registro</h3>
 							</div> --}}

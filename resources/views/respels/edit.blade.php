@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Reepel-Editar
+Respel-Editar
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
@@ -30,10 +30,9 @@ Reepel-Editar
 							</div>
 							<!-- /.box-header -->
                             <!-- form start -->
-                        @foreach ($Respels as $Respel)
-                            
-                        @endforeach
-                        <form role="form" action="/respels/{{$Respel->ID_Respel}}" method="POST" enctype="multipart/form-data">
+                        
+
+                        <form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
