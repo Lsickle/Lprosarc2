@@ -543,12 +543,12 @@ $(document).ready(function(){
             "targets": 5,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "/edit' class='btn btn-warning'/>Editar</a>";
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
               }},
             {"targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "' class='btn btn-success'/>Ver</a>";
+                return "<a method='get' href='/personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
               }
           }]
         });

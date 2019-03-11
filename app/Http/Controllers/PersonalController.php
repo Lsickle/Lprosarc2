@@ -16,10 +16,20 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        if(Auth::user()->UsRol === "Programador"){
+            $Personals = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                 ->join('areas', 'CargArea', '=', 'ID_Area')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete', 'areas.AreaName')
+                ->get();
+            return view('personal.index', compact('Personals'));
+        }
         $Personals = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName')
-            ->get();
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                 ->join('areas', 'CargArea', '=', 'ID_Area')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete', 'areas.AreaName')
+                ->where('personals.PersDelete',0)
+                ->get();
         return view('personal.index', compact('Personals'));
     }
 
@@ -116,9 +126,22 @@ class PersonalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+        $Persona = Personal::where('PersSlug', $id)->first();
+        $Persona->fill($request->all());
+        $Persona->FK_PersCargo = $request->input('FK_PersCargo');
+        $Persona->save();
+
+
+        $log = new audit();
+        $log->AuditTabla = "personals";
+        $log->AuditType = "Modificado";
+        $log->AuditRegistro = $Persona->ID_Pers;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $request->all();
+        $log->save();
+
+        return redirect()->route('personal.index');
     }
 
     /**
@@ -127,8 +150,24 @@ class PersonalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        $Persona = Personal::where('PersSlug', $id)->first();
+        if ($Persona->PersDelete == 0) {
+            $Persona->PersDelete = 1;
+        }
+        else{
+            $Persona->PersDelete = 0;
+        }
+        $Persona->save();
+
+        $log = new audit();
+        $log->AuditTabla = "personals";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Persona->ID_Pers;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Persona->PersDelete;
+        $log->save();
+
+        return redirect()->route('personal.index');
     }
 }
