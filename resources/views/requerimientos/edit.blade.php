@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Reepel-Editar
+Respel-Editar
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
@@ -30,24 +30,24 @@ Reepel-Editar
 							</div>
 							<!-- /.box-header -->
                             <!-- form start -->
-                        @foreach ($Requerimientos as $Requerimiento)
                             
-                        @endforeach
-                        <form role="form" action="/requerimientos/{{$Requerimiento->ID_Req}}" method="POST" enctype="multipart/form-data">
+						<div class="fingerprint-spinner" id="loadingTable">
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+						</div>
+                        @foreach ($Requerimientos as $Requerimiento)
+
+                        <form role="form" action="/requerimientos/{{$Requerimiento->ID_Req}}" method="POST" enctype="multipart/form-data" onsubmit="return ValidarFormulario" name="edit">
                                 @method('PUT')
                                 @csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									<div class="fingerprint-spinner" id="loadingTable">
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div>
 								<div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Actualice la información necesaria completando los campos requeridos según la informacion del residuo que registro</p>
@@ -72,9 +72,7 @@ Reepel-Editar
 											</div>
 										</div>
 									</div>
-								{{-- <input hidden type="text" name="FK_ReqRespel" value="{{Auth::respels()->ID_Respel}}">								 --}}
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
-								<input hidden type="text" name="updated_by" value="{{session('FK')}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
@@ -82,6 +80,21 @@ Reepel-Editar
 									</div>
 								</div>
 							</form>
+                        @endforeach
+						{{-- <script>
+
+								var checkbox = document.forms["edit"][""]('Destruccion');
+								checkbox.addEventListener("change", validaCheckbox, false);
+								function validaCheckbox(){
+								  var checked = checkbox.checked;
+								  if(checked){
+									alert('checkbox esta seleccionado');
+								  }
+								}
+									  if( $('Destruccion').prop('checked') ) {
+										   alert('Seleccionado');
+									  }
+						</script> --}}
 						</div>
 						<!-- /.box -->
 					</div>

@@ -391,12 +391,12 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Hoja de seguridad</label>
-	<input name="RespelHojaSeguridad" type="file" class="form-control">
+	<input name="RespelHojaSeguridad" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf">
 </div>
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Tarjeta De Emergencia</label>
-	<input name="RespelTarj" type="file" class="form-control">
+	<input name="RespelTarj" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf">
 </div>
 @if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
 {{-- <div class="form-group"> --}}

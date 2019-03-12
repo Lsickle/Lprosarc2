@@ -58,7 +58,7 @@ class RespelController extends Controller
             ->where('clientes.ID_Cli', 1) 
             ->get();
         // $Sedes = Sede::where()
-        return view('respels.create', compact('Sedes', 'Usuario'));
+        return view('respels.create', compact('Sedes'));
     }
 
     /**
@@ -73,19 +73,19 @@ class RespelController extends Controller
         if ($request->hasfile('RespelHojaSeguridad')) {
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/', $name);
+            $file->move(public_path().'/img/', $name);
         }
         else{
-            $name = public_path().'/images/default.png';
+            $name = public_path().'/img/default.png';
         }
 
         if ($request->hasfile('RespelTarj')) {
             $file = $request->file('RespelTarj');
             $tarj = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/', $tarj);
+            $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = public_path().'/images/default.png';
+            $tarj = public_path().'/img/default.png';
         }
        
         $respel = new Respel();
@@ -111,7 +111,7 @@ class RespelController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         // return $respel;
-        return redirect()->route('requerimientos.create')->with('status', $request->input('RespelName'))->with('FK',  $respel->RespelSlug);
+        return redirect()->route('requerimientos.create');
 
     }
 
@@ -136,7 +136,7 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();   
         // $Respels = Respel::all();   
-        // return $Respels;
+        // return $id;
         
         $Sedes = Sede::all();
 
@@ -152,12 +152,28 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $RespelsReq = Auth::respel()->ID_Respel;
-        // return $id;
-        // $Respels = Respel::where('ID_Respel', $id)->first();
-        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
-        // return $Requerimientos;
-        $Respels->fill($request->all());
+        $Respels = Respel::where('ID_Respel', $id)->first();
+        $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
+        $Respels->fill($request->except('RespelTarj', 'RespelHojaSeguridad'));
+        if ($request->hasfile('RespelHojaSeguridad')) {
+            $file = $request->file('RespelHojaSeguridad');
+            $name = time().$file->getClientOriginalName();
+            $Respels->RespelHojaSeguridad = $name;
+            $file->move(public_path().'/img/', $name);
+        }
+        else{
+            $name = public_path().'/img/default.png';
+        }
+
+        if ($request->hasfile('RespelTarj')) {
+            $file = $request->file('RespelTarj');
+            $tarj = time().$file->getClientOriginalName();
+            $Respels->RespelTarj = $tarj;
+            $file->move(public_path().'/img/', $tarj);
+        }
+        else{
+            $tarj = public_path().'/img/default.png';
+        }
         $Respels->save();
 
         $log = new audit();
@@ -168,9 +184,7 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        // return view('requerimientos/'.$Requerimientos->ReqSlug.'/edit', compact('Requerimientos', 'RespelsReq'))->with('FK',  $Respels->RespelSlug);
-        // return redirect()->route('requerimientos.edit', compact('Requerimientos', 'RespelsReq'))->with('FK',  $Respels->RespelSlug);
-        return redirect()->route('requerimientos.edit', compact('Requerimientos');
+        return redirect()->route('requerimientos.edit', compact('Requerimientos'));
     }
 
     /**

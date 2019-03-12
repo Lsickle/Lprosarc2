@@ -56,13 +56,13 @@
         "render": function ( data, type, row, meta ) {
           return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
         {"targets": 5,
-        "data": "CliSlug",
+        "data": "RespelHojaSeguridad",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}},
+          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
         {"targets": 6,
-        "data": "CliSlug",
+        "data": "RespelTarj",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}}
+          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
   });

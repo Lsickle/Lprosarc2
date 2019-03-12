@@ -110,16 +110,18 @@ class RequerimientoController extends Controller
      */
     public function edit($id)
     {
-        // $Respels = $request->input('FK_ReqRespel');
-        // $Requerimientos = Requerimiento::where(); 
-        return $id;
         $Requerimientos = DB::table('requerimientos')
             ->select('requerimientos.*')
-            ->where('')
+            ->where('requerimientos.ID_Req', '=', $id)
             ->get();
 
-        // return view('requerimientos/'.$Requerimientos->ReqSlug.'/edit', compact('Requerimientos', 'Respels'));  
-        return view('requerimientos.edit', compact('Requerimientos', 'Respels'));  
+        // $Reque = DB::table('requerimientos')
+        //     ->select('requerimientos.ReqSlug')
+        //     ->where('requerimientos.ID_Req', '=', $id)
+        //     ->get();
+
+        // return view('requerimientos/'.$Reque.'/edit', compact('Requerimientos', 'Reque'));  
+        return view('requerimientos.edit', compact('Requerimientos', 'Reque'));  
     }
 
     /**
@@ -131,11 +133,13 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Respels = Respel::where('RespelSlug', $request->input('FK_ReqRespel'))
-        $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
-        
+        $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
         $Requerimiento->fill($request->all());
-        $Requerimiento->FK_ReqRespel = $Requerimientos;
+        
+        // return $Requerimiento;
+        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
+        
+        // $Requerimiento->FK_ReqRespel = $Requerimientos;
 
         $Requerimiento->save();
 
@@ -146,7 +150,7 @@ class RequerimientoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        return redirect()->route('respels.index');
+        return redirect()->route('respels.index', compact('Requerimiento'));
     }
 
     /**

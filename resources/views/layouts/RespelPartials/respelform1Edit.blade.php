@@ -384,11 +384,11 @@
     </div>
     <div class="col-md-12">
         <label>Hoja de seguridad</label>
-        <input name="RespelHojaSeguridad" type="file" class="form-control" value="{{$Respels->RespelHojaSeguridad}}">
+        <input name="RespelHojaSeguridad" type="file" accept=".png, .jpg, .jpeg,.pdf" class="form-control" value="{{$Respels->RespelHojaSeguridad}}">
     </div>
     <div class="col-md-12">
         <label>Tarjeta De Emergencia</label>
-        <input name="RespelTarj" type="file" class="form-control" value="{{$Respels->RespelTarj}}">
+        <input name="RespelTarj" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf" value="{{$Respels->RespelTarj}}">
     </div>
     @if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
     <div class="col-md-12">
