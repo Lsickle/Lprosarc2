@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-	{{ trans('adminlte_lang::message.home') }}
-@endsection
+@section('htmlheader_title','Personal')
 
 
 @section('main-content')

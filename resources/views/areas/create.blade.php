@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('htmlheader_title','Registro de areas')
-@section('contentheader_title','Registro de areas')
+@section('htmlheader_title','Areas')
+@section('contentheader_title','Registro de Areas')
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">

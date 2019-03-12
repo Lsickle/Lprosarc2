@@ -59,7 +59,8 @@
                           @csrf
                           <input type="submit" class='btn btn-success btn-block' value="Añadir">
                         </form>
-                      @endif</td>
+                      @endif
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

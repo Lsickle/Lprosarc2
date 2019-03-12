@@ -477,6 +477,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
+      "columnDefs": [ {
+          "targets": 4,
+          "data": "ID_Carg",
+          "render": function ( data, type, row, meta ) {
+          return "<a href='/cargos/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>  

@@ -2,7 +2,7 @@
 
 @section('htmlheader_title','Personal')
 
-@section('contentheader_title', 'Personal')
+@section('contentheader_title', 'Reguistro de Personal')
 
 @section('main-content')
 	<div class="container-fluid spark-screen">
