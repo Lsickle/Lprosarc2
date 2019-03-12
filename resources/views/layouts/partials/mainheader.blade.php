@@ -4,17 +4,20 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>S-</b>R</span>
+        <span class="logo-mini"><img src="/img/LogoProsarc.png" style="width: 80%; margin: 5px; border-radius: 50%;"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>SiG</b>ReS</span>
+        <span class="logo-lg"><b>Prosarc S.A ESP</b></span>
     </a>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <i class="fas fa-bars"></i>
+        <a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
+            <i class="fas fa-users"></i>
         </a>
+        {{-- <a href="#" class="fa fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; font-size: 14px; box-sizing: border-box; padding: 15px 15px; overflow: visible; color:#FFFFFF; float: left;">
+            <i class="fas fa-bars"></i>
+        </a> --}}
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -117,14 +120,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="max-width: 280px;white-space: nowrap;overflow: hidden;overflow-text: ellipsis">
                             <!-- The user image in the navbar-->
-                            <img src="../../../images/{{ Auth::user()->UsAvatar }}" class="user-image" alt="User Image"/>
+                            <img src="../../../img/{{ Auth::user()->UsAvatar }}" class="user-image" alt="User Image"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="../../../images/{{ Auth::user()->UsAvatar }}" class="img-circle" alt="User Image" />
+                                <img src="../../../img/{{ Auth::user()->UsAvatar }}" class="img-circle" alt="User Image" />
                                 <p>
                                     <span data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
                                     <small>{{ trans('adminlte_lang::message.login') }} Nov. 2012</small>

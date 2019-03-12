@@ -64,22 +64,13 @@
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-									   <div class="icheck form-group">
-			                                <label for="ClienteInputTipo">
-			                                   {{trans('adminlte_lang::message.clientaudit')}}
-			                                </label>
-			                                 <input id="inputcheck" type="checkbox" name="CliAuditable">
-			                            </div>
-			                            <div >
-			                            	<input  hidden="false" type="text" name="CliSlug" value="temp">
-			                            </div>
+									<div class="col-xs-6">
+										<label for="CliAuditable">{{trans('adminlte_lang::message.clientaudit')}}</label>
+										<select name="CliAuditable" class="form-control" id="ClienteInputTipo" placeholder="biologico">
+											<option value="1">Si</option>
+											<option value="0">No</option>
+										</select>
 									</div>
-									{{-- <div class="form-group">
-										<label for="exampleInputFile">Documento requerido</label>
-										<input name="" type="file" id="exampleInputFile">
-										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div> --}}
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" style="float:right; margin-right:5%">

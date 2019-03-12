@@ -16,6 +16,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sourceMaps()
    .combine([
        'node_modules/bootstrap/dist/css/bootstrap.min.css',
+       'node_modules/@fortawesome/fontawesome-free/css/all.css',
        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css'
@@ -25,52 +26,52 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/css/pratt_landing.min.css'
    ], 'public/css/all-landing.css')
    .combine([
-        'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
-        'node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
-        'node_modules/smartwizard/dist/css/smart_wizard.min.css',
-        'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.min.css',
-        'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.min.css',
-        'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.min.css',
-        'node_modules/fullcalendar/dist/fullcalendar.min.css'
+        'node_modules/@fortawesome/fontawesome-free/css/all.css',
+        'node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css',
+        'node_modules/smartwizard/dist/css/smart_wizard.css',
+        'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
+        'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
+        'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
+        'node_modules/fullcalendar/dist/fullcalendar.css'
     ], 'public/css/dependencias.css')
    .combine([
-        'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
-        'node_modules/datatables.net-autofill-dt/css/autoFill.dataTables.min.css',
-        'node_modules/datatables.net-buttons-dt/css/buttons.dataTables.min.css',
-        'node_modules/datatables.net-colreorder-dt/css/colReorder.dataTables.min.css',
-        'node_modules/datatables.net-fixedcolumns-dt/css/fixedColumns.dataTables.min.css',
-        'node_modules/datatables.net-fixedheader-dt/css/fixedHeader.dataTables.min.css',
-        'node_modules/datatables.net-keytable-dt/css/keyTable.dataTables.min.css',
-        'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.min.css',
-        'node_modules/datatables.net-rowgroup-dt/css/rowGroup.dataTables.min.css',
-        'node_modules/datatables.net-rowreorder-dt/css/rowReorder.dataTables.min.css',
-        'node_modules/datatables.net-scroller-dt/css/scroller.dataTables.min.css',
-        'node_modules/datatables.net-select-dt/css/select.dataTables.min.css'
+        'node_modules/datatables.net-dt/css/jquery.dataTables.css',
+        'node_modules/datatables.net-autofill-dt/css/autoFill.dataTables.css',
+        'node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css',
+        'node_modules/datatables.net-colreorder-dt/css/colReorder.dataTables.css',
+        'node_modules/datatables.net-fixedcolumns-dt/css/fixedColumns.dataTables.css',
+        'node_modules/datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css',
+        'node_modules/datatables.net-keytable-dt/css/keyTable.dataTables.css',
+        'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css',
+        'node_modules/datatables.net-rowgroup-dt/css/rowGroup.dataTables.css',
+        'node_modules/datatables.net-rowreorder-dt/css/rowReorder.dataTables.css',
+        'node_modules/datatables.net-scroller-dt/css/scroller.dataTables.css',
+        'node_modules/datatables.net-select-dt/css/select.dataTables.css'
     ], 'public/css/datatable-depen.css')
    .scripts([
-        'node_modules/@fortawesome/fontawesome-free/js/all.min.js',
-        'node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js',
-        'node_modules/jquery-slimscroll/jquery.slimscroll.min.js',
-        'node_modules/smartwizard/dist/js/jquery.smartWizard.min.js',
-        'node_modules/moment/min/moment-with-locales.min.js',
-        'node_modules/fullcalendar/dist/fullcalendar.min.js'
+        'node_modules/@fortawesome/fontawesome-free/js/all.js',
+        'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
+        'node_modules/jquery-slimscroll/jquery.slimscroll.js',
+        'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
+        'node_modules/moment/min/moment-with-locales.js',
+        'node_modules/fullcalendar/dist/fullcalendar.js'
     ], 'public/js/dependencias.js')
    .scripts([
-        'node_modules/datatables.net/js/jquery.dataTables.min.js',
+        'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-autofill/js/dataTables.autoFill.js',
-        'node_modules/datatables.net-colreorder/js/dataTables.colReorder.min.js',
-        'node_modules/datatables.net-buttons/js/dataTables.buttons.min.js',
-        'node_modules/datatables.net-buttons/js/buttons.html5.min.js',
-        'node_modules/datatables.net-buttons/js/buttons.flash.min.js',
-        'node_modules/datatables.net-buttons/js/buttons.colVis.min.js',
-        'node_modules/datatables.net-dt/js/dataTables.dataTables.min.js',
-        'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js',
-        'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js',
-        'node_modules/datatables.net-keytable/js/dataTables.keyTable.min.js',
-        'node_modules/datatables.net-responsive/js/dataTables.responsive.min.js',
-        'node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.min.js',
-        'node_modules/datatables.net-scroller/js/dataTables.scroller.min.js',
-        'node_modules/datatables.net-select/js/dataTables.select.min.js'
+        'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
+        'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
+        'node_modules/datatables.net-buttons/js/buttons.html5.js',
+        'node_modules/datatables.net-buttons/js/buttons.flash.js',
+        'node_modules/datatables.net-buttons/js/buttons.colVis.js',
+        'node_modules/datatables.net-dt/js/dataTables.dataTables.js',
+        'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
+        'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.js',
+        'node_modules/datatables.net-keytable/js/dataTables.keyTable.js',
+        'node_modules/datatables.net-responsive/js/dataTables.responsive.js',
+        'node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.js',
+        'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
+        'node_modules/datatables.net-select/js/dataTables.select.js'
     ], 'public/js/datatable-depen.js')
 
    /*// PACKAGE (ADMINLTE-LARAVEL) RESOURCES

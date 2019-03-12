@@ -22,10 +22,11 @@
                   <th>Doctype</th>
                   <th>Documento</th>
                   <th>Nombre</th>
-                  <th>Correo</th>
                   <th>Telefono</th>
                   <th>Cargo</th>
-                  <th>Ver más..</th>
+                  <th>Ver más</th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -42,14 +43,33 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Personals as $Personal)
+                @component('layouts.partials.modal')
+                    {{$Personal->ID_Pers}}
+                @endcomponent
+                {{-- @include('layouts.partials.modal') --}}
                 <tr>
                   <td>{{$Personal->PersDocType}}</td>
                   <td>{{$Personal->PersDocNumber}}</td>
                   <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
-                  <td>{{$Personal->PersEmail}}</td>
                   <td>{{$Personal->PersCellphone}}</td>
-                  <td>{{$Personal->CargName}}</td>
+                  <td>{{$Personal->CargName." de ".$Personal->AreaName}}</td>
                   <td>{{$Personal->PersSlug}}</td>
+                  <td>{{$Personal->PersSlug}}</td>
+                  <td>@if($Personal->PersDelete == 0)
+                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Personal->ID_Pers}}' class='btn btn-danger btn-block'>Borrar</a>
+                        <form action='/personal/{{$Personal->PersSlug}}' method='POST'>
+                            @method('DELETE')
+                            @csrf
+                            <input  type="submit" id="Eliminar{{$Personal->ID_Pers}}" style="display: none;">
+                        </form>
+                      @else
+                        <form action='/personal/{{$Personal->PersSlug}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                        </form>
+                      @endif
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

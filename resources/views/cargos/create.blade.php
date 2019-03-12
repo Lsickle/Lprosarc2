@@ -1,30 +1,18 @@
 @extends('layouts.app')
-@section('htmlheader_title','Registro de oficinas')
-@section('contentheader_title','Registro de oficinas')
+@section('htmlheader_title','Cargos')
+@section('contentheader_title','Registro de Cargos')
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				{{-- <div class="box-header with-border">
-					<h3 class="box-title">Datos Básicos de empresa</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
-				</div> --}}
+				
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							{{-- <div class="box-header with-border">
-								<h3 class="box-title">Quick Example</h3>
-							</div> --}}
-							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/cargos" method="POST" enctype="multipart/form-data">
 								@csrf

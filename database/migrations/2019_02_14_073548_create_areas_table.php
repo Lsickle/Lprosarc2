@@ -18,7 +18,6 @@ class CreateAreasTable extends Migration
             $table->string('AreaName',128);
             $table->unsignedInteger('FK_AreaSede')->nullable();
             $table->unsignedInteger('FK_GenerSede')->nullable();
-
             $table->foreign('FK_AreaSede')->references('ID_Sede')->on('sedes');
             $table->foreign('FK_GenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->timestamps();

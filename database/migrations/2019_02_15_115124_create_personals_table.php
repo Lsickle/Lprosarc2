@@ -21,7 +21,6 @@ class CreatePersonalsTable extends Migration
             $table->string('PersFirstName',64);
             $table->string('PersSecondName',64)->nullable();
             $table->string('PersLastName',64);
-            $table->string('PersEmail');
             $table->string('PersLibreta',25)->nullable();
             $table->string('PersPase',5)->nullable();
             $table->date('PersBirthday')->nullable();
