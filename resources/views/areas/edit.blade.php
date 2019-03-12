@@ -12,16 +12,19 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							<form role="form" action="/areas" method="POST" enctype="multipart/form-data">
+						@foreach($Areas as $Area)
+							<form role="form" action="/areas/{{$Area->ID_Area}}" method="POST" enctype="multipart/form-data">
+								@method('PATCH')
 								@csrf
 								<div class="box-body">
 									<div class="col-xs-6">
 										<label for="NombreArea">Nombre Area</label>
-										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" >
+										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" value="{{$Area->AreaName}}">
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">
 										<label for="SedeSelect">Sede</label>
 										<select name="AreaSede" id="SedeSelect" class="form-control">
+											<option value="{{$Area->FK_AreaSede || $Area->FK_GenerSede}}">Seleccione...</option>
 											@foreach($Sedes as $Sede)
 												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
 											@endforeach
@@ -29,9 +32,10 @@
 									</div>
 								</div>	
 								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+									<button type="submit" class="btn btn-primary">Editar</button>
 								</div>
 							</form>
+						@endforeach
 						</div>
 						<!-- /.box -->
 					</div>

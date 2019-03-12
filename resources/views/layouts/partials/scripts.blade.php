@@ -461,12 +461,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
-      /*"columnDefs": [ {
+      "columnDefs": [ {
           "targets": 2,
           "data": "ID_Area",
           "render": function ( data, type, row, meta ) {
-          return "<a href='/areas/" + data + "' class='btn btn-success'>Ver</a>";}      
-          }]*/
+          return "<a href='/areas/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>

@@ -20,14 +20,14 @@ class PersonalController extends Controller
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                  ->join('areas', 'CargArea', '=', 'ID_Area')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete', 'areas.AreaName')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
                 ->get();
             return view('personal.index', compact('Personals'));
         }
         $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                  ->join('areas', 'CargArea', '=', 'ID_Area')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete', 'areas.AreaName')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
                 ->where('personals.PersDelete',0)
                 ->get();
         return view('personal.index', compact('Personals'));
@@ -73,6 +73,7 @@ class PersonalController extends Controller
         $Personal->PersSalida = $request->input('PersSalida');
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersSlug = "pers".$Personal->PersDocNumber.date('Ymd')."prosarc";
+        $Personal->PersDelete = 0;
         $Personal->save();
 
         $log = new audit();

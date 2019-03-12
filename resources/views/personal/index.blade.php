@@ -26,7 +26,7 @@
                   <th>Cargo</th>
                   <th>Ver más</th>
                   <th>Editar</th>
-                  <th>Eliminar</th>
+                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -43,7 +43,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Personals as $Personal)
-                @include('layouts.partials.modal')
+                @component('layouts.partials.modal')
+                    {{$Personal->ID_Pers}}
+                @endcomponent
+                {{-- @include('layouts.partials.modal') --}}
                 <tr>
                   <td>{{$Personal->PersDocType}}</td>
                   <td>{{$Personal->PersDocNumber}}</td>
@@ -53,17 +56,17 @@
                   <td>{{$Personal->PersSlug}}</td>
                   <td>{{$Personal->PersSlug}}</td>
                   <td>@if($Personal->PersDelete == 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal' class='btn btn-danger btn-block'>Borrar</a>
+                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Personal->ID_Pers}}' class='btn btn-danger btn-block'>Borrar</a>
                         <form action='/personal/{{$Personal->PersSlug}}' method='POST'>
                             @method('DELETE')
                             @csrf
-                            <input  type="submit" id="Eliminar" style="display: none;">
+                            <input  type="submit" id="Eliminar{{$Personal->ID_Pers}}" style="display: none;">
                         </form>
                       @else
                         <form action='/personal/{{$Personal->PersSlug}}' method='POST'>
                           @method('DELETE')
                           @csrf
-                          <input type="submit" class='btn btn-success' value="Añadir">
+                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
                         </form>
                       @endif
                   </td>

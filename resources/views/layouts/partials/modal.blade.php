@@ -1,5 +1,5 @@
  {{--  Modal --}}
-    <div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal modal-default fade in" id="myModal{{ $slot }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
@@ -11,7 +11,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success pull-left" data-dismiss="modal">No, salir</button>
-            <label for="Eliminar" class='btn btn-danger'>Si, eliminar</label>
+            <label for="Eliminar{{ $slot }}" class='btn btn-danger'>Si, eliminar</label>
           </div>
         </div>
       </div>
