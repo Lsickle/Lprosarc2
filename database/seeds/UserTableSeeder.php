@@ -34,7 +34,7 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Luis1';
         $user->UsRol = 'Programador';
         $user->UsRolDesc = 'Programador de Software';
-        $user->UsAvatar = '1548953607Avatar suser.png';
+        $user->UsAvatar = 'robot400x400.gif';
         $user->save();
         /*$user->roles()->attach($role_suser);*/
 
