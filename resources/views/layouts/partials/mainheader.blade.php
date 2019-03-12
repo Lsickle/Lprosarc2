@@ -12,9 +12,12 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <i class="fas fa-bars"></i>
+        <a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
+            <i class="fas fa-users"></i>
         </a>
+        {{-- <a href="#" class="fa fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; font-size: 14px; box-sizing: border-box; padding: 15px 15px; overflow: visible; color:#FFFFFF; float: left;">
+            <i class="fas fa-bars"></i>
+        </a> --}}
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
