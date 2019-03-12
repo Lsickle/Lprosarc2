@@ -19,6 +19,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'proveedor';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.079.188-0974';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -28,6 +29,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.133.755-4527';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -37,6 +39,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.060.476-3508';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -46,6 +49,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.110.976-7423';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -55,6 +59,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.010.738-0235';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -64,6 +69,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.052.264-010';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -73,6 +79,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.124.455-5663';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -82,6 +89,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.057.349-0494';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -91,6 +99,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.203.194-1190';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -100,6 +109,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.025.149-8109';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -109,6 +119,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.031.886-240';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -118,6 +129,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '899.999.004-954';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -127,6 +139,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.512.475-2137';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -136,6 +149,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.029.045-8516';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -145,6 +159,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.101.815-9291';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -154,6 +169,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.302.546-5562';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -163,6 +179,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.058.533-5526';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -172,6 +189,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.920.304-0290';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -181,6 +199,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.008.716-2868';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -190,6 +209,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.750.270-4492';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -199,6 +219,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.067.597-4496';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -208,6 +229,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.590-3843';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -217,6 +239,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.042.141-117';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -226,6 +249,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.301.291-8513';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -235,6 +259,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.017.005-1636';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -244,6 +269,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.055.341-4981';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -253,6 +279,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.023.525-4957';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -262,6 +289,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.092.384-832';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -271,6 +299,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.023.844-1264';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -280,6 +309,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.060.467-3664';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -289,6 +319,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.189.181-1719';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -298,6 +329,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.003.216-8415';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -307,6 +339,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.146.643-5260';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -316,6 +349,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.193.165-6495';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -325,6 +359,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.304.130-4383';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -334,6 +369,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.066.000-5385';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -343,6 +379,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.013.570-3231';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -352,6 +389,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.536.292-5990';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -361,6 +399,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.523-1268';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -370,6 +409,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.577.604-1101';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -379,6 +419,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.804.080-5891';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -388,6 +429,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.101.778-6757';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -397,6 +439,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.051.863-4792';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -406,6 +449,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.373.462-4994';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -415,6 +459,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.070.853-7701';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -424,6 +469,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.511.110-6165';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -433,6 +479,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.090.823-1258';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -442,6 +489,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.005.114-4582';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -451,6 +499,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.070.281-3451';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -460,6 +509,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.023.551-8984';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -469,6 +519,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.208.694-8117';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -478,6 +529,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.054.781-6373';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -487,6 +539,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.266.647-1311';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -496,6 +549,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.000.167-2779';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -505,6 +559,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.493.566-6215';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -514,6 +569,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.019.041-6648';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -523,6 +579,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.015.914-348';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -532,6 +589,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.005.289-4677';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -541,6 +599,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.142.680-9381';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -550,6 +609,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.070.641-5230';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -559,6 +619,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.922.549-7919';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -568,6 +629,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.066.370-5730';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -577,6 +639,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.328.323-8530';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -586,6 +649,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.042.822-9941';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -595,6 +659,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.067.861-5695';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -604,6 +669,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.809.380-2246';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -613,6 +679,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.149.149-1901';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -622,6 +689,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.173.274-5459';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -631,6 +699,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.018.359-1609';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -640,6 +709,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.684.779-8289';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -649,6 +719,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.555.485-5723';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -658,6 +729,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.512.249-4854';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -667,6 +739,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.009.008-1211';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -676,6 +749,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.438.654-2712';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -685,6 +759,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.067-2553';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -694,6 +769,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.183.270-9125';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -703,6 +779,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.534.777-6723';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -712,6 +789,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.133.807-1461';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -721,6 +799,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.238.091-8420';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -730,6 +809,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.209.041-6679';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -739,6 +819,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.271.207-1499';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -748,6 +829,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.019.615-5141';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -757,6 +839,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.108.963-4822';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -766,6 +849,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.012.344-1500';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -775,6 +859,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.131.427-8279';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -784,6 +869,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.079.006-5680';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -793,6 +879,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.069.306-7938';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -802,6 +889,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.200.304-4577';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -811,6 +899,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.006.543-5813';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -820,6 +909,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.114.018-3319';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -829,6 +919,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.009.034-1605';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -838,6 +929,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.095.213-0303';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -847,6 +939,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.015.617-0690';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -856,6 +949,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.081.507-0382';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -865,6 +959,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.897.223-1356';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -874,6 +969,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.783.939-4241';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -883,6 +979,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.065.332-06';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -892,6 +989,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.554-8947';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -901,6 +999,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.098.466-4733';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -910,6 +1009,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.230.698-9917';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -919,6 +1019,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.039.561-1586';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -928,6 +1029,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.001.942-8354';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -937,6 +1039,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.037.582-6575';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -946,6 +1049,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.538-1350';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -955,6 +1059,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.074.642-72';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -964,6 +1069,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.297.153-8595';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -973,6 +1079,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.433.074-8405';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -982,6 +1089,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.059.282-6457';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -991,6 +1099,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.321.422-7498';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1000,6 +1109,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.234.953-0932';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1009,6 +1119,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.042.169-8257';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1018,6 +1129,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.193.444-6463';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1027,6 +1139,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.073.135-1840';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1036,6 +1149,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.072.323-3102';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1045,6 +1159,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.012.340-1655';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1054,6 +1169,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.008.524-5420';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1063,6 +1179,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '891.856.718-6815';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1072,6 +1189,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.436.352-4280';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1081,6 +1199,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '901.093.590-0522';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1090,6 +1209,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.896.246-4148';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1099,6 +1219,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.085.456-487';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1108,6 +1229,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.037.140-4947';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1117,6 +1239,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.039.813-2453';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1126,6 +1249,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.071.029-7309';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1135,6 +1259,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.065.656-0918';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1144,6 +1269,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.080.224-6390';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1153,6 +1279,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.011.337-5868';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1162,6 +1289,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.075.858-4258';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1171,6 +1299,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.001.697-8231';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1180,6 +1309,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.137.724-4425';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1189,6 +1319,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '804.002.660-7222';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1198,6 +1329,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.010.484-5916';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1207,6 +1339,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.051.688-5642';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1216,6 +1349,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.153.430-2889';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1225,6 +1359,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.137.940-9367';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1234,6 +1369,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.017.564-8182';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1243,6 +1379,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.052.601-1832';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1252,6 +1389,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.060.056-1711';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1261,6 +1399,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.903.711-3740';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1270,6 +1409,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.003.063-8169';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1279,6 +1419,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.013.230-5512';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1288,6 +1429,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.136.162-0891';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1297,6 +1439,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.501.983-6524';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1306,6 +1449,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.032.102-173';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1315,6 +1459,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.051.965-175';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1324,6 +1469,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.168.135-1784';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1333,6 +1479,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.024.746-1457';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1342,6 +1489,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.420.077-3785';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1351,6 +1499,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '832.000.773-3942';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1360,6 +1509,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.078.643-1542';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1369,6 +1519,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.027.231-278';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1378,6 +1529,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.591.327-2947';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1387,6 +1539,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.505.074-3228';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1396,6 +1549,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.117.527-8295';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1405,6 +1559,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '901.204.339-6714';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1414,6 +1569,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '901.161.536-428';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1423,6 +1579,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.125.280-8619';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1432,6 +1589,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.022.636-1962';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1441,6 +1599,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.061.110-3872';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1450,6 +1609,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.474.727-4461';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1459,6 +1619,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '890.929.877-1691';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1468,6 +1629,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.136.959-418';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1477,6 +1639,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.055.605-3661';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1486,6 +1649,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.219.154-1651';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1495,6 +1659,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.002.153-8520';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1504,6 +1669,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.448.985-8932';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1513,6 +1679,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.078.524-4413';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1522,6 +1689,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.018.871-2819';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1531,6 +1699,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.147.276-2326';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1540,6 +1709,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.107.855-2175';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1549,6 +1719,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.201.648-782';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1558,6 +1729,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.119.428-2417';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1567,6 +1739,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.677.390-8556';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1576,6 +1749,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.127.490-3698';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1585,6 +1759,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.533.206-8163';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1594,6 +1769,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '900.170.621-7182';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1603,6 +1779,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '860.534.045-3329';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1612,6 +1789,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.056.174-6149';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1621,6 +1799,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '830.024.281-838';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
 		$cliente = new Cliente();
@@ -1630,6 +1809,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliCategoria = 'Cliente';
 		$cliente->CliAuditable = '1';
 		$cliente->CliSlug = '800.049.458-376';
+		$cliente->CliDelete = 0;
 		$cliente->save();
 
     }

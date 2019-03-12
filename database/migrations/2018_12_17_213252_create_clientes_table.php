@@ -18,7 +18,7 @@ class CreateClientesTable extends Migration
             $table->string('CliNit', 20);
             $table->string('CliName');
             $table->string('CliShortname');
-            $table->string('CliCode', 32)->nullable();
+            /*$table->string('CliCode', 32)->nullable();*/
             $table->string('CliType', 32)->nullable();
             $table->string('CliCategoria',32);
             $table->boolean('CliAuditable');

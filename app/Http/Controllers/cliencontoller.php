@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Cliente;
 use App\audit;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 
@@ -18,7 +19,12 @@ class clientcontoller extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::all();
+        if(Auth::user()->UsRol === "Programador"){
+            $clientes = Cliente::all();
+            return view('clientes.index', compact('clientes'));
+        }
+        $clientes = Cliente::where('CliDelete', 0)->get();
+
         return view('clientes.index', compact('clientes'));
     }
 
@@ -40,26 +46,6 @@ class clientcontoller extends Controller
      */
     public function store(Request $request)
     {
-        
-        //  if ($request->hasfile('avatar')) {
-        //     $file = $request->file('avatar');
-        //     $name = time().$file->getClientOriginalName();
-        //     $file->move(public_path().'/images/',$name);
-        // }
-        // else{
-        //     $name = public_path().'/images/default.jpg';
-
-        // }
-        // if (empty($request->input('description'))){
-        //     $desc='descripcion generada automaticamente';
-        // }else{
-        //     $desc=$request->input('description');
-        // }
-        // if (empty($request->input('slug'))){
-        //     $slug=$request->input('name');
-        // }else{
-        //     $slug=$request->input('slug');
-        // }
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
@@ -138,19 +124,23 @@ class clientcontoller extends Controller
      * @return \Illuminate\Http\Response
      */
     // public function destroy($id, Cliente $cliente)
-    public function destroy($id)
-    {
-        $id->delete();
-        // $cliente->delete();
-        // return $cliente;
-        return $id;
+    public function destroy($id){
+        $Cliente = Cliente::where('CliSlug', $id)->first();
+            if ($Cliente->CliDelete == 0) {
+                $Cliente->CliDelete = 1;
+            }
+            else{
+                $Cliente->CliDelete = 0;
+            }
+        $Cliente->save();
+        
 
         $log = new audit();
         $log->AuditTabla="clientes";
         $log->AuditType="Eliminado";
-        $log->AuditRegistro=$cliente->ID_Cli;
+        $log->AuditRegistro=$Cliente->ID_Cli;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
+        $log->Auditlog = $Cliente->CliDelete;
         $log->save();
 
         return redirect()->route('clientes.index');
