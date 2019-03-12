@@ -16,6 +16,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sourceMaps()
    .combine([
        'node_modules/bootstrap/dist/css/bootstrap.min.css',
+       'node_modules/@fortawesome/fontawesome-free/css/all.css',
        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css'
