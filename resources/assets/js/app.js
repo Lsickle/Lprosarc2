@@ -23,8 +23,6 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('requirement-component', require('./components/RequirementComponent.vue'));
-Vue.component('respel-component', require('./components/RespelComponent.vue'));
-Vue.component('user-data-component', require('./components/UserDataComponent.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
