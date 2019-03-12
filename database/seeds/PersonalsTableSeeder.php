@@ -18,10 +18,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = "Duvan";
         $personal->PersSecondName = "Arley";
         $personal->PersLastName = "Gonzalez_Morato";
-        $personal->PersEmail = "moratoduvan@gmial.com";
         $personal->PersCellphone = '3227392232';
         $personal->FK_PersCargo = '4';
         $personal->PersSlug = "pers-duvan-gonzalez_morato-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -30,10 +30,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocNumber = '76543532';
         $personal->PersFirstName = "Luis";
         $personal->PersLastName = "De_la_Hoz";
-        $personal->PersEmail = "luiz@gmial.com";
         $personal->PersCellphone = '3223822393';
         $personal->FK_PersCargo = '3';
         $personal->PersSlug = "pers-luis-de_la_hoz-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -42,10 +42,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocNumber = '1002526460';
         $personal->PersFirstName = "Andres";
         $personal->PersLastName = "Ramirez";
-        $personal->PersEmail = "randres@gmial.com";
         $personal->PersCellphone = '3227396432';
         $personal->FK_PersCargo = '5';
         $personal->PersSlug = "pers-andres-ramirez-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -55,10 +55,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = "Camilo";
         $personal->PersSecondName = "Andres";
         $personal->PersLastName = "Murcia";
-        $personal->PersEmail = "cam@gmial.com";
         $personal->PersCellphone = '3221234232';
         $personal->FK_PersCargo = '1';
         $personal->PersSlug = "pers-camilo-murcia-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -67,10 +67,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocNumber = '109765643';
         $personal->PersFirstName = "Maria";
         $personal->PersLastName = "Gonzalez_Sosa";
-        $personal->PersEmail = "magosa@gmial.com";
         $personal->PersCellphone = '3244562456';
         $personal->FK_PersCargo = '2';
         $personal->PersSlug = "pers-maria-gonzalez_sosa-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
     }
 }

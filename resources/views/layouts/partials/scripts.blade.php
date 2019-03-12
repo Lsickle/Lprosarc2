@@ -228,7 +228,7 @@
       // },
       "scrollX": false,
           "autoWidth": true,
-               "keys": true,       
+               "keys": true,
       "responsive": true,
                  "columnDefs": [ {
         "targets": 5,
@@ -461,6 +461,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
+      "columnDefs": [ {
+          "targets": 2,
+          "data": "ID_Area",
+          "render": function ( data, type, row, meta ) {
+          return "<a href='/areas/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>
@@ -471,6 +477,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
+      "columnDefs": [ {
+          "targets": 4,
+          "data": "ID_Carg",
+          "render": function ( data, type, row, meta ) {
+          return "<a href='/cargos/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>  
@@ -534,10 +546,15 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 6,
+            "targets": 5,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "' class='btn btn-success'/>Ver</a>";
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+              }},
+            {"targets": 6,
+            "data": "PersSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
               }
           }]
         });
@@ -813,7 +830,7 @@ $(document).ready(function(){
           themeSystem: 'bootstrap4'
         })
       });
-    </script>
+
     {{-- 
           themeSystem: 'bootstrap4',
           height:"auto",
@@ -833,3 +850,4 @@ $(document).ready(function(){
             alert('a day has been clicked!');
           }*/
         },'option' , 'contentHeight' , 650) --}}
+    </script>

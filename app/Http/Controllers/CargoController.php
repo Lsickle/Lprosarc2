@@ -16,10 +16,18 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        if(Auth::user()->UsRol === "Programador"){
+            $Cargos = DB::table('cargos')
+                ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
+                ->select('cargos.ID_Carg','cargos.CargDelete','cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName')
+                ->get();
+            return view('cargos.index', compact('Cargos'));
+        }
         $Cargos = DB::table('cargos')
-            ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
-            ->select('cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName')
-            ->get();
+                ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
+                ->select('cargos.ID_Carg','cargos.CargDelete','cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName')
+                ->where('cargos.CargDelete', 0)
+                ->get();
         return view('cargos.index', compact('Cargos'));
     }
 
@@ -47,6 +55,7 @@ class CargoController extends Controller
         $cargo->CargSalary= $request->input('CargSalary');
         $cargo->CargGrade = $request->input('CargGrade');
         $cargo->CargArea = $request->input('SelectArea');
+        $cargo->CargDelete = 0;
         $cargo->save();
 
         $log = new audit();
@@ -77,7 +86,14 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        //
+        $Cargos = DB::table('cargos')
+            ->select('*')
+            ->where('ID_Carg',$id)
+            ->get();
+        $Areas = DB::table('areas')
+            ->select('ID_Area', 'AreaName')
+            ->get();
+        return view('cargos.edit', compact('Areas','Cargos'));
     }
 
     /**
@@ -88,7 +104,20 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //
+        $Cargo = Cargo::where('ID_Carg', $id)->first();
+        $Cargo->fill($request->all());
+        $Cargo->CargArea = $request->input('SelectArea');
+        $Cargo->save();
+
+        $log = new audit();
+        $log->AuditTabla="cargos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Cargo->ID_Carg;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('cargos.index');
     }
 
     /**
@@ -98,6 +127,23 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //
+        $Cargo = Cargo::where('ID_Carg', $id)->first();
+            if ($Cargo->CargDelete == 0) {
+                $Cargo->CargDelete = 1;
+            }
+            else{
+                $Cargo->CargDelete = 0;
+            }
+        $Cargo->save();
+
+        $log = new audit();
+        $log->AuditTabla = "cargos";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Cargo->ID_Carg;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Cargo->CargDelete;
+        $log->save();
+
+        return redirect()->route('cargos.index');
     }
 }

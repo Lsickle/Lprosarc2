@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>S-</b>R</span>
+        <span class="logo-mini"><img src="/img/LogoProsarc.png" style="width: 80%; margin: 5px; border-radius: 50%;"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>SiG</b>ReS</span>
+        <span class="logo-lg"><b>Prosarc S.A ESP</b></span>
     </a>
 
     <!-- Header Navbar -->

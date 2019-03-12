@@ -58,28 +58,24 @@
 									</div>
 									<div class="form-group">
 										<label for="ClienteInputTipo">Tipo de empresa</label>
-										<select name="CliType" class="form-control" id="ClienteInputTipo" placeholder="biologico" value="{{$cliente->CliType}}">
+										<select name="CliType" class="form-control" id="ClienteInputTipo" {{-- placeholder="biologico" --}} value="{{$cliente->CliType}}">
 											<option>biologico</option>
 											<option>industrial</option>
 											<option>medicamentos</option>
 											<option>otros</option>
 										</select>
 									</div>
-									{{-- <div class="col-xs-8">
-									   <div class="icheck form-group">
-			                                <label for="ClienteInputTipo">
-			                                   {{trans('adminlte_lang::message.clientaudit')}}
-			                                </label>
-			                                 <input id="ClienteInputTipo" style="display:none;" type="checkbox" name="CliAuditable">
-			                            </div>
-									</div> --}}
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="ClienteInputTipo">
-												{{trans('adminlte_lang::message.clientaudit')}}
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="CliAuditable">
-										 </div>
+									<div class="form-group">
+										<label for="ClienteInputTipo">{{trans('adminlte_lang::message.clientaudit')}}</label>
+										<select name="CliAuditable" class="form-control" id="ClienteInputTipo">
+											@if($cliente->CliAuditable == 1)
+												<option value="1">Si</option>
+												<option value="0">No</option>
+											@else
+												<option value="0">No</option>
+												<option value="1">Si</option>
+											@endif
+										</select>
 									 </div>
 									{{-- <div class="form-group">
 										<label for="exampleInputFile">Documento requerido</label>
