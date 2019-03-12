@@ -461,12 +461,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
-      /*"columnDefs": [ {
+      "columnDefs": [ {
           "targets": 2,
           "data": "ID_Area",
           "render": function ( data, type, row, meta ) {
-          return "<a href='/areas/" + data + "' class='btn btn-success'>Ver</a>";}      
-          }]*/
+          return "<a href='/areas/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>
@@ -477,6 +477,12 @@ $(document).ready(function(){
       "autoWidth": true,
       "keys": true,
       "responsive": true,
+      "columnDefs": [ {
+          "targets": 4,
+          "data": "ID_Carg",
+          "render": function ( data, type, row, meta ) {
+          return "<a href='/cargos/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";}      
+          }]
     });
   });
 </script>  
@@ -543,12 +549,12 @@ $(document).ready(function(){
             "targets": 5,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "/edit' class='btn btn-warning'/>Editar</a>";
+                return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
               }},
             {"targets": 6,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a method='get' href='/personal/" + data + "' class='btn btn-success'/>Ver</a>";
+                return "<a method='get' href='/personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
               }
           }]
         });

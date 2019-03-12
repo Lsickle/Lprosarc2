@@ -2,7 +2,7 @@
 
 @section('htmlheader_title','Personal')
 
-@section('contentheader_title', 'Personal')
+@section('contentheader_title', 'Edicion de Personal')
 
 @section('main-content')
 	<div class="container-fluid spark-screen">
@@ -15,7 +15,9 @@
           </div>
           <!-- /.box-header -->
               <!-- form start -->
-              <form role="form" action="/personal" method="POST" enctype="multipart/form-data">
+              @foreach($Personas as $Persona)
+              <form role="form" action="/personal/{{$Persona->PersSlug}}" method="POST" enctype="multipart/form-data">
+                @method('PATCH')
                 @csrf
                 {{-- <h1 id="loadingTable">LOADING...</h1> --}}
                   <div class="fingerprint-spinner" id="loadingTable">
@@ -37,7 +39,6 @@
                         <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
                       </ul>
                       <div>
-                      @foreach($Personas as $Persona)
                         <div id="step-1" class="">
                             <div class="col-xs-6">
                               <label for="PersDocType">Tipo de Documento</label>
@@ -67,11 +68,11 @@
                             </div>
                             <div class="col-xs-6">
                               <label for="PersCellphone">Numero de Celular</label>
-                              <input  required="true" name="PersCellphone" autofocus="true" type="text" class="form-control" id="PersCellphone" value="{{$Persona->PersCellphone}}">
+                              <input name="PersCellphone" autofocus="true" type="text" class="form-control" id="PersCellphone" value="{{$Persona->PersCellphone}}">
                             </div>
                             <div class="col-xs-6">
                               <label for="PersAddress">Direccion</label>
-                              <input  required="true" name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" value="{{$Persona->PersAddress}}">
+                              <input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" value="{{$Persona->PersAddress}}">
                             </div>
                             <div class="col-xs-6">
                               <label for="PersType">Tipo de Persona</label>

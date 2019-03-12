@@ -27,26 +27,17 @@ class RolesController extends Controller
     public function index(Request $request)
     {
 
-        $users = DB::table('users')->select('users.id', 
-                                            'users.name', 
-                                            'users.email', 
-                                            'users.created_at',  
-                                            'users.updated_at', 
-                                            'users.UsType', 
-                                            'users.UsAvatar', 
-                                            'users.UsStatus', 
-                                            'users.UsSlug', 
-                                            'users.UsRol', 
-                                            'users.UsRolDesc'
-                                            )->get();
-        if (!$request->User()) {
+        $users = DB::table('users')
+            ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc')
+            ->get();
+        /*if (!$request->User()) {
           return redirect()->route('login');
         }else{
             $request->User()->authorizeRoles(['admin', 'Programador', 'JefeLogistica']);
             // $trainers = Trainer::all();
             return view('permisos.index', compact('users'));
-        }
-        // return view('permisos.index', compact('users'));
+        }*/
+        return view('permisos.index', compact('users'));
     }
 
     /**

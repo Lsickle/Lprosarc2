@@ -16,12 +16,20 @@ class AreaController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){        
+    public function index(){
+        if(Auth::user()->UsRol === "Programador"){
+            $Areas = DB::table('areas')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
+                ->get();
+        	return view('areas.index', compact('Areas'));
+        }
         $Areas = DB::table('areas')
-            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->select('areas.ID_Area', 'areas.AreaName','sedes.SedeName')
-            ->get();
-    	return view('areas.index', compact('Areas'));
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
+                ->where('areas.AreaDelete',0)
+                ->get();
+        return view('areas.index', compact('Areas'));
     }
 
     /**
@@ -46,6 +54,7 @@ class AreaController extends Controller{
         $area = new Area();
         $area->AreaName = $request->input('NomArea');
         $area->FK_AreaSede= $request->input('AreaSede');
+        $area->AreaDelete = 0;
         $area->save();
 
         $log = new audit();
@@ -76,7 +85,14 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        //
+        $Areas = DB::table('areas')
+            ->select('*')
+            ->where('ID_Area',$id)
+            ->get();
+        $Sedes = DB::table('sedes')
+            ->select('ID_Sede', 'SedeName')
+            ->get();
+        return view('areas.edit', compact('Sedes', 'Areas'));
     }
 
     /**
@@ -87,7 +103,21 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //
+        /*return $request;*/
+        $Area = Area::where('ID_Area', $id)->first();
+        $Area->AreaName = $request->input('NomArea');
+        $Area->FK_AreaSede = $request->input('AreaSede');
+        $Area->save();
+
+        $log = new audit();
+        $log->AuditTabla="areas";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Area->ID_Area;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('areas.index');
     }
 
     /**
@@ -97,6 +127,23 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //
+        $Area = Area::where('ID_Area', $id)->first();
+            if ($Area->AreaDelete == 0) {
+                $Area->AreaDelete = 1;
+            }
+            else{
+                $Area->AreaDelete = 0;
+            }
+        $Area->save();
+
+        $log = new audit();
+        $log->AuditTabla = "areas";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Area->ID_Area;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Area->AreaDelete;
+        $log->save();
+
+        return redirect()->route('areas.index');
     }
 }

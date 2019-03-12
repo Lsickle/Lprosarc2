@@ -21,6 +21,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersCellphone = '3227392232';
         $personal->FK_PersCargo = '4';
         $personal->PersSlug = "pers-duvan-gonzalez_morato-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -32,6 +33,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersCellphone = '3223822393';
         $personal->FK_PersCargo = '3';
         $personal->PersSlug = "pers-luis-de_la_hoz-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -43,6 +45,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersCellphone = '3227396432';
         $personal->FK_PersCargo = '5';
         $personal->PersSlug = "pers-andres-ramirez-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -55,6 +58,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersCellphone = '3221234232';
         $personal->FK_PersCargo = '1';
         $personal->PersSlug = "pers-camilo-murcia-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
 
         $personal = new Personal();
@@ -66,6 +70,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersCellphone = '3244562456';
         $personal->FK_PersCargo = '2';
         $personal->PersSlug = "pers-maria-gonzalez_sosa-2019-02-20";
+        $personal->PersDelete = 0;
         $personal->save();
     }
 }
