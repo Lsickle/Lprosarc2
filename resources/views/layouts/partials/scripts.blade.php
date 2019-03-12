@@ -201,16 +201,16 @@
   $(function () {
     $('#example2').DataTable({
       "scrollX": false,
-      "autoWidth": true,
+      "autoWidth": false,
       "responsive": true,
-      "keys": true,
-      "columnDefs": [ {
+      "keys": true
+      /*"columnDefs": [ {
         "targets": 10,
         "data": "SedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
-      }]
+      }]*/
     });
   });
 </script>

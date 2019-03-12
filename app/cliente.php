@@ -8,7 +8,7 @@ class Cliente extends Model
 {
 	protected $table = 'clientes';
 
-	protected $fillable = ['CliNit', 'CliName', 'CliShortname', 'CliCode','CliType', 'CliCategoria','CliAuditable', 'CliSlug'];
+	protected $fillable = ['CliNit', 'CliName', 'CliShortname', 'CliCode','CliType', 'CliCategoria','CliAuditable', 'CliSlug' ,'CliDelete'];
 	
 	protected $primaryKey = 'ID_Cli';
 	/**
