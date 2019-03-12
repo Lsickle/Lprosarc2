@@ -10,9 +10,6 @@
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
-          @if (session('correo'))
-              {{session('correo')}}
-          @endif
           <a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->

@@ -28,6 +28,8 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Formulario de registro</h3>
 							</div>
+							{{session('status')}}
+							{{session('FK')}}
 							<!-- /.box-header -->
 							<!-- form start -->
 							<div class="fingerprint-spinner" id="loadingTable">

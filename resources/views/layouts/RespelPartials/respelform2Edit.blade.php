@@ -6,13 +6,23 @@
           <div class="">
             <label>
                 @if ($Requerimiento->ReqFotoCargue === 1)
-                <input type="checkbox" class="fotoswitch" name="ReqFotoCargue" value="1" checked/> Cargue
-              
+                <input type="checkbox" class="fotoswitch" name="ReqFotoCargue" checked/> Cargue
                 @else
-                <input type="checkbox" class="fotoswitch" name="ReqFotoCargue" value="1" /> Cargue             
+                <input type="checkbox" class="fotoswitch" name="ReqFotoCargue" value="True"/> Cargue  
                 @endif
             </label>
           </div>
+          <script>
+              var checkbox = document.getElementById('ReqFotoCargue');
+                checkbox.addEventListener("change", validaCheckbox, false);
+
+                function validaCheckbox(){
+  var checked = checkbox.checked;
+  if(checked){
+    alert('checkbox esta seleccionado');
+  }
+}
+            </script>
           <div class="">
             <label>
                 @if ($Requerimiento->ReqFotoDescargue === 1)   
@@ -27,16 +37,8 @@
                 @if ($Requerimiento->ReqFotoPesaje === 1)   
                 <input type="checkbox" class="fotoswitch" name="ReqFotoPesaje" value="1" checked/> Pesaje
                 @else  
-
                 <input type="checkbox" class="fotoswitch" name="ReqFotoPesaje" value="1" /> Pesaje
-                {{-- @if (<input type="checkbox" class="fotoswitch" name="ReqFotoPesaje" value="1" />)
-                
-                    
-                @else
-                    
-                @endif --}}
                 @endif
-                {{-- <input type="checkbox" class="fotoswitch" name="ReqFotoPesaje" value="1" /> Pesaje --}}
             </label>
           </div>
           <div class="">

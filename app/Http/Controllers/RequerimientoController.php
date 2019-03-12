@@ -46,6 +46,7 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
+        // llamando desde sesion 'FK' de respel
         $Requerimientos = Respel::where('RespelSlug',$request->input('FK_ReqRespel'))->first();
 
         $Requerimiento = new Requerimiento();
@@ -135,8 +136,7 @@ class RequerimientoController extends Controller
     {
         $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
         $Requerimiento->fill($request->all());
-        
-        // return $Requerimiento;
+        // return $request;
         // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
         
         // $Requerimiento->FK_ReqRespel = $Requerimientos;

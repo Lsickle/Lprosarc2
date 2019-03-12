@@ -6,6 +6,17 @@ Respel-Editar
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
 @endsection
 @section('main-content')
+<script>
+		var checkbox = document.getElementById('ReqFotoCargue');
+			checkbox.addEventListener("change", validaCheckbox, false);
+
+			function validaCheckbox(){
+var checked = checkbox.checked;
+if(checked){
+alert('checkbox esta seleccionado');
+}
+}
+	</script>
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">

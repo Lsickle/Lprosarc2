@@ -111,7 +111,7 @@ class RespelController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         // return $respel;
-        return redirect()->route('requerimientos.create');
+        return redirect()->route('requerimientos.create')->with('FK', $respel->RespelSlug)->with('status', $respel->RespelName);
 
     }
 
