@@ -40,6 +40,7 @@ class clientcontoller extends Controller
      */
     public function store(Request $request)
     {
+        
         //  if ($request->hasfile('avatar')) {
         //     $file = $request->file('avatar');
         //     $name = time().$file->getClientOriginalName();
@@ -60,17 +61,12 @@ class clientcontoller extends Controller
         //     $slug=$request->input('slug');
         // }
         $Cliente = new Cliente();
-        if ($request->input('CliAuditable')=='on') {
-            $Cliente->CliAuditable='1';
-        }
-        else{
-            $Cliente->CliAuditable='0';
-        };
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
+        $Cliente->CliAuditable = $request->input('CliAuditable');
         $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
         $Cliente->save();
 
@@ -121,12 +117,7 @@ class clientcontoller extends Controller
     public function update(Request $request, Cliente $cliente)
     {   
         $cliente->fill($request->except('created_at'));
-        if ($request->CliAuditable=='on') {
-            $cliente->CliAuditable='1';
-        }
-        else{
-            $cliente->CliAuditable='0';
-        };
+        $cliente->CliAuditable = $request->input('CliAuditable');
         $cliente->save();
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();

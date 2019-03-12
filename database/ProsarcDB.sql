@@ -175,6 +175,7 @@ drop DATABASE Prosarcdb;
 		PersBankAccaunt int,
 		PersIngreso date, /*fecha de ingreso a Prosarc*/
 		PersSalida date, /*fecha de egreso a Prosarc(renuncias, despido)*/
+		PersDelete boolean, /*Ver el estado si ha sido eliminado o no*/
 		FK_PersCargo int, /*foranea de la tabla posicion para relacionar el cargo de la persona*/
 		primary key (ID_Pers),
 		foreign key (FK_PersCargo) references Cargo(ID_Carg) ON UPDATE CASCADE
