@@ -30,7 +30,7 @@ create table Cliente(
 	CliNit bigint, /*nit*/
 	CliName varchar(255), /*razon social del cliente*/
 	CliShortname varchar(32), /*nombre corto del cliente*/
-	CliCode varchar(32), /*codigo del cliente ejem: "PL 1 AND"-.S" */
+	/*CliCode varchar(32), /*codigo del cliente ejem: "PL 1 AND"-.S" */
 	CliType varchar(32),/*tipo de empresa: organico; biologico; industrial; medicamentos; otros ETC...*/
 	CliCategoria varchar(32), /*cliente, generador, transportador, Proveedor etc..*/
 	CliAuditable boolean, /*¿cliente auditable?*/

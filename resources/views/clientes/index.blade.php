@@ -22,8 +22,9 @@
                 <th>NIT</th>
                 <th>Creado el</th>
                 <th>Auditable</th>
-                <th>Mas...</th>
+                <th>Ver Más</th>
                 <th>Editar</th>
+                <th>Borrar</th>
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -39,29 +40,37 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              {{-- <div class="row">
-                <div class="card text-center" style="width: 18rem; margin-top:3rem;">
-                  <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{$cliente->CliShortname}}</h5>
-                    <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-                    <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-                  </div>
-                </div>
-              </div> --}}
               @foreach($clientes as $cliente)
+              @component('layouts.partials.modal')
+                    {{$cliente->ID_Cli}}
+              @endcomponent
               <tr>
                 <td>{{$cliente->CliCategoria}}</td>
                 <td>{{$cliente->CliShortname}}</td>
                 <td>{{$cliente->CliNit}}</td>
                 <td>{{$cliente->created_at}}</td>
                 @if($cliente->CliAuditable==1)
-                <td>Si</td>
+                  <td>Si</td>
                 @else
-                <td>NO</td>
+                  <td>NO</td>
                 @endif
                 <td>{{$cliente->CliSlug}}</td>
                 <td>{{$cliente->CliSlug}}</td>
+                <td>@if($cliente->CliDelete == 0)
+                      <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$cliente->ID_Cli}}' class='btn btn-danger btn-block'>Borrar</a>
+                      <form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input  type="submit" id="Eliminar{{$cliente->ID_Cli}}" style="display: none;">
+                      </form>
+                    @else
+                      <form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                      </form>
+                    @endif
+                </td>
               </tr>
               @endforeach
             </tbody>
