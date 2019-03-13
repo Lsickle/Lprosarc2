@@ -21,6 +21,8 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Tipo</th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -37,6 +39,9 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Trainings as $Training)
+                @component('layouts.partials.modal')
+                    {{$Training->ID_Capa}}
+                @endcomponent
                 <tr>
                   <td>{{$Training->CapaName}}</td>
                   @if($Training->CapaTipo == 1)
@@ -44,6 +49,22 @@
                   @else
                     <td>Externo</td>
                   @endif
+                  <td>{{$Training->ID_Capa}}</td>
+                  <td>@if($Training->CapaDelete == 0)
+                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Training->ID_Capa}}' class='btn btn-danger btn-block'>Borrar</a>
+                        <form action='/capacitacion/{{$Training->ID_Capa}}' method='POST'>
+                            @method('DELETE')
+                            @csrf
+                            <input  type="submit" id="Eliminar{{$Training->ID_Capa}}" style="display: none;">
+                        </form>
+                      @else
+                        <form action='/capacitacion/{{$Training->ID_Capa}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                        </form>
+                      @endif
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

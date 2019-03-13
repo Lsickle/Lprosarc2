@@ -198,19 +198,12 @@
   });
 </script>
 <script>
-  $(function () {
-    $('#example2').DataTable({
+  $(document).ready(function () {
+    $('#scliente').DataTable({
       "scrollX": false,
-      "autoWidth": false,
-      "responsive": true,
-      "keys": true
-      /*"columnDefs": [ {
-        "targets": 10,
-        "data": "SedeSlug",
-        "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
-        }  
-      }]*/
+      "autoWidth": true,
+       "keys": true,
+      "responsive": true
     });
   });
 </script>
@@ -566,7 +559,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 2,
+            "data": "ID_Capa",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>
@@ -576,7 +576,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 5,
+            "data": "ID_CapPers",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion-personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>

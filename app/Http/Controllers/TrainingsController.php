@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\audit;
 use App\Training;
 
 class TrainingsController extends Controller
@@ -15,9 +16,16 @@ class TrainingsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-         $Trainings = DB::table('trainings')
-        ->select('CapaName','CapaTipo')
-        ->get();
+        if(Auth::user()->UsRol === "Programador"){
+             $Trainings = DB::table('trainings')
+                ->select('ID_Capa','CapaName','CapaTipo','CapaDelete')
+                ->get();
+            return view('trainings.index', compact('Trainings'));
+        }
+        $Trainings = DB::table('trainings')
+            ->select('ID_Capa','CapaName','CapaTipo','CapaDelete')
+            ->where('CapaDelete', 0)
+            ->get();
         return view('trainings.index', compact('Trainings'));
     }
 
@@ -28,7 +36,7 @@ class TrainingsController extends Controller
      */
     public function create()
     {
-        //
+        return view('trainings.create');
     }
 
     /**
@@ -39,7 +47,13 @@ class TrainingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Trainings = new Training();
+        $Trainings->CapaName = $request->input('CapaName');
+        $Trainings->CapaTipo = $request->input('CapaTipo');
+        $Trainings->CapaDelete = 0;
+        $Trainings->save();
+
+        return redirect()->route('capacitacion.index');
     }
 
     /**
@@ -61,7 +75,11 @@ class TrainingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $trainings = DB::table('trainings')
+            ->select('*')
+            ->where('ID_Capa', $id)
+            ->get();
+        return view('trainings.edit', compact('trainings'));
     }
 
     /**
@@ -73,7 +91,19 @@ class TrainingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $trainings = Training::where('ID_Capa', $id)->first();
+        $trainings->fill($request->all());
+        $trainings->save();
+
+        $log = new audit();
+        $log->AuditTabla="trainings";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$trainings->ID_Capa;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('capacitacion.index');
     }
 
     /**
@@ -84,6 +114,23 @@ class TrainingsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Trainings = Training::where('ID_Capa', $id)->first();
+            if ($Trainings->CapaDelete == 0) {
+                $Trainings->CapaDelete = 1;
+            }
+            else{
+                $Trainings->CapaDelete = 0;
+            }
+        $Trainings->save();
+
+        $log = new audit();
+        $log->AuditTabla = "Trainings";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Trainings->ID_Capa;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Trainings->CapaDelete;
+        $log->save();
+
+        return redirect()->route('capacitacion.index');
     }
 }
