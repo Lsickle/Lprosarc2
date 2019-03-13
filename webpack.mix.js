@@ -48,6 +48,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-scroller-dt/css/scroller.dataTables.css',
         'node_modules/datatables.net-select-dt/css/select.dataTables.css'
     ], 'public/css/datatable-depen.css')
+   .combine([
+        'node_modules/datatables.net-plugins/features/searchFade/dataTables.searchHighlight.css'
+    ], 'public/css/datatable-plugins.css')
    .scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
@@ -73,6 +76,13 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
         'node_modules/datatables.net-select/js/dataTables.select.js'
     ], 'public/js/datatable-depen.js')
+   .scripts([
+        'node_modules/datatables.net-plugins/pagination/input.js',
+        'node_modules/datatables.net-plugins/features/searchFade/dataTables.searchHighlight.js',
+        'node_modules/datatables.net-plugins/pagination/input.js',
+        'node_modules/datatables.net-plugins/filtering/row-based/range_dates.js',
+        'node_modules/datatables.net-plugins/filtering/row-based/range_numbers.js'
+    ], 'public/js/datatable-plugins.js')
 
    /*// PACKAGE (ADMINLTE-LARAVEL) RESOURCES
    .copy('resources/assets/img/*.*','public/img/')

@@ -19,7 +19,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table nowrap responsive table-bordered table-striped">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Nombre</th>
@@ -35,7 +35,7 @@
                   <th>edicion</th>
                 </tr>
                 </thead>
-                <tbody  hidden onload="renderTable()" id="readyTable">
+                <tbody hidden onload="renderTable()" id="readyTable">
 
               {{-- <h1 id="loadingTable">LOADING...</h1> --}}
                    <div class="fingerprint-spinner" id="loadingTable">
