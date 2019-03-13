@@ -28,8 +28,6 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Formulario de registro</h3>
 							</div>
-							{{session('status')}}
-							{{session('FK')}}
 							<!-- /.box-header -->
 							<!-- form start -->
 							<div class="fingerprint-spinner" id="loadingTable">
@@ -51,15 +49,11 @@
 										<p>Ingrese la información necesaria completando los campos requeridos según la información de requerimientos del residuo que desea registrar en cada paso</p>
 										<div id="smartwizard">
 											<ul>
-												{{-- <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li> --}}
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Requerimientos-Fotos</small></a></li>
 												<li><a href="#step-2"><b>paso 2</b><br /><small>Requerimientos-Videos</small></a></li>
 												<li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Adicionales</small></a></li>
 											</ul>
 											<div>
-												{{-- <div id="step-1" class="">
-													@include('layouts.RespelPartials.Respelform1')
-												</div> --}}
 												<div id="step-1" class="">
 													@include('layouts.RespelPartials.Respelform2')
 												</div>
@@ -78,7 +72,7 @@
 								{{-- Proviene del controlador RespelController --}}
 								<input hidden type="text" name="ReqRespel" value="{{session('status')}}">
 								<input hidden type="text" name="FK_ReqRespel" value="{{session('FK')}}">
-
+								
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>

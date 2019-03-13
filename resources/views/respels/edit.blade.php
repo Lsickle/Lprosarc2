@@ -13,69 +13,31 @@ Respel-Editar
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
+					
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
-				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">Formulario de registro</h3>
+							<i class="fa fa-minus"></i></button>
+							<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+								<i class="fa fa-times"></i></button>
+							</div>
+						</div>
+						<div class="row">
+							<!-- left column -->
+							<div class="col-md-12">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">Formulario de registro</h3>
+										<a href="/requerimientos/{{$Requerimientos->ReqSlug}}/edit" class="btn btn-primary" style="float: right;">Editar Requerimientos</a>
 							</div>
 							<!-- /.box-header -->
-                            <!-- form start -->
-                        
-
+                        <!-- form start -->
                         <form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
-                                @csrf
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									{{-- <div class="fingerprint-spinner" id="loadingTable">
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div> --}}
-								{{-- <div class="box-body" hidden onload="renderTable()" id="readyTable"> --}}
-									{{-- <div class="tab-pane" id="addRowWizz"> --}}
-										{{-- <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p> --}}
-										{{-- <div id="smartwizard"> --}}
-											{{-- <ul>
-												{{-- <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li> --}}
-												{{-- <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
-												<li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
-												<li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
-											</ul> --}}
-											
-													<!-- left column -->
-														<!-- general form elements -->
-								{{-- <div class="row"> --}}
-										
-											@include('layouts.RespelPartials.Respelform1Edit')
-										
-												{{-- <div id="step-2" class="">
-													@include('layouts.RespelPartials.Respelform2')
-												</div>
-												<div id="step-3" class="">
-													@include('layouts.RespelPartials.Respelform3')
-												</div>
-												<div id="step-4" class="">
-													@include('layouts.RespelPartials.Respelform4')
-												</div> --}}
-											{{-- </div>
-										</div>
-									</div> --}}
+								@csrf
+
+								@include('layouts.RespelPartials.Respelform1Edit')
+
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">	

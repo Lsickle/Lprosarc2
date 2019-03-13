@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Respel;
-use App\Sede;
 use Illuminate\Support\Facades\Auth;
 use App\audit;
+use App\Respel;
+use App\Sede;
 use App\User;
 use App\Requerimiento;
 
@@ -57,7 +57,7 @@ class RespelController extends Controller
             ->select('sedes.*', 'clientes.*')
             ->where('clientes.ID_Cli', 1) 
             ->get();
-        // $Sedes = Sede::where()
+
         return view('respels.create', compact('Sedes'));
     }
 
@@ -69,7 +69,6 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
-
         if ($request->hasfile('RespelHojaSeguridad')) {
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
@@ -110,8 +109,7 @@ class RespelController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        // return $respel;
-        return redirect()->route('requerimientos.create')->with('FK', $respel->RespelSlug)->with('status', $respel->RespelName);
+        return redirect()->route('requerimientos.create')->with('FK', $respel->ID_Respel)->with('status', $respel->RespelName);
 
     }
 
@@ -134,13 +132,14 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        $Respels = Respel::where('RespelSlug', $id)->first();   
-        // $Respels = Respel::all();   
-        // return $id;
+        $Respels = Respel::where('RespelSlug', $id)->first();
         
+        // return $Respels->ID_Respel;
+        $Requerimientos = Requerimiento::where('FK_ReqRespel',$Respels->ID_Respel)->first();   
+        // return $Requerimientos;
         $Sedes = Sede::all();
 
-        return view('respels.edit', compact('Respels', 'Sedes'));
+        return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos'));
     }
 
     /**
@@ -155,6 +154,7 @@ class RespelController extends Controller
         $Respels = Respel::where('ID_Respel', $id)->first();
         $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
         $Respels->fill($request->except('RespelTarj', 'RespelHojaSeguridad'));
+        
         if ($request->hasfile('RespelHojaSeguridad')) {
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
@@ -184,7 +184,8 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        return redirect()->route('requerimientos.edit', compact('Requerimientos'));
+        // return redirect()->route('requerimientos.edit', compact('Requerimientos'));
+        return redirect()->route('respels.index', compact('Requerimientos'));
     }
 
     /**

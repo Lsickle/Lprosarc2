@@ -47,17 +47,6 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              {{-- <div class="row">
-                <div class="card text-center" style="width: 18rem; margin-top:3rem;">
-                  <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{$cliente->CliShortname}}</h5>
-                    <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-                    <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-                  </div>
-                </div>
-              </div> --}}
-              
               @foreach($Respels as $respel)
               <tr>
                 <td>{{$respel->RespelName}}</td>
