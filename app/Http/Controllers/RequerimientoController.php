@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Requerimiento;
 use App\Respel;
 use App\audit;
- 
+
 class RequerimientoController extends Controller
 {
     /**
@@ -17,10 +17,13 @@ class RequerimientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        // $Requerimientos = DB::table('requerimientos')
-        //     ->select('*')
-        //     ->get();
-        $Requerimientos = Requerimiento::all();
+        $Requerimientos = DB::table('requerimientos')
+            ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('requerimientos.*', 'clientes.CliName')
+            ->get();
+        // $Requerimientos = Requerimiento::all();
 
         return view('requerimientos.index', compact('Requerimientos'));
     }
@@ -32,7 +35,7 @@ class RequerimientoController extends Controller
      */
     public function create()
     {
-        return redirect()->route('respels.index');
+        return view('requerimientos.create');
     }
 
     /**
@@ -43,6 +46,9 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
+        // llamando desde sesion 'FK' de respel
+        $Requerimientos = Respel::where('RespelSlug',$request->input('FK_ReqRespel'))->first();
+
         $Requerimiento = new Requerimiento();
         $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
         $Requerimiento->ReqFotoDescargue = $request->input('ReqFotoDescargue');
@@ -60,7 +66,6 @@ class RequerimientoController extends Controller
 
         $Requerimiento->ReqAuditoria = $request->input('ReqAuditoria');
         $Requerimiento->ReqAuditoriaTipo = $request->input('ReqAuditoriaTipo');
-
         $Requerimiento->ReqDevolucion = $request->input('ReqDevolucion');
         $Requerimiento->ReqDevolucionTipo = $request->input('ReqDevolucionTipo');
         // $Requerimiento->ReqDevolucionCant = $request->input('ReqDevolucionCant');
@@ -72,13 +77,8 @@ class RequerimientoController extends Controller
         $Requerimiento->ReqMasPerson = $request->input('ReqMasPerson');
         $Requerimiento->ReqPlatform = $request->input('ReqPlatform');
         $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
-
-
-        // $Requerimiento->FK_ReqRespel = $request->input('FK_ReqRespel');
-        $Requerimiento->FK_ReqRespel = 1;
-
-        // Se utiliza del registor de respel
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName');
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('ReqRespel');
+        $Requerimiento->FK_ReqRespel =  $Requerimientos->ID_Respel;
         $Requerimiento->save();
 
         $log = new audit();
@@ -89,8 +89,7 @@ class RequerimientoController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
-        return redirect()->route('respels.index');
-        // return redirect()->route('requerimientos.index');
+        return redirect()->route('respels.index', compact('Requerimientos'));
     }
 
     /**
@@ -112,7 +111,18 @@ class RequerimientoController extends Controller
      */
     public function edit($id)
     {
-        $Requerimientos = Requerimiento::all();        
+        $Requerimientos = DB::table('requerimientos')
+            ->select('requerimientos.*')
+            ->where('requerimientos.ID_Req', '=', $id)
+            ->get();
+
+        // $Reque = DB::table('requerimientos')
+        //     ->select('requerimientos.ReqSlug')
+        //     ->where('requerimientos.ID_Req', '=', $id)
+        //     ->get();
+
+        // return view('requerimientos/'.$Reque.'/edit', compact('Requerimientos', 'Reque'));  
+        return view('requerimientos.edit', compact('Requerimientos', 'Reque'));  
     }
 
     /**
@@ -124,7 +134,13 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
         $Requerimiento->fill($request->all());
+        // return $request;
+        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
+        
+        // $Requerimiento->FK_ReqRespel = $Requerimientos;
+
         $Requerimiento->save();
 
         $log = new audit();
@@ -134,6 +150,7 @@ class RequerimientoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
+        return redirect()->route('respels.index', compact('Requerimiento'));
     }
 
     /**
@@ -149,7 +166,7 @@ class RequerimientoController extends Controller
 
         $log = new audit();
         $log->AuditTabla="requerimientos";
-        $log->AuditType="Creado";
+        $log->AuditType="Eliminado";
         $log->AuditRegistro=$Requerimiento->ID_Req;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();

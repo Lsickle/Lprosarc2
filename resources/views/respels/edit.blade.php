@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Reepel-Editar
+Respel-Editar
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
@@ -30,14 +30,13 @@ Reepel-Editar
 							</div>
 							<!-- /.box-header -->
                             <!-- form start -->
-                        @foreach ($Respels as $Respel)
-                            
-                        @endforeach
-                        <form role="form" action="/respels/{{$Respel->ID_Respel}}" method="POST" enctype="multipart/form-data">
+                        
+
+                        <form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									<div class="fingerprint-spinner" id="loadingTable">
+									{{-- <div class="fingerprint-spinner" id="loadingTable">
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
@@ -47,22 +46,25 @@ Reepel-Editar
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div>
-								<div class="box-body" hidden onload="renderTable()" id="readyTable">
-									<div class="tab-pane" id="addRowWizz">
-										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
-										<div id="smartwizard">
-											<ul>
-												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li>
-												<li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
+									</div> --}}
+								{{-- <div class="box-body" hidden onload="renderTable()" id="readyTable"> --}}
+									{{-- <div class="tab-pane" id="addRowWizz"> --}}
+										{{-- <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p> --}}
+										{{-- <div id="smartwizard"> --}}
+											{{-- <ul>
+												{{-- <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li> --}}
+												{{-- <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
 												<li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
 												<li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
-											</ul>
-											<div>
-												<div id="step-1" class="">
-													@include('layouts.RespelPartials.respelform1Edit')
-												</div>
-												<div id="step-2" class="">
+											</ul> --}}
+											
+													<!-- left column -->
+														<!-- general form elements -->
+								{{-- <div class="row"> --}}
+										
+											@include('layouts.RespelPartials.Respelform1Edit')
+										
+												{{-- <div id="step-2" class="">
 													@include('layouts.RespelPartials.Respelform2')
 												</div>
 												<div id="step-3" class="">
@@ -70,15 +72,16 @@ Reepel-Editar
 												</div>
 												<div id="step-4" class="">
 													@include('layouts.RespelPartials.Respelform4')
-												</div>
-											</div>
+												</div> --}}
+											{{-- </div>
 										</div>
-									</div>
-								</div>
+									</div> --}}
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
+								<div class="col-md-12">	
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
+									</div>
 								</div>
 							</form>
 						</div>

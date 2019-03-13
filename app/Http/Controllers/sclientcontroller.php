@@ -160,9 +160,11 @@ class sclientcontroller extends Controller
      */
     public function destroy($id)
     {
-        // $id->delete($id);
         // return $id;
-
+        //$id->delete();
+        // Sede::find($id)->delete();
+        // cliente::find($id)->delete();
+        
         $log = new audit();
         $log->AuditTabla="sedes";
         $log->AuditType="Eliminado";
@@ -170,5 +172,7 @@ class sclientcontroller extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
+
+        return redirect()->route('sclientes.index');
     }
 }

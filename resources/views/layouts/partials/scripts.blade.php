@@ -50,19 +50,19 @@
         "targets": 9,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";}},
+          return "<a method='get' href='#" + data + "' class='btn btn-success'>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
           return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";}},      
         {"targets": 5,
-        "data": "CliSlug",
+        "data": "RespelHojaSeguridad",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}},
+          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
         {"targets": 6,
-        "data": "CliSlug",
+        "data": "RespelTarj",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' class='btn btn-primary'>Mirar</a>";}}
+          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
   });
@@ -814,12 +814,15 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 24,
+          "columnDefs": [{
+            "targets": 5,
             "data": "FK_RecSol",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-              }
+                return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          {"targets": 6,
+            "data": "ReqSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
           }]
         });
       });
