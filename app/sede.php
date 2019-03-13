@@ -20,7 +20,6 @@ class Sede extends Model
 	{
 	    return 'SedeSlug';
 	}
-	
 	public function clientes()
 	{
 	 return $this->belongsTo('App\Cliente','ID_Cli');
@@ -29,7 +28,6 @@ class Sede extends Model
 	{
 	 return $this->belongsTo('App\Municipio','ID_Mun');
 	}
-
 	public function generador(){
         return $this->hasMany('App\generador', 'ID_Gener', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
 	}
@@ -56,5 +54,8 @@ class Sede extends Model
     }
     public function Activo(){
     	return $this->hasMany('App\Activo', 'ID_Act', 'id');//como sedes tiene muchos activos
+	}
+	public function Respel(){
+    	return $this->hasMany('App\Respel', 'ID_Respel', 'id');//como genersedes tiene muchas areas
     }
 }

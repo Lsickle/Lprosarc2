@@ -17,9 +17,9 @@ class Respel extends Model
 	    return 'RespelSlug';
     }
     
-	public function GenerSede()
+	public function Sede()
 	{
-	 return $this->belongsTo('App\GenerSede', 'ID_GSede', 'id');
+	 return $this->belongsTo('App\sede', 'ID_Sede', 'id');
 	}
 
     public function Requerimiento(){
