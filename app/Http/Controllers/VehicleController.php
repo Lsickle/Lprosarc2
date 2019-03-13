@@ -31,7 +31,10 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('vehicle.create');
+        $Sedes = DB::table('sedes')
+            ->select('ID_Sede', 'SedeName')
+            ->get();
+        return view('vehicle.create', compact('Sedes'));
     }
     
     /**
@@ -43,25 +46,14 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         $Vehicle = new Vehiculo();
-        if ($request->input('InternoExterno') == 'on') {
-            $Vehicle->VehicInternExtern = '1';
-        }else{
-            $Vehicle->VehicInternExtern = '0';
-        };
-        $Vehicle->VehicPlaca = $request->input('placa');
-        $Vehicle->VehicCapacidad = $request->input('capacidad');
-        $Vehicle->VehicKmActual = $request->input('kmactual');
-        $Vehicle->VehicTipo = $request->input('tipo');
-        $Vehicle->FK_VehiSede = $request->input('sede');
+        $Vehicle->VehicPlaca = $request->input('VehicPlaca');
+        $Vehicle->VehicCapacidad = $request->input('VehicCapacidad');
+        $Vehicle->VehicKmActual = $request->input('VehicKmActual');
+        $Vehicle->VehicTipo = $request->input('VehicTipo');
+        $Vehicle->FK_VehiSede = $request->input('FK_VehiSede');
+        $Vehicle->VehicInternExtern = $request->input('VehicInternExtern');
+        $Vehicle->VehicDelete = 0;
         $Vehicle->save();
-
-        $log = new audit();
-        $log->AuditTabla="vehiculos";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Vehicle->ID_Vehic;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
         
         return redirect()->route('vehicle.index');
     }
@@ -85,7 +77,14 @@ class VehicleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Vehicles = DB::table('vehiculos')
+            ->select('*')
+            ->where('VehicPlaca', $id)
+            ->get();
+        $Sedes = DB::table('sedes')
+            ->select('ID_Sede', 'SedeName')
+            ->get();
+        return view('vehicle.edit', compact('Vehicles','Sedes'));
     }
     
     /**
@@ -97,7 +96,20 @@ class VehicleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
+        $Vehicle->fill($request->all());
+        $Vehicle->FK_VehiSede = $request->input('FK_VehiSede');
+        $Vehicle->save();
+
+        $log = new audit();
+        $log->AuditTabla="vehiculos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Vehicle->VehicPlaca;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('vehicle.index');
     }
 
     /**
@@ -108,6 +120,23 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
+            if ($Vehicle->VehicDelete == 0) {
+                $Vehicle->VehicDelete = 1;
+            }
+            else{
+                $Vehicle->VehicDelete = 0;
+            }
+        $Vehicle->save();
+
+        $log = new audit();
+        $log->AuditTabla = "vehiculos";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Vehicle->VehicPlaca;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Vehicle->VehicDelete;
+        $log->save();
+
+        return redirect()->route('vehicle.index');
     }
 }

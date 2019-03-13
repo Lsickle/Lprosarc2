@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-Vehiculos
-@endsection
+@section('htmlheader_title', 'Vehiculos')
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -10,6 +8,7 @@ Vehiculos
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Datos de los vehiculos</h3>
+          <a href="/vehicle/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -24,6 +23,7 @@ Vehiculos
                   <th>Sede</th>
                   <th>Fecha Registrado</th>
                   <th>Editar</th>
+                  <th>Borrar</th>
                 </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,6 +40,9 @@ Vehiculos
               </div>
               
               @foreach ($Vehicles as $Vehicle)
+              @component('layouts.partials.modal')
+                    {{$Vehicle->VehicPlaca}}
+              @endcomponent
                 <tr>
                   <td>{{$Vehicle->VehicPlaca}}</td>   
                   <td>{{$Vehicle->VehicTipo}}</td>   
@@ -50,9 +53,24 @@ Vehiculos
                   @else
                       <td>Externo</td>
                   @endif  
-                  <td>{{$Vehicle->SedeName}}</td> 
-                  <td>{{$Vehicle->created_at}}</td>  
-                  <td></td>  
+                  <td>{{$Vehicle->SedeName}}</td>
+                  <td>{{$Vehicle->created_at}}</td>
+                  <td>{{$Vehicle->VehicPlaca}}</td>
+                  <td>@if($Vehicle->VehicDelete === 0)
+                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}' class='btn btn-danger btn-block'>Borrar</a>
+                        <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input  type="submit" id="Eliminar{{$Vehicle->VehicPlaca}}" style="display: none;">
+                        </form>
+                      @else
+                        <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                        </form>
+                      @endif
+                  </td>
                 </tr> 
               @endforeach
             {{-- <tfoot>

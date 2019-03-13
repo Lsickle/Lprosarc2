@@ -522,9 +522,9 @@ $(document).ready(function(){
           "responsive": true,
           "columnDefs": [ {
           "targets": 7,
-          "data": "CliSlug",
+          "data": "VehicPlaca",
           "render": function ( data, type, row, meta ) {
-          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}      
+          return "<a href='/vehicle/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";}      
           }]
         });
       });

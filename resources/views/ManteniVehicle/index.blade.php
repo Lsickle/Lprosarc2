@@ -1,9 +1,7 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-Registro
-@endsection
+@section('htmlheader_title', 'Registro')
 @section('contentheader_title')
-{{-- {{ trans('adminlte_lang::message.sclientregistertittle') }} --}}
+{{ trans('adminlte_lang::message.sclientregistertittle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

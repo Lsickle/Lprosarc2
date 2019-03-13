@@ -8,7 +8,7 @@ class Vehiculo extends Model
 {
     protected $table = 'Vehiculos';
 
-    protected $fillable = ['VehicPlaca', 'VehicTipo', 'VehicCapacidad','VehicKmActual', 'VehicInternExtern'];
+    protected $fillable = ['VehicPlaca', 'VehicTipo', 'VehicCapacidad','VehicKmActual', 'VehicInternExtern', 'VehicDelete'];
 
     public $primaryKey = 'ID_Vehic';
 
