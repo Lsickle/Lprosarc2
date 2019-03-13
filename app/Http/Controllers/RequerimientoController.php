@@ -136,7 +136,10 @@ class RequerimientoController extends Controller
     {
         $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
         $Requerimiento->fill($request->all());
-        // return $request;
+        if (is_null($request->all())) {
+            return "No esta definido";
+        }
+        return "Esta definido";
         // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
         
         // $Requerimiento->FK_ReqRespel = $Requerimientos;
