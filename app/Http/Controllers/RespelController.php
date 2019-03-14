@@ -18,31 +18,27 @@ class RespelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // $Respels = DB::table('respels')
-        //     ->join('requerimientos', 'respels.RespelReq', '=', 'requerimientos.ID_Req')
-        //     ->join('declarations', 'respels.RespelDeclar', '=', 'declarations.ID_Declar')
-        //     ->join('gener_sedes', 'respels.RespelGenerSede', '=', 'gener_sedes.ID_GSede')
-        //     ->select('respels.*',
-        //              'requerimientos.*',
-        //              'declarations.*',
-        //              'gener_sedes.*'
-        //          )
-        //     ->get();
-        /*se cambio la consulta de forma temporal para probar el index*/
+    public function index(){ 
+
+    if(Auth::user()->UsRol === "Programador"){
 
         $Respels = DB::table('respels')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
-            ->get();
+        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+        ->select('respels.*', 'clientes.CliName')
+        ->get();
 
         return view('respels.index', compact('Respels'));
-
-        
     }
-
+    $Respels = DB::table('respels')
+        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+        ->select('respels.*', 'clientes.CliName')
+        ->where('respels.RespelDelete',0)
+        ->get();
+    
+        return view('respels.index', compact('Respels')); 
+}
     /**
      * Show the form for creating a new resource.
      *
@@ -50,12 +46,11 @@ class RespelController extends Controller
      */
     public function create()
     {
-        // $Usuario = Auth::user()->id;
-
+        // $Usuario -= Auth::user()->id;
         $Sedes = DB::table('sedes')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('sedes.*', 'clientes.*')
-            ->where('clientes.ID_Cli', 1) 
+            // ->where('clientes.ID_Cli', 1) 
             ->get();
 
         return view('respels.create', compact('Sedes'));
@@ -75,7 +70,7 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $name);
         }
         else{
-            $name = public_path().'/img/default.png';
+            $name = '';
         }
 
         if ($request->hasfile('RespelTarj')) {
@@ -84,9 +79,18 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = public_path().'/img/default.png';
+            $tarj = '';
         }
-       
+        // if(empty($request->hasfile('RespelHojaSeguridad')) and empty($request->hasfile('RespelHojaSeguridad'))){
+        //     // echo "Inserte La tarjeta de seguridad o la hoja de seguridad";
+        //     "<script>
+        //         alert('Inserte La tarjeta de seguridad o la hoja de seguridad');
+        //     </script>";
+            
+        //     return redirect()->route('respels.create');
+        //     exit;
+        // }
+
         $respel = new Respel();
         $respel->RespelName = $request->input('RespelName');
         $respel->RespelDescrip = $request->input('RespelDescrip');
@@ -100,17 +104,41 @@ class RespelController extends Controller
         $respel->RespelTarj = $tarj;
         $respel->FK_RespelSede = $request->input('FK_RespelSede');
         $respel->RespelSlug = "slug".$request->input('RespelName');
+        $respel->RespelDelete = 0;
         $respel->save();
 
-        $log = new audit();
-        $log->AuditTabla="respels";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$respel->ID_Respel;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-        return redirect()->route('requerimientos.create')->with('FK', $respel->ID_Respel)->with('status', $respel->RespelName);
+        $Requerimiento = new Requerimiento();
+        $Requerimiento->ReqFotoCargue = NULL;
+        $Requerimiento->ReqFotoDescargue = NULL;
+        $Requerimiento->ReqFotoPesaje = NULL;
+        $Requerimiento->ReqFotoReempacado = NULL;
+        $Requerimiento->ReqFotoMezclado = NULL;
+        $Requerimiento->ReqFotoDestruccion = NULL;
 
+        $Requerimiento->ReqVideoCargue = NULL;
+        $Requerimiento->ReqVideoDescargue = NULL;
+        $Requerimiento->ReqVideoPesaje = NULL;
+        $Requerimiento->ReqVideoReempacado = NULL;
+        $Requerimiento->ReqVideoMezclado = NULL;
+        $Requerimiento->ReqVideoDestruccion = NULL;
+
+        $Requerimiento->ReqAuditoria = NULL;
+        $Requerimiento->ReqAuditoriaTipo = NULL;
+        $Requerimiento->ReqDevolucion = NULL;
+        $Requerimiento->ReqDevolucionTipo = NULL;
+        $Requerimiento->ReqDatosPersonal = NULL;
+        $Requerimiento->ReqPlanillas = NULL;
+        $Requerimiento->ReqAlistamiento = NULL;
+        $Requerimiento->ReqCapacitacion = NULL;
+        $Requerimiento->ReqBascula = NULL;
+        $Requerimiento->ReqMasPerson = NULL;
+        $Requerimiento->ReqPlatform = NULL;
+        $Requerimiento->ReqCertiEspecial = NULL;
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName');
+        $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
+        $Requerimiento->save();
+
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -134,9 +162,8 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
         
-        // return $Respels->ID_Respel;
         $Requerimientos = Requerimiento::where('FK_ReqRespel',$Respels->ID_Respel)->first();   
-        // return $Requerimientos;
+        
         $Sedes = Sede::all();
 
         return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos'));
@@ -162,7 +189,8 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $name);
         }
         else{
-            $name = public_path().'/img/default.png';
+            // $name = public_path().'/img/default.png';
+            $name = "";
         }
 
         if ($request->hasfile('RespelTarj')) {
@@ -172,8 +200,10 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = public_path().'/img/default.png';
+            // $tarj = public_path().'/img/default.png';
+            $tarj = "";
         }
+
         $Respels->save();
 
         $log = new audit();
@@ -184,8 +214,7 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        // return redirect()->route('requerimientos.edit', compact('Requerimientos'));
-        return redirect()->route('respels.index', compact('Requerimientos'));
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -196,15 +225,21 @@ class RespelController extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
-        return $id;
+        $Respels = Respel::where('RespelSlug', $id)->first();
+        if ($Respels->RespelDelete == 0) {
+            $Respels->RespelDelete = 1;
+        }
+        else{
+            $Respels->RespelDelete = 0;
+        }
+        $Respels->save();
 
         $log = new audit();
         $log->AuditTabla="respels";
         $log->AuditType="Eliminado";
         $log->AuditRegistro=$Respels->ID_Respel;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
+        $log->Auditlog=$Respels->RespelDelete;
         $log->save();
 
         return redirect()->route('respels.index');
