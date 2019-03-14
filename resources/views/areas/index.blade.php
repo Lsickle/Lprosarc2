@@ -22,7 +22,6 @@
                   <th>Nombre</th>
                   <th>Sede</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -39,28 +38,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Areas as $Area)
-                @component('layouts.partials.modal')
-                    {{$Area->ID_Area}}
-                @endcomponent
                 <tr>
                   <td>{{$Area->AreaName}}</td>
                   <td>{{$Area->SedeName}}</td>
                   <td>{{$Area->ID_Area}}</td>
-                  <td>@if($Area->AreaDelete == 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Area->ID_Area}}' class='btn btn-danger btn-block'>Borrar</a>
-                        <form action='/areas/{{$Area->ID_Area}}' method='POST'>
-                            @method('DELETE')
-                            @csrf
-                            <input  type="submit" id="Eliminar{{$Area->ID_Area}}" style="display: none;">
-                        </form>
-                      @else
-                        <form action='/areas/{{$Area->ID_Area}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                        </form>
-                      @endif
-                  </td>
                 </tr>
                 @endforeach
               </tbody>
