@@ -77,6 +77,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-select/js/dataTables.select.js'
     ], 'public/js/datatable-depen.js')
    .scripts([
+        'node_modules/jszip/dist/jszip.js',
+        'node_modules/pdfmake/build/pdfmake.js',
         'resources/js/jquery.highlight.js',
         'node_modules/datatables.net-plugins/pagination/input.js',
         'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.js',
