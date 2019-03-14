@@ -6,7 +6,7 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Descripcion</label>
-	<input name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" required>
+	<input name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo">
 </div>
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
@@ -349,8 +349,7 @@
 <div class="col-md-12">
 	<label>Peligrosidad del residuo</label>
 	<select name="RespelIgrosidad" class="form-control" required>
-
-		<optgroup label="Seleccion el tipo de Peligrosidad del residuo" required>
+		{{-- <optgroup label="Seleccion el tipo de Peligrosidad del residuo"> --}}
 			<option value="">Selecione...</option>
 			<option>Inflamable</option>
 			<option>Toxico</option>
@@ -367,8 +366,8 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Estado del residuo</label>
-	<select name="RespelEstado" class="form-control">
-		<optgroup label="Seleccione el estado físico del residuo" >
+	<select required name="RespelEstado" class="form-control" required>
+		{{-- <optgroup label="Seleccione el estado físico del residuo"> --}}
 			<option value="">Selecione...</option>
 			<option value="Liquido">Liquido</option>
 			<option value="Solido">Solido</option>
@@ -380,9 +379,9 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Sede</label>
-	<select name="FK_RespelSede" class="form-control">
-		<optgroup label="Seleccione la sede de la que proviene">
-			<option>Selecione...</option>
+	<select name="FK_RespelSede" class="form-control" required>
+		{{-- <optgroup label="Seleccione la sede de la que proviene"> --}}
+			<option value="">Selecione...</option>
 			@foreach ($Sedes as $Sede)	
 				<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
 			@endforeach
@@ -392,7 +391,7 @@
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
 	<label>Hoja de seguridad</label>
-	<input name="RespelHojaSeguridad" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf">
+	<input name="RespelHojaSeguridad" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf" required>
 </div>
 {{-- <div class="form-group"> --}}
 <div class="col-md-12">
