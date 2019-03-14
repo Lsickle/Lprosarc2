@@ -41,7 +41,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($CapaPers as $CapaPer)
-                <tr>
+                <tr @if($CapaPer->CapaPersDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$CapaPer->PersFirstName." ".$CapaPer->PersLastName}}</td>
                   <td>{{$CapaPer->CapaName}}</td>
                   <td>{{$CapaPer->SedeName}}</td>

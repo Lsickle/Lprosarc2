@@ -21,10 +21,8 @@
                 <th>Nombre</th>
                 <th>NIT</th>
                 <th>Creado el</th>
-                <th>Auditable</th>
                 <th>Ver Más</th>
                 <th>Editar</th>
-                <th>Borrar</th>
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -41,50 +39,19 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
               @foreach($clientes as $cliente)
-              @component('layouts.partials.modal')
-                    {{$cliente->ID_Cli}}
-              @endcomponent
-              <tr>
+              <tr @if($cliente->CliDelete === 1)
+                style="color: red;" 
+              @endif
+              >
                 <td>{{$cliente->CliCategoria}}</td>
-                <td>{{$cliente->CliShortname}}</td>
+                <td>{{$cliente->CliName}}</td>
                 <td>{{$cliente->CliNit}}</td>
                 <td>{{$cliente->created_at}}</td>
-                @if($cliente->CliAuditable==1)
-                  <td>Si</td>
-                @else
-                  <td>NO</td>
-                @endif
                 <td>{{$cliente->CliSlug}}</td>
                 <td>{{$cliente->CliSlug}}</td>
-                <td>@if($cliente->CliDelete == 0)
-                      <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$cliente->ID_Cli}}' class='btn btn-danger btn-block'>Borrar</a>
-                      <form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input  type="submit" id="Eliminar{{$cliente->ID_Cli}}" style="display: none;">
-                      </form>
-                    @else
-                      <form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                      </form>
-                    @endif
-                </td>
               </tr>
               @endforeach
             </tbody>
-            {{-- <tfoot>
-            <tr>
-              <th>Categoria</th>
-              <th>Nombre</th>
-              <th>NIT</th>
-              <th>Creado el</th>
-              <th>Auditable</th>
-              <th>Mas...</th>
-              <th>Editar</th>
-            </tr>
-            </tfoot> --}}
           </table>
         </div>
         <!-- /.box-body -->

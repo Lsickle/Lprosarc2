@@ -40,7 +40,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Cargos as $Cargo)
-                <tr>
+                <tr @if($Cargo->CargDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Cargo->CargName}}</td>
                   <td>{{$Cargo->CargGrade}}</td>
                   <td>{{$Cargo->CargName}}</td>
