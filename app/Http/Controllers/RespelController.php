@@ -149,7 +149,16 @@ class RespelController extends Controller
      */
     public function show($id)
     {
-        //
+        // return $id;
+        $Respels = DB::table('respels')
+        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+        ->select('respels.*', 'clientes.*', 'sedes.*')
+        ->where('respels.RespelSlug', '=', $id)
+        ->get();
+        // return $Respels;
+
+        return view('respels.show', compact('Respels'));
     }
 
     /**

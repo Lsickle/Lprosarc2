@@ -32,7 +32,18 @@ class SolicitudServicioController extends Controller
      */
     public function create()
     {
-        return view('solicitud.createServicio');                
+        $Sedes = DB::table('solicitud_servicios')
+            ->join('sedes','sedes.ID_Sede', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->select('solicitud_servicios.*', 'sedes.*')
+            // ->where('')
+            ->get();
+
+        $GSedes = DB::table('gener_sedes')
+            ->select('gener_sedes.*')
+            // ->where('')
+            ->get();
+
+            return view('solicitud.createServicio', compact('GSedes', 'Sedes'));                
     }
 
     /**
@@ -43,27 +54,25 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        // $Servicios = DB::table('solicitud_servicios')
-        // ->select('solicitud_servicios.*')
-        // ->get();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = $request->input('Estado');
-        $Servicio->SolSerTipo = $request->input('Tipo');
+        $Servicio->SolSerStatus = $request->input('SolSerStatus');
+        $Servicio->SolSerTipo = $request->input('SolSerTipo');
 
-        if($request->input('auditable') == 'on'){
+        if($request->input('SolSerAuditable') == 'on'){
             $Servicio->SolSerAuditable = '1';
         }else{
             $Servicio->SolSerAuditable = '0';
         }
 
-        $Servicio->SolSerFrecuencia = $request->input('Frecuencia');
-        $Servicio->SolSerConducExter = $request->input('conductor');
-        $Servicio->SolSerVehicExter = $request->input('placa');
-        $Servicio->Fk_SolSerTransportador = 2;
+        $Servicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
+        $Servicio->SolSerConducExter = $request->input('SolSerConducExter');
+        $Servicio->SolSerVehicExter = $request->input('SolSerVehicExter');
+        $Servicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
+        $Servicio->FK_SolSerGenerSede = $request->input('FK_SolSerGenerSede');
         $Servicio->FK_SolSerGenerSede = 1;
         //Revisar slug
-        $Servicio->SolSerSlug = 'user'. $Servicio->SolSerVehicExter;
+        $Servicio->SolSerSlug = 'Slug'. $Servicio->SolSerVehicExter;
         
         $Servicio->save();
 
