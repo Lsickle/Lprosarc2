@@ -28,25 +28,27 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Formulario de registro</h3>
 							</div>
+							{{session('status')}}
+							{{session('FK')}}
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
+							<div class="fingerprint-spinner" id="loadingTable">
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+							</div>
+							<form role="form" action="/requerimientos" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									<div class="fingerprint-spinner" id="loadingTable">
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div>
 								<div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
-										<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
+										<p>Ingrese la información necesaria completando los campos requeridos según la información de requerimientos del residuo que desea registrar en cada paso</p>
 										<div id="smartwizard">
 											<ul>
 												{{-- <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li> --}}
@@ -72,6 +74,11 @@
 									</div>
 								</div>
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+
+								{{-- Proviene del controlador RespelController --}}
+								<input hidden type="text" name="ReqRespel" value="{{session('status')}}">
+								<input hidden type="text" name="FK_ReqRespel" value="{{session('FK')}}">
+
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>

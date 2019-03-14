@@ -20,10 +20,11 @@
               <thead>
                 <tr>
                   <th>Requerimientos de</th>
-                  <th>Fecha Creado</th>
-                  <th>Fecha Creado</th>
-                  <th>Fecha Modificado</th>
-                  <th>Ver mas</th>
+                  <th>Auditable</th>
+                  <th>Tipo de Auditoria</th>
+                  <th>Creado</th>
+                  <th>Mejorado</th>
+                  <th>Ver mas ...</th>
                   <th>Edit</th>
                   
             	    {{-- <th>FotoAlmacenado</th>
@@ -66,15 +67,60 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
-                {{-- @foreach($Cargos as $Cargo)
+                @foreach($Requerimientos as $Requerimiento)
                 <tr>
-                  <td>{{$Cargo->CargName}}</td>
-                  <td>{{$Cargo->CargGrade}}</td>
-                  <td>{{$Cargo->AreaName}}</td>
-                  <td>{{$Cargo->CargSalary}}</td>
+                  <td>{{$Requerimiento->CliName}}</td>
+                  @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
+                      <td>Si</td>
+                  @else
+                      <td>No</td>                      
+                  @endif
+                  <td>{{$Requerimiento->ReqAuditoriaTipo}}</td>
+                  <td>{{$Requerimiento->created_at}}</td>
+                  <td>{{$Requerimiento->updated_at}}</td>
+                  <td></td>
+                  <td>{{$Requerimiento->ReqSlug}}</td>
                 </tr>
-                @endforeach --}}
+                @endforeach
               </tbody>
+              {{-- <tfoot>
+                  <tr>
+                      <th>Requerimientos de</th>
+                      <th>Auditable</th>
+                      <th>Tipo de Auditoria</th>
+                      <th>Creado</th>
+                      <th>Mejorado</th>
+                      <th>Ver mas ...</th>
+                      <th>Edit</th>--}}
+                      
+                      {{-- <th>FotoAlmacenado</th>
+                      <th>FotoCargue</th>
+                      <th>FotoDescargue</th>
+                      <th>FotoPesaje</th>
+                      <th>FotoMezclado</th>
+                      <th>FotoDestruccion</th>
+                      <th>VideoCargue</th>
+                      <th>VideoDescargue</th>
+                      <th>VideoPesaje</th>
+                      <th>VideoAlmacenado</th>
+                      <th>VideoMezclado</th>
+                      <th>VideoDestruccion</th>
+                      <th>Auditoria</th>
+                      <th>AuditoriaTip</th>
+                      <th>Devolucion</th>
+                      <th>DevolucionTipo</th>
+                      <th>DatosPersonal</th>
+                      <th>Planillas</th>
+                      <th>Alistamiento</th>
+                      <th>Capacitacion</th>
+                      <th>Bascula</th>
+                      <th>MasPerson</th>
+                      <th>Platform</th>
+                      <th>CertiEspecial</th>
+                      <th>Residuo</th> --}}
+                      
+                    {{--</tr>
+              </tfoot> --}}
             </table>
           </div>
           <!-- /.box-body -->

@@ -20,7 +20,6 @@ class GenerSede extends Model
 	{
 	    return 'GSedeSlug';
 	}
-
 	public function generadors()
 	{
 	 return $this->belongsTo('App\Generador', 'ID_Gener');

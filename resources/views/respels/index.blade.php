@@ -10,6 +10,7 @@
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
+          <a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -73,7 +74,8 @@
                 @else
                 <td>NO</td>
                 @endif --}}
-                <td>{{$respel->GenerName}}</td>
+                <td>{{$respel->CliName}}</td>
+                {{-- <td></td> --}}
                 {{-- <td>{{$respel->created_at}}</td> --}}
                 {{-- <td>{{$respel->updated_at}}</td> --}}
                 <td></td>

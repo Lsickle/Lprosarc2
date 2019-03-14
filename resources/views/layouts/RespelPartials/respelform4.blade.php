@@ -3,7 +3,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="">
         <label>
-          <input class="AllowUncheck" type="radio" value="Presencial" name="ReqAuditoria"/> Auditoria Presencial
+          <input class="AllowUncheck" type="radio" value="Presencial" name="ReqAuditoriaTipo"/> Auditoria Presencial
         </label>
       </div>
       <div class="">

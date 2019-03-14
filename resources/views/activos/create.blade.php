@@ -34,12 +34,10 @@ Registros de Activos
 									<select class="form-control" id="activo" name="categoria" required="true">
 										<option>Seleccione...</option>
 										@foreach ($Categorias as $Categoria)
-										
 											<option value="{{$Categoria->ID_CatAct}}">{{$Categoria->CatName}}</option>																
 										@endforeach
 									</select>
 								</div>
-							{{-- </div> --}}
 								<div class="col-md-6">
 									<label for="activo1">SubCategoria</label>
 									<select class="form-control" id="activo1" name="FK_ActSub" required="true">
@@ -49,7 +47,6 @@ Registros de Activos
 										@endforeach
 									</select>
 								</div>
-							{{-- </div> --}}
 								<div class="col-md-6">
 									<label for="activoinputext1">Nombre del activo</label>
 									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="ActName">
