@@ -264,11 +264,11 @@
         "targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success'/>Ver</a>";}},
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success btn-block'/>Ver</a>";}},
         {"targets": 6,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";
         }  
       }]
 
