@@ -11,11 +11,26 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
 
+{{-- Dependencias Package.json --}}
+<script src="/js/dependencias.js"></script>
+
+{{-- pdfmake --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.js"></script>
+
+{{-- cdn de JSZip --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.js"></script>
+
+{{-- plugins de datatables --}}
+<script src="/js/datatable-plugins.js"></script>
+
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
-{{-- Dependencias Package.json --}}
-<script src="/js/dependencias.js"></script>
+
+{{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
+
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -264,20 +279,6 @@
       }]
 
     });
-    // $('#example2').DataTable({
-    //   'paging'      : true,
-    //   'lengthChange': false,
-    //   'searching'   : false,
-    //   'ordering'    : true,
-    //   'info'        : true,
-    //   'autoWidth'   : false
-    // })
-    //<!-- checkin imput -->
-    // $('input[name="CliAuditable"]').iCheck({
-    //   checkboxClass: 'icheckbox_square-blue',
-    //   radioClass: 'iradio_square-blue',
-    //   increaseArea: '20%' // optional
-    // });
   });
 </script>
   
@@ -845,33 +846,57 @@ $(document).ready(function(){
       });
     </script>
    
-    <script>
+<script>
+    var rol = "<?php
+            echo Auth::user()->UsRol;
+          ?>";
+      botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+      if (rol=='Programador') {
+        console.log(botoncito);
+      };
     $(document).ready(function () {
-    $('#example2').DataTable({
-        // scrollY: 300,
-        responsive: true,
-        // pagingType: 'input',
-        // keys: true,
-        select: true,
-        dom: 'Bfrtip',
-        buttons: [
-            'colvis', 'copy',
-            {
-            extend: 'collection',
-            text: 'Selector',
-            buttons: [ 'selectRows', 'selectCells' ]
-            }
-          ],
-        colReorder: true,
-        // pagingType: 'scrolling',
-        ordering: true,
-        autoWith: true,
-        fixedHeader: {
-            header: true
-        }
-    });
+      $('#example2').DataTable({
+          // pagingType: 'scrolling',
+          // scrollY: 300,
+          responsive: true,
+          // keys: true,
+          select: true,
+          dom: 'Bfrtip',
+          buttons: [
+              botoncito,
+              {
+              extend: 'collection',
+              text: 'Selector',
+              buttons: [ 'selectRows', 'selectCells' ]
+              }
+            ],
+          colReorder: true,
+          ordering: true,
+          autoWith: true,
+          searchHighlight: true,
+          "columnDefs": [ {
+            "targets": 10,
+            "data": "SedeSlug",
+            "render": function ( data, type, row, meta ) {
+              return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+            }  
+          }],
+          fixedHeader: {
+              header: true
+          }
+      });
+
+      var table = $('#example2').DataTable();
+ 
+      table.on( 'draw', function () {
+          var body = $( table.table().body() );
+   
+          body.unhighlight();
+          body.highlight( table.search() );  
+      });
   }); 
 </script>
+
     <script>
       $(function() {
         $('#calendar').fullCalendar({

@@ -49,7 +49,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-select-dt/css/select.dataTables.css'
     ], 'public/css/datatable-depen.css')
    .combine([
-        'node_modules/datatables.net-plugins/features/searchFade/dataTables.searchHighlight.css'
+        'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.css'
     ], 'public/css/datatable-plugins.css')
    .scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
@@ -77,8 +77,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-select/js/dataTables.select.js'
     ], 'public/js/datatable-depen.js')
    .scripts([
+        'resources/js/jquery.highlight.js',
         'node_modules/datatables.net-plugins/pagination/input.js',
-        'node_modules/datatables.net-plugins/features/searchFade/dataTables.searchHighlight.js',
+        'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.js',
         'node_modules/datatables.net-plugins/pagination/input.js',
         'node_modules/datatables.net-plugins/filtering/row-based/range_dates.js',
         'node_modules/datatables.net-plugins/filtering/row-based/range_numbers.js'
