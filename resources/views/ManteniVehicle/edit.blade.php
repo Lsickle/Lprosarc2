@@ -13,19 +13,19 @@
 					@endcomponent
 		          <h3 class="box-title">Datos del mantenimiento</h3>
 		          @if($MantVehicles->MvDelete === 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$MantVehicles->ID_Mv}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-                        <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input  type="submit" id="Eliminar{{$MantVehicles->ID_Mv}}" style="display: none;">
-                        </form>
-                      @else
-                        <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST' style="float: right;">
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success ' value="Añadir">
-                        </form>
-                      @endif
+                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$MantVehicles->ID_Mv}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+                    <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST'>
+                      @method('DELETE')
+                      @csrf
+                      <input  type="submit" id="Eliminar{{$MantVehicles->ID_Mv}}" style="display: none;">
+                    </form>
+                  @else
+                    <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST' style="float: right;">
+                      @method('DELETE')
+                      @csrf
+                      <input type="submit" class='btn btn-success ' value="Añadir">
+                    </form>
+                  @endif
 		        </div>
 				<div class="row">
 					<!-- left column -->

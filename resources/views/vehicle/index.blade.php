@@ -23,7 +23,6 @@
                   <th>Sede</th>
                   <th>Fecha Registrado</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,9 +39,6 @@
               </div>
               
               @foreach ($Vehicles as $Vehicle)
-              @component('layouts.partials.modal')
-                    {{$Vehicle->VehicPlaca}}
-              @endcomponent
                 <tr>
                   <td>{{$Vehicle->VehicPlaca}}</td>   
                   <td>{{$Vehicle->VehicTipo}}</td>   
@@ -56,21 +52,6 @@
                   <td>{{$Vehicle->SedeName}}</td>
                   <td>{{$Vehicle->created_at}}</td>
                   <td>{{$Vehicle->VehicPlaca}}</td>
-                  <td>@if($Vehicle->VehicDelete === 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}' class='btn btn-danger btn-block'>Borrar</a>
-                        <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input  type="submit" id="Eliminar{{$Vehicle->VehicPlaca}}" style="display: none;">
-                        </form>
-                      @else
-                        <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                        </form>
-                      @endif
-                  </td>
                 </tr> 
               @endforeach
           </table>

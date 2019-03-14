@@ -77,14 +77,11 @@ class VehicleController extends Controller
      */
     public function edit($id)
     {
-        $Vehicles = DB::table('vehiculos')
-            ->select('*')
-            ->where('VehicPlaca', $id)
-            ->get();
+        $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
             ->get();
-        return view('vehicle.edit', compact('Vehicles','Sedes'));
+        return view('vehicle.edit', compact('Vehicle','Sedes'));
     }
     
     /**
@@ -98,7 +95,6 @@ class VehicleController extends Controller
     {
         $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Vehicle->fill($request->all());
-        $Vehicle->FK_VehiSede = $request->input('FK_VehiSede');
         $Vehicle->save();
 
         $log = new audit();

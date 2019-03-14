@@ -9,21 +9,31 @@ Edicion de vehiculos
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Datos</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
-				</div>
+				<div class="box-header">
+	              @component('layouts.partials.modal')
+	                    {{$Vehicle->VehicPlaca}}
+	              @endcomponent
+		          <h3 class="box-title">Datos del vehiculo</h3>
+		          @if($Vehicle->VehicDelete === 0)
+                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+                    <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
+                      @method('DELETE')
+                      @csrf
+                      <input  type="submit" id="Eliminar{{$Vehicle->VehicPlaca}}" style="display: none;">
+                    </form>
+                  @else
+                    <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST' style="float: right;">
+                      @method('DELETE')
+                      @csrf
+                      <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                    </form>
+                  @endif
+		        </div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-						@foreach($Vehicles as $Vehicle)
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/vehicle/{{$Vehicle->VehicPlaca}}" method="POST" enctype="multipart/form-data">
@@ -72,10 +82,9 @@ Edicion de vehiculos
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+									<button type="submit" class="btn btn-primary">Editar</button>
 								</div>
 							</form>
-						@endforeach
 						</div>
 						<!-- /.box -->
 					</div>
