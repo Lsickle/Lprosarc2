@@ -70,7 +70,7 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $name);
         }
         else{
-            $name = public_path().'/img/default.png';
+            $name = '';
         }
 
         if ($request->hasfile('RespelTarj')) {
@@ -79,14 +79,15 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = public_path().'/img/default.png';
+            $tarj = '';
         }
-        // if(!empty($request->hasfile('RespelHojaSeguridad') and !empty($request->hasfile('RespelTarj'))))
-        // {
-        //     return 'Lleno';
-        //     exit;
-        // }else{
-        //     return 'Vacio';
+        // if(empty($request->hasfile('RespelHojaSeguridad')) and empty($request->hasfile('RespelHojaSeguridad'))){
+        //     // echo "Inserte La tarjeta de seguridad o la hoja de seguridad";
+        //     "<script>
+        //         alert('Inserte La tarjeta de seguridad o la hoja de seguridad');
+        //     </script>";
+            
+        //     return redirect()->route('respels.create');
         //     exit;
         // }
 
@@ -103,7 +104,7 @@ class RespelController extends Controller
         $respel->RespelTarj = $tarj;
         $respel->FK_RespelSede = $request->input('FK_RespelSede');
         $respel->RespelSlug = "slug".$request->input('RespelName');
-        $respel->RespelDelete =0;
+        $respel->RespelDelete = 0;
         $respel->save();
 
         $Requerimiento = new Requerimiento();
@@ -181,33 +182,28 @@ class RespelController extends Controller
         $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
         $Respels->fill($request->except('RespelTarj', 'RespelHojaSeguridad'));
         
-        // if ($request->hasfile('RespelHojaSeguridad')) {
-        //     $file = $request->file('RespelHojaSeguridad');
-        //     $name = time().$file->getClientOriginalName();
-        //     $Respels->RespelHojaSeguridad = $name;
-        //     $file->move(public_path().'/img/', $name);
-        // }
-        // else{
-        //     $name = public_path().'/img/default.png';
-        // }
-
-        // if ($request->hasfile('RespelTarj')) {
-        //     $file = $request->file('RespelTarj');
-        //     $tarj = time().$file->getClientOriginalName();
-        //     $Respels->RespelTarj = $tarj;
-        //     $file->move(public_path().'/img/', $tarj);
-        // }
-        // else{
-        //     $tarj = public_path().'/img/default.png';
-        // }
-        if(!empty($request->hasfile('RespelHojaSeguridad') || !empty($request->hasfile('RespelTarj'))))
-        {
-            return 'Vacio';
-            exit;
-        }else{
-            return 'Lleno';
-            exit;
+        if ($request->hasfile('RespelHojaSeguridad')) {
+            $file = $request->file('RespelHojaSeguridad');
+            $name = time().$file->getClientOriginalName();
+            $Respels->RespelHojaSeguridad = $name;
+            $file->move(public_path().'/img/', $name);
         }
+        else{
+            // $name = public_path().'/img/default.png';
+            $name = "";
+        }
+
+        if ($request->hasfile('RespelTarj')) {
+            $file = $request->file('RespelTarj');
+            $tarj = time().$file->getClientOriginalName();
+            $Respels->RespelTarj = $tarj;
+            $file->move(public_path().'/img/', $tarj);
+        }
+        else{
+            // $tarj = public_path().'/img/default.png';
+            $tarj = "";
+        }
+
         $Respels->save();
 
         $log = new audit();
