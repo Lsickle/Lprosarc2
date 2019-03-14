@@ -29,25 +29,27 @@ Respel-Editar
 									<div class="box-header with-border">
 										<h3 class="box-title">Formulario de registro</h3>
 										<a href="/requerimientos/{{$Requerimientos->ReqSlug}}/edit" class="btn btn-primary" style="float: right;">Editar Requerimientos</a>
-							</div>
+									</div>
 							<!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
-                                @method('PUT')
-								@csrf
+									<form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
+										@method('PUT')
+										@csrf
 
-								@include('layouts.RespelPartials.Respelform1Edit')
+										@include('layouts.RespelPartials.Respelform1Edit')
 
-								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
-								<!-- /.box-body -->
-								<div class="col-md-12">	
-									<div class="box-footer">
-										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
-									</div>
-								</div>
-							</form>
-						</div>
+										<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+										<!-- /.box-body -->
+										<div class="col-md-12">	
+											<div class="box-footer">
+												<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
+											</div>
+										</div>
+									</form>
 						<!-- /.box -->
+								</div>
+							</div>
+						</div>
 					</div>
 					<!-- /.box-body -->
 				</div>

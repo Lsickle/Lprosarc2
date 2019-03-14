@@ -58,11 +58,11 @@
         {"targets": 5,
         "data": "RespelHojaSeguridad",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
         {"targets": 6,
         "data": "RespelTarj",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
   });

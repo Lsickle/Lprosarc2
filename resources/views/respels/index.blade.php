@@ -32,6 +32,7 @@
                 {{-- <th>Actualizado el</th> --}}
                 <th>Ver Más...</th>
                 <th>Editar</th>
+                <th>Borrar</th>
               </tr>
             </thead>
             <tbody hidden onload="renderTable()" id="readyTable">
@@ -48,6 +49,9 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
               @foreach($Respels as $respel)
+              @component('layouts.partials.modal')
+                    {{$respel->ID_Respel}}
+                @endcomponent
               <tr>
                 <td>{{$respel->RespelName}}</td>
                 {{-- <td>{{$respel->RespelDescrip}}</td> --}}
@@ -69,6 +73,22 @@
                 {{-- <td>{{$respel->updated_at}}</td> --}}
                 <td></td>
                 <td>{{$respel->RespelSlug}}</td>
+                <td>@if($respel->RespelDelete == 0)
+                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$respel->ID_Respel}}' class='btn btn-danger btn-block'>Borrar</a>
+                    <form action='/respels/{{$respel->RespelSlug}}' method='POST'>
+                        @method('DELETE')
+                        @csrf
+                        <input  type="submit" id="Eliminar{{$respel->ID_Respel}}" style="display: none;">
+                    </form>
+                  @else
+                    <form action='/respels/{{$respel->RespelSlug}}' method='POST'>
+                      @method('DELETE')
+                      @csrf
+                      <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                    </form>
+                  @endif
+              </td>
+
                 {{-- <td>{{$respel->RespelSlug}}</td> --}}
               </tr>
               @endforeach
