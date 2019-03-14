@@ -21,6 +21,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Tipo</th>
+                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -44,6 +45,7 @@
                   @else
                     <td>Externo</td>
                   @endif
+                  <td>{{$Training->ID_Capa}}</td>
                 </tr>
                 @endforeach
               </tbody>

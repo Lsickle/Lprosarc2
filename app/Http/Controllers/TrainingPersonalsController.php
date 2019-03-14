@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use App\TrainingPersonals;
+use Illuminate\Support\Facades\Auth;
+use App\audit;
+use App\TrainingPersonal;
 
 class TrainingPersonalsController extends Controller
 {
@@ -15,11 +16,21 @@ class TrainingPersonalsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        if(Auth::user()->UsRol === "Programador"){
+            $CapaPers = DB::table('training_personals')
+                ->join('sedes', 'training_personals.FK_Sede', '=', 'sedes.ID_Sede')
+                ->join('trainings', 'training_personals.FK_Capa', '=', 'trainings.ID_Capa')
+                ->join('personals', 'training_personals.FK_Pers', '=', 'personals.ID_Pers')
+                ->select('training_personals.ID_CapPers','training_personals.CapaPersDate','training_personals.CapaPersExpire','training_personals.CapaPersDelete','sedes.SedeName','trainings.CapaName','personals.PersFirstName','personals.PersLastName')
+                ->get();
+            return view('TrainingPersonals.index', compact('CapaPers'));
+        }
         $CapaPers = DB::table('training_personals')
             ->join('sedes', 'training_personals.FK_Sede', '=', 'sedes.ID_Sede')
             ->join('trainings', 'training_personals.FK_Capa', '=', 'trainings.ID_Capa')
             ->join('personals', 'training_personals.FK_Pers', '=', 'personals.ID_Pers')
-            ->select('training_personals.CapaPersDate','training_personals.CapaPersExpire','sedes.SedeName','trainings.CapaName','personals.PersFirstName','personals.PersLastName')
+            ->select('training_personals.ID_CapPers','training_personals.CapaPersDate','training_personals.CapaPersExpire','training_personals.CapaPersDelete','sedes.SedeName','trainings.CapaName','personals.PersFirstName','personals.PersLastName')
+            ->where('training_personals.CapaPersDelete', 0)
             ->get();
         return view('TrainingPersonals.index', compact('CapaPers'));
     }
@@ -31,7 +42,16 @@ class TrainingPersonalsController extends Controller
      */
     public function create()
     {
-        //
+        $Personals = DB::table('personals')
+            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->get();
+        $Trainings = DB::table('trainings')
+            ->select('ID_Capa', 'CapaName')
+            ->get();
+        $Sedes = DB::table('sedes')
+            ->select('ID_Sede', 'SedeName')
+            ->get();
+        return view('trainingPersonals.create', compact('Personals', 'Trainings', 'Sedes'));
     }
 
     /**
@@ -42,7 +62,16 @@ class TrainingPersonalsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $CapaPers = new TrainingPersonal();
+        $CapaPers->CapaPersDate = $request->input('CapaPersDate');
+        $CapaPers->CapaPersExpire = $request->input('CapaPersExpire');
+        $CapaPers->FK_Pers = $request->input('FK_Pers');
+        $CapaPers->FK_Capa = $request->input('FK_Capa');
+        $CapaPers->FK_Sede = $request->input('FK_Sede');
+        $CapaPers->CapaPersDelete = 0;
+        $CapaPers->save();
+
+        return redirect()->route('capacitacion-personal.index');
     }
 
     /**
@@ -64,7 +93,17 @@ class TrainingPersonalsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $CapaPer = TrainingPersonal::where('ID_CapPers', $id)->first();
+        $Personals = DB::table('personals')
+            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->get();
+        $Trainings = DB::table('trainings')
+            ->select('ID_Capa', 'CapaName')
+            ->get();
+        $Sedes = DB::table('sedes')
+            ->select('ID_Sede', 'SedeName')
+            ->get();
+        return view('trainingPersonals.edit', compact('CapaPer','Personals','Trainings', 'Sedes'));
     }
 
     /**
@@ -76,7 +115,19 @@ class TrainingPersonalsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $CapaPers = TrainingPersonal::where('ID_CapPers', $id)->first();
+        $CapaPers->fill($request->all());
+        $CapaPers->save();
+
+        $log = new audit();
+        $log->AuditTabla="training_personals";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$CapaPers->ID_CapPers;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('capacitacion-personal.index');
     }
 
     /**
@@ -87,6 +138,23 @@ class TrainingPersonalsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $CapaPers = TrainingPersonal::where('ID_CapPers', $id)->first();
+            if ($CapaPers->CapaPersDelete == 0) {
+                $CapaPers->CapaPersDelete = 1;
+            }
+            else{
+                $CapaPers->CapaPersDelete = 0;
+            }
+        $CapaPers->save();
+
+        $log = new audit();
+        $log->AuditTabla = "training_personals";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $CapaPers->ID_CapPers;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $CapaPers->CapaPersDelete;
+        $log->save();
+
+        return redirect()->route('capacitacion-personal.index');
     }
 }

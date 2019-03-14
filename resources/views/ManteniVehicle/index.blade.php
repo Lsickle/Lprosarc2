@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title', 'Vehiculos')
+@section('contentheader_title', 'Lista de Vehiculos')
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -8,20 +9,19 @@
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Datos de los vehiculos</h3>
-          <a href="/vehicle/create" class="btn btn-primary" style="float: right;">Crear</a>
+          <a href="/vehicle-mantenimiento/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="VehicleTable" class="table table-compact table-bordered table-striped">
+          <table id="MantVehicleTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                  <th>Placa</th>
+                  <th>Vehiculo</th>
+                  <th>Kilometraje</th>
+                  <th>Estado</th>
                   <th>Tipo</th>
-                  <th>Capacidad</th>
-                  <th>Km Actual</th>
-                  <th>Prosedencia</th>
-                  <th>Sede</th>
-                  <th>Fecha Registrado</th>
+                  <th>Hora Inicio</th>
+                  <th>Hora Final</th>
                   <th>Editar</th>
                 </tr>
             </thead>
@@ -38,20 +38,19 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
               
-              @foreach ($Vehicles as $Vehicle)
+              @foreach ($MantVehicles as $MantVehicle)
                 <tr>
-                  <td>{{$Vehicle->VehicPlaca}}</td>   
-                  <td>{{$Vehicle->VehicTipo}}</td>   
-                  <td>{{$Vehicle->VehicCapacidad}} Kilos</td>   
-                  <td>{{$Vehicle->VehicKmActual}}</td> 
-                  @if ($Vehicle->VehicInternExtern == 1)
-                      <td>Interno</td>
+                  <td>{{$MantVehicle->VehicPlaca}}</td>
+                  <td>{{$MantVehicle->MvKm}}</td> 
+                  @if($MantVehicle->HoraMavFin >= now())
+                    <td>Activo</td>
                   @else
-                      <td>Externo</td>
-                  @endif  
-                  <td>{{$Vehicle->SedeName}}</td>
-                  <td>{{$Vehicle->created_at}}</td>
-                  <td>{{$Vehicle->VehicPlaca}}</td>
+                    <td>Finalizado</td>
+                  @endif
+                  <td>{{$MantVehicle->MvType}}</td>
+                  <td>{{$MantVehicle->HoraMavInicio}}</td>
+                  <td>{{$MantVehicle->HoraMavFin}}</td>
+                  <td>{{$MantVehicle->ID_Mv}}</td>
                 </tr> 
               @endforeach
           </table>

@@ -24,6 +24,7 @@
                   <th>Sede</th>
                   <th>Aprovacion</th>
                   <th>Vencimiento</th>
+                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -46,6 +47,7 @@
                   <td>{{$CapaPer->SedeName}}</td>
                   <td>{{$CapaPer->CapaPersDate}}</td>
                   <td>{{$CapaPer->CapaPersExpire}}</td>
+                  <td>{{$CapaPer->ID_CapPers}}</td>
                 </tr>
                 @endforeach
               </tbody>

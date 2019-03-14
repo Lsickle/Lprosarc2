@@ -109,15 +109,12 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Personas = DB::table('personals')
-            ->select('*')
-            ->where('PersSlug',$id)
-            ->get();
+        $Persona = Personal::where('PersSlug', $id)->first();
         $Cargos = DB::table('cargos')
             ->join('areas', 'CargArea', '=', 'ID_Area')
             ->select('cargos.ID_Carg','cargos.CargName', 'areas.AreaName')
             ->get();
-        return view('personal.edit', compact('Personas', 'Cargos'));
+        return view('personal.edit', compact('Persona', 'Cargos'));
     }
 
     /**
@@ -130,7 +127,6 @@ class PersonalController extends Controller
     public function update(Request $request, $id){
         $Persona = Personal::where('PersSlug', $id)->first();
         $Persona->fill($request->all());
-        $Persona->FK_PersCargo = $request->input('FK_PersCargo');
         $Persona->save();
 
 

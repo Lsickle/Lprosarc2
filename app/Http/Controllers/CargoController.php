@@ -86,10 +86,7 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Cargos = DB::table('cargos')
-            ->select('*')
-            ->where('ID_Carg',$id)
-            ->get();
+        $Cargos = Cargo::where('ID_Carg', $id)->first();
         $Areas = DB::table('areas')
             ->select('ID_Area', 'AreaName')
             ->get();
@@ -106,7 +103,6 @@ class CargoController extends Controller
     public function update(Request $request, $id){
         $Cargo = Cargo::where('ID_Carg', $id)->first();
         $Cargo->fill($request->all());
-        $Cargo->CargArea = $request->input('SelectArea');
         $Cargo->save();
 
         $log = new audit();

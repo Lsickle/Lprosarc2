@@ -544,9 +544,9 @@ $(document).ready(function(){
           "responsive": true,
           "columnDefs": [ {
           "targets": 7,
-          "data": "CliSlug",
+          "data": "VehicPlaca",
           "render": function ( data, type, row, meta ) {
-          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}      
+          return "<a href='/vehicle/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";}      
           }]
         });
       });
@@ -581,7 +581,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 2,
+            "data": "ID_Capa",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>
@@ -591,7 +598,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 5,
+            "data": "ID_CapPers",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion-personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>
@@ -920,4 +934,21 @@ $(document).ready(function(){
             alert('a day has been clicked!');
           }*/
         },'option' , 'contentHeight' , 650) --}}
+    </script>
+     <script>
+      $(document).ready(function () {
+        $('#MantVehicleTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 6,
+            "data": "ID_Mv",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/vehicle-mantenimiento/" + data + "/edit' class='btn btn-block btn-warning'>Editar</a>";
+              }
+          }]
+        });
+      });
     </script>

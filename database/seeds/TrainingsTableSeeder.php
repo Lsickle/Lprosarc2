@@ -14,26 +14,31 @@ class TrainingsTableSeeder extends Seeder
         $training = new Training();
         $training->CapaName = "Alturas";
         $training->CapaTipo = 1;
+        $training->CapaDelete = 0;
         $training->save();
 
         $training = new Training();
         $training->CapaName = "Menejo de residuos";
         $training->CapaTipo = 0;
+        $training->CapaDelete = 0;
         $training->save();
 
         $training = new Training();
         $training->CapaName = "Primeros auxilios";
         $training->CapaTipo = 1;
+        $training->CapaDelete = 0;
         $training->save();
 
         $training = new Training();
         $training->CapaName = "Seguridad y Salud";
         $training->CapaTipo = 0;
+        $training->CapaDelete = 0;
         $training->save();
 
         $training = new Training();
         $training->CapaName = "Manejo del aplicativo";
         $training->CapaTipo = 1;
+        $training->CapaDelete = 0;
         $training->save();
     }
 }
