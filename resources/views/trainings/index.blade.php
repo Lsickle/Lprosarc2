@@ -38,7 +38,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Trainings as $Training)
-                <tr>
+                <tr @if($Training->CapaDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Training->CapaName}}</td>
                   @if($Training->CapaTipo == 1)
                     <td>Interno</td>

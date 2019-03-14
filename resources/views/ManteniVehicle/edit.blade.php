@@ -73,7 +73,7 @@
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Editar</button>
+									<button type="submit" class="btn btn-primary">Actualizar</button>
 								</div>
 							</form>
 						</div>

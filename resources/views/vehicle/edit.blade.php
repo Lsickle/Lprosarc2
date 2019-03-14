@@ -82,7 +82,7 @@ Edicion de vehiculos
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Editar</button>
+									<button type="submit" class="btn btn-primary">Actualizar</button>
 								</div>
 							</form>
 						</div>

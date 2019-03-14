@@ -39,7 +39,10 @@
               </div>
               
               @foreach ($MantVehicles as $MantVehicle)
-                <tr>
+                <tr @if($MantVehicle->MvDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$MantVehicle->VehicPlaca}}</td>
                   <td>{{$MantVehicle->MvKm}}</td> 
                   @if($MantVehicle->HoraMavFin >= now())
