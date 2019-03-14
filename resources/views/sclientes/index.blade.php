@@ -19,7 +19,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="scliente" class="table table-compact table-bordered table-striped">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Nombre</th>
@@ -36,7 +36,7 @@
                   <th>Borrar</th>
                 </tr>
                 </thead>
-                <tbody  hidden onload="renderTable()" id="readyTable">
+                <tbody hidden onload="renderTable()" id="readyTable">
 
               {{-- <h1 id="loadingTable">LOADING...</h1> --}}
                    <div class="fingerprint-spinner" id="loadingTable">

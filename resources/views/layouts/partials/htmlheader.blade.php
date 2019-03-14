@@ -15,6 +15,8 @@
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}">
 
+    {{-- plugins de datatables --}}
+    <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
