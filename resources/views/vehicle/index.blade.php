@@ -73,14 +73,6 @@
                   </td>
                 </tr> 
               @endforeach
-            {{-- <tfoot>
-                <tr>
-                    <th>Placa</th>
-                    <th>Tipo</th>
-                    <th>Capacidad</th>
-                    <th>Km Actual</th>
-                </tr>
-            </tfoot> --}}
           </table>
         </div>
         <!-- /.box-body -->

@@ -1,76 +1,64 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Registro')
-@section('contentheader_title')
-{{ trans('adminlte_lang::message.sclientregistertittle') }}
-@endsection
+@section('htmlheader_title', 'Vehiculos')
+@section('contentheader_title', 'Lista de Vehiculos')
 @section('main-content')
 <div class="container-fluid spark-screen">
-	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Mantenimiento</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
-				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
-								@csrf
-								<div class="box-body">
-									
-									<div class="col-md-6">
-										<label for="mantenputext0">Km ultimo mantenimiento</label>
-										<input type="number" class="form-control" id="mantenputext0" placeholder="999999" name="km" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="mantenputext1">Cambio de Aceite</label>
-										<input type="date" class="form-control" id="mantenputext1" name="aceite">
-									</div>
-									<div class="col-md-6">
-										<label for="manteinputext2">Fecha ultima tecnico mecanica</label>
-										<input type="date" class="form-control" id="manteinputext2" name="tecmecanica" maxlength="16">
-									</div>
-									<div class="col-md-6">
-										<label for="manteinputext3">Tanqueo</label>
-										<input type="date" class="form-control" id="manteinputext3" name="Tanqueo">
-									</div>
-									<div class="col-md-6">
-										<label for="manteinputext4">Cantida de tanqueo</label>
-										<input type="number" class="form-control" id="manteinputext4" placeholder="100098" name="cantidad" required="true" max="999999">
-									</div>
-									
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>
-							</form>
-						</div>
-						<!-- /.box -->
-					</div>
-					</div>
-					</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<!--/.col (right) -->
-		</div>
-		<!-- /.box-body -->
-	</div>
-	<!-- /.box -->
+  <div class="row">
+    <div class="col-md-16 col-md-offset-0">
+      <!-- /.box -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Datos de los vehiculos</h3>
+          <a href="/vehicle-mantenimiento/create" class="btn btn-primary" style="float: right;">Crear</a>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="MantVehicleTable" class="table table-compact table-bordered table-striped">
+            <thead>
+                <tr>
+                  <th>Vehiculo</th>
+                  <th>Kilometraje</th>
+                  <th>Estado</th>
+                  <th>Tipo</th>
+                  <th>Hora Inicio</th>
+                  <th>Hora Final</th>
+                  <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody  hidden onload="renderTable()" id="readyTable">
+              <div class="fingerprint-spinner" id="loadingTable">
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+              </div>
+              
+              @foreach ($MantVehicles as $MantVehicle)
+                <tr>
+                  <td>{{$MantVehicle->VehicPlaca}}</td>
+                  <td>{{$MantVehicle->MvKm}}</td> 
+                  @if($MantVehicle->HoraMavFin >= now())
+                    <td>Activo</td>
+                  @else
+                    <td>Finalizado</td>
+                  @endif
+                  <td>{{$MantVehicle->MvType}}</td>
+                  <td>{{$MantVehicle->HoraMavInicio}}</td>
+                  <td>{{$MantVehicle->HoraMavFin}}</td>
+                  <td>{{$MantVehicle->ID_Mv}}</td>
+                </tr> 
+              @endforeach
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
 </div>
 @endsection
