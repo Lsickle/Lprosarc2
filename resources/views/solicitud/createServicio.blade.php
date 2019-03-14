@@ -31,7 +31,7 @@ Solicitudes de servicios
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
 										<select class="form-control" id="estado" name="Estado" required="true">
-											<option>Seleccione...</option>
+											<option value="">Seleccione...</option>
 											<option>Aprobada</option>
 											<option>Negada</option>
 											<option>Pendiente</option>
@@ -41,10 +41,19 @@ Solicitudes de servicios
 									<div class="col-md-6">
 										<label for="Tipo">Tipo</label>
 										<select class="form-control" id="Tipo" name="Tipo" required="true">
-											<option>Seleccione...</option>
+											<option value="">Seleccione...</option>
 											<option>Interno</option>
 											<option>Alquilado</option>
 											<option>Externo</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="Tipo">Sede</label>
+										<select class="form-control" id="Tipo" name="Tipo" required>
+											<option value="">Seleccione...</option>
+											@foreach ($Sedes as $Sede)
+												<option value{{$Sede->ID_Sede}}>{{$Sede->SedeName}}</option>
+											@endforeach
 										</select>
 									</div>
 									<div class="col-md-6">

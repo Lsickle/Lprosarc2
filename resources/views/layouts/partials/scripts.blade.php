@@ -48,9 +48,9 @@
        "responsive": true,
         "columnDefs": [ {
         "targets": 9,
-        "data": "CliSlug",
+        "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success'>Ver</a>";}},
+          return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {

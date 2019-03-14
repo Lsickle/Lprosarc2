@@ -32,7 +32,13 @@ class SolicitudServicioController extends Controller
      */
     public function create()
     {
-        return view('solicitud.createServicio');                
+        $Sedes = DB::table('solicitud_servicios')
+            ->join('sedes','sedes.ID_Sede', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->select('solicitud_servicios.*', 'sedes.*')
+            // ->where('')
+            ->get();
+
+            return view('solicitud.createServicio', compact('Sedes'));                
     }
 
     /**
@@ -43,9 +49,6 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        // $Servicios = DB::table('solicitud_servicios')
-        // ->select('solicitud_servicios.*')
-        // ->get();
 
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = $request->input('Estado');
