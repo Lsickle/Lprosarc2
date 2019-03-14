@@ -912,7 +912,7 @@ $(document).ready(function(){
       $(function() {
         $('#calendar').fullCalendar({
           themeSystem: 'bootstrap4'
-        })
+        });
       });
 
     {{-- 
@@ -935,6 +935,8 @@ $(document).ready(function(){
           }*/
         },'option' , 'contentHeight' , 650) --}}
     </script>
+
+
      <script>
       $(document).ready(function () {
         $('#MantVehicleTable').DataTable({
@@ -952,3 +954,5 @@ $(document).ready(function(){
         });
       });
     </script>
+
+

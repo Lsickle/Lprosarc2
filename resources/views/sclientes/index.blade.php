@@ -33,7 +33,6 @@
                   <th>Cliente</th>
                   <th>Auditable</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
                 </thead>
                 <tbody hidden onload="renderTable()" id="readyTable">
@@ -67,11 +66,10 @@
         								<td>NO</td>
         							@endif
                       <td>{{$Sede->SedeSlug}}</td>
-                      <td>Naa</td>
 		                </tr>
 			          	@endforeach
             	</tbody>
-                <tfoot>
+                {{-- <tfoot>
                 <tr>
                   <th>Nombre</th>
                   <th>Direccion</th>
@@ -85,7 +83,7 @@
                   <th>Auditable</th>
                   <th>edicion</th>
                 </tr>
-                </tfoot>
+                </tfoot> --}}
               </table>
             </div>
             <!-- /.box-body -->
