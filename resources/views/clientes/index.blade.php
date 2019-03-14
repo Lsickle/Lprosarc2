@@ -21,7 +21,6 @@
                 <th>Nombre</th>
                 <th>NIT</th>
                 <th>Creado el</th>
-                <th>Auditable</th>
                 <th>Ver Más</th>
                 <th>Editar</th>
               </tr>
@@ -48,11 +47,6 @@
                 <td>{{$cliente->CliName}}</td>
                 <td>{{$cliente->CliNit}}</td>
                 <td>{{$cliente->created_at}}</td>
-                @if($cliente->CliAuditable==1)
-                  <td>Si</td>
-                @else
-                  <td>NO</td>
-                @endif
                 <td>{{$cliente->CliSlug}}</td>
                 <td>{{$cliente->CliSlug}}</td>
               </tr>

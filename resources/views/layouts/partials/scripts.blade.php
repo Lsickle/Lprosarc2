@@ -197,10 +197,10 @@
       "keys": true,
       "responsive": true,
       "columnDefs": [ {
-        "targets": 7,
+        "targets": 6,
         "data": "GenerSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
         }  
       }]
     });
@@ -261,11 +261,11 @@
                "keys": true,
       "responsive": true,
                  "columnDefs": [ {
-        "targets": 5,
+        "targets": 4,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/clientes/" + data + "' class='btn btn-success btn-block'/>Ver</a>";}},
-        {"targets": 6,
+        {"targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
           return "<a href='/clientes/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";
