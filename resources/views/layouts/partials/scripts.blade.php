@@ -14,12 +14,6 @@
 {{-- Dependencias Package.json --}}
 <script src="/js/dependencias.js"></script>
 
-{{-- pdfmake --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.js"></script>
-
-{{-- cdn de JSZip --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.js"></script>
-
 {{-- plugins de datatables --}}
 <script src="/js/datatable-plugins.js"></script>
 
