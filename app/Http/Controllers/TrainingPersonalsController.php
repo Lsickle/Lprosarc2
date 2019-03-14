@@ -93,10 +93,7 @@ class TrainingPersonalsController extends Controller
      */
     public function edit($id)
     {
-        $CapaPers = DB::table('training_personals')
-            ->select('*')
-            ->where('ID_CapPers', $id)
-            ->get();
+        $CapaPer = TrainingPersonal::where('ID_CapPers', $id)->first();
         $Personals = DB::table('personals')
             ->select('ID_Pers', 'PersFirstName', 'PersLastName')
             ->get();
@@ -106,7 +103,7 @@ class TrainingPersonalsController extends Controller
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
             ->get();
-        return view('trainingPersonals.edit', compact('CapaPers','Personals','Trainings', 'Sedes'));
+        return view('trainingPersonals.edit', compact('CapaPer','Personals','Trainings', 'Sedes'));
     }
 
     /**
@@ -120,9 +117,6 @@ class TrainingPersonalsController extends Controller
     {
         $CapaPers = TrainingPersonal::where('ID_CapPers', $id)->first();
         $CapaPers->fill($request->all());
-        $CapaPers->FK_Pers = $request->input('FK_Pers');
-        $CapaPers->FK_Capa = $request->input('FK_Capa');
-        $CapaPers->FK_Sede = $request->input('FK_Sede');
         $CapaPers->save();
 
         $log = new audit();

@@ -8,7 +8,7 @@ class TrainingPersonal extends Model{
 
     protected $table = 'training_personals';
 
-    protected $fillable = ['CapaPersDate', 'CapaPersExpire','CapaPersDelete'];
+    protected $fillable = ['CapaPersDate', 'CapaPersExpire','CapaPersDelete','FK_Pers','FK_Capa','FK_Sede'];
 
     protected $primaryKey = 'ID_CapPers';
 

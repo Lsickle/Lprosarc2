@@ -25,7 +25,6 @@
                   <th>Aprovacion</th>
                   <th>Vencimiento</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -42,9 +41,6 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($CapaPers as $CapaPer)
-                @component('layouts.partials.modal')
-                    {{$CapaPer->ID_CapPers}}
-                @endcomponent
                 <tr>
                   <td>{{$CapaPer->PersFirstName." ".$CapaPer->PersLastName}}</td>
                   <td>{{$CapaPer->CapaName}}</td>
@@ -52,21 +48,6 @@
                   <td>{{$CapaPer->CapaPersDate}}</td>
                   <td>{{$CapaPer->CapaPersExpire}}</td>
                   <td>{{$CapaPer->ID_CapPers}}</td>
-                  <td>@if($CapaPer->CapaPersDelete === 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$CapaPer->ID_CapPers}}' class='btn btn-danger btn-block'>Borrar</a>
-                        <form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST'>
-                            @method('DELETE')
-                            @csrf
-                            <input  type="submit" id="Eliminar{{$CapaPer->ID_CapPers}}" style="display: none;">
-                        </form>
-                      @else
-                       <form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                        </form>
-                      @endif
-                  </td>
                 </tr>
                 @endforeach
               </tbody>

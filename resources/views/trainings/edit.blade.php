@@ -7,12 +7,31 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
+				<div class="box-header">
+	                @component('layouts.partials.modal')
+	                    {{$training->ID_Capa}}
+	                @endcomponent
+					<h3 class="box-title">Datos del mantenimiento</h3>
+					@if($training->CapaDelete == 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$training->ID_Capa}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<form action='/capacitacion/{{$training->ID_Capa}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$training->ID_Capa}}" style="display: none;">
+						</form>
+					@else
+						<form action='/capacitacion/{{$training->ID_Capa}}' method='POST' style="float: right;">
+							@method('DELETE')
+							@csrf
+							<input type="submit" class='btn btn-success' value="Añadir">
+						</form>
+					@endif
+				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-						@foreach($trainings as $training)
 							<form role="form" action="/capacitacion/{{$training->ID_Capa}}" method="POST" enctype="multipart/form-data">
 								@method('PATCH')
 								@csrf
@@ -34,7 +53,6 @@
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>
-						@endforeach
 						</div>
 						<!-- /.box -->
 					</div>

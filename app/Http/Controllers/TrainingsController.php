@@ -75,11 +75,8 @@ class TrainingsController extends Controller
      */
     public function edit($id)
     {
-        $trainings = DB::table('trainings')
-            ->select('*')
-            ->where('ID_Capa', $id)
-            ->get();
-        return view('trainings.edit', compact('trainings'));
+        $training = Training::where('ID_Capa', $id)->first();
+        return view('trainings.edit', compact('training'));
     }
 
     /**

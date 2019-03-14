@@ -7,12 +7,32 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
+				<div class="box-header">
+					@component('layouts.partials.modal')
+	                    {{$CapaPer->ID_CapPers}}
+	                @endcomponent
+					<h3 class="box-title">Datos de la capacitacion de una persona</h3>
+					@if($CapaPer->CapaPersDelete === 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$CapaPer->ID_CapPers}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$CapaPer->ID_CapPers}}" style="display: none;">
+						</form>
+					@else
+						<form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST' style="float: right;">
+							@method('DELETE')
+							@csrf
+							<input type="submit" class='btn btn-success' value="Añadir">
+						</form>
+					@endif
+				</div>
+               
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-						@foreach($CapaPers as $CapaPer)
 							<form role="form" action="/capacitacion-personal/{{$CapaPer->ID_CapPers}}" method="POST" enctype="multipart/form-data">
 								@method('PATCH')
 								@csrf
@@ -57,7 +77,6 @@
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>
-						@endforeach
 						</div>
 						<!-- /.box -->
 					</div>
