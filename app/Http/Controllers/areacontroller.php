@@ -85,10 +85,7 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Areas = DB::table('areas')
-            ->select('*')
-            ->where('ID_Area',$id)
-            ->get();
+        $Areas = Area::where('ID_Area', $id)->first();
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
             ->get();

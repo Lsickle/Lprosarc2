@@ -11,14 +11,25 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
+				<div class="box-header">
+					@component('layouts.partials.modal')
+						{{$cliente->ID_Cli}}
+					@endcomponent
 					<h3 class="box-title">Modificar datos</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
+					@if($cliente->CliDelete == 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$cliente->ID_Cli}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$cliente->ID_Cli}}" style="display: none;">
+						</form>
+					@else
+						<form action='/clientes/{{$cliente->CliSlug}}' method='POST' style="float: right;">
+							@method('DELETE')
+							@csrf
+							<input type="submit" class='btn btn-success btn-block' value="Añadir">
+						</form>
+					@endif
 				</div>
 				<div class="row">
 					<!-- left column -->

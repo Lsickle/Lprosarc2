@@ -17,6 +17,7 @@ class TrainingPersonalsTableSeeder extends Seeder
         $CapaPer->FK_Pers = "1";
         $CapaPer->CapaPersDate = "2019-02-19";
         $CapaPer->CapaPersExpire = "2019-12-19";
+        $CapaPer->CapaPersDelete = 0;
         $CapaPer->save();
 
         $CapaPer = new TrainingPersonal();
@@ -25,6 +26,7 @@ class TrainingPersonalsTableSeeder extends Seeder
         $CapaPer->FK_Pers = "3";
         $CapaPer->CapaPersDate = "2018-11-20";
         $CapaPer->CapaPersExpire = "2019-06-20";
+        $CapaPer->CapaPersDelete = 0;
         $CapaPer->save();
 
         $CapaPer = new TrainingPersonal();
@@ -33,6 +35,7 @@ class TrainingPersonalsTableSeeder extends Seeder
         $CapaPer->FK_Pers = "2";
         $CapaPer->CapaPersDate = "2019-02-19";
         $CapaPer->CapaPersExpire = "2019-12-19";
+        $CapaPer->CapaPersDelete = 0;
         $CapaPer->save();
 
         $CapaPer = new TrainingPersonal();
@@ -41,6 +44,7 @@ class TrainingPersonalsTableSeeder extends Seeder
         $CapaPer->FK_Pers = "5";
         $CapaPer->CapaPersDate = "2019-01-07";
         $CapaPer->CapaPersExpire = "2019-06-06";
+        $CapaPer->CapaPersDelete = 0;
         $CapaPer->save();
 
         $CapaPer = new TrainingPersonal();
@@ -49,6 +53,7 @@ class TrainingPersonalsTableSeeder extends Seeder
         $CapaPer->FK_Pers = "4";
         $CapaPer->CapaPersDate = "2018-02-28";
         $CapaPer->CapaPersExpire = "2019-07-30";
+        $CapaPer->CapaPersDelete = 0;
         $CapaPer->save();
     }
 }

@@ -24,7 +24,6 @@
                   <th>Carg</th>
                   <th>Salario</th>
                   <th>Editar</th>
-                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -41,30 +40,15 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Cargos as $Cargo)
-                @component('layouts.partials.modal')
-                    {{$Cargo->ID_Carg}}
-                @endcomponent
-                <tr>
+                <tr @if($Cargo->CargDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Cargo->CargName}}</td>
                   <td>{{$Cargo->CargGrade}}</td>
                   <td>{{$Cargo->CargName}}</td>
                   <td>{{$Cargo->CargSalary}}</td>
                   <td>{{$Cargo->ID_Carg}}</td>
-                  <td>@if($Cargo->CargDelete == 0)
-                        <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargo->ID_Carg}}' class='btn btn-danger btn-block'>Borrar</a>
-                        <form action='/cargos/{{$Cargo->ID_Carg}}' method='POST'>
-                            @method('DELETE')
-                            @csrf
-                            <input  type="submit" id="Eliminar{{$Cargo->ID_Carg}}" style="display: none;">
-                        </form>
-                      @else
-                        <form action='/cargos/{{$Cargo->ID_Carg}}' method='POST'>
-                          @method('DELETE')
-                          @csrf
-                          <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                        </form>
-                      @endif
-                  </td>
                 </tr>
                 @endforeach
               </tbody>

@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientmenu') }}
-@endsection
+@section('htmlheader_title', 'Vehiculos')
+@section('contentheader_title', 'Lista de Vehiculos')
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -9,24 +8,24 @@
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Lista de Contactos</h3>
-          <a href="/clientes/create" class="btn btn-primary" style="float: right;">Crear</a>
+          <h3 class="box-title">Datos de los vehiculos</h3>
+          <a href="/vehicle-mantenimiento/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-compact table-bordered table-striped">
+          <table id="MantVehicleTable" class="table table-compact table-bordered table-striped">
             <thead>
-              <tr>
-                <th>Categoria</th>
-                <th>Nombre</th>
-                <th>NIT</th>
-                <th>Creado el</th>
-                <th>Ver Más</th>
-                <th>Editar</th>
-              </tr>
+                <tr>
+                  <th>Vehiculo</th>
+                  <th>Kilometraje</th>
+                  <th>Estado</th>
+                  <th>Tipo</th>
+                  <th>Hora Inicio</th>
+                  <th>Hora Final</th>
+                  <th>Editar</th>
+                </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
-              {{-- <h1 id="loadingTable">LOADING...</h1> --}}
               <div class="fingerprint-spinner" id="loadingTable">
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
@@ -38,20 +37,25 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach($clientes as $cliente)
-              <tr @if($cliente->CliDelete === 1)
-                style="color: red;" 
-              @endif
-              >
-                <td>{{$cliente->CliCategoria}}</td>
-                <td>{{$cliente->CliName}}</td>
-                <td>{{$cliente->CliNit}}</td>
-                <td>{{$cliente->created_at}}</td>
-                <td>{{$cliente->CliSlug}}</td>
-                <td>{{$cliente->CliSlug}}</td>
-              </tr>
+              
+              @foreach ($MantVehicles as $MantVehicle)
+                <tr @if($MantVehicle->MvDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
+                  <td>{{$MantVehicle->VehicPlaca}}</td>
+                  <td>{{$MantVehicle->MvKm}}</td> 
+                  @if($MantVehicle->HoraMavFin >= now())
+                    <td>Activo</td>
+                  @else
+                    <td>Finalizado</td>
+                  @endif
+                  <td>{{$MantVehicle->MvType}}</td>
+                  <td>{{$MantVehicle->HoraMavInicio}}</td>
+                  <td>{{$MantVehicle->HoraMavFin}}</td>
+                  <td>{{$MantVehicle->ID_Mv}}</td>
+                </tr> 
               @endforeach
-            </tbody>
           </table>
         </div>
         <!-- /.box-body -->

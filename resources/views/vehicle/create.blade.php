@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-Registro
-@endsection
+@section('htmlheader_title', 'Vehiculos')
 @section('contentheader_title')
 Registro de vehiculos
 @endsection
@@ -32,39 +30,36 @@ Registro de vehiculos
 								@csrf
 								<div class="box-body">
 									<div class="col-md-6">
-										<label for="vehicinputext1">Numero de placa</label>
-										<input type="text" class="form-control" id="vehicinputext1" placeholder="BWK-456" name="placa">
+										<label for="VehicPlaca">Numero de placa</label>
+										<input type="text" class="form-control" id="VehicPlaca" name="VehicPlaca" required="true">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext2">Tipo de vehiculo</label>
-										<input type="text" class="form-control" id="vehicinputext2" placeholder="Camión" name="tipo" maxlength="16">
+										<label for="VehicTipo">Tipo de vehiculo</label>
+										<input type="text" class="form-control" id="VehicTipo" name="VehicTipo" maxlength="16">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext3">Capacidad (Kilos)</label>
-										<input type="number" class="form-control" id="vehicinputext3" placeholder="155545" name="capacidad" max="999999">
+										<label for="VehicCapacidad">Capacidad (Kilos)</label>
+										<input type="number" class="form-control" id="VehicCapacidad" name="VehicCapacidad" max="999999">
 									</div>
 									<div class="col-md-6">
-										<label for="vehicinputext4">Kilometraje actual</label>
-										<input type="number" class="form-control" id="vehicinputext4" placeholder="100098" name="kmactual" required="true" max="999999">
+										<label for="VehicKmActual">Kilometraje actual</label>
+										<input type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" required="true" max="999999">
 									</div>
 									<div class="col-md-6">
-											<label for="vehicinputext5">Sede</label>
-											<select class="form-control" id="vehicinputext5" name="sede" required="true">
-												<option>Seleccione...</option>
-												<option value="1">Principal</option>
-												<option value="6">Norte</option>
-												<option value="2">Sur</option>
-												<option value="8">Este</option>
-												<option value="3">Oeste</option>
+											<label for="FK_VehiSede">Sede</label>
+											<select class="form-control" id="FK_VehiSede" name="FK_VehiSede" required="true">
+												<option value="1">Seleccione...</option>
+												@foreach($Sedes as $Sede)
+													<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+												@endforeach
 											</select>
 									</div>
-									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
-										<div class="icheck form-group">
-											 <label for="inputcheck">
-												Interno
-											 </label>
-											  <input id="inputcheck" type="checkbox" name="InternoExterno">
-										 </div>
+									<div class="col-md-6">
+										<label for="VehicInternExtern">Vehiculo</label>
+										<select class="form-control" id="VehicInternExtern" name="VehicInternExtern" required="true">
+											<option value="1">Interno</option>
+											<option value="0">Externo</option>
+										</select>
 									</div>
 								</div>
 								<!-- /.box-body -->

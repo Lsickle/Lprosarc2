@@ -1,6 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <title>SiGResP - @yield('htmlheader_title', 'Your title here') </title>
+    <link rel="shortcut icon" href="/img/LogoProsarc.ico">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,6 +16,8 @@
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}">
 
+    {{-- plugins de datatables --}}
+    <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
