@@ -237,18 +237,21 @@ drop DATABASE Prosarcdb;
 		ENGINE=InnoDB;
 
 		/*Tabla de usuarios con acceso al aplicativo*/
-		Create table UsersAsisid INT(10) NOTAsisL AUTO_INCREMENT,
-		UsType varchar(64), /*tipo de usuario: comercial, logistica, operaciones, mantenimiento, almacen, direccion, administrador, desarollador, cliente, transporte, SIG(sistema integral de gestion)[andres romero:calidad, documentacion]*/
+		Create table Users(
+		id int auto_increment unique,
 		name VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 		email VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 		email_verified_at TIMESTAMP NULL DEFAULT NULL, /*fecha de validacion del usuario mediante el correo*/
 		password VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci', /*contraseña de acceso al sistema*/
-		UsAvatar varchar(255), /*ubicacion de la imagen de perfil de usuario*/
-		Usrol varchar(255), /*ubicacion de la imagen de perfil de usuario*/
-		UsStatus varchar(16), /*conectado, desconectado*/
 		remember_token VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci', /*token de validacion para bloqueo de sesiones*/
 		created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 		updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
+		UsType varchar(64), /*tipo de usuario: comercial, logistica, operaciones, mantenimiento, almacen, direccion, administrador, desarollador, cliente, transporte, SIG(sistema integral de gestion)[andres romero:calidad, documentacion]*/
+		UsAvatar varchar(255), /*ubicacion de la imagen de perfil de usuario*/
+		UsStatus varchar(16), /*conectado, desconectado*/
+		UsRol varchar(255), /*ubicacion de la imagen de perfil de usuario*/
+		UsRolDesc varchar(255), /*ubicacion de la imagen de perfil de usuario*/
+		updated_by varchar(255) /*ultima persona que modifico el registro*/
 		FK_UsPers int, /*foranea de la tabla personal*/
 		primary key (id),
 		foreign key (FK_UsPers) references Personal(ID_Pers) ON UPDATE CASCADE,
