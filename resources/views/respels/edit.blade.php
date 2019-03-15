@@ -6,6 +6,9 @@ Respel-Editar
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
 @endsection
 @section('main-content')
+@component('layouts.partials.modal')
+	{{$Respels->ID_Respel}}
+@endcomponent
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
@@ -21,22 +24,43 @@ Respel-Editar
 								<i class="fa fa-times"></i></button>
 							</div>
 						</div>
+						
 						<div class="row">
 							<!-- left column -->
 							<div class="col-md-12">
+									
 								<!-- general form elements -->
 								<div class="box box-primary">
 									<div class="box-header with-border">
 										<h3 class="box-title">Formulario de registro</h3>
-										<a href="/requerimientos/{{$Requerimientos->ReqSlug}}/edit" class="btn btn-primary" style="float: right;">Editar Requerimientos</a>
+									<div class="box-header with-border">
+									<a href="/requerimientos/{{$Requerimientos->ReqSlug}}/edit" class="btn btn-primary" style="float: right; margin-left: 1%;">Editar Requerimientos</a>
+								   
+									@if($Respels->RespelDelete == 0)
+									   <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->ID_Respel}}' class='btn btn-danger' style="float: right;">Borrar</a>
+									   <form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
+										   @method('DELETE')
+										   @csrf
+										   <input  type="submit" id="Eliminar{{$Respels->ID_Respel}}" style="display: none;">
+									   </form>
+									   @else
+									   <form action='/respels/{{$Respels->RespelSlug}}' method='POST' style="float: right;">
+										   @method('DELETE')
+										   @csrf
+										   <input type="submit" class='btn btn-success btn-block' value="Añadir">
+									   </form>
+								   @endif
+
 									</div>
-							<!-- /.box-header -->
-                        <!-- form start -->
+								</div>
+								<!-- /.box-header -->
+						<!-- form start -->
 									<form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
 										@method('PUT')
 										@csrf
 
 										@include('layouts.RespelPartials.Respelform1Edit')
+
 
 										<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 										<!-- /.box-body -->
