@@ -19,6 +19,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicCapacidad = "100";
         $vehicle->VehicKmActual = "1000";
         $vehicle->FK_VehiSede = "1";
+        $vehicle->VehicDelete = 0;
         $vehicle->save();
         
         $vehicle = new Vehiculo();
@@ -28,6 +29,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicCapacidad = "10000";
         $vehicle->VehicKmActual = "100";
         $vehicle->FK_VehiSede = "4";
+        $vehicle->VehicDelete = 0;
         $vehicle->save();
 
         $vehicle = new Vehiculo();
@@ -37,6 +39,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicCapacidad = "464650";
         $vehicle->VehicKmActual = "7597";
         $vehicle->FK_VehiSede = "10";
+        $vehicle->VehicDelete = 0;
         $vehicle->save();
 
         $vehicle = new Vehiculo();
@@ -46,6 +49,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicCapacidad = "728983837";
         $vehicle->VehicKmActual = "100034";
         $vehicle->FK_VehiSede = "8";
+        $vehicle->VehicDelete = 0;
         $vehicle->save();
 
         $vehicle = new Vehiculo();
@@ -55,6 +59,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicCapacidad = "6798";
         $vehicle->VehicKmActual = "06843";
         $vehicle->FK_VehiSede = "1";
+        $vehicle->VehicDelete = 0;
         $vehicle->save();
     }
 }

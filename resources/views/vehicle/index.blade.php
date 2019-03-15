@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-Vehiculos
-@endsection
+@section('htmlheader_title', 'Vehiculos')
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">
@@ -10,6 +8,7 @@ Vehiculos
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Datos de los vehiculos</h3>
+          <a href="/vehicle/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -40,7 +39,10 @@ Vehiculos
               </div>
               
               @foreach ($Vehicles as $Vehicle)
-                <tr>
+                <tr @if($Vehicle->VehicDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Vehicle->VehicPlaca}}</td>   
                   <td>{{$Vehicle->VehicTipo}}</td>   
                   <td>{{$Vehicle->VehicCapacidad}} Kilos</td>   
@@ -50,19 +52,11 @@ Vehiculos
                   @else
                       <td>Externo</td>
                   @endif  
-                  <td>{{$Vehicle->SedeName}}</td> 
-                  <td>{{$Vehicle->created_at}}</td>  
-                  <td></td>  
+                  <td>{{$Vehicle->SedeName}}</td>
+                  <td>{{$Vehicle->created_at}}</td>
+                  <td>{{$Vehicle->VehicPlaca}}</td>
                 </tr> 
               @endforeach
-            {{-- <tfoot>
-                <tr>
-                    <th>Placa</th>
-                    <th>Tipo</th>
-                    <th>Capacidad</th>
-                    <th>Km Actual</th>
-                </tr>
-            </tfoot> --}}
           </table>
         </div>
         <!-- /.box-body -->

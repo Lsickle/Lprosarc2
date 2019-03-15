@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantenimientoVehiculo extends Model
 {
-    protected $table = 'MantenVehics'; 
+    protected $table = 'mantenvehics'; 
 
-    protected $filatable = ['MvKm', 'MvStatus', 'MvType', 'HoraMavInicio', 'HoraMavFin'];
+    protected $fillable = ['MvKm', 'HoraMavInicio', 'HoraMavFin', 'MvType', 'FK_VehMan','MvDelete'];
 
-    protected $primarykey = 'ID_Mv';
+    protected $primaryKey = 'ID_Mv';
 
     public function Vehiculo(){
     	return $this->belongsTo('App\Vehiculo', 'ID_Vehic');

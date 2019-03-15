@@ -11,11 +11,27 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Edicion de personal</h3>
+                @component('layouts.partials.modal')
+                    {{$Persona->ID_Pers}}
+                @endcomponent
+            <h3 class="box-title">Datos de la persona</h3>
+            @if($Persona->PersDelete == 0)
+              <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+              <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
+                  @method('DELETE')
+                  @csrf
+                  <input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
+              </form>
+            @else
+              <form action='/personal/{{$Persona->PersSlug}}' method='POST' style="float: right;">
+                @method('DELETE')
+                @csrf
+                <input type="submit" class='btn btn-success btn-block' value="Añadir">
+              </form>
+            @endif
           </div>
           <!-- /.box-header -->
               <!-- form start -->
-              @foreach($Personas as $Persona)
               <form role="form" action="/personal/{{$Persona->PersSlug}}" method="POST" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
@@ -134,7 +150,6 @@
                             <input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{$Persona->PersPase}}">
                           </div>
                         </div>
-                      @endforeach
                       </div>
                     </div>
                   </div>
@@ -142,7 +157,7 @@
                 <input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
+                  <button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
                 </div>
               </form>
         </div>

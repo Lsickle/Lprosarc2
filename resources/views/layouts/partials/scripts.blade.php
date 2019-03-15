@@ -11,11 +11,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
 
+{{-- Dependencias Package.json --}}
+<script src="/js/dependencias.js"></script>
+
+{{-- plugins de datatables --}}
+<script src="/js/datatable-plugins.js"></script>
+
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
-{{-- Dependencias Package.json --}}
-<script src="/js/dependencias.js"></script>
+
+{{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
+
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -188,32 +197,53 @@
       "keys": true,
       "responsive": true,
       "columnDefs": [ {
-        "targets": 7,
+        "targets": 6,
         "data": "GenerSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-primary'>Ver</a>";
+          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
         }  
       }]
     });
   });
 </script>
-<script>
+{{-- <script>
   $(function () {
     $('#example2').DataTable({
-      "scrollX": false,
-      "autoWidth": false,
-      "responsive": true,
-      "keys": true
-      /*"columnDefs": [ {
+      "select": true,
+      dom: 'Bfrtip',
+      buttons: [
+          'copy', 'excel', 'pdf'
+      ],
+      // "autoFill": true,
+      "scrollX": true,
+      // "scrollCollapse": true,
+      // "autoWidth": true,
+      "responsive": {
+        "breakpoints": [
+          {name: 'bigdesktop', width: Infinity},
+          {name: 'meddesktop', width: 1480},
+          {name: 'smalldesktop', width: 1280},
+          {name: 'medium', width: 1188},
+          {name: 'tabletl', width: 1024},
+          {name: 'btwtabllandp', width: 848},
+          {name: 'tabletp', width: 768},
+          {name: 'mobilel', width: 480},
+          {name: 'mobilep', width: 320}
+        ]
+      },
+      "keys": true,
+      "colReorder": true,
+      "columnDefs": [ {
         "targets": 10,
         "data": "SedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
         }  
-      }]*/
+      }]
+      // "fixedColumns": true
     });
-  });
-</script>
+  }); 
+</script> --}}
 
 
 <script>
@@ -231,32 +261,18 @@
                "keys": true,
       "responsive": true,
                  "columnDefs": [ {
-        "targets": 5,
+        "targets": 4,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success'/>Ver</a>";}},
-        {"targets": 6,
+          return "<a method='get' href='/clientes/" + data + "' class='btn btn-success btn-block'/>Ver</a>";}},
+        {"targets": 5,
         "data": "CliSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+          return "<a href='/clientes/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";
         }  
       }]
 
     });
-    // $('#example2').DataTable({
-    //   'paging'      : true,
-    //   'lengthChange': false,
-    //   'searching'   : false,
-    //   'ordering'    : true,
-    //   'info'        : true,
-    //   'autoWidth'   : false
-    // })
-    //<!-- checkin imput -->
-    // $('input[name="CliAuditable"]').iCheck({
-    //   checkboxClass: 'icheckbox_square-blue',
-    //   radioClass: 'iradio_square-blue',
-    //   increaseArea: '20%' // optional
-    // });
   });
 </script>
   
@@ -353,7 +369,6 @@ $(document).ready(function(){
       size  : '3px'
     })
 </script>
-
 {{-- bootstrap-switch  --}}
 <script >
   $(".testswitch").bootstrapSwitch({
@@ -529,9 +544,9 @@ $(document).ready(function(){
           "responsive": true,
           "columnDefs": [ {
           "targets": 7,
-          "data": "CliSlug",
+          "data": "VehicPlaca",
           "render": function ( data, type, row, meta ) {
-          return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";}      
+          return "<a href='/vehicle/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";}      
           }]
         });
       });
@@ -566,7 +581,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 2,
+            "data": "ID_Capa",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>
@@ -576,7 +598,14 @@ $(document).ready(function(){
           "scrollX": false,
           "autoWidth": true,
           "keys": true,
-          "responsive": true
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 5,
+            "data": "ID_CapPers",
+            "render": function ( data, type, row, meta ) {
+                return "<a method='get' href='/capacitacion-personal/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }
+          }]
         });
       });
     </script>
@@ -827,6 +856,58 @@ $(document).ready(function(){
         });
       });
     </script>
+   
+<script>
+    var rol = "<?php
+            echo Auth::user()->UsRol;
+          ?>";
+      botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+      if (rol=='Programador') {
+        console.log(botoncito);
+      };
+    $(document).ready(function () {
+      $('#example2').DataTable({
+          // pagingType: 'scrolling',
+          // scrollY: 300,
+          responsive: true,
+          // keys: true,
+          select: true,
+          dom: 'Bfrtip',
+          buttons: [
+              botoncito,
+              {
+              extend: 'collection',
+              text: 'Selector',
+              buttons: [ 'selectRows', 'selectCells' ]
+              }
+            ],
+          colReorder: true,
+          ordering: true,
+          autoWith: true,
+          searchHighlight: true,
+          "columnDefs": [ {
+            "targets": 10,
+            "data": "SedeSlug",
+            "render": function ( data, type, row, meta ) {
+              return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+            }  
+          }],
+          fixedHeader: {
+              header: true
+          }
+      });
+
+      var table = $('#example2').DataTable();
+ 
+      table.on( 'draw', function () {
+          var body = $( table.table().body() );
+   
+          body.unhighlight();
+          body.highlight( table.search() );  
+      });
+  }); 
+</script>
+
     <script>
       $(function() {
         $('#calendar').fullCalendar({
@@ -853,4 +934,21 @@ $(document).ready(function(){
             alert('a day has been clicked!');
           }*/
         },'option' , 'contentHeight' , 650) --}}
+    </script>
+     <script>
+      $(document).ready(function () {
+        $('#MantVehicleTable').DataTable({
+          "scrollX": false,
+          "autoWidth": true,
+          "keys": true,
+          "responsive": true,
+          "columnDefs": [ {
+            "targets": 6,
+            "data": "ID_Mv",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/vehicle-mantenimiento/" + data + "/edit' class='btn btn-block btn-warning'>Editar</a>";
+              }
+          }]
+        });
+      });
     </script>

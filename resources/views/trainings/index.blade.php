@@ -21,6 +21,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Tipo</th>
+                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -37,13 +38,17 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Trainings as $Training)
-                <tr>
+                <tr @if($Training->CapaDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Training->CapaName}}</td>
                   @if($Training->CapaTipo == 1)
                     <td>Interno</td>
                   @else
                     <td>Externo</td>
                   @endif
+                  <td>{{$Training->ID_Capa}}</td>
                 </tr>
                 @endforeach
               </tbody>
