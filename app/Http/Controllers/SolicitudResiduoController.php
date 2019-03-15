@@ -21,7 +21,7 @@ class SolicitudResiduoController extends Controller
         $Residuos = DB::table('solicitud_residuos')
             ->select('*')
             ->get();
-        return view('solicitud.indexR', compact('Residuos'));
+        return view('solicitud-resid.index', compact('Residuos'));
     }
 
     /**
@@ -31,7 +31,7 @@ class SolicitudResiduoController extends Controller
      */
     public function create()
     {
-        return view('solicitud.createResiduo');
+        return view('solicitud-resid.create');
     }
 
     /**

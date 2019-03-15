@@ -32,8 +32,8 @@ Solicitudes de servicios
 										<label for="Tipo">Sede</label>
 										<select class="form-control" id="Tipo" name="Fk_SolSerTransportador" required>
 											<option value="">Seleccione...</option>
-											@foreach ($Servicios as $Servicio)
-												<option value="{{$Servicio->ID_Sede}}">{{$Servicio->SedeName}}</option>
+											@foreach ($Sedes as $Sede)
+												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -41,8 +41,8 @@ Solicitudes de servicios
 										<label for="Tipo">Sede Generador</label>
 										<select class="form-control" id="Tipo" name="FK_SolSerGenerSede" required>
 											<option value="">Seleccione...</option>
-											@foreach ($Servicios as $Servicio)
-												<option value="{{$Servicio->ID_GSede}}">{{$Servicio->GSedeName}}</option>
+											@foreach ($GSedes as $GSede)
+												<option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -58,30 +58,22 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6">
 										<label for="Tipo">Tipo</label>
-										<select class="form-control" id="Tipo" name="SolSerTipo" required="true">
-											<option value="">Seleccione...</option>
+										<select class="form-control" id="Tipo" name="SolSerTipo" id ="SolSerTipo" required="true">
+											<option>Seleccione...</option>
 											<option>Interno</option>
 											<option>Alquilado</option>
 											<option>Externo</option>
 										</select>
 									</div>
 									
-									<div class="col-md-6">
-										<label for="Tipo">Sede</label>
-										<select class="form-control" id="Tipo" name="Tipo" required>
-											<option value="">Seleccione...</option>
-											@foreach ($Sedes as $Sede)
-												<option value{{$Sede->ID_Sede}}>{{$Sede->SedeName}}</option>
-											@endforeach
-										</select>
-									</div>
+									
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
 										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="SolSerFrecuencia">
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext4">Nombre del conductor externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter">
+										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter" required>
 									</div>
 									
 									<div class="col-md-6">
