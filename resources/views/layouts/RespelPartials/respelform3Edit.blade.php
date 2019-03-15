@@ -1,10 +1,9 @@
-@foreach ($Requerimientos as $Requerimiento)
 <div class=" requirements-component form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Videos</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoCargue == 1)
+            @if ($Requerimientos->ReqVideoCargue == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoCargue" value="1" checked/> Cargue
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoCargue" value="1"/> Cargue
@@ -13,7 +12,7 @@
         </div>
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoDescargue == 1)
+            @if ($Requerimientos->ReqVideoDescargue == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoDescargue" value="1" checked/> Descargue
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoDescargue" value="1"/> Descargue
@@ -22,7 +21,7 @@
         </div>
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoPesaje == 1)
+            @if ($Requerimientos->ReqVideoPesaje == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoPesaje" value="1" checked/> Pesaje
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoPesaje" value="1"/> Pesaje
@@ -31,7 +30,7 @@
         </div>
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoReempacado == 1)
+            @if ($Requerimientos->ReqVideoReempacado == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoReempacado" value="1" checked/> Reempacado
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoReempacado" value="1"/> Reempacado
@@ -40,7 +39,7 @@
         </div>
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoMezclado == 1)
+            @if ($Requerimientos->ReqVideoMezclado == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoMezclado" value="1" checked/> Mezclado
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoMezclado" value="1"/> Mezclado
@@ -49,7 +48,7 @@
         </div>
         <div class="">
         <label>
-            @if ($Requerimiento->ReqVideoDestruccion == 1)
+            @if ($Requerimientos->ReqVideoDestruccion == 1)
                 <input type="checkbox" class="videoswitch" name="ReqVideoDestruccion" value="1" checked/> Destruccion
             @else
                 <input type="checkbox" class="videoswitch" name="ReqVideoDestruccion" value="1"/> Destruccion
@@ -58,4 +57,3 @@
         </div>
     </div>
 </div>
-@endforeach
