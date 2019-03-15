@@ -192,10 +192,10 @@ class RolesController extends Controller
         if ($request->hasfile('UsAvatar')) {
             $file = $request->file('UsAvatar');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/',$name);
+            $file->move(public_path().'/img/',$name);
         }
         else{
-            $name = public_path().'/images/default.jpg';
+            $name = public_path().'/img/robot400x400.gif';
 
         }
         DB::table('users')
