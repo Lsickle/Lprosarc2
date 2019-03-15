@@ -21,16 +21,16 @@ Servicios
           <table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                  <th>Sede del cliente</th>
-                  <th>Generado Por</th>
+                  <th>Cliente</th>
+                  <th>Generador</th>
                   <th>Estado</th>
-                  <th>Tipo</th>
                   <th>Auditable</th>
                   <th>Frecuencia</th>
+                  <th>Tipo del vehiculo</th>
                   <th>Conductor Externo</th>
                   <th>Placa del vehiculo externo</th>
-                  <th>Fecha creado</th>
-                  {{-- <th>Fecha mejorado</th> --}}
+                  {{-- <th>Fecha creado</th> --}}
+                  {{-- <th>Fecha modificado</th> --}}
                   <th>Editar</th>
                 </tr>
                 
@@ -52,18 +52,18 @@ Servicios
                       <td>{{$Servicio->CliShortname}}</td>
                       <td>{{$Servicio->GenerName}}</td>
                       <td>{{$Servicio->SolSerStatus}}</td>
-                      <td>{{$Servicio->SolSerTipo}}</td>
                       @if ($Servicio->SolSerAuditable == 1)
                       <td>Si</td>                      
                       @else
                       <td>No</td>
                       @endif
                       <td>{{$Servicio->SolSerFrecuencia}} Días</td>
+                      <td>{{$Servicio->SolSerTipo}}</td>
                       <td>{{$Servicio->SolSerConducExter}}</td>
                       <td>{{$Servicio->SolSerVehicExter}}</td>
-                      <td>{{$Servicio->created_at}}</td>
+                      {{-- <td>{{$Servicio->created_at}}</td> --}}
                       {{-- <td>{{$Servicio->updated_at}}</td> --}}
-                      <td></td>
+                      <td>{{$Servicio->SolSerSlug}}</td>
                     </tr>
                 @endforeach
                   </tbody>

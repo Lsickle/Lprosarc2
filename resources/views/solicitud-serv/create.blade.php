@@ -73,7 +73,7 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext4">Nombre del conductor externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter" required>
+										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter">
 									</div>
 									
 									<div class="col-md-6">

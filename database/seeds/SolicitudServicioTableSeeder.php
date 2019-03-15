@@ -39,7 +39,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = 'Pendiente';
         $Servicio->SolSerTipo = 'Alquilado';
-        $Servicio->SolSerAuditable = '0';
+        $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerFrecuencia = '5';
         $Servicio->SolSerConducExter = 'Cristian';
         $Servicio->SolSerVehicExter = 'HGT-478';
@@ -63,7 +63,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = 'Incompleta';
         $Servicio->SolSerTipo = 'interno';
-        $Servicio->SolSerAuditable = '0';
+        $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerFrecuencia = '1';
         $Servicio->SolSerConducExter = '';
         $Servicio->SolSerVehicExter = '';

@@ -8,7 +8,7 @@ class SolicitudServicio extends Model
 {
     protected $table='solicitud_servicios';
 
-    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug'];
+    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug', 'Fk_SolSerTransportador', 'FK_SolSerGenerSede'];
     protected $primaryKey = 'ID_SolSer';
     	/**
 	 * Get the route key for the model.

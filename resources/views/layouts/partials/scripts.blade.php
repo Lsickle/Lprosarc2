@@ -708,10 +708,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 9,
-            "data": "PersSlug",
+            "targets": 8,
+            "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });

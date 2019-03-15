@@ -18,7 +18,7 @@ class CreateSolicitudServiciosTable extends Migration
             $table->timestamps();
             $table->string('SolSerStatus', 16);
             $table->string('SolSerTipo', 32);
-            $table->boolean('SolSerAuditable');
+            $table->boolean('SolSerAuditable')->nullable();
             $table->unsignedTinyInteger('SolSerFrecuencia')->nullable();
             $table->string('SolSerConducExter')->nullable();
             $table->string('SolSerVehicExter')->nullable();

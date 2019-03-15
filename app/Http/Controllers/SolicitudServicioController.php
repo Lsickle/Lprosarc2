@@ -82,7 +82,7 @@ class SolicitudServicioController extends Controller
         $Servicio->FK_SolSerGenerSede = $request->input('FK_SolSerGenerSede');
 
         //Revisar slug
-        $Servicio->SolSerSlug = 'Slug'.$Sedes->SedeSlug;
+        $Servicio->SolSerSlug = 'Slug'.$Sedes->SedeSlug.date('Ymd');
         
         $Servicio->save();
 
@@ -116,7 +116,12 @@ class SolicitudServicioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Servicios = SolicitudServicio::where('SolSerSlug', $id)->first();
+
+        $Sedes = Sede::all();
+        $GSedes = GenerSede::all();
+
+        return view('solicitud-serv.edit', compact('Servicios', 'GSedes', 'Sedes'));
     }
 
     /**
@@ -128,7 +133,21 @@ class SolicitudServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Servicios = SolicitudServicio::where('ID_SolSer', $id)->first();
+        $Servicios->fill($request->all());
+        $Servicios->SolSerAuditable =$request->input('SolSerAuditable');
+
+        $Servicios->save();
+
+        $log = new audit();
+        $log->AuditTabla="solicitud_servicios";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Servicios->ID_SolSer;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('solicitud-servicio.index');
     }
 
     /**
