@@ -38,7 +38,7 @@ class RolesController extends Controller
 
         $users = DB::table('users')
                 ->join('personals', 'users.FK_UserPers', '=', 'personals.ID_Pers')
-                ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc','users.FK_UserPers','personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName', 'personals.PersLastName','personals.PersCellphone','personals.PersSlug')
+                ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc','users.UsRol2','users.UsRolDesc2','users.FK_UserPers','personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName', 'personals.PersLastName','personals.PersCellphone','personals.PersSlug')
                 ->get();
         /*if (!$request->User()) {
           return redirect()->route('login');
@@ -200,6 +200,82 @@ class RolesController extends Controller
                 $tipoUsuario="Interno";
                 break;
         };
+
+        switch ($request->UsRol2) {
+            case '':
+                $rolDescripcion2="Sin Rol Asignado";
+                break;
+
+            case 'Usuario':
+                $rolDescripcion2="Usuario general";
+                break;
+
+            case 'Cliente':
+                $rolDescripcion2="Cliente registrado";
+                break; 
+
+            case 'Generador':
+                $rolDescripcion2="Generador de residuos";
+                break; 
+
+            case 'Auditor':
+                $rolDescripcion2="Auditor Externo";
+                break; 
+
+            case 'JefeLogistica':
+                $rolDescripcion2="Jefe de Logistica";
+                break; 
+
+            case 'AuxiliarLogistica':
+                $rolDescripcion2="Auxiliar de Logistica";
+                break; 
+
+            case 'JefeOperacion':
+                $rolDescripcion2="Jefe de Operaciones";
+                break;    
+            
+            case 'SupervisorTurno':
+                $rolDescripcion2="Supervisor de Turno";
+                break;    
+            
+            case 'EncargadoAlmacen':
+                $rolDescripcion2="Encargado de Almacen";
+                break;    
+            
+            case 'AsistenteLogistica':
+                $rolDescripcion2="Asistente de Logistica";
+                break;    
+            
+            case 'EncargadoHorno':
+                $rolDescripcion2="Encargado de Horno";
+                break;    
+            
+            case 'Tesoreria':
+                $rolDescripcion2="Tesoreria";
+                break;    
+            
+            case 'AdminCuenta':
+                $rolDescripcion2="Administrador de cuenta";
+                break;    
+            
+            case 'AdminComercial':
+                $rolDescripcion2="Director Comercial";
+                break;    
+            
+            case 'admin':
+                $rolDescripcion2="Director de Planta";
+                break;    
+            
+            case 'Programador':
+                $rolDescripcion2="Programador de Software";
+                break; 
+            
+            default:
+                $rolDescripcion2="Sin Rol Asignado";
+                break;
+        };
+
+
         if ($request->hasfile('UsAvatar')) {
             $file = $request->file('UsAvatar');
             $name = time().$file->getClientOriginalName();
@@ -220,6 +296,7 @@ class RolesController extends Controller
             'UsRol' => $request->UsRol,
             'UsStatus' => $request->UsStatus,
             'UsRolDesc' => $rolDescripcion,
+            'UsRolDesc2' => $rolDescripcion2,
             'UsType' => $tipoUsuario,
             'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             'updated_by' => $request->updated_by,

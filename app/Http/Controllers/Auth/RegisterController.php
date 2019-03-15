@@ -85,6 +85,8 @@ class RegisterController extends Controller
             'UsSlug'   => $data['name'].mt_rand(1,999),
             'UsRol'    => "Usuario",
             'UsRolDesc'    => "Usuario General",
+            'UsRol2'    => "Usuario",
+            'UsRolDesc2'    => "Usuario General",
             'UsAvatar'    => "robot400x400.gif",
             'FK_PersCargo'    => "1",
         ];
