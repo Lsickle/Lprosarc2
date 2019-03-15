@@ -32,8 +32,8 @@ Solicitudes de servicios
 										<label for="Tipo">Sede</label>
 										<select class="form-control" id="Tipo" name="Fk_SolSerTransportador" required>
 											<option value="">Seleccione...</option>
-											@foreach ($Sedes as $Sede)
-												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+											@foreach ($Servicios as $Servicio)
+												<option value="{{$Servicio->ID_Sede}}">{{$Servicio->SedeName}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -41,8 +41,8 @@ Solicitudes de servicios
 										<label for="Tipo">Sede Generador</label>
 										<select class="form-control" id="Tipo" name="FK_SolSerGenerSede" required>
 											<option value="">Seleccione...</option>
-											@foreach ($GSedes as $GSede)
-												<option value="{{$GSede->ID_GSede}}"">{{$GSede->GSedeName}}</option>
+											@foreach ($Servicios as $Servicio)
+												<option value="{{$Servicio->ID_GSede}}">{{$Servicio->GSedeName}}</option>
 											@endforeach
 										</select>
 									</div>

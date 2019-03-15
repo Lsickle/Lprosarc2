@@ -20,8 +20,15 @@ class SolicitudServicioController extends Controller
     public function index()
     {
         $Servicios = DB::table('solicitud_servicios')
-        ->select('solicitud_servicios.*')
-        ->get();
+            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->leftjoin('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('solicitud_servicios.*', 'clientes.*', 'generadors.*')
+            ->get();
+        // return $Servicios;
+
+        
+
         return view('solicitud.indexServicio', compact('Servicios'));
     }
 
@@ -32,18 +39,15 @@ class SolicitudServicioController extends Controller
      */
     public function create()
     {
-        $Sedes = DB::table('solicitud_servicios')
-            ->join('sedes','sedes.ID_Sede', 'solicitud_servicios.Fk_SolSerTransportador')
-            ->select('solicitud_servicios.*', 'sedes.*')
-            // ->where('')
-            ->get();
+        $Servicios = DB::table('solicitud_servicios')
+            ->leftjoin('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
+            ->select('sedes.*', 'gener_sedes.*')
 
-        $GSedes = DB::table('gener_sedes')
-            ->select('gener_sedes.*')
-            // ->where('')
             ->get();
+            // return $Servicios;
 
-            return view('solicitud.createServicio', compact('GSedes', 'Sedes'));                
+            return view('solicitud.createServicio', compact('Servicios'));                
     }
 
     /**
