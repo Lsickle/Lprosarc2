@@ -21,18 +21,21 @@ class genercontroller extends Controller
      */
     public function index()
     {
-        // $sedes = DB::table('sedes')
-        //     ->join('clientes', 'sedes.Cliente', '=', 'clientes.ID_Cli')
-        //     ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname', 'clientes.CliAuditable')
-        //     ->get();
-
-        $Generadors = DB::table('Generadors')
-            ->join('sedes', 'Generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('Generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname')
-            ->get();
-        // $Generadors = generador::all();
-        return view('generadores.index', compact('Generadors'));
+        if(Auth::user()->UsRol === "Programador"){
+            $Generadors = DB::table('generadors')
+                ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname')
+                ->get();
+            return view('generadores.index', compact('Generadors'));
+        }
+        $Generadors = DB::table('generadors')
+                ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname')
+                ->where('GenerDelete',0)
+                ->get();
+            return view('generadores.index', compact('Generadors'));
     }
 
     /**
@@ -55,29 +58,16 @@ class genercontroller extends Controller
     public function store(Request $request)
     {
         $Gener = new generador();
-        if ($request->input('GenerAuditable')=='on') {
-            $Gener->GenerAuditable='1';
-        }
-        else{
-            $Gener->GenerAuditable='0';
-        };
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
         $Gener->GenerShortname = $request->input('GenerShortname');
         $Gener->GenerType = $request->input('GenerType');
         $Gener->FK_GenerCli = $request->input('GenerCli');
-        $Gener->GenerSlug = 'Gener-'.$request->input('GenerShortname');
+        $Gener->GenerSlug = 'Gener-'.$request->input('GenerShortname').now();
+        $Gener->GenerDelete = 0;
         $Gener->save();
-
-        $log = new audit();
-        $log->AuditTabla="generadors";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Gener->ID_Gener;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
     
-        return redirect()->route('Generadores.index');
+        return redirect()->route('generadores.index');
     }
 
     /**
@@ -118,16 +108,7 @@ class genercontroller extends Controller
     public function update(Request $request, $id)
     {
         $generador = generador::where('GenerSlug',$id)->first();
-        // return $request;
         $generador->fill($request->except('created_at'));
-        if ($request->input('GenerAuditable') == 'on') {
-            $generador->GenerAuditable = '1';
-        }
-        else{
-            $generador->GenerAuditable = '0';
-        };
-        $generador->GenerSlug = 'Gener-'.$request->input('GenerShortname');
-        $generador->FK_GenerCli = $request->input('FK_GenerCli');
         $generador->save();
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
@@ -138,7 +119,7 @@ class genercontroller extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         // return $log->Auditlog;
-        return redirect()->route('Generadores.index');
+        return redirect()->route('generadores.index');
     }
 
     /**
@@ -149,17 +130,23 @@ class genercontroller extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
-        return $id;
+        $generador = generador::where('GenerSlug', $id)->first();
+            if ($generador->GenerDelete == 0) {
+                $generador->GenerDelete = 1;
+            }
+            else{
+                $generador->GenerDelete = 0;
+            }
+        $generador->save();
 
         $log = new audit();
         $log->AuditTabla="generadors";
         $log->AuditType="Eliminado";
         $log->AuditRegistro=$generador->ID_Gener;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
+        $log->Auditlog = $generador->GenerDelete;
         $log->save();
 
-        return redirect()->route('Generadores.index');
+        return redirect()->route('generadores.index');
     }
 }

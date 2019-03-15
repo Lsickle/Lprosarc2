@@ -76,26 +76,9 @@
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="form-group">
-										<label for="ClienteInputTipo">{{trans('adminlte_lang::message.clientaudit')}}</label>
-										<select name="CliAuditable" class="form-control" id="ClienteInputTipo">
-											@if($cliente->CliAuditable == 1)
-												<option value="1">Si</option>
-												<option value="0">No</option>
-											@else
-												<option value="0">No</option>
-												<option value="1">Si</option>
-											@endif
-										</select>
-									 </div>
-									{{-- <div class="form-group">
-										<label for="exampleInputFile">Documento requerido</label>
-										<input name="" type="file" id="exampleInputFile">
-										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Actualizar</button>
 								</div>
 							</form>

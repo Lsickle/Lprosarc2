@@ -64,13 +64,6 @@
 											<option>otros</option>
 										</select>
 									</div>
-									<div class="col-xs-6">
-										<label for="CliAuditable">{{trans('adminlte_lang::message.clientaudit')}}</label>
-										<select name="CliAuditable" class="form-control" id="ClienteInputTipo" placeholder="biologico">
-											<option value="1">Si</option>
-											<option value="0">No</option>
-										</select>
-									</div>
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer" style="float:right; margin-right:5%">

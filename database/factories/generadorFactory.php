@@ -19,6 +19,7 @@ $factory->define(App\generador::class, function (Faker $faker) {
         'FK_GenerCli'=> $GenerClisede,
         'created_at'=> $ccreado,
         'updated_at'=> $cactualizado,
+        'GenerDelete'=> 0,
         'GenerSlug'=> str_slug('cli'.$title.$slug)
     ];
 

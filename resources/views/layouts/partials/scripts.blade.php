@@ -200,7 +200,13 @@
         "targets": 6,
         "data": "GenerSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/Generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+          return "<a method='get' href='/generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+        }  
+      },{
+        "targets": 7,
+        "data": "GenerSlug",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/generadores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
         }  
       }]
     });
@@ -951,4 +957,60 @@ $(document).ready(function(){
           }]
         });
       });
+    </script>
+    <script>
+        var rol = "<?php
+                echo Auth::user()->UsRol;
+              ?>";
+          botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+          if (rol=='Programador') {
+            console.log(botoncito);
+          };
+        $(document).ready(function () {
+          $('#generadores').DataTable({
+              // pagingType: 'scrolling',
+              // scrollY: 300,
+              responsive: true,
+              // keys: true,
+              select: true,
+              dom: 'Bfrtip',
+              buttons: [
+                  botoncito,
+                  {
+                  extend: 'collection',
+                  text: 'Selector',
+                  buttons: [ 'selectRows', 'selectCells' ]
+                  }
+                ],
+              colReorder: true,
+              ordering: true,
+              autoWith: true,
+              searchHighlight: true,
+              "columnDefs": [ {
+                  "targets": 6,
+                  "data": "GenerSlug",
+                  "render": function ( data, type, row, meta ) {
+                    return "<a method='get' href='/generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+                  }  
+                },{
+                  "targets": 7,
+                  "data": "GenerSlug",
+                  "render": function ( data, type, row, meta ) {
+                    return "<a method='get' href='/generadores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                  }  
+              }],
+              fixedHeader: {
+                  header: true
+              }
+          });
+
+          var table = $('#generadores').DataTable();
+     
+          table.on( 'draw', function () {
+              var body = $( table.table().body() );
+       
+              body.unhighlight();
+              body.highlight( table.search() );  
+          });
+      }); 
     </script>
