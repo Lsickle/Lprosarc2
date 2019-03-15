@@ -872,7 +872,7 @@ $(document).ready(function(){
         console.log(botoncito);
       };
     $(document).ready(function () {
-      $('#example2').DataTable({
+      $('#sedes').DataTable({
           responsive: true,
           select: true,
           dom: 'Bfrtip',
@@ -888,16 +888,16 @@ $(document).ready(function(){
           ordering: true,
           autoWith: true,
           searchHighlight: true,
-          columnDefs:{
-            targets: 10,
-            data: 'SedeSlug',
-            render: function ( data, type, row, meta ) {
-              return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
+          columnDefs: [ {
+            "targets": 8,
+            "data": "SedeSlug",
+            "render": function ( data, type, row, meta ) {
+              return "<a method='get' href='/sclientes/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
             }  
-          }
+          }]
       });
       /*funcion para resaltar las busquedas*/
-      var table = $('#example2').DataTable();
+      var table = $('#sedes').DataTable();
  
       table.on( 'draw', function () {
           var body = $( table.table().body() );
@@ -954,7 +954,7 @@ $(document).ready(function(){
         });
       });
     </script>
-
+    
     <script>
         var rol = "<?php
                 echo Auth::user()->UsRol;
