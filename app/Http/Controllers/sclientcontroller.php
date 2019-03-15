@@ -21,16 +21,23 @@ class sclientcontroller extends Controller
     public function index()
     {
         // $sedes = Sede::all();
-
-        $sedes = DB::table('sedes')
+        if(Auth::user()->UsRol === "Programador"){
+            $sedes = DB::table('sedes')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->get();
+            return view('sclientes.index', compact('sedes'));
+        }
+       $sedes = DB::table('sedes')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname', 'clientes.CliAuditable')
+            ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+            ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+            ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+            ->where('sedes.SedeDelete', 0)
             ->get();
-
         return view('sclientes.index', compact('sedes'));
-
-
-       
     }
 
     /**
@@ -74,7 +81,8 @@ class sclientcontroller extends Controller
         $Sede->SedeCelular = $request->input('SedeCelular');
         $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
         $Sede->FK_SedeCli = $request->input('clientename');
-        $Sede->FK_SedeMun = $request->input('FK_SedeMun');        
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+        $Sede->SedeDelete = 0;
         $Sede->save();
 
         $log = new audit();
@@ -136,9 +144,6 @@ class sclientcontroller extends Controller
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
         $Sede->fill($request->except('created_at'));
-        $Sede->SedeExt2 = $request->input('SedeExt2');
-        $Sede->FK_SedeCli = $request->input('clientename');
-        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
         $Sede->save();
 
         $log = new audit();
@@ -160,17 +165,21 @@ class sclientcontroller extends Controller
      */
     public function destroy($id)
     {
-        // return $id;
-        //$id->delete();
-        // Sede::find($id)->delete();
-        // cliente::find($id)->delete();
-        
+        $Sede = Sede::where('SedeSlug', $id)->first();
+            if ($Sede->SedeDelete == 0) {
+                $Sede->SedeDelete = 1;
+            }
+            else{
+                $Sede->SedeDelete = 0;
+            }
+        $Sede->save();
+
         $log = new audit();
-        $log->AuditTabla="sedes";
+        $log->AuditTabla="gener_sedes";
         $log->AuditType="Eliminado";
         $log->AuditRegistro=$Sede->ID_Sede;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
+        $log->Auditlog = $Sede->SedeDelete;
         $log->save();
 
         return redirect()->route('sclientes.index');
