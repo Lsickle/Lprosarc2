@@ -30,9 +30,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $('#smartwizard').smartWizard({
-    theme: 'arrows',
-    keyNavigation:true
-  });
+      theme: 'arrows',
+      keyNavigation:true
+    });
   });
 </script>
 
@@ -867,10 +867,7 @@ $(document).ready(function(){
       };
     $(document).ready(function () {
       $('#example2').DataTable({
-          // pagingType: 'scrolling',
-          // scrollY: 300,
           responsive: true,
-          // keys: true,
           select: true,
           dom: 'Bfrtip',
           buttons: [
@@ -880,28 +877,25 @@ $(document).ready(function(){
               text: 'Selector',
               buttons: [ 'selectRows', 'selectCells' ]
               }
-            ],
+          ],
           colReorder: true,
           ordering: true,
           autoWith: true,
           searchHighlight: true,
-          "columnDefs": [ {
-            "targets": 10,
-            "data": "SedeSlug",
-            "render": function ( data, type, row, meta ) {
+          columnDefs:{
+            targets: 10,
+            data: 'SedeSlug',
+            render: function ( data, type, row, meta ) {
               return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
             }  
-          }],
-          fixedHeader: {
-              header: true
           }
       });
-
+      /*funcion para resaltar las busquedas*/
       var table = $('#example2').DataTable();
  
       table.on( 'draw', function () {
           var body = $( table.table().body() );
-   
+        
           body.unhighlight();
           body.highlight( table.search() );  
       });
