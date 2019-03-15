@@ -168,4 +168,5 @@ return [
     'sclientregistertittle'   => 'Registro de sede del cliente',
     'Generregistertittle'     => 'Registro de Generador',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'sclientmenu'             => 'Sedes del cliente',  
 ];

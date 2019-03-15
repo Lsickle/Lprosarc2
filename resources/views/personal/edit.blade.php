@@ -62,7 +62,6 @@
                                   <option value="{{$Persona->PersDocType}}">Seleccione...</option>
                                   <option value="CC">Cedula de Ciudadania</option>
                                   <option value="CE">Cedula Extranjera</option>
-                                  <option value="NIT">Nit</option>
                                   <option value="RUT">Rut</option>
                               </select>
                             </div>

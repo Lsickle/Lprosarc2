@@ -11,23 +11,31 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Datos de la sede del Generador</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
+				<div class="box-header">
+					@component('layouts.partials.modal')
+						{{$GSede->ID_GSede}}
+					@endcomponent
+					<h3 class="box-title">Complete todos los campos a continuacion</h3>
+					@if($GSede->GSedeDelete == 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$GSede->ID_GSede}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<form action='/sgeneradores/{{$GSede->GSedeSlug}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$GSede->ID_GSede}}" style="display: none;">
+						</form>
+					@else
+						<form action='/sgeneradores/{{$GSede->GSedeSlug}}' method='POST' style="float: right;">
+							@method('DELETE')
+							@csrf
+							<input type="submit" class='btn btn-success btn-block' value="Añadir">
+						</form>
+					@endif
 				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">complete todos los campos a continuacion</h3>
-							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/sgeneradores/{{$GSede->GSedeSlug}}" method="POST" enctype="multipart/form-data">
@@ -52,27 +60,25 @@
 										<select class="form-control" id="Departamento" name="Departamento" required="true">
 											<option>Seleccione...</option>
 											@foreach ($Departamentos as $Departamento)
-												
-											<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+												<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
 											@endforeach
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="sedemunicipio">Municipio</label>
 										<select class="form-control" id="sedemunicipio" name="FK_GSedeMun" required="true">
-											<option>Seleccione....</option>
+											<option value="{{$GSede->FK_GSedeMun}}">Seleccione....</option>
 											@foreach ($Municipios as $Municipio)
-												
-											<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
 											@endforeach
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
 										<select class="form-control" id="clientname" name="FK_GSede" required="true">
-												<option>Seleccione....</option>
+												<option value="{{$GSede->FK_GSede}}">Seleccione....</option>
 											@foreach($generadores as $generador)
-												<option value="{{$generador->ID_Gener}}">{{$generador->GenerShortname}}</option>
+												<option value="{{$generador->ID_GSede}}">{{$generador->GenerShortname}}</option>
 											@endforeach()
 										</select>
 									</div>
@@ -110,7 +116,7 @@
 									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Actualizar</button>
 								</div>
 							</form>

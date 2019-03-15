@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Personal;
+use App\Audit;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class RolesController extends Controller
@@ -27,9 +31,15 @@ class RolesController extends Controller
     public function index(Request $request)
     {
 
-        $users = DB::table('users')
-            ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc')
+        $viejousers = DB::table('users')
+            ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc', 'users.FK_UserPers')
             ->get();
+
+
+        $users = DB::table('users')
+                ->join('personals', 'users.FK_UserPers', '=', 'personals.ID_Pers')
+                ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc','users.FK_UserPers','personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName', 'personals.PersLastName','personals.PersCellphone','personals.PersSlug')
+                ->get();
         /*if (!$request->User()) {
           return redirect()->route('login');
         }else{
@@ -81,9 +91,10 @@ class RolesController extends Controller
      */
     public function edit($id)
     {   
+        $personas=Personal::all();
         $user=User::find($id);
         // return $user;
-        return view('permisos.edit', compact('user'));
+        return view('permisos.edit', compact('user', 'personas'));
     }
 
     /**
@@ -95,7 +106,7 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
+        // return $id;
         $rolDescripcion="";
         $tipoUsuario="";
         switch ($request->UsRol) {
@@ -192,12 +203,15 @@ class RolesController extends Controller
         if ($request->hasfile('UsAvatar')) {
             $file = $request->file('UsAvatar');
             $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/',$name);
+            $file->move(public_path().'/img/',$name);
         }
         else{
-            $name = public_path().'/images/default.jpg';
+            $name = 'robot400x400.gif';
 
-        }
+        };
+
+        $propietario = $request->input('FK_UserPers');
+
         DB::table('users')
         ->where('id', $id)
         ->update([
@@ -210,7 +224,19 @@ class RolesController extends Controller
             'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             'updated_by' => $request->updated_by,
             'UsAvatar' => $name,
+            'FK_UserPers' => $propietario,
         ]);
+
+
+        $log = new audit();
+        $log->AuditTabla="users";
+        $log->AuditType="modificado";
+        $log->AuditRegistro=$id;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+
         return redirect()->route('permisos.index');
     }
 

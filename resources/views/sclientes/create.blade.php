@@ -49,7 +49,7 @@
 									<div class="col-md-6">
 											<label for="departamento">Departamento</label>
 											<select class="form-control" id="departamento" name="Departamento" required="true">
-												<option>Seleccione...</option>
+												<option value="1">Seleccione...</option>
 												@foreach ($Departamentos as $Departamento)		
 													<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
 												@endforeach
@@ -59,7 +59,7 @@
 										<div class="col-md-6">
 											<label for="GSedemunicipio">Municipio</label>
 											<select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required="true">
-											<option>Seleccione...</option>
+											<option value="1">Seleccione...</option>
 											@foreach ($Municipios as $Municipio)
 												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
 											@endforeach
@@ -68,6 +68,7 @@
 									<div class="col-md-6">
 										<label for="clientname">Cliente</label>
 										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
+											<option value="1">Seleccione...</option>
 											@foreach($Clientes as $cliente)
 												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
 											@endforeach()
@@ -76,6 +77,10 @@
 									<div class="col-md-6">
 										<label for="sedeinputaddress">Direccion</label>
 										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
+									</div>
+									<div class="col-md-6">
+										<label for="sedeinputemail">Email de la Sede</label>
+										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
 									</div>
 									<div class="col-md-6">
 										<label for="sedeinputphone1">telf local 1</label>
@@ -93,21 +98,9 @@
 										<label for="sedeinputext2">Ext 2</label>
 										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999" >
 									</div>
-									{{-- <div class="form-group" style="margin-top: 1em"> --}}
-									<div class="col-md-6">
-										<label for="sedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true">
-									</div>
-									
-
-									{{-- <div class="form-group">
-										<label for="exampleInputFile">Documento requerido</label>
-										<input type="file" id="exampleInputFile">
-										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>

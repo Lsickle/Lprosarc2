@@ -33,6 +33,8 @@
                   <th>Email</th>
                   <th>Status</th>
                   <th>Rol</th> 
+                  <th>Propietario</th>
+                  <th>tipo</th> 
                   <th>Mas...</th>
                   <th>Editar Rol</th>
                 </tr>
@@ -68,6 +70,7 @@
 		                  <td>{{$usuario->email}}</td>
                       <td>{{$usuario->UsStatus}}</td>
                       <td>{{$usuario->UsRolDesc}}</td>
+                      <td>{{$usuario->PersFirstName}} {{$usuario->PersLastName}}</td>
                       <td>{{$usuario->UsType}}</td>
                       <th>{{$usuario->id}}</th>
                       <th>{{$usuario->id}}</th>
@@ -94,7 +97,9 @@
                   <th>Nombre</th>
                   <th>Email</th>
                   <th>Status</th>
-                  <th>Rol</th>
+                  <th>Rol</th> 
+                  <th>Propietario</th>
+                  <th>tipo</th> 
                   <th>Mas...</th>
                   <th>Editar Rol</th>
                 </tr>
