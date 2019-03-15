@@ -60,11 +60,6 @@
                       <td>{{$Sede->SedePhone2}}</td>
                       <td>{{$Sede->SedeExt2}}</td>
                       <td>{{$Sede->SedeCelular}}</td>
-	                  	@if($Sede->CliAuditable==1)
-        								<td>Si</td>
-        							@else
-        								<td>NO</td>
-        							@endif
                       <td>{{$Sede->SedeSlug}}</td>
 		                </tr>
 			          	@endforeach

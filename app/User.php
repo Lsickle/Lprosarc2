@@ -50,7 +50,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'email_verified_at', 'password', 'UsType', 'UsAvatar', 'UsStatus', 'UsSlug', 'UsRol', 'UsRolDesc', 'updated_by'
+        'name', 'email', 'email_verified_at', 'password', 'UsType', 'UsAvatar', 'UsStatus', 'UsSlug', 'UsRol', 'UsRolDesc', 'updated_by', 'FK_UserPers'
     ];
 
     /**
@@ -65,6 +65,12 @@ class User extends Authenticatable
     {
         return 'UsSlug';
     }
+
+    //se especifica la raclacion con la tabla personals
+    public function usuario(){
+        return $this->belongsTo('App\Personal','ID_Pers');
+    }
+    
     //se especifica la raclacion con la tabla declaraciones
     public function ArticuloProv()
     {

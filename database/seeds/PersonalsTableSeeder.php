@@ -14,6 +14,19 @@ class PersonalsTableSeeder extends Seeder
         $personal = new Personal();
         $personal->PersType = 1;
         $personal->PersDocType = "CC";
+        $personal->PersDocNumber = '1010101010';
+        $personal->PersFirstName = "Sin";
+        $personal->PersSecondName = "persona";
+        $personal->PersLastName = "asignada";
+        $personal->PersCellphone = '5555555555';
+        $personal->FK_PersCargo = '1';
+        $personal->PersSlug = "pers-sin-asignada-2019-02-20";
+        $personal->PersDelete = 0;
+        $personal->save();
+
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = "CC";
         $personal->PersDocNumber = '1002526800';
         $personal->PersFirstName = "Duvan";
         $personal->PersSecondName = "Arley";

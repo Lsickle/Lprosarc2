@@ -986,7 +986,7 @@ $(document).ready(function(){
               ordering: true,
               autoWith: true,
               searchHighlight: true,
-              "columnDefs": [ {
+              columnDefs: [ {
                   "targets": 6,
                   "data": "GenerSlug",
                   "render": function ( data, type, row, meta ) {
