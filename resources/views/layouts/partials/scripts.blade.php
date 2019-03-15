@@ -679,7 +679,7 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 8,
+            "targets": 9,
             "data": "PersSlug",
             "render": function ( data, type, row, meta ) {
               return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";

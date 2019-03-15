@@ -28,9 +28,27 @@ Solicitudes de servicios
 							<!-- form start -->
 							<form role="form" action="/solicitud-servicio" method="POST" enctype="multipart/form-data">
 								@csrf
+								<div class="col-md-6">
+										<label for="Tipo">Sede</label>
+										<select class="form-control" id="Tipo" name="Fk_SolSerTransportador" required>
+											<option value="">Seleccione...</option>
+											@foreach ($Servicios as $Servicio)
+												<option value="{{$Servicio->ID_Sede}}">{{$Servicio->SedeName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="Tipo">Sede Generador</label>
+										<select class="form-control" id="Tipo" name="FK_SolSerGenerSede" required>
+											<option value="">Seleccione...</option>
+											@foreach ($Servicios as $Servicio)
+												<option value="{{$Servicio->ID_GSede}}">{{$Servicio->GSedeName}}</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
-										<select class="form-control" id="estado" name="Estado" required="true">
+										<select class="form-control" id="estado" name="SolSerStatus" required="true">
 											<option value="">Seleccione...</option>
 											<option>Aprobada</option>
 											<option>Negada</option>
@@ -40,13 +58,14 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6">
 										<label for="Tipo">Tipo</label>
-										<select class="form-control" id="Tipo" name="Tipo" required="true">
+										<select class="form-control" id="Tipo" name="SolSerTipo" required="true">
 											<option value="">Seleccione...</option>
 											<option>Interno</option>
 											<option>Alquilado</option>
 											<option>Externo</option>
 										</select>
 									</div>
+									
 									<div class="col-md-6">
 										<label for="Tipo">Sede</label>
 										<select class="form-control" id="Tipo" name="Tipo" required>
@@ -58,22 +77,23 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
-										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="Frecuencia">
+										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="SolSerFrecuencia">
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext4">Nombre del conductor externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="conductor">
+										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter">
 									</div>
+									
 									<div class="col-md-6">
 										<label for="soliservicioinputext5">Placa del vehiculo externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext5" placeholder="FDR-756" name="placa">
+										<input type="text" class="form-control" id="soliservicioinputext5" placeholder="FDR-756" name="SolSerVehicExter">
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 										<div class="icheck form-group">
 											<label for="inputcheck">
 												Auditable
 											</label>
-											<input id="inputcheck" type="checkbox" name="auditable">
+											<input id="inputcheck" type="checkbox" name="SolSerAuditable">
 										</div>
 									</div>
 									<div class="col-md-8">
