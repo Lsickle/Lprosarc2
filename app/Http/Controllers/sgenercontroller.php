@@ -20,11 +20,22 @@ class sgenercontroller extends Controller
      */
     public function index()
     {
+        if(Auth::user()->UsRol === "Programador"){
+            $Gsedes = DB::table('gener_sedes')
+                ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+                ->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname','municipios.MunName', 'departamentos.DepartName')
+                ->get();
+            return view('sgeneradores.index', compact('Gsedes'));
+        }
         $Gsedes = DB::table('gener_sedes')
             ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-            ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname', 'generadors.GenerAuditable')
+            ->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+            ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+            ->select('gener_sedes.*', 'generadors.ID_Gener', 'generadors.GenerShortname','municipios.MunName', 'departamentos.DepartName')
+            ->where('gener_sedes.GSedeDelete',0)
             ->get();
-
         return view('sgeneradores.index', compact('Gsedes'));
     }
 
@@ -74,16 +85,8 @@ class sgenercontroller extends Controller
         $GenerSede->GSedeSlug = 'GSede-'.$request->input('GSedeName');
         $GenerSede->FK_GSede = $request->input('FK_GSede');
         $GenerSede->FK_GSedeMun = $request->input('FK_GSedeMun');
+        $GenerSede->GSedeDelete = 0;
         $GenerSede->save();
-        
-        // return $GenerSede;
-        $log = new audit();
-        $log->AuditTabla="gener_sedes";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$GenerSede->ID_GSede;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
         return redirect()->route('sgeneradores.index');
     }
@@ -133,9 +136,6 @@ class sgenercontroller extends Controller
     {
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
         $GSede->fill($request->except('created_at'));
-        $GSede->GSedeExt2 = $request->input('GSedeExt2');
-        $GSede->FK_GSede = $request->input('FK_GSede');
-        $GSede->FK_GSedeMun = $request->input('FK_GSedeMun');
         $GSede->save();
 
         $log = new audit();
@@ -157,15 +157,21 @@ class sgenercontroller extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
-        return $id;
-        
+        $Gsede = GenerSede::where('GSedeSlug', $id)->first();
+            if ($Gsede->GSedeDelete == 0) {
+                $Gsede->GSedeDelete = 1;
+            }
+            else{
+                $Gsede->GSedeDelete = 0;
+            }
+        $Gsede->save();
+
         $log = new audit();
-        $log->AuditTabla = "gener_sedes";
-        $log->AuditType = "Eliminado";
-        $log->AuditRegistro = $GSede->ID_GSede;
+        $log->AuditTabla="gener_sedes";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$Gsede->ID_GSede;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
+        $log->Auditlog = $Gsede->GSedeDelete;
         $log->save();
 
         return redirect()->route('sgeneradores.index');

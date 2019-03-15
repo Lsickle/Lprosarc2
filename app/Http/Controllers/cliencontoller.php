@@ -52,7 +52,6 @@ class clientcontoller extends Controller
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
-        $Cliente->CliAuditable = $request->input('CliAuditable');
         $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
         $Cliente->save();
 
@@ -103,7 +102,6 @@ class clientcontoller extends Controller
     public function update(Request $request, Cliente $cliente)
     {   
         $cliente->fill($request->except('created_at'));
-        $cliente->CliAuditable = $request->input('CliAuditable');
         $cliente->save();
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();

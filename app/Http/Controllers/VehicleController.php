@@ -17,11 +17,19 @@ class VehicleController extends Controller
      */
     public function index()
     { 
+        if(Auth::user()->UsRol === "Programador"){
+            $Vehicles = DB::table('vehiculos')
+                ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
+                ->select('vehiculos.*', 'sedes.SedeName')
+                ->get();
+            return view('vehicle.index', compact('Vehicles'));
+        }
         $Vehicles = DB::table('vehiculos')
-            ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
-            ->select('vehiculos.*', 'sedes.SedeName')
-            ->get();
-        return view('vehicle.index', compact('Vehicles'));
+                ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
+                ->select('vehiculos.*', 'sedes.SedeName')
+                ->where('VehicDelete', 0)
+                ->get();
+            return view('vehicle.index', compact('Vehicles'));
     }
 
     /**

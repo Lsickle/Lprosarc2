@@ -8,7 +8,7 @@ class GenerSede extends Model
 {
     protected $table='gener_sedes';
 
-    protected $fillable=['GSedeName', 'GSedeAddress', 'GSedePhone1', 'GSedeExt1', 'GSedePhone2',' GSedeExt2', 'GSedeEmail', 'GSedeCelular', 'Generador', 'GSedeSlug'];
+    protected $fillable=['GSedeName', 'GSedeAddress', 'GSedePhone1', 'GSedeExt1', 'GSedePhone2',' GSedeExt2', 'GSedeEmail', 'GSedeCelular', 'Generador', 'GSedeSlug', 'FK_GSede', 'FK_GSedeMun', 'GSedeDelete'];
 
     protected $primaryKey = 'ID_GSede';
     	/**
