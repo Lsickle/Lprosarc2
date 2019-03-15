@@ -79,6 +79,10 @@
 										<input type="text" class="form-control" id="GSedeinputaddress" placeholder="cll 23 #11c-03" name="GSedeAddress" required="true">
 									</div>
 									<div class="col-md-6">
+										<label for="GSedeinputemail">Email de la Sede</label>
+										<input type="email" class="form-control" id="GSedeinputemail" placeholder="Sistemas@Prosarc.com" name="GSedeEmail" required="true">
+									</div>
+									<div class="col-md-6">
 										<label for="GSedeinputphone1">telf local 1</label>
 										<input type="tel" class="form-control" id="GSedeinputphone1" placeholder="031-4123141" name="GSedePhone1" maxlength="16">
 									</div>
@@ -94,21 +98,9 @@
 										<label for="GSedeinputext2">Ext 2</label>
 										<input type="text" class="form-control" id="GSedeinputext2" placeholder="1555" name="GSedeExt2" maxlength="4">
 									</div>
-									{{-- <div class="form-group" style="margin-top: 10em"> --}}
-										<div class="col-md-6">
-										<label for="GSedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="GSedeinputemail" placeholder="Sistemas@Prosarc.com" name="GSedeEmail" required="true">
-									</div>
-									
-
-									{{-- <div class="form-group">
-										<label for="exampleInputFile">Documento requerido</label>
-										<input type="file" id="exampleInputFile">
-										<p class="help-block">Debe ingresar en formato PDF el archivo solicitado.</p>
-									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
+								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Registrar</button>
 								</div>
 							</form>

@@ -35,14 +35,9 @@
                 </li>
               </ul>
 
-          	<a href="/Generadores/{{$generadors->GenerSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+          	<a href="/generadores/{{$generadors->GenerSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
 						<br>
-{{--             <form action="/sclientes/create" class="form-group" method="POST">
-              @csrf
-                <input type="text" name="CliSlug" value="{{$generadors->GenerSlug}}" hidden="true">
-                <button type="submit" class="btn btn-primary btn-block">Agregar Sede</button>
-            </form> --}}
-      			<form action="/Generadores/{{$generadors->ID_Gener}}" class="form-group" method="POST">
+      			<form action="/generadores/{{$generadors->ID_Gener}}" class="form-group" method="POST">
       				@csrf
       				@method('DELETE')
       					<button type="submit" class="btn btn-danger btn-block">Borrar</button>
