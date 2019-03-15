@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Personal;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class RolesController extends Controller
@@ -27,9 +28,19 @@ class RolesController extends Controller
     public function index(Request $request)
     {
 
-        $users = DB::table('users')
-            ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc')
+        $usersx = DB::table('users')
+            ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc', 'users.FK_UserPers')
             ->get();
+
+        $Areas = DB::table('areas')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
+                ->get();
+
+        $users = DB::table('users')
+                ->join('personals', 'users.FK_UserPers', '=', 'personals.ID_Pers')
+                ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc','users.FK_UserPers','personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName', 'personals.PersLastName','personals.PersCellphone','personals.PersSlug')
+                ->get();
         /*if (!$request->User()) {
           return redirect()->route('login');
         }else{
@@ -81,9 +92,10 @@ class RolesController extends Controller
      */
     public function edit($id)
     {   
+        $personas=Personal::all();
         $user=User::find($id);
         // return $user;
-        return view('permisos.edit', compact('user'));
+        return view('permisos.edit', compact('user', 'personas'));
     }
 
     /**
@@ -195,9 +207,12 @@ class RolesController extends Controller
             $file->move(public_path().'/img/',$name);
         }
         else{
-            $name = public_path().'/img/robot400x400.gif';
+            $name = 'robot400x400.gif';
 
-        }
+        };
+
+        $propietario = $request->input('FK_UserPers');
+
         DB::table('users')
         ->where('id', $id)
         ->update([
@@ -210,6 +225,7 @@ class RolesController extends Controller
             'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             'updated_by' => $request->updated_by,
             'UsAvatar' => $name,
+            'FK_UserPers' => $propietario,
         ]);
         return redirect()->route('permisos.index');
     }
