@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <noscript>
+        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
+        {{-- @include('layouts.partials.noscript') --}}
+    </noscript>
 </head>
 <body>
     <div id="app">
