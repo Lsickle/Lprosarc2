@@ -1,8 +1,6 @@
   @extends('layouts.app')
 
-@section('htmlheader_title')
-	{{ trans('adminlte_lang::message.clientmenu') }}
-@endsection
+@section('htmlheader_title','Generadores')
 
 
 @section('main-content')
@@ -28,8 +26,7 @@
                   <th>Creado el</th>
                   <th>Sede</th>
                   <th>Cliente</th>
-                  <th>Auditable</th>
-                  <th>edicion</th>
+                  <th>Ver Más</th>
                 </tr>
                 </thead>
                 <tbody  hidden onload="renderTable()" id="readyTable">
@@ -64,27 +61,10 @@
 		                  <td>{{$Gener->created_at}}</td>
                       <td>{{$Gener->SedeName}}</td>
                       <td>{{$Gener->CliShortname}}</td>
-                      @if($Gener->GenerAuditable==1)
-                          <td>Si</td>
-                        @else
-                          <td>NO</td>
-                        @endif
                       <td>{{$Gener->GenerSlug}}</td>
 		                </tr>
-					@endforeach
+                  @endforeach
             	</tbody>
-                <tfoot>
-                <tr>
-                  <th>Categoria</th>
-                  <th>Nombre</th>
-                  <th>NIT</th>
-                  <th>Creado el</th>
-                  <th>Sede</th>
-                  <th>Cliente</th>
-                  <th>Auditable</th>
-                  <th>edicion</th>
-                </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->

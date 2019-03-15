@@ -39,7 +39,10 @@
               </div>
               
               @foreach ($Vehicles as $Vehicle)
-                <tr>
+                <tr @if($Vehicle->VehicDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Vehicle->VehicPlaca}}</td>   
                   <td>{{$Vehicle->VehicTipo}}</td>   
                   <td>{{$Vehicle->VehicCapacidad}} Kilos</td>   

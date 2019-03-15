@@ -38,7 +38,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Areas as $Area)
-                <tr>
+                <tr @if($Area->AreaDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Area->AreaName}}</td>
                   <td>{{$Area->SedeName}}</td>
                   <td>{{$Area->ID_Area}}</td>

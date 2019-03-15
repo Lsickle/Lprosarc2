@@ -42,7 +42,10 @@
                   <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 </div>
                 @foreach($Personals as $Personal)
-                <tr>
+                <tr @if($Personal->PersDelete === 1)
+                      style="color: red;" 
+                    @endif
+                >
                   <td>{{$Personal->PersDocType}}</td>
                   <td>{{$Personal->PersDocNumber}}</td>
                   <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
