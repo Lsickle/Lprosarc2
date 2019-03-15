@@ -170,7 +170,7 @@
     });
   });
 </script> 
-<script>
+{{-- <script>
   // funcion para da formato a la tabla
   $(function () {
     $('#example4').DataTable({
@@ -180,7 +180,7 @@
       "responsive": true,
       "processing":true,
       "columnDefs": [ {
-        "targets": 9,
+        "targets": 8,
         "data": "GSedeSlug",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
@@ -188,8 +188,8 @@
       }]
     });
   });
-</script> 
-<script>
+</script>  --}}
+{{-- <script>
   $(function () {
     $('#example3').DataTable({
       "scrollX": false,
@@ -211,7 +211,7 @@
       }]
     });
   });
-</script>
+</script> --}}
 {{-- <script>
   $(function () {
     $('#example2').DataTable({
@@ -1005,6 +1005,56 @@ $(document).ready(function(){
           });
 
           var table = $('#generadores').DataTable();
+     
+          table.on( 'draw', function () {
+              var body = $( table.table().body() );
+       
+              body.unhighlight();
+              body.highlight( table.search() );  
+          });
+      }); 
+    </script>
+    <script>
+        var rol = "<?php
+                echo Auth::user()->UsRol;
+              ?>";
+          botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+          if (rol=='Programador') {
+            console.log(botoncito);
+          };
+        $(document).ready(function () {
+          $('#sgeneradores').DataTable({
+              // pagingType: 'scrolling',
+              // scrollY: 300,
+              responsive: true,
+              // keys: true,
+              select: true,
+              dom: 'Bfrtip',
+              buttons: [
+                  botoncito,
+                  {
+                  extend: 'collection',
+                  text: 'Selector',
+                  buttons: [ 'selectRows', 'selectCells' ]
+                  }
+                ],
+              colReorder: true,
+              ordering: true,
+              autoWith: true,
+              searchHighlight: true,
+              "columnDefs": [ {
+                "targets": 8,
+                "data": "GSedeSlug",
+                "render": function ( data, type, row, meta ) {
+                  return "<a method='get' href='/sgeneradores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                }  
+              }],
+              fixedHeader: {
+                  header: true
+              }
+          });
+
+          var table = $('#sgeneradores').DataTable();
      
           table.on( 'draw', function () {
               var body = $( table.table().body() );

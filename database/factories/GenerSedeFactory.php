@@ -6,6 +6,7 @@ $factory->define(App\GenerSede::class, function (Faker $faker) {
 	$gsedename=$faker->randomElement(['norte', 'sur','este', 'oeste', 'principal']);
 	$gslug=$gsedename.' '.$faker->unique()->numberBetween($min = 100, $max = 9000);
 	$gsactualizado = $faker->dateTime($max = 'now');
+	$gsmunicipio= $faker->numberBetween($min = 1, $max = 1122);
 	$gscreado= $faker->dateTime($max = $gsactualizado);
 	/*cellpart hace referencia a una parte de una numero celular ejemplo:cellpart1=316 cellpart2=40135421*/
 	$cellpart2=$faker->optional($weight = 0.9)->numerify('#######');/*10% chance of NULL*/
@@ -40,7 +41,9 @@ $factory->define(App\GenerSede::class, function (Faker $faker) {
         'GSedeExt2'=> $ext2,
         'GSedeEmail'=> $gsedecorreo,
         'GSedeCelular'=> $faker->optional($weight = 0.8)->numerify('###.###.###.###-#'),/*20% chance of NULL*/
+        'FK_GSedeMun'=> $gsmunicipio,
         'GSedeSlug'=> str_slug($gslug), /*$title-$gsedeclass,*/
+        'GSedeDelete'=> 0,
         'created_at'=> $gscreado,
         'updated_at'=> $gsactualizado
     ];

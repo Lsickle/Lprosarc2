@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-	{{ trans('adminlte_lang::message.sclientmenu') }}
-@endsection
+@section('htmlheader_title','Generadores')
 
 
 @section('main-content')
@@ -19,20 +17,18 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example4" class="table table-bordered table-striped">
+              <table id="sgeneradores" class="table table-bordered table-striped">
                 <thead hidden id="readyHead">
                 <tr>
                   <th>Nombre</th>
                   <th>Direccion</th>
                   <th>Telefono 1</th>
-                  <th>Ext1</th>
                   <th>Telefono 2</th>
-                  <th>Ext2</th>
                   <th>Sede Email</th>
                   <th>Sede Celular</th>
                   <th>Generador</th>
-                  {{-- <th>Auditable</th> --}}
-                  <th>edicion</th>
+                  <th>Municipio</th>
+                  <th>Editar</th>
                 </tr>
                 </thead>
                 <tbody  hidden onload="renderTable()" id="readyTable">
@@ -49,51 +45,23 @@
                      <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                      <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                    </div>
-                	{{-- <div class="row">
-							<div class="card text-center" style="width: 18rem; margin-top:3rem;">
-								<img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-								<div class="card-body">
-									<h5 class="card-title">{{$cliente->CliShortname}}</h5>	
-									<p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-									<a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-								</div>
-							</div>
-						</div> --}}
                 	@foreach($Gsedes as $GSede)
-						        <tr>
+						        <tr @if($GSede->GSedeDelete === 1)
+                          style="color: red;" 
+                        @endif
+                    >
 		                  <td>{{$GSede->GSedeName}}</td>
 		                  <td>{{$GSede->GSedeAddress}}</td>
 		                  <td>{{$GSede->GSedePhone1}}</td>
-		                  <td>{{$GSede->GSedeExt1}}</td>
                       <td>{{$GSede->GSedePhone2}}</td>
-                      <td>{{$GSede->GSedeExt2}}</td>
                       <td>{{$GSede->GSedeEmail}}</td>
                       <td>{{$GSede->GSedeCelular}}</td>
                       <td>{{$GSede->GenerShortname}}</td>
-	                  	{{-- @if($GSede->GenerAuditable==1)
-        								<td>Si</td>
-        							@else
-        								<td>NO</td>
-        							@endif --}}
+                      <td>{{$GSede->MunName." - ".$GSede->DepartName}}</td>
                       <td>{{$GSede->GSedeSlug}}</td>
 		                </tr>
 			          	@endforeach
             	</tbody>
-                {{-- <tfoot>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Direccion</th>
-                  <th>Telefono 1</th>
-                  <th>Ext1</th>
-                  <th>Telefono 2</th>
-                  <th>Ext2</th>
-                  <th>Sede Email</th>
-                  <th>Sede Celular</th>
-                  <th>Generador</th>
-                  <th>Auditable</th>
-                  <th>edicion</th>
-                </tr>
-                </tfoot> --}}
               </table>
             </div>
             <!-- /.box-body -->
