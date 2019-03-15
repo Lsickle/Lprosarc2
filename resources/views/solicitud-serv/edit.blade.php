@@ -3,7 +3,7 @@
 Solicitude de servicio
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+Editar Solicitud de servicio
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,7 @@ Solicitude de servicio
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
+					<h3 class="box-title">Datos</h3>
 					
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -26,8 +26,25 @@ Solicitude de servicio
 							<div class="col-md-12">
 								<!-- general form elements -->
 								<div class="box box-primary">
+                                        @component('layouts.partials.modal')
+                                            {{$Servicios->ID_SolSer}}
+                                        @endcomponent
 									<div class="box-header with-border">
-										<h3 class="box-title">Editar registro</h3>
+                                        <h3 class="box-title">Editar registro</h3>
+                                        @if($Servicios->SolSerDelete == 0)
+                                            <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Servicios->ID_SolSer}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+                                            <form action='/solicitud-servicio/{{$Servicios->SolSerSlug}}' method='POST'>
+                                                @method('DELETE')
+                                                @csrf
+                                                <input  type="submit" id="Eliminar{{$Servicios->ID_SolSer}}" style="display: none;">
+                                            </form>
+                                        @else
+                                            <form action='/personal/{{$Servicios->SolSerSlug}}' method='POST' style="float: right;">
+                                            @method('DELETE')
+                                            @csrf
+                                            <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                                            </form>
+                                        @endif
 									</div>
 							<!-- /.box-header -->
                         <!-- form start -->

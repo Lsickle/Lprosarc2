@@ -21,7 +21,6 @@ class RespelController extends Controller
     public function index(){ 
 
     if(Auth::user()->UsRol === "Programador"){
-
         $Respels = DB::table('respels')
         ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -103,7 +102,7 @@ class RespelController extends Controller
         $respel->RespelHojaSeguridad = $name;
         $respel->RespelTarj = $tarj;
         $respel->FK_RespelSede = $request->input('FK_RespelSede');
-        $respel->RespelSlug = "slug".$request->input('RespelName');
+        $respel->RespelSlug = "slug".$request->input('RespelName').date('Ymd');
         $respel->RespelDelete = 0;
         $respel->save();
 
@@ -134,7 +133,7 @@ class RespelController extends Controller
         $Requerimiento->ReqMasPerson = NULL;
         $Requerimiento->ReqPlatform = NULL;
         $Requerimiento->ReqCertiEspecial = NULL;
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName');
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('Ymd');
         $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
         $Requerimiento->save();
 
@@ -212,7 +211,6 @@ class RespelController extends Controller
             // $tarj = public_path().'/img/default.png';
             $tarj = "";
         }
-
         $Respels->save();
 
         $log = new audit();

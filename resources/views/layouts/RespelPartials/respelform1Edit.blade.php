@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
         <label>Nombre</label>
         <input name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$Respels->RespelName}}" required>

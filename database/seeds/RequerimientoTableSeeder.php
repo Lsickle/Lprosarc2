@@ -26,7 +26,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqVideoMezclado = NULL; 
         $Requerimiento->ReqVideoDestruccion = NULL; 
         $Requerimiento->ReqAuditoria = NULL; 
-        $Requerimiento->ReqAuditoriaTipo = "1"; 
+        $Requerimiento->ReqAuditoriaTipo = "Presencial"; 
         $Requerimiento->ReqDevolucion = NULL; 
         $Requerimiento->ReqDevolucionTipo = NULL; 
         $Requerimiento->ReqDatosPersonal = NULL; 
@@ -55,7 +55,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqVideoMezclado = "1"; 
         $Requerimiento->ReqVideoDestruccion = "1"; 
         $Requerimiento->ReqAuditoria = "1"; 
-        $Requerimiento->ReqAuditoriaTipo = "1"; 
+        $Requerimiento->ReqAuditoriaTipo = "Presencial"; 
         $Requerimiento->ReqDevolucion = "1"; 
         $Requerimiento->ReqDevolucionTipo = "1"; 
         $Requerimiento->ReqDatosPersonal = "1"; 
@@ -113,7 +113,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqVideoMezclado = NULL; 
         $Requerimiento->ReqVideoDestruccion = NULL; 
         $Requerimiento->ReqAuditoria = NULL; 
-        $Requerimiento->ReqAuditoriaTipo = "1"; 
+        $Requerimiento->ReqAuditoriaTipo = "Virtual"; 
         $Requerimiento->ReqDevolucion = NULL; 
         $Requerimiento->ReqDevolucionTipo = NULL; 
         $Requerimiento->ReqDatosPersonal = NULL; 
