@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Personal;
+use App\Audit;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class RolesController extends Controller
@@ -28,14 +31,10 @@ class RolesController extends Controller
     public function index(Request $request)
     {
 
-        $usersx = DB::table('users')
+        $viejousers = DB::table('users')
             ->select('users.id','users.name','users.email','users.created_at','users.updated_at','users.UsType','users.UsAvatar','users.UsStatus','users.UsSlug','users.UsRol','users.UsRolDesc', 'users.FK_UserPers')
             ->get();
 
-        $Areas = DB::table('areas')
-                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
-                ->get();
 
         $users = DB::table('users')
                 ->join('personals', 'users.FK_UserPers', '=', 'personals.ID_Pers')
@@ -107,7 +106,7 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
+        // return $id;
         $rolDescripcion="";
         $tipoUsuario="";
         switch ($request->UsRol) {
@@ -227,6 +226,17 @@ class RolesController extends Controller
             'UsAvatar' => $name,
             'FK_UserPers' => $propietario,
         ]);
+
+
+        $log = new audit();
+        $log->AuditTabla="users";
+        $log->AuditType="modificado";
+        $log->AuditRegistro=$id;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+
         return redirect()->route('permisos.index');
     }
 
