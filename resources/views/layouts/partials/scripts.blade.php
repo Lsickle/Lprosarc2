@@ -954,10 +954,7 @@ $(document).ready(function(){
         });
       });
     </script>
-<<<<<<< HEAD
 
-
-=======
     <script>
         var rol = "<?php
                 echo Auth::user()->UsRol;
@@ -1014,6 +1011,7 @@ $(document).ready(function(){
           });
       }); 
     </script>
+    
     <script>
         var rol = "<?php
                 echo Auth::user()->UsRol;
@@ -1064,4 +1062,3 @@ $(document).ready(function(){
           });
       }); 
     </script>
->>>>>>> duvan
