@@ -57,9 +57,9 @@
        "responsive": true,
         "columnDefs": [ {
         "targets": 9,
-        "data": "CliSlug",
+        "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success'>Ver</a>";}},
+          return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
@@ -67,11 +67,11 @@
         {"targets": 5,
         "data": "RespelHojaSeguridad",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
         {"targets": 6,
         "data": "RespelTarj",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
   });
@@ -715,9 +715,9 @@ $(document).ready(function(){
           "responsive": true,
           "columnDefs": [ {
             "targets": 8,
-            "data": "PersSlug",
+            "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });

@@ -25,6 +25,7 @@ use App\Tratamiento;
 use App\CategoriaActivo;
 use App\SubcategoriaActivo;
 use App\Activo;
+use App\Requerimiento;
 
 class DatabaseSeeder extends Seeder
 {
@@ -61,5 +62,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SolicitudServicioTableSeeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
+        $this->call(RequerimientoTableSeeder::class);
     }
 }
