@@ -55,35 +55,36 @@ Editar Solicitud de servicio
                                             <div class="col-md-6"> 
                                                 <label for="SolicitudResiduo">Respel</label>										
                                                 <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" required>
-                                                    @foreach ($SolRes as $SolRe)
-                                                    <option value="{{$SolRe->ID_Respel}}">{{$SolRe->RespelName}}</option>
+                                                    <option value="{{$SolRes->FK_SolResRespel}}">Select..</option>
+                                                    @foreach ($Respels as $Respel)
+                                                    <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-6"> 
                                                 <label for="soliresidinputext">Solicitud de servicio</label>										
                                                 <select id="soliresidinputext" name="SolResSolSer" class="form-control" required>
-                                                    <option value="">Seleccione...</option>
-                                                    @foreach ($SolRes as $SolRe)
-                                                    <option value="{{$SolRe->ID_SolSer}}">({{$SolRe->CliShortname}}) y ({{$SolRe->GenerName}})</option>
+                                                    <option value="{{$SolRes->FK_SolResSolSer}}">Seleccione...</option>
+                                                    @foreach ($SolSers as $SolSer)
+                                                    <option value="{{$SolSer->ID_SolSer}}">({{$SolSer->CliShortname}}) y ({{$SolSer->GenerName}})</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="soliresidinputext1">Kg Enviado</label>
-                                                <input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="SolResKgEnviado" max="99999999">
+                                                <input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="SolResKgEnviado" max="99999999" value="{{$SolRes->SolResKgEnviado}}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="soliresidinputext2">Kg recibidos</label>
-                                                <input type="number" class="form-control" id="soliresidinputext2" placeholder="787698" name="SolResKgRecibido" max="99999999">
+                                                <input type="number" class="form-control" id="soliresidinputext2" placeholder="787698" name="SolResKgRecibido" max="99999999"value="{{$SolRes->SolResKgRecibido}}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="soliresidinputext3">Kg conciliados</label>
-                                                <input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="SolResKgConciliado" max="99999999">
+                                                <input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="SolResKgConciliado" max="99999999" value="{{$SolRes->SolResKgConciliado}}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="soliresidinputext4">Kg Tratado</label>
-                                                <input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="SolResKgTratado"  max="99999999">
+                                                <input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="SolResKgTratado"  max="99999999" value="{{$SolRes->SolResKgTratado}}">
                                             </div>
                                         </div>
                                         <input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">

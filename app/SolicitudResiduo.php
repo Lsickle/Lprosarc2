@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class SolicitudResiduo extends Model{
+
     protected $table = 'solicitud_residuos';
-    protected $fillable = ['SolResKgEnviado','SolResKgRecibido','SolResKgConciliado','SolResKgTratado'];
+
+    protected $fillable = ['SolResKgEnviado','SolResKgRecibido','SolResKgConciliado','SolResKgTratado', 'SolResRespel', 'SolResSolSer'];
+   
     protected $primaryKey = 'ID_SolRes';
 
     public function SolicitudServicio(){

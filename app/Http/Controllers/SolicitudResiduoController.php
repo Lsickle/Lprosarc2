@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\SolicitudResiduo;
 use App\audit;
 use App\Respel;
+use App\SolicitudServicio;
 
 
 class SolicitudResiduoController extends Controller
@@ -105,15 +106,19 @@ class SolicitudResiduoController extends Controller
     {
         // return $id;
         $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
-        $Residuos = DB::table('solicitud_residuos')
-            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.SolResRespel')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.SolResSolSer')
-            ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
-            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('clientes.*', 'respels.*', 'solicitud_residuos.*')
-            ->get();
+        $Respels = Respel::all();
+        $SolSers = DB::table('solicitud_servicios')
+            ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
+            ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
 
-        return view('solicitud-resid.edit', compact('SolRes', 'Residuos'));
+            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            
+            ->select('generadors.GenerName', 'clientes.CliShortname', 'solicitud_servicios.ID_SolSer')
+            ->get();
+        // $Respel = Respel::all();
+        // return $SolRes;
+        return view('solicitud-resid.edit', compact('SolRes', 'Respels', 'SolSers'));
     }
 
     /**
@@ -125,7 +130,19 @@ class SolicitudResiduoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
+        $SolRes->fill($request->all());
+        $SolRes->save();
+
+        $log = new audit();
+        $log->AuditTabla="solicitud_residuos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$SolRes->ID_SolRes;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        return redirect()->route('solicitud-residuo.index');
     }
 
     /**
