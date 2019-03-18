@@ -714,7 +714,7 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 8,
+            "targets": 9,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
               return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";

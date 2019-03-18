@@ -23,6 +23,7 @@ Servicios
                 <tr>
                   <th>Cliente</th>
                   <th>Generador</th>
+                  <th>Residuo</th>
                   <th>Estado</th>
                   <th>Auditable</th>
                   <th>Frecuencia</th>
@@ -51,6 +52,7 @@ Servicios
                     <tr>
                       <td>{{$Servicio->CliShortname}}</td>
                       <td>{{$Servicio->GenerName}}</td>
+                      <td>{{$Servicio->RespelName}}</td>
                       <td>{{$Servicio->SolSerStatus}}</td>
                       @if ($Servicio->SolSerAuditable == 1)
                       <td>Si</td>                      

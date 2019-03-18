@@ -9,6 +9,8 @@ use App\SolicitudServicio;
 use App\audit;
 use App\Sede;
 use App\GenerSede;
+use App\Respel;
+use App\ResiduosGener;
 
 
 
@@ -27,8 +29,12 @@ class SolicitudServicioController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+         
+            ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
+            ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName')
+            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
             ->get();
 
         return view('solicitud-serv.index', compact('Servicios'));
@@ -37,10 +43,13 @@ class SolicitudServicioController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->join('residuos_geners', 'residuos_geners.FK_SGener', '=', 'gener_sedes.ID_GSede')
+            ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName')
+            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
             ->where('solicitud_servicios.SolSerDelete', 0)
             ->get();
+
 
         return view('solicitud-serv.index', compact('Servicios'));
     }
@@ -53,9 +62,21 @@ class SolicitudServicioController extends Controller
     public function create()
     {
         $Sedes = Sede::all();
-        $GSedes = GenerSede::all();
 
-        return view('solicitud-serv.create', compact('GSedes', 'Sedes'));                
+        $GSedes = GenerSede::all();
+        // $GSedes = DB::table('gener_sedes')
+        // ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+        // ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
+        // ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede')
+        // ->get();
+        
+        $Respels = Respel::all();
+        // $Respels = DB::table('respels')
+        //     ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        //     ->select('respels.*')
+        //     ->get();
+
+        return view('solicitud-serv.create', compact('GSedes', 'Sedes', 'Respels'));                
     }
 
     /**
@@ -84,9 +105,15 @@ class SolicitudServicioController extends Controller
         $Servicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
         $Servicio->FK_SolSerGenerSede = $request->input('FK_SolSerGenerSede');
         $Servicio->SolSerDelete = 0;
-        $Servicio->SolSerSlug = 'Slug'.$Sedes->SedeSlug.date('Ymd');
+        $Servicio->SolSerSlug = 'Slug'.date('YmdHis');
         
         $Servicio->save();
+
+        $SGenerRes = new ResiduosGener();
+        $SGenerRes->FK_SGener = $request->input('FK_SolSerGenerSede');
+        $SGenerRes->FK_Respel = $request->input('FK_Respel');
+        $SGenerRes->FK_SolSer = $Servicio->ID_SolSer;
+        $SGenerRes->save();
 
         $log = new audit();
         $log->AuditTabla="solicitud_servicios";
@@ -120,10 +147,13 @@ class SolicitudServicioController extends Controller
     {
         $Servicios = SolicitudServicio::where('SolSerSlug', $id)->first();
 
+        $SGenerRes = ResiduosGener::where('FK_SolSer', $Servicios->ID_SolSer)->first();
         $Sedes = Sede::all();
         $GSedes = GenerSede::all();
+        $Respels = Respel::all();
 
-        return view('solicitud-serv.edit', compact('Servicios', 'GSedes', 'Sedes'));
+
+        return view('solicitud-serv.edit', compact('Servicios', 'GSedes', 'Sedes', 'Respels', 'SGenerRes'));
     }
 
     /**
@@ -140,6 +170,20 @@ class SolicitudServicioController extends Controller
         $Servicios->SolSerAuditable =$request->input('SolSerAuditable');
         $Servicios->save();
 
+        $SGenerRes = new ResiduosGener();
+        $SGenerRes = ResiduosGener::where('FK_SolSer', $Servicios->ID_SolSer)->first();
+        $SGenerRes->FK_SGener = $request->input('FK_SolSerGenerSede');
+        $SGenerRes->FK_Respel = $request->input('FK_Respel');
+        $SGenerRes->save();
+
+        $log = new audit();
+        $log->AuditTabla="residuos_geners";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$SGenerRes->ID_SGenerRes;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+        
         $log = new audit();
         $log->AuditTabla="solicitud_servicios";
         $log->AuditType="Modificado";

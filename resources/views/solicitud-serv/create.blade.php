@@ -28,9 +28,9 @@ Solicitudes de servicios
 							<!-- form start -->
 							<form role="form" action="/solicitud-servicio" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="col-md-6">
-										<label for="Tipo">Sede</label>
-										<select class="form-control" id="Tipo" name="Fk_SolSerTransportador" required>
+								<div class="col-md-12">
+										<label for="Sede">Sede</label>
+										<select class="form-control" id="Sede" name="Fk_SolSerTransportador" required>
 											<option value="">Seleccione...</option>
 											@foreach ($Sedes as $Sede)
 												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
@@ -38,11 +38,20 @@ Solicitudes de servicios
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="Tipo">Sede Generador</label>
-										<select class="form-control" id="Tipo" name="FK_SolSerGenerSede" required>
+										<label for="SGener">Sede Generador</label>
+										<select class="form-control" id="SGener" name="FK_SolSerGenerSede" required>
 											<option value="">Seleccione...</option>
 											@foreach ($GSedes as $GSede)
 												<option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="Respel">Respel</label>
+										<select class="form-control" id="Respel" name="FK_Respel" required>
+											<option value="">Seleccione...</option>
+											@foreach ($Respels as $Respel)
+												<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
 											@endforeach
 										</select>
 									</div>

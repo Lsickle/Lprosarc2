@@ -70,6 +70,15 @@ Editar Solicitud de servicio
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
+                                                <label for="Respel">Respel</label>
+                                                <select class="form-control" id="Respel" name="FK_Respel" required>
+                                                <option value="{{$SGenerRes->FK_Respel}}">Seleccione...</option>
+                                                    @foreach ($Respels as $Respel)
+                                                        <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <label for="estado">Estado</label>
                                                 <select class="form-control" id="estado" name="SolSerStatus" required>
                                                     <option value="{{$Servicios->SolSerStatus}}">Seleccione...</option>
