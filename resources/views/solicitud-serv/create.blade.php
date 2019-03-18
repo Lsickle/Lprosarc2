@@ -39,7 +39,7 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6"> 
 										<label for="SGenerRespel">Respel</label>										
-										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
+										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" style="width: 100%" required>
 											@foreach ($Respels as $Respel)
 											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
 											@endforeach

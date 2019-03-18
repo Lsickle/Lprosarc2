@@ -54,8 +54,7 @@ Editar Solicitud de servicio
 										<div class="box-body">
                                             <div class="col-md-6"> 
                                                 <label for="SolicitudResiduo">Respel</label>										
-                                                <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" required>
-                                                    <option value="{{$SolRes->FK_SolResRespel}}">Select..</option>
+                                                <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" value="{{$SolRes->FK_SolResRespel}}" style="width: 100%" required>
                                                     @foreach ($Respels as $Respel)
                                                     <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                     @endforeach

@@ -23,6 +23,7 @@
 {{-- select 2 --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+
 {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
@@ -31,12 +32,21 @@
 {{-- select 2 --}}
 <script>
   $(document).ready(function() {
-    $('#SGenerRespel').select2();
+    $('#SGenerRespel').select2({
+      placeholder: "Seleccione el residuo",
+    allowClear: true,
+    width: 'resolve'
+    });
+    
   });
 </script>
 <script>
   $(document).ready(function() {
-    $('#SolicitudResiduo').select2();
+    $('#SolicitudResiduo').select2({
+      placeholder: "Seleccione el residuo",
+    allowClear: true,
+    width: 'resolve'
+    });
   });
 </script>
 

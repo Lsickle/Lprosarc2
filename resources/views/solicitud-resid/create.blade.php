@@ -33,7 +33,7 @@ Solicitudes de residuos
 								<div class="box-body">
 									<div class="col-md-6"> 
 										<label for="SolicitudResiduo">Respel</label>										
-										<select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" required>
+										<select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" style="width: 100%" required>
 											@foreach ($SolRes as $SolRe)
 											<option value="{{$SolRe->ID_Respel}}">{{$SolRe->RespelName}}</option>
 											@endforeach

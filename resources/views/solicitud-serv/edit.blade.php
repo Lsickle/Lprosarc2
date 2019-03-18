@@ -62,7 +62,7 @@ Editar Solicitud de servicio
                                             </div>
                                             <div class="col-md-6"> 
                                                     <label for="SGenerRespel">Respel</label>										
-                                                    <select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
+                                                    <select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" style="width: 100%" required>
                                                         @foreach ($Respels as $Respel)
                                                         <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                         @endforeach
@@ -128,7 +128,7 @@ Editar Solicitud de servicio
 
 										<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 										<!-- /.box-body -->
-										<div class="col-md-12">	
+										<div class="col-md-6">	
 											<div class="box-footer">
 												<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
 											</div>

@@ -104,9 +104,10 @@ class SolicitudResiduoController extends Controller
      */
     public function edit($id)
     {
-        // return $id;
         $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
+
         $Respels = Respel::all();
+        
         $SolSers = DB::table('solicitud_servicios')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
@@ -116,8 +117,7 @@ class SolicitudResiduoController extends Controller
             
             ->select('generadors.GenerName', 'clientes.CliShortname', 'solicitud_servicios.ID_SolSer')
             ->get();
-        // $Respel = Respel::all();
-        // return $SolRes;
+
         return view('solicitud-resid.edit', compact('SolRes', 'Respels', 'SolSers'));
     }
 
