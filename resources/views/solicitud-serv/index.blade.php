@@ -71,16 +71,17 @@ Servicios
                   </tbody>
             {{-- <tfoot>
                 <tr>
-                  <th>Generado Por</th>
-                  <th>Sede del cliente</th>
+                  <th>Cliente</th>
+                  <th>Generador</th>
+                  <th>Residuo</th>
                   <th>Estado</th>
-                  <th>Tipo</th>
                   <th>Auditable</th>
                   <th>Frecuencia</th>
+                  <th>Tipo del vehiculo</th>
                   <th>Conductor Externo</th>
                   <th>Placa del vehiculo externo</th>
                   <th>Fecha creado</th>
-                  <th>Fecha mejorado</th>
+                  <th>Fecha modificado</th>
                   <th>Editar</th>
                 </tr>
             </tfoot> --}}

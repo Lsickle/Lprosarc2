@@ -29,10 +29,8 @@ class SolicitudServicioController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-         
             ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
             ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
             ->get();
@@ -43,7 +41,7 @@ class SolicitudServicioController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-            ->join('residuos_geners', 'residuos_geners.FK_SGener', '=', 'gener_sedes.ID_GSede')
+            ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
             ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
@@ -88,6 +86,7 @@ class SolicitudServicioController extends Controller
     public function store(Request $request)
     {
         $Sedes = Sede::where('ID_Sede', $request->input('Fk_SolSerTransportador'))->first();
+        // return $request;
 
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = $request->input('SolSerStatus');

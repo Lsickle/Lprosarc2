@@ -46,7 +46,7 @@ Solicitudes de servicios
 											@endforeach
 										</select>
 									</div>
-									<div class="col-md-6">
+									{{-- <div class="col-md-6">
 										<label for="Respel">Respel</label>
 										<select class="form-control" id="Respel" name="FK_Respel" required>
 											<option value="">Seleccione...</option>
@@ -54,14 +54,23 @@ Solicitudes de servicios
 												<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
 											@endforeach
 										</select>
+									</div> --}}
+									<div class="col-md-6"> 
+											<label for="SGenerRespel">Respel</label>										
+										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
+											@foreach ($Respels as $Respel)
+											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+											@endforeach
+										</select>
 									</div>
+
+
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
 										<select class="form-control" id="estado" name="SolSerStatus" required="true">
-											<option value="">Seleccione...</option>
+											<option>Pendiente</option>
 											<option>Aprobada</option>
 											<option>Negada</option>
-											<option>Pendiente</option>
 											<option>Incompleta</option>
 										</select>
 									</div>
