@@ -34,6 +34,11 @@
     $('#SGenerRespel').select2();
   });
 </script>
+<script>
+  $(document).ready(function() {
+    $('#SolicitudResiduo').select2();
+  });
+</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -695,21 +700,16 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 4,
-            "data": "SolResSolSer",
-            "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
-            },{
-            "targets": 5,
+          "columnDefs": [{
+            "targets": 6,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+                return "<a href='solicitud-residu0/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 6,
-            "data": "PersSlug",
+            "targets": 7,
+            "data": "ID_SolRes",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
+                return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
             }
           ]
         });

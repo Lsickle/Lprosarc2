@@ -37,6 +37,14 @@ Solicitudes de servicios
 											@endforeach
 										</select>
 									</div>
+									<div class="col-md-6"> 
+										<label for="SGenerRespel">Respel</label>										
+										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
+											@foreach ($Respels as $Respel)
+											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-md-6">
 										<label for="SGener">Sede Generador</label>
 										<select class="form-control" id="SGener" name="FK_SolSerGenerSede" required>
@@ -46,25 +54,6 @@ Solicitudes de servicios
 											@endforeach
 										</select>
 									</div>
-									{{-- <div class="col-md-6">
-										<label for="Respel">Respel</label>
-										<select class="form-control" id="Respel" name="FK_Respel" required>
-											<option value="">Seleccione...</option>
-											@foreach ($Respels as $Respel)
-												<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
-											@endforeach
-										</select>
-									</div> --}}
-									<div class="col-md-6"> 
-											<label for="SGenerRespel">Respel</label>										
-										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
-											@foreach ($Respels as $Respel)
-											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
-											@endforeach
-										</select>
-									</div>
-
-
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
 										<select class="form-control" id="estado" name="SolSerStatus" required="true">
@@ -83,8 +72,6 @@ Solicitudes de servicios
 											<option>Externo</option>
 										</select>
 									</div>
-									
-									
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
 										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="SolSerFrecuencia">

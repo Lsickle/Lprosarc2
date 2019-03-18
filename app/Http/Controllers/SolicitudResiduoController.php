@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\SolicitudResiduo;
 use App\audit;
+use App\Respel;
 
 
 class SolicitudResiduoController extends Controller
@@ -19,8 +20,13 @@ class SolicitudResiduoController extends Controller
     public function index()
     {
         $Residuos = DB::table('solicitud_residuos')
-            ->select('*')
+            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.SolResRespel')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.SolResSolSer')
+            ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*')
             ->get();
+
         return view('solicitud-resid.index', compact('Residuos'));
     }
 
@@ -31,7 +37,23 @@ class SolicitudResiduoController extends Controller
      */
     public function create()
     {
-        return view('solicitud-resid.create');
+        // $Respels = Respel::all();
+        $SolRes = DB::table('solicitud_residuos')
+            ->join('respels', 'solicitud_residuos.SolResRespel', '=', 'respels.ID_Respel')
+            ->join('solicitud_servicios', 'solicitud_residuos.SolResSolSer', '=', 'solicitud_servicios.ID_SolSer')
+
+            ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
+            ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+
+            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+
+
+
+            ->select('respels.RespelName', 'respels.ID_Respel', 'generadors.GenerName', 'clientes.CliShortname', 'solicitud_servicios.ID_SolSer')
+            ->get();
+
+        return view('solicitud-resid.create', compact('Respels', 'SolRes'));
     }
 
     /**
@@ -42,17 +64,13 @@ class SolicitudResiduoController extends Controller
      */
     public function store(Request $request)
     {
-        // $Residuos = DB::table('solicitud_residuos')
-        //     ->select('solicitud_residuos.*')
-        //     ->get();
-
         $Residuo = new SolicitudResiduo();
-        $Residuo->SolResKgEnviado = $request->input('enviado');
-        $Residuo->SolResKgRecibido = $request->input('resibido');
-        $Residuo->SolResKgConciliado = $request->input('conciliado');
-        $Residuo->SolResKgTratado = $request->input('tratado');
-        $Residuo->SolResRespel = 2;
-        $Residuo->SolResSolSer = 1;
+        $Residuo->SolResKgEnviado = $request->input('SolResKgEnviado');
+        $Residuo->SolResKgRecibido = $request->input('SolResKgRecibido');
+        $Residuo->SolResKgConciliado = $request->input('SolResKgConciliado');
+        $Residuo->SolResKgTratado = $request->input('SolResKgTratado');
+        $Residuo->SolResRespel = $request->input('SolResRespel');
+        $Residuo->SolResSolSer = $request->input('SolResSolSer');
         $Residuo->save();
 
         $log = new audit();
@@ -62,10 +80,8 @@ class SolicitudResiduoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        // return $Residuo;
+
         return redirect()->route('solicitud-residuo.index'); 
-        // return view('solicitud.indexResiduo');
-        // return redirect()->route('solicitud.indexResiduo');        
     }
 
     /**
@@ -87,7 +103,17 @@ class SolicitudResiduoController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return $id;
+        $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
+        $Residuos = DB::table('solicitud_residuos')
+            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.SolResRespel')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.SolResSolSer')
+            ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('clientes.*', 'respels.*', 'solicitud_residuos.*')
+            ->get();
+
+        return view('solicitud-resid.edit', compact('SolRes', 'Residuos'));
     }
 
     /**

@@ -60,21 +60,20 @@ Editar Solicitud de servicio
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div class="col-md-6"> 
+                                                    <label for="SGenerRespel">Respel</label>										
+                                                    <select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" required>
+                                                        @foreach ($Respels as $Respel)
+                                                        <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             <div class="col-md-6">
                                                 <label for="GSede">Sede Generador</label>
                                                 <select class="form-control" id="GSede" name="FK_SolSerGenerSede" required>
                                                     <option value="{{$Servicios->FK_SolSerGenerSede}}">Seleccione...</option>
                                                     @foreach ($GSedes as $GSede)
                                                         <option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="Respel">Respel</label>
-                                                <select class="form-control" id="Respel" name="FK_Respel" required>
-                                                <option value="{{$SGenerRes->FK_Respel}}">Seleccione...</option>
-                                                    @foreach ($Respels as $Respel)
-                                                        <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
