@@ -20,11 +20,20 @@
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
+{{-- select 2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
 
+
+{{-- select 2 --}}
+<script>
+  $(document).ready(function() {
+    $('#SGenerRespel').select2();
+  });
+</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -714,7 +723,7 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 8,
+            "targets": 9,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
               return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
