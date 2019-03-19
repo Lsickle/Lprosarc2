@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Quotation;
 
-class CotizacionTableSeeder extends Seeder
+class QuotationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -23,7 +23,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user00';
-        $Respel->FK_RespelSede = '2';
+        $Respel->FK_RespelCoti = '2';
         $Respel->RespelDelete = '0';
         $Respel->save();
 
@@ -38,7 +38,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Negada';
         $Respel->RespelSlug = 'user02';
-        $Respel->FK_RespelSede = '4';
+        $Respel->FK_RespelCoti = '4';
         $Respel->RespelDelete = '0';
         $Respel->save();
 
@@ -53,7 +53,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Pendiente';
         $Respel->RespelSlug = 'user03';
-        $Respel->FK_RespelSede = '3';
+        $Respel->FK_RespelCoti = '3';
         $Respel->RespelDelete = '0';
         $Respel->save();
 
@@ -68,7 +68,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Incompleta';
         $Respel->RespelSlug = 'user04';
-        $Respel->FK_RespelSede = '1';
+        $Respel->FK_RespelCoti = '1';
         $Respel->RespelDelete = '0';
         $Respel->save();
 
@@ -83,7 +83,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user05';
-        $Respel->FK_RespelSede = '5';
+        $Respel->FK_RespelCoti = '5';
         $Respel->RespelDelete = '0';
         $Respel->save();
     }

@@ -14,8 +14,19 @@ class CreateCotizacionsTable extends Migration
     public function up()
     {
         Schema::create('cotizacions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID_Coti');
+            $table->Integer('CotiNumero');
+            $table->datetime('CotiFechaSolicitud');
+            $table->datetime('CotiFechaRespuesta')->nullable();
+            $table->datetime('CotiFechaVencimiento')->nullable();/*en caso de se deba renegociar el precio predeterminado es un año*/
+            $table->boolean('CotiVencida')->nullable(); /*si o no*/
+            $table->string('CotiPrecioTotal')->nullable();
+            $table->string('CotiPrecioSubtotal')->nullable();
+            $table->boolean('CotiDelete');
+            $table->unsignedInteger('FK_CotiSede')->unique();
+            $table->foreign('FK_CotiSede')->references('ID_Sede')->on('sedes');
             $table->timestamps();
+            
         });
     }
 
