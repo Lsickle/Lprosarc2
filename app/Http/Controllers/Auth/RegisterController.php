@@ -88,7 +88,7 @@ class RegisterController extends Controller
             'UsRol2'    => "Usuario",
             'UsRolDesc2'    => "Usuario General",
             'UsAvatar'    => "robot400x400.gif",
-            'FK_PersCargo'    => "1",
+            'FK_UserPers'    => "1",
         ];
         if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];
