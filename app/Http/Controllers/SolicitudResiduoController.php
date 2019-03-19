@@ -38,7 +38,6 @@ class SolicitudResiduoController extends Controller
      */
     public function create()
     {
-        // $Respels = Respel::all();
         $SolRes = DB::table('solicitud_residuos')
             ->join('respels', 'solicitud_residuos.SolResRespel', '=', 'respels.ID_Respel')
             ->join('solicitud_servicios', 'solicitud_residuos.SolResSolSer', '=', 'solicitud_servicios.ID_SolSer')
@@ -52,7 +51,7 @@ class SolicitudResiduoController extends Controller
             ->select('respels.RespelName', 'respels.ID_Respel', 'generadors.GenerName', 'clientes.CliShortname', 'solicitud_servicios.ID_SolSer')
             ->get();
 
-        return view('solicitud-resid.create', compact('Respels', 'SolRes'));
+        return view('solicitud-resid.create', compact('SolRes'));
     }
 
     /**
@@ -71,14 +70,6 @@ class SolicitudResiduoController extends Controller
         $Residuo->SolResRespel = $request->input('SolResRespel');
         $Residuo->SolResSolSer = $request->input('SolResSolSer');
         $Residuo->save();
-
-        $log = new audit();
-        $log->AuditTabla="solicitud_residuos";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Residuo->ID_SolRes;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
         return redirect()->route('solicitud-residuo.index'); 
     }
@@ -128,7 +119,6 @@ class SolicitudResiduoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
         $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
         $SolRes->fill($request->all());
         $SolRes->save();

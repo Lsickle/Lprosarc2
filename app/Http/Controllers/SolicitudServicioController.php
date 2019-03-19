@@ -164,6 +164,7 @@ class SolicitudServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
         $Servicios = SolicitudServicio::where('ID_SolSer', $id)->first();
         $Servicios->fill($request->all());
         $Servicios->SolSerAuditable =$request->input('SolSerAuditable');

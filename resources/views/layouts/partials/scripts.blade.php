@@ -49,6 +49,15 @@
     });
   });
 </script>
+<script>
+  $(document).ready(function() {
+    $('#1').select2({
+      placeholder: "Seleccione el residuo",
+      allowClear: true,
+      width: 'resolve'
+    });
+  });
+</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
