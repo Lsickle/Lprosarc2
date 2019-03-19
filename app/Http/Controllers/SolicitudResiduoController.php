@@ -49,8 +49,6 @@ class SolicitudResiduoController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 
-
-
             ->select('respels.RespelName', 'respels.ID_Respel', 'generadors.GenerName', 'clientes.CliShortname', 'solicitud_servicios.ID_SolSer')
             ->get();
 
@@ -107,7 +105,7 @@ class SolicitudResiduoController extends Controller
         $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
 
         $Respels = Respel::all();
-        
+
         $SolSers = DB::table('solicitud_servicios')
             ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
             ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
@@ -130,6 +128,7 @@ class SolicitudResiduoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
         $SolRes->fill($request->all());
         $SolRes->save();

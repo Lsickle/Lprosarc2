@@ -53,8 +53,9 @@ Editar Solicitud de servicio
 										@csrf
 										<div class="box-body">
                                             <div class="col-md-6"> 
+                                                <input hidden value="{{$SolRes->SolResRespel}}" name="SolResRespel">
                                                 <label for="SolicitudResiduo">Respel</label>										
-                                                <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" value="{{$SolRes->FK_SolResRespel}}" style="width: 100%" required>
+                                                <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control"  style="width: 100%">
                                                     @foreach ($Respels as $Respel)
                                                     <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                     @endforeach
@@ -63,7 +64,7 @@ Editar Solicitud de servicio
                                             <div class="col-md-6"> 
                                                 <label for="soliresidinputext">Solicitud de servicio</label>										
                                                 <select id="soliresidinputext" name="SolResSolSer" class="form-control" required>
-                                                    <option value="{{$SolRes->FK_SolResSolSer}}">Seleccione...</option>
+                                                    <option value="{{$SolRes->SolResSolSer}}">Seleccione...</option>
                                                     @foreach ($SolSers as $SolSer)
                                                     <option value="{{$SolSer->ID_SolSer}}">({{$SolSer->CliShortname}}) y ({{$SolSer->GenerName}})</option>
                                                     @endforeach

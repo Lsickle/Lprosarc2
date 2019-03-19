@@ -34,8 +34,8 @@
   $(document).ready(function() {
     $('#SGenerRespel').select2({
       placeholder: "Seleccione el residuo",
-    allowClear: true,
-    width: 'resolve'
+     allowClear: true,
+     width: 'resolve'
     });
     
   });
@@ -44,8 +44,8 @@
   $(document).ready(function() {
     $('#SolicitudResiduo').select2({
       placeholder: "Seleccione el residuo",
-    allowClear: true,
-    width: 'resolve'
+      allowClear: true,
+      width: 'resolve'
     });
   });
 </script>
