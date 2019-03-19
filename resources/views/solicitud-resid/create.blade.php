@@ -31,41 +31,49 @@ Solicitudes de residuos
 							<form role="form" action="/solicitud-residuo" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
+									<div class="col-md-6"> 
+										<label for="SolicitudResiduo">Respel</label>										
+										<select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" style="width: 100%" required>
+											@foreach ($SolRes as $SolRe)
+											<option value="{{$SolRe->ID_Respel}}">{{$SolRe->RespelName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6"> 
+										<label for="soliresidinputext">Solicitud de servicio</label>										
+										<select id="soliresidinputext" name="SolResSolSer" class="form-control" required>
+											<option value="">Seleccione...</option>
+											@foreach ($SolRes as $SolRe)
+											<option value="{{$SolRe->ID_SolSer}}">({{$SolRe->CliShortname}}) y ({{$SolRe->GenerName}})</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-md-6">
 										<label for="soliresidinputext1">Kg Enviado</label>
-										<input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="enviado" max="99999999">
+										<input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="SolResKgEnviado" max="99999999">
 									</div>
 									<div class="col-md-6">
 										<label for="soliresidinputext2">Kg recibidos</label>
-										<input type="number" class="form-control" id="soliresidinputext2" placeholder="787698" name="resibido" max="99999999">
+										<input type="number" class="form-control" id="soliresidinputext2" placeholder="787698" name="SolResKgRecibido" max="99999999">
 									</div>
 									<div class="col-md-6">
 										<label for="soliresidinputext3">Kg conciliados</label>
-										<input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="conciliado" max="99999999">
+										<input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="SolResKgConciliado" max="99999999">
 									</div>
 									<div class="col-md-6">
 										<label for="soliresidinputext4">Kg Tratado</label>
-										<input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="tratado"  max="99999999">
+										<input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="SolResKgTratado"  max="99999999">
 									</div>
-									{{-- <div class="col-md-6">
-										<label for="soliresidinputext4">Solicitud de servicio</label>
-										<input type="text" class="form-control" id="soliresidinputext4" placeholder="01" name="servicio" value="1">
+								</div>
+								<div class="col-md-8">
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary">Registrar</button>
 									</div>
-									<div class="col-md-6">
-										<label for="soliresidinputext4">Respel</label>
-										<input type="text" class="form-control" id="soliresidinputext4" placeholder="01" name="Respel" value="1">
-									</div> --}}
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>
 							</form>
 						</div>
 						<!-- /.box -->
-					</div>
-					</div>
-					</div>
 					</div>
 					<!-- /.box-body -->
 				</div>

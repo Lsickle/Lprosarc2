@@ -17,8 +17,8 @@ class CreateSolicitudResiduosTable extends Migration
             $table->increments('ID_SolRes');
             $table->Integer('SolResKgEnviado');
             $table->Integer('SolResKgRecibido');
-            $table->Integer('SolResKgConciliado');
-            $table->Integer('SolResKgTratado');
+            $table->Integer('SolResKgConciliado')->nullable();
+            $table->Integer('SolResKgTratado')->nullable();
             $table->unsignedInteger('SolResSolSer');
             $table->unsignedInteger('SolResRespel');
             $table->foreign('SolResSolSer')->references('ID_SolSer')->on('solicitud_servicios');

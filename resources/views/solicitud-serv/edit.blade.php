@@ -39,7 +39,7 @@ Editar Solicitud de servicio
                                                 <input  type="submit" id="Eliminar{{$Servicios->ID_SolSer}}" style="display: none;">
                                             </form>
                                         @else
-                                            <form action='/personal/{{$Servicios->SolSerSlug}}' method='POST' style="float: right;">
+                                            <form action='/solicitud-servicio/{{$Servicios->SolSerSlug}}' method='POST' style="float: right;">
                                             @method('DELETE')
                                             @csrf
                                             <input type="submit" class='btn btn-success btn-block' value="Añadir">
@@ -51,12 +51,21 @@ Editar Solicitud de servicio
 									<form role="form" action="/solicitud-servicio/{{$Servicios->ID_SolSer}}" method="POST" enctype="multipart/form-data">
 										@method('PUT')
 										@csrf
-										<div class="col-md-6">
+										<div class="col-md-12">
                                                 <label for="Sede">Sede</label>
                                                 <select class="form-control" id="Sede" name="Fk_SolSerTransportador" required>
                                                     <option value="{{$Servicios->Fk_SolSerTransportador}}">Seleccione...</option>
                                                     @foreach ($Sedes as $Sede)
                                                         <option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6"> 
+                                                <input hidden value="{{$SGenerRes->FK_Respel}}" name="FK_Respel">
+                                                <label for="SGenerRespel">Respel</label>										
+                                                <select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" style="width: 100%">
+                                                    @foreach ($Respels as $Respel)
+                                                    <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -73,10 +82,10 @@ Editar Solicitud de servicio
                                                 <label for="estado">Estado</label>
                                                 <select class="form-control" id="estado" name="SolSerStatus" required>
                                                     <option value="{{$Servicios->SolSerStatus}}">Seleccione...</option>
-                                                    <option>Aprobada</option>
-                                                    <option>Negada</option>
                                                     <option>Pendiente</option>
                                                     <option>Incompleta</option>
+                                                    <option>Negada</option>
+                                                    <option>Aprobada</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
