@@ -37,21 +37,11 @@
      allowClear: true,
      width: 'resolve'
     });
-    
   });
 </script>
 <script>
   $(document).ready(function() {
     $('#SolicitudResiduo').select2({
-      placeholder: "Seleccione el residuo",
-      allowClear: true,
-      width: 'resolve'
-    });
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $('#1').select2({
       placeholder: "Seleccione el residuo",
       allowClear: true,
       width: 'resolve'
@@ -68,7 +58,6 @@
     });
   });
 </script>
-
 
 <!-- funcion para flitrado de tablas -->
 <script>

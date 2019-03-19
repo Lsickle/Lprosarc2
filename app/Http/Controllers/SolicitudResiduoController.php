@@ -142,6 +142,24 @@ class SolicitudResiduoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $SolRes = SolicitudResiduo::where('ID_SolRes', $id)->first();
+        if ($SolRes->SolResDelete == 0) {
+            $SolRes->SolResDelete = 1;
+        }
+        else{
+            $SolRes->SolResDelete = 0;
+        }
+        $SolRes->save();
+        
+        $log = new audit();
+        $log->AuditTabla="solicitud_residuos";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$SolRes->ID_SolRes;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$SolRes->SolResDelete;
+        $log->save();
+
+        return redirect()->route('solicitud-residuo.index');
+
     }
 }

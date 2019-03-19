@@ -78,7 +78,7 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = '';
+            $tarj = 'default';
         }
         // if(empty($request->hasfile('RespelHojaSeguridad')) and empty($request->hasfile('RespelHojaSeguridad'))){
         //     // echo "Inserte La tarjeta de seguridad o la hoja de seguridad";
