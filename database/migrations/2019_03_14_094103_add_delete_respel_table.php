@@ -26,7 +26,7 @@ class AddDeleteRespelTable extends Migration
     public function down()
     {
         Schema::table('respels', function (Blueprint $table) {
-            $table->boolean('RespelDelete');
+            $table->dropColumn('RespelDelete');
         });
     }
 }

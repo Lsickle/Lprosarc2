@@ -26,7 +26,7 @@ class AddDeleteSolicitudServiciosTable extends Migration
     public function down()
     {
         Schema::table('solicitud_servicios', function (Blueprint $table) {
-            $table->boolean('SolSerDelete');
+            $table->dropColumn('SolSerDelete');
         });
     }
 }

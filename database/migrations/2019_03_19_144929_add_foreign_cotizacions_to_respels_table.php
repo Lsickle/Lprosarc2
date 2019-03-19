@@ -14,8 +14,10 @@ class AddForeignCotizacionsToRespelsTable extends Migration
     public function up()
     {
         Schema::table('respels', function (Blueprint $table) {
+            $table->dropColumn('FK_RespelSede');
             $table->unsignedInteger('FK_RespelCoti')->nullable();
             $table->foreign('FK_RespelCoti')->references('ID_Coti')->on('cotizacions');
+            
         });
     }
 
@@ -28,6 +30,8 @@ class AddForeignCotizacionsToRespelsTable extends Migration
     {
         Schema::table('respels', function (Blueprint $table) {
             $table->dropColumn('FK_RespelCoti');
+            $table->unsignedInteger('FK_RespelSede');
+            $table->foreign('FK_RespelSede')->references('ID_Sede')->on('sedes');
         });
     }
 }
