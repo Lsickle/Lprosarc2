@@ -32,13 +32,13 @@ Editar Solicitud de Residuo
                                 <h3 class="box-title">Editar registro</h3>
                                 @if($SolRes->SolResDelete == 0)
                                     <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolRes->ID_SolRes}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-                                    <form action='/solicitud-residuo/{{$SolRes->ID_SolRes}}' method='POST'>
+                                    <form action='/solicitud-residuo/{{$SolRes->SolResSlug}}' method='POST'>
                                         @method('DELETE')
                                         @csrf
                                         <input type="submit" id="Eliminar{{$SolRes->ID_SolRes}}" style="display: none;">
                                     </form>
                                 @else
-                                    <form action='/solicitud-residuo/{{$SolRes->ID_SolRes}}' method='POST' style="float: right;">
+                                    <form action='/solicitud-residuo/{{$SolRes->SolResSlug}}' method='POST' style="float: right;">
                                     @method('DELETE')
                                     @csrf
                                     <input type="submit" class='btn btn-success btn-block' value="Añadir">
@@ -47,7 +47,7 @@ Editar Solicitud de Residuo
                             </div>
                                 <!-- /.box-header -->
                             <!-- form start -->
-                            <form role="form" action="/solicitud-residuo/{{$SolRes->ID_SolRes}}" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="/solicitud-residuo/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="box-body">

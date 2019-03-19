@@ -20,6 +20,7 @@ Solicitud de Residuos
           <table id="SolicitudresiduoTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
+                  <th>Solicitud de Servicio</th>
                   <th>Cliente</th>
                   <th>Residuo</th>
                   <th>Kilogramos enviado</th>
@@ -45,6 +46,7 @@ Solicitud de Residuos
               </div>
               @foreach ($Residuos as $Residuo)
                 <tr>
+                  <td>{{$Residuo->ID_SolSer}}</td>
                   <td>{{$Residuo->CliShortname}}</td>
                   <td>{{$Residuo->RespelName}}</td>
                   <td>{{$Residuo->SolResKgEnviado}}</td>
@@ -52,7 +54,7 @@ Solicitud de Residuos
                   <td>{{$Residuo->SolResKgConciliado}}</td>
                   <td>{{$Residuo->SolResKgTratado}} Kilogramo</td>
                   <td>{{$Residuo->SolResSolSer}}</td>
-                  <td>{{$Residuo->ID_SolRes}}</td>
+                  <td>{{$Residuo->SolResSlug}}</td>
                 </tr>
                 @endforeach
             {{-- <tfoot>

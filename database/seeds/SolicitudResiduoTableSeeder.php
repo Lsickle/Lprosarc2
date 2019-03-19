@@ -18,8 +18,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgConciliado = '65';
         $Residuo->SolResKgTratado = '345';
         $Residuo->SolResSolSer = '2';
-        $Residuo->SolResRespel = '1';
+        $Residuo->SolResRespel = '3';
         $Residuo->SolResDelete = '0';
+        $Residuo->SolResSlug = 'user01';
         $Residuo->save();
         
         $Residuo = new SolicitudResiduo();
@@ -30,6 +31,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResSolSer = '4';
         $Residuo->SolResRespel = '2';
         $Residuo->SolResDelete = '0';
+        $Residuo->SolResSlug = 'user02';
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -40,6 +42,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResSolSer = '5';
         $Residuo->SolResRespel = '1';
         $Residuo->SolResDelete = '0';
+        $Residuo->SolResSlug = 'user03';
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -50,6 +53,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResSolSer = '1';
         $Residuo->SolResRespel = '4';
         $Residuo->SolResDelete = '0';
+        $Residuo->SolResSlug = 'user04';
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -57,10 +61,10 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '48246';
         $Residuo->SolResKgConciliado = '66827';
         $Residuo->SolResKgTratado = '6354';
-        $Residuo->SolResSolSer = '2';
+        $Residuo->SolResSolSer = '3';
         $Residuo->SolResRespel = '5';
         $Residuo->SolResDelete = '0';
+        $Residuo->SolResSlug = 'user05';
         $Residuo->save();
-
     }
 }

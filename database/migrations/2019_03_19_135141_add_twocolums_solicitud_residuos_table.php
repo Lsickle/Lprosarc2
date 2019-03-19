@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDeleteSolicitudResiduosTable extends Migration
+class AddTwocolumsSolicitudResiduosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class AddDeleteSolicitudResiduosTable extends Migration
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
             $table->boolean('SolResDelete');
+            $table->string('SolResSlug')->unique();
         });
     }
 
@@ -27,6 +28,7 @@ class AddDeleteSolicitudResiduosTable extends Migration
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
             $table->boolean('SolResDelete');
+            $table->string('SolResSlug')->unique();
         });
     }
 }

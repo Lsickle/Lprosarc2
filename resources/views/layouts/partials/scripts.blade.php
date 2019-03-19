@@ -709,13 +709,13 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 6,
+            "targets": 7,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu0/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+                return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 7,
-            "data": "ID_SolRes",
+            "targets": 8,
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
             }

@@ -43,8 +43,8 @@ Solicitudes de residuos
 										<label for="soliresidinputext">Solicitud de servicio</label>										
 										<select id="soliresidinputext" name="SolResSolSer" class="form-control" required>
 											<option value="">Seleccione...</option>
-											@foreach ($SolRes as $SolRe)
-											<option value="{{$SolRe->ID_SolSer}}">({{$SolRe->CliShortname}}) y ({{$SolRe->GenerName}})</option>
+											@foreach ($SolSers as $SolSer)
+											<option value="{{$SolSer->ID_SolSer}}">{{$SolSer->ID_SolSer}}</option>
 											@endforeach
 										</select>
 									</div>
