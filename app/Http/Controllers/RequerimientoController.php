@@ -56,7 +56,9 @@ class RequerimientoController extends Controller
      */
     public function show($id)
     {
-        //
+        $Requerimientos = Requerimiento::where('ReqSlug', $id)->first();
+
+        return view('requerimientos.show', compact('Requerimientos'));
     }
 
     /**

@@ -120,7 +120,7 @@ class RespelController extends Controller
         $Requerimiento->ReqMasPerson = NULL;
         $Requerimiento->ReqPlatform = NULL;
         $Requerimiento->ReqCertiEspecial = NULL;
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('Ymd');
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('YmdHis');
         $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
         $Requerimiento->save();
 
