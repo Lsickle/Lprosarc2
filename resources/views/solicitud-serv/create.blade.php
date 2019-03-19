@@ -28,18 +28,26 @@ Solicitudes de servicios
 							<!-- form start -->
 							<form role="form" action="/solicitud-servicio" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="col-md-6">
-										<label for="Tipo">Sede</label>
-										<select class="form-control" id="Tipo" name="Fk_SolSerTransportador" required>
+								<div class="col-md-12">
+										<label for="Sede">Sede</label>
+										<select class="form-control" id="Sede" name="Fk_SolSerTransportador" required>
 											<option value="">Seleccione...</option>
 											@foreach ($Sedes as $Sede)
 												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
 											@endforeach
 										</select>
 									</div>
+									<div class="col-md-6"> 
+										<label for="SGenerRespel">Respel</label>										
+										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" style="width: 100%" required>
+											@foreach ($Respels as $Respel)
+											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-md-6">
-										<label for="Tipo">Sede Generador</label>
-										<select class="form-control" id="Tipo" name="FK_SolSerGenerSede" required>
+										<label for="SGener">Sede Generador</label>
+										<select class="form-control" id="SGener" name="FK_SolSerGenerSede" required>
 											<option value="">Seleccione...</option>
 											@foreach ($GSedes as $GSede)
 												<option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
@@ -49,10 +57,9 @@ Solicitudes de servicios
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
 										<select class="form-control" id="estado" name="SolSerStatus" required="true">
-											<option value="">Seleccione...</option>
+											<option>Pendiente</option>
 											<option>Aprobada</option>
 											<option>Negada</option>
-											<option>Pendiente</option>
 											<option>Incompleta</option>
 										</select>
 									</div>
@@ -65,8 +72,6 @@ Solicitudes de servicios
 											<option>Externo</option>
 										</select>
 									</div>
-									
-									
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
 										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="SolSerFrecuencia">

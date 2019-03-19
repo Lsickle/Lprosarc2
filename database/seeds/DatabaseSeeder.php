@@ -63,5 +63,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RespelTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
+        $this->call(SGeneradorResiduoTableSeeder::class);
     }
 }
