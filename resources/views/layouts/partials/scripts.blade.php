@@ -867,7 +867,7 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 5,
+            "targets": 6,
             "data": "ReqSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='/requerimientos/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},

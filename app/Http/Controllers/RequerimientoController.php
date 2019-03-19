@@ -21,7 +21,7 @@ class RequerimientoController extends Controller
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
             ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('requerimientos.*', 'clientes.CliName')
+            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName')
             ->get();
 
         return view('requerimientos.index', compact('Requerimientos'));

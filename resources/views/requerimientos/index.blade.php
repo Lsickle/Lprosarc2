@@ -18,12 +18,13 @@
             <table id="RequerimientosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Requerimientos de</th>
+                  <th>Cliente</th>
+                  <th>Nombre del Residuo</th>
                   <th>Auditable</th>
                   <th>Tipo de Auditoria</th>
                   <th>Creado</th>
                   <th>Actualizado</th>
-                  <th>Ver Requerimientos</th>
+                  <th>Requerimiento</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -42,6 +43,8 @@
                 @foreach($Requerimientos as $Requerimiento)
                 <tr>
                   <td>{{$Requerimiento->CliName}}</td>
+                  <td>{{$Requerimiento->RespelName}}</td>
+
                   @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
                       <td>Si</td>
                   @else
