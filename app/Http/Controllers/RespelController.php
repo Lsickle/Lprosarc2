@@ -63,14 +63,10 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
-        if ($request->hasfile('RespelHojaSeguridad')) {
-            $file = $request->file('RespelHojaSeguridad');
-            $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/img/', $name);
-        }
-        else{
-            $name = '';
-        }
+        $file = $request->file('RespelHojaSeguridad');
+        $name = time().$file->getClientOriginalName();
+        $file->move(public_path().'/img/', $name);
+        
 
         if ($request->hasfile('RespelTarj')) {
             $file = $request->file('RespelTarj');
@@ -78,17 +74,8 @@ class RespelController extends Controller
             $file->move(public_path().'/img/', $tarj);
         }
         else{
-            $tarj = '';
+            $tarj = 'default.png';
         }
-        // if(empty($request->hasfile('RespelHojaSeguridad')) and empty($request->hasfile('RespelHojaSeguridad'))){
-        //     // echo "Inserte La tarjeta de seguridad o la hoja de seguridad";
-        //     "<script>
-        //         alert('Inserte La tarjeta de seguridad o la hoja de seguridad');
-        //     </script>";
-            
-        //     return redirect()->route('respels.create');
-        //     exit;
-        // }
 
         $respel = new Respel();
         $respel->RespelName = $request->input('RespelName');
@@ -102,7 +89,7 @@ class RespelController extends Controller
         $respel->RespelHojaSeguridad = $name;
         $respel->RespelTarj = $tarj;
         $respel->FK_RespelSede = $request->input('FK_RespelSede');
-        $respel->RespelSlug = "slug".$request->input('RespelName').date('Ymd');
+        $respel->RespelSlug = "slug".$request->input('RespelName').date('YmdHis');
         $respel->RespelDelete = 0;
         $respel->save();
 
@@ -133,7 +120,7 @@ class RespelController extends Controller
         $Requerimiento->ReqMasPerson = NULL;
         $Requerimiento->ReqPlatform = NULL;
         $Requerimiento->ReqCertiEspecial = NULL;
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('Ymd');
+        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('YmdHis');
         $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
         $Requerimiento->save();
 

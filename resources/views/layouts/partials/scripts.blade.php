@@ -37,21 +37,11 @@
      allowClear: true,
      width: 'resolve'
     });
-    
   });
 </script>
 <script>
   $(document).ready(function() {
     $('#SolicitudResiduo').select2({
-      placeholder: "Seleccione el residuo",
-      allowClear: true,
-      width: 'resolve'
-    });
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $('#1').select2({
       placeholder: "Seleccione el residuo",
       allowClear: true,
       width: 'resolve'
@@ -68,7 +58,6 @@
     });
   });
 </script>
-
 
 <!-- funcion para flitrado de tablas -->
 <script>
@@ -720,13 +709,13 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 6,
+            "targets": 7,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu0/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+                return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 7,
-            "data": "ID_SolRes",
+            "targets": 8,
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
             }
@@ -878,15 +867,16 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 5,
-            "data": "FK_RecSol",
-            "render": function ( data, type, row, meta ) {
-                return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          {"targets": 6,
+            "targets": 6,
             "data": "ReqSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
-          }]
+                return "<a href='/requerimientos/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          // {"targets": 6,
+          //   "data": "ReqSlug",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
+          // }
+          ]
         });
       });
     </script>

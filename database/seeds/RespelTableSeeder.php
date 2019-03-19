@@ -19,8 +19,8 @@ class RespelTableSeeder extends Seeder
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Infamable';
         $Respel->RespelEstado = 'Solido';
-        $Respel->RespelHojaSeguridad = 'Si';
-        $Respel->RespelTarj = 'Si';
+        $Respel->RespelHojaSeguridad = 'LogoProsarc.png';
+        $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user00';
         $Respel->FK_RespelSede = '2';
@@ -34,8 +34,8 @@ class RespelTableSeeder extends Seeder
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Toxico';
         $Respel->RespelEstado = 'Liquido';
-        $Respel->RespelHojaSeguridad = 'Si';
-        $Respel->RespelTarj = 'No';
+        $Respel->RespelHojaSeguridad = 'LogoProsarc.png';
+        $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Negada';
         $Respel->RespelSlug = 'user02';
         $Respel->FK_RespelSede = '4';
@@ -49,8 +49,8 @@ class RespelTableSeeder extends Seeder
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Electrico';
         $Respel->RespelEstado = 'Solido';
-        $Respel->RespelHojaSeguridad = 'No';
-        $Respel->RespelTarj = 'No';
+        $Respel->RespelHojaSeguridad = 'LogoProsarc.png';
+        $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Pendiente';
         $Respel->RespelSlug = 'user03';
         $Respel->FK_RespelSede = '3';
@@ -64,8 +64,8 @@ class RespelTableSeeder extends Seeder
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'N\A';
         $Respel->RespelEstado = 'Solido';
-        $Respel->RespelHojaSeguridad = 'No';
-        $Respel->RespelTarj = 'Si';
+        $Respel->RespelHojaSeguridad = 'LogoProsarc.png';
+        $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Incompleta';
         $Respel->RespelSlug = 'user04';
         $Respel->FK_RespelSede = '1';
@@ -79,8 +79,8 @@ class RespelTableSeeder extends Seeder
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Muy Toxico';
         $Respel->RespelEstado = 'Gaseoso';
-        $Respel->RespelHojaSeguridad = 'Si';
-        $Respel->RespelTarj = 'Si';
+        $Respel->RespelHojaSeguridad = 'LogoProsarc.png';
+        $Respel->RespelTarj = 'default.png';
         $Respel->RespelStatus = 'Aprobada';
         $Respel->RespelSlug = 'user05';
         $Respel->FK_RespelSede = '5';
