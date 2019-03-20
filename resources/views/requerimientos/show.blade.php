@@ -276,7 +276,7 @@ Requerimientos
 								</div>
 								<div class="col-md-4">
 									<label>
-										<input type="text" maxlength="64" class="" name="ReqDevolucionTipo" value="{{$Requerimientos->ReqDevolucionTipo}}" disabled> tipo de elementos
+										<input type="text" maxlength="64" class="" name="ReqDevolucionTipo" value="{{$Requerimientos->ReqDevolucionTipo}}" disabled> Tipo de elementos
 									</label>
 								</div>
 							</div>

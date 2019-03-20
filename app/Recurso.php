@@ -8,7 +8,7 @@ class Recurso extends Model
 {
     protected $table = 'recursos';
 
-    protected $fillable = ['RecName', 'RecCarte', 'RecTipo','RecRmSrc', 'RecSrc', 'RecFormat'];
+    protected $fillable = ['RecName', 'RecCarte', 'RecTipo','RecRmSrc', 'RecSrc', 'RecFormat', 'FK_RecSol'];
 
     public $primaryKey = 'ID_Rec';
 

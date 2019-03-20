@@ -709,12 +709,12 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 7,
+            "targets": 8,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 8,
+            "targets": 9,
             "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
@@ -849,11 +849,20 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
+          // "columnDefs": [ {
+          //   "targets": 5,
+          //   "data": "RecSrc",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
           "columnDefs": [ {
-            "targets": 5,
-            "data": "FK_RecSol",
+            "targets": 6,
+            "data": "ID_Rec",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
+                return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          {"targets": 7,
+            "data": "ID_Rec",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
