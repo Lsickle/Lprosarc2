@@ -21,9 +21,7 @@ class CreateRecursosTable extends Migration
             /*$table->string('RecRmSrc',64);*/
             $table->string('RecSrc',255);
             $table->string('RecFormat',32);
-            $table->unsignedInteger('FK_RecSol');
             $table->timestamps();
-            $table->foreign('FK_RecSol')->references('ID_SolSer')->on('solicitud_servicios');
         });
     }
 

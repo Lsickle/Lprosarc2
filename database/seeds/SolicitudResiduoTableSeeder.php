@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use Illuminate\Database\Seeder;
 use App\SolicitudResiduo;
@@ -17,8 +17,8 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '45';
         $Residuo->SolResKgConciliado = '65';
         $Residuo->SolResKgTratado = '345';
-        $Residuo->SolResSolSer = '2';
-        $Residuo->SolResRespel = '3';
+        $Residuo->FK_SolResSolSer = '2';
+        $Residuo->FK_SolResRespel = '3';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user01';
         $Residuo->save();
@@ -28,8 +28,8 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '362237';
         $Residuo->SolResKgConciliado = '461278';
         $Residuo->SolResKgTratado = '32567';
-        $Residuo->SolResSolSer = '4';
-        $Residuo->SolResRespel = '2';
+        $Residuo->FK_SolResSolSer = '4';
+        $Residuo->FK_SolResRespel = '2';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user02';
         $Residuo->save();
@@ -39,8 +39,8 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '1892';
         $Residuo->SolResKgConciliado = '1362';
         $Residuo->SolResKgTratado = '6732';
-        $Residuo->SolResSolSer = '5';
-        $Residuo->SolResRespel = '1';
+        $Residuo->FK_SolResSolSer = '5';
+        $Residuo->FK_SolResRespel = '1';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user03';
         $Residuo->save();
@@ -50,8 +50,8 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '86127';
         $Residuo->SolResKgConciliado = '7814';
         $Residuo->SolResKgTratado = '6712';
-        $Residuo->SolResSolSer = '1';
-        $Residuo->SolResRespel = '4';
+        $Residuo->FK_SolResSolSer = '1';
+        $Residuo->FK_SolResRespel = '4';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user04';
         $Residuo->save();
@@ -61,8 +61,8 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResKgRecibido = '48246';
         $Residuo->SolResKgConciliado = '66827';
         $Residuo->SolResKgTratado = '6354';
-        $Residuo->SolResSolSer = '3';
-        $Residuo->SolResRespel = '5';
+        $Residuo->FK_SolResSolSer = '3';
+        $Residuo->FK_SolResRespel = '5';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user05';
         $Residuo->save();

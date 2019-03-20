@@ -20,11 +20,7 @@ class CreateVehiculoTable extends Migration
             $table->string('VehicTipo',64);
             $table->string('VehicCapacidad',64);
             $table->integer('VehicKmActual');
-            $table->boolean('VehicInternExtern');
-            $table->unsignedInteger('FK_VehiSede');
-
-            $table->foreign('FK_VehiSede')->references('ID_Sede')->on('sedes');
-            
+            $table->boolean('VehicInternExtern');            
         });
     }
 
@@ -35,6 +31,6 @@ class CreateVehiculoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehiculo');
+        Schema::dropIfExists('vehiculos');
     }
 }

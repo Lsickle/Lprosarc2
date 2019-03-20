@@ -27,7 +27,8 @@ class AddForeignKeyPersonalToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('FK_UserPers');
+            $table->dropForeign(['FK_UserPers']);
+            $table->dropColumn('FK_UserPers');
         });
     }
 }

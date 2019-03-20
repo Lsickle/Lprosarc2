@@ -29,6 +29,6 @@ class CreateResiduosGenerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('residuos_gener');
+        Schema::dropIfExists('residuos_geners');
     }
 }

@@ -24,12 +24,7 @@ class CreateOrderComprasTable extends Migration
             $table->boolean('OrdenPagada');
             $table->integer('OrdenTotal');
             $table->boolean('OrdenAutor');
-            $table->unsignedInteger('FK_OrdenCreateBy');
-            $table->unsignedInteger('FK_OrdenProg');
-            
-            $table->foreign('FK_OrdenProg')->references('ID_ProgVeh')->on('ProgVehiculos');
-            $table->foreign('FK_OrdenCreateBy')->references('id')->on('Users');
-            
+                        
         });
     }
 
@@ -40,6 +35,6 @@ class CreateOrderComprasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_compras');
+        Schema::dropIfExists('OrdenCompras');
     }
 }
