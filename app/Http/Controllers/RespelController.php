@@ -10,6 +10,7 @@ use App\Respel;
 use App\Sede;
 use App\User;
 use App\Requerimiento;
+use App\Cotizacion;
 
 class RespelController extends Controller
 {
@@ -22,19 +23,23 @@ class RespelController extends Controller
 
     if(Auth::user()->UsRol === "Programador"){
         $Respels = DB::table('respels')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
         ->select('respels.*', 'clientes.CliName')
         ->get();
 
         return view('respels.index', compact('Respels'));
-    }
-    $Respels = DB::table('respels')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+    }else{
+        $Respels = DB::table('respels')
+        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
         ->select('respels.*', 'clientes.CliName')
         ->where('respels.RespelDelete',0)
-        ->get();
+        ->get();   
+    }
+    
     
         return view('respels.index', compact('Respels')); 
 }
@@ -46,11 +51,14 @@ class RespelController extends Controller
     public function create()
     {
         // $Usuario -= Auth::user()->id;
-        $Sedes = DB::table('sedes')
-            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('sedes.*', 'clientes.*')
+            $Sedes = DB::table('cotizacions')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
             // ->where('clientes.ID_Cli', 1) 
             ->get();
+
+            // return $Sedes;
 
         return view('respels.create', compact('Sedes'));
     }
@@ -90,7 +98,7 @@ class RespelController extends Controller
         $respel->RespelEstado = $request->input('RespelEstado');
         $respel->RespelHojaSeguridad = $name;
         $respel->RespelTarj = $tarj;
-        $respel->FK_RespelSede = $request->input('FK_RespelSede');
+        $respel->FK_RespelCoti = $request->input('FK_RespelCoti');
         $respel->RespelSlug = "slug".$request->input('RespelName').date('YmdHis');
         $respel->RespelDelete = 0;
         $respel->save();
@@ -139,7 +147,8 @@ class RespelController extends Controller
     {
         // return $id;
         $Respels = DB::table('respels')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
         ->select('respels.*', 'clientes.*', 'sedes.*')
         ->where('respels.RespelSlug', '=', $id)
@@ -161,7 +170,12 @@ class RespelController extends Controller
         
         $Requerimientos = Requerimiento::where('FK_ReqRespel',$Respels->ID_Respel)->first();   
         
-        $Sedes = Sede::all();
+        $Sedes = DB::table('cotizacions')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
+            // ->where('clientes.ID_Cli', 1) 
+            ->get();
 
         return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos'));
     }
