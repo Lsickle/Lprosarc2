@@ -26,7 +26,7 @@
 							<!-- form start -->
 							<form role="form" action="/recurso" method="POST" enctype="multipart/form-data">
 								@csrf
-								
+								{{csrf_field()}}
                                 {{-- <div class="col-md-12">
                                     <label for="SolRes">Declaracion</label>
                                     <select class="form-control" id="SolRes" name="FK_RecSol" required>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="soliservicioinputext3">Ruta de guardado</label>
-                                    <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc" accept=".jpg, .jpeg, .png" multiple required>
+                                    <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple required>
                                 </div>
                                 {{-- <div class="col-md-12">
                                     <label for="soliservicioinputext4">Formato</label>

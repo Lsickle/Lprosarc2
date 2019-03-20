@@ -53,16 +53,42 @@ class RecursoController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        $file = $request->file('RecSrc');
+        // return $request->all();
+        if ($request->hasfile('RecSrc')) {
+
+        foreach($request->RecSrc as $file){ 
+        
         $name = time().$file->getClientOriginalName();
+        
+        return print_r($name. "<br>");
+        // $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
+        // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
+        }
+    }
 
-        // $ext = new SplFileInfo($file);
-        $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
-        $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
 
-        // $extension = pathinfo(getFilename($file), PATHINFO_EXTENSION);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $file = $request->file('RecSrc');
+        // $name = time().$file->getClientOriginalName();
+        
+        // $Global= $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
+        // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
+        // }
         $Recurso = new Recurso();
         $Recurso->RecName = $request->input("RecName");
         $Recurso->RecTipo = $request->input("RecTipo");

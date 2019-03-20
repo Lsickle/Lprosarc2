@@ -52,7 +52,7 @@
                                         <label for="tipo">Pesaje</label>
                                     </div>
                                     <div class="col-md-2">
-                                        {{-- @foreach ($Recursos as $Recurso) --}}
+                                    {{-- @foreach ($Recursos as $Recurso) --}}
                                     <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
                                     {{-- @endforeach --}}                                    
                                     </div>
@@ -62,7 +62,7 @@
                                         <label for="tipo">Reempacado</label>
                                     </div>
                                     <div class="col-md-2">
-                                        {{-- @foreach ($Recursos as $Recurso) --}}
+                                    {{-- @foreach ($Recursos as $Recurso) --}}
                                     <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
                                     {{-- @endforeach --}}                                    
                                     </div>
