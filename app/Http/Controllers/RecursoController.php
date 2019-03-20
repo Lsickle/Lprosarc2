@@ -60,12 +60,22 @@ class RecursoController extends Controller
         
         $name = time().$file->getClientOriginalName();
         
-        return print_r($name. "<br>");
-        // $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
-        // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
+        // print_r($name. "<br>");
+        $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
+        $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
+
+        $Recurso = new Recurso();
+
+        $Recurso->RecName = $request->input("RecName");
+        $Recurso->RecTipo = $request->input("RecTipo");
+        $Recurso->RecCarte = $request->input("RecCarte");
+        $Recurso->RecSrc = $Src;
+        $Recurso->RecFormat = '.jpg';
+        $Recurso->FK_RecSol = $request->input("FK_RecSol");
+        // $Recurso->FK_RecSolRes = $request->input("SolRes");
+        $Recurso->save();
         }
     }
-
 
 
 
@@ -89,15 +99,7 @@ class RecursoController extends Controller
         // $Global= $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
         // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
         // }
-        $Recurso = new Recurso();
-        $Recurso->RecName = $request->input("RecName");
-        $Recurso->RecTipo = $request->input("RecTipo");
-        $Recurso->RecCarte = $request->input("RecCarte");
-        $Recurso->RecSrc = $Src;
-        $Recurso->RecFormat = '.jpg';
-        $Recurso->FK_RecSol = $request->input("FK_RecSol");
-        // $Recurso->FK_RecSolRes = $request->input("SolRes");
-        $Recurso->save();
+        
 
         return redirect()->route('recurso.index');
     }
@@ -110,9 +112,18 @@ class RecursoController extends Controller
      */
     public function show($id)
     {
-        $Recursos = Recurso::where('ID_Rec', $id)->first();
+        // return $id;
+        // $Recursos = Recurso::where('FK_RecSol', 2)->first();
+        // $Recursos = Recurso::all();
+        // $SolSer = SolicitudServicio::where('FK_RecSol', $id)->first();
 
-        return view('recursos.show', compact('Recursos'));
+        $Recursos = DB::table('recursos')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'recursos.FK_RecSol')
+            ->select('recursos.*')
+            ->where('FK_RecSol', 2)
+            ->get();
+        // return $Recursos;
+        return view('recursos.show', compact('Recursos', 'SolSer'));
     }
 
     /**

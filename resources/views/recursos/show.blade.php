@@ -31,20 +31,20 @@
                                     <div class="col-md-12">
                                         <label for="tipo">Cargue</label>
                                     </div>
-                                    {{-- @foreach ($Recursos as $Recurso) --}}
+                                    @foreach ($Recursos as $Recurso)
                                     <div class="col-md-2">
-                                        <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                        <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
                                     </div>
-                                    {{-- @endforeach --}}
+                                    @endforeach
                                 </div>
                                 <div class="box-body">
                                     <div class="col-md-12">
                                         <label for="tipo">Descargue</label>
                                     </div>
                                     <div class="col-md-2">
-                                        {{-- @foreach ($Recursos as $Recurso) --}}
-                                    <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    {{-- @endforeach --}}                                    
+                                        @foreach ($Recursos as $Recurso)
+                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                    @endforeach                                    
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -52,9 +52,9 @@
                                         <label for="tipo">Pesaje</label>
                                     </div>
                                     <div class="col-md-2">
-                                    {{-- @foreach ($Recursos as $Recurso) --}}
-                                    <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    {{-- @endforeach --}}                                    
+                                    @foreach ($Recursos as $Recurso)
+                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                    @endforeach                                    
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -62,9 +62,9 @@
                                         <label for="tipo">Reempacado</label>
                                     </div>
                                     <div class="col-md-2">
-                                    {{-- @foreach ($Recursos as $Recurso) --}}
-                                    <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    {{-- @endforeach --}}                                    
+                                    @foreach ($Recursos as $Recurso)
+                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                    @endforeach                                    
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -72,9 +72,9 @@
                                         <label for="tipo">Mezclado</label>
                                     </div>
                                     <div class="col-md-2">
-                                        {{-- @foreach ($Recursos as $Recurso) --}}
-                                    <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    {{-- @endforeach --}}                                    
+                                        @foreach ($Recursos as $Recurso)
+                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                    @endforeach                                    
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -82,9 +82,9 @@
                                         <label for="tipo">Destruccion</label>
                                     </div>
                                     <div class="col-md-2">
-                                        {{-- @foreach ($Recursos as $Recurso) --}}
-                                    <img src="../../../{{$Recursos->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    {{-- @endforeach --}}                                    
+                                        @foreach ($Recursos as $Recurso)
+                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
+                                    @endforeach                                    
                                     </div>
                                 </div>
                                 
