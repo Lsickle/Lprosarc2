@@ -12,7 +12,7 @@ class CotizacionsTableSeder extends Seeder
      */
     public function run()
     {
-        $cotizacion = new Quotation();
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "001";
         $cotizacion->CotiFechaSolicitud = "2018-02-20 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2018-02-20 07:00:00";
@@ -24,7 +24,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiDelete = '0';
         $cotizacion->save();
 
-        $cotizacion = new Quotation();
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "002";
         $cotizacion->CotiFechaSolicitud = "2018-10-20 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2018-10-20 07:00:00";
@@ -36,7 +36,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiDelete = '0';
         $cotizacion->save();
 
-        $cotizacion = new Quotation();
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "003";
         $cotizacion->CotiFechaSolicitud = "2018-05-20 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2018-06-10 07:00:00";
@@ -48,7 +48,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiDelete = '0';
         $cotizacion->save();
 
-        $cotizacion = new Quotation();
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "004";
         $cotizacion->CotiFechaSolicitud = "2019-01-22 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2019-02-22 07:00:00";
@@ -60,7 +60,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiDelete = '0';
         $cotizacion->save();
 
-        $cotizacion = new Quotation();
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "005";
         $cotizacion->CotiFechaSolicitud = "2019-02-20 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2019-02-21 07:00:00";

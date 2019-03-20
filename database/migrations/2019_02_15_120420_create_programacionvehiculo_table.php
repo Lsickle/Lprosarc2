@@ -23,12 +23,8 @@ class CreateProgramacionvehiculoTable extends Migration
             $table->dateTime('ProgVehEntrada');
             $table->dateTime('ProgVehSalida');
             $table->unsignedInteger('FK_ProgVehiculo');
-            $table->unsignedInteger('FK_ProgConductor');
-            $table->unsignedInteger('FK_ProgAyudante');
             $table->unsignedInteger('FK_ProgMan');
             $table->foreign('FK_ProgVehiculo')->references('ID_Vehic')->on('vehiculos');
-            $table->foreign('FK_ProgConductor')->references('ID_Pers')->on('personals');
-            $table->foreign('FK_ProgAyudante')->references('ID_Pers')->on('personals');
             $table->foreign('FK_ProgMan')->references('ID_Mv')->on('MantenVehics');
         });
     }
@@ -40,6 +36,6 @@ class CreateProgramacionvehiculoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('programacionvehiculo');
+        Schema::dropIfExists('ProgVehiculos');
     }
 }

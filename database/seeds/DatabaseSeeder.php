@@ -61,9 +61,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SubCategoriaActivoTableSeeder::class);
         $this->call(ActivoTableSeeder::class);
         $this->call(SolicitudServicioTableSeeder::class);
+        $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
+
     }
 }

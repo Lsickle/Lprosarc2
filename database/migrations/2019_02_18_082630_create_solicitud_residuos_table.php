@@ -19,10 +19,6 @@ class CreateSolicitudResiduosTable extends Migration
             $table->Integer('SolResKgRecibido');
             $table->Integer('SolResKgConciliado')->nullable();
             $table->Integer('SolResKgTratado')->nullable();
-            $table->unsignedInteger('SolResSolSer');
-            $table->unsignedInteger('SolResRespel');
-            $table->foreign('SolResSolSer')->references('ID_SolSer')->on('solicitud_servicios');
-            $table->foreign('SolResRespel')->references('ID_Respel')->on('respels');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ class CreateSolicitudResiduosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('res_envios');
+        Schema::dropIfExists('solicitud_residuos');
     }
 }
