@@ -52,9 +52,9 @@ Editar Solicitud de Residuo
                                 @csrf
                                 <div class="box-body">
                                     <div class="col-md-6"> 
-                                        <input hidden value="{{$SolRes->SolResRespel}}" name="SolResRespel">
+                                        <input hidden value="{{$SolRes->FK_SolResRespel}}" name="FK_SolResRespel">
                                         <label for="SolicitudResiduo">Respel</label>										
-                                        <select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control"  style="width: 100%">
+                                        <select id="SolicitudResiduo" multiple="multiple" name="FK_SolResRespel" class="form-control"  style="width: 100%">
                                             @foreach ($Respels as $Respel)
                                             <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
                                             @endforeach
@@ -62,8 +62,8 @@ Editar Solicitud de Residuo
                                     </div>
                                     <div class="col-md-6"> 
                                         <label for="soliresidinputext">Solicitud de servicio</label>										
-                                        <select id="soliresidinputext" name="SolResSolSer" class="form-control" required>
-                                            <option value="{{$SolRes->SolResSolSer}}">Seleccione...</option>
+                                        <select id="soliresidinputext" name="FK_SolResSolSer" class="form-control" required>
+                                            <option value="{{$SolRes->FK_SolResSolSer}}">Seleccione...</option>
                                             @foreach ($SolSers as $SolSer)
                                             <option value="{{$SolSer->ID_SolSer}}">({{$SolSer->CliShortname}}) y ({{$SolSer->GenerName}})</option>
                                             @endforeach

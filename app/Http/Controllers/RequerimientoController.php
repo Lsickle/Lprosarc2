@@ -19,7 +19,8 @@ class RequerimientoController extends Controller
     public function index(){
         $Requerimientos = DB::table('requerimientos')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName')
             ->get();

@@ -21,8 +21,8 @@ class SolicitudResiduoController extends Controller
     public function index()
     {
         $Residuos = DB::table('solicitud_residuos')
-            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.SolResRespel')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.SolResSolSer')
+            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.FK_SolResRespel')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
             ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*', 'solicitud_servicios.ID_SolSer')
@@ -39,7 +39,7 @@ class SolicitudResiduoController extends Controller
     public function create()
     {
         $SolRes = DB::table('solicitud_residuos')
-            ->join('respels', 'solicitud_residuos.SolResRespel', '=', 'respels.ID_Respel')
+            ->join('respels', 'solicitud_residuos.FK_SolResRespel', '=', 'respels.ID_Respel')
             ->select('respels.RespelName', 'respels.ID_Respel')
             ->get();
         $SolSers = SolicitudServicio::all();
@@ -59,8 +59,8 @@ class SolicitudResiduoController extends Controller
         $Residuo->SolResKgRecibido = $request->input('SolResKgRecibido');
         $Residuo->SolResKgConciliado = $request->input('SolResKgConciliado');
         $Residuo->SolResKgTratado = $request->input('SolResKgTratado');
-        $Residuo->SolResRespel = $request->input('SolResRespel');
-        $Residuo->SolResSolSer = $request->input('SolResSolSer');
+        $Residuo->FK_SolResRespel = $request->input('FK_SolResRespel');
+        $Residuo->FK_SolResSolSer = $request->input('FK_SolResSolSer');
         $Residuo->SolResSlug = 'Slug'.date('YmdHis');
         $Residuo->SolResDelete = 0;
         $Residuo->save();

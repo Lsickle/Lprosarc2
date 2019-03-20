@@ -53,7 +53,7 @@ Solicitud de Residuos
                   <td>{{$Residuo->SolResKgRecibido}}</td>
                   <td>{{$Residuo->SolResKgConciliado}}</td>
                   <td>{{$Residuo->SolResKgTratado}} Kilogramo</td>
-                  <td>{{$Residuo->SolResSolSer}}</td>
+                  <td>{{$Residuo->FK_SolResSolSer}}</td>
                   <td>{{$Residuo->SolResSlug}}</td>
                 </tr>
                 @endforeach
