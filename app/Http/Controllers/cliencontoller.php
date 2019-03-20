@@ -53,6 +53,7 @@ class clientcontoller extends Controller
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
         $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
+        $Cliente->CliDelete = '0';
         $Cliente->save();
 
         $log = new audit();

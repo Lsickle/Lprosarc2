@@ -18,6 +18,9 @@
 
     {{-- plugins de datatables --}}
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
+
+    {{-- selec2 --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 

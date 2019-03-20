@@ -50,15 +50,15 @@
 <div class="form-group">
 	<label>Propietario</label>
 	
-	<select name="FK_UserPers" class="form-control" placeholder="Persona a la cual esta asignado el Usuario">
+	<select id="selectconfiltro"  name="FK_UserPers" class="form-control" placeholder="Persona a la cual esta asignado el Usuario">
 		<option>Sin persona asignada</option>
 		@foreach($personas as $persona)
-			<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName}} {{$persona->PersLastName}} {{$persona->PersDocType}} {{$persona->PersDocNumber}}</option>
+			<option value="{{$persona->ID_Pers}}">{{$persona->PersDocNumber}} {{$persona->PersDocType}} {{$persona->PersFirstName}} {{$persona->PersLastName}}</option>
 		@endforeach
 	</select>
 </div>
 
 <div class="form-group">
 	<label>Avatar</label>
-	<input name="UsAvatar" value="{{$user->UsAvatar}}" type="file" class="form-control">
+	<input name="UsAvatar" value="{{$user->UsAvatar}}" type="file" class="form-control" style="padding: 0px;">
 </div>

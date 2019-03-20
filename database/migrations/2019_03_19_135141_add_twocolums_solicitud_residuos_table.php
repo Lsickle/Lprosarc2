@@ -27,8 +27,8 @@ class AddTwocolumsSolicitudResiduosTable extends Migration
     public function down()
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
-            $table->boolean('SolResDelete');
-            $table->string('SolResSlug')->unique();
+            $table->dropColumn('SolResDelete');
+            $table->dropColumn('SolResSlug');
         });
     }
 }
