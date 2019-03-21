@@ -19,13 +19,13 @@
                 <tr>
                   <th>Solicitud de Servicio</th>
                   <th>Residuo</th>
-                  <th>Nombre</th>
+                  {{-- <th>Nombre</th>
                   <th>Categoria</th>
-                  <th>Tipo</th>
+                  <th>Tipo</th> --}}
                   {{-- <th>Ruta</th> --}}
-                  <th>Formato</th>
+                  {{-- <th>Formato</th> --}}
                   <th>Ver Recursos</th>
-                  <th>Editar</th>
+                  {{-- <th>Editar</th> --}}
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -42,15 +42,15 @@
                 </div>
                 @foreach($Recursos as $Recurso)
                 <tr>
-                  <td>{{$Recurso->ID_SolSer}}</td>
+                  <td>{{$Recurso->FK_SolSer}}</td>
                   <td>{{$Recurso->RespelName}}</td>
-                  <td>{{$Recurso->RecName}}</td>
+                  {{-- <td>{{$Recurso->RecName}}</td>
                   <td>{{$Recurso->RecCarte}}</td>
                   <td>{{$Recurso->RecTipo}}</td>
                   <td>{{$Recurso->RecFormat}}</td>
-                  {{-- <td>{{$Recurso->FK_RecSol}}</td> --}}
-                  {{-- <td>{{$Recurso->ID_Rec}}</td> --}}
-                  <td>{{$Recurso->ID_Rec}}</td>
+                  {{-- <td>{{$Recurso->FK_ResGer}}</td> --}}
+                  {{-- {{-- <td>{{$Recurso->ID_Rec}}</td> --}}
+                  <td>{{$Recurso->ID_SGenerRes}}</td>
                 </tr>
                 @endforeach
               </tbody>

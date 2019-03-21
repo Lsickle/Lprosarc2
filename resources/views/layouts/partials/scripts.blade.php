@@ -859,16 +859,17 @@ $(document).ready(function(){
           //   "render": function ( data, type, row, meta ) {
           //       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
           "columnDefs": [ {
-            "targets": 6,
-            "data": "ID_Rec",
+            "targets": 2,
+            "data": "ID_SGenerRes",
             "render": function ( data, type, row, meta ) {
                 return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          {"targets": 7,
-            "data": "ID_Rec",
-            "render": function ( data, type, row, meta ) {
-                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-              }
-          }]
+          // {"targets": 7,
+          //   "data": "ID_Rec",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+          //     }
+          // }
+          ]
         });
       });
     </script>

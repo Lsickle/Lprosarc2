@@ -31,9 +31,9 @@
                                     <label for="SolSer">Solicitud Servicio</label>
                                     <select class="form-control" id="SolSer" name="FK_ResGer" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($Recursos as $Recurso)
+                                        @foreach ($ResGeners as $ResGener)
                                             
-                                        <option value="{{$Recurso->ID_SolSer}}">{{$Recurso->ID_SolSer}}</option>
+                                    <option value="{{$ResGener->ID_SGenerRes}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
                                         @endforeach
                                     
                                     </select>

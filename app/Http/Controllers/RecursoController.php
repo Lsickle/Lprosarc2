@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\audit;
 use App\Recurso;
 use App\SolicitudServicio;
-use App\SolicitudResiduo;
 use App\cliente;
+use App\ResiduosGener;
 
 class RecursoController extends Controller
 {
@@ -20,17 +20,23 @@ class RecursoController extends Controller
      */
     public function index(){
 
-        $Recursos = DB::table('recursos')
-            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
-            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            ->select('recursos.*', 'respels.RespelName', 'solicitud_servicios.ID_SolSer')
-            ->get();
-        // $Recursos = Recurso::all();
-        // $SolSer = SolicitudServicio::all();
-        // $SolRes = SolicitudResiduo::all();
+        // $Recursos = DB::table('recursos')
+        //     ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+        //     ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
+        //     ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+        //     ->select('recursos.*', 'respels.RespelName', 'solicitud_servicios.ID_SolSer', 'residuos_geners.FK_SolSer')
+        //     ->get();
 
-        return view('recursos.index', compact('Recursos'));
+            $Recursos = DB::table('residuos_geners')
+            // $Recursos = DB::table('recursos')
+            // ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            // ->join('recursos', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->select('respels.RespelName', 'residuos_geners.*')
+            ->get();
+        // $ResGener = ResiduosGener::all();
+
+        return view('recursos.index', compact('Recursos', 'ResGener'));
     }
 
     /**
@@ -41,15 +47,19 @@ class RecursoController extends Controller
     public function create()
     {
         $Clientes = cliente::all();
-        // $SolSers = SolicitudServicio::all();
+
+        $ResGeners = DB::table('residuos_geners')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('respels.RespelName', 'residuos_geners.FK_SolSer', 'residuos_geners.ID_SGenerRes')
+            ->get();
+
         $Recursos = DB::table('recursos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
-            ->select('recursos.*', 'solicitud_servicios.ID_SolSer')
+            ->select('recursos.*', 'residuos_geners.FK_SolSer')
             ->get();
-            return $Recursos;
 
-        return view('recursos.create', compact('SolSers', 'Clientes', 'Recursos'));
+        return view('recursos.create', compact('ResGeners', 'Clientes', 'Recursos'));
     }
 
     /**
@@ -73,10 +83,10 @@ class RecursoController extends Controller
         $Recurso->RecName = $request->input("RecName");
         $Recurso->RecTipo = $request->input("RecTipo");
         $Recurso->RecCarte = $request->input("RecCarte");
-        $Recurso->SlugRec = 'Slug'. $request->input("RecName").date('YmdHis');
+        $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
         $Recurso->RecSrc = $Src;
         $Recurso->RecFormat = '.'.$Extension;
-        $Recurso->FK_RecSol = $request->input("FK_ResGer");
+        $Recurso->FK_ResGer = $request->input("FK_ResGer");
         $Recurso->save();
         }
     }
@@ -91,18 +101,13 @@ class RecursoController extends Controller
      */
     public function show($id)
     {
-        // return $id;
-        // $Recursos = Recurso::where('FK_RecSol', 2)->first();
-        // $Recursos = Recurso::all();
-        // $SolSer = SolicitudServicio::where('FK_RecSol', $id)->first();
-
         $Recursos = DB::table('recursos')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'recursos.FK_RecSol')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
             ->select('recursos.*')
-            ->where('FK_RecSol', '=', 3)
+            ->where('FK_ResGer', '=', $id)
             ->get();
-        // return $Recursos;
-        return view('recursos.show', compact('Recursos', 'SolSer'));
+            
+        return view('recursos.show', compact('Recursos'));
     }
 
     /**

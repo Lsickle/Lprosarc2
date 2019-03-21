@@ -28,79 +28,170 @@
                                     <label for="tipo">Foto</label>
                                 </div>
                                 <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Cargue</label>
-                                    </div>
                                     @foreach ($Recursos as $Recurso)
-                                    <div class="col-md-2">
-                                        <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    </div>
+                                        @if ($Recurso->RecTipo == 'Cargue' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach ($Recursos as $Recurso)
+                                        @if ($Recurso->RecTipo == 'Descargue' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach ($Recursos as $Recurso)
+                                        @if ($Recurso->RecTipo == 'Pesaje' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach ($Recursos as $Recurso)
+                                        @if ($Recurso->RecTipo == 'Reempacado' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach ($Recursos as $Recurso)
+                                        @if ($Recurso->RecTipo == 'Mezclado' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach ($Recursos as $Recurso)
+                                        @if ($Recurso->RecTipo == 'Destruccion' and $Recurso->RecCarte == 'Foto')
+                                            <div class="col-md-12">
+                                                <label>{{$Recurso->RecTipo}}</label>
+                                            </div>
+                                            @foreach ($Recursos as $Recurso)
+                                            <div class="col-md-2">
+                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                            </div>
+                                            @endforeach                                            
+                                            @break
+                                        @endif
                                     @endforeach
                                 </div>
-                                <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Descargue</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        @foreach ($Recursos as $Recurso)
-                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    @endforeach                                    
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Pesaje</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                    @foreach ($Recursos as $Recurso)
-                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    @endforeach                                    
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Reempacado</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                    @foreach ($Recursos as $Recurso)
-                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    @endforeach                                    
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Mezclado</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        @foreach ($Recursos as $Recurso)
-                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    @endforeach                                    
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Destruccion</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        @foreach ($Recursos as $Recurso)
-                                    <img src="../../../{{$Recurso->RecSrc}}" alt="" width="150" height="150" value="{{$Recursos->RecSrc}}">  
-                                    @endforeach                                    
-                                    </div>
-                                </div>
-                                
-                                {{-- </div> --}}
                             </div>
+                        </div>
                             {{-- @endforeach --}}
-                            <div class="box-body">
-                                    <div class="col-md-12">
-                                        <label for="tipo">Video</label>
-                                    </div>
-                            <div class="col-md-6">
-                                    
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <label for="tipo">Video</label>
                             </div>
-
-
-
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Cargue' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Descargue' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Pesaje' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Reempacado' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Mezclado' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($Recursos as $Recurso)
+                                @if ($Recurso->RecTipo == 'Destruccion' and $Recurso->RecCarte == 'video')
+                                    <div class="col-md-12">
+                                        <label>{{$Recurso->RecTipo}}</label>
+                                    </div>
+                                    @foreach ($Recursos as $Recurso)
+                                    <div class="col-md-2">
+                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                    </div>
+                                    @endforeach
+                                    @break
+                                @endif
+                            @endforeach
                         </div>					
                         <!-- /.box -->
                     </div>
