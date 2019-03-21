@@ -32,10 +32,8 @@
                                     <select class="form-control" id="SolSer" name="FK_ResGer" required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($ResGeners as $ResGener)
-                                            
-                                    <option value="{{$ResGener->ID_SGenerRes}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
+                                            <option value="{{$ResGener->ID_SGenerRes}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
                                         @endforeach
-                                    
                                     </select>
                                 </div>
                                 <div class="col-md-12">
@@ -43,17 +41,10 @@
                                     <select class="form-control" id="nombre" name="RecName" required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($Clientes as $Cliente)
-                                            
-                                        <option value="{{$Cliente->CliShortname}}">{{$Cliente->CliShortname}}</option>
+                                            <option value="{{$Cliente->CliShortname}}">{{$Cliente->CliShortname}}</option>
                                         @endforeach
-                                    
                                     </select>
                                 </div>
-                                {{-- <div class="col-md-12">
-                                        <label for="nombre">Nombre del recurso</label>
-                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre de la imagen o video" name="RecName" required>
-                                    </div> --}}
-                
                                 <div class="col-md-12">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control" id="categoria" name="RecCarte" required>
@@ -90,10 +81,6 @@
                                     <label for="soliservicioinputext3">Ruta de guardado</label>
                                     <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple required>
                                 </div>
-                                {{-- <div class="col-md-12">
-                                    <label for="soliservicioinputext4">Formato</label>
-                                    <input type="text" class="form-control" id="soliservicioinputext4" placeholder=".jpg" name="RecFormat" required>
-                                </div> --}}
                                 <div class="col-md-8">
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Registrar</button>

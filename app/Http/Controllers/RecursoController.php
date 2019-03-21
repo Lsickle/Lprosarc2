@@ -20,23 +20,17 @@ class RecursoController extends Controller
      */
     public function index(){
 
-        // $Recursos = DB::table('recursos')
-        //     ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
-        //     ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
-        //     ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-        //     ->select('recursos.*', 'respels.RespelName', 'solicitud_servicios.ID_SolSer', 'residuos_geners.FK_SolSer')
-        //     ->get();
+        $Recursos2 = DB::table('recursos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->select('recursos.*')
+            ->get();
 
-            $Recursos = DB::table('residuos_geners')
-            // $Recursos = DB::table('recursos')
-            // ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+        $Recursos = DB::table('residuos_geners')
             ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            // ->join('recursos', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
             ->select('respels.RespelName', 'residuos_geners.*')
             ->get();
-        // $ResGener = ResiduosGener::all();
 
-        return view('recursos.index', compact('Recursos', 'ResGener'));
+        return view('recursos.index', compact('Recursos', 'Recursos2'));
     }
 
     /**
@@ -74,15 +68,19 @@ class RecursoController extends Controller
 
         foreach($request->RecSrc as $file){ 
         
+        $Recurso = new Recurso();
+        
         $name = time().$file->getClientOriginalName();
         $Extension = $file->extension();
         $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
         $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
-
-        $Recurso = new Recurso();
+        $Folder = $request->input("RecName").time();
+        
+        // return $Folder;
         $Recurso->RecName = $request->input("RecName");
         $Recurso->RecTipo = $request->input("RecTipo");
         $Recurso->RecCarte = $request->input("RecCarte");
+        $Recurso->RecRmSrc = $Folder;
         $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
         $Recurso->RecSrc = $Src;
         $Recurso->RecFormat = '.'.$Extension;
@@ -118,11 +116,15 @@ class RecursoController extends Controller
      */
     public function edit($id)
     {
-        $Recursos = Recurso::where('ID_Rec', $id)->first();
-        $SolSers = SolicitudServicio::all();
+        $ResGeners = DB::table('residuos_geners')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('respels.RespelName', 'residuos_geners.FK_SolSer', 'residuos_geners.ID_SGenerRes')
+            ->get();
 
+        $Recursos = Recurso::where('ID_Rec', $id)->first();
+        // $ResGeners = ResiduosGener::where('ResGener', $id)->first();
         
-        return view('recursos.edit', compact('Recursos', 'SolSers'));
+        return view('recursos.edit', compact('Recursos', 'ResGeners'));
     }
 
     /**
@@ -135,19 +137,29 @@ class RecursoController extends Controller
     public function update(Request $request, $id)
     {
         $Recursos = Recurso::where('ID_Rec', $id)->first();
-        $SolSer = SolicitudServicio::where('FK_RecSol', $id)->first();
-        // $SolRes = SolicitudResiduo::where('FK_RecSolRes', $id)->first();
-        $Recurso->fill($request->except('RecSrc'));
 
-        // if ($request->hasfile('RecSrc')) {
-        //     $file = $request->file('RecSrc');
-        //     $name = time().$file->getClientOriginalName();
-        //     $file->move(public_path().'/Recursos/'.$Recursos->input("RecName").time(),$name);
-        //     $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
-        //     $Recurso->RecSrc = $Src;
-        // }
-        $Recurso->save();
+        // return $request;
+        if ($request->hasfile('RecSrc')) {
 
+            foreach($request->RecSrc as $file){ 
+
+            $name = time().$file->getClientOriginalName();
+            $Extension = $file->extension();
+            $Global=$file->move(public_path().'/Recursos/'.$Recursos->RecRmSrc,$name);
+            $Src = 'Recursos/'.$Recursos->RecRmSrc.time().'/'.$name;
+
+            $Recurso = new Recurso();
+            $Recurso->RecTipo = $request->input("RecTipo");
+            $Recurso->RecCarte = $request->input("RecCarte");
+            $Recurso->RecSrc = $Src;
+            $Recurso->RecFormat = '.'.$Extension;
+            $Recurso->RecRmSrc = $Recursos->RecRmSrc;
+            $Recurso->RecName = $request->input("RecName");
+            $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
+            $Recurso->FK_ResGer = $request->input("FK_ResGer");
+            $Recurso->save();
+            }
+        }
         $log = new audit();
         $log->AuditTabla="recursos";
         $log->AuditType="Modificado";

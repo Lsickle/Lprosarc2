@@ -25,7 +25,7 @@
                   {{-- <th>Ruta</th> --}}
                   {{-- <th>Formato</th> --}}
                   <th>Ver Recursos</th>
-                  {{-- <th>Editar</th> --}}
+                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -49,8 +49,11 @@
                   <td>{{$Recurso->RecTipo}}</td>
                   <td>{{$Recurso->RecFormat}}</td>
                   {{-- <td>{{$Recurso->FK_ResGer}}</td> --}}
-                  {{-- {{-- <td>{{$Recurso->ID_Rec}}</td> --}}
                   <td>{{$Recurso->ID_SGenerRes}}</td>
+                  @foreach ($Recursos2 as $Recurso2)
+                    <td>{{$Recurso2->ID_Rec}}</td>
+                    @break
+                  @endforeach
                 </tr>
                 @endforeach
               </tbody>

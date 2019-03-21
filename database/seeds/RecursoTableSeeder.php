@@ -18,6 +18,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecTipo = "Carge";
         $Recursos->RecSrc = "/img/defaul.png";
         $Recursos->RecFormat = ".png";
+        $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user01";
         $Recursos->FK_ResGer = "1";
         $Recursos->save();
@@ -28,6 +29,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecTipo = "Descargue";
         $Recursos->RecSrc = "/img/defaul.png";
         $Recursos->RecFormat = ".png";
+        $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user02";
         $Recursos->FK_ResGer = "3";
         $Recursos->save();
@@ -38,6 +40,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecTipo = "Pesaje";
         $Recursos->RecSrc = "/img/defaul.png";
         $Recursos->RecFormat = ".png";
+        $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user03";
         $Recursos->FK_ResGer = "2";
         $Recursos->save();
@@ -48,6 +51,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecTipo = "Reempacado";
         $Recursos->RecSrc = "/img/defaul.png";
         $Recursos->RecFormat = ".png";
+        $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user04";
         $Recursos->FK_ResGer = "5";
         $Recursos->save();
@@ -58,6 +62,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecTipo = "Mezclado";
         $Recursos->RecSrc = "/img/defaul.png";
         $Recursos->RecFormat = ".png";
+        $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user05";
         $Recursos->FK_ResGer = "4";
         $Recursos->save();

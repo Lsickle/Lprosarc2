@@ -25,32 +25,18 @@
 						<div class="box box-primary">
 							<!-- form start -->
                         <form role="form" action="/recurso/{{$Recursos->ID_Rec}}" method="POST" enctype="multipart/form-data">
-								@csrf
-								
-                                {{-- <div class="col-md-12">
-                                    <label for="SolRes">Declaracion</label>
-                                    <select class="form-control" id="SolRes" name="FK_RecSol" required>
-                                        <option value="">Seleccione...</option>
-                                        <option value="1">1</option>
-                                    
-                                    </select>
-                                </div> --}}
+                            @csrf
+                            @method('PATCH')
+								{{csrf_field()}}                                
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
-                                    <select class="form-control" id="SolSer" name="FK_RecSol" required>
+                                    <select class="form-control" id="SolSer" name="FK_ResGer" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($SolSers as $SolSer)
-                                            
-                                        <option value="{{$SolSer->ID_SolSer}}">{{$SolSer->ID_SolSer}}</option>
+                                        @foreach ($ResGeners as $ResGener)
+                                            <option value="{{$Recursos->FK_ResGer}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
                                         @endforeach
-                                    
                                     </select>
                                 </div>
-                                <div class="col-md-12">
-                                        <label for="nombre">Nombre del recurso</label>
-                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre de la imagen o video" name="RecName" value="{{$Recursos->RecName}}" required>
-                                    </div>
-                
                                 <div class="col-md-12">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control" id="categoria" name="RecCarte" required>
@@ -85,12 +71,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="soliservicioinputext3">Ruta de guardado</label>
-                                    <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc" accept=".jpg, .jpeg, .png" multiple value="{{$Recursos->RecSrc}}" required>
+                                    <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple>
                                 </div>
-                                {{-- <div class="col-md-12">
-                                    <label for="soliservicioinputext4">Formato</label>
-                                    <input type="text" class="form-control" id="soliservicioinputext4" placeholder=".jpg" name="RecFormat" required>
-                                </div> --}}
+                                <input hidden value="{{$Recursos->RecName}}" name="RecName">
                                 <div class="col-md-8">
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Registrar</button>

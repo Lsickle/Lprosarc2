@@ -863,12 +863,12 @@ $(document).ready(function(){
             "data": "ID_SGenerRes",
             "render": function ( data, type, row, meta ) {
                 return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          // {"targets": 7,
-          //   "data": "ID_Rec",
-          //   "render": function ( data, type, row, meta ) {
-          //       return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-          //     }
-          // }
+          {"targets": 3,
+            "data": "ID_Rec",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              }
+          }
           ]
         });
       });

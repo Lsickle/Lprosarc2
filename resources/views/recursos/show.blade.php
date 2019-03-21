@@ -34,9 +34,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Cargue')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
@@ -47,9 +49,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Descargue')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
@@ -60,9 +64,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Pesaje')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
@@ -73,9 +79,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Reempacado')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
@@ -86,9 +94,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Mezclado')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
@@ -99,9 +109,11 @@
                                                 <label>{{$Recurso->RecTipo}}</label>
                                             </div>
                                             @foreach ($Recursos as $Recurso)
-                                            <div class="col-md-2">
-                                                <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
-                                            </div>
+                                                @if ($Recurso->RecTipo == 'Destruccion')
+                                                    <div class="col-md-2">
+                                                        <img src="{{ asset($Recurso->RecSrc) }}" alt="" width="150" height="150" value="">  
+                                                    </div>
+                                                @endif
                                             @endforeach                                            
                                             @break
                                         @endif
