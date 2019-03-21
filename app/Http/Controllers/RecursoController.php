@@ -21,8 +21,10 @@ class RecursoController extends Controller
     public function index(){
 
         $Recursos = DB::table('recursos')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'recursos.FK_RecSol')
-            ->select('solicitud_servicios.ID_SolSer', 'recursos.*')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('recursos.*', 'respels.RespelName', 'solicitud_servicios.ID_SolSer')
             ->get();
         // $Recursos = Recurso::all();
         // $SolSer = SolicitudServicio::all();
@@ -39,10 +41,15 @@ class RecursoController extends Controller
     public function create()
     {
         $Clientes = cliente::all();
-        $SolSers = SolicitudServicio::all();
-        // $SolRes = SolicitudResiduo::all();
+        // $SolSers = SolicitudServicio::all();
+        $Recursos = DB::table('recursos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_SolSer')
+            ->select('recursos.*', 'solicitud_servicios.ID_SolSer')
+            ->get();
+            return $Recursos;
 
-        return view('recursos.create', compact('SolSers', 'Clientes'));
+        return view('recursos.create', compact('SolSers', 'Clientes', 'Recursos'));
     }
 
     /**
@@ -53,54 +60,26 @@ class RecursoController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         if ($request->hasfile('RecSrc')) {
 
         foreach($request->RecSrc as $file){ 
         
         $name = time().$file->getClientOriginalName();
-        
-        // print_r($name. "<br>");
+        $Extension = $file->extension();
         $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
         $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
 
         $Recurso = new Recurso();
-
         $Recurso->RecName = $request->input("RecName");
         $Recurso->RecTipo = $request->input("RecTipo");
         $Recurso->RecCarte = $request->input("RecCarte");
+        $Recurso->SlugRec = 'Slug'. $request->input("RecName").date('YmdHis');
         $Recurso->RecSrc = $Src;
-        $Recurso->RecFormat = '.jpg';
-        $Recurso->FK_RecSol = $request->input("FK_RecSol");
-        // $Recurso->FK_RecSolRes = $request->input("SolRes");
+        $Recurso->RecFormat = '.'.$Extension;
+        $Recurso->FK_RecSol = $request->input("FK_ResGer");
         $Recurso->save();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // $file = $request->file('RecSrc');
-        // $name = time().$file->getClientOriginalName();
-        
-        // $Global= $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
-        // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
-        // }
-        
-
         return redirect()->route('recurso.index');
     }
 
@@ -120,7 +99,7 @@ class RecursoController extends Controller
         $Recursos = DB::table('recursos')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'recursos.FK_RecSol')
             ->select('recursos.*')
-            ->where('FK_RecSol', 2)
+            ->where('FK_RecSol', '=', 3)
             ->get();
         // return $Recursos;
         return view('recursos.show', compact('Recursos', 'SolSer'));

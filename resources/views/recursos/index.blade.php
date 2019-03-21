@@ -18,12 +18,12 @@
               <thead>
                 <tr>
                   <th>Solicitud de Servicio</th>
+                  <th>Residuo</th>
                   <th>Nombre</th>
                   <th>Categoria</th>
                   <th>Tipo</th>
                   {{-- <th>Ruta</th> --}}
                   <th>Formato</th>
-                  <th>Residuo</th>
                   <th>Ver Recursos</th>
                   <th>Editar</th>
                 </tr>
@@ -43,13 +43,13 @@
                 @foreach($Recursos as $Recurso)
                 <tr>
                   <td>{{$Recurso->ID_SolSer}}</td>
+                  <td>{{$Recurso->RespelName}}</td>
                   <td>{{$Recurso->RecName}}</td>
                   <td>{{$Recurso->RecCarte}}</td>
                   <td>{{$Recurso->RecTipo}}</td>
                   <td>{{$Recurso->RecFormat}}</td>
-                  <td>{{$Recurso->FK_RecSol}}</td>
+                  {{-- <td>{{$Recurso->FK_RecSol}}</td> --}}
                   {{-- <td>{{$Recurso->ID_Rec}}</td> --}}
-                  <td>{{$Recurso->RecSrc}}</td>
                   <td>{{$Recurso->ID_Rec}}</td>
                 </tr>
                 @endforeach

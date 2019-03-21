@@ -27,21 +27,13 @@
 							<form role="form" action="/recurso" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{csrf_field()}}
-                                {{-- <div class="col-md-12">
-                                    <label for="SolRes">Declaracion</label>
-                                    <select class="form-control" id="SolRes" name="FK_RecSol" required>
-                                        <option value="">Seleccione...</option>
-                                        <option value="1">1</option>
-                                    
-                                    </select>
-                                </div> --}}
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
-                                    <select class="form-control" id="SolSer" name="FK_RecSol" required>
+                                    <select class="form-control" id="SolSer" name="FK_ResGer" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($SolSers as $SolSer)
+                                        @foreach ($Recursos as $Recurso)
                                             
-                                        <option value="{{$SolSer->ID_SolSer}}">{{$SolSer->ID_SolSer}}</option>
+                                        <option value="{{$Recurso->ID_SolSer}}">{{$Recurso->ID_SolSer}}</option>
                                         @endforeach
                                     
                                     </select>
