@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class CotizacionController extends Controller
 {
@@ -13,7 +16,28 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        return view('ordenCompra/cotizacion');
+        // return view('ordenCompra/cotizacion');
+
+        if(Auth::user()->UsRol === "Programador"){
+            $cotizaciones = DB::table('cotizacions')
+                ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->select('cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+                ->get();
+        }
+        else{
+            // $cotizaciones = DB::table('cotizacions')
+            //     ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+            //     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            //     ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+            //     ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+            //     ->select('cotizacions.*', 'sedes.*', 'clientes.*', 'clientes.*','municipios.*', 'departamentos.*')
+            //     ->get();
+        }
+        // return $cotizaciones;
+        return view('cotizacion.index', compact('cotizaciones'));
     }
 
     /**

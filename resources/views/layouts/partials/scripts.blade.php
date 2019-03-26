@@ -4,13 +4,6 @@
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
-{{-- CDNS de FullCalendar --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
-
 {{-- Dependencias Package.json --}}
 <script src="/js/dependencias.js"></script>
 
@@ -20,11 +13,56 @@
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
+@if(
+	Route::currentRouteName()=='cotizacion.create'||
+	Route::currentRouteName()=='cotizacion.index'
+)
+	<script>
+		$(document).ready(function() {
+			var test = "<?php echo Route::currentRouteName(); ?>";
+			window.alert(test);
+			var rol = "<?php echo Auth::user()->UsRol; ?>";
 
+			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
-{{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
+			if (rol=='Programador') {
+				console.log(botoncito);
+			};
+
+			$('#cotizaciones').DataTable({
+				responsive: true,
+				select: true,
+				dom: 'Bfrtip',
+				buttons: [
+					botoncito, {
+						extend: 'collection',
+						text: 'Selector',
+						buttons: [ 'selectRows', 'selectCells' ]
+					}
+				],
+				colReorder: true,
+				ordering: true,
+				autoWith: true,
+				searchHighlight: true,
+				columnDefs: [ {
+					"targets": 14,
+					"data": "ID_Coti",
+					"render": function ( data, type, row, meta ) {
+						return "<a method='get' href='/cotizaciones/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+					}  
+				} ]
+			});
+			/*funcion para resaltar las busquedas*/
+			var table = $('#cotizaciones').DataTable();
+
+			table.on( 'draw', function () {
+				var body = $( table.table().body());
+				body.unhighlight();
+				body.highlight( table.search() );  
+			});
+		}); 
+	</script>
+@endif
 
 
 {{-- select 2 --}}

@@ -116,6 +116,13 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->add(Link::toUrl('/compra/cotizacion', '<i class="fas fa-file-invoice"></i> Cotizacion'))
             ->addClass('treeview-menu')
         )
+        /*PESTAÑA DE COTIZACIONES*/
+        ->add(Menu::new()
+            ->prepend('<a href="#"><i class="fas fa-clipboard-list"></i> <span>Cotizaciones</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+            ->addParentClass('treeview')
+            ->add(Link::toUrl('/cotizacion', '<i class="fas fa-list"></i> Lista'))
+            ->addClass('treeview-menu')
+        )
         /*PESTAÑA DE ACTIVOS*/
         ->add(Menu::new()
             ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>Activos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
