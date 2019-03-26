@@ -40,7 +40,8 @@
 							              <ul>
 							                <li><a href="#step-1">Paso 1 <br /><small>Datos de la cuenta</small></a></li>
 							                <li><a href="#step-2">Paso 2<br /><small>rol y tipo</small></a></li>
-							                <li><a href="#step-3">paso 3<br /><small>status</small></a></li>
+							                <li><a href="#step-3">Paso 2<br /><small>rol secundario</small></a></li>
+							                <li><a href="#step-4">paso 3<br /><small>status</small></a></li>
 							              </ul>
 							                <div>
 							                  <div id="step-1" class="">
@@ -50,6 +51,9 @@
 							                    @include('layouts.UserPartials.form2')
 							                  </div>
 							                  <div id="step-3" class="">
+							                    @include('layouts.UserPartials.form4')
+							                  </div>
+							                  <div id="step-4" class="">
 							                    @include('layouts.UserPartials.form3')
 							                  </div>
 							                </div>

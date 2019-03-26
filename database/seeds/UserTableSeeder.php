@@ -34,7 +34,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Luis1';
         $user->UsRol = 'Programador';
         $user->UsRolDesc = 'Programador de Software';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_suser);*/
 
@@ -44,8 +47,11 @@ class UserTableSeeder extends Seeder
         $user->password = bcrypt('secret');
         $user->UsSlug = 'User1';
         $user->UsRol = 'Vigilante';
-        $user->UsRolDesc = 'Usuario general';
+        $user->UsRolDesc = 'Seguridad Fisica';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_user);*/
 
@@ -56,7 +62,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Leider1';
         $user->UsRol = 'admin';
         $user->UsRolDesc = 'Director de Planta';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_admin);*/
 
@@ -67,7 +76,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Juan1';
         $user->UsRol = 'JefeLogistica';
         $user->UsRolDesc = 'Jefe de Logistica';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_jlogistica);*/
 
@@ -78,7 +90,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Victor1';
         $user->UsRol = 'JefeOperacion';
         $user->UsRolDesc = 'Jefe de Operaciones';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_joperacion);*/
 
@@ -89,7 +104,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Duvan1';
         $user->UsRol = 'AsistenteLogistica';
         $user->UsRolDesc = 'Asistente de Logistica';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_asistlogistica);*/
 
@@ -100,7 +118,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'TestClient1';
         $user->UsRol = 'Cliente';
         $user->UsRolDesc = 'Cliente registrado';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_client);*/
 
@@ -111,7 +132,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'GeneradorProsarc1';
         $user->UsRol = 'Generador';
         $user->UsRolDesc = 'Generador de residuos';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_gener);*/
 
@@ -122,7 +146,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Peter1';
         $user->UsRol = 'AuxiliarLogistica';
         $user->UsRolDesc = 'Auxiliar de Logistica';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_auxlogistica);*/
 
@@ -133,7 +160,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Camilo1';
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -144,7 +174,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'William1';
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -155,7 +188,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Camilo21';
         $user->UsRol = 'SupervisorTurno';
         $user->UsRolDesc = 'Supervisor de Turno';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -166,7 +202,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Sandro1';
         $user->UsRol = 'EncargadoAlmacen';
         $user->UsRolDesc = 'Encargado de Almacen';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_ealmacen);*/
 
@@ -177,7 +216,10 @@ class UserTableSeeder extends Seeder
         $user->UsSlug = 'Horno1';
         $user->UsRol = 'EncargadoHorno';
         $user->UsRolDesc = 'Encargado de Horno';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
         $user->save();
         /*$user->roles()->attach($role_ehorno);*/
 

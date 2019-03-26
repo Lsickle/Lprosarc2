@@ -19,11 +19,11 @@ class RequerimientoController extends Controller
     public function index(){
         $Requerimientos = DB::table('requerimientos')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('requerimientos.*', 'clientes.CliName')
+            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName')
             ->get();
-        // $Requerimientos = Requerimiento::all();
 
         return view('requerimientos.index', compact('Requerimientos'));
     }
@@ -35,7 +35,7 @@ class RequerimientoController extends Controller
      */
     public function create()
     {
-        return view('requerimientos.create');
+        //
     }
 
     /**
@@ -46,10 +46,44 @@ class RequerimientoController extends Controller
      */
     public function store(Request $request)
     {
-        // llamando desde sesion 'FK' de respel
-        $Requerimientos = Respel::where('RespelSlug',$request->input('FK_ReqRespel'))->first();
+        // En el controlador de respel
+    }
 
-        $Requerimiento = new Requerimiento();
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $Requerimientos = Requerimiento::where('ReqSlug', $id)->first();
+
+        return view('requerimientos.show', compact('Requerimientos'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $Requerimientos = Requerimiento::where('ReqSlug', $id)->first();
+        return view('requerimientos.edit', compact('Requerimientos'));  
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $Requerimiento = Requerimiento::where('ReqSlug', $id)->first();
         $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
         $Requerimiento->ReqFotoDescargue = $request->input('ReqFotoDescargue');
         $Requerimiento->ReqFotoPesaje = $request->input('ReqFotoPesaje');
@@ -77,70 +111,6 @@ class RequerimientoController extends Controller
         $Requerimiento->ReqMasPerson = $request->input('ReqMasPerson');
         $Requerimiento->ReqPlatform = $request->input('ReqPlatform');
         $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('ReqRespel');
-        $Requerimiento->FK_ReqRespel =  $Requerimientos->ID_Respel;
-        $Requerimiento->save();
-
-        $log = new audit();
-        $log->AuditTabla="requerimientos";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Requerimiento->ID_Req;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-
-        return redirect()->route('respels.index', compact('Requerimientos'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $Requerimientos = DB::table('requerimientos')
-            ->select('requerimientos.*')
-            ->where('requerimientos.ID_Req', '=', $id)
-            ->get();
-
-        // $Reque = DB::table('requerimientos')
-        //     ->select('requerimientos.ReqSlug')
-        //     ->where('requerimientos.ID_Req', '=', $id)
-        //     ->get();
-
-        // return view('requerimientos/'.$Reque.'/edit', compact('Requerimientos', 'Reque'));  
-        return view('requerimientos.edit', compact('Requerimientos', 'Reque'));  
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
-        $Requerimiento->fill($request->all());
-        // return $request;
-        // $Requerimientos = Requerimiento::where('FK_ReqRespel', $Respels);   
-        
-        // $Requerimiento->FK_ReqRespel = $Requerimientos;
-
         $Requerimiento->save();
 
         $log = new audit();
@@ -150,7 +120,7 @@ class RequerimientoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        return redirect()->route('respels.index', compact('Requerimiento'));
+        return redirect()->route('respels.index');
     }
 
     /**
@@ -161,9 +131,6 @@ class RequerimientoController extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
-        return $id;
-
         $log = new audit();
         $log->AuditTabla="requerimientos";
         $log->AuditType="Eliminado";

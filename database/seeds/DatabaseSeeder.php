@@ -25,6 +25,8 @@ use App\Tratamiento;
 use App\CategoriaActivo;
 use App\SubcategoriaActivo;
 use App\Activo;
+use App\Requerimiento;
+use App\Cotizacion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,7 +38,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {   
         //$this->call(RoleTableSeeder::class);
-        $this->call(UserTableSeeder::class);
         $this->call(DepartamentosTableSeeder::class);
         $this->call(MunicipiosTableSeeder::class);
         $this->call(RealclientesTableSeeder::class);
@@ -45,6 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AreasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(PersonalsTableSeeder::class);
+        $this->call(UserTableSeeder::class);
         $this->call(TrainingsTableSeeder::class);
         $this->call(TrainingPersonalsTableSeeder::class);
         $this->call(AssistancesTableSeeder::class);
@@ -53,13 +55,17 @@ class DatabaseSeeder extends Seeder
         $this->call(MantenVehicTableSeeder::class);
         $this->call(VehicProgTableSeeder::class);
         $this->call(OrdenCompraTableSeeder::class);
-        $this->call(CotizacionTableSeeder::class);
+        $this->call(QuotationTableSeeder::class);
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
         $this->call(ActivoTableSeeder::class);
         $this->call(SolicitudServicioTableSeeder::class);
+        $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
+        $this->call(RequerimientoTableSeeder::class);
+        $this->call(SGeneradorResiduoTableSeeder::class);
+
     }
 }

@@ -85,7 +85,10 @@ class RegisterController extends Controller
             'UsSlug'   => $data['name'].mt_rand(1,999),
             'UsRol'    => "Usuario",
             'UsRolDesc'    => "Usuario General",
-            'UsAvatar'    => "robot400x400.gif",   
+            'UsRol2'    => "Usuario",
+            'UsRolDesc2'    => "Usuario General",
+            'UsAvatar'    => "robot400x400.gif",
+            'FK_UserPers'    => "1",
         ];
         if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];

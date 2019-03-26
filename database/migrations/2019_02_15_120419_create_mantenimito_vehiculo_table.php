@@ -33,6 +33,6 @@ class CreateMantenimitoVehiculoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mantenimito_vehiculo');
+        Schema::dropIfExists('MantenVehics');
     }
 }

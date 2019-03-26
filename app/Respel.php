@@ -8,7 +8,7 @@ class Respel extends Model
 {
     protected $table='respels';
 
-    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741',  'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus', 'RespelSlug'];
+    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741',  'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus','RespelDelete', 'RespelSlug', 'FK_RespelCoti'];
 
     protected $primaryKey = 'ID_Respel';
 
@@ -19,7 +19,7 @@ class Respel extends Model
     
 	public function Sede()
 	{
-	 return $this->belongsTo('App\sede', 'ID_Sede', 'id');
+	 return $this->belongsTo('App\Cotizacion', 'ID_Coti', 'id');
 	}
 
     public function Requerimiento(){
@@ -33,4 +33,7 @@ class Respel extends Model
     public function SolicitudResiduo(){
         return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
     }
+    public function ResiduosGener(){
+		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
+	}
 }

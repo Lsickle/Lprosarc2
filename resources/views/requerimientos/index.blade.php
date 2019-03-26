@@ -12,46 +12,19 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Requerimientos de los residuos</h3>
-            <a href="cargos/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="RequerimientosTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Requerimientos de</th>
+                  <th>Cliente</th>
+                  <th>Nombre del Residuo</th>
                   <th>Auditable</th>
                   <th>Tipo de Auditoria</th>
                   <th>Creado</th>
-                  <th>Mejorado</th>
-                  <th>Ver mas ...</th>
-                  <th>Edit</th>
-                  
-            	    {{-- <th>FotoAlmacenado</th>
-                	<th>FotoCargue</th>
-                	<th>FotoDescargue</th>
-                  <th>FotoPesaje</th>
-                  <th>FotoMezclado</th>
-          	      <th>FotoDestruccion</th>
-                  <th>VideoCargue</th>
-                  <th>VideoDescargue</th>
-                  <th>VideoPesaje</th>
-                  <th>VideoAlmacenado</th>
-                  <th>VideoMezclado</th>
-                  <th>VideoDestruccion</th>
-                  <th>Auditoria</th>
-                  <th>AuditoriaTip</th>
-                  <th>Devolucion</th>
-                  <th>DevolucionTipo</th>
-                  <th>DatosPersonal</th>
-                  <th>Planillas</th>
-                  <th>Alistamiento</th>
-                  <th>Capacitacion</th>
-                  <th>Bascula</th>
-                  <th>MasPerson</th>
-                  <th>Platform</th>
-                  <th>CertiEspecial</th>
-                  <th>Residuo</th> --}}
+                  <th>Actualizado</th>
+                  <th>Requerimiento</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -70,6 +43,8 @@
                 @foreach($Requerimientos as $Requerimiento)
                 <tr>
                   <td>{{$Requerimiento->CliName}}</td>
+                  <td>{{$Requerimiento->RespelName}}</td>
+
                   @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
                       <td>Si</td>
                   @else
@@ -78,48 +53,19 @@
                   <td>{{$Requerimiento->ReqAuditoriaTipo}}</td>
                   <td>{{$Requerimiento->created_at}}</td>
                   <td>{{$Requerimiento->updated_at}}</td>
-                  <td></td>
                   <td>{{$Requerimiento->ReqSlug}}</td>
                 </tr>
                 @endforeach
               </tbody>
               {{-- <tfoot>
                   <tr>
-                      <th>Requerimientos de</th>
-                      <th>Auditable</th>
-                      <th>Tipo de Auditoria</th>
-                      <th>Creado</th>
-                      <th>Mejorado</th>
-                      <th>Ver mas ...</th>
-                      <th>Edit</th>--}}
-                      
-                      {{-- <th>FotoAlmacenado</th>
-                      <th>FotoCargue</th>
-                      <th>FotoDescargue</th>
-                      <th>FotoPesaje</th>
-                      <th>FotoMezclado</th>
-                      <th>FotoDestruccion</th>
-                      <th>VideoCargue</th>
-                      <th>VideoDescargue</th>
-                      <th>VideoPesaje</th>
-                      <th>VideoAlmacenado</th>
-                      <th>VideoMezclado</th>
-                      <th>VideoDestruccion</th>
-                      <th>Auditoria</th>
-                      <th>AuditoriaTip</th>
-                      <th>Devolucion</th>
-                      <th>DevolucionTipo</th>
-                      <th>DatosPersonal</th>
-                      <th>Planillas</th>
-                      <th>Alistamiento</th>
-                      <th>Capacitacion</th>
-                      <th>Bascula</th>
-                      <th>MasPerson</th>
-                      <th>Platform</th>
-                      <th>CertiEspecial</th>
-                      <th>Residuo</th> --}}
-                      
-                    {{--</tr>
+                    <th>Requerimientos de</th>
+                    <th>Auditable</th>
+                    <th>Tipo de Auditoria</th>
+                    <th>Creado</th>
+                    <th>Actualizado</th>
+                    <th>Requerimientos</th>
+                  </tr>
               </tfoot> --}}
             </table>
           </div>

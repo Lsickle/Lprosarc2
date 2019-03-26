@@ -20,11 +20,38 @@
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
+{{-- select 2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+{{-- select2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+
 
 {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
 
+
+{{-- select 2 --}}
+<script>
+  $(document).ready(function() {
+    $('#SGenerRespel').select2({
+      placeholder: "Seleccione el residuo",
+     allowClear: true,
+     width: 'resolve'
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    $('#SolicitudResiduo').select2({
+      placeholder: "Seleccione el residuo",
+      allowClear: true,
+      width: 'resolve'
+    });
+  });
+</script>
 
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
@@ -35,7 +62,6 @@
     });
   });
 </script>
-
 
 <!-- funcion para flitrado de tablas -->
 <script>
@@ -57,9 +83,9 @@
        "responsive": true,
         "columnDefs": [ {
         "targets": 9,
-        "data": "CliSlug",
+        "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='#" + data + "' class='btn btn-success'>Ver</a>";}},
+          return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";}},
         {"targets": 10,
         "data": "RespelSlug",
         "render": function ( data, type, row, meta ) {
@@ -67,11 +93,11 @@
         {"targets": 5,
         "data": "RespelHojaSeguridad",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}},
         {"targets": 6,
         "data": "RespelTarj",
         "render": function ( data, type, row, meta ) {
-          return "<a method='get' href='/images/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
+          return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
   });
@@ -110,11 +136,11 @@
       //     'copy', 'excel', 'pdf'
       // ],
       "columnDefs": [
-       {"targets": 5,
+       {"targets": 7,
         "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";}},
-        {"targets": 6,
+        {"targets": 8,
         "data": "id",
         "render": function ( data, type, row, meta ) {
           return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
@@ -686,21 +712,16 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 4,
-            "data": "SolResSolSer",
-            "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
-            },{
-            "targets": 5,
+          "columnDefs": [{
+            "targets": 7,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
+                return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 6,
-            "data": "PersSlug",
+            "targets": 8,
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a href='solicitud-residu/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
+                return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
             }
           ]
         });
@@ -714,10 +735,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 8,
-            "data": "PersSlug",
+            "targets": 9,
+            "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
@@ -850,15 +871,16 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 5,
-            "data": "FK_RecSol",
-            "render": function ( data, type, row, meta ) {
-                return "<a href='/#/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          {"targets": 6,
+            "targets": 6,
             "data": "ReqSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
-          }]
+                return "<a href='/requerimientos/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          // {"targets": 6,
+          //   "data": "ReqSlug",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
+          // }
+          ]
         });
       });
     </script>
@@ -990,6 +1012,7 @@ $(document).ready(function(){
         });
       });
     </script>
+    
     <script>
         var rol = "<?php
                 echo Auth::user()->UsRol;
@@ -1018,7 +1041,7 @@ $(document).ready(function(){
               ordering: true,
               autoWith: true,
               searchHighlight: true,
-              "columnDefs": [ {
+              columnDefs: [ {
                   "targets": 6,
                   "data": "GenerSlug",
                   "render": function ( data, type, row, meta ) {
@@ -1046,6 +1069,7 @@ $(document).ready(function(){
           });
       }); 
     </script>
+    
     <script>
         var rol = "<?php
                 echo Auth::user()->UsRol;
@@ -1096,3 +1120,72 @@ $(document).ready(function(){
           });
       }); 
     </script>
+
+
+<script>
+  $(document).ready(function() {
+      $('#selectconfiltro').select2({
+        });
+  });
+  $(window).resize(function() {
+    $('.select2').css('width', '100%');
+  });
+</script>{{-- 
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s
+}
+
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999
+}
+
+.form-control::-ms-expand {
+  background-color: transparent;
+  border: 0
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #eee;
+  opacity: 1
+}
+
+.form-control[disabled],
+fieldset[disabled] .form-control {
+  cursor: not-allowed
+}  --}}

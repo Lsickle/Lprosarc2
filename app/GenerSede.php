@@ -30,5 +30,8 @@ class GenerSede extends Model
     }
     public function Areas(){
     	return $this->hasMany('App\GenerSede', 'ID_Area', 'id');//como genersedes tiene muchas areas
-    }
+	}
+	public function ResiduosGener(){
+		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
+	}
 }

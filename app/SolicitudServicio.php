@@ -8,7 +8,7 @@ class SolicitudServicio extends Model
 {
     protected $table='solicitud_servicios';
 
-    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug'];
+    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug', 'Fk_SolSerTransportador', 'FK_SolSerGenerSede', 'SolSerDelete'];
     protected $primaryKey = 'ID_SolSer';
     	/**
 	 * Get the route key for the model.
@@ -37,5 +37,8 @@ class SolicitudServicio extends Model
 	}
 	public function SolicitudResiduo(){
 		return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
+	}
+	public function ResiduosGener(){
+		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
 }

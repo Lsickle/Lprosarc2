@@ -25,56 +25,13 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							{{-- {{$Usuario}} --}}
-
-							{{-- <div class="box-header with-border">
-								<h3 class="box-title">Formulario de registro</h3>
-							</div> --}}
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
 								@csrf
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									{{-- <div class="fingerprint-spinner" id="loadingTable">
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-										<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-									</div> --}}
-								{{-- <div class="box-body" hidden onload="renderTable()" id="readyTable"> --}}
-									{{-- <div class="tab-pane" id="addRowWizz"> --}}
-										{{-- <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p> --}}
-										{{-- <div id="smartwizard"> --}}
-											{{-- <ul>
-												{{-- <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos del Residuo</small></a></li> --}}
-												{{-- <li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
-												<li><a href="#step-3"><b>paso 3</b><br /><small>Requerimientos-Videos</small></a></li>
-												<li><a href="#step-4"><b>paso 4</b><br /><small>Requerimientos-Adicionales</small></a></li>
-											</ul> --}}
-											
-													<!-- left column -->
-														<!-- general form elements -->
-								{{-- <div class="row"> --}}
 										
-											@include('layouts.RespelPartials.Respelform1')
-										
-												{{-- <div id="step-2" class="">
-													@include('layouts.RespelPartials.Respelform2')
-												</div>
-												<div id="step-3" class="">
-													@include('layouts.RespelPartials.Respelform3')
-												</div>
-												<div id="step-4" class="">
-													@include('layouts.RespelPartials.Respelform4')
-												</div> --}}
-											{{-- </div>
-										</div>
-									</div> --}}
+								@include('layouts.RespelPartials.Respelform1')
+
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">	

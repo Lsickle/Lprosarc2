@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
         <label>Nombre</label>
         <input name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$Respels->RespelName}}" required>
@@ -372,12 +371,12 @@
         </select>
     </div>
     <div class="col-md-12">
-        <label>Sede</label>
-        <select name="FK_RespelSede" class="form-control">
-            <optgroup label="Seleccione la sede de la que proviene">
-                <option>Selecione...</option>
-                @foreach ($Sedes as $Sede)	
-                    <option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+        <label>Cotizacion</label>
+        <select name="FK_RespelCoti" class="form-control" required>
+            {{-- <optgroup label="Seleccione la sede de la que proviene"> --}}
+                <option value="">Selecione...</option>
+                @foreach ($Sedes as $Sede)  
+                    <option value="{{$Sede->ID_Coti}}">{{$Sede->SedeName}} Cotizacion: N°: {{$Sede->CotiNumero}}</option>
                 @endforeach
             </optgroup>
         </select>

@@ -22,7 +22,7 @@
                 <th>Clasificacion 4741 Y</th>
                 <th>Clasificacion 4741 A</th>
                 <th>Peligrosidad</th>
-                <th>Estado</th>
+                <th>Estado del residuo</th>
                 <th>Hoja de Seguridad</th>
                 <th>Tarj de Emergencia</th>
                 {{-- <th>Auditable</th> --}}
@@ -32,6 +32,7 @@
                 {{-- <th>Actualizado el</th> --}}
                 <th>Ver Más...</th>
                 <th>Editar</th>
+
               </tr>
             </thead>
             <tbody hidden onload="renderTable()" id="readyTable">
@@ -47,18 +48,9 @@
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              {{-- <div class="row">
-                <div class="card text-center" style="width: 18rem; margin-top:3rem;">
-                  <img class="card-img-top rounded-circle mx-auto d-block" src="images/{{$trainer->avatar}}" onerror="this.src='images/default.jpg';" alt="" style="margin:2rem; background-color:#EFEFEF; width:8rem;height:8rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{$cliente->CliShortname}}</h5>
-                    <p class="card-text" style="overflow-y: scroll; max-height:3rem; min-height:3rem;">{{$cliente->CliNit}}</p>
-                    <a href="/clientes/{{$cliente->CliShortname}}" class="btn btn-primary">Ver mas...</a>
-                  </div>
-                </div>
-              </div> --}}
-              
               @foreach($Respels as $respel)
+
+              
               <tr>
                 <td>{{$respel->RespelName}}</td>
                 {{-- <td>{{$respel->RespelDescrip}}</td> --}}
@@ -75,29 +67,32 @@
                 <td>NO</td>
                 @endif --}}
                 <td>{{$respel->CliName}}</td>
-                {{-- <td></td> --}}
                 {{-- <td>{{$respel->created_at}}</td> --}}
                 {{-- <td>{{$respel->updated_at}}</td> --}}
-                <td></td>
                 <td>{{$respel->RespelSlug}}</td>
-                {{-- <td>{{$respel->RespelSlug}}</td> --}}
+                <td>{{$respel->RespelSlug}}</td>
+                
               </tr>
               @endforeach
             </tbody>
             {{-- <tfoot>
             <tr>
               <th>Nombre</th>
-              <th>Descripcion</th>
-              <th>Clasificacion 4741</th>
-              <th>Peligrosidad</th>
-              <th>Estado</th>
-              <th>Hoja de Seguridad</th>
-              <th>Tarj de Emergencia</th>
-              <th>Auditable</th>
-              <th>Generado por</th>
-              <th>Creado el</th>
-              <th>Actualizado el</th>
-              <th>Editar</th>
+                <th>Descripcion</th>
+                <th>Clasificacion 4741 Y</th>
+                <th>Clasificacion 4741 A</th>
+                <th>Peligrosidad</th>
+                <th>Estado del residuo</th>
+                <th>Hoja de Seguridad</th>
+                <th>Tarj de Emergencia</th>
+                <th>Auditable</th>
+                <th>Estado</th>
+                <th>Generado por</th>
+                <th>Creado el</th>
+                <th>Actualizado el</th>
+                <th>Ver Más...</th>
+                <th>Editar</th>
+                <th>Borrar</th>
             </tr>
             </tfoot> --}}
           </table>

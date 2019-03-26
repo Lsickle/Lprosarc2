@@ -28,19 +28,44 @@ Solicitudes de servicios
 							<!-- form start -->
 							<form role="form" action="/solicitud-servicio" method="POST" enctype="multipart/form-data">
 								@csrf
+								<div class="col-md-12">
+										<label for="Sede">Sede</label>
+										<select class="form-control" id="Sede" name="Fk_SolSerTransportador" required>
+											<option value="">Seleccione...</option>
+											@foreach ($Sedes as $Sede)
+												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6"> 
+										<label for="SGenerRespel">Respel</label>										
+										<select id="SGenerRespel" multiple="multiple" name="FK_Respel" class="form-control" style="width: 100%" required>
+											@foreach ($Respels as $Respel)
+											<option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="SGener">Sede Generador</label>
+										<select class="form-control" id="SGener" name="FK_SolSerGenerSede" required>
+											<option value="">Seleccione...</option>
+											@foreach ($GSedes as $GSede)
+												<option value="{{$GSede->ID_GSede}}">{{$GSede->GSedeName}}</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-md-6">
 										<label for="estado">Estado</label>
-										<select class="form-control" id="estado" name="Estado" required="true">
-											<option>Seleccione...</option>
+										<select class="form-control" id="estado" name="SolSerStatus" required="true">
+											<option>Pendiente</option>
 											<option>Aprobada</option>
 											<option>Negada</option>
-											<option>Pendiente</option>
 											<option>Incompleta</option>
 										</select>
 									</div>
 									<div class="col-md-6">
 										<label for="Tipo">Tipo</label>
-										<select class="form-control" id="Tipo" name="Tipo" required="true">
+										<select class="form-control" id="Tipo" name="SolSerTipo" id ="SolSerTipo" required="true">
 											<option>Seleccione...</option>
 											<option>Interno</option>
 											<option>Alquilado</option>
@@ -49,22 +74,23 @@ Solicitudes de servicios
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext3">Frecuencia de recolecta</label>
-										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="Frecuencia">
+										<input type="text" class="form-control" id="soliservicioinputext3" placeholder="15 días" name="SolSerFrecuencia">
 									</div>
 									<div class="col-md-6">
 										<label for="soliservicioinputext4">Nombre del conductor externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="conductor">
+										<input type="text" class="form-control" id="soliservicioinputext4" placeholder="Juan" name="SolSerConducExter">
 									</div>
+									
 									<div class="col-md-6">
 										<label for="soliservicioinputext5">Placa del vehiculo externo</label>
-										<input type="text" class="form-control" id="soliservicioinputext5" placeholder="FDR-756" name="placa">
+										<input type="text" class="form-control" id="soliservicioinputext5" placeholder="FDR-756" name="SolSerVehicExter">
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 										<div class="icheck form-group">
 											<label for="inputcheck">
 												Auditable
 											</label>
-											<input id="inputcheck" type="checkbox" name="auditable">
+											<input id="inputcheck" type="checkbox" name="SolSerAuditable">
 										</div>
 									</div>
 									<div class="col-md-8">
