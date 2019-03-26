@@ -911,29 +911,65 @@ $(document).ready(function(){
     <script>
       $(function() {
         $('#calendar').fullCalendar({
-          themeSystem: 'bootstrap4'
-        });
-      });
-
-    {{-- 
           themeSystem: 'bootstrap4',
-          height:"auto",
-           header: {
-               left:   'prevYear,nextYear',
-               center: 'title',
-               right:  'today prev,next'
+          fixedWeekCount: true,
+          showNonCurrentDates: true,
+          selectable: true,
+          selectHelper: true,
+          /*height: 650,
+          contentHeight: 600,*/
+          aspectRatio: 2.5,
+          header: {
+            left: 'prevYear,nextYear',
+            center: 'title',
+            right: 'prev,month,agendaWeek,agendaDay,next'
+          },
+          footer: {
+            left: 'prevYear,myCustomButton,nextYear',
+            center: 'title',
+            right: 'prev,month,agendaWeek,agendaDay,next'
+          },
+          buttonText: {
+            month:    'Mes',
+            week:     'Semana',
+            day:      'Día',
+            list:     'list'
+          },
+          bootstrapFontAwesome: {
+            close: 'fa-times',
+            prev: 'fa-chevron-left',
+            next: 'fa-chevron-right',
+            prevYear: 'fas fa-caret-square-left',
+            nextYear: 'fas fa-caret-square-right'
+          },
+          dayClick: function(date, jsEvent, view) {
+            // alert('Clicked on: ' + date.format());
+            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+            // alert('Current view: ' + view.name);
+            // change the day's background color just for fun
+            $(this).css('background-color', 'white');
+
+          },
+            events: [
+            {
+              title  : 'event1',
+              start  : '2019-03-15'
             },
-            buttonText: {
-                today : 'Hoy'
+            {
+              title  : 'event2',
+              start  : '2019-03-15',
+              end    : '2019-03-17',
+              color: 'black',
+              textColor: 'yellow'
             },
-            aspectRatio : 2,
-            windowResize: function(view) {
-              alert('The calendar has adjusted to a window resize');
+            {
+              title  : 'event3',
+              start  : '2010-01-09T12:30:00',
+              allDay : false // will make the time show
             }
-          /*dayClick: function() {
-            alert('a day has been clicked!');
-          }*/
-        },'option' , 'contentHeight' , 650) --}}
+          ]
+        },'render');
+      });
     </script>
 
 

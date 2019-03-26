@@ -104,7 +104,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->prepend('<a href="#"><i class="fas fa-truck-moving"></i> <span>Vehiculos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/vehicle', '<i class="fas fa-list-alt"></i> Listar'))
-            ->add(Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> Programación'))
+            ->add(Link::toUrl('/prueba', '<i class="fas fa-calendar-alt"></i> Programación'))
             ->add(Link::toUrl('/vehicle-mantenimiento', '<i class="fas fa-tools"></i> Mantenimiento'))
             ->addClass('treeview-menu')
         )
