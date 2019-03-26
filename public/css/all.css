@@ -6158,6 +6158,7 @@ readers do not read off random characters that represent icons */
 .spinner-ring {
   position: absolute;
   border-radius: 50%;
+  margin: auto;
   border: 0.25rem solid transparent;
 /*border-top-color: #3C8DBC;
   border-left-color: #3C8DBC;
