@@ -32,6 +32,28 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
 
+{{-- slider --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+
+{{-- slider --}}
+<script>
+  $(document).ready(function(){
+    $('#slider').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
 
 {{-- select 2 --}}
 <script>
@@ -866,9 +888,7 @@ $(document).ready(function(){
           {"targets": 3,
             "data": "ID_Rec",
             "render": function ( data, type, row, meta ) {
-                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-              }
-          }
+                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
           ]
         });
       });

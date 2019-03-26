@@ -50,10 +50,13 @@
                   <td>{{$Recurso->RecFormat}}</td>
                   {{-- <td>{{$Recurso->FK_ResGer}}</td> --}}
                   <td>{{$Recurso->ID_SGenerRes}}</td>
-                  @foreach ($Recursos2 as $Recurso2)
+                  <td>{{$Recurso->ID_SGenerRes}}</td>
+                  {{-- @foreach ($Recursos2 as $Recurso2)
+                    <td>{{$Recurso->ID_SGenerRes}}</td>
+                    <td>{{$Recurso2->ID_Rec}}</td>
                     <td>{{$Recurso2->ID_Rec}}</td>
                     @break
-                  @endforeach
+                  @endforeach --}}
                 </tr>
                 @endforeach
               </tbody>

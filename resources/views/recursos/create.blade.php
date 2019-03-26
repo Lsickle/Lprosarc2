@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="nombre">Nombre del recurso</label>
+                                    <label for="nombre">Nombre del Cliente (recurso)</label>
                                     <select class="form-control" id="nombre" name="RecName" required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($Clientes as $Cliente)
@@ -46,7 +46,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="categoria">Categoria</label>
+                                    <label for="categoria">Categoría</label>
                                     <select class="form-control" id="categoria" name="RecCarte" required>
                                         <option value="">Seleccione...</option>
                                         <option>Foto</option>

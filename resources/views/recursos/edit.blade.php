@@ -23,29 +23,41 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							<!-- form start -->
-                        <form role="form" action="/recurso/{{$Recursos->ID_Rec}}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                            <!-- form start -->
+                            {{-- @foreach ($Recursos as $Recurso) --}}
+                                
+                            {{-- <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data"> --}}
+                            <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
+                                @csrf
                             @method('PATCH')
-								{{csrf_field()}}                                
+								{{-- {{csrf_field()}} --}}
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
                                     <select class="form-control" id="SolSer" name="FK_ResGer" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($ResGeners as $ResGener)
-                                            <option value="{{$Recursos->FK_ResGer}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
+                                        @foreach ($SolServs as $SolServ)
+                                            <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}, {{$SolServ->RespelName}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-12">
+                                        <label for="nombre">Nombre del Cliente (recurso)</label>
+                                        <select class="form-control" id="nombre" name="RecName" required>
+                                            <option value="">Seleccione...</option>
+                                            @foreach ($Clientes as $Cliente)
+                                                <option value="{{$Cliente->CliShortname}}">{{$Cliente->CliShortname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                {{-- <div class="col-md-12">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control" id="categoria" name="RecCarte" required>
                                         <option value="{{$Recursos->RecCarte}}">Seleccione...</option>
                                         <option>Foto</option>
                                         <option>Video</option>
                                     </select>
-                                </div>
-                                <div class="col-md-12">
+                                </div> --}}
+                                {{-- <div class="col-md-12">
                                     <label for="tipo">Tipo</label>
                                     <select class="form-control" id="tipo" name="RecTipo" required>
                                         <option value="{{$Recursos->RecTipo}}">Seleccione...</option>
@@ -55,7 +67,7 @@
                                         <option>Reempacado</option>
                                         <option>Mezclado</option>
                                         <option>Destruccion</option>
-                                        {{-- 
+                                        
                                         <option>Datos del Personal</option>
                                         <option>Bascula</option>
                                         <option>Planillas</option>
@@ -66,20 +78,22 @@
                                         <option>Mas Personal de cargue/descargue</option>
                                         <option>Certificacion Especial</option>
                                         <option>tipo de elementos</option>
-                                         --}}
+                                        
                                     </select>
-                                </div>
-                                <div class="col-md-12">
+                                </div> --}}
+                                {{-- <div class="col-md-12">
                                     <label for="soliservicioinputext3">Ruta de guardado</label>
                                     <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple>
-                                </div>
-                                <input hidden value="{{$Recursos->RecName}}" name="RecName">
+                                </div> --}}
+                                {{-- <input hidden value="{{$Recursos->RecName}}" name="RecName"> --}}
                                 <div class="col-md-8">
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Registrar</button>
                                     </div>
                                 </div>
-							</form>
+                            </form>
+                            {{-- @endforeach --}}
+                            
 							</div>					
 							<!-- /.box -->
 						</div>
