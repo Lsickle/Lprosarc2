@@ -58,7 +58,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/jquery-slimscroll/jquery.slimscroll.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
         'node_modules/moment/min/moment-with-locales.js',
-        'node_modules/fullcalendar/dist/fullcalendar.js'
+        'node_modules/fullcalendar/dist/fullcalendar.js',
+        'node_modules/fullcalendar/dist/locale/es.js'
     ], 'public/js/dependencias.js')
    .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',

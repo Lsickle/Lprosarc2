@@ -15295,14 +15295,14 @@
 	return $.fn.dataTable;
 }));
 
-/*! AutoFill 2.3.3
+/*! AutoFill 2.3.2
  * ©2008-2018 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     AutoFill
  * @description Add Excel like click and drag auto-fill options to DataTables
- * @version     2.3.3
+ * @version     2.3.2
  * @file        dataTables.autoFill.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     www.sprymedia.co.uk/contact
@@ -15686,10 +15686,10 @@ $.extend( AutoFill.prototype, {
 		left   = start.column < end.column ? startCell : endCell;
 		right  = start.column < end.column ? endCell   : startCell;
 
-		top    = this._getPosition( top.get(0) ).top;
-		left   = this._getPosition( left.get(0) ).left;
-		height = this._getPosition( bottom.get(0) ).top + bottom.outerHeight() - top;
-		width  = this._getPosition( right.get(0) ).left + right.outerWidth() - left;
+		top    = this._getPosition( top ).top;
+		left   = this._getPosition( left ).left;
+		height = this._getPosition( bottom ).top + bottom.outerHeight() - top;
+		width  = this._getPosition( right ).left + right.outerWidth() - left;
 
 		var select = this.dom.select;
 		select.top.css( {
@@ -15882,8 +15882,9 @@ $.extend( AutoFill.prototype, {
 	_getPosition: function ( node, targetParent )
 	{
 		var
-			currNode = node,
+			currNode = $(node),
 			currOffsetParent,
+			position,
 			top = 0,
 			left = 0;
 
@@ -15892,26 +15893,23 @@ $.extend( AutoFill.prototype, {
 		}
 
 		do {
-			// Don't use jQuery().position() the behaviour changes between 1.x and 3.x for
-			// tables
-			var positionTop = currNode.offsetTop;
-			var positionLeft = currNode.offsetLeft;
+			position = currNode.position();
 
 			// jQuery doesn't give a `table` as the offset parent oddly, so use DOM directly
-			currOffsetParent = $( currNode.offsetParent );
+			currOffsetParent = $( currNode[0].offsetParent );
 
-			top += positionTop + currOffsetParent.scrollTop();
-			left += positionLeft + currOffsetParent.scrollLeft();
+			top += position.top + currOffsetParent.scrollTop();
+			left += position.left + currOffsetParent.scrollLeft();
 
 			top += parseInt( currOffsetParent.css('margin-top') ) * 1;
 			top += parseInt( currOffsetParent.css('border-top-width') ) * 1;
 
 			// Emergency fall back. Shouldn't happen, but just in case!
-			if ( currNode.nodeName.toLowerCase() === 'body' ) {
+			if ( currNode.get(0).nodeName.toLowerCase() === 'body' ) {
 				break;
 			}
 
-			currNode = currOffsetParent.get(0); // for next loop
+			currNode = currOffsetParent; // for next loop
 		}
 		while ( currOffsetParent.get(0) !== targetParent.get(0) )
 
@@ -16031,14 +16029,14 @@ $.extend( AutoFill.prototype, {
 			var editor = dt.editor();
 
 			editor
-				.on( 'submitSuccess.dtaf close.dtaf', function () {
+				.on( 'submitSuccess.dtaf', function () {
 					editor.off( '.dtaf');
 
 					setTimeout( function () {
 						that._mouseup( e );
 					}, 100 );
 				} )
-				.on( 'submitComplete.dtaf preSubmitCancelled.dtaf close.dtaf', function () {
+				.on( 'submitComplete.dtaf preSubmitCancelled.dtaf', function () {
 					editor.off( '.dtaf');
 				} );
 
@@ -16243,7 +16241,6 @@ $.extend( AutoFill.prototype, {
 
 		var dt = this.s.dt;
 		var cell;
-		var columns = dt.columns( this.c.columns ).indexes();
 
 		// Potentially allow modifications to the cells matrix
 		this._emitEvent( 'preAutoFill', [ dt, cells ] );
@@ -16264,9 +16261,7 @@ $.extend( AutoFill.prototype, {
 				for ( var j=0, jen=cells[i].length ; j<jen ; j++ ) {
 					cell = cells[i][j];
 
-					if ( columns.indexOf(cell.index.column) !== -1 ) {
-						cell.cell.data( cell.set );
-					}
+					cell.cell.data( cell.set );
 				}
 			}
 
@@ -16397,7 +16392,7 @@ AutoFill.actions = {
  * @static
  * @type      String
  */
-AutoFill.version = '2.3.3';
+AutoFill.version = '2.3.2';
 
 
 /**
@@ -17929,8 +17924,8 @@ $.fn.dataTable.Api.register( 'colReorder.disable()', function() {
 return ColReorder;
 }));
 
-/*! Buttons for DataTables 1.5.6
- * ©2016-2019 SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables 1.5.4
+ * ©2016-2018 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -17979,15 +17974,6 @@ var _dtButtons = DataTable.ext.buttons;
  */
 var Buttons = function( dt, config )
 {
-	// If not created with a `new` keyword then we return a wrapper function that
-	// will take the settings object for a DT. This allows easy use of new instances
-	// with the `layout` option - e.g. `topLeft: $.fn.dataTable.Buttons( ... )`.
-	if ( !(this instanceof Buttons) ) {
-		return function (settings) {
-			return new Buttons( settings, dt ).container();
-		};
-	}
-
 	// If there is no config set it to an empty object
 	if ( typeof( config ) === 'undefined' ) {
 		config = {};	
@@ -18188,16 +18174,12 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get a button's node of the buttons container if no button is given
-	 * @param  {node} [node] Button node
-	 * @return {jQuery} Button element, or container
+	 * Get a button's node
+	 * @param  {node} node Button node
+	 * @return {jQuery} Button element
 	 */
 	node: function ( node )
 	{
-		if ( ! node ) {
-			return this.dom.container;
-		}
-
 		var button = this._nodeToButton( node );
 		return $(button.node);
 	},
@@ -18491,7 +18473,6 @@ $.extend( Buttons.prototype, {
 		};
 
 		var tag = config.tag || buttonDom.tag;
-		var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
 		var button = $('<'+tag+'/>')
 			.addClass( buttonDom.className )
 			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
@@ -18502,9 +18483,8 @@ $.extend( Buttons.prototype, {
 				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 					action( e, dt, button, config );
 				}
-				if( clickBlurs ) {
-					button.blur();
-				}
+
+				button.blur();
 			} )
 			.on( 'keyup.dtb', function (e) {
 				if ( e.keyCode === 13 ) {
@@ -18571,13 +18551,6 @@ $.extend( Buttons.prototype, {
 		}
 
 		this._addKey( config );
-
-		// Style integration callback for DOM manipulation
-		// Note that this is _not_ documented. It is currently
-		// for style integration only
-		if( this.c.buttonCreated ) {
-			inserter = this.c.buttonCreated( config, inserter );
-		}
 
 		return {
 			conf:         config,
@@ -18874,12 +18847,10 @@ Buttons.background = function ( show, className, fade, insertPoint ) {
 			.addClass( className )
 			.css( 'display', 'none' )
 			.insertAfter( insertPoint )
-			.stop()
 			.fadeIn( fade );
 	}
 	else {
 		$('div.'+className)
-			.stop()
 			.fadeOut( fade, function () {
 				$(this)
 					.removeClass( className )
@@ -19123,7 +19094,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.5.6';
+Buttons.version = '1.5.4';
 
 
 $.extend( _dtButtons, {
@@ -19132,22 +19103,101 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.collection', 'Collection' );
 		},
 		className: 'buttons-collection',
-		init: function ( dt, button, config ) {
-			button.attr( 'aria-expanded', false );
-		},
 		action: function ( e, dt, button, config ) {
+			var host = button;
+			var collectionParent = $(button).parents('div.dt-button-collection');
+			var hostPosition = host.position();
+			var tableContainer = $( dt.table().container() );
+			var multiLevel = false;
+			var insertPoint = host;
+
+			// Remove any old collection
+			if ( collectionParent.length ) {
+				multiLevel = $('.dt-button-collection').position();
+				insertPoint = collectionParent;
+				$('body').trigger( 'click.dtb-collection' );
+			}
+
+			if ( insertPoint.parents('body')[0] !== document.body ) {
+				insertPoint = document.body.lastChild;
+			}
+
+			config._collection.find('.dt-button-collection-title').remove();
+			config._collection.prepend('<div class="dt-button-collection-title">'+config.collectionTitle+'</div>');
+
+			config._collection
+				.addClass( config.collectionLayout )
+				.css( 'display', 'none' )
+				.insertAfter( insertPoint )
+				.fadeIn( config.fade );
+
+			var position = config._collection.css( 'position' );
+
+			if ( multiLevel && position === 'absolute' ) {
+				config._collection.css( {
+					top: multiLevel.top,
+					left: multiLevel.left
+				} );
+			}
+			else if ( position === 'absolute' ) {
+				config._collection.css( {
+					top: hostPosition.top + host.outerHeight(),
+					left: hostPosition.left
+				} );
+
+				// calculate overflow when positioned beneath
+				var tableBottom = tableContainer.offset().top + tableContainer.height();
+				var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
+				var bottomOverflow = listBottom - tableBottom;
+				
+				// calculate overflow when positioned above
+				var listTop = hostPosition.top - config._collection.outerHeight();
+				var tableTop = tableContainer.offset().top;
+				var topOverflow = tableTop - listTop;
+				
+				// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
+				if (bottomOverflow > topOverflow || config.dropup) {
+					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
+				}
+
+				// Right alignment is enabled on a class, e.g. bootstrap:
+				// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
+				if ( config._collection.hasClass( config.rightAlignClassName ) ) {
+					config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
+				}
+
+				// Right alignment in table container
+				var listRight = hostPosition.left + config._collection.outerWidth();
+				var tableRight = tableContainer.offset().left + tableContainer.width();
+				if ( listRight > tableRight ) {
+					config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
+				}
+
+				// Right alignment to window
+				var listOffsetRight = host.offset().left + config._collection.outerWidth();
+				if ( listOffsetRight > $(window).width() ) {
+					config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
+				}
+			}
+			else {
+				// Fix position - centre on screen
+				var top = config._collection.height() / 2;
+				if ( top > $(window).height() / 2 ) {
+					top = $(window).height() / 2;
+				}
+
+				config._collection.css( 'marginTop', top*-1 );
+			}
+
+			if ( config.background ) {
+				Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
+			}
+
 			var close = function () {
-				dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes().each( function() {
-					var collection = $(this).siblings('.dt-button-collection');
-
-					if ( collection.length ) {
-						collection.stop().fadeOut( config.fade, function () {
-							collection.detach();
-						} );
-					}
-
-					$(this).attr( 'aria-expanded', 'false' );
-				});
+				config._collection
+				.fadeOut( config.fade, function () {
+					config._collection.detach();
+				} );
 
 				$('div.dt-button-background').off( 'click.dtb-collection' );
 				Buttons.background( false, config.backgroundClassName, config.fade, insertPoint );
@@ -19156,134 +19206,36 @@ $.extend( _dtButtons, {
 				dt.off( 'buttons-action.b-internal' );
 			};
 
-			var wasExpanded = button.attr( 'aria-expanded' ) === 'true';
+			// Need to break the 'thread' for the collection button being
+			// activated by a click - it would also trigger this event
+			setTimeout( function () {
+				// This is bonkers, but if we don't have a click listener on the
+				// background element, iOS Safari will ignore the body click
+				// listener below. An empty function here is all that is
+				// required to make it work...
+				$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
 
-			close();
+				$('body')
+					.on( 'click.dtb-collection', function (e) {
+						// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+						var back = $.fn.addBack ? 'addBack' : 'andSelf';
 
-			if (!wasExpanded) {
-				var host = button;
-				var collectionParent = $(button).parents('div.dt-button-collection');
-				var hostPosition = host.position();
-				var tableContainer = $( dt.table().container() );
-				var multiLevel = false;
-				var insertPoint = host;
-
-				button.attr( 'aria-expanded', 'true' );
-
-				// Remove any old collection
-				if ( collectionParent.length ) {
-					multiLevel = $('.dt-button-collection').position();
-					insertPoint = collectionParent;
-					$('body').trigger( 'click.dtb-collection' );
-				}
-
-				if ( insertPoint.parents('body')[0] !== document.body ) {
-					insertPoint = document.body.lastChild;
-				}
-
-				config._collection.find('.dt-button-collection-title').remove();
-				config._collection.prepend('<div class="dt-button-collection-title">'+config.collectionTitle+'</div>');
-
-				config._collection
-					.addClass( config.collectionLayout )
-					.css( 'display', 'none' )
-					.insertAfter( insertPoint )
-					.stop()
-					.fadeIn( config.fade );
-
-				var position = config._collection.css( 'position' );
-
-				if ( multiLevel && position === 'absolute' ) {
-					config._collection.css( {
-						top: multiLevel.top,
-						left: multiLevel.left
-					} );
-				}
-				else if ( position === 'absolute' ) {
-					config._collection.css( {
-						top: hostPosition.top + host.outerHeight(),
-						left: hostPosition.left
-					} );
-
-					// calculate overflow when positioned beneath
-					var tableBottom = tableContainer.offset().top + tableContainer.height();
-					var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
-					var bottomOverflow = listBottom - tableBottom;
-
-					// calculate overflow when positioned above
-					var listTop = hostPosition.top - config._collection.outerHeight();
-					var tableTop = tableContainer.offset().top;
-					var topOverflow = tableTop - listTop;
-
-					// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-					if (bottomOverflow > topOverflow || config.dropup) {
-						config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
-					}
-
-					// Right alignment is enabled on a class, e.g. bootstrap:
-					// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
-					if ( config._collection.hasClass( config.rightAlignClassName ) ) {
-						config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
-					}
-
-					// Right alignment in table container
-					var listRight = hostPosition.left + config._collection.outerWidth();
-					var tableRight = tableContainer.offset().left + tableContainer.width();
-					if ( listRight > tableRight ) {
-						config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
-					}
-
-					// Right alignment to window
-					var listOffsetRight = host.offset().left + config._collection.outerWidth();
-					if ( listOffsetRight > $(window).width() ) {
-						config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
-					}
-				}
-				else {
-					// Fix position - centre on screen
-					var top = config._collection.height() / 2;
-					if ( top > $(window).height() / 2 ) {
-						top = $(window).height() / 2;
-					}
-
-					config._collection.css( 'marginTop', top*-1 );
-				}
-
-				if ( config.background ) {
-					Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
-				}
-
-				// Need to break the 'thread' for the collection button being
-				// activated by a click - it would also trigger this event
-				setTimeout( function () {
-					// This is bonkers, but if we don't have a click listener on the
-					// background element, iOS Safari will ignore the body click
-					// listener below. An empty function here is all that is
-					// required to make it work...
-					$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
-
-					$('body')
-						.on( 'click.dtb-collection', function (e) {
-							// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-							var back = $.fn.addBack ? 'addBack' : 'andSelf';
-
-							if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-								close();
-							}
-						} )
-						.on( 'keyup.dtb-collection', function (e) {
-							if ( e.keyCode === 27 ) {
-								close();
-							}
-						} );
-
-					if ( config.autoClose ) {
-						dt.on( 'buttons-action.b-internal', function () {
+						if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
 							close();
-						} );
-					}
-				}, 10 );
-			}
+						}
+					} )
+					.on( 'keyup.dtb-collection', function (e) {
+						if ( e.keyCode === 27 ) {
+							close();
+						}
+					} );
+
+				if ( config.autoClose ) {
+					dt.on( 'buttons-action.b-internal', function () {
+						close();
+					} );
+				}
+			}, 10 );
 		},
 		background: true,
 		collectionLayout: '',
@@ -19371,7 +19323,7 @@ $.extend( _dtButtons, {
 			init: function ( dt, node, conf ) {
 				var that = this;
 				dt.on( 'length.dt'+conf.namespace, function () {
-					that.text( conf.text );
+					that.text( text( dt ) );
 				} );
 			},
 			destroy: function ( dt, node, conf ) {
@@ -19874,23 +19826,16 @@ $(document).on( 'init.dt plugin-init.dt', function (e, settings) {
 	}
 } );
 
-function _init ( settings ) {
-	var api = new DataTable.Api( settings );
-	var opts = api.init().buttons || DataTable.defaults.buttons;
-
-	return new Buttons( api, opts ).container();
-}
-
 // DataTables `dom` feature option
 DataTable.ext.feature.push( {
-	fnInit: _init,
+	fnInit: function( settings ) {
+		var api = new DataTable.Api( settings );
+		var opts = api.init().buttons || DataTable.defaults.buttons;
+
+		return new Buttons( api, opts ).container();
+	},
 	cFeature: "B"
 } );
-
-// DataTables 2 layout feature
-if ( DataTable.ext.features ) {
-	DataTable.ext.features.register( 'buttons', _init );
-}
 
 
 return Buttons;
@@ -21110,19 +21055,19 @@ DataTable.ext.buttons.excelHtml5 = {
 			} ) );
 		}
 
+		// Auto filter for columns
+		$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
+			attr: {
+				ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+			}
+		} ) );
+
 		// Workbook modifications
 		var workbook = xlsx.xl['workbook.xml'];
 
 		$( 'sheets sheet', workbook ).attr( 'name', _sheetname( config ) );
 
-		// Auto filter for columns
 		if ( config.autoFilter ) {
-			$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
-				attr: {
-					ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
-				}
-			} ) );
-
 			$('definedNames', workbook).append( _createNode( workbook, 'definedName', {
 				attr: {
 					name: '_xlnm._FilterDatabase',
@@ -29838,7 +29783,7 @@ Api.register( 'scroller.page()', function() {
 return Scroller;
 }));
 
-/*! Select for DataTables 1.3.0
+/*! Select for DataTables 1.2.7
  * 2015-2018 SpryMedia Ltd - datatables.net/license/mit
  */
 
@@ -29846,7 +29791,7 @@ return Scroller;
  * @summary     Select for DataTables
  * @description A collection of API methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
- * @version     1.3.0
+ * @version     1.2.7
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     datatables.net/forums
@@ -29894,7 +29839,7 @@ var DataTable = $.fn.dataTable;
 // Version information for debugger
 DataTable.select = {};
 
-DataTable.select.version = '1.3.0';
+DataTable.select.version = '1.2.7';
 
 DataTable.select.init = function ( dt ) {
 	var ctx = dt.settings()[0];
@@ -29939,10 +29884,6 @@ DataTable.select.init = function ( dt ) {
 
 		if ( opts.style !== undefined ) {
 			style = opts.style;
-			setStyle = true;
-		}
-		else {
-			style = 'os';
 			setStyle = true;
 		}
 
@@ -30197,7 +30138,7 @@ function enableMouseSelection ( dt )
 
 			// If text was selected (click and drag), then we shouldn't change
 			// the row's selected state
-			if ( matchSelection ) {
+			if ( window.getSelection ) {
 				var selection = window.getSelection();
 
 				// If the element that contains the selection is not in the table, we can ignore it
@@ -30210,7 +30151,7 @@ function enableMouseSelection ( dt )
 			}
 
 			var ctx = dt.settings()[0];
-			var wrapperClass = $.trim(dt.settings()[0].oClasses.sWrapper).replace(/ +/g, '.');
+			var wrapperClass = dt.settings()[0].oClasses.sWrapper.replace(/ /g, '.');
 
 			// Ignore clicks inside a sub-table
 			if ( $(e.target).closest('div.'+wrapperClass)[0] != dt.table().container() ) {
