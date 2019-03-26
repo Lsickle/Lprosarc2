@@ -17,10 +17,10 @@ class CreateProgramacionvehiculoTable extends Migration
             $table->increments('ID_ProgVeh');
             $table->timestamps();
             $table->date('ProgVehFecha');
-            $table->integer('progVehKm');
+            $table->integer('progVehKm')->nullable();
             $table->boolean('ProgVehTurno');
             $table->boolean('ProgVehtipo');
-            $table->dateTime('ProgVehEntrada');
+            $table->dateTime('ProgVehEntrada')->nullable();
             $table->dateTime('ProgVehSalida');
             $table->unsignedInteger('FK_ProgVehiculo');
             $table->unsignedInteger('FK_ProgMan');
