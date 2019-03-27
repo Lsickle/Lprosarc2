@@ -14,6 +14,11 @@ class Cotizacion extends Model
 
     public function Sede()
 	{
-	 return $this->belongsTo('App\Cotizacion', 'ID_Sede', 'id');
+	 return $this->belongsTo('App\Sede', 'FK_CotiSede', 'ID_Sede');
+	}
+
+	public function respels()
+	{
+	 return $this->hasMany('App\respel', 'ID_Respel', 'id');
 	}
 }

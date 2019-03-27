@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Cotizacion
+    Nueva Cotizacion
 @endsection
 @section('contentheader_title')
-Cotizacion
+    Nueva Cotizacion
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -28,26 +28,29 @@ Cotizacion
                             
                             <!-- /.box-header -->
                             <!-- form start -->
-                            <form role="form" action="/ordenCompra" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="/cotizacion" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="box-body">
-                                    
+
                                     <div class="col-md-6">
-                                        <label for="cotizacioninputext1">Numero de cotizacion</label>
-                                        <input type="text" class="form-control" id="cotizacioninputext1" placeholder="0000010" name="numcotizacion">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="program">Estado de cotizacion</label>
-                                        <select class="form-control" id="program" name="cotizacion" required="true">
-                                            <option>Seleccione...</option>
-                                            <option>Aprobada</option>
-                                            <option>Aprobada Parcial</option>
+                                        <label for="selectsede">Sede del Cliente</label>
+                                        <select class="form-control" id="selectsede" name="FK_CotiSede" required="true">
+                                            @foreach($sedes as $sede)
+                                                <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
+
                                     <div class="col-md-6">
-                                        <label for="cotizacioninputext3">Subtotal de cotizacion</label>
-                                        <input type="number" class="form-control" id="cotizacioninputext3" placeholder="988888" name="subtotal" max="999.999.999.999">
+                                        <label for="CotizacionStatus">Status de cotizacion</label>
+                                        <select class="form-control" id="CotizacionStatus" name="CotiStatus" disabled >
+                                            <option>Pendiente</option>
+                                            <option>Aprobada</option>
+                                            <option>Aprobada Parcial</option>
+                                            <option>Rechazada</option>
+                                        </select>
                                     </div>
+                                 
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">

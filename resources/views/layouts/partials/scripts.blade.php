@@ -19,16 +19,14 @@
 )
 	<script>
 		$(document).ready(function() {
-			var test = "<?php echo Route::currentRouteName(); ?>";
-			window.alert(test);
+
+			/*var rol defino el rol del usuario*/
 			var rol = "<?php echo Auth::user()->UsRol; ?>";
 
+			/*var botoncito define los botones que se usaran si el usuario es programador*/
 			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
-			if (rol=='Programador') {
-				console.log(botoncito);
-			};
-
+			/*funcion para renderizar la tabla de cotizacion.index*/
 			$('#cotizaciones').DataTable({
 				responsive: true,
 				select: true,
@@ -52,6 +50,7 @@
 					}  
 				} ]
 			});
+
 			/*funcion para resaltar las busquedas*/
 			var table = $('#cotizaciones').DataTable();
 
@@ -922,9 +921,7 @@ $(document).ready(function(){
             echo Auth::user()->UsRol;
           ?>";
       botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-      if (rol=='Programador') {
-        console.log(botoncito);
-      };
+      
     $(document).ready(function () {
       $('#sedes').DataTable({
           responsive: true,
@@ -1014,9 +1011,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#generadores').DataTable({
               // pagingType: 'scrolling',
@@ -1071,9 +1066,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#sgeneradores').DataTable({
               // pagingType: 'scrolling',

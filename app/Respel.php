@@ -17,9 +17,9 @@ class Respel extends Model
 	    return 'RespelSlug';
     }
     
-	public function Sede()
+	public function Cotizacion()
 	{
-	 return $this->belongsTo('App\Cotizacion', 'ID_Coti', 'id');
+	 return $this->belongsTo('App\Cotizacion', 'FK_RespelCoti', 'ID_Coti');
 	}
 
     public function Requerimiento(){

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Sede;
+use App\Cotizacion;
+use App\Respel;
 
 class CotizacionController extends Controller
 {
@@ -46,8 +49,34 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        // $residuos = DB::table('respels')
+        //         ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
+        //         ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+        //         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        //         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+        //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+        //         ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+        //         ->where('RespelStatus', '=', 'Aprobado')
+        //         ->get();
+
+
+        // $residuos = Respel::with(['Cotizacion'])->get();
+
+        $residuos = Respel::with(['cotizacion.sede.clientes', 'cotizacion.sede.municipios.departamento'])
+                ->select(
+                    'respels.RespelName',
+                    'respels.FK_RespelCoti'
+
+                ) 
+                ->where('RespelStatus', '=', 'Aprobado')
+                ->get();
+        // $sedes=Sede::All();
+        // return $sedes;
+
+        return $residuos;
+        // return $sql;
+        return view('cotizacion.create', compact('residuos'));
     }
 
     /**
@@ -58,7 +87,20 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
+        $cotizacion = new Cotizacion();
+        $cotizacion->FK_CotiSede = $request->input('FK_CotiSede');
+       
+        $Declaration->save();
+
+        $log = new audit();
+        $log->AuditTabla="cotizacion";
+        $log->AuditType="Creado";
+        $log->AuditRegistro=$cotizacion->ID_Coti;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        return redirect()->route('cotizacion.index');
     }
 
     /**

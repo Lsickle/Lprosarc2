@@ -9,7 +9,7 @@ Cotizaciones
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">Lista Cotizaciones</h3>
-					<a href="/cotizaciones/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<a href="/cotizacion/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -47,7 +47,11 @@ Cotizaciones
 								<td>{{$cotizacion->CotiFechaVencimiento}}</td>
 								<td>{{$cotizacion->CotiVencida}}</td>
 								<td>{{$cotizacion->SedeAddress}}</td>
-								<td>{{$cotizacion->MunName.' - '.$cotizacion->DepartName}}</td>
+								@if($cotizacion->MunName=='Bogotá D.C.')
+									<td>{{$cotizacion->MunName}}</td>
+								@else()
+									<td>{{$cotizacion->MunName.' - '.$cotizacion->DepartName}}</td>
+								@endif
 								<td>{{$cotizacion->CliName}}</td>
 								<td>{{$cotizacion->SedeCelular}}</td>
 								<td>{{$cotizacion->CotiPrecioSubtotal}}</td>
