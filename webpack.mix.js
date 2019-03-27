@@ -33,6 +33,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
+        'node_modules/select2/dist/css/select2.css',
         'node_modules/fullcalendar/dist/fullcalendar.css'
     ], 'public/css/dependencias.css')
    .combine([
@@ -57,6 +58,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
         'node_modules/jquery-slimscroll/jquery.slimscroll.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
+        'node_modules/select2/dist/js/select2.full.js',
         'node_modules/moment/min/moment-with-locales.js',
         'node_modules/fullcalendar/dist/fullcalendar.js',
         'node_modules/fullcalendar/dist/locale/es.js'

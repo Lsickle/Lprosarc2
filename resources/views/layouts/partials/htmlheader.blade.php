@@ -24,9 +24,7 @@
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    {{-- select 2 --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-{{-- script de idioma --}}
+    {{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
         window.trans = @php
@@ -42,6 +40,8 @@
             // echo $trans;
         @endphp
     </script>
+    
+    {{-- script para validar si javascript esta desactivado en el navegador --}}
     <noscript>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}
