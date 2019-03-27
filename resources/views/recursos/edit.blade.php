@@ -23,10 +23,6 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-                            <!-- form start -->
-                            {{-- @foreach ($Recursos as $Recurso) --}}
-                                
-                            {{-- <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data"> --}}
                             <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
@@ -50,52 +46,12 @@
                                         </select>
                                     </div>
                                     <input hidden value="0" name="number">
-                                {{-- <div class="col-md-12">
-                                    <label for="categoria">Categoria</label>
-                                    <select class="form-control" id="categoria" name="RecCarte" required>
-                                        <option value="{{$Recursos->RecCarte}}">Seleccione...</option>
-                                        <option>Foto</option>
-                                        <option>Video</option>
-                                    </select>
-                                </div> --}}
-                                {{-- <div class="col-md-12">
-                                    <label for="tipo">Tipo</label>
-                                    <select class="form-control" id="tipo" name="RecTipo" required>
-                                        <option value="{{$Recursos->RecTipo}}">Seleccione...</option>
-                                        <option>Cargue</option>
-                                        <option>Descargue</option>
-                                        <option>Pesaje</option>
-                                        <option>Reempacado</option>
-                                        <option>Mezclado</option>
-                                        <option>Destruccion</option>
-                                        
-                                        <option>Datos del Personal</option>
-                                        <option>Bascula</option>
-                                        <option>Planillas</option>
-                                        <option>Devolucion de elementos</option>
-                                        <option>Alistamiento de residuos</option>
-                                        <option>personal con Capacitacion</option>
-                                        <option>vehiculo con Plataforma</option>
-                                        <option>Mas Personal de cargue/descargue</option>
-                                        <option>Certificacion Especial</option>
-                                        <option>tipo de elementos</option>
-                                        
-                                    </select>
-                                </div> --}}
-                                {{-- <div class="col-md-12">
-                                    <label for="soliservicioinputext3">Ruta de guardado</label>
-                                    <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple>
-                                </div> --}}
-                                {{-- <input hidden value="{{$Recursos->RecName}}" name="RecName"> --}}
                                 <div class="col-md-8">
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Registrar</button>
                                     </div>
                                 </div>
                             </form>
-                            {{-- @endforeach --}}
-                            
-							</div>					
 							<!-- /.box -->
 						</div>
 						<!-- /.box-body -->

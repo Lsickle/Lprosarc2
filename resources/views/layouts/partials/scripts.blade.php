@@ -41,15 +41,9 @@
 <script>
   $(document).ready(function(){
     $('#CargueRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
       slideWidth: 1200
     });
   });
@@ -57,15 +51,9 @@
 <script>
   $(document).ready(function(){
     $('#DescargueRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
       slideWidth: 1200
     });
   });
@@ -73,15 +61,9 @@
 <script>
   $(document).ready(function(){
     $('#PesajeRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
       slideWidth: 1200
     });
   });
@@ -89,15 +71,9 @@
 <script>
   $(document).ready(function(){
     $('#ReempacadoRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
       slideWidth: 1200
     });
   });
@@ -105,15 +81,9 @@
 <script>
   $(document).ready(function(){
     $('#MezcladoRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
       slideWidth: 1200
     });
   });
@@ -121,15 +91,69 @@
 <script>
   $(document).ready(function(){
     $('#DestruccionRec').bxSlider({
-      // auto: true,
-      // autoControls: true,
-      // stopAutoOnClick: true,
-      // pager: true,
-      // controls: false,
       mode: 'fade',
       captions: true,
       adaptiveHeight: true,
-      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#CargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
       slideWidth: 1200
     });
   });
