@@ -49,6 +49,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <input hidden value="0" name="number">
                                 {{-- <div class="col-md-12">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control" id="categoria" name="RecCarte" required>

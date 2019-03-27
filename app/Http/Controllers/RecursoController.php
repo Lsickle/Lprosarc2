@@ -72,16 +72,12 @@ class RecursoController extends Controller
             $name = time().$file->getClientOriginalName();
             $Extension = $file->extension();
             $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
-            // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
             $Src = 'Recursos/'.$request->input("RecName").time();
-            // $Folder = $request->input("RecName").time();
-            $Folder = $name;
             
-            // return $Folder;
             $Recurso->RecName = $request->input("RecName");
             $Recurso->RecTipo = $request->input("RecTipo");
             $Recurso->RecCarte = $request->input("RecCarte");
-            $Recurso->RecRmSrc = $Folder;
+            $Recurso->RecRmSrc = $name;
             $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
             $Recurso->RecSrc = $Src;
             $Recurso->RecFormat = '.'.$Extension;
@@ -98,17 +94,19 @@ class RecursoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->first();
+        
         $Recursos = DB::table('recursos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
-            ->select('recursos.*')
-            ->where('FK_ResGer', '=', $id)
+            ->select('recursos.*', 'residuos_geners.ID_SGenerRes')
+            ->where('FK_ResGer', $id)
             ->get();
-            
-        return view('recursos.show', compact('Recursos'));
-    }
 
+        return view('recursos.show', compact('Recursos', 'ResGeners'));
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -142,22 +140,51 @@ class RecursoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Recursos = Recurso::where('FK_ResGer', $id)->first();
+        if($request->input("number") == 0){
+         $Recursos = Recurso::where('FK_ResGer', $id)->first();
         rename(public_path($Recursos->RecSrc), 'Recursos/'.$request->input("RecName").time());
 
         $Recurso = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName") ,'RecSrc' => 'Recursos/'.$request->input("RecName").time()]);
 
         $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->update(['FK_SolSer' => $request->input("FK_SolSer")]);
+            $log = new audit();
+            $log->AuditTabla="residuos_geners y recurso";
+            $log->AuditType="Modificado";
+            $log->AuditRegistro = $ResGeners->ID_SGenerRes;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$request->all();
+            $log->save();
 
-        $log = new audit();
-        $log->AuditTabla="residuos_geners y recurso";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro = $ResGeners->ID_SGenerRes;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
+        }
+        if($request->input("number") == 1){
+            $Recs = Recurso::where('FK_ResGer', $id)->first();
+        // return $request;
+        if ($request->hasfile('RecSrc')) {
+            foreach($request->RecSrc as $file){ 
+            
+            $Recur = new Recurso();
+            
+            $Recur->RecTipo = $request->input("RecTipo");
+            $Recur->RecCarte = $request->input("RecCarte");
+            $Recur->RecName = $Recs->RecName;
+            
+            $name = time().$file->getClientOriginalName();
+            $Extension = $file->extension();
+            $file->move(public_path($Recs->RecSrc),$name);
+            $Recur->RecRmSrc = $name;
+            $Recur->SlugRec = 'Slug'.$name;
+            $Recur->RecSrc = $Recs->RecSrc;
+            $Recur->RecFormat = '.'.$Extension;
+            $Recur->FK_ResGer = $Recs->FK_ResGer;
+            $Recur->save();
+            }
+        }
+        // return redirect()->route('recurso.show');
+        }
         return redirect()->route('recurso.index');
+
+        
     }
 
     /**

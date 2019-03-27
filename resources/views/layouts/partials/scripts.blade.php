@@ -40,7 +40,87 @@
 {{-- slider --}}
 <script>
   $(document).ready(function(){
-    $('#slider').bxSlider({
+    $('#CargueRec').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueRec').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeRec').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoRec').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoRec').bxSlider({
+      // auto: true,
+      // autoControls: true,
+      // stopAutoOnClick: true,
+      // pager: true,
+      // controls: false,
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      // video:true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionRec').bxSlider({
       // auto: true,
       // autoControls: true,
       // stopAutoOnClick: true,
