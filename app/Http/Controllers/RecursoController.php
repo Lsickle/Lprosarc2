@@ -65,29 +65,30 @@ class RecursoController extends Controller
     public function store(Request $request)
     {
         if ($request->hasfile('RecSrc')) {
-
-        foreach($request->RecSrc as $file){ 
-        
-        $Recurso = new Recurso();
-        
-        $name = time().$file->getClientOriginalName();
-        $Extension = $file->extension();
-        $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
-        $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
-        $Folder = $request->input("RecName").time();
-        
-        // return $Folder;
-        $Recurso->RecName = $request->input("RecName");
-        $Recurso->RecTipo = $request->input("RecTipo");
-        $Recurso->RecCarte = $request->input("RecCarte");
-        $Recurso->RecRmSrc = $Folder;
-        $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
-        $Recurso->RecSrc = $Src;
-        $Recurso->RecFormat = '.'.$Extension;
-        $Recurso->FK_ResGer = $request->input("FK_ResGer");
-        $Recurso->save();
+            foreach($request->RecSrc as $file){ 
+            
+            $Recurso = new Recurso();
+            
+            $name = time().$file->getClientOriginalName();
+            $Extension = $file->extension();
+            $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
+            // $Src = 'Recursos/'.$request->input("RecName").time().'/'.$name;
+            $Src = 'Recursos/'.$request->input("RecName").time();
+            // $Folder = $request->input("RecName").time();
+            $Folder = $name;
+            
+            // return $Folder;
+            $Recurso->RecName = $request->input("RecName");
+            $Recurso->RecTipo = $request->input("RecTipo");
+            $Recurso->RecCarte = $request->input("RecCarte");
+            $Recurso->RecRmSrc = $Folder;
+            $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
+            $Recurso->RecSrc = $Src;
+            $Recurso->RecFormat = '.'.$Extension;
+            $Recurso->FK_ResGer = $request->input("FK_ResGer");
+            $Recurso->save();
+            }
         }
-    }
         return redirect()->route('recurso.index');
     }
 
@@ -129,7 +130,7 @@ class RecursoController extends Controller
         // // ->where('residuos_geners.ID_SGenerRes', $id)
         // ->get();
 
-        return view('recursos.edit', compact('ResGeners', 'Clientes', 'GenerRes', 'SolServs'));
+        return view('recursos.edit', compact('ResGeners', 'Clientes', 'SolServs'));
     }
 
     /**
@@ -141,11 +142,12 @@ class RecursoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Recursos = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName")]);
+        $Recursos = Recurso::where('FK_ResGer', $id)->first();
+        rename(public_path($Recursos->RecSrc), 'Recursos/'.$request->input("RecName").time());
 
-        $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->first();
-        $ResGeners->FK_SolSer = $request->input("FK_SolSer");
-        $ResGeners->save(); 
+        $Recurso = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName") ,'RecSrc' => 'Recursos/'.$request->input("RecName").time()]);
+
+        $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->update(['FK_SolSer' => $request->input("FK_SolSer")]);
 
         $log = new audit();
         $log->AuditTabla="residuos_geners y recurso";

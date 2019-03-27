@@ -57,7 +57,7 @@
                                                 @foreach ($Recursos as $Recurso)
                                                 @if ($Recurso->RecTipo == 'Cargue')
                                                 <div class="col-md-2">
-                                                    <img src="{{ asset($Recurso->RecSrc) }}" height="auto" width="100%" max-width="1200">
+                                                    <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
                                                 </div>
                                                 @endif
                                                 @endforeach  
