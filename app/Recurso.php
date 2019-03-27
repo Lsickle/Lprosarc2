@@ -8,9 +8,9 @@ class Recurso extends Model
 {
     protected $table = 'recursos';
 
-    protected $fillable = ['RecName', 'RecCarte', 'RecTipo','RecRmSrc', 'RecSrc', 'RecFormat', 'FK_RecSol'];
+    protected $fillable = ['RecName', 'RecCarte', 'RecTipo','RecRmSrc', 'RecSrc', 'RecFormat', 'SlugRec', 'FK_RecSol'];
 
-    public $primaryKey = 'ID_Rec';
+    protected $primaryKey = 'ID_Rec';
 
     public function SolicitudResiduos()
     {

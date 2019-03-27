@@ -28,15 +28,15 @@
                                 
                             {{-- <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data"> --}}
                             <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
+                                @method('PUT')
                                 @csrf
-                            @method('PATCH')
-								{{-- {{csrf_field()}} --}}
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
-                                    <select class="form-control" id="SolSer" name="FK_ResGer" required>
+                                    <select class="form-control" id="SolSer" name="FK_SolSer" required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($SolServs as $SolServ)
-                                            <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}, {{$SolServ->RespelName}}</option>
+                                            {{-- <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}, {{$SolServ->RespelName}}</option> --}}
+                                            <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}</option>
                                         @endforeach
                                     </select>
                                 </div>

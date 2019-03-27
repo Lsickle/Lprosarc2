@@ -116,40 +116,20 @@ class RecursoController extends Controller
      */
     public function edit($id)
     {
-        // $ResGeners = DB::table('residuos_geners')
-        // ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-        // ->select('respels.RespelName', 'residuos_geners.*')
-        // ->where('residuos_geners.ID_SGenerRes', $id)
-        // ->get();
-
         $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->first();
-        // $GenerRes = DB::table('residuos_geners')
+
+        $Clientes = cliente::all();
+
+        $SolServs = SolicitudServicio::all();
+
+        // $SolServs = DB::table('solicitud_servicios')
+        // ->join('residuos_geners', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_Respel')
         // ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-        // ->select('respels.RespelName', 'residuos_geners.*')
+        // ->select('respels.RespelName', 'solicitud_servicios.*')
         // // ->where('residuos_geners.ID_SGenerRes', $id)
         // ->get();
 
-        $SolServs = DB::table('solicitud_servicios')
-        ->join('residuos_geners', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_Respel')
-        ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-        ->select('respels.RespelName', 'solicitud_servicios.*')
-        // ->where('residuos_geners.ID_SGenerRes', $id)
-        ->get();
-
-        // $SolServs = SolicitudServicio::all();
-
-        $Clientes = cliente::all();
-        
-        $Recursos = DB::table('recursos')
-        ->join('residuos_geners', 'recursos.FK_ResGer', '=', 'residuos_geners.ID_SGenerRes')
-        ->select('recursos.*')
-        ->where('recursos.FK_ResGer', $id)
-        
-        ->get();
-
-        // return $id;       
-        
-        return view('recursos.edit', compact('Recursos', 'ResGeners', 'Clientes', 'GenerRes', 'SolServs'));
+        return view('recursos.edit', compact('ResGeners', 'Clientes', 'GenerRes', 'SolServs'));
     }
 
     /**
@@ -161,35 +141,16 @@ class RecursoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Recursos = Recurso::where('ID_Rec', $id)->first();
+        $Recursos = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName")]);
 
-        // return $request;
-        if ($request->hasfile('RecSrc')) {
-
-            foreach($request->RecSrc as $file){ 
-
-            // $name = time().$file->getClientOriginalName();
-            // $Extension = $file->extension();
-            // $Global=$file->move(public_path().'/Recursos/'.$Recursos->RecRmSrc,$name);
-            // $Src = 'Recursos/'.$Recursos->RecRmSrc.time().'/'.$name;
-
-            $Recurso = new Recurso();
-            $Recurso->RecTipo = $Recurso->RecTipoinput;
-            $Recurso->RecCarte = $Recurso->RecCarteinput;
-            $Recurso->RecSrc = $Recurso->RecSrc;
-            $Recurso->RecFormat =$Recurso->RecFormat;
-            $Recurso->RecRmSrc = $Recursos->RecRmSrc;
-            $Recurso->RecName = $Recursos->RecName;
-            $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
-            $Recurso->FK_ResGer = $request->input("FK_ResGer");
-            $Recurso->save();
-            }
-        }
+        $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->first();
+        $ResGeners->FK_SolSer = $request->input("FK_SolSer");
+        $ResGeners->save(); 
 
         $log = new audit();
-        $log->AuditTabla="recursos";
+        $log->AuditTabla="residuos_geners y recurso";
         $log->AuditType="Modificado";
-        $log->AuditRegistro = $Recurso->ID_Rec;
+        $log->AuditRegistro = $ResGeners->ID_SGenerRes;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
