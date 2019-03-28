@@ -50,7 +50,45 @@
                                             <option>Rechazada</option>
                                         </select>
                                     </div>
-                                 
+
+                                    {{-- residuos adjuntables a la cotizacion --}}
+                                    <div>
+                                        <table id="RespelTable" class="table table-bordered table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th>Nombre</th>
+                                              <th>Clasificacion 4741 Y</th>
+                                              <th>Clasificacion 4741 A</th>
+                                              <th>Peligrosidad</th>
+                                              <th>Estado del residuo</th>
+                                              <th>Hoja de Seguridad</th>
+                                              <th>Tarj de Emergencia</th>
+                                              <th>Estado</th>
+                                              <th>Generado por</th>
+                                              <th>Seleccionar</th>
+                                              <th>Editar</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody hidden onload="renderTable()" id="readyTable">
+                                            @include('layouts.partials.spinner')
+                                            @foreach($residuos as $residuo)
+                                                <tr>
+                                                  <td>{{$residuo->RespelName}}</td>
+                                                  <td>{{$residuo->YRespelClasf4741}}</td>
+                                                  <td>{{$residuo->ARespelClasf4741}}</td>
+                                                  <td>{{$residuo->RespelIgrosidad}}</td>
+                                                  <td>{{$residuo->RespelEstado}}</td>
+                                                  <td>{{$residuo->RespelHojaSeguridad}}</td>
+                                                  <td>{{$residuo->RespelTarj}}</td>
+                                                  <td>{{$residuo->RespelStatus}}</td>
+                                                  <td>{{$residuo->CliName}}</td>
+                                                  <td>{{$residuo->RespelSlug}}</td>
+                                                  <td>{{$residuo->RespelSlug}}</td>
+                                                </tr>
+                                            @endforeach
+                                          </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">

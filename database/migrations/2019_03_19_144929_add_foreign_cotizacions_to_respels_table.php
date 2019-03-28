@@ -17,7 +17,7 @@ class AddForeignCotizacionsToRespelsTable extends Migration
             $table->dropForeign('respels_fk_respelsede_foreign');
             $table->dropColumn('FK_RespelSede');
             $table->unsignedInteger('FK_RespelCoti')->nullable();
-            $table->foreign('FK_RespelCoti')->references('ID_Coti')->on('cotizacions');
+            $table->foreign('FK_RespelCoti')->references('ID_Sede')->on('sedes');
             
         });
     }

@@ -56,7 +56,7 @@ class Sede extends Model
     	return $this->hasMany('App\Activo', 'ID_Act', 'id');//como sedes tiene muchos activos
 	}
 	public function Cotizacion(){
-    	return $this->hasMany('App\Cotizacion', 'ID_Coti');//como genersedes tiene muchas areas
+    	return $this->hasMany('App\Cotizacion', 'ID_Coti', 'id');//como sedes tiene muchas cotizaciones
 
     	// return $this->hasManyThrough(
      //        'App\Respel',
