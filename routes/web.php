@@ -67,13 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/recurso', 'RecursoController');
 	Route::resource('/requerimientos', 'RequerimientoController');
 	Route::resource('/holidays', 'holidayController');
-	Route::get('/prueba', function () {
-	    return view('PruebaFullCalendar.index');
-	});
+	Route::resource('/prueba', 'pruebaController');
 	Route::resource('/cotizacion', 'CotizacionController');
 
 	Route::get('/home', 'HomeController@index')->name('home');
 
 });
-
-
