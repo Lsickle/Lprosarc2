@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-12">
                             <label for="soliservicioinputext3">Archivos</label>
-                            <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png" multiple required>
+                            <input type="file" class="form-control" id="soliservicioinputext3" name="RecSrc[]" accept=".jpg, .jpeg, .png, .mp4" multiple required>
                         </div>
                         <div class="col-md-12">
                             <div class="modal-footer">

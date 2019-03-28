@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
@@ -71,14 +72,14 @@ class RecursoController extends Controller
             
             $name = time().$file->getClientOriginalName();
             $Extension = $file->extension();
-            $file->move(public_path().'/Recursos/'.$request->input("RecName").time(),$name);
+            $file->move(public_path('/Recursos/').$request->input("RecName").time(),$name);
             $Src = 'Recursos/'.$request->input("RecName").time();
             
             $Recurso->RecName = $request->input("RecName");
             $Recurso->RecTipo = $request->input("RecTipo");
             $Recurso->RecCarte = $request->input("RecCarte");
             $Recurso->RecRmSrc = $name;
-            $Recurso->SlugRec = 'Slug'. $request->input("RecName").$name;
+            $Recurso->SlugRec = 'Slug'.$name;
             $Recurso->RecSrc = $Src;
             $Recurso->RecFormat = '.'.$Extension;
             $Recurso->FK_ResGer = $request->input("FK_ResGer");
@@ -141,50 +142,51 @@ class RecursoController extends Controller
     public function update(Request $request, $id)
     {
         if($request->input("number") == 0){
-         $Recursos = Recurso::where('FK_ResGer', $id)->first();
-        rename(public_path($Recursos->RecSrc), 'Recursos/'.$request->input("RecName").time());
+            $Recursos = Recurso::where('FK_ResGer', $id)->first();
+            rename(public_path($Recursos->RecSrc), 'Recursos/'.$request->input("RecName").time());
 
-        $Recurso = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName") ,'RecSrc' => 'Recursos/'.$request->input("RecName").time()]);
+            $Recurso = Recurso::where('FK_ResGer', $id)->update(['RecName' => $request->input("RecName") ,'RecSrc' => 'Recursos/'.$request->input("RecName").time()]);
 
-        $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->update(['FK_SolSer' => $request->input("FK_SolSer")]);
+            $ResGeners = ResiduosGener::where('ID_SGenerRes', $id)->update(['FK_SolSer' => $request->input("FK_SolSer")]);
+            
             $log = new audit();
-            $log->AuditTabla="residuos_geners y recurso";
+            $log->AuditTabla="residuos_geners y recursos";
             $log->AuditType="Modificado";
             $log->AuditRegistro = $ResGeners->ID_SGenerRes;
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=$request->all();
             $log->save();
 
+        // return redirect()->route('recurso.index');
 
         }
         if($request->input("number") == 1){
-            $Recs = Recurso::where('FK_ResGer', $id)->first();
-        // return $request;
-        if ($request->hasfile('RecSrc')) {
-            foreach($request->RecSrc as $file){ 
-            
-            $Recur = new Recurso();
-            
-            $Recur->RecTipo = $request->input("RecTipo");
-            $Recur->RecCarte = $request->input("RecCarte");
-            $Recur->RecName = $Recs->RecName;
-            
-            $name = time().$file->getClientOriginalName();
-            $Extension = $file->extension();
-            $file->move(public_path($Recs->RecSrc),$name);
-            $Recur->RecRmSrc = $name;
-            $Recur->SlugRec = 'Slug'.$name;
-            $Recur->RecSrc = $Recs->RecSrc;
-            $Recur->RecFormat = '.'.$Extension;
-            $Recur->FK_ResGer = $Recs->FK_ResGer;
-            $Recur->save();
+            $Recursos = Recurso::where('FK_ResGer', $id)->first();
+
+            if ($request->hasfile('RecSrc')) {
+                foreach($request->RecSrc as $file){ 
+                
+                $Recurso = new Recurso();
+                
+                $Recurso->RecTipo = $request->input("RecTipo");
+                $Recurso->RecCarte = $request->input("RecCarte");
+                $Recurso->RecName = $Recursos->RecName;
+                
+                $name = time().$file->getClientOriginalName();
+                $Extension = $file->extension();
+                $file->move(public_path($Recursos->RecSrc),$name);
+
+                $Recurso->RecRmSrc = $name;
+                $Recurso->SlugRec = 'Slug'.$name;
+                $Recurso->RecSrc = $Recursos->RecSrc;
+                $Recurso->RecFormat = '.'.$Extension;
+                $Recurso->FK_ResGer = $Recursos->FK_ResGer;
+                $Recurso->save();
+                }
             }
-        }
         // return redirect()->route('recurso.show');
         }
         return redirect()->route('recurso.index');
-
-        
     }
 
     /**
@@ -195,6 +197,21 @@ class RecursoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Recursos = Recurso::where('ID_Rec', $id)->first();
+
+        unlink(public_path($Recursos->RecSrc)."/".$Recursos->RecRmSrc);
+
+        Recurso::destroy($id);
+
+
+        // $log = new audit();
+        // $log->AuditTabla = "recursos";
+        // $log->AuditType = "Eliminado";
+        // $log->AuditRegistro = $Recursos->ID_Rec;
+        // $log->AuditUser = Auth::user()->email;
+        // $log->Auditlog = $Persona->PersDelete;
+        // $log->save();
+
+        return redirect()->route('recurso.index');
     }
 }

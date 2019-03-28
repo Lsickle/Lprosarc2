@@ -17,42 +17,60 @@
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
 						<i class="fa fa-times"></i></button>
                     </div>
-				</div>
+                </div>
+                
 				<div class="row">
                     <!-- left column -->
+                    
 					<div class="col-md-12">
                         <!-- general form elements -->
 						<div class="box box-primary">
+                            
                             <div class="box-body">
+                                    <tbody  hidden onload="renderTable()" id="readyTable">
+                                            <div class="fingerprint-spinner" id="loadingTable">
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+                                              <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+                                            </div>
                                 <div class="col-md-12">
+                                    
                                     <label for="tipo">Foto</label>
                                     <a method='get' href='#' data-toggle='modal' data-target='#myModal'  class="btn btn-primary" style="float: right;">Añadir</a>
-                                
                                     <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
                                         @method('PUT')
                                         {{csrf_field()}}
                                         @csrf
-                                            @component('layouts.partials.modalañadirecurso')
-                                            @endcomponent
+                                        @component('layouts.partials.modalañadirecurso')
+                                        @endcomponent
                                     </form>                    
                                 </div>
-                            </div>
+                            {{-- </div> --}}
                             @foreach ($Recursos as $Recurso)
                             @if ($Recurso->RecTipo == 'Cargue' and $Recurso->RecCarte == 'Foto')
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="CargueRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
                                         @foreach ($Recursos as $Recurso)
-                                        @if ($Recurso->RecTipo == 'Cargue')
+                                        @if ($Recurso->RecTipo == 'Cargue' and $Recurso->RecCarte == 'Foto')
                                         <div>
                                             <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
-                                            <div class="bx-caption">
-                                                <button type="submit" class="btn btn-warning" value ="{{$Recurso->ID_Rec}}">Eliminar</button>
-                                            </div>
+                                            <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="bx-caption">
+                                                    <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                                @endif
-                                                @endforeach  
+                                        @endif
+                                        @endforeach  
                                     </div>
                                 </div>
                                 @break
@@ -63,10 +81,18 @@
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="DescargueRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
                                         @foreach ($Recursos as $Recurso)
-                                            @if ($Recurso->RecTipo == 'Descargue')
-                                            <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                            @if ($Recurso->RecTipo == 'Descargue' and $Recurso->RecCarte == 'Foto')
+                                            <div>
+                                                <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                                <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="bx-caption">
+                                                        <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                             @endif
                                         @endforeach  
                                     </div>
@@ -79,10 +105,18 @@
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="PesajeRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
                                         @foreach ($Recursos as $Recurso)
-                                            @if ($Recurso->RecTipo == 'Pesaje')
-                                            <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                            @if ($Recurso->RecTipo == 'Pesaje' and $Recurso->RecCarte == 'Foto')
+                                            <div>
+                                                <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                                <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="bx-caption">
+                                                        <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                             @endif
                                         @endforeach  
                                     </div>
@@ -95,10 +129,18 @@
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="ReempacadoRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
                                         @foreach ($Recursos as $Recurso)
                                             @if ($Recurso->RecTipo == 'Reempacado' and $Recurso->RecCarte == 'Foto')
-                                            <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                            <div>
+                                                <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                                <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="bx-caption">
+                                                        <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                    </div>
+                                                </form>
+                                            </div> 
                                             @endif
                                         @endforeach  
                                     </div>
@@ -111,10 +153,18 @@
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="MezcladoRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
                                         @foreach ($Recursos as $Recurso)
-                                            @if ($Recurso->RecTipo == 'Mezclado')
-                                            <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                            @if ($Recurso->RecTipo == 'Mezclado' and $Recurso->RecCarte == 'Foto')
+                                            <div>
+                                                <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                                <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="bx-caption">
+                                                        <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                    </div>
+                                                </form>
+                                            </div>                                          
                                             @endif
                                         @endforeach  
                                     </div>
@@ -127,11 +177,19 @@
                                 <div class="col-md-12">
                                     <label>{{$Recurso->RecTipo}}</label>
                                     <div id="DestruccionRec">
-                                        <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
+                                        {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
                                         @foreach ($Recursos as $Recurso)
                                             @if ($Recurso->RecTipo == 'Destruccion')
-                                            <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
-                                            @endif
+                                            <div>
+                                                    <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200">
+                                                    <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <div class="bx-caption">
+                                                            <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>                                            @endif
                                         @endforeach  
                                     </div>
                                 </div>
@@ -141,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-  
+                </div>
                 <div class="box-body">
                     <div class="col-md-12">
                         <label for="tipo">Video</label>
@@ -152,9 +210,13 @@
                             <label>{{$Recurso->RecTipo}}</label>
                             <div id="CargueVideo">
                                 @foreach ($Recursos as $Recurso)
-                                @if ($Recurso->RecTipo == 'Cargue')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
-                                    <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
+                                @if ($Recurso->RecTipo == 'Cargue' and $Recurso->RecCarte == 'Video')
+                                    <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                        <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
+                                        <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
+                                    </form>
                                     @endif
                                 @endforeach  
                             </div>
@@ -169,8 +231,8 @@
                             <div id="DescargueVideo">
                                 @foreach ($Recursos as $Recurso)
                                 @if ($Recurso->RecTipo == 'Descargue')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
-                                    <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
+                                    {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
+                                    <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video> 
                                     @endif
                                 @endforeach  
                             </div>
@@ -185,7 +247,7 @@
                             <div id="PesajeVideo">
                                 @foreach ($Recursos as $Recurso)
                                 @if ($Recurso->RecTipo == 'Pesaje')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
+                                    {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
                                     <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
                                     @endif
                                 @endforeach  
@@ -201,7 +263,7 @@
                             <div id="ReempacadoVideo">
                                 @foreach ($Recursos as $Recurso)
                                 @if ($Recurso->RecTipo == 'Reempacado' and $Recurso->RecCarte == 'Video')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
+                                    {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
                                     <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
                                     @endif
                                 @endforeach  
@@ -217,7 +279,7 @@
                             <div id="MezcladoVideo">
                                 @foreach ($Recursos as $Recurso)
                                 @if ($Recurso->RecTipo == 'Mezclado')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
+                                    {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
                                     <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
                                     @endif
                                 @endforeach  
@@ -233,7 +295,7 @@
                             <div id="DestruccionVideo">
                                 @foreach ($Recursos as $Recurso)
                                 @if ($Recurso->RecTipo == 'Destruccion')
-                                    <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                         
+                                    {{-- <iframe  width="100%" max-width="1200" height="auto" src="https://www.youtube.com/embed/N5olyi6xywU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                          --}}
                                     <iframe src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"></iframe> 
                                     @endif
                                 @endforeach  
@@ -244,13 +306,16 @@
                     @endforeach
                     <!-- /.box -->
                 </div>
+
                     <!-- /.box-body -->
 				<!-- /.box -->
 			</div>
 			<!--/.col (right) -->
 		</div>
 		<!-- /.box-body -->
-	</div>
+    </div>
+            </tbody>
+    
 	<!-- /.box -->
 </div>
 @endsection
