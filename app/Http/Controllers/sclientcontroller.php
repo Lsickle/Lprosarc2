@@ -129,7 +129,6 @@ class sclientcontroller extends Controller
 
         $Departamentos = Departamento::all();
 
-        // $Municipios = Municipio::where('FK_MunCity', '=', 'ID_Depart')->first();
         $Municipios = Municipio::all();
 
         return view('sclientes.edit', compact('Sede', 'Clientes', 'Departamentos', 'Municipios'));

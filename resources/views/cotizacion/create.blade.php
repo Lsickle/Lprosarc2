@@ -52,7 +52,7 @@
                                     </div>
 
                                     {{-- residuos adjuntables a la cotizacion --}}
-                                    <div>
+                                    {{-- <div>
                                         <table id="RespelTable" class="table table-bordered table-striped">
                                           <thead>
                                             <tr>
@@ -88,7 +88,7 @@
                                             @endforeach
                                           </tbody>
                                         </table>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">

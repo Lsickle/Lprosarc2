@@ -54,11 +54,11 @@ Cotizaciones
 								<td>{{$cotizacion->CliName}}</td>
 								<td>{{$cotizacion->SedeCelular}}</td>
 								<td>{{$cotizacion->CotiPrecioSubtotal}}</td>
+								<td>{{$cotizacion->ID_Coti}}</td>
 								<td>{{$cotizacion->CotiPrecioTotal}}</td>
 								<td>{{$cotizacion->CotiDelete}}</td>
 								<td>{{$cotizacion->SedeEmail}}</td>
 								<td>{{$cotizacion->SedePhone1.' - '.$cotizacion->SedeExt1}}</td>
-								<td>{{$cotizacion->ID_Coti}}</td>
 							</tr>
 							@endforeach
 						</tbody>

@@ -43,10 +43,10 @@
 				autoWith: true,
 				searchHighlight: true,
 				columnDefs: [ {
-					"targets": 14,
+					"targets": 10,
 					"data": "ID_Coti",
 					"render": function ( data, type, row, meta ) {
-						return "<a method='get' href='/cotizaciones/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+						return "<a method='get' href='/cotizacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
 					}  
 				} ]
 			});

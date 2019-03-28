@@ -122,8 +122,16 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        // $Cotizacion = Cotizacion::where('ID_Coti', $id)->get();
+        
+        // $Sedes = Sede::All();
+        
+        $residuos = Respel::where('FK_RespelCoti', $id);     
+
+        return $residuos;
+
+        return view('cotizacion.edit', compact('Cotizacions'));
     }
 
     /**
