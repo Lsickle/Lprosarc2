@@ -18,6 +18,11 @@
 				selectable: true,
 				selectHelper: true,
 				eventLimit: true,
+				views: {
+					timeGrid: {
+						eventLimit: 6
+					}
+				},
 				aspectRatio: 2,
 				header: {
 					left: 'title',
@@ -30,7 +35,7 @@
 					right: 'dayGridMonth,dayGridWeek,dayGridDay'
 				},
 				dateClick: function(info) {
-					// $('#textFecha').val(data.format());
+					document.getElementById('textFecha').value = info.format();
 					// alert(info.format);
 					$('#CrearEventos').modal();
 				},/*
@@ -45,7 +50,7 @@
 									{
 										title: '{{$vehiculo->VehicPlaca}}',
 										id: '{{$evento->ID_ProgVeh}}',
-										@if ($evento->ProgVehSalida <> null)
+										@if ($evento->ProgVehEntrada <> null)
 											end: '{{$evento->ProgVehEntrada}}',
 										@endif
 										start: '{{$evento->ProgVehSalida}}'
@@ -96,11 +101,10 @@
 					document.getElementById('textHoraLlega1').value= llegada;
 					document.getElementById('textConductor1').value= conductor;
 					document.getElementById('textAyudante1').value= ayudante;
-					$('#textConductor1').html(conductorName);
+					$('#textConductor1').html("<b>"+conductorName+" (Actual)</b>");
 					$('#textAyudante1').html(ayudanteName);
-					$('#textVehiculo1').html(placa_vehic);
-					alert(placa_vehic);
-					// $('#ModalEventos').modal();
+					$('#textVehiculo1').html(info.event.title);
+					$('#ModalEventos').modal();
 				}
 			});
 			calendar.render();
@@ -112,7 +116,38 @@
 @section('contentheader_title', 'FullCalendar')
 
 @section('main-content')
-	<div id='calendar'></div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<h4 class="box-title">Draggable Events</h4>
+				</div>
+				<div class="box-body">
+					<div id="external-events">
+						<div class="external-event bg-green">Lunch</div>
+						<div class="external-event bg-yellow">Go home</div>
+						<div class="external-event bg-aqua">Do homework</div>
+						<div class="external-event bg-light-blue">Work on UI design</div>
+						<div class="external-event bg-red">Sleep tight</div>
+						<div class="checkbox">
+							<label for="drop-remove">
+								<input type="checkbox" id="drop-remove">
+								remove after drop
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="box box-primary">
+				<div class="box-body no-padding">
+					<div id='calendar'></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{-- <div id='calendar'></div> --}}
 	{{--  Modal --}}
 	<div class="modal modal-default fade in" id="CrearEventos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -203,7 +238,7 @@
 							<div class="box-body">
 								<div class="col-xs-6">
 									<label for="textFecha1">Fecha:</label>
-									<input required class="form-control" type="text" id="textFecha1" name="textFecha1" readonly>
+									<input required class="form-control" type="text" id="textFecha1" name="textFecha1">
 								</div>
 								<div class="col-xs-6">
 									<label for="textTipo">Tipo:</label>
