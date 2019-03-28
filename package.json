@@ -51,9 +51,12 @@
     "popper.js": "^1.12",
     "smartwizard": "^4.3.1",
     "vue": "^2.6.6",
-    "datatables.net-plugins": "^1.10.19"
+    "datatables.net-plugins": "^1.10.19",
+    "@fullcalendar/bootstrap": "^4.0.1",
+    "@fullcalendar/core": "^4.0.1",
+    "@fullcalendar/daygrid": "^4.0.1",
+    "@fullcalendar/interaction": "^4.0.1"
   },
   "dependencies": {
-    
   }
 }

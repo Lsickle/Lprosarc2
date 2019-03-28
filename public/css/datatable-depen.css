@@ -604,6 +604,10 @@ div.dt-button-collection-title {
   font-size: 0.9em;
 }
 
+div.dt-button-collection-title:empty {
+  display: none;
+}
+
 button.dt-button,
 div.dt-button,
 a.dt-button {

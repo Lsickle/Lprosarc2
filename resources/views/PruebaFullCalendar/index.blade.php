@@ -3,31 +3,40 @@
 @section('htmlheader_title','Prueba')
 
 @section('NewScript')
-		<script>
-		$(function() {
-			$('#calendar').fullCalendar({
-				themeSystem: 'bootstrap4',
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				plugins: [ 'dayGrid','bootstrap','interaction'],
+				defaultAllDayEventDuration: '04:00',
+				locale: 'es',
+				defaultView: 'dayGridMonth',
+				themeSystem: 'bootstrap',
 				fixedWeekCount: true,
 				showNonCurrentDates: true,
 				selectable: true,
 				selectHelper: true,
-				// height: "parent",
-				// contentHeight: 600,
+				eventLimit: true,
 				aspectRatio: 2,
 				header: {
 					left: 'title',
 					center: 'prevYear,prev,next,nextYear',
-					right: 'month,agendaWeek,agendaDay'
+					right: 'dayGridMonth,dayGridWeek,dayGridDay'
 				},
 				footer: {
 					left: 'title',
 					center: 'prevYear,prev,next,nextYear',
-					right: 'month,agendaWeek,agendaDay'
+					right: 'dayGridMonth,dayGridWeek,dayGridDay'
 				},
-				dayClick: function(data,jsEvent,view){
-					$('#textFecha').val(data.format());
+				dateClick: function(info) {
+					// $('#textFecha').val(data.format());
+					// alert(info.format);
 					$('#CrearEventos').modal();
-				},
+				},/*
+				dayClick: function(){
+					
+				},*/
 				eventSources:[{
 					events: [
 						@foreach($eventos as $evento)
@@ -35,23 +44,7 @@
 								@if($vehiculo->ID_Vehic === $evento->FK_ProgVehiculo && $evento->ProgVehDelete === 0)
 									{
 										title: '{{$vehiculo->VehicPlaca}}',
-										fecha: '{{$evento->ProgVehFecha}}',
-										km: '{{$evento->progVehKm}}',
 										id: '{{$evento->ID_ProgVeh}}',
-										ID_Vehic: '{{$vehiculo->ID_Vehic}}',
-										salida: '{{date("h:i:s",strtotime($evento->ProgVehSalida))}}',
-										@if($evento->ProgVehEntrada)
-											llegada: '{{date("h:i:s",strtotime($evento->ProgVehEntrada))}}',
-										@else
-											llegada: '{{$evento->ProgVehEntrada}}',
-										@endif
-										@foreach($personal as $persona)
-											@if($persona->ID_Pers === $evento->FK_ProgConductor)
-												conductor: '{{$persona->ID_Pers}}',
-											@elseif($persona->ID_Pers === $evento->FK_ProgAyudante)
-												ayudante: '{{$persona->ID_Pers}}',
-											@endif
-										@endforeach
 										@if ($evento->ProgVehSalida <> null)
 											end: '{{$evento->ProgVehEntrada}}',
 										@endif
@@ -64,21 +57,55 @@
 					color: 'black',
 					textColor: 'yellow'
 				}],
-				eventClick: function(event,jsEvent,view){
-					document.getElementById('formularioModal').action = '/prueba/'+event.id;
-					document.getElementById('formularioModal1').action = '/prueba/'+event.id;
-					$('#titleModal').html(event.title);
-					$('#textFecha1').val(event.fecha);
-					$('#textVehiculo1').val(event.ID_Vehic);
-					$('#textkm1').val(event.km);
-					$('#textHoraSali1').val(event.salida);
-					$('#textHoraLlega1').val(event.llegada);
-					$('#textConductor1').val(event.conductor);
-					$('#textAyudante1').val(event.ayudante);
-					$('#ModalEventos').modal();
+				eventClick: function(info){
+					var llegada, fecha, km, salida, conductor, conductorName, ayudante, ayudanteName, ID_Vehic, placa_vehic;
+					@foreach($eventos as $evento)
+						if({{$evento->ID_ProgVeh}} == info.event.id){
+							@foreach($vehiculos as $vehiculo)
+								placa_vehic = '{{$vehiculo->VehicPlaca}}';
+								if(placa_vehic == info.event.title){
+									ID_Vehic = {{$vehiculo->ID_Vehic}};
+								}
+							@endforeach
+							fecha = '{{$evento->ProgVehFecha}}';
+							km = '{{$evento->progVehKm}}';
+							salida = '{{date("h:i:s",strtotime($evento->ProgVehSalida))}}';
+							@if($evento->ProgVehEntrada)
+								llegada = '{{date("h:i:s",strtotime($evento->ProgVehEntrada))}}';
+							@else
+								llegada = '{{$evento->ProgVehEntrada}}';
+							@endif
+							@foreach($personal as $persona)
+								@if($persona->ID_Pers === $evento->FK_ProgConductor)
+									conductor = '{{$persona->ID_Pers}}';
+									conductorName = '{{$persona->PersFirstName.' '.$persona->PersLastName}}'
+								@elseif($persona->ID_Pers === $evento->FK_ProgAyudante)
+									ayudante = '{{$persona->ID_Pers}}';
+									ayudanteName = '{{$persona->PersFirstName.' '.$persona->PersLastName}}';
+								@endif
+							@endforeach
+						}
+					@endforeach
+					document.getElementById('formularioModal').action = '/prueba/'+info.event.id;
+					document.getElementById('formularioModal1').action = '/prueba/'+info.event.id;
+					$('#titleModal').html(info.event.title);
+					document.getElementById('textFecha1').value= fecha;
+					document.getElementById('textVehiculo1').value= ID_Vehic;
+					document.getElementById('textkm1').value= km;
+					document.getElementById('textHoraSali1').value= salida;
+					document.getElementById('textHoraLlega1').value= llegada;
+					document.getElementById('textConductor1').value= conductor;
+					document.getElementById('textAyudante1').value= ayudante;
+					$('#textConductor1').html(conductorName);
+					$('#textAyudante1').html(ayudanteName);
+					$('#textVehiculo1').html(placa_vehic);
+					alert(placa_vehic);
+					// $('#ModalEventos').modal();
 				}
 			});
+			calendar.render();
 		});
+
 	</script>
 @endsection
 

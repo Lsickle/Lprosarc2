@@ -12,14 +12,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
 
 {{-- Dependencias Package.json --}}
-<script src="/js/dependencias.js"></script>
+<script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
 {{-- plugins de datatables --}}
-<script src="/js/datatable-plugins.js"></script>
+<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 
 <!-- DataTables -->
-<script src="/js/datatable-depen.js"></script>
+<script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 
+{{-- Full Calendar --}}
+<script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 
 {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
