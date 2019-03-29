@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\SolicitudServicio;
+use App\SolicitudResiduo;
 use App\audit;
 use App\Sede;
 use App\GenerSede;
 use App\Respel;
 use App\ResiduosGener;
-
+use App\Cliente;
+use App\Generador;
 
 
 class SolicitudServicioController extends Controller
@@ -133,7 +135,20 @@ class SolicitudServicioController extends Controller
      */
     public function show($id)
     {
-        //
+        $Servicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        $SedePro = Sede::where('ID_Sede', $Servicio->Fk_SolSerTransportador)->first();
+        $ClientePro = Cliente::where('ID_Cli',$SedePro->FK_SedeCli)->first();
+        // Datos del cliente
+        $GSede = GenerSede::where('ID_GSede', $Servicio->FK_SolSerGenerSede)->first();
+        $Generador = Generador::where('ID_Gener', $GSede->FK_GSede)->first();
+        $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
+        $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+        //Datos del residuo
+        $ServicioResiduos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->first();
+        $ResiduosGener = ResiduosGener::where('ID_SGenerRes', $ServicioResiduos->FK_SolResRg)->first();
+        $Residuos = Respel::where('ID_Respel',$ResiduosGener->FK_Respel)->first();
+        // return $Servicio;
+        return view('solicitud-serv.show', compact('Servicio','SedePro','ClientePro','GSede','Generador','Sede','Cliente','ResiduosGener','Residuos'));
     }
 
     /**
