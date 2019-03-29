@@ -64,9 +64,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SolicitudServicioTableSeeder::class);
         $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
-        $this->call(SolicitudResiduoTableSeeder::class);
-        $this->call(RequerimientoTableSeeder::class);
+        $this->call(TratamientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
+        $this->call(RequerimientoTableSeeder::class);
+        $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);
 
     }
