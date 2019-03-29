@@ -8,7 +8,7 @@ class ArticuloPorProveedor extends Model
 {
     protected $table = 'articulo_por_proveedors';
 
-	protected $fillable = ['ArtiUnidad', 'ArtiCant', 'ArtiPrecio', 'ArtiCostoUnid', 'ArtiMinimo'];
+	protected $fillable = ['ArtiUnidad', 'ArtiCant', 'ArtiPrecio', 'ArtiCostoUnid', 'ArtiMinimo', 'FK_ArtCotiz', 'FK_ArtiActiv', 'FK_AutorizedBy'];
 	
 	protected $primaryKey = 'ID_ArtiProve';
 

@@ -27,9 +27,9 @@ Articulos por Proveedor
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/articulos-proveedor" method="POST" enctype="multipart/form-data">
-								@csrf
-							{{-- </div> --}}
+							<form role="form" action="/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}" method="POST" enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Numero de Cotizacion</label>
                                     <select class="form-control" id="articuloxprov" name="FK_ArtCotiz" required>
@@ -51,35 +51,35 @@ Articulos por Proveedor
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Usuario</label>
                                     <select class="form-control" id="articuloxprov" name="FK_AutorizedBy" required>
-                                        <option>Seleccione...</option>
+                                        <option value="{{$ArtProvs->FK_ArtiActiv}}">Seleccione...</option>
                                         @foreach ($Activos as $Activo)
-											<option value="{{$Activo->ID_Cotiz}}">{{$Activo->CotizNum}}</option>
+											<option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>
 										@endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Forma del articulo</label>
                                     <select class="form-control" id="articuloxprov" name="ArtiUnidad" required>
-                                        <option>Seleccione...</option>
+                                        <option value="{{$ArtProvs->ArtiUnidad}}">Seleccione...</option>
                                         <option value="0">Unidad</option>
                                         <option value="1">Peso</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="articuloxprovinputext1">Cantidad</label>
-                                    <input type="number" class="form-control" id="articuloxprovinputext1" placeholder="988888" name="ArtiCant" max="999999" required>
+                                    <input type="number" class="form-control" id="articuloxprovinputext1" placeholder="988888" name="ArtiCant" value="{{$ArtProvs->ArtiCant}}" max="999999" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="articuloxprovinputext2">Precio</label>
-                                    <input type="text" class="form-control" id="articuloxprovinputext2" placeholder="150000" name="ArtiPrecio" required>
+                                    <input type="text" class="form-control" id="articuloxprovinputext2" placeholder="150000" name="ArtiPrecio" value="{{$ArtProvs->ArtiPrecio}}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="articuloxprovinputext3">Articulo costo por unidad </label>
-                                    <input type="number" class="form-control" id="articuloxprovinputext3" placeholder="12345" name="ArtiCostoUnid" max="9999999" required>
+                                    <input type="number" class="form-control" id="articuloxprovinputext3" placeholder="12345" name="ArtiCostoUnid" value="{{$ArtProvs->ArtiCostoUnid}}" max="9999999" required>
                                 </div>
 								<div class="col-md-6">
 									<label for="articuloxprovinputext4">Cantidad Minima de compra</label>
-									<input type="number" class="form-control" id="articuloxprovinputext4" placeholder="23456" name="ArtiMinimo" max="9999999" required>
+									<input type="number" class="form-control" id="articuloxprovinputext4" placeholder="23456" name="ArtiMinimo" value="{{$ArtProvs->ArtiMinimo}}" max="9999999" required>
 								</div>
 								<div class="container-fluid spark-screen">
 									<div class="row">			

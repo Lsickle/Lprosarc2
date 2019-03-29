@@ -18,7 +18,7 @@ class ArticuloXProveedorController extends Controller
     public function index()
     {
         $ArtProvs = DB::table('articulo_por_proveedors')
-            ->join('activos', 'activos.ID_Act', '=', 'articulo_por_proveedors.ID_ArtiProve')
+            ->join('activos', 'activos.ID_Act', '=', 'articulo_por_proveedors.FK_ArtiActiv')
             ->select('articulo_por_proveedors.*', 'activos.ActName')
             ->get();
 
@@ -82,7 +82,12 @@ class ArticuloXProveedorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ArtProvs = ArticuloPorProveedor::where('ID_ArtiProve', $id)->first();
+
+        $Activos = Activo::all();
+        $Quotations = Quotation::all();
+
+        return view('articulos.edit', compact('ArtProvs', 'Quotations', 'Activos'));  
     }
 
     /**
@@ -94,7 +99,15 @@ class ArticuloXProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ArtProvs = ArticuloPorProveedor::where('ID_ArtiProve', $id)->first();
+        $ArtProvs->fill($request->all());
+        $ArtProvs->save();
+
+        // return $ArtProvs;
+        // $ArtProvs->ActModel = $request->input('ActModel');
+
+        return redirect()->route('articulos-proveedor.index');
+
     }
 
     /**
