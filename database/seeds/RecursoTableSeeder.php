@@ -20,7 +20,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user01";
-        $Recursos->FK_ResGer = "1";
+        $Recursos->FK_RecSolRes = "1";
         $Recursos->save();
 
         $Recursos = new Recurso();
@@ -31,7 +31,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user02";
-        $Recursos->FK_ResGer = "3";
+        $Recursos->FK_RecSolRes = "3";
         $Recursos->save();
 
         $Recursos = new Recurso();
@@ -42,7 +42,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user03";
-        $Recursos->FK_ResGer = "2";
+        $Recursos->FK_RecSolRes = "2";
         $Recursos->save();
 
         $Recursos = new Recurso();
@@ -53,7 +53,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user04";
-        $Recursos->FK_ResGer = "5";
+        $Recursos->FK_RecSolRes = "5";
         $Recursos->save();
 
         $Recursos = new Recurso();
@@ -64,7 +64,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user05";
-        $Recursos->FK_ResGer = "4";
+        $Recursos->FK_RecSolRes = "4";
         $Recursos->save();
     }
 }

@@ -16,31 +16,26 @@ class SGeneradorResiduoTableSeeder extends Seeder
         $SGenerRes = new ResiduosGener();
         $SGenerRes->FK_SGener = "2";
         $SGenerRes->FK_Respel = "1";
-        $SGenerRes->FK_SolSer = "1";
         $SGenerRes->save();
 
         $SGenerRes = new ResiduosGener();
         $SGenerRes->FK_SGener = "1";
         $SGenerRes->FK_Respel = "3";
-        $SGenerRes->FK_SolSer = "2";
         $SGenerRes->save();
 
         $SGenerRes = new ResiduosGener();
         $SGenerRes->FK_SGener = "5";
         $SGenerRes->FK_Respel = "2";
-        $SGenerRes->FK_SolSer = "3";
         $SGenerRes->save();
 
         $SGenerRes = new ResiduosGener();
         $SGenerRes->FK_SGener = "3";
         $SGenerRes->FK_Respel = "5";
-        $SGenerRes->FK_SolSer = "4";
         $SGenerRes->save();
 
         $SGenerRes = new ResiduosGener();
         $SGenerRes->FK_SGener = "4";
         $SGenerRes->FK_Respel = "4";
-        $SGenerRes->FK_SolSer = "5";
         $SGenerRes->save();
     }
 }

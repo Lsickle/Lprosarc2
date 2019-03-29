@@ -17,7 +17,28 @@
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
 						<i class="fa fa-times"></i></button>
 					</div>
-				</div>
+                </div>
+                {{-- <div class="box-header">
+                    @component('layouts.partials.modal')
+                        {{$ResGeners->ID_SGenerRes}}
+                    @endcomponent
+                <h3 class="box-title">Datos de la persona</h3>
+                @if($ResGeners->PersDelete == 0)
+                  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ResGeners->ID_SGenerRes}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+                  <form action='/recurso/{{$ResGeners->ID_SGenerRes}}' method='POST'>
+                      @method('DELETE')
+                      @csrf
+                      
+                      <input  type="submit" id="Eliminar{{$ResGeners->ID_SGenerRes}}" style="display: none;">
+                  </form>
+                @else
+                  <form action='/recurso/{{$ResGeners->ID_SGenerRes}}' method='POST' style="float: right;">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                  </form>
+                @endif
+              </div> --}}
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">

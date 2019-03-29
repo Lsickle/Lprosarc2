@@ -65,7 +65,7 @@ class RecursoController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasfile('RecSrc')) {
+        if ($request->hasfile('RecSrc')){
             foreach($request->RecSrc as $file){ 
             
             $Recurso = new Recurso();
@@ -122,6 +122,14 @@ class RecursoController extends Controller
 
         $SolServs = SolicitudServicio::all();
 
+        $Recursos = DB::table('recursos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'recursos.FK_ResGer')
+            ->select('recursos.*', 'residuos_geners.ID_SGenerRes')
+            ->where('FK_ResGer', $id)
+            ->get();
+        
+        $Recs = Recurso::where('FK_ResGer', $id)->first();
+        
         // $SolServs = DB::table('solicitud_servicios')
         // ->join('residuos_geners', 'solicitud_servicios.ID_SolSer', '=', 'residuos_geners.FK_Respel')
         // ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
@@ -129,7 +137,7 @@ class RecursoController extends Controller
         // // ->where('residuos_geners.ID_SGenerRes', $id)
         // ->get();
 
-        return view('recursos.edit', compact('ResGeners', 'Clientes', 'SolServs'));
+        return view('recursos.edit', compact('ResGeners', 'Clientes', 'SolServs', 'Recursos', 'Recs'));
     }
 
     /**
