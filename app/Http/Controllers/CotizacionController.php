@@ -123,15 +123,15 @@ class CotizacionController extends Controller
      */
     public function edit($id)
     {   
-        // $Cotizacion = Cotizacion::where('ID_Coti', $id)->get();
+        $cotizacion = Cotizacion::where('ID_Coti', $id)->first();
         
-        // $Sedes = Sede::All();
+        $sedes = Sede::All();
         
-        $residuos = Respel::where('FK_RespelCoti', $id);     
+        $residuos = Respel::where('FK_RespelCoti', $id)->get();     
 
-        return $residuos;
+        // return $residuos;
 
-        return view('cotizacion.edit', compact('Cotizacions'));
+        return view('cotizacion.edit', compact('sedes', 'cotizacion', 'residuos'));
     }
 
     /**

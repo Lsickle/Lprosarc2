@@ -30,7 +30,7 @@
 
                             <div class="col-md-6">
                                 <label for="CotizacionStatus">Status de cotizacion</label>
-                                <select class="form-control" id="CotizacionStatus" name="CotiStatus" disabled >
+                                <select class="form-control" id="CotizacionStatus" name="CotiStatus">
                                     <option>Pendiente</option>
                                     <option>Aprobada</option>
                                     <option>Aprobada Parcial</option>
@@ -38,8 +38,33 @@
                                 </select>
                             </div>
 
+                            {{-- vencimiento a partir de la aprobacion --}}
+                            <div class="form-group">
+                              <label>Vencimiento:</label>
+
+                              <div class="input-group">
+                                <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                  <span>
+                                    <i class="far fa-calendar-alt"></i> Rango De Vencimiento
+                                  </span>
+                                  <i class="fas fa-caret-down"></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="CotizacionStatus">Status de cotizacion</label>
+                                <select class="form-control" id="CotizacionStatus" name="CotiStatus">
+                                    <option>Pendiente</option>
+                                    <option>Aprobada</option>
+                                    <option>Aprobada Parcial</option>
+                                    <option>Rechazada</option>
+                                </select>
+                            </div>
+
+
                             {{-- residuos adjuntables a la cotizacion --}}
-                            <div>
+                          {{--   <div>
                                 <table id="RespelTable" class="table table-bordered table-striped">
                                   <thead>
                                     <tr>
@@ -75,7 +100,7 @@
                                     @endforeach
                                   </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">

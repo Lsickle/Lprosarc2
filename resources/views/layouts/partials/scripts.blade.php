@@ -13,6 +13,10 @@
 <!-- DataTables -->
 <script src="/js/datatable-depen.js"></script>
 
+{{-- date range --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
+
 @if(
 	Route::currentRouteName()=='cotizacion.create'||
 	Route::currentRouteName()=='cotizacion.index'
@@ -64,6 +68,26 @@
 @endif
 
 
+{{-- <script>
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          '1 Meses'   : [moment(), moment().add(1, 'month')],
+          '2 Meses'   : [moment(), moment().add(2, 'months')],
+          '3 Meses' : [moment(), moment().add(3, 'months')],
+          '6 Meses': [moment(), moment().add(6, 'months')],
+          '1 Año': [moment(), moment().add(1, 'year')]
+        },
+        startDate: moment(),
+        endDate  : moment().moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+</script> --}}
 {{-- select 2 --}}
 <script>
   $(document).ready(function() {

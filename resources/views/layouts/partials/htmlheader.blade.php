@@ -24,6 +24,9 @@
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+
+    {{-- daterange --}}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.css">
     {{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
