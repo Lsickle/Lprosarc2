@@ -31,7 +31,7 @@ Registros de Activos
 								@csrf
 								<div class="col-md-6">
 									<label for="activo">Categoria</label>
-									<select class="form-control" id="activo" name="categoria" required="true">
+									<select class="form-control" id="activo" name="categoria" required>
 										<option>Seleccione...</option>
 										@foreach ($Categorias as $Categoria)
 											<option value="{{$Categoria->ID_CatAct}}">{{$Categoria->CatName}}</option>																
@@ -40,7 +40,7 @@ Registros de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activo1">SubCategoria</label>
-									<select class="form-control" id="activo1" name="FK_ActSub" required="true">
+									<select class="form-control" id="activo1" name="FK_ActSub" required>
 										<option>Seleccione...</option>
 										@foreach ($SubActivos as $SubActivo)
 											 <option value="{{$SubActivo->ID_SubCat}}">{{$SubActivo->SubCatName}}</option>																
@@ -49,19 +49,19 @@ Registros de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext1">Nombre del activo</label>
-									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="ActName">
+									<input type="text" class="form-control" id="activoinputext1" placeholder="Nombre del activo" name="ActName" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activo2">Forma del activo</label>
-									<select class="form-control" id="activo2" name="ActUnid" required="true">
+									<select class="form-control" id="activo2" name="ActUnid" required>
 										<option>Seleccione...</option>
-										<option value="0">Unidad</option>
-										<option value="1">Peso</option>
+										<option>Unidad</option>
+										<option>Peso</option>
 									</select>
 								</div>
 								<div class="col-md-6">
 									<label for="activo3">Sede</label>
-									<select class="form-control" id="activo3" name="FK_ActSede" required="true">
+									<select class="form-control" id="activo3" name="FK_ActSede" required>
 										<option>Seleccione...</option>
 										@foreach ($Sedes as $Sede)
 											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
@@ -71,29 +71,28 @@ Registros de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext2">Cantidad</label>
-									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="ActCant" max="999999">
+									<input type="number" class="form-control" id="activoinputext2" placeholder="988888" name="ActCant" max="999999" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext3">Serial de Prosarc</label>
-									<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="ActSerialProsarc">
+									<input type="text" class="form-control" id="activoinputext3" placeholder="Serial de Prosarc" name="ActSerialProsarc" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext4">Modelo</label>
-									<input type="text" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="ActModel">
+									<input type="text" class="form-control" id="activoinputext4" placeholder="modelo del activo" name="ActModel" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext5">Talla</label>
-									<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="ActTalla">
-								</div>
-								<div class="col-md-6">
-									<label for="activoinputext6">Observaciones</label>
-									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones" name="ActObserv">
+									<input type="text" class="form-control" id="activoinputext5" placeholder="talla de activo" name="ActTalla" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext7">Serial Proveedor</label>
-									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="ActSerialProveed">
+									<input type="text" class="form-control" id="activoinputext7" placeholder="Serial del proveedor" name="ActSerialProveed" required>
 								</div>
-								
+								<div class="col-md-12">
+									<label for="activoinputext6">Observaciones</label>
+									<input type="text" class="form-control" id="activoinputext6" placeholder="Observaciones" name="ActObserv" required>
+								</div>
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">
