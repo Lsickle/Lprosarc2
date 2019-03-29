@@ -6,31 +6,7 @@
 	<label>Email</label>
 	<input name="email" value="{{$user->email}}" type="text" class="form-control" placeholder="Correo electornico de usuario" required>
 </div>
-{{-- <div class="form-group">
-	<label >Rol</label>
-	<select name="UsRol" value="{{$user->UsRolDesc}}" class="form-control" placeholder="rol que desempeña en el proceso">
-		<optgroup label="Externo">
-			<option>Usuario general</option>
-			<option>Cliente registrado</option>
-			<option>Generador de residuos</option>
-			<option>Auditor Externo</option>
-		</optgroup>
-		<optgroup label="Interno">
-			<option>Jefe de Logistica</option>
-			<option>Auxiliar de Logistica</option>
-			<option>Asistente de Logistica</option>
-			<option>Jefe de Operaciones</option>
-			<option>Supervisor de Turno</option>
-			<option>Encargado de Almacen</option>
-			<option>Encargado de Horno</option>
-			<option>Programador de Software</option>
-			<option>Tesoreria</option>
-			<option>Administrador de cuenta</option>
-			<option>Director Comercial</option>
-			<option>Director de Planta</option>
-		</optgroup>
-	</select>
-</div> --}}
+
 <div class="form-group">
 	<label>Fecha de registro</label>
 	<input name="created_at" value="{{$user->created_at}}" type="text" class="form-control" disabled>
@@ -49,11 +25,9 @@
 
 <div class="form-group">
 	<label>Propietario</label>
-	
 	<select id="selectconfiltro"  name="FK_UserPers" class="form-control" placeholder="Persona a la cual esta asignado el Usuario">
-		<option>Sin persona asignada</option>
 		@foreach($personas as $persona)
-			<option value="{{$persona->ID_Pers}}">{{$persona->PersDocNumber}} {{$persona->PersDocType}} {{$persona->PersFirstName}} {{$persona->PersLastName}}</option>
+			<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName}} {{$persona->PersSecondName}} {{$persona->PersLastName}} {{$persona->PersDocType}} {{$persona->PersDocNumber}}</option>
 		@endforeach
 	</select>
 </div>

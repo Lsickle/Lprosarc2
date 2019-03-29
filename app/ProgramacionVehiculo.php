@@ -8,7 +8,7 @@ class ProgramacionVehiculo extends Model
 {
     protected $table = 'ProgVehiculos';
     
-    protected $fillable = ['ProgVehFecha', 'progVehKm', 'ProgVehTurno', 'ProgVehtipo', 'ProgVehEntrada', 'ProgVehSalida'];
+    protected $fillable = ['ProgVehFecha', 'progVehKm', 'ProgVehTurno', 'ProgVehtipo', 'ProgVehEntrada', 'ProgVehSalida','ProgVehDelete','FK_ProgVehiculo','FK_ProgMan','FK_ProgConductor','FK_ProgAyudante'];
 
     protected $primaryKey = 'ID_ProgVeh';
 

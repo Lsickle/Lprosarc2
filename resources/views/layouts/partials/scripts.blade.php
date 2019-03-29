@@ -12,20 +12,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
 
 {{-- Dependencias Package.json --}}
-<script src="/js/dependencias.js"></script>
+<script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
 {{-- plugins de datatables --}}
-<script src="/js/datatable-plugins.js"></script>
+<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 
 <!-- DataTables -->
-<script src="/js/datatable-depen.js"></script>
+<script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 
-{{-- select 2 --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
-
-{{-- select2 --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+{{-- Full Calendar --}}
+<script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 
 {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -864,7 +860,7 @@ $(document).ready(function(){
             "targets": 9,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "' class='btn btn-success'>Ver</a>";
               }
           }]
         });
@@ -1063,36 +1059,6 @@ $(document).ready(function(){
       });
   }); 
 </script>
-
-    <script>
-      $(function() {
-        $('#calendar').fullCalendar({
-          themeSystem: 'bootstrap4'
-        });
-      });
-
-    {{-- 
-          themeSystem: 'bootstrap4',
-          height:"auto",
-           header: {
-               left:   'prevYear,nextYear',
-               center: 'title',
-               right:  'today prev,next'
-            },
-            buttonText: {
-                today : 'Hoy'
-            },
-            aspectRatio : 2,
-            windowResize: function(view) {
-              alert('The calendar has adjusted to a window resize');
-            }
-          /*dayClick: function() {
-            alert('a day has been clicked!');
-          }*/
-        },'option' , 'contentHeight' , 650) --}}
-    </script>
-
-
      <script>
       $(document).ready(function () {
         $('#MantVehicleTable').DataTable({
@@ -1228,7 +1194,11 @@ $(document).ready(function(){
   $(window).resize(function() {
     $('.select2').css('width', '100%');
   });
-</script>{{-- 
+</script>
+@yield('NewScript')
+
+
+{{-- 
 .form-control {
   display: block;
   width: 100%;

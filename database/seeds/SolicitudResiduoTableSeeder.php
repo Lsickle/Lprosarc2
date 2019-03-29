@@ -21,6 +21,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResRespel = '3';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user01';
+        $Residuo->FK_SolResTratamiento = 1;
+        $Residuo->FK_SolResReque = 2;
+        $Residuo->FK_SolResRg = 1;
         $Residuo->save();
         
         $Residuo = new SolicitudResiduo();
@@ -32,6 +35,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResRespel = '2';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user02';
+        $Residuo->FK_SolResTratamiento = 2;
+        $Residuo->FK_SolResReque = 2;
+        $Residuo->FK_SolResRg = 2;
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -43,6 +49,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResRespel = '1';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user03';
+        $Residuo->FK_SolResTratamiento = 3;
+        $Residuo->FK_SolResReque = 2;
+        $Residuo->FK_SolResRg = 3;
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -54,6 +63,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResRespel = '4';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user04';
+        $Residuo->FK_SolResTratamiento = 4;
+        $Residuo->FK_SolResReque = 2;
+        $Residuo->FK_SolResRg = 1;
         $Residuo->save();
 
         $Residuo = new SolicitudResiduo();
@@ -65,6 +77,9 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResRespel = '5';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user05';
+        $Residuo->FK_SolResTratamiento = 5;
+        $Residuo->FK_SolResReque = 2;
+        $Residuo->FK_SolResRg = 5;
         $Residuo->save();
     }
 }

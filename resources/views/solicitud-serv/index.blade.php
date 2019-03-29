@@ -32,7 +32,7 @@ Servicios
                   <th>Placa del vehiculo externo</th>
                   {{-- <th>Fecha creado</th> --}}
                   {{-- <th>Fecha modificado</th> --}}
-                  <th>Editar</th>
+                  <th>Ver Más</th>
                 </tr>
                 
             </thead>

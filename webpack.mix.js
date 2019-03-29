@@ -33,8 +33,12 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
-        'node_modules/fullcalendar/dist/fullcalendar.css'
+        'node_modules/select2/dist/css/select2.css'
     ], 'public/css/dependencias.css')
+   .combine([
+        'node_modules/@fullcalendar/core/main.css',
+        'node_modules/@fullcalendar/daygrid/main.css'
+   	], 'public/css/fullcalendar.css')
    .combine([
         'node_modules/datatables.net-dt/css/jquery.dataTables.css',
         'node_modules/datatables.net-autofill-dt/css/autoFill.dataTables.css',
@@ -57,9 +61,14 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
         'node_modules/jquery-slimscroll/jquery.slimscroll.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
-        'node_modules/moment/min/moment-with-locales.js',
-        'node_modules/fullcalendar/dist/fullcalendar.js'
+        'node_modules/select2/dist/js/select2.full.js'
     ], 'public/js/dependencias.js')
+   .scripts([
+   		'node_modules/@fullcalendar/core/main.js',
+   		'node_modules/@fullcalendar/core/locales/es.js',
+   		'node_modules/@fullcalendar/daygrid/main.js',
+      'node_modules/@fullcalendar/interaction/main.min.js'
+   	], 'public/js/fullcalendar.js')
    .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-autofill/js/dataTables.autoFill.js',
