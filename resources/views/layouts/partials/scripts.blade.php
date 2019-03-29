@@ -860,7 +860,7 @@ $(document).ready(function(){
             "targets": 9,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "' class='btn btn-success'>Ver</a>";
               }
           }]
         });
