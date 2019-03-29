@@ -459,53 +459,57 @@ create table InventarioTecnologia(
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
 
-/*tabla de requermientos del cliente por residuo "¡¡PENDIENTE!!"*/
-create table Requerimiento(
-	ID_Req int auto_increment unique,
-	/*ReqFotoCargue boolean,*/
-	ReqFotoDescargue boolean,
-	/*ReqFotoPesaje boolean,*/
-	ReqFotoAlmacenado boolean,
-	/*ReqFotoMezclado boolean,*/
-	ReqFotoDestruccion boolean,
-	/*ReqVideoCargue boolean,*/
-	ReqVideoDescargue boolean,
-	/*ReqVideoPesaje boolean,*/
-	ReqVideoAlmacenado boolean,
-	/*ReqVideoMezclado boolean,*/
-	ReqVideoDestruccion boolean,
-	ReqAuditoria boolean,
-	ReqAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/
-	ReqDevolucion boolean,
-	ReqDevolucionTipo varchar(128), /*observacion de lo que se quiere que sea devuelto al cliente*/
-	ReqDatosPersonal boolean, /*datos de personal y vehiculo que van a la recogida de residuos*/
-	ReqPlanillas boolean, /*Planillas de pago de seguridad social*/
-	ReqAlistamiento boolean, /*Alistamiento de material*/
-	ReqCapacitacion boolean, /*Capacitación de personal dada por el cliente*/
-	ReqBascula boolean, /*Pesaje en báscula camionera*/
-	ReqMasPerson boolean, /*Personal adicional para cargue*/
-	ReqPlatform boolean, /*Vehículo con plataforma*/
-	ReqCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
-	FK_ReqRespel int, /*foranea de la tabla respel*/
-	primary key (ID_Req),
-	foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE
-)
-	COLLATE='utf8mb4_unicode_ci'
-	ENGINE=InnoDB;
-
 /*tabla de tratamiento*/
 create table Tratamiento(
 		ID_Trat int auto_increment unique,
 		TratName varchar(64),
 		TratTipo boolean, /*interno o externo*/
 		FK_TratProv int, /*proveedor del tratamiento (externo)*/
-		FK_TratRespel int, /*residuo al que aplica*/
 		primary key	(ID_Trat),
 		foreign key (FK_TratProv) references Sedes(ID_Sede) ON UPDATE CASCADE,
-		foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE
+		-- FK_TratRespel int, /*residuo al que aplica*/
+		-- foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE (SE PASO ESTA COLUMNA A LA TABLA DE REQUERIMIENTOS)
 	)
 		COLLATE='utf8mb4_unicode_ci'
 		ENGINE=InnoDB;
+
+/*tabla de requermientos del cliente por residuo "¡¡PENDIENTE!!"*/
+create table Requerimiento(
+	-- ReqFotoCargue boolean,
+	-- ReqFotoDescargue boolean,
+	-- ReqFotoPesaje boolean,
+	-- ReqFotoAlmacenado boolean,
+	-- ReqFotoMezclado boolean,
+	-- ReqFotoDestruccion boolean,
+	-- ReqVideoCargue boolean,
+	-- ReqVideoDescargue boolean,
+	-- ReqVideoPesaje boolean,
+	-- ReqVideoAlmacenado boolean,
+	-- ReqVideoMezclado boolean,
+	-- ReqVideoDestruccion boolean,
+	-- ReqAuditoria boolean,
+	-- ReqAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/
+	-- ReqDevolucion boolean,
+	-- ReqDevolucionTipo varchar(128), observacion de lo que se quiere que sea devuelto al cliente
+	-- ReqDatosPersonal boolean, /*datos de personal y vehiculo que van a la recogida de residuos*/
+	-- ReqPlanillas boolean, /*Planillas de pago de seguridad social*/
+	-- ReqAlistamiento boolean, /*Alistamiento de material*/
+	-- ReqCapacitacion boolean, /*Capacitación de personal dada por el cliente*/
+	-- ReqBascula boolean, /*Pesaje en báscula camionera*/
+	-- ReqMasPerson boolean, /*Personal adicional para cargue*/
+	-- ReqPlatform boolean, /*Vehículo con plataforma*/
+	-- ReqCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
+	-- (SE CAMBIA ESTA TABLA PARA DEJARLA COMO TABLA DE UNION ENTRE RESPEL Y TRATAMIENTO CON SUS REQUERMIENTOS)
+	ID_Req int auto_increment unique,
+	FK_ReqRespel int, /*foranea de la tabla respel*/
+	FK_ReqTratamiento int, /*foranea de la tabla tratamiento*/
+	primary key (ID_Req),
+	foreign key (FK_TratRespel) references Respel(ID_Respel) ON UPDATE CASCADE
+	foreign key (FK_ReqTratamiento) references Tratamiento(ID_Trat) ON UPDATE CASCADE
+)
+	COLLATE='utf8mb4_unicode_ci'
+	ENGINE=InnoDB;
+
 
 /*tabla de cantidades por cada residuo saolicitados*/
 create table SolicitudResiduo(

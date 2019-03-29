@@ -5,14 +5,17 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
 {{-- Dependencias Package.json --}}
-<script src="/js/dependencias.js"></script>
+<script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
 {{-- plugins de datatables --}}
-<script src="/js/datatable-plugins.js"></script>
+<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 
 <!-- DataTables -->
-<script src="/js/datatable-depen.js"></script>
+<script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 
+{{-- fullcalendar --}}
+<script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+<<<<<<< HEAD
 {{-- date range --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
@@ -29,6 +32,9 @@
 
 			/*var botoncito define los botones que se usaran si el usuario es programador*/
 			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+=======
+{{-- Full Calendar --}}
+>>>>>>> 89b374ad63338f6143b710223815909d9b631e3c
 
 			/*funcion para renderizar la tabla de cotizacion.index*/
 			$('#cotizaciones').DataTable({
@@ -793,7 +799,7 @@ $(document).ready(function(){
             "targets": 9,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
-              return "<a href='/solicitud-servicio/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+              return "<a href='/solicitud-servicio/" + data + "' class='btn btn-success'>Ver</a>";
               }
           }]
         });
@@ -982,36 +988,6 @@ $(document).ready(function(){
       });
   }); 
 </script>
-
-    <script>
-      $(function() {
-        $('#calendar').fullCalendar({
-          themeSystem: 'bootstrap4'
-        });
-      });
-
-    {{-- 
-          themeSystem: 'bootstrap4',
-          height:"auto",
-           header: {
-               left:   'prevYear,nextYear',
-               center: 'title',
-               right:  'today prev,next'
-            },
-            buttonText: {
-                today : 'Hoy'
-            },
-            aspectRatio : 2,
-            windowResize: function(view) {
-              alert('The calendar has adjusted to a window resize');
-            }
-          /*dayClick: function() {
-            alert('a day has been clicked!');
-          }*/
-        },'option' , 'contentHeight' , 650) --}}
-    </script>
-
-
      <script>
       $(document).ready(function () {
         $('#MantVehicleTable').DataTable({
@@ -1143,7 +1119,11 @@ $(document).ready(function(){
   $(window).resize(function() {
     $('.select2').css('width', '100%');
   });
-</script>{{-- 
+</script>
+@yield('NewScript')
+
+
+{{-- 
 .form-control {
   display: block;
   width: 100%;
