@@ -128,7 +128,6 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
         ->add(Menu::new()
             ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>Solicitud</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
-            ->add(Link::toUrl('/solicitud-residuo', '<i class="fas fa-list-alt"></i>  Inventario de Residuos'))
             ->add(Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-signature"></i> Inventario de servicios'))
             ->add(Link::toUrl('/recurso', '<i class="fas fa-video"></i> Recursos'))
             ->addClass('treeview-menu')

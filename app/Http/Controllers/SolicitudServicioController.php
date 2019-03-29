@@ -62,21 +62,9 @@ class SolicitudServicioController extends Controller
     public function create()
     {
         $Sedes = Sede::all();
-
-        $GSedes = GenerSede::all();
-        // $GSedes = DB::table('gener_sedes')
-        // ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-        // ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
-        // ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede')
-        // ->get();
-        
+        // $GSedes = GenerSede::all(); 'GSedes', 
         $Respels = Respel::all();
-        // $Respels = DB::table('respels')
-        //     ->join('sedes', 'sedes.ID_Sede', '=', 'respels.FK_RespelSede')
-        //     ->select('respels.*')
-        //     ->get();
-
-        return view('solicitud-serv.create', compact('GSedes', 'Sedes', 'Respels'));                
+        return view('solicitud-serv.create', compact('Sedes', 'Respels'));
     }
 
     /**

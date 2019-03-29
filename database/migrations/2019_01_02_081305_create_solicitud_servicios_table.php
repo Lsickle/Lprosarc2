@@ -23,10 +23,8 @@ class CreateSolicitudServiciosTable extends Migration
             $table->string('SolSerConducExter')->nullable();
             $table->string('SolSerVehicExter')->nullable();
             $table->unsignedInteger('Fk_SolSerTransportador');
-            $table->unsignedInteger('FK_SolSerGenerSede');
             $table->string('SolSerSlug')->unique();
             $table->foreign('Fk_SolSerTransportador')->references('ID_Sede')->on('sedes');
-            $table->foreign('FK_SolSerGenerSede')->references('ID_GSede')->on('gener_sedes');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

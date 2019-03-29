@@ -21,7 +21,8 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerVehicExter = '';
         $Servicio->SolSerSlug = 'user1';
         $Servicio->Fk_SolSerTransportador = '1';
-        $Servicio->FK_SolSerGenerSede = '2';
+        $Servicio->FK_SolSerCliente = '2';
+        $Servicio->FK_SolSerPersona = '2';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
 
@@ -34,7 +35,8 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerVehicExter = 'HDT-567';
         $Servicio->SolSerSlug = 'user2';
         $Servicio->Fk_SolSerTransportador = '5';
-        $Servicio->FK_SolSerGenerSede = '1';
+        $Servicio->FK_SolSerCliente = '1';
+        $Servicio->FK_SolSerPersona = '1';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
 
@@ -47,7 +49,8 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerVehicExter = 'HGT-478';
         $Servicio->SolSerSlug = 'user5';
         $Servicio->Fk_SolSerTransportador = '2';
-        $Servicio->FK_SolSerGenerSede = '5';
+        $Servicio->FK_SolSerCliente = '5';
+        $Servicio->FK_SolSerPersona = '5';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
 
@@ -60,7 +63,8 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerVehicExter = '';
         $Servicio->SolSerSlug = 'user4';
         $Servicio->Fk_SolSerTransportador = '4';
-        $Servicio->FK_SolSerGenerSede = '3';
+        $Servicio->FK_SolSerCliente = '3';
+        $Servicio->FK_SolSerPersona = '3';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
 
@@ -73,7 +77,8 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerVehicExter = '';
         $Servicio->SolSerSlug = 'user3';
         $Servicio->Fk_SolSerTransportador = '3';
-        $Servicio->FK_SolSerGenerSede = '4';
+        $Servicio->FK_SolSerCliente = '4';
+        $Servicio->FK_SolSerPersona = '4';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
     }
