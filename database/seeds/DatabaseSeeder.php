@@ -27,7 +27,9 @@ use App\SubcategoriaActivo;
 use App\Activo;
 use App\Requerimiento;
 use App\Cotizacion;
+use App\Recurso;
 use App\Certificado;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,6 +68,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RespelTableSeeder::class);
         $this->call(TratamientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
+        $this->call(RecursoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);

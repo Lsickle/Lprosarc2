@@ -10,7 +10,7 @@
         <label >Corriente de clasificacion Y</label>
         <select name="YRespelClasf4741" class="form-control">
             <optgroup label="Corriente de clasificacion Y segun Decreto Unico Ambiental del 2016">
-                <option value="{{$Respels->ARespelClasf4741}}">Selecione...</option>
+                <option value="{{$Respels->ARespelClasf4741}}">Seleccione...</option>
                 <option value="Y1">Y1 Desechos clínicos resultantes de la atención médica prestada en hospitales, centros médicos y clínicas </option>
                 <option value="Y2">Y2 Desechos resultantes de la producción y preparación de productos farmacéuticos</option>
                 <option value="Y3">Y3 Desechos de medicamentos y productos farmacéuticos</option>
@@ -62,7 +62,7 @@
     <div class="col-md-12">
         <label>Corriente de clasificacion A</label>
         <select name="ARespelClasf4741" class="form-control">
-            <option value="{{$Respels->ARespelClasf4741}}">Selecione...</option>
+            <option value="{{$Respels->ARespelClasf4741}}">Seleccione...</option>
             <optgroup label="A1
                 Desechos metálicos o que contengan metales">
                 <option value="A1010"><b>A1010</b>
@@ -345,7 +345,7 @@
         <label>Peligrosidad del residuo</label>
         <select name="RespelIgrosidad" class="form-control" >
             <optgroup label="Seleccion el tipo de Peligrosidad del residuo">
-                <option value="{{$Respels->RespelIgrosidad}}">Selecione...</option>
+                <option value="{{$Respels->RespelIgrosidad}}">Seleccione...</option>
                 <option>Inflamable</option>
                 <option>Toxico</option>
                 <option>Biologico</option>
@@ -362,7 +362,7 @@
         <label>Estado del residuo</label>
         <select name="RespelEstado" class="form-control" >
             <optgroup label="Seleccione el estado físico del residuo">
-                <option value="{{$Respels->RespelEstado}}">Selecione...</option>
+                <option value="{{$Respels->RespelEstado}}">Seleccione...</option>
                 <option value="Liquido">Liquido</option>
                 <option value="Solido">Solido</option>
                 <option value="Gaseoso">Gaseoso</option>
@@ -394,7 +394,7 @@
         <label>Estado de aprobación</label>
         <select name="RespelStatus" class="form-control" >
             <optgroup label="Estado de aprobación por parte de Prosarc">
-                <option value="{{$Respels->RespelStatus}}">Selecione...</option>
+                <option value="{{$Respels->RespelStatus}}">Seleccione...</option>
                 <option value="Aprobado">Aprobado</option>
                 <option value="Negado">Negado</option>
                 <option value="Pendiente">Pendiente</option>

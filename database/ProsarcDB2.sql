@@ -537,7 +537,7 @@ create table Recurso(
 	RecTipo varchar(64), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	/*RecRmSrc varchar(255), direcion de la carperta donde */
+	RecRmSrc varchar(255), /*direcion de la carperta donde */
 	RecSrc varchar(255), /*ruta donde se guardan los diferentes recursos*/
 	RecFormat varchar(32), /*jpg, gif, png, etc*/
 	FK_RecSol int, /*foranea de la tabla residuo por solicitud*/

@@ -28,6 +28,132 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
 
+{{-- slider --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+
+{{-- slider --}}
+<script>
+  $(document).ready(function(){
+    $('#CargueRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#CargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
 
 {{-- select 2 --}}
 <script>
@@ -709,12 +835,12 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 7,
+            "targets": 8,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 8,
+            "targets": 9,
             "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
@@ -849,13 +975,21 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
+          // "columnDefs": [ {
+          //   "targets": 5,
+          //   "data": "RecSrc",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
           "columnDefs": [ {
-            "targets": 5,
-            "data": "FK_RecSol",
+            "targets": 2,
+            "data": "ID_SGenerRes",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-              }
-          }]
+                return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          {"targets": 3,
+            "data": "ID_Rec",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
+          ]
         });
       });
     </script>
