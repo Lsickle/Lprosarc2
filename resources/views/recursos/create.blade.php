@@ -29,10 +29,10 @@
 								{{csrf_field()}}
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
-                                    <select class="form-control" id="SolSer" name="FK_ResGer" required>
+                                    <select class="form-control" id="SolSer" name="FK_RecSolRes" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($ResGeners as $ResGener)
-                                            <option value="{{$ResGener->ID_SGenerRes}}">{{$ResGener->FK_SolSer}}, {{$ResGener->RespelName}}</option>
+                                        @foreach ($SolRes as $SolRe)
+                                            <option value="{{$SolRe->ID_SolRes}}">{{$SolRe->FK_SolResSolSer}}, {{$SolRe->RespelName}}</option>
                                         @endforeach
                                     </select>
                                 </div>

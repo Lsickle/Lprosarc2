@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Activo extends Model{
     protected $table = 'activos';
 
-	protected $fillable = ['ActName', 'ActUnid', 'ActCant', 'ActSerialProsarc', 'ActSerialProveed',' ActModel', 'ActTalla', 'ActObserv'];
+	protected $fillable = ['ActName', 'ActUnid', 'ActCant', 'ActSerialProsarc', 'ActSerialProveed',' ActModel', 'ActTalla', 'ActObserv', 'FK_ActSub', 'FK_ActSede'];
+	
 	protected $primaryKey = 'ID_Act';
 
 	public function Sedes(){

@@ -982,11 +982,11 @@ $(document).ready(function(){
           //       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
           "columnDefs": [ {
             "targets": 2,
-            "data": "ID_SGenerRes",
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
           {"targets": 3,
-            "data": "ID_Rec",
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
           ]

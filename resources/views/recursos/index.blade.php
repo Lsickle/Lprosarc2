@@ -37,10 +37,10 @@
                 </div>
                 @foreach($Recursos as $Recurso)
                 <tr>
-                  <td>{{$Recurso->FK_SolSer}}</td>
+                  <td>{{$Recurso->FK_SolResSolSer}}</td>
                   <td>{{$Recurso->RespelName}}</td>
-                  <td>{{$Recurso->ID_SGenerRes}}</td>
-                  <td>{{$Recurso->ID_SGenerRes}}</td>
+                  <td>{{$Recurso->SolResSlug}}</td>
+                  <td>{{$Recurso->SolResSlug}}</td>
                 </tr>
                 @endforeach
               </tbody>
