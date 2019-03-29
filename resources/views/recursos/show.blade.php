@@ -43,7 +43,7 @@
                                     
                                     <label for="tipo">Foto</label>
                                     <a method='get' href='#' data-toggle='modal' data-target='#myModal'  class="btn btn-primary" style="float: right;">Añadir</a>
-                                    <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
+                                    <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data">
                                         @method('PUT')
                                         {{csrf_field()}}
                                         @csrf
@@ -65,6 +65,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="bx-caption">
+                                                    <input hidden name="number" value="1">
                                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                 </div>
                                             </form>
@@ -89,6 +90,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="bx-caption">
+                                                        <input hidden name="number" value="1">
                                                         <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                     </div>
                                                 </form>
@@ -113,6 +115,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="bx-caption">
+                                                    <input hidden name="number" value="1">
                                                         <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                     </div>
                                                 </form>
@@ -137,6 +140,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="bx-caption">
+                                                    <input hidden name="number" value="1">
                                                         <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                     </div>
                                                 </form>
@@ -161,6 +165,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="bx-caption">
+                                                    <input hidden name="number" value="1">
                                                         <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                     </div>
                                                 </form>
@@ -185,6 +190,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <div class="bx-caption">
+                                                            <input hidden name="number" value="1">
                                                             <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                                         </div>
                                                     </form>
@@ -213,6 +219,7 @@
                                     <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
+                                        <input hidden name="number" value="1">
                                         <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                         <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                     </form>
@@ -233,6 +240,7 @@
                                 <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
+                                    <input hidden name="number" value="1">
                                     <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                 </form>
@@ -253,6 +261,7 @@
                                 <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
+                                    <input hidden name="number" value="1">
                                     <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                 </form>
@@ -273,6 +282,7 @@
                                 <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
+                                    <input hidden name="number" value="1">
                                     <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                 </form>
@@ -293,6 +303,7 @@
                                 <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
+                                    <input hidden name="number" value="1">
                                     <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                 </form>
@@ -313,6 +324,7 @@
                                 <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
+                                    <input hidden name="number" value="1">
                                     <video src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200" controls></video>
                                     <button type="submit" class="btn btn-danger btn-block" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button>
                                 </form>

@@ -14,6 +14,7 @@ class DropAndAddColumnsRecursosTable extends Migration
     public function up()
     {
         Schema::table('recursos', function (Blueprint $table) {
+            $table->string('RecDelete');
             $table->dropForeign('recursos_fk_resger_foreign');
             $table->dropColumn('FK_ResGer');
             $table->unsignedInteger('FK_RecSolRes');
@@ -29,6 +30,7 @@ class DropAndAddColumnsRecursosTable extends Migration
     public function down()
     {
         Schema::table('recursos', function (Blueprint $table) {
+            $table->string('RecDelete');
             $table->dropForeign('recursos_fk_resger_foreign');
             $table->dropColumn('FK_ResGer');
             $table->unsignedInteger('FK_RecSolRes');

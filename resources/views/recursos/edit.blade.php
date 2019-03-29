@@ -18,42 +18,41 @@
 						<i class="fa fa-times"></i></button>
 					</div>
                 </div>
-                {{-- <div class="box-header">
-                    @component('layouts.partials.modal')
-                        {{$ResGeners->ID_SGenerRes}}
-                    @endcomponent
-                <h3 class="box-title">Datos de la persona</h3>
-                @if($ResGeners->PersDelete == 0)
-                  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ResGeners->ID_SGenerRes}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-                  <form action='/recurso/{{$ResGeners->ID_SGenerRes}}' method='POST'>
-                      @method('DELETE')
-                      @csrf
-                      
-                      <input  type="submit" id="Eliminar{{$ResGeners->ID_SGenerRes}}" style="display: none;">
-                  </form>
-                @else
-                  <form action='/recurso/{{$ResGeners->ID_SGenerRes}}' method='POST' style="float: right;">
-                    @method('DELETE')
-                    @csrf
-                    <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                  </form>
-                @endif
-              </div> --}}
 				<div class="row">
-					<!-- left column -->
+                    <!-- left column -->
 					<div class="col-md-12">
-						<!-- general form elements -->
+                        <!-- general form elements -->
 						<div class="box box-primary">
-                            <form role="form" action="/recurso/{{$ResGeners->ID_SGenerRes}}" method="POST" enctype="multipart/form-data">
+                            <div class="box-header">
+                                @component('layouts.partials.modalrecurso')
+                                    {{$SolRes->ID_SolRes}}
+                                @endcomponent
+                            <h3 class="box-title">Datos de la persona</h3>
+                            @if($Recs->RecDelete == 0)
+                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolRes->ID_SolRes}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+                                <form action='/recurso/{{$SolRes->SolResSlug}}' method='POST'>
+                                    @method('DELETE')
+                                    @csrf
+                                    <input  type="submit" id="Eliminar{{$SolRes->ID_SolRes}}" style="display: none;">
+                                </form>
+                            @else
+                                <form action='/recurso/{{$SolRes->SolResSlug}}' method='POST' style="float: right;">
+                                @method('DELETE')
+                                @csrf
+                                <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                                </form>
+                            @endif
+
+                            </div>
+                            <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="col-md-12">
                                     <label for="SolSer">Solicitud Servicio</label>
-                                    <select class="form-control" id="SolSer" name="FK_SolSer" required>
+                                    <select class="form-control" id="SolSer" name="FK_RecSolRes" required>
                                         <option value="">Seleccione...</option>
-                                        @foreach ($SolServs as $SolServ)
-                                            {{-- <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}, {{$SolServ->RespelName}}</option> --}}
-                                            <option value="{{$SolServ->ID_SolSer}}">{{$SolServ->ID_SolSer}}</option>
+                                        @foreach ($SolResiduos as $SolResiduo)
+                                            <option value="{{$SolResiduo->ID_SolRes}}">{{$SolResiduo->FK_SolResSolSer}} , {{$SolResiduo->RespelName}}</option>
                                         @endforeach
                                     </select>
                                 </div>

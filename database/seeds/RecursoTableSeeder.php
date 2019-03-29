@@ -20,6 +20,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user01";
+        $Recursos->RecDelete = "0";
         $Recursos->FK_RecSolRes = "1";
         $Recursos->save();
 
@@ -31,6 +32,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user02";
+        $Recursos->RecDelete = "0";
         $Recursos->FK_RecSolRes = "3";
         $Recursos->save();
 
@@ -42,6 +44,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user03";
+        $Recursos->RecDelete = "0";
         $Recursos->FK_RecSolRes = "2";
         $Recursos->save();
 
@@ -53,6 +56,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user04";
+        $Recursos->RecDelete = "0";
         $Recursos->FK_RecSolRes = "5";
         $Recursos->save();
 
@@ -64,6 +68,7 @@ class RecursoTableSeeder extends Seeder
         $Recursos->RecFormat = ".png";
         $Recursos->RecRmSrc = "/img";
         $Recursos->SlugRec = "user05";
+        $Recursos->RecDelete = "0";
         $Recursos->FK_RecSolRes = "4";
         $Recursos->save();
     }
