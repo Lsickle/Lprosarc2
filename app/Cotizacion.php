@@ -8,9 +8,9 @@ class Cotizacion extends Model
 {
     protected $table = 'cotizacions';
 
-    protected $fillable= ['CotiNumero', 'CotiFechaSolicitud', 'CotiFechaRespuesta', 'CotiFechaVencimiento', 'CotiVencida', 'CotiPrecioTotal', 'CotiPrecioSubtotal', 'FK_CotiSede', 'CotiDelete'];
+    protected $fillable = ['CotiNumero', 'CotiFechaSolicitud', 'CotiFechaRespuesta', 'CotiFechaVencimiento', 'CotiVencida', 'CotiPrecioTotal', 'CotiPrecioSubtotal', 'FK_CotiSede', 'CotiDelete'];
 
-    protected $primarykey = 'ID_Coti';
+    protected $primaryKey = 'ID_Coti';
 
     public function Sede()
 	{
@@ -19,6 +19,6 @@ class Cotizacion extends Model
 
 	public function respels()
 	{
-	 return $this->hasMany('App\respel', 'ID_Respel', 'id');
+	 return $this->hasMany('App\respel', 'ID_Respel');
 	}
 }

@@ -82,10 +82,8 @@ class CotizacionController extends Controller
     public function store(Request $request)
     {
         $ultimo_aidi = Cotizacion::max('ID_Coti');
-        // return $request;
 
-
-        $cotizacion = new Cotizacion();
+        $cotizacion = new Cotizacion();        
         $cotizacion->CotiNumero = $ultimo_aidi + 1;
         $cotizacion->CotiFechaSolicitud = now();
         $cotizacion->CotiVencida = 0;
@@ -112,7 +110,7 @@ class CotizacionController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('cotizacion.show', compact('id'));
     }
 
     /**
@@ -129,7 +127,6 @@ class CotizacionController extends Controller
         
         $residuos = Respel::where('FK_RespelCoti', $id)->get();     
 
-        // return $residuos;
 
         return view('cotizacion.edit', compact('sedes', 'cotizacion', 'residuos'));
     }
@@ -141,9 +138,41 @@ class CotizacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){   
+        // return $id;
+
+        // return $request;
+
+        $cotizacion = Cotizacion::where('ID_Coti', $id)->first();
+        $cotizacion->CotiNumero = $request->input('CotiNumero');
+        if ($request->input('CotiStatus')=='Aprobada'||$request->input('CotiStatus')=='Rechazada') {
+            $cotizacion->CotiFechaRespuesta = now();
+        }
+        $cotizacion->CotiFechaVencimiento = $request->input('CotiFechaVencimiento');
+        if (($request->input('CotiFechaVencimiento'))!=null && $request->input('CotiFechaVencimiento')<=now()) {
+            $cotizacion->CotiVencida = 1;
+        }
+        $cotizacion->CotiPrecioTotal = $request->input('CotiPrecioTotal');
+        $cotizacion->CotiPrecioSubtotal = $request->input('CotiPrecioSubtotal');
+        $cotizacion->FK_CotiSede = $request->input('FK_CotiSede');
+        $cotizacion->CotiStatus = $request->input('CotiStatus');
+        $cotizacion->CotiDelete = 0;
+        $cotizacion->update();
+
+        // return $cotizacion;
+
+        /*codigo para incluir la actualizacion en la tabla de auditoria*/
+        $log = new audit();
+        $log->AuditTabla="cotizacions";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$cotizacion->ID_Coti;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+        // return $log->Auditlog;
+
+
+        return redirect()->route('cotizacion.index');
     }
 
     /**
@@ -154,6 +183,24 @@ class CotizacionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cotizacion = Cotizacion::where('ID_Coti', $id)->first();
+            if ($cotizacion->CotiDelete == 0) {
+                $cotizacion->CotiDelete = 1;
+            }
+            else{
+                $cotizacion->CotiDelete = 0;
+            }
+        $cotizacion->save();
+        
+
+        $log = new audit();
+        $log->AuditTabla="cotizacion";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$cotizacion->ID_Coti;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog = $cotizacion->CotiDelete;
+        $log->save();
+
+        return redirect()->route('cotizacion.index');
     }
 }

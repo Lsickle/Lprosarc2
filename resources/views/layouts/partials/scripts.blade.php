@@ -15,10 +15,6 @@
 
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
-<<<<<<< HEAD
-{{-- date range --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
 
 @if(
 	Route::currentRouteName()=='cotizacion.create'||
@@ -32,12 +28,9 @@
 
 			/*var botoncito define los botones que se usaran si el usuario es programador*/
 			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-=======
-{{-- Full Calendar --}}
->>>>>>> 89b374ad63338f6143b710223815909d9b631e3c
 
 			/*funcion para renderizar la tabla de cotizacion.index*/
-			$('#cotizaciones').DataTable({
+			$('#cotizacionesTable').DataTable({
 				responsive: true,
 				select: true,
 				dom: 'Bfrtip',
@@ -53,7 +46,7 @@
 				autoWith: true,
 				searchHighlight: true,
 				columnDefs: [ {
-					"targets": 10,
+					"targets": 13,
 					"data": "ID_Coti",
 					"render": function ( data, type, row, meta ) {
 						return "<a method='get' href='/cotizacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";

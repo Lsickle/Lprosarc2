@@ -13,7 +13,7 @@ Cotizaciones
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<table id="cotizaciones" class="table table-bordered table-striped" width="100%">
+					<table id="cotizacionesTable" class="table table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
 								<th>Número de cotización</th>
@@ -27,7 +27,6 @@ Cotizaciones
 								<th>Celular</th>
 								<th>Subtotal</th>
 								<th>Total</th>
-								<th>Delete</th>
 								<th>Sede Email</th>
 								<th>Telefono 1</th>
 								<th>Ver Mas</th>
@@ -54,11 +53,11 @@ Cotizaciones
 								<td>{{$cotizacion->CliName}}</td>
 								<td>{{$cotizacion->SedeCelular}}</td>
 								<td>{{$cotizacion->CotiPrecioSubtotal}}</td>
-								<td>{{$cotizacion->ID_Coti}}</td>
 								<td>{{$cotizacion->CotiPrecioTotal}}</td>
 								<td>{{$cotizacion->CotiDelete}}</td>
 								<td>{{$cotizacion->SedeEmail}}</td>
 								<td>{{$cotizacion->SedePhone1.' - '.$cotizacion->SedeExt1}}</td>
+								<td>{{$cotizacion->ID_Coti}}</td>
 							</tr>
 							@endforeach
 						</tbody>
