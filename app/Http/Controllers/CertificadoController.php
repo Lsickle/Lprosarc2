@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Certificado;
 
 
 class CertificadoController extends Controller
@@ -28,7 +29,10 @@ class CertificadoController extends Controller
      */
     public function create()
     {
-        return view('resivos.createCertificado');
+        $solicitudes = DB::table('solicitud_servicios')
+            ->select('*')
+            ->get();
+        return view('resivos.createCertificado', compact('solicitudes'));
     }
 
     /**
