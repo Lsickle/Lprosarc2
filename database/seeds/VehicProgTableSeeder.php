@@ -23,6 +23,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->FK_ProgConductor = "3";
         $vehicleprog->FK_ProgAyudante = "4";
         $vehicleprog->FK_ProgMan = "1";
+        $vehicleprog->ProgVehDelete = "0";
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
@@ -36,6 +37,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->FK_ProgConductor = "3";
         $vehicleprog->FK_ProgAyudante = "5";
         $vehicleprog->FK_ProgMan = "2";
+        $vehicleprog->ProgVehDelete = "0";
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
@@ -49,6 +51,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->FK_ProgConductor = "1";
         $vehicleprog->FK_ProgAyudante = "2";
         $vehicleprog->FK_ProgMan = "3";
+        $vehicleprog->ProgVehDelete = "0";
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
@@ -62,6 +65,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->FK_ProgConductor = "1";
         $vehicleprog->FK_ProgAyudante = "3";
         $vehicleprog->FK_ProgMan = "4";
+        $vehicleprog->ProgVehDelete = "0";
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
@@ -75,6 +79,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->FK_ProgConductor = "2";
         $vehicleprog->FK_ProgAyudante = "4";
         $vehicleprog->FK_ProgMan = "5";
+        $vehicleprog->ProgVehDelete = "0";
         $vehicleprog->save();
     }
 }

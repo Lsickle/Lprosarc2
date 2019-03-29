@@ -10,6 +10,9 @@
     <link href="{{ mix('/css/dependencias.css') }}" rel="stylesheet" type="text/css">
     
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
+
+    {{-- Full Calendar --}}
+     <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
@@ -32,6 +35,7 @@
 {{-- slider --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
   
+    {{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
         window.trans = @php
@@ -47,6 +51,8 @@
             // echo $trans;
         @endphp
     </script>
+    
+    {{-- script para validar si javascript esta desactivado en el navegador --}}
     <noscript>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}

@@ -14,15 +14,16 @@ class CreateTratamientosTable extends Migration
     public function up()
     {
         Schema::create('tratamientos', function (Blueprint $table) {
-            $table->increments('ID_Trat');
-            $table->timestamps();
+            $table->increments('ID_Trat')->unique();
             $table->string('TratName');
             $table->boolean('TratTipo');
             $table->unsignedInteger('FK_TratProv');
-            $table->unsignedInteger('FK_TratRespel');
+            $table->timestamps();
 
             $table->foreign('FK_TratProv')->references('ID_Sede')->on('sedes');
-            $table->foreign('FK_TratRespel')->references('ID_Respel')->on('Respels');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

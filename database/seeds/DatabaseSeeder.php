@@ -28,6 +28,7 @@ use App\Activo;
 use App\Requerimiento;
 use App\Cotizacion;
 use App\Recurso;
+use App\Certificado;
 
 class DatabaseSeeder extends Seeder
 {
@@ -68,6 +69,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
         $this->call(RecursoTableSeeder::class);
+        $this->call(CertificadoTableSeeder::class);
 
     }
 }
