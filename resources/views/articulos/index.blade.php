@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Activos
+Articulos
 @endsection
 @section('contentheader_title')
-Activos
+Articulos por Proveedor
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,20 +12,24 @@ Activos
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Datos de los activos</h3>
+          <h3 class="box-title">Datos</h3>
+          <a href="articulos-proveedor/create" class="btn btn-primary" style="float: right;">Crear</a>
+
         </div>
         <!-- /.box-header -->
         <div class="box-body">
           <table id="ArticuloXProveedor" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Forma </th>
+                    {{-- <th>Cliente</th> --}}
+                    {{-- <th>Forma </th> --}}
+                    <th>Activo</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Costo por Unid.</th>
                     <th>Cant. min. compra</th>
-                    <th>Fecha creado</th>
-                    <th>Fecha Actualizado</th>
+                    {{-- <th>Fecha creado</th> --}}
+                    {{-- <th>Fecha Actualizado</th> --}}
                     <th>Editar</th>
                 </tr>
               
@@ -44,20 +48,25 @@ Activos
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
               
-              @foreach ($Proveedores as $Proveedor)
+              @foreach ($ArtProvs as $ArtProv)
               <tr>
-                @if ($Proveedor->ArtiUnidad <> 1)
-                    <td>Unidades</td>
-                @else
-                    <td>Peso</td>
-                @endif
-                <td>{{$Proveedor->ArtiCant}}</td>
-                <td>{{$Proveedor->ArtiPrecio}}</td>
-                <td>{{$Proveedor->ArtiCostoUnid}}</td>
-                <td>{{$Proveedor->ArtiMinimo}}</td>
-                <td>{{$Proveedor->created_at}}</td>
-                <td>{{$Proveedor->updated_at}}</td>
-                <td></td>
+                <td>{{$ArtProv->ActName}}</td>
+                <td>
+                  {{$ArtProv->ArtiCant}}
+                  @if ($ArtProv->ArtiUnidad <> 1)
+                      Unidades
+                  @else
+                      En Peso
+                  @endif
+                </td>
+                <td>{{$ArtProv->ArtiPrecio}}</td>
+                <td>{{$ArtProv->ArtiCostoUnid}}</td>
+                <td>{{$ArtProv->ArtiMinimo}}</td>
+
+                <td>{{$ArtProv->ID_ArtiProve}}</td>
+                {{-- <td>{{$ArtProv->created_at}}</td> --}}
+                {{-- <td>{{$ArtProv->updated_at}}</td> --}}
+                {{-- <td></td> --}}
               </tr>
               @endforeach
             {{-- <tfoot>

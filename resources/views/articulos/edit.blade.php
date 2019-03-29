@@ -3,7 +3,7 @@
 Articulos
 @endsection
 @section('contentheader_title')
-Registros de Articulos por Proveedor
+Articulos por Proveedor
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -33,7 +33,7 @@ Registros de Articulos por Proveedor
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Numero de Cotizacion</label>
                                     <select class="form-control" id="articuloxprov" name="FK_ArtCotiz" required>
-                                        <option>Seleccione...</option>
+                                    <option value="{{$ArtProvs->FK_ArtCotiz}}">Seleccione...</option>
 									@foreach ($Quotations as $Quotation)
 										<option value="{{$Quotation->ID_Cotiz}}">{{$Quotation->CotizNum}}</option>
 									@endforeach	
@@ -42,7 +42,7 @@ Registros de Articulos por Proveedor
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Activos</label>
                                     <select class="form-control" id="articuloxprov" name="FK_ArtiActiv" required>
-                                        <option>Seleccione...</option>
+                                        <option value="{{$ArtProvs->FK_ArtiActiv}}">Seleccione...</option>
                                         @foreach ($Activos as $Activo)
 											<option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>
 										@endforeach	

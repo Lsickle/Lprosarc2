@@ -138,7 +138,6 @@ class RecursoController extends Controller
             $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
             $Recursos = Recurso::where('FK_RecSolRes', $SolRes->ID_SolRes)->first();
             
-            // return $SolRes;
             // modificar el nombre de la carpeta
             rename(public_path($Recursos->RecSrc), 'Recursos/'.$request->input("RecName").time());
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ArticuloPorProveedor;
+use App\Activo;
+use App\Quotation;
 
 class ArticuloXProveedorController extends Controller
 {
@@ -15,11 +17,12 @@ class ArticuloXProveedorController extends Controller
      */
     public function index()
     {
-        $Proveedores = DB::table('articulo_por_proveedors')
-            ->select('articulo_por_proveedors.*')
+        $ArtProvs = DB::table('articulo_por_proveedors')
+            ->join('activos', 'activos.ID_Act', '=', 'articulo_por_proveedors.ID_ArtiProve')
+            ->select('articulo_por_proveedors.*', 'activos.ActName')
             ->get();
 
-        return view('articulos.index', compact('Proveedores'));
+        return view('articulos.index', compact('ArtProvs'));
     }
 
     /**
@@ -29,7 +32,10 @@ class ArticuloXProveedorController extends Controller
      */
     public function create()
     {
-        return view('articulos.create');
+        $Activos = Activo::all();
+        $Quotations = Quotation::all();
+
+        return view('articulos.create', compact('Activos', 'Quotations'));
     }
 
     /**
@@ -40,7 +46,21 @@ class ArticuloXProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ArtProv = new ArticuloPorProveedor();
+        $ArtProv->ArtiUnidad = $request->input("ArtiUnidad");
+        $ArtProv->ArtiCant = $request->input("ArtiCant");
+        $ArtProv->ArtiPrecio = $request->input("ArtiPrecio");
+        $ArtProv->ArtiCostoUnid = $request->input("ArtiCostoUnid");
+        $ArtProv->ArtiMinimo = $request->input("ArtiMinimo");
+
+        $ArtProv->FK_ArtCotiz = $request->input("FK_ArtCotiz");
+        $ArtProv->FK_ArtiActiv = $request->input("FK_ArtiActiv");
+        // $ArtProv->FK_AutorizedBy = $request->input("FK_AutorizedBy");
+        $ArtProv->FK_AutorizedBy = 1;
+
+        $ArtProv->save();
+
+        return redirect()->route('articulos-proveedor.index');
     }
 
     /**
