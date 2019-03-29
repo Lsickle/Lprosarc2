@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);
-        // $this->call(RecursoTableSeeder::class);
+        $this->call(RecursoTableSeeder::class);
 
     }
 }
