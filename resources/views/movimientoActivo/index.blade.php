@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Activos
+Movimiento
 @endsection
 @section('contentheader_title')
-Activos
+Movimiento de Activos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,8 @@ Activos
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Datos de los activos</h3>
+          <h3 class="box-title">Datos</h3>
+          <a href="movimiento-activos/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Movimiento de Activos
+Movimientos
 @endsection
 @section('contentheader_title')
 Registros de Movimiento de Activos
@@ -27,21 +27,20 @@ Registros de Movimiento de Activos
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/movimiento-activos" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="col-md-6">
-									<label for="activo">Tipo de Movimiento</label>
-									<select class="form-control" id="activo" name="tipo" required="true">
-										<option>Seleccione...</option>
+									<label for="moviminetoActivo">Tipo de Movimiento</label>
+									<select class="form-control" id="moviminetoActivo" name="MovTipo" required>
+										<option value="">Seleccione...</option>
 										<option>Entrada</option>
 										<option>Salida</option>
 										<option>Asignacion</option>
 									</select>
 								</div>
-							{{-- </div> --}}
 								<div class="col-md-6">
-									<label for="activo">Nombre del Activo</label>
-									<select class="form-control" id="activo" name="nombre" required="true">
+									<label for="moviminetoActivo1">Nombre del Activo</label>
+									<select class="form-control" id="moviminetoActivo1" name="FK_MovInv" required>
 										<option>Seleccione...</option>
 										@foreach ($Movimientos as $Movimiento)
 											 <option value="{{$Movimiento->ID_Act}}">{{$Movimiento->ActName}}</option>																
@@ -49,11 +48,11 @@ Registros de Movimiento de Activos
 									</select>
                                 </div>
                                 <div class="col-md-6">
-									<label for="activo">Asignado A</label>
-									<select class="form-control" id="activo" name="nombre" required="true">
+									<label for="moviminetoActivo2">Asignado A</label>
+									<select class="form-control" id="moviminetoActivo2" name="FK_ActPerson" required>
 										<option>Seleccione...</option>
-										@foreach ($MovimientosAct as $MovimientoAct)
-											 <option value="{{$MovimientoAct->ID_Pers}}">{{$MovimientoAct->PersFirstName}}      ({{$MovimientoAct->CargName}})</option>																
+										@foreach ($Movimientos as $Movimiento)
+											 <option value="{{$Movimiento->ID_Pers}}">{{$Movimiento->PersFirstName}}      ({{$Movimiento->CargName}})</option>																
 										@endforeach
 									</select>
 								</div>
@@ -62,20 +61,15 @@ Registros de Movimiento de Activos
 										<div class="box-footer" style="float:right; margin-right:5%">
 											<button type="submit" class="btn btn-primary">Registrar</button>
 										</div>	
-							<!-- /.box-body -->
 									</div>
-								</div>					
+                                </div>
+                                					
                             </form>
-							<!-- /.box -->
 						</div>
                     </div>	
                 </div>	
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
 @endsection

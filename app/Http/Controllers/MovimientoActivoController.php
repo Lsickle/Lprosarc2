@@ -18,11 +18,11 @@ class MovimientoActivoController extends Controller
     public function index()
     {
         $Movimientos = DB::table('movimiento_activos')
-            ->rightJoin('Activos', 'movimiento_activos.FK_MovInv', '=', 'Activos.ID_Act')
+            ->join('activos', 'movimiento_activos.FK_MovInv', '=', 'Activos.ID_Act')
             ->select('movimiento_activos.*', 'Activos.ActName')
             ->get();
 
-        return view('activos.movimientoIndex', compact('Movimientos'));
+        return view('movimientoActivo.index', compact('Movimientos'));
     }
 
     /**
@@ -33,17 +33,13 @@ class MovimientoActivoController extends Controller
     public function create()
     {
         $Movimientos = DB::table('movimiento_activos')
-            ->rightJoin('Activos', 'movimiento_activos.FK_MovInv', '=', 'Activos.ID_Act')
-            ->select('movimiento_activos.*', 'Activos.ActName', 'Activos.ID_Act')
-            ->get();
-        
-        $MovimientosAct = DB::table('movimiento_activos')
-            ->rightJoin('personals', 'movimiento_activos.FK_ActPerson', '=', 'personals.ID_Pers')
-            ->Join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('Cargos.CargName',  'personals.PersFirstName', 'personals.ID_Pers')
+            ->join('activos', 'movimiento_activos.FK_MovInv', '=', 'Activos.ID_Act')
+            ->join('personals', 'movimiento_activos.FK_ActPerson', '=', 'personals.ID_Pers')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->select('Cargos.CargName',  'personals.PersFirstName', 'personals.ID_Pers', 'Activos.ActName', 'Activos.ID_Act')
             ->get();
 
-    return view('activos.movimiento', compact('Movimientos', 'MovimientosAct'));
+        return view('movimientoActivo.create', compact('Movimientos'));
     }
 
     /**
@@ -54,7 +50,13 @@ class MovimientoActivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Movimientos = new MovimientoActivo();
+        $Movimientos->MovTipo = $request->input("MovTipo");
+        $Movimientos->FK_MovInv = $request->input("FK_MovInv");
+        $Movimientos->FK_ActPerson = $request->input("FK_ActPerson");
+        $Movimientos->save();
+
+        return redirect()->route('movimiento-activos.index');
     }
 
     /**
