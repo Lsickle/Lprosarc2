@@ -13,9 +13,9 @@ Articulos por Proveedor
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">Datos</h3>
-                            @component('layouts.partials.modal')
-                                {{$Movimientos->ID_MovAct}}
-                            @endcomponent
+                        @component('layouts.partials.modal')
+                            {{$Movimientos->ID_MovAct}}
+                        @endcomponent
                         @if($Movimientos->MovActDelete == 0)
                           <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Movimientos->ID_MovAct}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
                           <form action='/movimiento-activos/{{$Movimientos->ID_MovAct}}' method='POST'>
@@ -24,30 +24,25 @@ Articulos por Proveedor
                               <input  type="submit" id="Eliminar{{$Movimientos->ID_MovAct}}" style="display: none;">
                           </form>
                         @else
-
                           <form action='/movimiento-activos/{{$Movimientos->ID_MovAct}}' method='POST' style="float: right;">
                             @method('DELETE')
                             @csrf
                             <input type="submit" class='btn btn-success btn-block' value="Añadir">
                           </form>
                         @endif
-                      {{-- </div> --}}
-					{{-- <div class="box-tools pull-right"> --}}
-						{{-- <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      </div>
+					{{-- <div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i></button> --}}
-					{{-- </div> --}}
+                        <i class="fa fa-times"></i></button>
+					</div> --}}
 				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-                            <!-- /.box-header -->
-                            
-							
-                              
 							<!-- form start -->
 							<form role="form" action="/movimiento-activos/{{$Movimientos->ID_MovAct}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
@@ -88,7 +83,7 @@ Articulos por Proveedor
                                     </div>
                                     <div class="col-md-12">		
 										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Registrar</button>
+											<button type="submit" class="btn btn-primary">Editar</button>
 										</div>	
 									</div>
 								</div>
