@@ -8,7 +8,7 @@ class MovimientoActivo extends Model
 {
     protected $table = 'movimiento_activos';
 
-	protected $fillable = ['MovTipo', 'FK_MovInv', 'FK_ActPerson'];
+	protected $fillable = ['MovTipo', 'FK_MovInv', 'FK_ActPerson', 'MovActDelete'];
 	
 	protected $primaryKey = 'ID_MovAct';
 	

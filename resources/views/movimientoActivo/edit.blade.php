@@ -13,15 +13,32 @@ Articulos por Proveedor
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">Datos</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            @component('layouts.partials.modal')
+                                {{$Movimientos->ID_MovAct}}
+                            @endcomponent
+                        @if($Movimientos->MovActDelete == 0)
+                          <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Movimientos->ID_MovAct}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+                          <form action='/movimiento-activos/{{$Movimientos->ID_MovAct}}' method='POST'>
+                              @method('DELETE')
+                              @csrf
+                              <input  type="submit" id="Eliminar{{$Movimientos->ID_MovAct}}" style="display: none;">
+                          </form>
+                        @else
+
+                          <form action='/movimiento-activos/{{$Movimientos->ID_MovAct}}' method='POST' style="float: right;">
+                            @method('DELETE')
+                            @csrf
+                            <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                          </form>
+                        @endif
+                      {{-- </div> --}}
+					{{-- <div class="box-tools pull-right"> --}}
+						{{-- <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
+                        <i class="fa fa-times"></i></button> --}}
+					{{-- </div> --}}
 				</div>
-				
-
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
@@ -29,26 +46,7 @@ Articulos por Proveedor
 						<div class="box box-primary">
                             <!-- /.box-header -->
                             
-							{{-- <div class="box-header">
-									@component('layouts.partials.modal')
-										{{$Movimientos->ID_Movimientos}}
-									@endcomponent
-								@if($Movimientos->MovActDelete == 0)
-								  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Movimientos->ID_Movimientos}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-								  <form action='/articulos-proveedor/{{$Movimientos->ID_Movimientos}}' method='POST'>
-									  @method('DELETE')
-									  @csrf
-									  <input  type="submit" id="Eliminar{{$Movimientos->ID_Movimientos}}" style="display: none;">
-								  </form>
-								@else
-
-								  <form action='/articulos-proveedor/{{$Movimientos->ID_Movimientos}}' method='POST' style="float: right;">
-									@method('DELETE')
-									@csrf
-									<input type="submit" class='btn btn-success btn-block' value="Añadir">
-								  </form>
-								@endif
-                              </div> --}}
+							
                               
 							<!-- form start -->
 							<form role="form" action="/movimiento-activos/{{$Movimientos->ID_MovAct}}" method="POST" enctype="multipart/form-data">
@@ -57,7 +55,9 @@ Articulos por Proveedor
                                 <div class="col-md-12">
                                         <label for="moviminetoActivo">Tipo de Movimiento</label>
                                         <select class="form-control" id="moviminetoActivo" name="MovTipo" required>
-                                            <option value="{{$Movimientos->MovTipo}}">Seleccione...</option>
+                                            
+                                            {{-- Falta Validar --}}
+                                            <option value="{{$Movimientos->MovTipo}}">{{$Movimientos->MovTipo}}</option>
                                             <option>Entrada</option>
                                             <option>Salida</option>
                                             <option>Asignar</option>
@@ -66,7 +66,7 @@ Articulos por Proveedor
                                     <div class="col-md-12">
                                         <label for="moviminetoActivo1">Nombre del Activo</label>
                                         <select class="form-control" id="moviminetoActivo1" name="FK_MovInv" required>
-                                            <option value="{{$Movimientos->FK_MovInv}}">Seleccione...</option>
+                                            <option value="{{$Movimientos->FK_MovInv}}">{{$Activo->ActName}}</option>
                                             @foreach ($Activos as $Activos)
                                                  <option value="{{$Activos->ID_Act}}">{{$Activos->ActName}}</option>																
                                             @endforeach
@@ -75,9 +75,14 @@ Articulos por Proveedor
                                     <div class="col-md-12">
                                         <label for="moviminetoActivo2">Asignado A</label>
                                         <select class="form-control" id="moviminetoActivo2" name="FK_ActPerson">
-                                            <option value="">Seleccione...</option>
+                                            @if ($Movimientos->FK_ActPerson == NULL)
+                                                    <option value="">Seleccione...</option>
+                                            @else
+                                                <option value="{{$Movimientos->FK_ActPerson}}">{{$Personal->PersFirstName}} ({{$Cargos->CargName}})</option>
+                                                {{-- <option value="">Nadie Asignado </option>																 --}}
+                                            @endif
                                             @foreach ($Personales as $Personal)
-                                                 <option value="{{$Personal->ID_Pers}}">{{$Personal->PersFirstName}} ({{$Personal->CargName}})</option>																
+                                                <option value="{{$Personal->ID_Pers}}">{{$Personal->PersFirstName}} ({{$Personal->CargName}})</option>																
                                             @endforeach
                                         </select>
                                     </div>

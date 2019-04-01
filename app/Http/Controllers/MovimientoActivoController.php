@@ -9,6 +9,7 @@ use App\Activo;
 use App\audit;
 use App\MovimientoActivo;
 use App\Personal;
+use App\cargo;
 
 
 class MovimientoActivoController extends Controller
@@ -44,7 +45,6 @@ class MovimientoActivoController extends Controller
         ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
         ->select('cargos.CargName',  'personals.PersFirstName', 'personals.ID_Pers')
         ->get();
-
 
         return view('movimientoActivo.create', compact('Personales', 'Activos'));
     }
@@ -87,15 +87,23 @@ class MovimientoActivoController extends Controller
     {
         $Movimientos = MovimientoActivo::where('ID_MovAct', $id)->first();
 
-        $Activos = Activo::all();
+        if($Movimientos->FK_ActPerson !== NULL){
+            $Personal = Personal::where('ID_Pers', $Movimientos->FK_ActPerson)->first();
+            $Cargos = Cargo::where('ID_Carg', $Personal->FK_PersCargo)->first();
+        }
+
+        $Activo = Activo::where('ID_Act', $Movimientos->FK_MovInv)->first();
+
+        $Activos = Activo::where('ID_Act', '<>', $Movimientos->FK_MovInv)->get();
 
         $Personales = DB::table('personals')
+            ->leftjoin('movimiento_activos', 'movimiento_activos.FK_ActPerson', '=', 'personals.ID_Pers')
             ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
             ->select('Cargos.CargName',  'personals.PersFirstName', 'personals.ID_Pers')
+            ->where('personals.ID_Pers', '<>', $Movimientos->FK_ActPerson)
             ->get();
-
-        return view('movimientoActivo.edit', compact('Movimientos', 'Personales', 'Activos'));
-
+       
+        return view('movimientoActivo.edit', compact('Movimientos', 'Personales', 'Activos', 'Personal', 'Cargos', 'Activo'));
     }
 
     /**
@@ -130,6 +138,24 @@ class MovimientoActivoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Movimientos = MovimientoActivo::where('ID_MovAct', $id)->first();
+
+        if ($Movimientos->MovActDelete == 0){
+            $Movimientos->MovActDelete = 1;
+        }
+        else{
+            $Movimientos->MovActDelete = 0;
+        }
+        $Movimientos->save();
+
+        $log = new audit();
+        $log->AuditTabla = "articulo_por_proveedors";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Movimientos->ID_MovAct;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Movimientos->MovActDelete;
+        $log->save();
+
+        return redirect()->route('movimiento-activos.index');
     }
 }
