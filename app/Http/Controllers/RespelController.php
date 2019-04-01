@@ -71,10 +71,12 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
+        if ($request->hasfile('RespelHojaSeguridad')) {
         $file = $request->file('RespelHojaSeguridad');
         $name = time().$file->getClientOriginalName();
         $file->move(public_path().'/img/', $name);
-        
+    }
+
 
         if ($request->hasfile('RespelTarj')) {
             $file = $request->file('RespelTarj');
@@ -197,20 +199,12 @@ class RespelController extends Controller
             $Respels->RespelHojaSeguridad = $name;
             $file->move(public_path().'/img/', $name);
         }
-        else{
-            // $name = public_path().'/img/default.png';
-            $name = "";
-        }
 
         if ($request->hasfile('RespelTarj')) {
             $file = $request->file('RespelTarj');
             $tarj = time().$file->getClientOriginalName();
             $Respels->RespelTarj = $tarj;
             $file->move(public_path().'/img/', $tarj);
-        }
-        else{
-            // $tarj = public_path().'/img/default.png';
-            $tarj = "";
         }
         $Respels->save();
 

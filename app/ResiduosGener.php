@@ -8,7 +8,7 @@ class ResiduosGener extends Model
 {
     protected $table = 'residuos_geners';
 
-    protected $fillable = ['FK_SGener', 'FK_Respel', 'FK_SolSer'];
+    protected $fillable = ['FK_SGener', 'FK_Respel'];
 
     protected $primaryKey = 'ID_SGenerRes';
 

@@ -3,7 +3,7 @@
 Activos
 @endsection
 @section('contentheader_title')
-Editar datos de Activos
+Datos de Activos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,7 @@ Editar datos de Activos
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Nuevos Datos</h3>
+					<h3 class="box-title">Editar Datos</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -25,15 +25,33 @@ Editar datos de Activos
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
+								<div class="box-header">
+										@component('layouts.partials.modal')
+											{{$Activos->ID_Act}}
+										@endcomponent
+									@if($Activos->ActDelete == 0)
+									  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Activos->ID_Act}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+									  <form action='/activos/{{$Activos->ID_Act}}' method='POST'>
+										  @method('DELETE')
+										  @csrf
+										  <input  type="submit" id="Eliminar{{$Activos->ID_Act}}" style="display: none;">
+									  </form>
+									@else
+									  <form action='/activos/{{$Activos->ID_Act}}' method='POST' style="float: right;">
+										@method('DELETE')
+										@csrf
+										<input type="submit" class='btn btn-success btn-block' value="Añadir">
+									  </form>
+									@endif
+								  </div>
 							<!-- /.box-header -->
                             <!-- form start -->
-                            @foreach ($Activos as $Activo)
-							<form role="form" action="/activos/{{$Activo->ID_Act}}" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/activos/{{$Activos->ID_Act}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 								<div class="col-md-6">
 									<label for="activo">Categoria</label>
-									<select class="form-control" id="activo" name="categoria" required="true">
+									<select class="form-control" id="activo" name="categoria" required>
 										<option>Seleccione...</option>
 										@foreach ($Categorias as $Categoria)
 											<option value="{{$Categoria->ID_CatAct}}">{{$Categoria->CatName}}</option>																
@@ -43,8 +61,8 @@ Editar datos de Activos
 							{{-- </div> --}}
 								<div class="col-md-6">
 									<label for="activo">SubCategoria</label>
-									<select class="form-control" id="activo" name="FK_ActSub" required="true">
-										<option>Seleccione...</option>
+									<select class="form-control" id="activo" name="FK_ActSub" required>
+										<option value="{{$Activos->FK_ActSub}}">Seleccione...</option>
 										@foreach ($SubActivos as $SubActivo)
 											 <option value="{{$SubActivo->ID_SubCat}}">{{$SubActivo->SubCatName}}</option>																
 										@endforeach
@@ -52,59 +70,51 @@ Editar datos de Activos
 								</div>
 								<div class="col-md-6">
 									<label for="activo3">Sede</label>
-									<select class="form-control" id="activo3" name="FK_ActSede" required="true">
-										<option>Seleccione...</option>
+									<select class="form-control" id="activo3" name="FK_ActSede" required>
+										<option value="{{$Activos->FK_ActSede}}">Seleccione...</option>	
 										@foreach ($Sedes as $Sede)
 											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
 											
 										@endforeach
 									</select>
 								</div>
-                            {{-- </div> --}}
-                            
-                                
-                            
 								<div class="col-md-6">
 									<label for="activoinputext1">Nombre del activo</label>
-									<input type="text" class="form-control" id="activoinputext1" value="{{$Activo->ActName}}" name="ActName">
+									<input type="text" class="form-control" id="activoinputext1" value="{{$Activos->ActName}}" name="ActName" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activo">Forma del activo</label>
-									<select class="form-control" id="activo" name="ActUnid" required="true" Value="{{$Activo->ActUnid}}">
-										<option>Seleccione...</option>
-										<option value="0">Unidad</option>
-										<option value="1">Peso</option>
+									<select class="form-control" id="activo" name="ActUnid" required>
+										<option value="{{$Activos->ActUnid}}">Seleccione...</option>
+										<option>Unidad</option>
+										<option>Peso</option>
 									</select>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext2">Cantidad</label>
-									<input type="number" class="form-control" id="activoinputext2" value="{{$Activo->ActCant}}" name="ActCant" max="999999">
+									<input type="number" class="form-control" id="activoinputext2" value="{{$Activos->ActCant}}" name="ActCant" max="999999" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext3">Serial de Prosarc</label>
-									<input type="text" class="form-control" id="activoinputext3" value="{{$Activo->ActSerialProsarc}} " name="ActSerialProsarc">
+									<input type="text" class="form-control" id="activoinputext3" value="{{$Activos->ActSerialProsarc}} " name="ActSerialProsarc" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext4">Modelo</label>
-									<input type="text" class="form-control" id="activoinputext4" value="{{$Activo->ActModel}}" name="ActModel">
+									<input type="text" class="form-control" id="activoinputext4" value="{{$Activos->ActModel}}" name="ActModel" required>
 								</div>
 								<div class="col-md-6">
 									<label for="activoinputext5">Talla</label>
-									<input type="text" class="form-control" id="activoinputext5" value="{{$Activo->ActTalla}}" name="ActTalla">
+									<input type="text" class="form-control" id="activoinputext5" value="{{$Activos->ActTalla}}" name="ActTalla" required>
 								</div>
-								<div class="col-md-6">
-									<label for="activoinputext6">Observaciones</label>
-									<input type="text" class="form-control" id="activoinputext6" value="{{$Activo->ActObserv}}" name="ActObserv">
-								</div>
+								
 								<div class="col-md-6">
 									<label for="activoinputext7">Serial Proveedor</label>
-									<input type="text" class="form-control" id="activoinputext7" value="{{$Activo->ActSerialProveed}}" name="ActSerialProveed">
+									<input type="text" class="form-control" id="activoinputext7" value="{{$Activos->ActSerialProveed}}" name="ActSerialProveed" required>
 								</div>
-								{{-- <div class="col-md-6">
-									<label for="activoinputext8">Sede</label>
-									<input type="text" class="form-control" id="activoinputext8" placeholder="Sede" name="Sede">
-                                </div> --}}
-                                @endforeach
+								<div class="col-md-12">
+									<label for="activoinputext6">Observaciones</label>
+									<input type="text" class="form-control" id="activoinputext6" value="{{$Activos->ActObserv}}" name="ActObserv" required>
+								</div>
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">

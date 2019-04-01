@@ -149,7 +149,7 @@ class PersonalController extends Controller
      */
     public function destroy($id){
         $Persona = Personal::where('PersSlug', $id)->first();
-        if ($Persona->PersDelete == 0) {
+        if ($Persona->PersDelete == 0){
             $Persona->PersDelete = 1;
         }
         else{
