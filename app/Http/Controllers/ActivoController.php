@@ -90,17 +90,18 @@ class ActivoController extends Controller
      */
     public function edit($id)
     {
-        $SubActivos = SubcategoriaActivo::all();
-
-        $Categorias = CategoriaActivo::all();
-
         $Activos = Activo::where('ID_Act', $id)->first();
 
-        $Sedes =  DB::table('sedes')
-            ->select('sedes.SedeName', 'sedes.ID_Sede')
-            ->get();
+        $SubActivo = SubcategoriaActivo::where('ID_SubCat', $Activos->FK_ActSub)->first();
+        $SubActivos = SubcategoriaActivo::where('ID_SubCat','<>', $Activos->FK_ActSub)->get();
+        
+        $Categoria = CategoriaActivo::where('ID_CatAct', $SubActivo->FK_SubCat)->first();
+        $Categorias = CategoriaActivo::where('ID_CatAct','<>', $SubActivo->FK_SubCat)->get();
+        
+        $Sede = Sede::where('ID_Sede', $Activos->FK_ActSede)->first();
+        $Sedes = Sede::where('ID_Sede', '<>', $Activos->FK_ActSede)->get();
 
-        return view('activos.edit',  compact('Activos', 'SubActivos', 'Categorias', 'Sedes'));
+        return view('activos.edit',  compact('Activos', 'SubActivos','Sedes', 'Categorias', 'SubActivo','Sede', 'Categoria'));
     }
     /**
      * Update the specified resource in storage.
@@ -114,12 +115,8 @@ class ActivoController extends Controller
         $Activo = Activo::where('ID_Act', $id)->first();
         $Activo->fill($request->all());
         $Activo->ActModel = $request->input('ActModel');
-
-        // $Activo->ActDelete = 0;
-
         $Activo->save();
 
-        // return $Activo;
         $log = new audit();
         $log->AuditTabla = "activos";
         $log->AuditType = "Modificado";

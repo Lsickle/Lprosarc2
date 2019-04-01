@@ -128,7 +128,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>Activos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> Inventario'))
-            ->add(Link::toUrl('/activos-movimiento', '<i class="fas fa-list-alt"></i> Movimientos'))
+            ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> Movimientos'))
             ->addClass('treeview-menu')
         )
         /*PESTAÑA DE SOLICITUD*/
