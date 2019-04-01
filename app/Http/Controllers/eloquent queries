@@ -1,0 +1,27 @@
+<?php 
+/*elocuent queries*/
+
+
+/*sub consultas de modelos relacionados*//
+$variable = Modelo::with(['user.post.comments', 'user.post.images'])
+                ->select(
+                    'user.id',
+                    'user.username'b nm
+                ) 
+                ->where('userstatus', '=', 'registrado')
+                ->get();
+
+/*joins de multiples tablas relacionadas */
+$variable2 = DB::table('respels')
+                ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
+                ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+                ->where('RespelStatus', '=', 'Aprobado')
+                ->get();
+
+
+
+?>

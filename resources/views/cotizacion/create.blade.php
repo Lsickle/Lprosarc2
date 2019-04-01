@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Cotizacion
+    Nueva Cotizacion
 @endsection
 @section('contentheader_title')
-Cotizacion
+    Nueva Cotizacion
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -28,26 +28,67 @@ Cotizacion
                             
                             <!-- /.box-header -->
                             <!-- form start -->
-                            <form role="form" action="/ordenCompra" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="/cotizacion" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="box-body">
-                                    
+
                                     <div class="col-md-6">
-                                        <label for="cotizacioninputext1">Numero de cotizacion</label>
-                                        <input type="text" class="form-control" id="cotizacioninputext1" placeholder="0000010" name="numcotizacion">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="program">Estado de cotizacion</label>
-                                        <select class="form-control" id="program" name="cotizacion" required="true">
-                                            <option>Seleccione...</option>
-                                            <option>Aprobada</option>
-                                            <option>Aprobada Parcial</option>
+                                        <label for="selectsede">Sede del Cliente</label>
+                                        <select class="form-control" id="selectsede" name="FK_CotiSede" required="true">
+                                            @foreach($sedes as $sede)
+                                                <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
+
                                     <div class="col-md-6">
-                                        <label for="cotizacioninputext3">Subtotal de cotizacion</label>
-                                        <input type="number" class="form-control" id="cotizacioninputext3" placeholder="988888" name="subtotal" max="999.999.999.999">
+                                        <label for="CotizacionStatus">Status de cotizacion</label>
+                                        <select class="form-control" id="CotizacionStatus" name="CotiStatus" disabled >
+                                            <option>Pendiente</option>
+                                            <option>Aprobada</option>
+                                            <option>Aprobada Parcial</option>
+                                            <option>Rechazada</option>
+                                        </select>
                                     </div>
+
+                                    {{-- residuos adjuntables a la cotizacion --}}
+                                    {{-- <div>
+                                        <table id="RespelTable" class="table table-bordered table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th>Nombre</th>
+                                              <th>Clasificacion 4741 Y</th>
+                                              <th>Clasificacion 4741 A</th>
+                                              <th>Peligrosidad</th>
+                                              <th>Estado del residuo</th>
+                                              <th>Hoja de Seguridad</th>
+                                              <th>Tarj de Emergencia</th>
+                                              <th>Estado</th>
+                                              <th>Generado por</th>
+                                              <th>Seleccionar</th>
+                                              <th>Editar</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody hidden onload="renderTable()" id="readyTable">
+                                            @include('layouts.partials.spinner')
+                                            @foreach($residuos as $residuo)
+                                                <tr>
+                                                  <td>{{$residuo->RespelName}}</td>
+                                                  <td>{{$residuo->YRespelClasf4741}}</td>
+                                                  <td>{{$residuo->ARespelClasf4741}}</td>
+                                                  <td>{{$residuo->RespelIgrosidad}}</td>
+                                                  <td>{{$residuo->RespelEstado}}</td>
+                                                  <td>{{$residuo->RespelHojaSeguridad}}</td>
+                                                  <td>{{$residuo->RespelTarj}}</td>
+                                                  <td>{{$residuo->RespelStatus}}</td>
+                                                  <td>{{$residuo->CliName}}</td>
+                                                  <td>{{$residuo->RespelSlug}}</td>
+                                                  <td>{{$residuo->RespelSlug}}</td>
+                                                </tr>
+                                            @endforeach
+                                          </tbody>
+                                        </table>
+                                    </div> --}}
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">

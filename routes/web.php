@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/asistencia', 'AssistancesController');
 	Route::resource('/compra/orden','OrdenCompraController');
-	Route::resource('/compra/cotizacion','CotizacionController');
+	Route::resource('/compra/cotizacion','QuotationController');
 	Route::resource('/activos','ActivoController');
 	Route::resource('/movimiento-activos','MovimientoActivoController');
 	Route::resource('/capacitacion','TrainingsController');

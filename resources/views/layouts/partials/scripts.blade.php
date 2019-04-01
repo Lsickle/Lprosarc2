@@ -4,13 +4,6 @@
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
-{{-- CDNS de FullCalendar --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
-
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
@@ -20,13 +13,58 @@
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 
-{{-- Full Calendar --}}
+{{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
+@if(
+	Route::currentRouteName()=='cotizacion.create'||
+	Route::currentRouteName()=='cotizacion.index'
+)
+	<script>
+		$(document).ready(function() {
 
-{{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
+			/*var rol defino el rol del usuario*/
+			var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+			/*var botoncito define los botones que se usaran si el usuario es programador*/
+			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+			/*funcion para renderizar la tabla de cotizacion.index*/
+			$('#cotizacionesTable').DataTable({
+				responsive: true,
+				select: true,
+				dom: 'Bfrtip',
+				buttons: [
+					botoncito, {
+						extend: 'collection',
+						text: 'Selector',
+						buttons: [ 'selectRows', 'selectCells' ]
+					}
+				],
+				colReorder: true,
+				ordering: true,
+				autoWith: true,
+				searchHighlight: true,
+				columnDefs: [ {
+					"targets": 13,
+					"data": "ID_Coti",
+					"render": function ( data, type, row, meta ) {
+						return "<a method='get' href='/cotizacion/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
+					}  
+				} ]
+			});
+
+			/*funcion para resaltar las busquedas*/
+			var table = $('#cotizacionesTable').DataTable();
+
+			table.on( 'draw', function () {
+				var body = $( table.table().body());
+				body.unhighlight();
+				body.highlight( table.search() );  
+			});
+		}); 
+	</script>
+@endif
 
 {{-- slider --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
@@ -155,6 +193,27 @@
   });
 </script>
 
+
+{{-- <script>
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          '1 Meses'   : [moment(), moment().add(1, 'month')],
+          '2 Meses'   : [moment(), moment().add(2, 'months')],
+          '3 Meses' : [moment(), moment().add(3, 'months')],
+          '6 Meses': [moment(), moment().add(6, 'months')],
+          '1 Año': [moment(), moment().add(1, 'year')]
+        },
+        startDate: moment(),
+        endDate  : moment().moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+</script> --}}
 {{-- select 2 --}}
 <script>
   $(document).ready(function() {
@@ -1020,9 +1079,7 @@ $(document).ready(function(){
             echo Auth::user()->UsRol;
           ?>";
       botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-      if (rol=='Programador') {
-        console.log(botoncito);
-      };
+      
     $(document).ready(function () {
       $('#sedes').DataTable({
           responsive: true,
@@ -1082,9 +1139,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#generadores').DataTable({
               // pagingType: 'scrolling',
@@ -1139,9 +1194,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#sgeneradores').DataTable({
               // pagingType: 'scrolling',
