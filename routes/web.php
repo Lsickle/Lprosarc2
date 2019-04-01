@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/compra/orden','OrdenCompraController');
 	Route::resource('/compra/cotizacion','CotizacionController');
 	Route::resource('/activos','ActivoController');
-	Route::resource('/activos-movimiento','MovimientoActivoController');
+	Route::resource('/movimiento-activos','MovimientoActivoController');
 	Route::resource('/capacitacion','TrainingsController');
 	Route::resource('/capacitacion-personal','TrainingPersonalsController');
 	Route::resource('/inventariotech', 'InventarioTechonologiesController');
