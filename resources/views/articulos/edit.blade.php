@@ -20,25 +20,7 @@ Articulos por Proveedor
 						<i class="fa fa-times"></i></button>
 					</div>
 				</div>
-				<div class="box-header">
-					@component('layouts.partials.modal')
-						{{$ArtProvs->ID_ArtiProve}}
-					@endcomponent
-				@if($ArtProvs->ArtDelete == 0)
-				  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ArtProvs->ID_ArtiProve}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-				  <form action='/activos/{{$ArtProvs->ID_ArtiProve}}' method='POST'>
-					  @method('DELETE')
-					  @csrf
-					  <input  type="submit" id="Eliminar{{$ArtProvs->ID_ArtiProve}}" style="display: none;">
-				  </form>
-				@else
-				  <form action='/activos/{{$ArtProvs->ID_ArtiProve}}' method='POST' style="float: right;">
-					@method('DELETE')
-					@csrf
-					<input type="submit" class='btn btn-success btn-block' value="Añadir">
-				  </form>
-				@endif
-			  </div>
+				
 
 				<div class="row">
 					<!-- left column -->
@@ -46,6 +28,25 @@ Articulos por Proveedor
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<!-- /.box-header -->
+							<div class="box-header">
+									@component('layouts.partials.modal')
+										{{$ArtProvs->ID_ArtiProve}}
+									@endcomponent
+								@if($ArtProvs->ArtDelete == 0)
+								  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ArtProvs->ID_ArtiProve}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+								  <form action='/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}' method='POST'>
+									  @method('DELETE')
+									  @csrf
+									  <input  type="submit" id="Eliminar{{$ArtProvs->ID_ArtiProve}}" style="display: none;">
+								  </form>
+								@else
+								  <form action='/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}' method='POST' style="float: right;">
+									@method('DELETE')
+									@csrf
+									<input type="submit" class='btn btn-success btn-block' value="Añadir">
+								  </form>
+								@endif
+							  </div>
 							<!-- form start -->
 							<form role="form" action="/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
@@ -66,15 +67,6 @@ Articulos por Proveedor
                                         @foreach ($Activos as $Activo)
 											<option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>
 										@endforeach	
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="articuloxprov">Usuario</label>
-                                    <select class="form-control" id="articuloxprov" name="FK_AutorizedBy" required>
-                                        <option value="{{$ArtProvs->FK_ArtiActiv}}">Seleccione...</option>
-                                        @foreach ($Activos as $Activo)
-											<option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>
-										@endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -101,12 +93,20 @@ Articulos por Proveedor
 									<label for="articuloxprovinputext4">Cantidad Minima de compra</label>
 									<input type="number" class="form-control" id="articuloxprovinputext4" placeholder="23456" name="ArtiMinimo" value="{{$ArtProvs->ArtiMinimo}}" max="9999999" required>
 								</div>
-								<div class="container-fluid spark-screen">
-									<div class="row">			
-										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Registrar</button>
-										</div>	
+
+								<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+									<div class="icheck form-group">
+										<label for="inputcheck">
+											Autorizar (Finaliza en Validacion)
+										</label>
+										<input id="inputcheck" type="checkbox" name="FK_AutorizedBy">
 									</div>
+								</div>
+
+								<div class="col-md-12">		
+									<div class="box-footer" style="float:right; margin-right:5%">
+										<button type="submit" class="btn btn-primary">Registrar</button>
+									</div>	
 								</div>
 							</form>
 						</div>

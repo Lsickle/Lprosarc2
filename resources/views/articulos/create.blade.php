@@ -47,16 +47,7 @@ Registros de Articulos por Proveedor
 											<option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>
 										@endforeach	
                                     </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="articuloxprov">Usuario</label>
-                                    <select class="form-control" id="articuloxprov" name="FK_AutorizedBy" required>
-                                        <option>Seleccione...</option>
-                                        @foreach ($Activos as $Activo)
-											<option value="{{$Activo->ID_Cotiz}}">{{$Activo->CotizNum}}</option>
-										@endforeach
-                                    </select>
-                                </div>
+								</div>
                                 <div class="col-md-6">
                                     <label for="articuloxprov">Forma del articulo</label>
                                     <select class="form-control" id="articuloxprov" name="ArtiUnidad" required>
@@ -81,12 +72,18 @@ Registros de Articulos por Proveedor
 									<label for="articuloxprovinputext4">Cantidad Minima de compra</label>
 									<input type="number" class="form-control" id="articuloxprovinputext4" placeholder="23456" name="ArtiMinimo" max="9999999" required>
 								</div>
-								<div class="container-fluid spark-screen">
-									<div class="row">			
-										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Registrar</button>
-										</div>	
+								<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
+									<div class="icheck form-group">
+										<label for="inputcheck">
+											Autorizar (Finaliza en Validacion)
+										</label>
+										<input id="inputcheck" type="checkbox" name="FK_AutorizedBy">
 									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="box-footer" style="float:right;">
+										<button type="submit" class="btn btn-primary">Registrar</button>
+									</div>	
 								</div>
 							</form>
 						</div>

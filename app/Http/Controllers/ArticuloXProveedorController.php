@@ -142,5 +142,7 @@ class ArticuloXProveedorController extends Controller
         $log->AuditUser = Auth::user()->email;
         $log->Auditlog = $ArtProvs->ArtDelete;
         $log->save();
+
+        return redirect()->route('articulos-proveedor.index');
     }
 }
