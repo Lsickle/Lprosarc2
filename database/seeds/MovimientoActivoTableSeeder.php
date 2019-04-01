@@ -20,13 +20,13 @@ class MovimientoActivoTableSeeder extends Seeder
 
         $Movimiento = new MovimientoActivo();
         $Movimiento->MovTipo = "Entrada";
-        $Movimiento->FK_ActPerson = "4";
+        $Movimiento->FK_ActPerson = NULL;
         $Movimiento->FK_MovInv = "1";
         $Movimiento->save();
 
         $Movimiento = new MovimientoActivo();
         $Movimiento->MovTipo = "Salida";
-        $Movimiento->FK_ActPerson = "2";
+        $Movimiento->FK_ActPerson = NULL;
         $Movimiento->FK_MovInv = "5";
         $Movimiento->save();
 
@@ -38,7 +38,7 @@ class MovimientoActivoTableSeeder extends Seeder
 
         $Movimiento = new MovimientoActivo();
         $Movimiento->MovTipo = "Entrada";
-        $Movimiento->FK_ActPerson = "3";
+        $Movimiento->FK_ActPerson = NULL;
         $Movimiento->FK_MovInv = "2";
         $Movimiento->save();
     }

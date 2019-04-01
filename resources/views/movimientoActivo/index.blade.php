@@ -20,14 +20,15 @@ Movimiento de Activos
           <table id="MovimientoActivoTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Nombre del activo</th>
+                    <th>Cliente</th>
+                    <th>Activo</th>
                     <th>Tipo</th>
-                    <th>Fecha Creacion</th>
-                    <th>Actualizado el</th>
+                    <th>Asignado</th>
+                    <th>Creado</th>
+                    <th>Actualizado</th>
                     <th>Editar</th>
                 </tr>
-              
-            {{-- </thead> --}}
+            </thead>
           {{-- </tbody> --}}
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
@@ -43,24 +44,22 @@ Movimiento de Activos
               </div>
               @foreach ($Movimientos as $Movimiento)
                   <tr>
+                    <td>{{$Movimiento->CliShortname}}</td>
                     <td>{{$Movimiento->ActName}}</td>
                     <td>{{$Movimiento->MovTipo}}</td>
+                    <td>{{$Movimiento->PersFirstName}}</td>
                     <td>{{$Movimiento->created_at}}</td>
                     <td>{{$Movimiento->updated_at}}</td>
-                    <td></td>
-
+                    <td>{{$Movimiento->ID_MovAct}}</td>
                   </tr>
-                
               @endforeach
-              {{-- @foreach ($Activos as $Activo)
-                  
-              @endforeach --}}
             {{-- <tfoot>
                 <tr>
-                    <th>Nombre del activo</th>
+                    <th>Activo</th>
+                    <th>Asignado</th>
                     <th>Tipo</th>
-                    <th>Fecha Creacion</th>
-                    <th>Actualizado el</th>
+                    <th>Creado</th>
+                    <th>Actualizado</th>
                     <th>Editar</th>
                 </tr>
             </tfoot> --}}

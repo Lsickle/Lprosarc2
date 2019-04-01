@@ -29,41 +29,38 @@ Registros de Movimiento de Activos
 							<!-- form start -->
 							<form role="form" action="/movimiento-activos" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<label for="moviminetoActivo">Tipo de Movimiento</label>
 									<select class="form-control" id="moviminetoActivo" name="MovTipo" required>
 										<option value="">Seleccione...</option>
 										<option>Entrada</option>
 										<option>Salida</option>
-										<option>Asignacion</option>
+										<option>Asignar</option>
 									</select>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<label for="moviminetoActivo1">Nombre del Activo</label>
 									<select class="form-control" id="moviminetoActivo1" name="FK_MovInv" required>
-										<option>Seleccione...</option>
-										@foreach ($Movimientos as $Movimiento)
-											 <option value="{{$Movimiento->ID_Act}}">{{$Movimiento->ActName}}</option>																
+										<option  value="">Seleccione...</option>
+										@foreach ($Activos as $Activo)
+											 <option value="{{$Activo->ID_Act}}">{{$Activo->ActName}}</option>																
 										@endforeach
 									</select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
 									<label for="moviminetoActivo2">Asignado A</label>
-									<select class="form-control" id="moviminetoActivo2" name="FK_ActPerson" required>
-										<option>Seleccione...</option>
-										@foreach ($Movimientos as $Movimiento)
-											 <option value="{{$Movimiento->ID_Pers}}">{{$Movimiento->PersFirstName}}      ({{$Movimiento->CargName}})</option>																
+									<select class="form-control" id="moviminetoActivo2" name="FK_ActPerson">
+										<option  value="">Seleccione...</option>
+										@foreach ($Personales as $Personal)
+											 <option value="{{$Personal->ID_Pers}}">{{$Personal->PersFirstName}} ({{$Personal->CargName}})</option>																
 										@endforeach
 									</select>
 								</div>
-								<div class="container-fluid spark-screen">
-									<div class="row">			
-										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Registrar</button>
-										</div>	
-									</div>
+                                <div class="col-md-12">		
+									<div class="box-footer" style="float:right; margin-right:5%">
+										<button type="submit" class="btn btn-primary">Registrar</button>
+									</div>	
                                 </div>
-                                					
                             </form>
 						</div>
                     </div>	

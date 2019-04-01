@@ -908,10 +908,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 4,
-            "data": "PersSlug",
+            "targets": 6,
+            "data": "ID_MovAct",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                return "<a href='movimiento-activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
