@@ -23,7 +23,7 @@ class CreateCotizacionsTable extends Migration
             $table->string('CotiPrecioTotal')->nullable();
             $table->string('CotiPrecioSubtotal')->nullable();
             $table->boolean('CotiDelete');
-            $table->unsignedInteger('FK_CotiSede')->unique();
+            $table->unsignedInteger('FK_CotiSede');
             $table->foreign('FK_CotiSede')->references('ID_Sede')->on('sedes');
             $table->timestamps();
             

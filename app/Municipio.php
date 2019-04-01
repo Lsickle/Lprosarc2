@@ -13,6 +13,6 @@ class Municipio extends Model
     protected $primaryKey = 'ID_Mun';
 
     public function Departamento(){
-    	return $this->belongsTo('App\Departamento', 'ID_Depart');
+    	return $this->belongsTo('App\Departamento', 'FK_MunCity', 'ID_Depart');
     }
 }
