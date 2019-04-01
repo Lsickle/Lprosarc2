@@ -29,6 +29,7 @@ use App\Requerimiento;
 use App\Cotizacion;
 use App\Recurso;
 use App\Certificado;
+use App\ArticuloPorProveedor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -71,6 +72,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);
         $this->call(RecursoTableSeeder::class);
+        $this->call(ArticuloXProveedorTableSeeder::class);
 
     }
 }

@@ -27,13 +27,10 @@ Articulos por Proveedor
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Costo por Unid.</th>
-                    <th>Cant. min. compra</th>
-                    {{-- <th>Fecha creado</th> --}}
-                    {{-- <th>Fecha Actualizado</th> --}}
+                    <th>Cantidad  minima <br> de compra</th>
                     <th>Editar</th>
                 </tr>
-              
-            {{-- </thead> --}}
+            </thead>
           {{-- </tbody> --}}
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
@@ -62,22 +59,16 @@ Articulos por Proveedor
                 <td>{{$ArtProv->ArtiPrecio}}</td>
                 <td>{{$ArtProv->ArtiCostoUnid}}</td>
                 <td>{{$ArtProv->ArtiMinimo}}</td>
-
                 <td>{{$ArtProv->ID_ArtiProve}}</td>
-                {{-- <td>{{$ArtProv->created_at}}</td> --}}
-                {{-- <td>{{$ArtProv->updated_at}}</td> --}}
-                {{-- <td></td> --}}
               </tr>
               @endforeach
             {{-- <tfoot>
                <tr>
-                    <th>Forma </th>
+                    <th>Activo</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Costo por Unid.</th>
-                    <th>Cant. min. compra</th>
-                    <th>Fecha creado</th>
-                    <th>Fecha Actualizado</th>
+                    <th>Cantidad  minima <br> de compra</th>
                     <th>Editar</th>
                 </tr>
             </tfoot> --}}
