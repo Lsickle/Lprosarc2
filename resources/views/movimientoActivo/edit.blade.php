@@ -37,7 +37,6 @@ Articulos por Proveedor
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
                         <i class="fa fa-times"></i></button>
 					</div> --}}
-				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
@@ -52,10 +51,22 @@ Articulos por Proveedor
                                         <select class="form-control" id="moviminetoActivo" name="MovTipo" required>
                                             
                                             {{-- Falta Validar --}}
-                                            <option value="{{$Movimientos->MovTipo}}">{{$Movimientos->MovTipo}}</option>
-                                            <option>Entrada</option>
-                                            <option>Salida</option>
-                                            <option>Asignar</option>
+                                            {{-- <option value="{{$Movimientos->MovTipo}}">{{$Movimientos->MovTipo}}</option> --}}
+                                            @if ($Movimientos->MovTipo == "Entrada")
+                                                <option>Entrada</option>
+                                                <option>Salida</option>
+                                                <option>Asignar</option>
+                                            @else
+                                                @if ($Movimientos->MovTipo == "Salida")
+                                                    <option>Salida</option>
+                                                    <option>Entrada</option>
+                                                    <option>Asignar</option>
+                                                @else
+                                                    <option>Asignar</option>
+                                                    <option>Entrada</option>   
+                                                    <option>Salida</option>
+                                                @endif
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-12">
@@ -83,7 +94,7 @@ Articulos por Proveedor
                                     </div>
                                     <div class="col-md-12">		
 										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Editar</button>
+											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>	
 									</div>
 								</div>
