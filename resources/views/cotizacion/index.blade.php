@@ -16,7 +16,7 @@ Cotizaciones
 					<table id="cotizacionesTable" class="table table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
-								<th>Número de cotización</th>
+								<th>#</th>
 								<th>Fecha de Solicitud</th>
 								<th>Fecha de Respuesta</th>
 								<th>Fecha de Vencimiento</th>
@@ -43,7 +43,7 @@ Cotizaciones
 								<td>{{$cotizacion->CotiFechaSolicitud}}</td>
 								<td>{{$cotizacion->CotiFechaRespuesta}}</td>
 								<td>{{$cotizacion->CotiFechaVencimiento}}</td>
-								<td>{{$cotizacion->CotiVencida}}</td>
+								<td>{{$cotizacion->CotiStatus}}</td>
 								<td>{{$cotizacion->SedeAddress}}</td>
 								@if($cotizacion->MunName=='Bogotá D.C.')
 									<td>{{$cotizacion->MunName}}</td>
@@ -54,7 +54,7 @@ Cotizaciones
 								<td>{{$cotizacion->SedeCelular}}</td>
 								<td>{{$cotizacion->CotiPrecioSubtotal}}</td>
 								<td>{{$cotizacion->CotiPrecioTotal}}</td>
-								<td>{{$cotizacion->CotiDelete}}</td>
+								{{-- <td>{{$cotizacion->CotiDelete}}</td> --}}
 								<td>{{$cotizacion->SedeEmail}}</td>
 								<td>{{$cotizacion->SedePhone1.' - '.$cotizacion->SedeExt1}}</td>
 								<td>{{$cotizacion->ID_Coti}}</td>

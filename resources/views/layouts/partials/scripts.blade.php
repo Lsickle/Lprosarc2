@@ -49,13 +49,13 @@
 					"targets": 13,
 					"data": "ID_Coti",
 					"render": function ( data, type, row, meta ) {
-						return "<a method='get' href='/cotizacion/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+						return "<a method='get' href='/cotizacion/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
 					}  
 				} ]
 			});
 
 			/*funcion para resaltar las busquedas*/
-			var table = $('#cotizaciones').DataTable();
+			var table = $('#cotizacionesTable').DataTable();
 
 			table.on( 'draw', function () {
 				var body = $( table.table().body());

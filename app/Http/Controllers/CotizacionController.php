@@ -110,7 +110,13 @@ class CotizacionController extends Controller
      */
     public function show($id)
     {
-        return view('cotizacion.show', compact('id'));
+        $cotizacion = Cotizacion::where('ID_Coti', $id)->first();
+        
+        $sede = Sede::where('ID_Sede', $cotizacion->FK_CotiSede)->first();;
+        
+        $residuos = Respel::where('FK_RespelCoti', $id)->get();  
+
+        return view('cotizacion.show', compact('cotizacion', 'sede', 'residuos'));
     }
 
     /**
