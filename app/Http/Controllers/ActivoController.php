@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\audit;
+use App\Sede;
 use App\Activo;
 use App\SubcategoriaActivo;
 use App\CategoriaActivo;
@@ -35,24 +36,12 @@ class ActivoController extends Controller
      */
     public function create()
     {
-        $SubActivos = DB::table('subcategoria_activos')
-            ->select('subcategoria_activos.*')
-            ->get();
+        $SubActivos = SubcategoriaActivo::all();
 
-        $Categorias = DB::table('categoria_activos')
-            ->select('categoria_activos.*')
-            ->get();
+        $Categorias = CategoriaActivo::all();
 
-        // $Sedes = DB::table('sedes')
-        //     ->Join('Activos', 'Activos.FK_ActSede', '=', 'sedes.ID_Sede')
-        //     ->select('activos.*', 'sedes.SedeName', 'sedes.ID_Sede')
-        //     // ->select('sedes.*')
-        //     ->where('FK_SedeCli', '=', $id)
-        //     ->get();
-            $Sedes = DB::table('sedes')
-            ->leftJoin('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('sedes.*', 'clientes.ID_Cli')
-            ->where('FK_SedeCli', '=', 'ID_Cli')
+        $Sedes = DB::table('sedes')
+            ->select('sedes.ID_Sede', 'sedes.SedeName')
             ->get();
 
         return view('activos.create', compact('SubActivos', 'Categorias', 'Sedes'));
@@ -76,16 +65,9 @@ class ActivoController extends Controller
         $Activo->ActObserv = $request->input('ActObserv');
         $Activo->ActSerialProveed = $request->input('ActSerialProveed');
         $Activo->FK_ActSub = $request->input('FK_ActSub');
-        $Activo->FK_ActSede = 1;
+        $Activo->FK_ActSede = $request->input('FK_ActSede');
+        $Activo->ActDelete = 0;
         $Activo->save();
-
-        $log = new audit();
-        $log->AuditTabla="activos";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Activo->ID_Act;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
         return redirect()->route('activos.index');
     }
@@ -100,7 +82,6 @@ class ActivoController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -109,27 +90,18 @@ class ActivoController extends Controller
      */
     public function edit($id)
     {
-        $SubActivos = DB::table('subcategoria_activos')
-            ->select('subcategoria_activos.*')
-            ->get();
+        $SubActivos = SubcategoriaActivo::all();
 
-        $Categorias = DB::table('categoria_activos')
-            ->select('categoria_activos.*')
-            ->get();
+        $Categorias = CategoriaActivo::all();
 
-        $Sedes = DB::table('sedes')
+        $Activos = Activo::where('ID_Act', $id)->first();
+
+        $Sedes =  DB::table('sedes')
             ->select('sedes.SedeName', 'sedes.ID_Sede')
-            ->where('FK_SedeCli', '=', $id)
-            ->get();
-
-        $Activos = DB::table('activos')
-            ->select('activos.*')
-            ->where('ID_Act', '=', $id)
             ->get();
 
         return view('activos.edit',  compact('Activos', 'SubActivos', 'Categorias', 'Sedes'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -142,8 +114,9 @@ class ActivoController extends Controller
         $Activo = Activo::where('ID_Act', $id)->first();
         $Activo->fill($request->all());
         $Activo->ActModel = $request->input('ActModel');
-        $Activo->FK_ActSub = $request->input('FK_ActSub');
-        $Activo->FK_ActSede = $request->input('FK_ActSede');
+
+        // $Activo->ActDelete = 0;
+
         $Activo->save();
 
         // return $Activo;
@@ -157,7 +130,6 @@ class ActivoController extends Controller
 
         return redirect()->route('activos.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -166,6 +138,23 @@ class ActivoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Activos = Activo::where('ID_Act', $id)->first();
+        if ($Activos->ActDelete == 0){
+            $Activos->ActDelete = 1;
+        }
+        else{
+            $Activos->ActDelete = 0;
+        }
+        $Activos->save();
+
+        $log = new audit();
+        $log->AuditTabla = "activos";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $Activos->ID_Act;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $Activos->ActDelete;
+        $log->save();
+
+        return redirect()->route('activos.index');
     }
 }

@@ -21,6 +21,7 @@ Solicitud de Residuos
             <thead>
                 <tr>
                   <th>Solicitud de Servicio</th>
+                  <th>Declaracion</th>
                   <th>Cliente</th>
                   <th>Residuo</th>
                   <th>Kilogramos enviado</th>
@@ -47,6 +48,7 @@ Solicitud de Residuos
               @foreach ($Residuos as $Residuo)
                 <tr>
                   <td>{{$Residuo->ID_SolSer}}</td>
+                  <td>{{$Residuo->ID_SolRes}}</td>
                   <td>{{$Residuo->CliShortname}}</td>
                   <td>{{$Residuo->RespelName}}</td>
                   <td>{{$Residuo->SolResKgEnviado}}</td>
