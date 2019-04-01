@@ -29,9 +29,9 @@ Articulos por Proveedor
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<div class="box-header">
-									@component('layouts.partials.modal')
-										{{$ArtProvs->ID_ArtiProve}}
-									@endcomponent
+								@component('layouts.partials.modal')
+									{{$ArtProvs->ID_ArtiProve}}
+								@endcomponent
 								@if($ArtProvs->ArtDelete == 0)
 								  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ArtProvs->ID_ArtiProve}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
 								  <form action='/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}' method='POST'>
@@ -102,7 +102,6 @@ Articulos por Proveedor
 										<input id="inputcheck" type="checkbox" name="FK_AutorizedBy">
 									</div>
 								</div>
-
 								<div class="col-md-12">		
 									<div class="box-footer" style="float:right; margin-right:5%">
 										<button type="submit" class="btn btn-primary">Registrar</button>

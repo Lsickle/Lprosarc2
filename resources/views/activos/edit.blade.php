@@ -13,38 +13,35 @@ Datos de Activos
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">Editar Datos</h3>
-					<div class="box-tools pull-right">
+					@component('layouts.partials.modal')
+						{{$Activos->ID_Act}}
+					@endcomponent
+					@if($Activos->ActDelete == 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Activos->ID_Act}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+						<form action='/activos/{{$Activos->ID_Act}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$Activos->ID_Act}}" style="display: none;">
+						</form>
+					@else
+						<form action='/activos/{{$Activos->ID_Act}}' method='POST' style="float: right;">
+						@method('DELETE')
+						@csrf
+						<input type="submit" class='btn btn-success btn-block' value="Añadir">
+						</form>
+					@endif
+					{{-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
 						<i class="fa fa-times"></i></button>
-					</div>
+					</div> --}}
 				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-								<div class="box-header">
-										@component('layouts.partials.modal')
-											{{$Activos->ID_Act}}
-										@endcomponent
-									@if($Activos->ActDelete == 0)
-									  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Activos->ID_Act}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-									  <form action='/activos/{{$Activos->ID_Act}}' method='POST'>
-										  @method('DELETE')
-										  @csrf
-										  <input  type="submit" id="Eliminar{{$Activos->ID_Act}}" style="display: none;">
-									  </form>
-									@else
-									  <form action='/activos/{{$Activos->ID_Act}}' method='POST' style="float: right;">
-										@method('DELETE')
-										@csrf
-										<input type="submit" class='btn btn-success btn-block' value="Añadir">
-									  </form>
-									@endif
-								  </div>
-							<!-- /.box-header -->
                             <!-- form start -->
 							<form role="form" action="/activos/{{$Activos->ID_Act}}" method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -52,7 +49,7 @@ Datos de Activos
 								<div class="col-md-6">
 									<label for="activo">Categoria</label>
 									<select class="form-control" id="activo" name="categoria" required>
-										<option>Seleccione...</option>
+										<option>{{$Categoria->CatName}}</option>
 										@foreach ($Categorias as $Categoria)
 											<option value="{{$Categoria->ID_CatAct}}">{{$Categoria->CatName}}</option>																
 										@endforeach
@@ -62,7 +59,7 @@ Datos de Activos
 								<div class="col-md-6">
 									<label for="activo">SubCategoria</label>
 									<select class="form-control" id="activo" name="FK_ActSub" required>
-										<option value="{{$Activos->FK_ActSub}}">Seleccione...</option>
+										<option value="{{$Activos->FK_ActSub}}">{{$SubActivo->SubCatName}}</option>
 										@foreach ($SubActivos as $SubActivo)
 											 <option value="{{$SubActivo->ID_SubCat}}">{{$SubActivo->SubCatName}}</option>																
 										@endforeach
@@ -71,10 +68,9 @@ Datos de Activos
 								<div class="col-md-6">
 									<label for="activo3">Sede</label>
 									<select class="form-control" id="activo3" name="FK_ActSede" required>
-										<option value="{{$Activos->FK_ActSede}}">Seleccione...</option>	
+										<option value="{{$Activos->FK_ActSede}}">{{$Sede->SedeName}}</option>	
 										@foreach ($Sedes as $Sede)
 											<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>	
-											
 										@endforeach
 									</select>
 								</div>
@@ -85,9 +81,12 @@ Datos de Activos
 								<div class="col-md-6">
 									<label for="activo">Forma del activo</label>
 									<select class="form-control" id="activo" name="ActUnid" required>
-										<option value="{{$Activos->ActUnid}}">Seleccione...</option>
-										<option>Unidad</option>
-										<option>Peso</option>
+										<option value="{{$Activos->ActUnid}}">{{$Activos->ActUnid}}</option>
+										@if ($Activos->ActUnid == "Peso")
+											<option>Unidad</option>	
+										@else
+											<option>Peso</option>
+										@endif
 									</select>
 								</div>
 								<div class="col-md-6">
