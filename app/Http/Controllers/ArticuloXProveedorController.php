@@ -85,11 +85,13 @@ class ArticuloXProveedorController extends Controller
     {
         $ArtProvs = ArticuloPorProveedor::where('ID_ArtiProve', $id)->first();
 
-        $Activos = Activo::all();
+        $Activo = Activo::where('ID_Act', $ArtProvs->FK_ArtiActiv)->first();
+        $Activos = Activo::where('ID_Act', '<>', $ArtProvs->FK_ArtiActiv)->get();
 
-        $Quotations = Quotation::all();
+        $Quotation = Quotation::where('ID_Cotiz', $ArtProvs->FK_ArtCotiz)->first();
+        $Quotations = Quotation::where('ID_Cotiz', '<>', $ArtProvs->FK_ArtCotiz)->get();
 
-        return view('articulos.edit', compact('ArtProvs', 'Quotations', 'Activos'));  
+        return view('articulos.edit', compact('ArtProvs', 'Quotations', 'Activos', 'Activo', 'Quotation'));  
     }
 
     /**

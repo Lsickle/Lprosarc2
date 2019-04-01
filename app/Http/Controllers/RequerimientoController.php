@@ -35,7 +35,7 @@ class RequerimientoController extends Controller
      */
     public function create()
     {
-        //
+        // En el controlador de respel
     }
 
     /**
