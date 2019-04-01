@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\ArticuloPorProveedor;
 use App\Activo;
 use App\Quotation;
+use App\audit;
 
 class ArticuloXProveedorController extends Controller
 {
@@ -57,7 +59,6 @@ class ArticuloXProveedorController extends Controller
         $ArtProv->FK_ArtiActiv = $request->input("FK_ArtiActiv");
         // $ArtProv->FK_AutorizedBy = $request->input("FK_AutorizedBy");
         $ArtProv->FK_AutorizedBy = 1;
-
         $ArtProv->save();
 
         return redirect()->route('articulos-proveedor.index');
@@ -85,6 +86,7 @@ class ArticuloXProveedorController extends Controller
         $ArtProvs = ArticuloPorProveedor::where('ID_ArtiProve', $id)->first();
 
         $Activos = Activo::all();
+
         $Quotations = Quotation::all();
 
         return view('articulos.edit', compact('ArtProvs', 'Quotations', 'Activos'));  
@@ -103,8 +105,13 @@ class ArticuloXProveedorController extends Controller
         $ArtProvs->fill($request->all());
         $ArtProvs->save();
 
-        // return $ArtProvs;
-        // $ArtProvs->ActModel = $request->input('ActModel');
+        $log = new audit();
+        $log->AuditTabla = "articulo_por_proveedors";
+        $log->AuditType = "Modificado";
+        $log->AuditRegistro = $ArtProvs->ID_ArtiProve;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $request->all();
+        $log->save();
 
         return redirect()->route('articulos-proveedor.index');
 
@@ -118,6 +125,22 @@ class ArticuloXProveedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ArtProvs = ArticuloPorProveedor::where('ID_ArtiProve', $id)->first();
+
+        if ($ArtProvs->ArtDelete == 0){
+            $ArtProvs->ArtDelete = 1;
+        }
+        else{
+            $ArtProvs->ArtDelete = 0;
+        }
+        $ArtProvs->save();
+
+        $log = new audit();
+        $log->AuditTabla = "articulo_por_proveedors";
+        $log->AuditType = "Eliminado";
+        $log->AuditRegistro = $ArtProvs->ID_ArtiProve;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = $ArtProvs->ArtDelete;
+        $log->save();
     }
 }

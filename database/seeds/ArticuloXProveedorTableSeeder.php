@@ -21,6 +21,7 @@ class ArticuloXProveedorTableSeeder extends Seeder
         $Proveedor->FK_ArtiActiv = "1";
         $Proveedor->FK_ArtCotiz = "3";
         $Proveedor->FK_AutorizedBy = "5";
+        $Proveedor->ArtDelete = "0";
         $Proveedor->save();
 
         $Proveedor = new ArticuloPorProveedor();
@@ -32,6 +33,7 @@ class ArticuloXProveedorTableSeeder extends Seeder
         $Proveedor->FK_ArtiActiv = "3";
         $Proveedor->FK_ArtCotiz = "1";
         $Proveedor->FK_AutorizedBy = "2";
+        $Proveedor->ArtDelete = "0";
         $Proveedor->save();
 
         $Proveedor = new ArticuloPorProveedor();
@@ -43,6 +45,7 @@ class ArticuloXProveedorTableSeeder extends Seeder
         $Proveedor->FK_ArtiActiv = "4";
         $Proveedor->FK_ArtCotiz = "2";
         $Proveedor->FK_AutorizedBy = "1";
+        $Proveedor->ArtDelete = "0";
         $Proveedor->save();
 
         $Proveedor = new ArticuloPorProveedor();
@@ -54,6 +57,7 @@ class ArticuloXProveedorTableSeeder extends Seeder
         $Proveedor->FK_ArtiActiv = "5";
         $Proveedor->FK_ArtCotiz = "4";
         $Proveedor->FK_AutorizedBy = "3";
+        $Proveedor->ArtDelete = "0";
         $Proveedor->save();
 
         $Proveedor = new ArticuloPorProveedor();
@@ -65,6 +69,7 @@ class ArticuloXProveedorTableSeeder extends Seeder
         $Proveedor->FK_ArtiActiv = "2";
         $Proveedor->FK_ArtCotiz = "5";
         $Proveedor->FK_AutorizedBy = "4";
+        $Proveedor->ArtDelete = "0";
         $Proveedor->save();
     }
 }
