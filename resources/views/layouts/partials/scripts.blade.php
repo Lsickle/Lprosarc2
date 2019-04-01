@@ -194,6 +194,56 @@
 </script>
 
 
+@if(
+
+  Route::currentRouteName()=='tratamiento.create'||
+  Route::currentRouteName()=='tratamiento.index'
+)
+<script>
+  $(document).ready(function() {
+
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+    /*var botoncito define los botones que se usaran si el usuario es programador*/
+    var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+    /*funcion para renderizar la tabla de cotizacion.index*/
+    $('#tratamientosTable').DataTable({
+      responsive: true,
+      select: true,
+      dom: 'Bfrtip',
+      buttons: [
+        botoncito, {
+          extend: 'collection',
+          text: 'Selector',
+          buttons: [ 'selectRows', 'selectCells' ]
+        }
+      ],
+      colReorder: true,
+      ordering: true,
+      autoWith: true,
+      searchHighlight: true,
+      columnDefs: [ {
+        "targets": 7,
+        "data": "ID_Trat",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/tratamiento/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
+        }  
+      } ]
+    });
+
+    /*funcion para resaltar las busquedas*/
+    var table = $('#tratamientosTable').DataTable();
+
+    table.on( 'draw', function () {
+      var body = $( table.table().body());
+      body.unhighlight();
+      body.highlight( table.search() );  
+    });
+  }); 
+</script>
+@endif
 {{-- <script>
     //Date range as a button
     $('#daterange-btn').daterangepicker(
@@ -1310,3 +1360,10 @@ fieldset[disabled] .form-control {
 fieldset[disabled] .form-control {
   cursor: not-allowed
 }  --}}
+
+{{-- script para evitar el envio multiple de formularios --}}
+<script>
+  $(':submit').click(function() {
+        $(this).attr('disabled','disabled');
+  });
+</script>
