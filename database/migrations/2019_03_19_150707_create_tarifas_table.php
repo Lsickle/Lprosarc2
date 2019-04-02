@@ -27,7 +27,7 @@ class CreateTarifasTable extends Migration
             $table->integer('TarifaPesoinicial3')->nullable();
             $table->integer('TarifaPesofinal3')->nullable();
             $table->integer('TarifaPrecio3')->nullable();
-            $table->boolean('TarifaCotiDelete');
+            $table->boolean('TarifaDelete');
             $table->unsignedInteger('FK_TarifaTrat')->nullable();
             $table->foreign('FK_TarifaTrat')->references('ID_Trat')->on('tratamientos');
             $table->timestamps();
