@@ -81,7 +81,7 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        return $request;
         $SolicitudServicio = new SolicitudServicio();
         $SolicitudServicio->SolSerStatus = 'Pendiente';
         $SolicitudServicio->SolSerTipo = $request->input('SolSerTipo');
@@ -95,11 +95,74 @@ class SolicitudServicioController extends Controller
         $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
         $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
         // $SolicitudServicio->save();
-        return $SolicitudServicio;
+        // return $SolicitudServicio;
+        $SolicitudResiduo = new SolicitudResiduo();
+        FK_SolResRg = DB::table('residuos_geners')
+            ->select('ID_SGenerRes')
+            ->where('FK_SGener', $request['Generador'][$x])
+            ->where('FK_Respel'. $request['Respel'][$x][$y])
+            ->get();
 
 
-$request->input('SolResAuditoriaTipo');
-$request->input('ReqAuditoriaTipo');
+$SolicitudResiduo->FK_SolResRg =
+$SolicitudResiduo->FK_SolResRespel =
+$SolicitudResiduo->SolResCateRecibido =
+$SolicitudResiduo->SolResDelete =
+$SolicitudResiduo->SolResSlug =
+$SolicitudResiduo->FK_SolResTratamiento =
+$SolicitudResiduo->FK_SolResSolSer =
+$SolicitudResiduo->SolResCateEnviado =
+$SolicitudResiduo->SolResFotoCargue =
+$SolicitudResiduo->SolResFotoDescargue =
+$SolicitudResiduo->SolResFotoPesaje =
+$SolicitudResiduo->SolResFotoReempacado =
+$SolicitudResiduo->SolResFotoMezclado =
+$SolicitudResiduo->SolResFotoDestruccion =
+$SolicitudResiduo->SolResVideoCargue =
+$SolicitudResiduo->SolResVideoDescargue =
+$SolicitudResiduo->SolResVideoPesaje =
+$SolicitudResiduo->SolResVideoReempacado =
+$SolicitudResiduo->SolResVideoMezclado =
+$SolicitudResiduo->SolResVideoDestruccion =
+$SolicitudResiduo->SolResAuditoria =
+$SolicitudResiduo->SolResAuditoriaTipo =
+$SolicitudResiduo->SolResDevolucion =
+$SolicitudResiduo->SolResDevolucionTipo =
+$SolicitudResiduo->SolResDatosPersonal =
+$SolicitudResiduo->SolResPlanillas =
+$SolicitudResiduo->SolResAlistamiento =
+$SolicitudResiduo->SolResCapacitacion =
+$SolicitudResiduo->SolResBascula =
+$SolicitudResiduo->SolResMasPerson =
+$SolicitudResiduo->SolResPlatform =
+$SolicitudResiduo->SolResCertiEspecial =
+$SolicitudResiduo->SolResTipoCate =
+
+$request['Generador'][];
+$request['Respel'][];
+$request['CateEnviado'][];
+$request['Tratamiento'][];
+$request['SolResAuditoriaTipo'][];
+$request['ReqAuditoriaTipo'][];
+$request['FotoCargue'][];
+$request['FotoDestruccion'][];
+$request['Alistamiento'][];
+$request['FotoDescargue'][];
+$request['FotoPesaje'][];
+$request['FotoReempacado'][];
+$request['FotoMezclado'][];
+$request['VideoCargue'][];
+$request['VideoDescargue'][];
+$request['VideoPesaje'][];
+$request['VideoReempacado'][];
+$request['VideoMezclado'][];
+$request['VideoDestruccion'][];
+$request['Devolucion'][];
+$request['Planillas'][];
+$request['Capacitacion'][];
+$request['Bascula'][];
+$request['Platform'][];
+$request['CertiEspecial'][];
         $Prueba = '0) ';
         $Generador = count($request['Generador']);
         for ($i=0; $i < $Generador; $i++) { 
