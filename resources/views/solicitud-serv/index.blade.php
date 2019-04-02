@@ -48,26 +48,26 @@ Servicios
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
               </div>
-              @foreach ($Servicios as $Servicio)
+              {{-- @foreach ($Servicios as $Servicio) --}}
                     <tr>
-                      <td>{{$Servicio->CliShortname}}</td>
-                      <td>{{$Servicio->GenerName}}</td>
-                      <td>{{$Servicio->RespelName}}</td>
-                      <td>{{$Servicio->SolSerStatus}}</td>
-                      @if ($Servicio->SolSerAuditable == 1)
+                      <td>{{-- {{$Servicio->CliShortname}} --}}</td>
+                      <td>{{-- {{$Servicio->GenerName}} --}}</td>
+                      <td>{{-- {{$Servicio->RespelName}} --}}</td>
+                      <td>{{-- {{$Servicio->SolSerStatus}} --}}</td>
+                      {{-- @if ($Servicio->SolSerAuditable == 1) --}}
                       <td>Si</td>                      
-                      @else
+                      {{-- @else --}}
                       <td>No</td>
-                      @endif
-                      <td>{{$Servicio->SolSerFrecuencia}} Días</td>
-                      <td>{{$Servicio->SolSerTipo}}</td>
-                      <td>{{$Servicio->SolSerConducExter}}</td>
-                      <td>{{$Servicio->SolSerVehicExter}}</td>
-                      {{-- <td>{{$Servicio->created_at}}</td> --}}
-                      {{-- <td>{{$Servicio->updated_at}}</td> --}}
-                      <td>{{$Servicio->SolSerSlug}}</td>
+                      {{-- @endif --}}
+                      <td>{{-- {{$Servicio->SolSerFrecuencia}} --}} Días</td>
+                      <td>{{-- {{$Servicio->SolSerTipo}} --}}</td>
+                      <td>{{-- {{$Servicio->SolSerConducExter}} --}}</td>
+                      <td>{{-- {{$Servicio->SolSerVehicExter}} --}}</td>
+                      <td>{{-- {{$Servicio->created_at}} --}}</td>
+                      <td>{{-- {{$Servicio->updated_at}} --}}</td>
+                      <td>{{-- {{$Servicio->SolSerSlug}} --}}</td>
                     </tr>
-                @endforeach
+                {{-- @endforeach --}}
                   </tbody>
             {{-- <tfoot>
                 <tr>

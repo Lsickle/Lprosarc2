@@ -361,25 +361,16 @@ $(document).ready(function(){
 <!-- checkin imput -->
 <script>
   $(function () {
+    $('.inputcheck').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+<script>
+  $(function () {
     $('#inputcheck').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-<script>
-  $(function () {
-    $('#inputcheck1').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-<script>
-  $(function () {
-    $('#inputcheck2').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
@@ -434,6 +425,25 @@ $(document).ready(function(){
   });
 </script>
 
+<script >
+  $(".CalendarSwitch").bootstrapSwitch({
+    animate: true,
+    radioAllOff: true,
+    labelText: '<i class="fas fa-calendar-alt"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
+<script>
+  $(".CheckMin").bootstrapSwitch({
+    size: "mini",
+    animate: true,
+    radioAllOff: true,
+    labelText: '<i class="fas fa-calendar-alt"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
 <!-- script para botones del listado de usuarios -->
 {{-- <script type="text/javascript">
   $('.radio1').on('switch-change', function () {

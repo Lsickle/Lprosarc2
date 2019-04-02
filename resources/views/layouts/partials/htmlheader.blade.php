@@ -11,6 +11,9 @@
     
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
 
+    {{-- Stilos Personalizados --}}
+    <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
+
     {{-- Full Calendar --}}
      <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

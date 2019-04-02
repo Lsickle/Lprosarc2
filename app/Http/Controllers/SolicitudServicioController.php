@@ -14,6 +14,7 @@ use App\Respel;
 use App\ResiduosGener;
 use App\Cliente;
 use App\Generador;
+use App\Personal;
 
 
 class SolicitudServicioController extends Controller
@@ -26,18 +27,17 @@ class SolicitudServicioController extends Controller
     public function index()
     {
         if(Auth::user()->UsRol === "Programador"){
+        // $Servicios = DB::table('solicitud_servicios')
+            // ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            // ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
+            // ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            // ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
+            // ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            // ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            // ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
+            // ->get();/*, compact('Servicios')*/, compact('Respel')
 
-        $Servicios = DB::table('solicitud_servicios')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
-            ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
-            ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-            ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
-            ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
-            ->get();
-
-        return view('solicitud-serv.index', compact('Servicios'));
+        return view('solicitud-serv.index');
         }
         $Servicios = DB::table('solicitud_servicios')
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
@@ -62,9 +62,15 @@ class SolicitudServicioController extends Controller
     public function create()
     {
         $Sedes = Sede::all();
-        // $GSedes = GenerSede::all(); 'GSedes', 
-        $Respels = Respel::all();
-        return view('solicitud-serv.create', compact('Sedes', 'Respels'));
+        $Clientes = Cliente::all();
+        $Respels = DB::table('respels')
+            ->select('ID_Respel', 'RespelName')
+            ->get();
+        $Generadors = DB::table('generadors')
+            ->select('ID_Gener', 'GenerName')
+            ->get();
+        $Personals = Personal::all();
+        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'Generadors'));
     }
 
     /**
@@ -75,44 +81,60 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        $Sedes = Sede::where('ID_Sede', $request->input('Fk_SolSerTransportador'))->first();
         // return $request;
+        $SolicitudServicio = new SolicitudServicio();
+        $SolicitudServicio->SolSerStatus = 'Pendiente';
+        $SolicitudServicio->SolSerTipo = $request->input('SolSerTipo');
+        $SolicitudServicio->SolSerAuditable = $request->input('SolSerAuditable');
+        $SolicitudServicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
+        $SolicitudServicio->SolSerConducExter = $request->input('SolSerConducExter');
+        $SolicitudServicio->SolSerVehicExter = $request->input('SolSerVehicExter');
+        $SolicitudServicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
+        $SolicitudServicio->SolSerSlug = now().'solicitud'.$request->input('FK_SolSerCliente').'deservicio';
+        $SolicitudServicio->SolSerDelete = 0;
+        $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
+        $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
+        // $SolicitudServicio->save();
+        return $SolicitudServicio;
 
-        $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = $request->input('SolSerStatus');
-        $Servicio->SolSerTipo = $request->input('SolSerTipo');
 
-        if($request->input('SolSerAuditable') == 'on'){
-            $Servicio->SolSerAuditable = '1';
-        }else{
-            $Servicio->SolSerAuditable = '0';
+$request->input('SolResAuditoriaTipo');
+$request->input('ReqAuditoriaTipo');
+        $Prueba = '0) ';
+        $Generador = count($request['Generador']);
+        for ($i=0; $i < $Generador; $i++) { 
+            
         }
+        return $Prueba;
+        // return $Generador;
+        // return $request['desRespel'][0];
+        $data = $request->input('Respel');
+        $prueba = json_encode($data);
+        return $data;
 
+
+
+        $auditable = $request->input('SolSerAuditable');
+        $Servicio = new SolicitudServicio();
+        $Servicio->SolSerStatus = "Pendiente";
+        $Servicio->SolSerTipo = $request->input('SolSerTipo');
+        if($auditable){
+            $Servicio->SolSerAuditable = 1;
+        }
+        else{
+            $Servicio->SolSerAuditable = 0;
+        }
         $Servicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
         $Servicio->SolSerConducExter = $request->input('SolSerConducExter');
         $Servicio->SolSerVehicExter = $request->input('SolSerVehicExter');
         $Servicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
-        $Servicio->FK_SolSerGenerSede = $request->input('FK_SolSerGenerSede');
+        $Servicio->SolSerSlug = 'Slug'.date('YmdHis').$request->input('FK_SolSerCliente');
         $Servicio->SolSerDelete = 0;
-        $Servicio->SolSerSlug = 'Slug'.date('YmdHis');
-        
+        $Servicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
+        $Servicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
         $Servicio->save();
-
-        $SGenerRes = new ResiduosGener();
-        $SGenerRes->FK_SGener = $request->input('FK_SolSerGenerSede');
-        $SGenerRes->FK_Respel = $request->input('FK_Respel');
-        $SGenerRes->FK_SolSer = $Servicio->ID_SolSer;
-        $SGenerRes->save();
-
-        $log = new audit();
-        $log->AuditTabla="solicitud_servicios";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Servicio->ID_SolSer;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-
-        return redirect()->route('solicitud-servicio.index');
+        return redirect()->route('solicitud-residuo.create')->compact('$Servicio->ID_SolSer');
+        // return $Servicio;
     }
 
     /**
