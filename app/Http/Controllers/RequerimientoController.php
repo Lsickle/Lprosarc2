@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Requerimiento;
 use App\Respel;
 use App\audit;
+use App\Tratamiento;
 
 class RequerimientoController extends Controller
 {
@@ -18,11 +19,12 @@ class RequerimientoController extends Controller
      */
     public function index(){
         $Requerimientos = DB::table('requerimientos')
+            ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'requerimientos.FK_ReqTrata')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName')
+            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName', 'tratamientos.TratName')
             ->get();
 
         return view('requerimientos.index', compact('Requerimientos'));
@@ -71,7 +73,10 @@ class RequerimientoController extends Controller
     public function edit($id)
     {
         $Requerimientos = Requerimiento::where('ReqSlug', $id)->first();
-        return view('requerimientos.edit', compact('Requerimientos'));  
+
+        $Tratamientos = Tratamiento::select('ID_Trat', 'TratName')->get();
+
+        return view('requerimientos.edit', compact('Requerimientos', 'Tratamientos'));  
     }
 
     /**
@@ -111,6 +116,8 @@ class RequerimientoController extends Controller
         $Requerimiento->ReqMasPerson = $request->input('ReqMasPerson');
         $Requerimiento->ReqPlatform = $request->input('ReqPlatform');
         $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
+        
+        $Requerimiento->FK_ReqTrata = $request->input('FK_ReqTrata');
         $Requerimiento->save();
 
         $log = new audit();
@@ -120,7 +127,8 @@ class RequerimientoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        return redirect()->route('respels.index');
+        // return redirect()->route('respels.index');
+        return redirect()->route('requerimientos.index');
     }
 
     /**

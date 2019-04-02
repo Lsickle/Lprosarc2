@@ -130,5 +130,14 @@
                 @endif
             </label>
         </div>
+        <div class="col-md-6">
+            <label for="Trata">Tratamiento</label>
+            <select class="form-control" id="Trata" name="FK_ReqTrata" required="false">
+                <option value="">Seleccione...</option>
+                @foreach ($Tratamientos as $Tratamiento)
+                <option value="{{$Tratamiento->ID_Trat}}">{{$Tratamiento->TratName}}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>
