@@ -95,6 +95,7 @@ class SolicitudServicioController extends Controller
         $SolicitudServicio->SolSerDelete = 0;
         $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
         $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
+        // return $request['SolResAuditoriaTipo'];
         $SolicitudServicio->save();
         for ($x=1; $x <= count($request['SGenerador']); $x++) {
             for ($y=0; $y < count($request['Respel'][$x]); $y++) {
@@ -107,7 +108,7 @@ class SolicitudServicioController extends Controller
                 $SolicitudResiduo->SolResCateEnviado = $request['CateEnviado'][$x][$y];
                 $SolicitudResiduo->SolResCateRecibido = 0;
                 $SolicitudResiduo->SolResDelete = 0;
-                $SolicitudResiduo->SolResSlug = now()."solicitud".$request['Respel'][$x][$y]."residuo";
+                $SolicitudResiduo->SolResSlug = now()."solicitud".$request['Respel'][$x][$y].$x.$y."residuo";
                 $SolicitudResiduo->FK_SolResSolSer = $SolicitudServicio->ID_SolSer;
                 $SolicitudResiduo->FK_SolResTratamiento = $request['Tratamiento'][$x][$y];
                 foreach ($FK_SolResRg as $FK_SolRg) {
@@ -172,7 +173,7 @@ class SolicitudServicioController extends Controller
                 }
                 $SolicitudResiduo->SolResTipoCate = $request['TipoCate'][$x][$y];
                 $SolicitudResiduo->SolResAuditoria = $SolicitudServicio->SolSerAuditable;
-                $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'][$x][$y];
+                $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'];
                 $SolicitudResiduo->save();
             }
         }
