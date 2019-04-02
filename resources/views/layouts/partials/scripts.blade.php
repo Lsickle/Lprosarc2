@@ -1114,11 +1114,11 @@ $(document).ready(function(){
             "data": "ReqSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='/requerimientos/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
-          // {"targets": 6,
-          //   "data": "ReqSlug",
-          //   "render": function ( data, type, row, meta ) {
-          //       return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
-          // }
+          {"targets": 7,
+            "data": "ReqSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";}
+          }
           ]
         });
       });

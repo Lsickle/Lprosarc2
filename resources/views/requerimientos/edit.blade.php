@@ -32,18 +32,17 @@ Respel-Editar
 							<!-- /.box-header -->
                             <!-- form start -->
                             
-						<div class="fingerprint-spinner" id="loadingTable">
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-						</div>
-							{{-- @foreach ($Requerimientos as $Requerimiento) --}}
+							<div class="fingerprint-spinner" id="loadingTable">
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
+							</div>
 							<form role="form" action="/requerimientos/{{$Requerimientos->ReqSlug}}" method="POST" enctype="multipart/form-data" name="edit">
 								@method('PUT')
 								@csrf
@@ -59,6 +58,7 @@ Respel-Editar
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
+													
 												<div id="step-1" class="">
 													@include('layouts.RespelPartials.Respelform2Edit')
 												</div>
@@ -75,7 +75,7 @@ Respel-Editar
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Editar</button>
+										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
 									</div>
 								</div>
 							</form>
