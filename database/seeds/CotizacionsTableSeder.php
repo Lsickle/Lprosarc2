@@ -22,6 +22,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "350000";
         $cotizacion->FK_CotiSede = "2";
         $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -34,6 +35,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "2350000";
         $cotizacion->FK_CotiSede = "3";
         $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Pendiente';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -46,6 +48,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "1350000";
         $cotizacion->FK_CotiSede = "4";
         $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Pendiente';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -58,6 +61,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "1350000";
         $cotizacion->FK_CotiSede = "5";
         $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Pendiente';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -70,6 +74,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "1350000";
         $cotizacion->FK_CotiSede = "6";
         $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Rechazada';
         $cotizacion->save();
     }
 }

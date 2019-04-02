@@ -27,7 +27,11 @@ use App\SubcategoriaActivo;
 use App\Activo;
 use App\Requerimiento;
 use App\Cotizacion;
+use App\Recurso;
 use App\Certificado;
+use App\ArticuloPorProveedor;
+use App\MovimientoActivo;
+use App\Tarifa;
 
 class DatabaseSeeder extends Seeder
 {
@@ -57,6 +61,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicProgTableSeeder::class);
         $this->call(OrdenCompraTableSeeder::class);
         $this->call(QuotationTableSeeder::class);
+        $this->call(TarifasTableSeder::class);
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
@@ -69,6 +74,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);
-
+        $this->call(RecursoTableSeeder::class);
+        $this->call(ArticuloXProveedorTableSeeder::class);
+        $this->call(MovimientoActivoTableSeeder::class);
     }
 }

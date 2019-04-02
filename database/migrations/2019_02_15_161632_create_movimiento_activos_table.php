@@ -16,7 +16,7 @@ class CreateMovimientoActivosTable extends Migration
         Schema::create('movimiento_activos', function (Blueprint $table) {
             $table->increments('ID_MovAct');
             $table->string('MovTipo',32); /*tipo de movimiento Entrada, asignacion, Salida*/
-            $table->unsignedInteger('FK_ActPerson');
+            $table->unsignedInteger('FK_ActPerson')->nullable();
             $table->unsignedInteger('FK_MovInv');
             $table->foreign('FK_ActPerson')->references('ID_Pers')->on('Personals');
             $table->foreign('FK_MovInv')->references('ID_Act')->on('Activos');

@@ -401,18 +401,18 @@ Create table OrdenCompra(
 	ENGINE=InnoDB;
 
 /*tabla para registra las cotizaciones de las ordenes de compra aprobadas*/
-create table Cotizacion(
-	ID_Cotiz int auto_increment unique,
-	CotizNum int, /*numero de cotizacion*/
-	CotizStatus varchar(32), /* Aprobada, AprobadaParcial*/
-	CotizSubTotal int, /*costo de la cotizacion*/
+create table Quotation(
+	ID_Quota int auto_increment unique,
+	QuotaNum int, /*numero de Quotacion*/
+	QuotaStatus varchar(32), /* Aprobada, AprobadaParcial*/
+	QuotaSubTotal int, /*costo de la Quotacion*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	FK_CotizOrden int, /*numero de orden*/
-	FK_CotizSede int, /*numero de proveedor*/
-	primary key	(ID_Cotiz),
-	foreign key (FK_CotizSede) references Sede(ID_Sede) ON UPDATE CASCADE,
-	foreign key (FK_CotizOrden) references OrdenCompra(ID_Orden) ON UPDATE CASCADE
+	FK_QuotaOrden int, /*numero de orden*/
+	FK_QuotaSede int, /*numero de proveedor*/
+	primary key	(ID_Quota),
+	foreign key (FK_QuotaSede) references Sede(ID_Sede) ON UPDATE CASCADE,
+	foreign key (FK_QuotaOrden) references OrdenCompra(ID_Orden) ON UPDATE CASCADE
 )
 	COLLATE='utf8mb4_unicode_ci'
 	ENGINE=InnoDB;
@@ -561,7 +561,7 @@ create table Recurso(
 	RecTipo varchar(64), /*cargue, descargue, pesaje, reempacado, mezclado, destruccion, otro*/
 	created_at TIMESTAMP NULL DEFAULT NULL, /*fecha de creacion*/
 	updated_at TIMESTAMP NULL DEFAULT NULL,/*fecha de actualizacion*/
-	/*RecRmSrc varchar(255), direcion de la carperta donde */
+	RecRmSrc varchar(255), /*direcion de la carperta donde */
 	RecSrc varchar(255), /*ruta donde se guardan los diferentes recursos*/
 	RecFormat varchar(32), /*jpg, gif, png, etc*/
 	FK_RecSol int, /*foranea de la tabla residuo por solicitud*/

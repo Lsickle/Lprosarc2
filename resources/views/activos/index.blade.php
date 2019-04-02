@@ -13,6 +13,8 @@ Activos
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Datos de los activos</h3>
+          <a href="activos/create" class="btn btn-primary" style="float: right;">Crear</a>
+
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -30,9 +32,7 @@ Activos
                     <th>Más</th>
                     <th>Editar</th>
                 </tr>
-              
-            {{-- </thead> --}}
-          {{-- </tbody> --}}
+            </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
@@ -51,21 +51,12 @@ Activos
                     <td>{{$Activo->SubCatName}}</td>
                     <td>{{$Activo->ActName}}</td>
                     <td>{{$Activo->ActCant}}</td>
-                    
-                    @if($Activo->ActUnid <> 1)
-                      <td>Unidades</td>
-                    @else
-                    <td> Peso</td>
-                    @endif
-
+                    <td>{{$Activo->ActUnid}}</td>
                     <td>{{$Activo->ActModel}}</td>
                     <td>{{$Activo->ActSerialProsarc}}</td>
                     <td>{{$Activo->ActSerialProveed}}</td>
                     <td></td>
                     <td>{{$Activo->ID_Act}}</td>
-                    {{-- <th>{{$Activo->ActUnid}}</th> --}}
-                    {{-- <th>{{$Activo->ActTalla}}</th> --}}
-                    {{-- <th>{{$Activo->ActObserv}}</th> --}}
                   </tr>
                 
               @endforeach
@@ -75,8 +66,12 @@ Activos
                     <th>SubCategoria</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>
-                    <th>Unidades</th>
+                    <th>Forma</th>
                     <th>Modelo</th>
+                    <th>Serial Prosarc</th>
+                    <th>Serial Proveedor</th>
+                    <th>Más</th>
+                    <th>Editar</th>
                 </tr>
             </tfoot> --}}
           </table>

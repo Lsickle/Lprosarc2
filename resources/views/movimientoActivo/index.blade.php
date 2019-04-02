@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Activos
+Movimiento
 @endsection
 @section('contentheader_title')
-Activos
+Movimiento de Activos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,21 +12,23 @@ Activos
       <!-- /.box -->
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Datos de los activos</h3>
+          <h3 class="box-title">Datos</h3>
+          <a href="movimiento-activos/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
           <table id="MovimientoActivoTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Nombre del activo</th>
+                    <th>Cliente</th>
+                    <th>Activo</th>
                     <th>Tipo</th>
-                    <th>Fecha Creacion</th>
-                    <th>Actualizado el</th>
+                    <th>Asignado</th>
+                    <th>Creado</th>
+                    <th>Actualizado</th>
                     <th>Editar</th>
                 </tr>
-              
-            {{-- </thead> --}}
+            </thead>
           {{-- </tbody> --}}
             <tbody  hidden onload="renderTable()" id="readyTable">
               <div class="fingerprint-spinner" id="loadingTable">
@@ -42,24 +44,22 @@ Activos
               </div>
               @foreach ($Movimientos as $Movimiento)
                   <tr>
+                    <td>{{$Movimiento->CliShortname}}</td>
                     <td>{{$Movimiento->ActName}}</td>
                     <td>{{$Movimiento->MovTipo}}</td>
+                    <td>{{$Movimiento->PersFirstName}}</td>
                     <td>{{$Movimiento->created_at}}</td>
                     <td>{{$Movimiento->updated_at}}</td>
-                    <td></td>
-
+                    <td>{{$Movimiento->ID_MovAct}}</td>
                   </tr>
-                
               @endforeach
-              {{-- @foreach ($Activos as $Activo)
-                  
-              @endforeach --}}
             {{-- <tfoot>
                 <tr>
-                    <th>Nombre del activo</th>
+                    <th>Activo</th>
+                    <th>Asignado</th>
                     <th>Tipo</th>
-                    <th>Fecha Creacion</th>
-                    <th>Actualizado el</th>
+                    <th>Creado</th>
+                    <th>Actualizado</th>
                     <th>Editar</th>
                 </tr>
             </tfoot> --}}

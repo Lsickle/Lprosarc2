@@ -4,13 +4,6 @@
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
-{{-- CDNS de FullCalendar --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script> --}}
-
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
@@ -20,15 +13,257 @@
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 
-{{-- Full Calendar --}}
+{{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
+@if(
+	Route::currentRouteName()=='cotizacion.create'||
+	Route::currentRouteName()=='cotizacion.index'
+)
+	<script>
+		$(document).ready(function() {
 
-{{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
+			/*var rol defino el rol del usuario*/
+			var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+			/*var botoncito define los botones que se usaran si el usuario es programador*/
+			var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+			/*funcion para renderizar la tabla de cotizacion.index*/
+			$('#cotizacionesTable').DataTable({
+				responsive: true,
+				select: true,
+				dom: 'Bfrtip',
+				buttons: [
+					botoncito, {
+						extend: 'collection',
+						text: 'Selector',
+						buttons: [ 'selectRows', 'selectCells' ]
+					}
+				],
+				colReorder: true,
+				ordering: true,
+				autoWith: true,
+				searchHighlight: true,
+				columnDefs: [ {
+					"targets": 13,
+					"data": "ID_Coti",
+					"render": function ( data, type, row, meta ) {
+						return "<a method='get' href='/cotizacion/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
+					}  
+				} ]
+			});
+
+			/*funcion para resaltar las busquedas*/
+			var table = $('#cotizacionesTable').DataTable();
+
+			table.on( 'draw', function () {
+				var body = $( table.table().body());
+				body.unhighlight();
+				body.highlight( table.search() );  
+			});
+		}); 
+	</script>
+@endif
+
+{{-- slider --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 
+{{-- slider --}}
+<script>
+  $(document).ready(function(){
+    $('#CargueRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionRec').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#CargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DescargueVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#PesajeVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#ReempacadoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#MezcladoVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#DestruccionVideo').bxSlider({
+      mode: 'fade',
+      captions: true,
+      adaptiveHeight: true,
+      slideWidth: 1200
+    });
+  });
+</script>
+
+
+@if(
+
+  Route::currentRouteName()=='tratamiento.create'||
+  Route::currentRouteName()=='tratamiento.index'
+)
+<script>
+  $(document).ready(function() {
+
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+    /*var botoncito define los botones que se usaran si el usuario es programador*/
+    var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+    /*funcion para renderizar la tabla de cotizacion.index*/
+    $('#tratamientosTable').DataTable({
+      responsive: true,
+      select: true,
+      dom: 'Bfrtip',
+      buttons: [
+        botoncito, {
+          extend: 'collection',
+          text: 'Selector',
+          buttons: [ 'selectRows', 'selectCells' ]
+        }
+      ],
+      colReorder: true,
+      ordering: true,
+      autoWith: true,
+      searchHighlight: true,
+      columnDefs: [ {
+        "targets": 7,
+        "data": "ID_Trat",
+        "render": function ( data, type, row, meta ) {
+          return "<a method='get' href='/tratamiento/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
+        }  
+      } ]
+    });
+
+    /*funcion para resaltar las busquedas*/
+    var table = $('#tratamientosTable').DataTable();
+
+    table.on( 'draw', function () {
+      var body = $( table.table().body());
+      body.unhighlight();
+      body.highlight( table.search() );  
+    });
+  }); 
+</script>
+@endif
+{{-- <script>
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          '1 Meses'   : [moment(), moment().add(1, 'month')],
+          '2 Meses'   : [moment(), moment().add(2, 'months')],
+          '3 Meses' : [moment(), moment().add(3, 'months')],
+          '6 Meses': [moment(), moment().add(6, 'months')],
+          '1 Año': [moment(), moment().add(1, 'year')]
+        },
+        startDate: moment(),
+        endDate  : moment().moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+</script> --}}
 {{-- select 2 --}}
 <script>
   $(document).ready(function() {
@@ -719,12 +954,12 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [{
-            "targets": 7,
+            "targets": 8,
             "data": "SolResRespel",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";}
             },{
-            "targets": 8,
+            "targets": 9,
             "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
                 return "<a href='solicitud-residuo/" + data + "/edit' class='btn btn-block btn-warning'>Edit</a>";}
@@ -792,10 +1027,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 4,
-            "data": "PersSlug",
+            "targets": 6,
+            "data": "ID_MovAct",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                return "<a href='movimiento-activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
@@ -808,11 +1043,11 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 7,
-            "data": "PersSlug",
+          "columnDefs": [{
+            "targets": 5,
+            "data": "ID_ArtiProve",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                return "<a href='articulos-proveedor/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
@@ -859,13 +1094,21 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
+          // "columnDefs": [ {
+          //   "targets": 5,
+          //   "data": "RecSrc",
+          //   "render": function ( data, type, row, meta ) {
+          //       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
           "columnDefs": [ {
-            "targets": 5,
-            "data": "FK_RecSol",
+            "targets": 2,
+            "data": "SolResSlug",
             "render": function ( data, type, row, meta ) {
-                return "<a href='/solicitud-residuo/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-              }
-          }]
+                return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";}},
+          {"targets": 3,
+            "data": "SolResSlug",
+            "render": function ( data, type, row, meta ) {
+                return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";}}
+          ]
         });
       });
     </script>
@@ -896,9 +1139,7 @@ $(document).ready(function(){
             echo Auth::user()->UsRol;
           ?>";
       botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-      if (rol=='Programador') {
-        console.log(botoncito);
-      };
+      
     $(document).ready(function () {
       $('#sedes').DataTable({
           responsive: true,
@@ -958,9 +1199,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#generadores').DataTable({
               // pagingType: 'scrolling',
@@ -1015,9 +1254,7 @@ $(document).ready(function(){
                 echo Auth::user()->UsRol;
               ?>";
           botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-          if (rol=='Programador') {
-            console.log(botoncito);
-          };
+          
         $(document).ready(function () {
           $('#sgeneradores').DataTable({
               // pagingType: 'scrolling',
@@ -1133,3 +1370,10 @@ fieldset[disabled] .form-control {
 fieldset[disabled] .form-control {
   cursor: not-allowed
 }  --}}
+
+{{-- script para evitar el envio multiple de formularios --}}
+<script>
+  $(':submit').click(function() {
+        $(this).attr('disabled','disabled');
+  });
+</script>
