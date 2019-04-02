@@ -1017,10 +1017,10 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 4,
-            "data": "PersSlug",
+            "targets": 6,
+            "data": "ID_MovAct",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                return "<a href='movimiento-activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
@@ -1033,11 +1033,11 @@ $(document).ready(function(){
           "autoWidth": true,
           "keys": true,
           "responsive": true,
-          "columnDefs": [ {
-            "targets": 7,
-            "data": "PersSlug",
+          "columnDefs": [{
+            "targets": 5,
+            "data": "ID_ArtiProve",
             "render": function ( data, type, row, meta ) {
-                return "<a href='#" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                return "<a href='articulos-proveedor/" + data + "/edit' class='btn btn-warning'>Edit</a>";
               }
           }]
         });
