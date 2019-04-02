@@ -96,7 +96,7 @@ Articulos por Proveedor
 								<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">
 									<div class="icheck form-group">
 										<label for="inputcheck">
-											Autorizar (Finaliza en Validacion)
+											Autorizar
 										</label>
 										<input id="inputcheck" type="checkbox" name="FK_AutorizedBy">
 									</div>
