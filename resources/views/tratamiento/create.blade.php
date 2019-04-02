@@ -69,19 +69,6 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <button class="btn-primary" id="addcheck">agregar check box</button>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="select3">Auditable</label>
-                                        <select class="form-control" id="select3" name="aditoria">
-                                             @foreach($residuos as $residuo)
-                                                <option value="{{$residuo->ID_Respel}}">{{$residuo->SedeName}} - {{$residuo->RespelName}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
                                     {{-- residuos adjuntables a la cotizacion --}}
                                     {{-- <div>
                                         <table id="RespelTable" class="table table-bordered table-striped">
