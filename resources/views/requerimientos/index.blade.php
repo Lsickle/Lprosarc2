@@ -20,11 +20,14 @@
                 <tr>
                   <th>Cliente</th>
                   <th>Nombre del Residuo</th>
+                  {{-- <th>Tratamiento</th> --}}
+                  {{-- <th>Tarifa</th> --}}
                   <th>Auditable</th>
                   <th>Tipo de Auditoria</th>
                   <th>Creado</th>
                   <th>Actualizado</th>
                   <th>Requerimiento</th>
+                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -44,6 +47,8 @@
                 <tr>
                   <td>{{$Requerimiento->CliName}}</td>
                   <td>{{$Requerimiento->RespelName}}</td>
+                  {{-- <td>{{$Requerimiento->TratName}}</td> --}}
+                  {{-- <td>{{$Requerimiento->ID_Tarifa}}</td> --}}
 
                   @if ($Requerimiento->ReqAuditoriaTipo == 'Virtual' || $Requerimiento->ReqAuditoriaTipo == 'Presencial')
                       <td>Si</td>
@@ -53,6 +58,7 @@
                   <td>{{$Requerimiento->ReqAuditoriaTipo}}</td>
                   <td>{{$Requerimiento->created_at}}</td>
                   <td>{{$Requerimiento->updated_at}}</td>
+                  <td>{{$Requerimiento->ReqSlug}}</td>
                   <td>{{$Requerimiento->ReqSlug}}</td>
                 </tr>
                 @endforeach

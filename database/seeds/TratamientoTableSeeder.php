@@ -13,7 +13,7 @@ class TratamientoTableSeeder extends Seeder
     public function run()
     {
         $tratamiento = new Tratamiento();
-        $tratamiento->TratName = "Incineracion";
+        $tratamiento->TratName = "Incineración";
         $tratamiento->TratTipo = "0";
         $tratamiento->FK_TratProv = "1";
         $tratamiento->TratPretratamiento = "mezcla";
@@ -49,14 +49,12 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->save();
 
         $tratamiento = new Tratamiento();
-        $tratamiento->TratName = "incineracion";
+        $tratamiento->TratName = "incineración";
         $tratamiento->TratTipo = "1";
         $tratamiento->FK_TratProv = "1";
         $tratamiento->TratPretratamiento = "solidificacion";
         $tratamiento->FK_TratRespel = "3";
         $tratamiento->TratDelete = "0";
         $tratamiento->save();
-
-        
     }
 }
