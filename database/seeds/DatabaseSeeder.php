@@ -31,6 +31,7 @@ use App\Recurso;
 use App\Certificado;
 use App\ArticuloPorProveedor;
 use App\MovimientoActivo;
+use App\Tarifa;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,6 +61,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicProgTableSeeder::class);
         $this->call(OrdenCompraTableSeeder::class);
         $this->call(QuotationTableSeeder::class);
+        $this->call(TarifasTableSeder::class);
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);

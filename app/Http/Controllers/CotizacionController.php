@@ -112,7 +112,7 @@ class CotizacionController extends Controller
     {
         $cotizacion = Cotizacion::where('ID_Coti', $id)->first();
         
-        $sede = Sede::where('ID_Sede', $cotizacion->FK_CotiSede)->first();;
+        $sede = Sede::where('ID_Sede', $cotizacion->FK_CotiSede)->first();
         
         $residuos = Respel::where('FK_RespelCoti', $id)->get();  
 

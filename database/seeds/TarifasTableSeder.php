@@ -25,7 +25,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaPesoinicial3 = '501';
         $tarifa->TarifaPesofinal3 = '10000';
         $tarifa->TarifaPrecio3 = '3000';
-        $tarifa->FK_TarifaTrat = '1';
+        $tarifa->TarifaDelete = 0;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -41,7 +41,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaPesoinicial3 = '501';
         $tarifa->TarifaPesofinal3 = '20000';
         $tarifa->TarifaPrecio3 = '3000';
-        $tarifa->FK_TarifaTrat = '2';
+        $tarifa->TarifaDelete = 0;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -57,7 +57,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaPesoinicial3 = '5001';
         $tarifa->TarifaPesofinal3 = '20000';
         $tarifa->TarifaPrecio3 = '1200';
-        $tarifa->FK_TarifaTrat = '3';
+        $tarifa->TarifaDelete = 0;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -73,7 +73,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaPesoinicial3 = '5001';
         $tarifa->TarifaPesofinal3 = '100000';
         $tarifa->TarifaPrecio3 = '3000';
-        $tarifa->FK_TarifaTrat = '5';
+        $tarifa->TarifaDelete = 0;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -89,7 +89,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaPesoinicial3 = '501';
         $tarifa->TarifaPesofinal3 = '10000';
         $tarifa->TarifaPrecio3 = '4000';
-        $tarifa->FK_TarifaTrat = '4';
+        $tarifa->TarifaDelete = 0;
         $tarifa->save();
     }
 }

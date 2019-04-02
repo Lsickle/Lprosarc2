@@ -39,7 +39,11 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user01";
         $Requerimiento->FK_ReqRespel = "5";
+<<<<<<< HEAD
         $Requerimiento->FK_ReqTrata = "5";
+=======
+        $Requerimiento->FK_ReqTarifa = "5";
+>>>>>>> b28212de5c2584025665cf46d3e9b5206b7e1677
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -69,7 +73,11 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user02";
         $Requerimiento->FK_ReqRespel = "3";
+<<<<<<< HEAD
         $Requerimiento->FK_ReqTrata = "4";
+=======
+        $Requerimiento->FK_ReqTarifa = "3";
+>>>>>>> b28212de5c2584025665cf46d3e9b5206b7e1677
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -99,7 +107,11 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user03";
         $Requerimiento->FK_ReqRespel = "1";
+<<<<<<< HEAD
         $Requerimiento->FK_ReqTrata = "2";
+=======
+        $Requerimiento->FK_ReqTarifa = "1";
+>>>>>>> b28212de5c2584025665cf46d3e9b5206b7e1677
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -129,7 +141,11 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user04";
         $Requerimiento->FK_ReqRespel = "2";
+<<<<<<< HEAD
         $Requerimiento->FK_ReqTrata = "3";
+=======
+        $Requerimiento->FK_ReqTarifa = "2";
+>>>>>>> b28212de5c2584025665cf46d3e9b5206b7e1677
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -159,7 +175,11 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user05";
         $Requerimiento->FK_ReqRespel = "4";      
+<<<<<<< HEAD
         $Requerimiento->FK_ReqTrata = "1";      
+=======
+        $Requerimiento->FK_ReqTarifa = "4";     
+>>>>>>> b28212de5c2584025665cf46d3e9b5206b7e1677
         $Requerimiento->save(); 
     }
 }
