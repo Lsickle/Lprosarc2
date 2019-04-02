@@ -14,8 +14,8 @@ class AddForeignPersonalToProgvehiculosTable extends Migration
     public function up()
     {
         Schema::table('progvehiculos', function (Blueprint $table) {
-            $table->unsignedInteger('FK_ProgConductor');
-            $table->unsignedInteger('FK_ProgAyudante');
+            $table->unsignedInteger('FK_ProgConductor')->nullable();
+            $table->unsignedInteger('FK_ProgAyudante')->nullable();
             $table->foreign('FK_ProgConductor')->references('ID_Pers')->on('personals');
             $table->foreign('FK_ProgAyudante')->references('ID_Pers')->on('personals');
         });

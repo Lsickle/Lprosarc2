@@ -14,7 +14,7 @@ class AddForeignVehisedeToVehiculosTable extends Migration
     public function up()
     {
         Schema::table('vehiculos', function (Blueprint $table) {
-            $table->unsignedInteger('FK_VehiSede');
+            $table->unsignedInteger('FK_VehiSede')->nullable();
             $table->foreign('FK_VehiSede')->references('ID_Sede')->on('sedes');
         });
     }

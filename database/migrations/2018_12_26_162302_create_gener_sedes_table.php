@@ -23,13 +23,12 @@ class CreateGenerSedesTable extends Migration
             $table->unsignedSmallInteger('GSedeExt2')->nullable();
             $table->string('GSedeEmail', 128);
             $table->string('GSedeCelular', 32)->nullable();
-            $table->unsignedInteger('FK_GSede');
-            $table->unsignedInteger('FK_GSedeMun')->nullable();
-            $table->string('GSedeSlug')->unique();
-
-            $table->foreign('FK_GSede')->references('ID_Gener')->on('generadors');
-            $table->foreign('FK_GSedeMun')->references('ID_Mun')->on('municipios');
             $table->timestamps();
+            $table->string('GSedeSlug')->unique();
+            $table->unsignedInteger('FK_GSede')->nullable();
+            $table->unsignedInteger('FK_GSedeMun')->nullable();
+            $table->foreign('FK_GSede')->references('ID_Gener')->on('generadors')->onDelete('cascade');
+            $table->foreign('FK_GSedeMun')->references('ID_Mun')->on('municipios');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

@@ -14,6 +14,17 @@ class CreatePersonalsTable extends Migration
     public function up()
     {
         Schema::create('personals', function (Blueprint $table) {
+
+
+
+
+// Añadir emali
+
+
+
+
+
+
             $table->increments('ID_Pers')->unique();
             $table->boolean('PersType');
             $table->string('PersDocType',6);//Tipo de datos CC CE NIT RUT
@@ -33,10 +44,13 @@ class CreatePersonalsTable extends Migration
             $table->string('PersBankAccaunt',64)->nullable();
             $table->date('PersIngreso')->nullable();
             $table->date('PersSalida')->nullable();
-            $table->string('PersSlug')->unique();
-            $table->unsignedInteger('FK_PersCargo');
-            $table->foreign('FK_PersCargo')->references('ID_Carg')->on('cargos');
             $table->timestamps();
+            $table->string('PersSlug')->unique();
+            $table->unsignedInteger('FK_PersCargo')->nullable();
+            $table->foreign('FK_PersCargo')->references('ID_Carg')->on('cargos')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

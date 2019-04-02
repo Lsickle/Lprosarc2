@@ -23,12 +23,15 @@ class CreateSedesTable extends Migration
             $table->unsignedSmallInteger('SedeExt2')->nullable();
             $table->string('SedeEmail', 128);
             $table->string('SedeCelular', 32)->nullable();
-            $table->unsignedInteger('FK_SedeCli');
-            $table->unsignedInteger('FK_SedeMun')->nullable();
-            $table->string('SedeSlug')->unique();
-            $table->foreign('FK_SedeCli')->references('ID_Cli')->on('clientes');
-            $table->foreign('FK_SedeMun')->references('ID_Mun')->on('municipios');
             $table->timestamps();  
+            $table->string('SedeSlug')->unique();
+            $table->unsignedInteger('FK_SedeCli')->nullable();
+            $table->unsignedInteger('FK_SedeMun')->nullable();
+            $table->foreign('FK_SedeCli')->references('ID_Cli')->on('clientes')->onDelete('cascade');
+            $table->foreign('FK_SedeMun')->references('ID_Mun')->on('municipios');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

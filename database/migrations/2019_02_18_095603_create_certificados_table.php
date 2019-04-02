@@ -24,10 +24,12 @@ class CreateCertificadosTable extends Migration
             $table->boolean('CertAuthJl');
             $table->boolean('CertAuthDp');
             $table->string('CertAnexo');
-            $table->unsignedInteger('FK_CertSolser');
-
-            $table->foreign('FK_CertSolser')->references('ID_SolSer')->on('solicitud_servicios');
             $table->timestamps();
+            $table->unsignedInteger('FK_CertSolser')->nullable();
+            $table->foreign('FK_CertSolser')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

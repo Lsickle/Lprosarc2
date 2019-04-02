@@ -17,14 +17,16 @@ class CreateTrainingPersonalsTable extends Migration
             $table->increments('ID_CapPers');
             $table->date('CapaPersDate');
             $table->date('CapaPersExpire');
-            $table->unsignedInteger('FK_Pers');
-            $table->unsignedInteger('FK_Sede');
-            $table->unsignedInteger('FK_Capa');
-            
-            $table->foreign('FK_Sede')->references('ID_Sede')->on('sedes');
-            $table->foreign('FK_Capa')->references('ID_Capa')->on('trainings');
-            $table->foreign('FK_Pers')->references('ID_Pers')->on('personals');
             $table->timestamps();
+            $table->unsignedInteger('FK_Pers')->nullable();
+            $table->unsignedInteger('FK_Sede')->nullable();
+            $table->unsignedInteger('FK_Capa')->nullable();
+            $table->foreign('FK_Sede')->references('ID_Sede')->on('sedes')->onDelete('cascade');
+            $table->foreign('FK_Capa')->references('ID_Capa')->on('trainings')->onDelete('cascade');
+            $table->foreign('FK_Pers')->references('ID_Pers')->on('personals')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

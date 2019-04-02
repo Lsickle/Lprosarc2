@@ -21,11 +21,10 @@ class CreateGeneradorsTable extends Migration
             $table->string('GenerCode', 32)->nullable();
             $table->string('GenerType', 32)->nullable();
             $table->boolean('GenerAuditable');
-            $table->unsignedInteger('FK_GenerCli');
             $table->timestamps();
             $table->string('GenerSlug')->unique();
-            
-            $table->foreign('FK_GenerCli')->references('ID_Sede')->on('sedes');
+            $table->unsignedInteger('FK_GenerCli')->nullable();
+            $table->foreign('FK_GenerCli')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

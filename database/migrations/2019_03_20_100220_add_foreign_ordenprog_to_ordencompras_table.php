@@ -14,7 +14,7 @@ class AddForeignOrdenprogToOrdencomprasTable extends Migration
     public function up()
     {
         Schema::table('ordencompras', function (Blueprint $table) {
-            $table->unsignedInteger('FK_OrdenProg');
+            $table->unsignedInteger('FK_OrdenProg')->nullable();
             $table->foreign('FK_OrdenProg')->references('ID_ProgVeh')->on('ProgVehiculos');
         });
     }

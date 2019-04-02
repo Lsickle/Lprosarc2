@@ -24,9 +24,12 @@ class CreateInventarioTechnologiesTable extends Migration
             $table->string('TecnAccessory1',64)->nullable();
             $table->string('TecnAccessory2',64)->nullable();
             $table->string('Tecnobserv')->nullable();
-            $table->unsignedInteger('FK_TecnPerson');
-            $table->foreign('FK_TecnPerson')->references('Id_Pers')->on('personals');
             $table->timestamps();
+            $table->unsignedInteger('FK_TecnPerson')->nullable();
+            $table->foreign('FK_TecnPerson')->references('Id_Pers')->on('personals');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

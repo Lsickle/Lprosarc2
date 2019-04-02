@@ -17,10 +17,9 @@ class CreateTratamientosTable extends Migration
             $table->increments('ID_Trat')->unique();
             $table->string('TratName');
             $table->boolean('TratTipo');
-            $table->unsignedInteger('FK_TratProv');
             $table->timestamps();
-
-            $table->foreign('FK_TratProv')->references('ID_Sede')->on('sedes');
+            $table->unsignedInteger('FK_TratProv')->nullable();
+            $table->foreign('FK_TratProv')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

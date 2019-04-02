@@ -18,10 +18,12 @@ class CreateCargosTable extends Migration
             $table->string('CargName',128);
             $table->bigInteger('CargSalary');
             $table->string('CargGrade',128);
-            $table->unsignedInteger('CargArea');
-            
-            $table->foreign('CargArea')->references('ID_Area')->on('areas');
             $table->timestamps();
+            $table->unsignedInteger('CargArea')->nullable();
+            $table->foreign('CargArea')->references('ID_Area')->on('areas');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

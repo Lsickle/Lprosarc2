@@ -14,7 +14,7 @@ class AddForeignOrdencreatedbyToOrdencomprasTable extends Migration
     public function up()
     {
         Schema::table('ordencompras', function (Blueprint $table) {
-            $table->unsignedInteger('FK_OrdenCreateBy');
+            $table->unsignedInteger('FK_OrdenCreateBy')->nullable();
             $table->foreign('FK_OrdenCreateBy')->references('id')->on('Users');
         });
     }
