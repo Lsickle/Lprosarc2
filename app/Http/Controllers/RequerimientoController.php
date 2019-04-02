@@ -20,7 +20,7 @@ class RequerimientoController extends Controller
      */
     public function index(){
         $Requerimientos = DB::table('requerimientos')
-            // ->join('tarifas', 'tarifas.ID_Tarifa', '=', 'requerimientos.FK_ReqTarifa')
+            // ->rightjoin('tarifas', 'tarifas.ID_Tarifa', '=', 'requerimientos.FK_ReqTarifa')
             // ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'requerimientos.FK_ReqTrata')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
