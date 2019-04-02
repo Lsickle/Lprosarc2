@@ -9,6 +9,7 @@ use App\Requerimiento;
 use App\Respel;
 use App\audit;
 use App\Tratamiento;
+use App\Tarifa;
 
 class RequerimientoController extends Controller
 {
@@ -19,12 +20,14 @@ class RequerimientoController extends Controller
      */
     public function index(){
         $Requerimientos = DB::table('requerimientos')
-            ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'requerimientos.FK_ReqTrata')
+            // ->join('tarifas', 'tarifas.ID_Tarifa', '=', 'requerimientos.FK_ReqTarifa')
+            // ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'requerimientos.FK_ReqTrata')
             ->join('respels', 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName', 'tratamientos.TratName')
+            // ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName', 'tratamientos.TratName', 'tarifas.ID_Tarifa')
+            ->select('requerimientos.*', 'clientes.CliName', 'respels.RespelName')
             ->get();
 
         return view('requerimientos.index', compact('Requerimientos'));
@@ -77,7 +80,10 @@ class RequerimientoController extends Controller
         $Tratamiento = Tratamiento::select('TratName')->where('ID_Trat', $Requerimientos->FK_ReqTrata)->first();
         $Tratamientos = Tratamiento::select('ID_Trat', 'TratName')->where('ID_Trat', '<>', $Requerimientos->FK_ReqTrata)->get();
 
-        return view('requerimientos.edit', compact('Requerimientos', 'Tratamientos', 'Tratamiento'));  
+        $Tarifa = Tarifa::where('ID_Tarifa', $Requerimientos->FK_ReqTarifa)->first();
+        $Tarifas = Tarifa::where('ID_Tarifa', '<>', $Requerimientos->FK_ReqTarifa)->get();
+
+        return view('requerimientos.edit', compact('Requerimientos', 'Tratamientos', 'Tratamiento', 'Tarifas', 'Tarifa'));  
     }
 
     /**
@@ -119,6 +125,7 @@ class RequerimientoController extends Controller
         $Requerimiento->ReqCertiEspecial = $request->input('ReqCertiEspecial');
         
         $Requerimiento->FK_ReqTrata = $request->input('FK_ReqTrata');
+        $Requerimiento->FK_ReqTarifa = $request->input('FK_ReqTarifa');
         $Requerimiento->save();
 
         $log = new audit();

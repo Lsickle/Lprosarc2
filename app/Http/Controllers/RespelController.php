@@ -133,6 +133,7 @@ class RespelController extends Controller
         $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('YmdHis');
         $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
         $Requerimiento->FK_ReqTrata = NULL;
+        $Requerimiento->FK_ReqTarifa = NULL;
         $Requerimiento->save();
 
         return redirect()->route('respels.index');
