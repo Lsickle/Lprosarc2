@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\audit;
 use App\Tarifa;
+use App\Sede;
 use Illuminate\Http\Request;
 
 class TarifaController extends Controller
@@ -75,24 +76,35 @@ class TarifaController extends Controller
     public function show(Tarifa $tarifa)
     {   
         if(Auth::user()->UsRol === "Programador"){
-            $residuos = DB::table('tarifas')
+            $Tarifaactual = DB::table('tarifas')
+                ->join('requerimientos', 'requerimientos.FK_ReqTarifa', '=', 'tarifas.ID_Tarifa')
+                ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+                ->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+                ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
                 ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
-                ->get();
+                ->where('requerimientos.FK_ReqTarifa', $tarifa->ID_Tarifa)
+                ->select('tarifas.*', 'requerimientos.*', 'tratamientos.*', 'respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+                ->first();
         }
         else{
-            // $cotizaciones = DB::table('cotizacions')
-            //     ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
-            //     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            //     ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-            //     ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-            //     ->select('cotizacions.*', 'sedes.*', 'clientes.*', 'clientes.*','municipios.*', 'departamentos.*')
-            //     ->get();
+            $Tarifaactual = DB::table('tarifas')
+                ->join('requerimientos', 'requerimientos.FK_ReqTarifa', '=', 'tarifas.ID_Tarifa')
+                ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+                ->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+                ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
+                ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->where('requerimientos.FK_ReqTarifa', $tarifa->ID_Tarifa)
+                ->select('tarifas.*', 'requerimientos.*', 'tratamientos.*', 'respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+                ->first();
         }
-        return view('tarifas.create', compact('tarifa'));
+
+        return view('tarifas.show', compact('Tarifaactual'));
     }
 
     /**

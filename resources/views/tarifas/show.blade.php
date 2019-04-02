@@ -19,9 +19,9 @@
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
 
-              <h3 class="profile-username text-center">{{$sede->SedeName}}</h3>
+              <h3 class="profile-username text-center">{{$Tarifaactual->SedeName}}</h3>
 
-              <p class="text-muted text-center">{{$sede->SedeAddress}}</p>
+              <p class="text-muted text-center">{{$Tarifaactual->SedeAddress}}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -35,14 +35,14 @@
                 </li>
               </ul>
 
-            <a href="/tarifas/{{$tarifa->ID_Tarifa}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+            <a href="/tarifas/{{$Tarifaactual->ID_Tarifa}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
                         <br>
 {{--             <form action="/sclientes/create" class="form-group" method="POST">
               @csrf
                 <input type="text" name="CliSlug" value="{{$cliente->CliSlug}}" hidden="true">
                 <button type="submit" class="btn btn-primary btn-block">Agregar Sede</button>
             </form> --}}
-                <form action="/tarifas/{{$tarifa->ID_Tarifa}}" class="form-group" method="POST">
+                <form action="/tarifas/{{$Tarifaactual->ID_Tarifa}}" class="form-group" method="POST">
                     @csrf
               @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-block">Borrar</button>
