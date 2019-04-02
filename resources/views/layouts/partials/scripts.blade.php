@@ -1362,8 +1362,58 @@ fieldset[disabled] .form-control {
 }  --}}
 
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
+{{-- <script>
   $(':submit').click(function() {
         $(this).attr('disabled','disabled');
   });
-</script>
+</script> --}}
+
+@if(
+  Route::currentRouteName()=='tarifas.create'||
+  Route::currentRouteName()=='tarifas.index'
+)
+  <script>
+    $(document).ready(function() {
+
+      /*var rol defino el rol del usuario*/
+      var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+      /*var botoncito define los botones que se usaran si el usuario es programador*/
+      var botoncito = (rol=='Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+      /*funcion para renderizar la tabla de cotizacion.index*/
+      $('#tarifasTable').DataTable({
+        responsive: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+          botoncito, {
+            extend: 'collection',
+            text: 'Selector',
+            buttons: [ 'selectRows', 'selectCells' ]
+          }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true,
+        columnDefs: [ {
+          "targets": 10,
+          "data": "ID_Tarifa",
+          "render": function ( data, type, row, meta ) {
+            return "<a method='get' href='/tarifas/" + data + "/' class='btn btn-primary btn-block'>Ver mas</a>";
+          }  
+        } ]
+      });
+
+      /*funcion para resaltar las busquedas*/
+      var table = $('#tarifasTable').DataTable();
+
+      table.on( 'draw', function () {
+        var body = $( table.table().body());
+        body.unhighlight();
+        body.highlight( table.search() );  
+      });
+    }); 
+  </script>
+@endif
