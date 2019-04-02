@@ -18,7 +18,6 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResCateConciliado = '65';
         $Residuo->SolResCateTratado = '345';
         $Residuo->FK_SolResSolSer = '2';
-        $Residuo->FK_SolResRespel = '3';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user01';
         $Residuo->SolResTipoCate = 'Kg';
@@ -32,7 +31,6 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResCateConciliado = '461278';
         $Residuo->SolResCateTratado = '32567';
         $Residuo->FK_SolResSolSer = '4';
-        $Residuo->FK_SolResRespel = '2';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user02';
         $Residuo->SolResTipoCate = 'Kg';
@@ -46,7 +44,6 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResCateConciliado = '1362';
         $Residuo->SolResCateTratado = '6732';
         $Residuo->FK_SolResSolSer = '5';
-        $Residuo->FK_SolResRespel = '1';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user03';
         $Residuo->SolResTipoCate = 'Kg';
@@ -60,7 +57,6 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResCateConciliado = '7814';
         $Residuo->SolResCateTratado = '6712';
         $Residuo->FK_SolResSolSer = '1';
-        $Residuo->FK_SolResRespel = '4';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user04';
         $Residuo->SolResTipoCate = 'Kg';
@@ -74,7 +70,6 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->SolResCateConciliado = '66827';
         $Residuo->SolResCateTratado = '6354';
         $Residuo->FK_SolResSolSer = '3';
-        $Residuo->FK_SolResRespel = '5';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = 'user05';
         $Residuo->SolResTipoCate = 'Kg';

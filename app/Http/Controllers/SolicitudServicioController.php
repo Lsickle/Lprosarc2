@@ -66,11 +66,11 @@ class SolicitudServicioController extends Controller
         $Respels = DB::table('respels')
             ->select('ID_Respel', 'RespelName')
             ->get();
-        $Generadors = DB::table('generadors')
-            ->select('ID_Gener', 'GenerName')
+        $SGeneradors = DB::table('gener_sedes')
+            ->select('ID_GSede', 'GSedeName')
             ->get();
         $Personals = Personal::all();
-        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'Generadors'));
+        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'SGeneradors'));
     }
 
     /**
@@ -81,11 +81,12 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
         $SolicitudServicio = new SolicitudServicio();
         $SolicitudServicio->SolSerStatus = 'Pendiente';
         $SolicitudServicio->SolSerTipo = $request->input('SolSerTipo');
-        $SolicitudServicio->SolSerAuditable = $request->input('SolSerAuditable');
+        if ($request->input('SolSerAuditable')) {
+            $SolicitudServicio->SolSerAuditable = 1;
+        }
         $SolicitudServicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
         $SolicitudServicio->SolSerConducExter = $request->input('SolSerConducExter');
         $SolicitudServicio->SolSerVehicExter = $request->input('SolSerVehicExter');
@@ -94,110 +95,94 @@ class SolicitudServicioController extends Controller
         $SolicitudServicio->SolSerDelete = 0;
         $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
         $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
-        // $SolicitudServicio->save();
-        // return $SolicitudServicio;
-        $SolicitudResiduo = new SolicitudResiduo();
-        FK_SolResRg = DB::table('residuos_geners')
-            ->select('ID_SGenerRes')
-            ->where('FK_SGener', $request['Generador'][$x])
-            ->where('FK_Respel'. $request['Respel'][$x][$y])
-            ->get();
-
-
-$SolicitudResiduo->FK_SolResRg =
-$SolicitudResiduo->FK_SolResRespel =
-$SolicitudResiduo->SolResCateRecibido =
-$SolicitudResiduo->SolResDelete =
-$SolicitudResiduo->SolResSlug =
-$SolicitudResiduo->FK_SolResTratamiento =
-$SolicitudResiduo->FK_SolResSolSer =
-$SolicitudResiduo->SolResCateEnviado =
-$SolicitudResiduo->SolResFotoCargue =
-$SolicitudResiduo->SolResFotoDescargue =
-$SolicitudResiduo->SolResFotoPesaje =
-$SolicitudResiduo->SolResFotoReempacado =
-$SolicitudResiduo->SolResFotoMezclado =
-$SolicitudResiduo->SolResFotoDestruccion =
-$SolicitudResiduo->SolResVideoCargue =
-$SolicitudResiduo->SolResVideoDescargue =
-$SolicitudResiduo->SolResVideoPesaje =
-$SolicitudResiduo->SolResVideoReempacado =
-$SolicitudResiduo->SolResVideoMezclado =
-$SolicitudResiduo->SolResVideoDestruccion =
-$SolicitudResiduo->SolResAuditoria =
-$SolicitudResiduo->SolResAuditoriaTipo =
-$SolicitudResiduo->SolResDevolucion =
-$SolicitudResiduo->SolResDevolucionTipo =
-$SolicitudResiduo->SolResDatosPersonal =
-$SolicitudResiduo->SolResPlanillas =
-$SolicitudResiduo->SolResAlistamiento =
-$SolicitudResiduo->SolResCapacitacion =
-$SolicitudResiduo->SolResBascula =
-$SolicitudResiduo->SolResMasPerson =
-$SolicitudResiduo->SolResPlatform =
-$SolicitudResiduo->SolResCertiEspecial =
-$SolicitudResiduo->SolResTipoCate =
-
-$request['Generador'][];
-$request['Respel'][];
-$request['CateEnviado'][];
-$request['Tratamiento'][];
-$request['SolResAuditoriaTipo'][];
-$request['ReqAuditoriaTipo'][];
-$request['FotoCargue'][];
-$request['FotoDestruccion'][];
-$request['Alistamiento'][];
-$request['FotoDescargue'][];
-$request['FotoPesaje'][];
-$request['FotoReempacado'][];
-$request['FotoMezclado'][];
-$request['VideoCargue'][];
-$request['VideoDescargue'][];
-$request['VideoPesaje'][];
-$request['VideoReempacado'][];
-$request['VideoMezclado'][];
-$request['VideoDestruccion'][];
-$request['Devolucion'][];
-$request['Planillas'][];
-$request['Capacitacion'][];
-$request['Bascula'][];
-$request['Platform'][];
-$request['CertiEspecial'][];
-        $Prueba = '0) ';
-        $Generador = count($request['Generador']);
-        for ($i=0; $i < $Generador; $i++) { 
-            
+        $SolicitudServicio->save();
+        for ($x=1; $x <= count($request['SGenerador']); $x++) {
+            for ($y=0; $y < count($request['Respel'][$x]); $y++) {
+                $SolicitudResiduo = new SolicitudResiduo();
+                $FK_SolResRg = DB::table('residuos_geners')
+                    ->select('ID_SGenerRes')
+                    ->where('FK_SGener', $request['SGenerador'][$x])
+                    ->where('FK_Respel', $request['Respel'][$x][$y])
+                    ->get();
+                $SolicitudResiduo->SolResCateEnviado = $request['CateEnviado'][$x][$y];
+                $SolicitudResiduo->SolResCateRecibido = 0;
+                $SolicitudResiduo->SolResDelete = 0;
+                $SolicitudResiduo->SolResSlug = now()."solicitud".$request['Respel'][$x][$y]."residuo";
+                $SolicitudResiduo->FK_SolResSolSer = $SolicitudServicio->ID_SolSer;
+                $SolicitudResiduo->FK_SolResTratamiento = $request['Tratamiento'][$x][$y];
+                foreach ($FK_SolResRg as $FK_SolRg) {
+                    $SolicitudResiduo->FK_SolResRg = $FK_SolRg->ID_SGenerRes;
+                }
+                if(isset($request['FotoCargue'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoCargue = 1;
+                }
+                if(isset($request['FotoDescargue'][$x][$y])) {
+                    $SolicitudResiduo->SolResFotoDescargue = 1;
+                }
+                if(isset($request['FotoPesaje'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoPesaje = 1;
+                }
+                if(isset($request['FotoReempacado'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoReempacado = 1;
+                }
+                if(isset($request['FotoMezclado'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoMezclado = 1;
+                }
+                if(isset($request['FotoDestruccion'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoDestruccion = 1;
+                }
+                if(isset($request['VideoCargue'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoCargue = 1;
+                }
+                if(isset($request['VideoDescargue'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoDescargue = 1;
+                }
+                if(isset($request['VideoPesaje'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoPesaje = 1;
+                }
+                if(isset($request['VideoReempacado'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoReempacado = 1;
+                }
+                if(isset($request['VideoMezclado'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoMezclado = 1;
+                }
+                if(isset($request['VideoDestruccion'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoDestruccion = 1;
+                }
+                if(isset($request['Devolucion'][$x][$y])){
+                    $SolicitudResiduo->SolResDevolucion = 1;
+                }
+                if(isset($request['Planillas'][$x][$y])){
+                    $SolicitudResiduo->SolResPlanillas = 1;
+                }
+                if(isset($request['Alistamiento'][$x][$y])){
+                    $SolicitudResiduo->SolResAlistamiento = 1;
+                }
+                if(isset($request['Capacitacion'][$x][$y])){
+                    $SolicitudResiduo->SolResCapacitacion = 1;
+                }
+                if(isset($request['Bascula'][$x][$y])){
+                    $SolicitudResiduo->SolResBascula = 1;
+                }
+                if(isset($request['Platform'][$x][$y])){
+                    $SolicitudResiduo->SolResPlatform = 1;
+                }
+                if(isset($request['CertiEspecial'][$x][$y])){
+                    $SolicitudResiduo->SolResCertiEspecial = 1;
+                }
+                $SolicitudResiduo->SolResTipoCate = $request['TipoCate'][$x][$y];
+                $SolicitudResiduo->SolResAuditoria = $SolicitudServicio->SolSerAuditable;
+                $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'][$x][$y];
+                $SolicitudResiduo->save();
+            }
         }
-        return $Prueba;
-        // return $Generador;
-        // return $request['desRespel'][0];
-        $data = $request->input('Respel');
-        $prueba = json_encode($data);
-        return $data;
-
-
-
-        $auditable = $request->input('SolSerAuditable');
-        $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = "Pendiente";
-        $Servicio->SolSerTipo = $request->input('SolSerTipo');
-        if($auditable){
-            $Servicio->SolSerAuditable = 1;
-        }
-        else{
-            $Servicio->SolSerAuditable = 0;
-        }
-        $Servicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
-        $Servicio->SolSerConducExter = $request->input('SolSerConducExter');
-        $Servicio->SolSerVehicExter = $request->input('SolSerVehicExter');
-        $Servicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
-        $Servicio->SolSerSlug = 'Slug'.date('YmdHis').$request->input('FK_SolSerCliente');
-        $Servicio->SolSerDelete = 0;
-        $Servicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
-        $Servicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
-        $Servicio->save();
-        return redirect()->route('solicitud-residuo.create')->compact('$Servicio->ID_SolSer');
-        // return $Servicio;
+// SGener   Respel
+//  1-2       1
+//  1-1       3
+//  2-5       2
+//  1-3       5
+//  2-4       4
+        return redirect()->route('solicitud-servicio.index');
     }
 
     /**

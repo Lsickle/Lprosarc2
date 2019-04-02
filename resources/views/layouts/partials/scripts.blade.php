@@ -1372,8 +1372,8 @@ fieldset[disabled] .form-control {
 }  --}}
 
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
+{{-- <script>
   $(':submit').click(function() {
         $(this).attr('disabled','disabled');
   });
-</script>
+</script> --}}
