@@ -8,7 +8,7 @@ Cotizaciones
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Lista Cotizaciones</h3>
+					<h3 class="box-title">Cotizaciones</h3>
 					<a href="/cotizacion/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
 				<!-- /.box-header -->

@@ -17,7 +17,6 @@
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 @if(
-	Route::currentRouteName()=='cotizacion.create'||
 	Route::currentRouteName()=='cotizacion.index'
 )
 	<script>
@@ -57,11 +56,20 @@
 			/*funcion para resaltar las busquedas*/
 			var table = $('#cotizacionesTable').DataTable();
 
-			table.on( 'draw', function () {
+			table.on('draw', function () {
 				var body = $( table.table().body());
 				body.unhighlight();
-				body.highlight( table.search() );  
+				body.highlight( table.search() );
+        var width = $(window).width();
+
+        if ( width !== oldWindowWidth ) {
+          that._resize();
+          oldWindowWidth = width;
+        }
 			});
+      // function () {
+        
+      // }
 		}); 
 	</script>
 @endif
