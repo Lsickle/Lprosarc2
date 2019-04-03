@@ -8,7 +8,7 @@ class Generador extends Model
 {
     protected $table = 'generadors';
 
-	protected $fillable = ['GenerNit', 'GenerName', 'GenerShortname', 'GenerCode', 'GenerType','GenerAuditable', 'GenerSlug', 'GenerCli','FK_GenerCli'];
+	protected $fillable = ['GenerNit', 'GenerName', 'GenerShortname', 'GenerCode', 'GenerType','GenerSlug', 'GenerDelete','FK_GenerCli'];
 	
 	protected $primaryKey = 'ID_Gener';
 	/**

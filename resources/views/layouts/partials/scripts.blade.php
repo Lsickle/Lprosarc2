@@ -596,25 +596,16 @@ $(document).ready(function(){
 <!-- checkin imput -->
 <script>
   $(function () {
+    $('.inputcheck').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+<script>
+  $(function () {
     $('#inputcheck').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-<script>
-  $(function () {
-    $('#inputcheck1').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-<script>
-  $(function () {
-    $('#inputcheck2').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
@@ -669,6 +660,25 @@ $(document).ready(function(){
   });
 </script>
 
+<script >
+  $(".CalendarSwitch").bootstrapSwitch({
+    animate: true,
+    radioAllOff: true,
+    labelText: '<i class="fas fa-calendar-alt"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
+<script>
+  $(".CheckMin").bootstrapSwitch({
+    size: "mini",
+    animate: true,
+    radioAllOff: true,
+    labelText: '<i class="fas fa-calendar-alt"></i>',
+    onText: '<i class="fas fa-check"></i>', 
+    offText: '<i class="fas fa-times"></i>',
+  });
+</script>
 <!-- script para botones del listado de usuarios -->
 {{-- <script type="text/javascript">
   $('.radio1').on('switch-change', function () {
@@ -966,7 +976,7 @@ $(document).ready(function(){
           "keys": true,
           "responsive": true,
           "columnDefs": [ {
-            "targets": 9,
+            "targets": 6,
             "data": "SolSerSlug",
             "render": function ( data, type, row, meta ) {
               return "<a href='/solicitud-servicio/" + data + "' class='btn btn-success'>Ver</a>";
@@ -1300,73 +1310,12 @@ $(document).ready(function(){
 </script>
 @yield('NewScript')
 
-
-{{-- 
-.form-control {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s
-}
-
-.form-control:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
-}
-
-.form-control::-moz-placeholder {
-  color: #999;
-  opacity: 1
-}
-
-.form-control:-ms-input-placeholder {
-  color: #999
-}
-
-.form-control::-webkit-input-placeholder {
-  color: #999
-}
-
-.form-control::-ms-expand {
-  background-color: transparent;
-  border: 0
-}
-
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control {
-  background-color: #eee;
-  opacity: 1
-}
-
-.form-control[disabled],
-fieldset[disabled] .form-control {
-  cursor: not-allowed
-}  --}}
-
 {{-- script para evitar el envio multiple de formularios --}}
-{{-- <script>
+<script>
   $(':submit').click(function() {
         $(this).attr('disabled','disabled');
   });
-</script> --}}
+</script>
 
 @if(
   Route::currentRouteName()=='tarifas.create'||
@@ -1417,3 +1366,15 @@ fieldset[disabled] .form-control {
     }); 
   </script>
 @endif
+
+<script>
+  $(document).ready(function () {
+    $('.SolResTable').DataTable({
+      "scrollX": false,
+      "autoWidth": true,
+      "keys": true,
+      "responsive": true
+    });
+  });
+</script>
+=======

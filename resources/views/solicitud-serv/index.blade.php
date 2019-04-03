@@ -22,16 +22,11 @@ Servicios
             <thead>
                 <tr>
                   <th>Cliente</th>
-                  <th>Generador</th>
-                  <th>Residuo</th>
                   <th>Estado</th>
-                  <th>Auditable</th>
-                  <th>Frecuencia</th>
+                  <th>Persona Acargo</th>
+                  <th>Email</th>
+                  <th>Cantidad (Total)</th>
                   <th>Tipo del vehiculo</th>
-                  <th>Conductor Externo</th>
-                  <th>Placa del vehiculo externo</th>
-                  {{-- <th>Fecha creado</th> --}}
-                  {{-- <th>Fecha modificado</th> --}}
                   <th>Ver Más</th>
                 </tr>
                 
@@ -51,40 +46,15 @@ Servicios
               @foreach ($Servicios as $Servicio)
                     <tr>
                       <td>{{$Servicio->CliShortname}}</td>
-                      <td>{{$Servicio->GenerName}}</td>
-                      <td>{{$Servicio->RespelName}}</td>
                       <td>{{$Servicio->SolSerStatus}}</td>
-                      @if ($Servicio->SolSerAuditable == 1)
-                      <td>Si</td>                      
-                      @else
-                      <td>No</td>
-                      @endif
-                      <td>{{$Servicio->SolSerFrecuencia}} Días</td>
+                      <td>{{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
+                      <td>{{$Servicio->PersAddress}}(email)</td>
+                      <td>230 kg</td>
                       <td>{{$Servicio->SolSerTipo}}</td>
-                      <td>{{$Servicio->SolSerConducExter}}</td>
-                      <td>{{$Servicio->SolSerVehicExter}}</td>
-                      {{-- <td>{{$Servicio->created_at}}</td> --}}
-                      {{-- <td>{{$Servicio->updated_at}}</td> --}}
                       <td>{{$Servicio->SolSerSlug}}</td>
                     </tr>
                 @endforeach
-                  </tbody>
-            {{-- <tfoot>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Generador</th>
-                  <th>Residuo</th>
-                  <th>Estado</th>
-                  <th>Auditable</th>
-                  <th>Frecuencia</th>
-                  <th>Tipo del vehiculo</th>
-                  <th>Conductor Externo</th>
-                  <th>Placa del vehiculo externo</th>
-                  <th>Fecha creado</th>
-                  <th>Fecha modificado</th>
-                  <th>Editar</th>
-                </tr>
-            </tfoot> --}}
+            </tbody>
           </table>
         </div>
         <!-- /.box-body -->
