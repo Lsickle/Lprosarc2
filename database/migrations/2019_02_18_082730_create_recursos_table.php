@@ -18,10 +18,12 @@ class CreateRecursosTable extends Migration
             $table->string('RecName',128);
             $table->string('RecCarte',32);
             $table->string('RecTipo',32);
-            /*$table->string('RecRmSrc',64);*/
             $table->string('RecSrc',255);
             $table->string('RecFormat',32);
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

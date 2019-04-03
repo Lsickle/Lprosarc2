@@ -20,9 +20,12 @@ class CreateAssistancesTable extends Migration
             $table->dateTime('AsisSalida')->nullable();
             $table->integer('AsisNocturnas')->nullable();
             $table->boolean('AsisStatus');
-            $table->unsignedInteger('FK_AsisPers');
-            $table->foreign('FK_AsisPers')->references('ID_Pers')->on('personals');
             $table->timestamps();
+            $table->unsignedInteger('FK_AsisPers')->nullable();
+            $table->foreign('FK_AsisPers')->references('ID_Pers')->on('personals')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

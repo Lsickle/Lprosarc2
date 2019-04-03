@@ -15,17 +15,20 @@ class CreateProgramacionvehiculoTable extends Migration
     {
         Schema::create('ProgVehiculos', function (Blueprint $table) {
             $table->increments('ID_ProgVeh');
-            $table->timestamps();
             $table->date('ProgVehFecha');
             $table->integer('progVehKm')->nullable();
             $table->boolean('ProgVehTurno');
             $table->boolean('ProgVehtipo');
             $table->dateTime('ProgVehEntrada')->nullable();
             $table->dateTime('ProgVehSalida');
-            $table->unsignedInteger('FK_ProgVehiculo');
-            $table->unsignedInteger('FK_ProgMan');
-            $table->foreign('FK_ProgVehiculo')->references('ID_Vehic')->on('vehiculos');
-            $table->foreign('FK_ProgMan')->references('ID_Mv')->on('MantenVehics');
+            $table->timestamps();
+            $table->unsignedInteger('FK_ProgVehiculo')->nullable();
+            $table->unsignedInteger('FK_ProgMan')->nullable();
+            $table->foreign('FK_ProgVehiculo')->references('ID_Vehic')->on('vehiculos')->onDelete('cascade');
+            $table->foreign('FK_ProgMan')->references('ID_Mv')->on('MantenVehics')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

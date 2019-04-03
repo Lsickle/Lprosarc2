@@ -74,31 +74,32 @@ class RequerimientoTableSeeder extends Seeder
 
         $Requerimiento = new Requerimiento();
         $Requerimiento->ReqFotoCargue = NULL; 
-        $Requerimiento->ReqFotoDescargue =NULL; 
-        $Requerimiento->ReqFotoPesaje =NULL; 
-        $Requerimiento->ReqFotoReempacado =NULL; 
-        $Requerimiento->ReqFotoMezclado =NULL; 
+        $Requerimiento->ReqFotoDescargue = NULL; 
+        $Requerimiento->ReqFotoPesaje = NULL; 
+        $Requerimiento->ReqFotoReempacado = NULL; 
+        $Requerimiento->ReqFotoMezclado = NULL; 
         $Requerimiento->ReqFotoDestruccion = NULL; 
-        $Requerimiento->ReqVideoCargue =NULL; 
-        $Requerimiento->ReqVideoDescargue =NULL; 
-        $Requerimiento->ReqVideoPesaje =NULL; 
-        $Requerimiento->ReqVideoReempacado =NULL; 
-        $Requerimiento->ReqVideoMezclado =NULL; 
-        $Requerimiento->ReqVideoDestruccion =NULL; 
-        $Requerimiento->ReqAuditoria =NULL; 
+        $Requerimiento->ReqVideoCargue = NULL; 
+        $Requerimiento->ReqVideoDescargue = NULL; 
+        $Requerimiento->ReqVideoPesaje = NULL; 
+        $Requerimiento->ReqVideoReempacado = NULL; 
+        $Requerimiento->ReqVideoMezclado = NULL; 
+        $Requerimiento->ReqVideoDestruccion = NULL; 
+        $Requerimiento->ReqAuditoria = NULL; 
         $Requerimiento->ReqAuditoriaTipo = NULL; 
-        $Requerimiento->ReqDevolucion =NULL; 
-        $Requerimiento->ReqDevolucionTipo =NULL; 
-        $Requerimiento->ReqDatosPersonal =NULL; 
-        $Requerimiento->ReqPlanillas =NULL; 
+        $Requerimiento->ReqDevolucion = NULL; 
+        $Requerimiento->ReqDevolucionTipo = NULL; 
+        $Requerimiento->ReqDatosPersonal = NULL; 
+        $Requerimiento->ReqPlanillas = NULL; 
         $Requerimiento->ReqAlistamiento = NULL; 
-        $Requerimiento->ReqCapacitacion =NULL; 
-        $Requerimiento->ReqBascula =NULL; 
-        $Requerimiento->ReqMasPerson =NULL; 
+        $Requerimiento->ReqCapacitacion = NULL; 
+        $Requerimiento->ReqBascula = NULL; 
+        $Requerimiento->ReqMasPerson = NULL; 
         $Requerimiento->ReqPlatform = NULL; 
-        $Requerimiento->ReqCertiEspecial =NULL; 
+        $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user03";
         $Requerimiento->FK_ReqRespel = "1";
+        $Requerimiento->FK_ReqTrata = "2";
         $Requerimiento->FK_ReqTarifa = "1";
         $Requerimiento->save(); 
 
@@ -129,6 +130,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user04";
         $Requerimiento->FK_ReqRespel = "2";
+        $Requerimiento->FK_ReqTrata = "3";
         $Requerimiento->FK_ReqTarifa = "2";
         $Requerimiento->save(); 
 
@@ -159,6 +161,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user05";
         $Requerimiento->FK_ReqRespel = "4";      
+        $Requerimiento->FK_ReqTrata = "1";      
         $Requerimiento->FK_ReqTarifa = "4";     
         $Requerimiento->save(); 
     }

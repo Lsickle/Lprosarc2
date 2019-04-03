@@ -121,6 +121,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->prepend('<a href="#"><i class="fas fa-clipboard-list"></i> <span>Cotizaciones</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
             ->add(Link::toUrl('/cotizacion', '<i class="fas fa-list"></i> Lista'))
+            ->add(Link::toUrl('/tarifas', '<i class="fas fa-dollar-sign"></i> Tarifas'))
             ->addClass('treeview-menu')
         )
         /*PESTAÑA DE ACTIVOS*/

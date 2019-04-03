@@ -10,7 +10,7 @@ class Quotation extends Model
 
     protected $fillable = ['CotizNum', 'CotizStatus', 'CotizSubTotal'];
 
-    protected $primarykey = 'ID_Cotiz';
+    protected $primaryKey = 'ID_Cotiz';
 
     public function Sede(){
     	return $this->belongsTo('App\Sede', 'ID_Sede');

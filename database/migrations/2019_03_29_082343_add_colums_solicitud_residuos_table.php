@@ -14,8 +14,6 @@ class AddColumsSolicitudResiduosTable extends Migration
     public function up()
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
-            $table->unsignedInteger('FK_SolResTratamiento');
-            $table->unsignedInteger('FK_SolResRg');
             $table->boolean('SolResFotoCargue')->nullable();
             $table->boolean('SolResFotoDescargue')->nullable();
             $table->boolean('SolResFotoPesaje')->nullable();
@@ -41,8 +39,10 @@ class AddColumsSolicitudResiduosTable extends Migration
             $table->boolean('SolResPlatform')->nullable();
             $table->boolean('SolResCertiEspecial')->nullable();
             $table->string('SolResTipoCate');
-            $table->foreign('FK_SolResTratamiento')->references('ID_Trat')->on('tratamientos');
-            $table->foreign('FK_SolResRg')->references('ID_SGenerRes')->on('residuos_geners');
+            $table->unsignedInteger('FK_SolResTratamiento')->nullable();
+            $table->unsignedInteger('FK_SolResRg')->nullable();
+            $table->foreign('FK_SolResTratamiento')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
+            $table->foreign('FK_SolResRg')->references('ID_SGenerRes')->on('residuos_geners')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -83,8 +83,8 @@ class AddColumsSolicitudResiduosTable extends Migration
             $table->dropColumn('SolResPlatform');
             $table->dropColumn('SolResCertiEspecial');
             $table->dropColumn('SolResTipoCate');
-            $table->dropForeign(['FK_SolResTratamiento']);
-            $table->dropForeign(['FK_SolResRg']);
+            $table->dropForeign('solicitud_residuos_fk_solrestratamiento_foreign');
+            $table->dropForeign('solicitud_residuos_fk_solressolser_foreign');
         });
     }
 }

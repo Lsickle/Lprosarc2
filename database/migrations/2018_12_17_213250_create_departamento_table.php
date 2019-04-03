@@ -15,10 +15,13 @@ class CreateDepartamentoTable extends Migration
     {
         Schema::create('departamentos', function (Blueprint $table) {
             $table->increments('ID_Depart');
-            $table->timestamps();
             $table->string('DepartName');
             $table->string('DepartRegionName');
             $table->string('DepartCapitalName');
+            $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

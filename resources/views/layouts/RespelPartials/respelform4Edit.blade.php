@@ -130,5 +130,39 @@
                 @endif
             </label>
         </div>
+        <div class="col-md-12">
+            <label for="Trata">Tratamiento</label>
+            <select class="form-control" id="Trata" name="FK_ReqTrata" required="false">
+                @if ($Requerimientos->FK_ReqTrata !== NULL)
+                    <option value="{{$Requerimientos->FK_ReqTrata}}">{{$Tratamiento->TratName}}</option>
+                @foreach ($Tratamientos as $Tratamiento)
+                <option value="{{$Tratamiento->ID_Trat}}">{{$Tratamiento->TratName}}</option>
+                @endforeach
+                @else
+                <option value="">Sleccione...</option>
+                @foreach ($Tratamientos as $Tratamiento)
+                <option value="{{$Tratamiento->ID_Trat}}">{{$Tratamiento->TratName}}</option>
+                @endforeach
+                @endif
+                
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="tarifa">Tarifa</label>
+            <select class="form-control" id="tarifa" name="FK_ReqTarifa" required="false">
+                @if ($Requerimientos->FK_ReqTarifa !== NULL)
+                    <option value="{{$Requerimientos->FK_ReqTarifa}}">{{$Tarifa->ID_Tarifa}}</option>
+                    @foreach ($Tarifas as $Tarifa)
+                    <option value="{{$Tarifa->ID_Tarifa}}">{{$Tarifa->ID_Tarifa}}</option>
+                    @endforeach
+                @else
+                    <option value="">Seleccione...</option>
+                    @foreach ($Tarifas as $Tarifa)
+                    <option value="{{$Tarifa->ID_Tarifa}}">{{$Tarifa->ID_Tarifa}}</option>
+                    @endforeach
+                @endif
+                
+            </select>
+        </div>
     </div>
 </div>

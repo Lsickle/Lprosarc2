@@ -18,6 +18,9 @@ class CreateTrainingsTable extends Migration
             $table->string('CapaName',64);
             $table->boolean('CapaTipo');
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

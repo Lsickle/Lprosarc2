@@ -16,11 +16,14 @@ class CreateQrCodesTable extends Migration
         /*falta relacionar la tabla de envrespsel*/
         Schema::create('qr_codes', function (Blueprint $table) {
             $table->increments('ID_QrCode');
-            $table->timestamps();
             $table->integer('QrCodeEstiba'); /*numero de estiba de cada residuo(para los casos donde hay varias estibas por residuo)*/
             $table->string('QrCodeSrc',255); /*direccion donde esta guardado el codigo qr para su reimpresion*/
-            $table->unsignedInteger('FK_QrCodeSolSer');/*foranea para ingresar informacion en el codigo QR(cantidad pesada)*/
-            $table->foreign('FK_QrCodeSolSer')->references('ID_SolSer')->on('solicitud_servicios'); 
+            $table->timestamps();
+            $table->unsignedInteger('FK_QrCodeSolSer')->nullable();/*foranea para ingresar informacion en el codigo QR(cantidad pesada)*/
+            $table->foreign('FK_QrCodeSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci'; 
         });
     }
 

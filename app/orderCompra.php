@@ -10,7 +10,7 @@ class OrderCompra extends Model
 
     protected $fillable = ['OrdenNum', 'OrdenStatus', 'OrdenInvoice', 'OrdenRecibida', 'OrdenPagada', 'OrdenTotal', 'OrdenAutor'];
 
-    protected $primarykey = 'ID_Orden';
+    protected $primaryKey = 'ID_Orden';
 
     public function User(){
     	return $this->belongsTo('App\User', 'id');
