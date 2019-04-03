@@ -15,7 +15,7 @@ class AddForeingTratamientosToRequerimientosTable extends Migration
     {
         Schema::table('requerimientos', function (Blueprint $table) {
             $table->unsignedInteger('FK_ReqTrata')->nullable();
-            $table->foreign('FK_ReqTrata')->references('ID_Trat')->on('tratamientos');
+            $table->foreign('FK_ReqTrata')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
         });
     }
 

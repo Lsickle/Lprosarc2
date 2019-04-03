@@ -29,7 +29,7 @@ class CreateTarifasTable extends Migration
             $table->integer('TarifaPrecio3')->nullable();
             $table->boolean('TarifaDelete');
             $table->unsignedInteger('FK_TarifaTrat')->nullable();
-            $table->foreign('FK_TarifaTrat')->references('ID_Trat')->on('tratamientos');
+            $table->foreign('FK_TarifaTrat')->references('ID_Trat')->on('tratamientos')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

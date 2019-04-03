@@ -21,8 +21,8 @@ class CreateQuotationsTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('FK_CotizOrden')->nullable();
             $table->unsignedInteger('FK_CotizSede')->nullable();
-            $table->foreign('FK_CotizOrden')->references('ID_Sede')->on('Sedes');
-            $table->foreign('FK_CotizSede')->references('ID_Orden')->on('OrdenCompras');
+            $table->foreign('FK_CotizOrden')->references('ID_Orden')->on('OrdenCompras')->onDelete('cascade');
+            $table->foreign('FK_CotizSede')->references('ID_Sede')->on('Sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

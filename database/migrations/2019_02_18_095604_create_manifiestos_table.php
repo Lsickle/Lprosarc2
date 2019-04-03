@@ -26,7 +26,7 @@ class CreateManifiestosTable extends Migration
             $table->string('CertAnexo');
             $table->timestamps();
             $table->unsignedInteger('FK_ManiSolSer')->nullable();
-            $table->foreign('FK_ManiSolSer')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->foreign('FK_ManiSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

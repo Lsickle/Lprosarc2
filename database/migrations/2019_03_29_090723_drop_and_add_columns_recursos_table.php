@@ -18,7 +18,7 @@ class DropAndAddColumnsRecursosTable extends Migration
             $table->dropForeign('recursos_fk_resger_foreign');
             $table->dropColumn('FK_ResGer');
             $table->unsignedInteger('FK_RecSolRes')->nullable();
-            $table->foreign('FK_RecSolRes')->references('ID_SolRes')->on('solicitud_residuos');
+            $table->foreign('FK_RecSolRes')->references('ID_SolRes')->on('solicitud_residuos')->onDelete('cascade');
             });
     }
 

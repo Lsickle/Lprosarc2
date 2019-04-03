@@ -17,9 +17,9 @@ class AddColumsSolicitudResiduosTable extends Migration
             $table->unsignedInteger('FK_SolResTratamiento')->nullable();
             $table->unsignedInteger('FK_SolResReque')->nullable();
             $table->unsignedInteger('FK_SolResRg')->nullable();
-            $table->foreign('FK_SolResTratamiento')->references('ID_Trat')->on('tratamientos');
-            $table->foreign('FK_SolResReque')->references('ID_Req')->on('requerimientos');
-            $table->foreign('FK_SolResRg')->references('ID_SGenerRes')->on('residuos_geners');
+            $table->foreign('FK_SolResTratamiento')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
+            $table->foreign('FK_SolResReque')->references('ID_Req')->on('requerimientos')->onDelete('set null');
+            $table->foreign('FK_SolResRg')->references('ID_SGenerRes')->on('residuos_geners')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

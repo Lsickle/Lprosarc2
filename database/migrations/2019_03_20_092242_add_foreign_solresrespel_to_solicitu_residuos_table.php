@@ -15,9 +15,9 @@ class AddForeignSolresrespelToSolicituResiduosTable extends Migration
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
             $table->unsignedInteger('FK_SolResRespel')->nullable();
-            $table->foreign('FK_SolResRespel')->references('ID_Respel')->on('respels');
+            $table->foreign('FK_SolResRespel')->references('ID_Respel')->on('respels')->onDelete('set null');
             $table->unsignedInteger('FK_SolResSolSer')->nullable();
-            $table->foreign('FK_SolResSolSer')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->foreign('FK_SolResSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
         });
     }
 

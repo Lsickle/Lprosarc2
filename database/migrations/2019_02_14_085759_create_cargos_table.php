@@ -20,7 +20,7 @@ class CreateCargosTable extends Migration
             $table->string('CargGrade',128);
             $table->timestamps();
             $table->unsignedInteger('CargArea')->nullable();
-            $table->foreign('CargArea')->references('ID_Area')->on('areas');
+            $table->foreign('CargArea')->references('ID_Area')->on('areas')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
