@@ -19,6 +19,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = "persona";
         $personal->PersLastName = "asignada";
         $personal->PersCellphone = '5555555555';
+        $personal->PersEmail = NULL;
         $personal->FK_PersCargo = '1';
         $personal->PersSlug = "pers-sin-asignada-2019-02-20";
         $personal->PersDelete = 0;
@@ -32,6 +33,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = "Arley";
         $personal->PersLastName = "Gonzalez_Morato";
         $personal->PersCellphone = '3227392232';
+        $personal->PersEmail = "Duvan@prosarc.com.co";
         $personal->FK_PersCargo = '4';
         $personal->PersSlug = "pers-duvan-gonzalez_morato-2019-02-20";
         $personal->PersDelete = 0;
@@ -44,6 +46,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = "Luis";
         $personal->PersLastName = "De_la_Hoz";
         $personal->PersCellphone = '3223822393';
+        $personal->PersEmail = "Luis@prosarc.com.co";
         $personal->FK_PersCargo = '3';
         $personal->PersSlug = "pers-luis-de_la_hoz-2019-02-20";
         $personal->PersDelete = 0;
@@ -56,6 +59,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = "Andres";
         $personal->PersLastName = "Ramirez";
         $personal->PersCellphone = '3227396432';
+        $personal->PersEmail = "Ramirez@prosarc.com.co";
         $personal->FK_PersCargo = '5';
         $personal->PersSlug = "pers-andres-ramirez-2019-02-20";
         $personal->PersDelete = 0;
@@ -69,6 +73,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = "Andres";
         $personal->PersLastName = "Murcia";
         $personal->PersCellphone = '3221234232';
+        $personal->PersEmail = "Camilo@prosarc.com.co";
         $personal->FK_PersCargo = '1';
         $personal->PersSlug = "pers-camilo-murcia-2019-02-20";
         $personal->PersDelete = 0;
@@ -80,7 +85,9 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocNumber = '109765643';
         $personal->PersFirstName = "Maria";
         $personal->PersLastName = "Gonzalez_Sosa";
+        $personal->PersSecondName = NULL;
         $personal->PersCellphone = '3244562456';
+        $personal->PersEmail = "Maria@prosarc.com.co";
         $personal->FK_PersCargo = '2';
         $personal->PersSlug = "pers-maria-gonzalez_sosa-2019-02-20";
         $personal->PersDelete = 0;

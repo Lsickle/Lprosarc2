@@ -15,7 +15,7 @@ class AddForeignKeyToRequerimientosTable extends Migration
     {
         Schema::table('requerimientos', function (Blueprint $table) {
             $table->unsignedInteger('FK_ReqTarifa')->nullable();
-            $table->foreign('FK_ReqTarifa')->references('ID_Tarifa')->on('tarifas');
+            $table->foreign('FK_ReqTarifa')->references('ID_Tarifa')->on('tarifas')->onDelete('set null');
         });
     }
 

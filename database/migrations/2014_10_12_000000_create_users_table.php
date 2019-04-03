@@ -20,17 +20,17 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
             $table->string('UsType', 64)->nullable();
             $table->string('UsAvatar', 255)->nullable();
             $table->string('UsStatus', 32)->nullable();
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
             $table->string('UsSlug')->nullable();
             $table->string('UsRol')->nullable();
             $table->string('UsRolDesc')->nullable();
             $table->string('updated_by')->nullable();
+            $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

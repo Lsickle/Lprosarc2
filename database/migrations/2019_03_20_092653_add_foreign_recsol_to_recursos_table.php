@@ -14,8 +14,8 @@ class AddForeignRecsolToRecursosTable extends Migration
     public function up()
     {
         Schema::table('recursos', function (Blueprint $table) {
-            $table->unsignedInteger('FK_RecSol');
-            $table->foreign('FK_RecSol')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->unsignedInteger('FK_RecSol')->nullable();
+            $table->foreign('FK_RecSol')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
         });
     }
 

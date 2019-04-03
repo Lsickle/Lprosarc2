@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignSolresolserToSolicitudServiciosTable extends Migration
+class AddColumToPersonalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddForeignSolresolserToSolicitudServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::table('solicitud_servicios', function (Blueprint $table) {
-            
+        Schema::table('personals', function (Blueprint $table) {
+            $table->string('PersEmail')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddForeignSolresolserToSolicitudServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::table('solicitud_servicios', function (Blueprint $table) {
-            
+        Schema::table('personals', function (Blueprint $table) {
+            $table->string('PersEmail')->nullable();            
         });
     }
 }
