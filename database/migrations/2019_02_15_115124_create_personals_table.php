@@ -14,17 +14,6 @@ class CreatePersonalsTable extends Migration
     public function up()
     {
         Schema::create('personals', function (Blueprint $table) {
-
-
-
-
-// Añadir emali
-
-
-
-
-
-
             $table->increments('ID_Pers')->unique();
             $table->boolean('PersType');
             $table->string('PersDocType',6);//Tipo de datos CC CE NIT RUT
