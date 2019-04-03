@@ -27,17 +27,14 @@ class SolicitudServicioController extends Controller
     public function index()
     {
         if(Auth::user()->UsRol === "Programador"){
-        // $Servicios = DB::table('solicitud_servicios')
-            // ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
-            // ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
-            // ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-            // ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
-            // ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            // ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            // ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
-            // ->get();/*, compact('Servicios')*/, compact('Respel')
-
-        return view('solicitud-serv.index');
+        $Servicios = DB::table('solicitud_servicios')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+            ->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
+            ->get();
+        $Residuos = SolicitudResiduo::all();
+        return view('solicitud-serv.index', compact('Servicios', 'Residuos '));
         }
         $Servicios = DB::table('solicitud_servicios')
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
@@ -194,20 +191,52 @@ class SolicitudServicioController extends Controller
      */
     public function show($id)
     {
-        $Servicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-        $SedePro = Sede::where('ID_Sede', $Servicio->Fk_SolSerTransportador)->first();
-        $ClientePro = Cliente::where('ID_Cli',$SedePro->FK_SedeCli)->first();
-        // Datos del cliente
-        $GSede = GenerSede::where('ID_GSede', $Servicio->FK_SolSerGenerSede)->first();
-        $Generador = Generador::where('ID_Gener', $GSede->FK_GSede)->first();
-        $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-        $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
-        //Datos del residuo
-        $ServicioResiduos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->first();
-        $ResiduosGener = ResiduosGener::where('ID_SGenerRes', $ServicioResiduos->FK_SolResRg)->first();
-        $Residuos = Respel::where('ID_Respel',$ResiduosGener->FK_Respel)->first();
+        $SolicitudServicio = DB::table('solicitud_servicios')
+            ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+            ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->join('municipios', 'municipios.ID_Mun', 'sedes.FK_SedeMun')
+            ->select('solicitud_servicios.*','clientes.CliNit','clientes.CliName','sedes.SedeAddress','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress'/*se remplaza por email*/,'municipios.MunName')
+            ->where('solicitud_servicios.SolSerSlug', $id)
+            ->get();
+        $TransPor = DB::table('solicitud_servicios')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+            ->join('municipios', 'municipios.ID_Mun', 'sedes.FK_SedeMun')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('clientes.CliNit','clientes.CliName','sedes.SedeAddress','municipios.MunName')
+            ->where('solicitud_servicios.SolSerSlug', $id)
+            ->get();
+        $GenerResiduos = DB::table('solicitud_residuos')
+            ->distinct()
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
+            ->select('gener_sedes.GSedeAddress','residuos_geners.FK_SGener', 'generadors.GenerNit', 'generadors.GenerName', 'municipios.MunName')
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
+            ->get();
+        $Residuos = DB::table('solicitud_residuos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'solicitud_residuos.FK_SolResTratamiento')
+            ->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('solicitud_residuos.*', 'residuos_geners.FK_SGener', 'tratamientos.TratName','respels.*')
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
+            ->get();
+        // return $GenerResiduos;
+        // $picks = DB::table('picks')
+        //     ->distinct()
+        //     ->select('user_id')
+        //     ->where('weeknum', '=', 1)
+        //     ->groupBy('user_id')
+        //     ->get();
+        // $GSede = GenerSede::where('ID_GSede', $Servicio->FK_SolSerGenerSede)->first();
+        // $Generador = Generador::where('ID_Gener', $GSede->FK_GSede)->first();
+        // //Datos del residuo
+        // $ServicioResiduos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->first();
+        // $ResiduosGener = ResiduosGener::where('ID_SGenerRes', $ServicioResiduos->FK_SolResRg)->first();
+        // $Residuos = Respel::where('ID_Respel',$ResiduosGener->FK_Respel)->first();
         // return $Servicio;
-        return view('solicitud-serv.show', compact('Servicio','SedePro','ClientePro','GSede','Generador','Sede','Cliente','ResiduosGener','Residuos'));
+        return view('solicitud-serv.show', compact('SolicitudServicio','TransPor','Residuos', 'GenerResiduos','Total'));
     }
 
     /**

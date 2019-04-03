@@ -1,5 +1,5 @@
 .divReq label, .divReq div{
-	margin-right: 2%;
+	margin: 0 2% 1% 0;
 	width: 22px;
 	height: 22px;
 }
@@ -9,4 +9,10 @@
 	padding-bottom: 4%;
 	border-radius: 1%;
 	border: 1px solid #dddddd;
+}
+.text-aline-center div{
+	text-align: center;
+}
+.text-aline-center .col-md-5, .text-aline-center .col-md-12,.text-aline-center .col-md-6{
+	text-align: left;
 }
