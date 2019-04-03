@@ -18,8 +18,8 @@ class DropAndAddColumsRecursosTabel extends Migration
         $table->dropColumn('FK_RecSol');
         $table->string('RecRmSrc',128);
         $table->string('SlugRec')->unique();
-        $table->unsignedInteger('FK_ResGer');
-        $table->foreign('FK_ResGer')->references('ID_SGenerRes')->on('residuos_geners');
+        $table->unsignedInteger('FK_ResGer')->nullable();
+        $table->foreign('FK_ResGer')->references('ID_SGenerRes')->on('residuos_geners')->onDelete('cascade');
         });
     }
 

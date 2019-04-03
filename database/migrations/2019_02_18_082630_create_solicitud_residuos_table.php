@@ -20,6 +20,9 @@ class CreateSolicitudResiduosTable extends Migration
             $table->Integer('SolResKgConciliado')->nullable();
             $table->Integer('SolResKgTratado')->nullable();
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

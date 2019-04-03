@@ -15,12 +15,15 @@ class CreateVehiculoTable extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->increments('ID_Vehic');
-            $table->timestamps();
             $table->string('VehicPlaca',12)->unique();
             $table->string('VehicTipo',64);
             $table->string('VehicCapacidad',64);
             $table->integer('VehicKmActual');
-            $table->boolean('VehicInternExtern');            
+            $table->boolean('VehicInternExtern');  
+            $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';          
         });
     }
 

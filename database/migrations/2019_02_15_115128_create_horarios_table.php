@@ -23,9 +23,12 @@ class CreateHorariosTable extends Migration
             $table->dateTime('HorarioSalida');
             $table->dateTime('HoraPermisoInicio');
             $table->dateTime('HoraPermisoFin');
-            $table->unsignedInteger('FK_HoraPers');
-            $table->foreign('FK_HoraPers')->references('ID_Pers')->on('personals');
             $table->timestamps();
+            $table->unsignedInteger('FK_HoraPers')->nullable();
+            $table->foreign('FK_HoraPers')->references('ID_Pers')->on('personals')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

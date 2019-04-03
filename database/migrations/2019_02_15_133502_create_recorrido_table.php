@@ -16,6 +16,9 @@ class CreateRecorridoTable extends Migration
         Schema::create('recorridos', function (Blueprint $table) {
             $table->increments('ID_Recor');
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

@@ -40,9 +40,9 @@ class CreateRequerimientosTable extends Migration
             $table->boolean('ReqPlatform')->nullable();
             $table->boolean('ReqCertiEspecial')->nullable();
             $table->string('ReqSlug')->unique();
-            $table->unsignedInteger('FK_ReqRespel');
-            $table->foreign('FK_ReqRespel')->references('ID_Respel')->on('respels');
             $table->timestamps();
+            $table->unsignedInteger('FK_ReqRespel')->nullable();
+            $table->foreign('FK_ReqRespel')->references('ID_Respel')->on('respels')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

@@ -16,7 +16,6 @@ class CreateOrderComprasTable extends Migration
         Schema::create('OrdenCompras', function (Blueprint $table) {
 
             $table->increments('ID_Orden');
-            $table->timestamps();
             $table->integer('OrdenNum');
             $table->string('OrdenStatus',64);
             $table->string('OrdenInvoice',32);
@@ -24,6 +23,10 @@ class CreateOrderComprasTable extends Migration
             $table->boolean('OrdenPagada');
             $table->integer('OrdenTotal');
             $table->boolean('OrdenAutor');
+            $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
                         
         });
     }

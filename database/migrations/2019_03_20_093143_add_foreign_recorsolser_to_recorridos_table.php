@@ -14,10 +14,10 @@ class AddForeignRecorsolserToRecorridosTable extends Migration
     public function up()
     {
         Schema::table('recorridos', function (Blueprint $table) {
-            $table->unsignedInteger('FK_RecorSolSer');
-            $table->unsignedInteger('FK_RecorProgveh');
-            $table->foreign('FK_RecorSolSer')->references('ID_SolSer')->on('solicitud_servicios'); 
-            $table->foreign('FK_RecorProgveh')->references('ID_ProgVeh')->on('ProgVehiculos'); 
+            $table->unsignedInteger('FK_RecorSolSer')->nullable();
+            $table->unsignedInteger('FK_RecorProgveh')->nullable();
+            $table->foreign('FK_RecorSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade'); 
+            $table->foreign('FK_RecorProgveh')->references('ID_ProgVeh')->on('ProgVehiculos')->onDelete('cascade'); 
         });
     }
 
