@@ -28,7 +28,7 @@ class CreateSedesTable extends Migration
             $table->unsignedInteger('FK_SedeCli')->nullable();
             $table->unsignedInteger('FK_SedeMun')->nullable();
             $table->foreign('FK_SedeCli')->references('ID_Cli')->on('clientes')->onDelete('cascade');
-            $table->foreign('FK_SedeMun')->references('ID_Mun')->on('municipios');
+            $table->foreign('FK_SedeMun')->references('ID_Mun')->on('municipios')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

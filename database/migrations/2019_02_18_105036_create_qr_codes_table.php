@@ -20,7 +20,7 @@ class CreateQrCodesTable extends Migration
             $table->string('QrCodeSrc',255); /*direccion donde esta guardado el codigo qr para su reimpresion*/
             $table->timestamps();
             $table->unsignedInteger('FK_QrCodeSolSer')->nullable();/*foranea para ingresar informacion en el codigo QR(cantidad pesada)*/
-            $table->foreign('FK_QrCodeSolSer')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->foreign('FK_QrCodeSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci'; 

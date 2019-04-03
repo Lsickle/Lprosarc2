@@ -19,9 +19,9 @@ class CreateResiduosGenerTable extends Migration
             $table->unsignedInteger('FK_SGener')->nullable();
             $table->unsignedInteger('FK_Respel')->nullable();
             $table->unsignedInteger('FK_SolSer')->nullable();
-            $table->foreign('FK_SGener')->references('ID_GSede')->on('gener_sedes');
-            $table->foreign('FK_Respel')->references('ID_Respel')->on('respels');
-            $table->foreign('FK_SolSer')->references('ID_SolSer')->on('solicitud_servicios');
+            $table->foreign('FK_SGener')->references('ID_GSede')->on('gener_sedes')->onDelete('cascade');
+            $table->foreign('FK_Respel')->references('ID_Respel')->on('respels')->onDelete('cascade');
+            $table->foreign('FK_SolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

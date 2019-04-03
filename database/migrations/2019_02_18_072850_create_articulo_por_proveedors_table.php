@@ -25,9 +25,9 @@ class CreateArticuloPorProveedorsTable extends Migration
             $table->unsignedInteger('FK_ArtiActiv')->nullable(); /*foranea de la tabla Activos*/
             $table->unsignedInteger('FK_ArtCotiz')->nullable(); /*foranea de la tabla Quotations*/
             $table->unsignedInteger('FK_AutorizedBy')->nullable();/*compra de articulo autorizado por*/
-            $table->foreign('FK_ArtiActiv')->references('ID_Act')->on('Activos');
-            $table->foreign('FK_AutorizedBy')->references('id')->on('Users');
-            $table->foreign('FK_ArtCotiz')->references('ID_Cotiz')->on('Quotations');
+            $table->foreign('FK_ArtiActiv')->references('ID_Act')->on('Activos')->onDelete('cascade');
+            $table->foreign('FK_AutorizedBy')->references('id')->on('Users')->onDelete('set null');
+            $table->foreign('FK_ArtCotiz')->references('ID_Cotiz')->on('Quotations')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

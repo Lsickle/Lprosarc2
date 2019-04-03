@@ -28,7 +28,7 @@ class CreateGenerSedesTable extends Migration
             $table->unsignedInteger('FK_GSede')->nullable();
             $table->unsignedInteger('FK_GSedeMun')->nullable();
             $table->foreign('FK_GSede')->references('ID_Gener')->on('generadors')->onDelete('cascade');
-            $table->foreign('FK_GSedeMun')->references('ID_Mun')->on('municipios');
+            $table->foreign('FK_GSedeMun')->references('ID_Mun')->on('municipios')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

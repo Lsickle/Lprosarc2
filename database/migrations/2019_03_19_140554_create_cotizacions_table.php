@@ -25,7 +25,7 @@ class CreateCotizacionsTable extends Migration
             $table->boolean('CotiDelete');
             $table->timestamps();
             $table->unsignedInteger('FK_CotiSede')->nullable();
-            $table->foreign('FK_CotiSede')->references('ID_Sede')->on('sedes');
+            $table->foreign('FK_CotiSede')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

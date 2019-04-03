@@ -15,7 +15,7 @@ class AddForeignKeyPersonalToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('FK_UserPers')->nullable();
-            $table->foreign('FK_UserPers')->references('ID_Pers')->on('personals');
+            $table->foreign('FK_UserPers')->references('ID_Pers')->on('personals')->onDelete('cascade');
         });
     }
 
