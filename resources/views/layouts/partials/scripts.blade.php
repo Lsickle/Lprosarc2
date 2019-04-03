@@ -1369,7 +1369,6 @@ fieldset[disabled] .form-control {
 </script> --}}
 
 @if(
-  Route::currentRouteName()=='tarifas.create'||
   Route::currentRouteName()=='tarifas.index'
 )
   <script>
