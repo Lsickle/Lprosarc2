@@ -13,6 +13,7 @@ use App\GenerSede;
 use App\Respel;
 use App\ResiduosGener;
 use App\Cliente;
+use App\Tratamiento;
 use App\Generador;
 use App\Personal;
 
@@ -67,7 +68,8 @@ class SolicitudServicioController extends Controller
             ->select('ID_GSede', 'GSedeName')
             ->get();
         $Personals = Personal::all();
-        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'SGeneradors'));
+        $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
+        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'SGeneradors', 'Tratamientos'));
     }
 
     /**
@@ -92,7 +94,6 @@ class SolicitudServicioController extends Controller
         $SolicitudServicio->SolSerDelete = 0;
         $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
         $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
-        // return $request['SolResAuditoriaTipo'];
         $SolicitudServicio->save();
         for ($x=1; $x <= count($request['SGenerador']); $x++) {
             for ($y=0; $y < count($request['Respel'][$x]); $y++) {
@@ -171,15 +172,10 @@ class SolicitudServicioController extends Controller
                 $SolicitudResiduo->SolResTipoCate = $request['TipoCate'][$x][$y];
                 $SolicitudResiduo->SolResAuditoria = $SolicitudServicio->SolSerAuditable;
                 $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'];
+                $SolicitudResiduo->SolResUnidades = $request['Unidades'][$x][$y];
                 $SolicitudResiduo->save();
             }
         }
-// SGener   Respel
-//  1-2       1
-//  1-1       3
-//  2-5       2
-//  1-3       5
-//  2-4       4
         return redirect()->route('solicitud-servicio.index');
     }
 
@@ -222,21 +218,7 @@ class SolicitudServicioController extends Controller
             ->select('solicitud_residuos.*', 'residuos_geners.FK_SGener', 'tratamientos.TratName','respels.*')
             ->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
             ->get();
-        // return $GenerResiduos;
-        // $picks = DB::table('picks')
-        //     ->distinct()
-        //     ->select('user_id')
-        //     ->where('weeknum', '=', 1)
-        //     ->groupBy('user_id')
-        //     ->get();
-        // $GSede = GenerSede::where('ID_GSede', $Servicio->FK_SolSerGenerSede)->first();
-        // $Generador = Generador::where('ID_Gener', $GSede->FK_GSede)->first();
-        // //Datos del residuo
-        // $ServicioResiduos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->first();
-        // $ResiduosGener = ResiduosGener::where('ID_SGenerRes', $ServicioResiduos->FK_SolResRg)->first();
-        // $Residuos = Respel::where('ID_Respel',$ResiduosGener->FK_Respel)->first();
-        // return $Servicio;
-        return view('solicitud-serv.show', compact('SolicitudServicio','TransPor','Residuos', 'GenerResiduos','Total'));
+        return view('solicitud-serv.show', compact('SolicitudServicio','TransPor','Residuos', 'GenerResiduos'));
     }
 
     /**
@@ -247,15 +229,46 @@ class SolicitudServicioController extends Controller
      */
     public function edit($id)
     {
-        $Servicios = SolicitudServicio::where('SolSerSlug', $id)->first();
-
-        $SGenerRes = ResiduosGener::where('FK_SolSer', $Servicios->ID_SolSer)->first();
-        $Sedes = Sede::all();
-        $GSedes = GenerSede::all();
-        $Respels = Respel::all();
-
-
-        return view('solicitud-serv.edit', compact('Servicios', 'GSedes', 'Sedes', 'Respels', 'SGenerRes'));
+        $Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+        $Sede = Sede::where('ID_Sede', $Solicitud->Fk_SolSerTransportador)
+            ->select('SedeName','ID_Sede')
+            ->first();
+        $Sedes = Sede::where('ID_Sede', '<>', $Solicitud->Fk_SolSerTransportador)
+            ->select('SedeName','ID_Sede')
+            ->get();
+        $Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)
+            ->select('ID_Cli','CliName')
+            ->first();
+        // return $Cliente;
+        $Clientes = Cliente::where('ID_Cli', '<>', $Solicitud->FK_SolSerCliente)
+            ->select('ID_Cli','CliName')
+            ->get();
+        $Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
+            ->select('ID_Pers','PersFirstName','PersLastName')
+            ->first();
+        $Personal = Personal::where('ID_Pers', '<>', $Solicitud->FK_SolSerPersona)
+            ->select('ID_Pers','PersFirstName','PersLastName')
+            ->get();
+        $GenerResiduos = DB::table('solicitud_residuos')
+            ->distinct()
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->select('gener_sedes.ID_GSede','gener_sedes.GSedeName','residuos_geners.FK_SGener')
+            ->where('solicitud_residuos.FK_SolResSolSer', $Solicitud->ID_SolSer)
+            ->get();
+        $SGeneradors = GenerSede::select('ID_GSede','GSedeName');
+        // return $GenerResiduos;
+        $Residuos = DB::table('solicitud_residuos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            ->join('tratamientos', 'tratamientos.ID_Trat', '=', 'solicitud_residuos.FK_SolResTratamiento')
+            ->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('solicitud_residuos.*', 'residuos_geners.FK_SGener','tratamientos.ID_Trat','tratamientos.TratName','respels.ID_Respel','respels.RespelName')
+            ->where('solicitud_residuos.FK_SolResSolSer', $Solicitud->ID_SolSer)
+            ->get();
+        $Respels = Respel::select('ID_Respel','RespelName');
+        $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
+            // return $Respels;
+        return view('solicitud-serv.edit', compact('Solicitud','Sede','Sedes','Cliente','Clientes','Persona','Personal','GenerResiduos','SGeneradors','Residuos','Respels','Tratamientos','id'));
     }
 
     /**
@@ -268,6 +281,103 @@ class SolicitudServicioController extends Controller
     public function update(Request $request, $id)
     {
         // return $request;
+        $SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        $SolicitudServicio->SolSerStatus = 'Pendiente';
+        $SolicitudServicio->SolSerTipo = $request->input('SolSerTipo');
+        if ($request->input('SolSerAuditable')) {
+            $SolicitudServicio->SolSerAuditable = 1;
+        }
+        $SolicitudServicio->SolSerFrecuencia = $request->input('SolSerFrecuencia');
+        $SolicitudServicio->SolSerConducExter = $request->input('SolSerConducExter');
+        $SolicitudServicio->SolSerVehicExter = $request->input('SolSerVehicExter');
+        $SolicitudServicio->Fk_SolSerTransportador = $request->input('Fk_SolSerTransportador');
+        $SolicitudServicio->SolSerSlug = now().'solicitud'.$request->input('FK_SolSerCliente').'deservicio';
+        $SolicitudServicio->SolSerDelete = 0;
+        $SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
+        $SolicitudServicio->FK_SolSerCliente = $request->input('FK_SolSerCliente');
+        $SolicitudServicio->save();
+        for ($x=0; $x < count($request['SGenerador']); $x++) {
+            for ($y=0; $y < count($request['Respel'][$x]); $y++) {
+                $slug = $request['SolResSlug'][$x][$y];
+                $SolicitudResiduo = SolicitudResiduo::where('SolResSlug', $slug)->first();
+                // return $SolicitudResiduo;
+                $FK_SolResRg = DB::table('residuos_geners')
+                    ->select('ID_SGenerRes')
+                    ->where('FK_SGener', $request['SGenerador'][$x])
+                    ->where('FK_Respel', $request['Respel'][$x][$y])
+                    ->get();
+                $SolicitudResiduo->SolResCateEnviado = $request['CateEnviado'][$x][$y];
+                $SolicitudResiduo->FK_SolResTratamiento = $request['Tratamiento'][$x][$y];
+                foreach ($FK_SolResRg as $FK_SolRg) {
+                    $SolicitudResiduo->FK_SolResRg = $FK_SolRg->ID_SGenerRes;
+                }
+                if(isset($request['FotoCargue'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoCargue = 1;
+                }
+                if(isset($request['FotoDescargue'][$x][$y])) {
+                    $SolicitudResiduo->SolResFotoDescargue = 1;
+                }
+                if(isset($request['FotoPesaje'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoPesaje = 1;
+                }
+                if(isset($request['FotoReempacado'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoReempacado = 1;
+                }
+                if(isset($request['FotoMezclado'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoMezclado = 1;
+                }
+                if(isset($request['FotoDestruccion'][$x][$y])){
+                    $SolicitudResiduo->SolResFotoDestruccion = 1;
+                }
+                if(isset($request['VideoCargue'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoCargue = 1;
+                }
+                if(isset($request['VideoDescargue'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoDescargue = 1;
+                }
+                if(isset($request['VideoPesaje'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoPesaje = 1;
+                }
+                if(isset($request['VideoReempacado'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoReempacado = 1;
+                }
+                if(isset($request['VideoMezclado'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoMezclado = 1;
+                }
+                if(isset($request['VideoDestruccion'][$x][$y])){
+                    $SolicitudResiduo->SolResVideoDestruccion = 1;
+                }
+                if(isset($request['Devolucion'][$x][$y])){
+                    $SolicitudResiduo->SolResDevolucion = 1;
+                }
+                if(isset($request['Planillas'][$x][$y])){
+                    $SolicitudResiduo->SolResPlanillas = 1;
+                }
+                if(isset($request['Alistamiento'][$x][$y])){
+                    $SolicitudResiduo->SolResAlistamiento = 1;
+                }
+                if(isset($request['Capacitacion'][$x][$y])){
+                    $SolicitudResiduo->SolResCapacitacion = 1;
+                }
+                if(isset($request['Bascula'][$x][$y])){
+                    $SolicitudResiduo->SolResBascula = 1;
+                }
+                if(isset($request['Platform'][$x][$y])){
+                    $SolicitudResiduo->SolResPlatform = 1;
+                }
+                if(isset($request['CertiEspecial'][$x][$y])){
+                    $SolicitudResiduo->SolResCertiEspecial = 1;
+                }
+                $SolicitudResiduo->SolResTipoCate = $request['TipoCate'][$x][$y];
+                $SolicitudResiduo->SolResAuditoria = $SolicitudServicio->SolSerAuditable;
+                $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'];
+                $SolicitudResiduo->SolResUnidades = $request['Unidades'][$x][$y];
+                $SolicitudResiduo->save();
+            }
+                // return $SolicitudResiduo.' '.$request['SolResSlug'][$x];
+        }
+        // return $SolicitudServicio;
+        /*// return $request;
         $Servicios = SolicitudServicio::where('ID_SolSer', $id)->first();
         $Servicios->fill($request->all());
         $Servicios->SolSerAuditable =$request->input('SolSerAuditable');
@@ -285,15 +395,15 @@ class SolicitudServicioController extends Controller
         $log->AuditRegistro=$SGenerRes->ID_SGenerRes;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request->all());
-        $log->save();
+        $log->save();*/
         
-        $log = new audit();
-        $log->AuditTabla="solicitud_servicios";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro=$Servicios->ID_SolSer;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
-        $log->save();
+        // $log = new audit();
+        // $log->AuditTabla="solicitud_servicios";
+        // $log->AuditType="Modificado";
+        // $log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+        // $log->AuditUser=Auth::user()->email;
+        // $log->Auditlog=json_encode($request->all());
+        // $log->save();
 
         return redirect()->route('solicitud-servicio.index');
     }

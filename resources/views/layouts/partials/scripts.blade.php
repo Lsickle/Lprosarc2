@@ -293,6 +293,15 @@
     });
   });
 </script>
+{{-- script para formulario en smart-wizzard --}}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.smartwizard').smartWizard({
+      theme: 'arrows',
+      keyNavigation:true
+    });
+  });
+</script>
 
 <!-- funcion para flitrado de tablas -->
 <script>
@@ -1377,4 +1386,3 @@ $(document).ready(function(){
     });
   });
 </script>
-=======
