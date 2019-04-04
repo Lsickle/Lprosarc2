@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('UsRol')->nullable();
             $table->string('UsRolDesc')->nullable();
             $table->string('updated_by')->nullable();
-            $table->boolean('confirmed')->default(0);
+            $table->boolean('confirmed')->nullable();
             $table->string('confirmation_code')->nullable();
             $table->timestamps();
             $table->engine = 'InnoDB';

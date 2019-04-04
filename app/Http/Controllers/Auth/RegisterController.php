@@ -42,7 +42,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/confirm';
 
     /**
      * Create a new controller instance.
@@ -80,8 +80,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // $data['confirmation_code'] = str_random(25);
-        $fields = [
-            // $user = User::create([
+        // $fields = [
+            $user = User::create([
 
                 'name'     => $data['name'],
                 'email'    => $data['email'],
@@ -93,33 +93,42 @@ class RegisterController extends Controller
                 'UsRolDesc2'    => "Usuario General",
                 'UsAvatar'    => "robot400x400.gif",
                 // 'FK_UserPers'    => "1",
-                // 'confirmation_code' => str_random(25),
-            // ]);
+                'confirmation_code' => $data['name'].mt_rand(1,999),
+                // 'confirmed' => "0",
+            ]);
             
-        ];
-        if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
-            $fields['username'] = $data['username'];
-        }
+        // ];
+        // if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
+        //     $fields['username'] = $data['username'];
+        // }
         
         
-        
-        $user = User::create($fields);
-        Mail::send('auth.verify', $data, function($message) use ($data) {
+        // return User::create($fields);
+        // return $user;
+
+        // $confirmation_code = $user->confirmation_code;
+        Mail::send('emails.confirmation_code', $data,  function($message) use ($data) {
             $message->to($data['email'], $data['name'])->subject('Confirmación de Correo');
         });
-        return $user;
+
+
+        // return redirect()->route('auth.confirm');
     }
-    public function verify($code)
+
+    public function verify($email)
     {
-        $user = User::where('confirmation_code', $code)->first();
+        $user = User::where('confirmation_code', $email)->first();
+// return $confirmation_code;
+        if (! $user){
+            return redirect()->route('auth.register');
+        }else{
 
-        if (! $user)
-            return redirect('/');
+            $user->confirmation_code = null;
+            $user->email_verified_at = now();
+            $user->save();
+    
+            return redirect()->route('clientes.create')->with('notification', 'Has confirmado correctamente tu correo!');
+        }
 
-        $user->confirmed = true;
-        $user->confirmation_code = null;
-        $user->save();
-
-        return redirect('/home')->with('notification', 'Has confirmado correctamente tu correo!');
     }
 }

@@ -21,9 +21,9 @@ Auth::routes(['verify' => true]);
 Route::get('/noscriptpage', function () {
     return view('noscriptpage');
 });
-Route::get('/clientes', function () {
-    // Only verified users may enter...
-})->middleware('verified');
+// Route::get('/clientes', function () {
+//     // Only verified users may enter...
+// })->middleware('verified');
 
 Route::group(['middleware' => 'auth'], function () {
     //    Route::get('/link1', function ()    {
@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 
 	
-// Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
+Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
 
 
 });
