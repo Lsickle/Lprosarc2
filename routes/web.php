@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 
 	
-Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
+	Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
 
 
 });

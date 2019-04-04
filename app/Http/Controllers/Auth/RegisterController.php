@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use Validator;
 use Mail;
@@ -42,7 +43,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/confirm';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -51,6 +52,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        // $user = Auth::user();
         $this->middleware('guest');
     }
 
@@ -104,20 +106,18 @@ class RegisterController extends Controller
         
         
         // return User::create($fields);
-        // return $user;
-
+        
         // $confirmation_code = $user->confirmation_code;
-        Mail::send('emails.confirmation_code', $data,  function($message) use ($data) {
+        Mail::send('emails.confirmation_code', $data, function($message) use ($data) {
             $message->to($data['email'], $data['name'])->subject('Confirmación de Correo');
         });
-
-
         // return redirect()->route('auth.confirm');
+        return $user;
     }
 
     public function verify($email)
     {
-        $user = User::where('confirmation_code', $email)->first();
+        $user = User::where('email', $email)->first();
 // return $confirmation_code;
         if (! $user){
             return redirect()->route('auth.register');
@@ -127,7 +127,7 @@ class RegisterController extends Controller
             $user->email_verified_at = now();
             $user->save();
     
-            return redirect()->route('clientes.create')->with('notification', 'Has confirmado correctamente tu correo!');
+            return redirect('clientes/create')->with('notification', 'Has confirmado correctamente tu correo!');
         }
 
     }
