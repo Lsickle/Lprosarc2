@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -78,21 +79,47 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $data['confirmation_code'] = str_random(25);
         $fields = [
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
-            'UsSlug'   => $data['name'].mt_rand(1,999),
-            'UsRol'    => "Usuario",
-            'UsRolDesc'    => "Usuario General",
-            'UsRol2'    => "Usuario",
-            'UsRolDesc2'    => "Usuario General",
-            'UsAvatar'    => "robot400x400.gif",
-            'FK_UserPers'    => "1",
+            // $user = User::create([
+
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => bcrypt($data['password']),
+                'UsSlug'   => $data['name'].mt_rand(1,999),
+                'UsRol'    => "Usuario",
+                'UsRolDesc'    => "Usuario General",
+                'UsRol2'    => "Usuario",
+                'UsRolDesc2'    => "Usuario General",
+                'UsAvatar'    => "robot400x400.gif",
+                // 'FK_UserPers'    => "1",
+                // 'confirmation_code' => str_random(25),
+            // ]);
+            
         ];
         if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];
         }
-        return User::create($fields);
+        
+        
+        
+        $user = User::create($fields);
+        Mail::send('auth.verify', $data, function($message) use ($data) {
+            $message->to($data['email'], $data['name'])->subject('Confirmación de Correo');
+        });
+        return $user;
+    }
+    public function verify($code)
+    {
+        $user = User::where('confirmation_code', $code)->first();
+
+        if (! $user)
+            return redirect('/');
+
+        $user->confirmed = true;
+        $user->confirmation_code = null;
+        $user->save();
+
+        return redirect('/home')->with('notification', 'Has confirmado correctamente tu correo!');
     }
 }
