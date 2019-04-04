@@ -8,14 +8,14 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 @section('main-content')
 <div class="container-fluid spark-screen">
 @foreach($SolicitudServicio as $Servicio)
+@component('layouts.partials.modal')
+	{{$Servicio->SolSerSlug}}
+@endcomponent
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="text-aline-center">
 					<div class="box-header with-border">
-						@component('layouts.partials.modal')
-							{{$Servicio->SolSerSlug}}
-						@endcomponent
 						<div class="col-md-12">
 							@if($Servicio->SolSerDelete == 0)
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Servicio->SolSerSlug}}' class='btn btn-danger' style="float: right;">Eliminar</a>
@@ -120,6 +120,7 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 												<th colspan="3">Ciudad: {{$GenerResiduo->MunName}}</th>
 											</tr>
 											<tr>
+												<th>Unidades</th>
 												<th>Residuo</th>
 												<th>Descripción</th>
 												<th>Tipo de Cantidad</th>
@@ -133,6 +134,7 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 												@if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
 													<?php $Total = $Residuo->SolResCateEnviado+$Total;?>
 													<tr>
+														<td>{{$Residuo->SolResUnidades}}</td>
 														<td>{{$Residuo->RespelName}}</td>
 														<td>{{$Residuo->RespelDescrip}}</td>
 														<td>{{$Residuo->SolResTipoCate}}</td>
@@ -145,8 +147,8 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 										</tbody>
 										<thead>
 											<tr>
-												<th colspan="3">Cantidad Total Enviada</th>
-												<th>{{$Total}} Kg</th>
+												<th colspan="4">Cantidad Total Enviada</th>
+												<th>{{$Total.' '}}Kg</th>
 												<th colspan="2"></th>
 											</tr>
 										</thead>

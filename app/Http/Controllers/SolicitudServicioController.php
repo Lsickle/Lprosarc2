@@ -39,14 +39,13 @@ class SolicitudServicioController extends Controller
         }
         $Servicios = DB::table('solicitud_servicios')
             ->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
-            ->leftjoin('gener_sedes', 'gener_sedes.ID_GSede', '=', 'solicitud_servicios.FK_SolSerGenerSede')
-            ->leftjoin('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-            ->join('residuos_geners', 'residuos_geners.FK_SolSer', '=', 'solicitud_servicios.ID_SolSer')
-            ->leftjoin('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('solicitud_servicios.*', 'clientes.CliShortname', 'generadors.GenerName', 'respels.RespelName')
+            ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+            ->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
             ->where('solicitud_servicios.SolSerDelete', 0)
             ->get();
+        $Residuos = SolicitudResiduo::all();
+        return view('solicitud-serv.index', compact('Servicios', 'Residuos '));
 
 
         return view('solicitud-serv.index', compact('Servicios'));
@@ -416,21 +415,31 @@ class SolicitudServicioController extends Controller
      */
     public function destroy($id)
     {
-        $Servicios = SolicitudServicio::where('SolSerSlug', $id)->first();
-        if ($Servicios->SolSerDelete == 0) {
-            $Servicios->SolSerDelete = 1;
+        $Servicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        if ($Servicio->SolSerDelete == 0) {
+            $Servicio->SolSerDelete = 1;
+            $Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
+            foreach ($Residuos as $Residuo ) {
+                $Residuo->SolResDelete = 1;
+                $Residuo->save();
+            }
         }
         else{
-            $Servicios->SolSerDelete = 0;
+            $Servicio->SolSerDelete = 0;
+            $Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
+            foreach ($Residuos as $Residuo ) {
+                $Residuo->SolResDelete = 0;
+                $Residuo->save();
+            }
         }
-        $Servicios->save();
+        $Servicio->save();
 
         $log = new audit();
-        $log->AuditTabla="solicitud_serviciosrespels";
+        $log->AuditTabla="solicitud_servicios";
         $log->AuditType="Eliminado";
-        $log->AuditRegistro=$Servicios->ID_SolSer;
+        $log->AuditRegistro=$Servicio->ID_SolSer;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$Servicios->SolSerDelete;
+        $log->Auditlog=$Servicio->SolSerDelete;
         $log->save();
         
         return redirect()->route('solicitud-servicio.index');
