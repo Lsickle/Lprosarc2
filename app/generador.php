@@ -8,7 +8,7 @@ class Generador extends Model
 {
     protected $table = 'generadors';
 
-	protected $fillable = ['GenerNit', 'GenerName', 'GenerShortname', 'GenerCode', 'GenerType','GenerAuditable', 'GenerSlug', 'GenerCli','FK_GenerCli'];
+	protected $fillable = ['GenerNit', 'GenerName', 'GenerShortname', 'GenerCode', 'GenerType','GenerSlug', 'GenerDelete','FK_GenerCli'];
 	
 	protected $primaryKey = 'ID_Gener';
 	/**
@@ -22,7 +22,7 @@ class Generador extends Model
 	}
 	public function sedes()
 	{
-	 return $this->belongsTo('App\Sede', 'ID_Sede');//como generador pertenece a la sede de un cliente
+	 return $this->belongsTo('App\Sede', 'FK_GenerCli', 'ID_Sede');//como generador pertenece a la sede de un cliente
 	}
 	public function GenerSede()
     {
