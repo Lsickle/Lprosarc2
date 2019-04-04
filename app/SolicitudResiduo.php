@@ -8,7 +8,7 @@ class SolicitudResiduo extends Model{
 
     protected $table = 'solicitud_residuos';
 
-    protected $fillable = ['SolResKgEnviado','SolResKgRecibido','SolResKgConciliado','SolResKgTratado', 'SolResRespel', 'SolResSolSer'];
+    protected $fillable = ['SolResCateEnviado', 'SolResCateRecibido', 'SolResCateConciliado', 'SolResCateTratado', 'SolResUnidades', 'SolResDelete', 'SolResSlug', 'SolResFotoCargue', 'SolResFotoDescargue', 'SolResFotoPesaje', 'SolResFotoReempacado', 'SolResFotoMezclado', 'SolResFotoDestruccion', 'SolResVideoCargue', 'SolResVideoDescargue', 'SolResVideoPesaje', 'SolResVideoReempacado', 'SolResVideoMezclado', 'SolResVideoDestruccion', 'SolResAuditoria', 'SolResAuditoriaTipo', 'SolResDevolucion', 'SolResDevolucionTipo', 'SolResDatosPersonal', 'SolResPlanillas', 'SolResAlistamiento', 'SolResCapacitacion', 'SolResBascula', 'SolResMasPerson', 'SolResPlatform', 'SolResCertiEspecial', 'SolResTipoCate', 'FK_SolResTratamiento', 'FK_SolResRg', 'FK_SolResSolSer'];
    
     protected $primaryKey = 'ID_SolRes';
 
@@ -19,3 +19,4 @@ class SolicitudResiduo extends Model{
     	return $this->belogsTo('App\Respel', 'ID_Respel');
     }
 }
+

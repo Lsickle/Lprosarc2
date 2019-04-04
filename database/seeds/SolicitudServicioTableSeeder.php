@@ -14,7 +14,7 @@ class SolicitudServicioTableSeeder extends Seeder
     {
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = 'Aprobado';
-        $Servicio->SolSerTipo = 'interno';
+        $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = '1';
         $Servicio->SolSerFrecuencia = '15';
         $Servicio->SolSerConducExter = '';
@@ -56,7 +56,7 @@ class SolicitudServicioTableSeeder extends Seeder
 
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = 'Incompleta';
-        $Servicio->SolSerTipo = 'interno';
+        $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = '1';
         $Servicio->SolSerFrecuencia = '45';
         $Servicio->SolSerConducExter = '';
@@ -70,7 +70,7 @@ class SolicitudServicioTableSeeder extends Seeder
 
         $Servicio = new SolicitudServicio();
         $Servicio->SolSerStatus = 'Incompleta';
-        $Servicio->SolSerTipo = 'interno';
+        $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerFrecuencia = '1';
         $Servicio->SolSerConducExter = '';
