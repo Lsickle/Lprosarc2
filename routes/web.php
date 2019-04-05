@@ -21,11 +21,8 @@ Auth::routes(['verify' => true]);
 Route::get('/noscriptpage', function () {
     return view('noscriptpage');
 });
-// Route::get('/clientes', function () {
-//     // Only verified users may enter...
-// })->middleware('verified');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
 //    });
@@ -74,9 +71,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
-
-	
-	Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
-
-
 });

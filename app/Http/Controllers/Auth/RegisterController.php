@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Auth;
 use App\User;
-use Validator;
-use Mail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+// use Mail;
 
-/**
- * Class RegisterController
- * @package %%NAMESPACE%%\Http\Controllers\Auth
- */
 class RegisterController extends Controller
 {
     /*
@@ -27,16 +23,6 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
 
     /**
      * Where to redirect users after login / registration.
@@ -66,7 +52,6 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name'     => 'required|max:255',
-            'username' => 'sometimes|required|max:255|unique:users',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             // 'terms'    => 'required',
@@ -81,10 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $data['confirmation_code'] = str_random(25);
-        // $fields = [
-            $user = User::create([
-
+        return User::create([
                 'name'     => $data['name'],
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
@@ -95,40 +77,32 @@ class RegisterController extends Controller
                 'UsRolDesc2'    => "Usuario General",
                 'UsAvatar'    => "robot400x400.gif",
                 // 'FK_UserPers'    => "1",
-                'confirmation_code' => $data['name'].mt_rand(1,999),
+                // 'confirmation_code' => $data['name'].mt_rand(1,999),
                 // 'confirmed' => "0",
             ]);
-            
-        // ];
-        // if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
-        //     $fields['username'] = $data['username'];
-        // }
-        
-        
-        // return User::create($fields);
         
         // $confirmation_code = $user->confirmation_code;
-        Mail::send('emails.confirmation_code', $data, function($message) use ($data) {
-            $message->to($data['email'], $data['name'])->subject('Confirmación de Correo');
-        });
-        // return redirect()->route('auth.confirm');
-        return $user;
+        // Mail::send('emails.confirmation_code', $data, function($message) use ($data) {
+        //     $message->to($data['email'], $data['name'])->subject('Confirmación de Correo');
+        // });
+        // // return redirect()->route('auth.confirm');
+        // return $user;
     }
 
-    public function verify($email)
-    {
-        $user = User::where('email', $email)->first();
-// return $confirmation_code;
-        if (! $user){
-            return redirect()->route('auth.register');
-        }else{
+//     public function verify($email)
+//     {
+//         $user = User::where('email', $email)->first();
+// // return $confirmation_code;
+//         if (! $user){
+//             return redirect()->route('auth.register');
+//         }else{
 
-            $user->confirmation_code = null;
-            $user->email_verified_at = now();
-            $user->save();
+//             $user->confirmation_code = null;
+//             $user->email_verified_at = now();
+//             $user->save();
     
-            return redirect('clientes/create')->with('notification', 'Has confirmado correctamente tu correo!');
-        }
+//             return redirect('clientes/create')->with('notification', 'Has confirmado correctamente tu correo!');
+//         }
 
-    }
+//     }
 }
