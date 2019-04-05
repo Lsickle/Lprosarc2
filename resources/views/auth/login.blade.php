@@ -47,6 +47,9 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
+                                    <label class="form-check-label" for="olvidar">
+                                        <a href="resetpassword">{{ __('Olvidaste tu Contraseña?') }}</a>
+                                    </label>
                                 </div>
                             </div>
                         </div>

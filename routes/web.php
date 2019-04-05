@@ -25,10 +25,15 @@ Route::get('/noscriptpage', function () {
 //     // Only verified users may enter...
 // })->middleware('verified');
 
+
 Route::group(['middleware' => 'auth'], function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
 //    });
+// Route::get('/', function () {
+	// Only verified users may enter...
+	
+
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
@@ -75,8 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 
+// })->middleware('verified');
+
 	
 	Route::get('/register/verify/{code}', 'Auth\RegisterController@verify');
-
+	Route::get('/resetpassword', 'Auth\ForgotPasswordController@showLinkRequestForm');
 
 });

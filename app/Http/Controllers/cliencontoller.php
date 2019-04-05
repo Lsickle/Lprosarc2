@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Departamento;
+use App\Municipio;
 use App\Cliente;
 use App\audit;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,10 @@ class clientcontoller extends Controller
         if(Auth::user()->UsRol === "Programador"){
             $clientes = Cliente::all();
             return view('clientes.index', compact('clientes'));
+            $clientes = Cliente::where('CliDelete', 0)->get();
         }
-        $clientes = Cliente::where('CliDelete', 0)->get();
-
-        return view('clientes.index', compact('clientes'));
+        
+        // return view('clientes.index', compact('clientes'));
     }
 
     /**
@@ -35,7 +36,16 @@ class clientcontoller extends Controller
      */
     public function create()
     {
-        return view('clientes.create');
+        if(Auth::user()->UsRol === "Cliente"){
+            // $Clientes = cliente::all();
+            $Departamentos = Departamento::all();
+            $Municipios = Municipio::all();
+            // $Clientes = Cliente::all();
+            return view('clientes.create2', compact('Clientes', 'Departamentos', 'Municipios'));
+        }else{
+
+            return view('clientes.create');
+        }
     }
 
     /**
@@ -65,7 +75,6 @@ class clientcontoller extends Controller
         $log->save();
 
         return redirect()->route('clientes.index');
-        // return 'Saved';
     }
 
     /**
@@ -76,7 +85,6 @@ class clientcontoller extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
         return view('clientes.show', compact('cliente'));
         // return $cliente;
     }
@@ -89,7 +97,6 @@ class clientcontoller extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
         return view('clientes.edit', compact('cliente'));
     }
 

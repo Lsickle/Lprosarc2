@@ -29,7 +29,10 @@
             </form>
             <!-- /.search form -->
             {{-- SideBar --}}
+            {{-- @if (Auth::user()->UsRol == "Cliente" || Auth::user()->UsRol == "admin") --}}
+                
                 {!! Menu::sidebar() !!}
+            {{-- @endif --}}
             {{-- /SideBar --}}
 
         </section>

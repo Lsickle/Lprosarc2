@@ -23,3 +23,4 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:api'], function () {
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_api_routes
 });
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');

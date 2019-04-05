@@ -43,7 +43,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -118,7 +118,7 @@ class RegisterController extends Controller
     public function verify($email)
     {
         $user = User::where('email', $email)->first();
-// return $confirmation_code;
+
         if (! $user){
             return redirect()->route('auth.register');
         }else{
