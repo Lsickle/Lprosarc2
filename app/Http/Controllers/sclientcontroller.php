@@ -28,7 +28,17 @@ class sclientcontroller extends Controller
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
                 ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->get();
-        } else{
+        }elseif(Auth::user()->UsRol === "Cliente"){
+            $cliente = Auth::user()->ID_Cli;
+            $sedes = DB::table('sedes')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+                ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->where('sedes.SedeDelete', 0)
+                ->where('FK_SedeCli', $cliente)
+                ->get();
+        }else{
             $sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
@@ -36,9 +46,9 @@ class sclientcontroller extends Controller
                 ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->where('sedes.SedeDelete', 0)
                 ->get();
-
         }
-        return view('sclientes.index', compact('sedes'));
+        return $cliente;
+        return view('sclientes.index', compact('sedes', 'cliente'));
         
     }
 

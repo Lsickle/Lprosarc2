@@ -53,8 +53,8 @@
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
-													
 												<div id="step-1" class="">
+
 													<div class="form-group">
                                                         <label for="ClienteInputNit">NIT</label>
                                                         <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
@@ -67,10 +67,12 @@
                                                         <label for="">Nombre Corto</label>
                                                         <input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
                                                     </div>
-                                                   
-												</div>
+
+                                                </div>
+                                                
 												<div id="step-2" class="">
-													<div class="col-md-12">
+
+													<div class="col-md-6">
                                                         <label for="sedeinputname">Nombre de la Sede</label>
                                                         <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true">
                                                     </div>
@@ -85,8 +87,8 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="GSedemunicipio">Municipio</label>
-                                                        <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required="true">
-                                                        <option value="1">Seleccione...</option>
+                                                        <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required>
+                                                        <option value="">Seleccione...</option>
                                                         @foreach ($Municipios as $Municipio)
                                                             <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
                                                         @endforeach
@@ -97,8 +99,12 @@
                                                         <input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
                                                     </div>
                                                     <div class="col-md-6">
+                                                        <label for="sedeinputemail">Email de la Sede</label>
+                                                        <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" required>
+                                                    </div>
+                                                    <div class="col-md-6">
                                                         <label for="sedeinputaddress">Direccion</label>
-                                                        <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true">
+                                                        <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required>
                                                     </div>
                                                     
                                                     <div class="col-md-6">
@@ -109,9 +115,6 @@
                                                         <label for="sedeinputext1">Ext 1</label>
                                                         <input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" max="9999">
                                                     </div>
-
-
-
                                                     <div class="col-md-6">
                                                         <label for="sedeinputphone2">telf local 2</label>
                                                         <input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16">
@@ -121,11 +124,10 @@
                                                         <input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999" >
                                                     </div>
 
-
+                                                    <input hidden value="1" name="number">
                                                     
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputemail">Email de la Sede</label>
-                                                        <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" required="true">
+                                                    <div class="box-footer" style="float:right; margin-right:5%">
+                                                        <button type="submit" class="btn btn-primary">Registrar</button>
                                                     </div>
 												</div>
 											</div>
@@ -133,9 +135,7 @@
 									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>
+								
 							</form>
 						</div>
 						<!-- /.box -->
@@ -150,4 +150,5 @@
 	</div>
 	<!-- /.box -->
 </div>
+
 @endsection

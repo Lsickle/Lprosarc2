@@ -89,7 +89,7 @@ class RegisterController extends Controller
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
                 'UsSlug'   => $data['name'].mt_rand(1,999),
-                'UsRol'    => "Usuario",
+                'UsRol'    => "Cliente",
                 'UsRolDesc'    => "Usuario General",
                 'UsRol2'    => "Usuario",
                 'UsRolDesc2'    => "Usuario General",
