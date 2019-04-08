@@ -14,7 +14,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="example1" class="table table-compact table-bordered table-striped">
+          <table id="clientesTable" class="table table-compact table-bordered table-striped">
             <thead>
               <tr>
                 <th>Categoria</th>
@@ -25,7 +25,7 @@
                 <th>Editar</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody onload="renderTable()" id="readyTable">
               @include('layouts.partials.spinner')
               @foreach($clientes as $cliente)
               <tr @if($cliente->CliDelete === 1)
