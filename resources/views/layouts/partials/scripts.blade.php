@@ -16,8 +16,11 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
+{{-- slider --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 @if(
-	Route::currentRouteName()=='cotizacion.create'||
 	Route::currentRouteName()=='cotizacion.index'
 )
 	<script>
@@ -57,18 +60,29 @@
 			/*funcion para resaltar las busquedas*/
 			var table = $('#cotizacionesTable').DataTable();
 
-			table.on( 'draw', function () {
+			table.on('draw', function redibujar() {
 				var body = $( table.table().body());
 				body.unhighlight();
 				body.highlight( table.search() );  
 			});
+      // alert('ready');
+      // function redibujar(){ 
+      //  alert('redibujar');
+      //  table.responsive.recalc(); 
+      // }; 
+      // document.setTimeout(redibujar, 10000); // 5 seconds 
+     
+      
+
 		}); 
+$(window).load(function(){ 
+    function show_popup(){ 
+     $("#cotizacionesTable").slideUp(); 
+    }; 
+    window.setTimeout(show_popup, 5000); // 5 seconds 
+}) 
 	</script>
 @endif
-
-{{-- slider --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
-  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 
 {{-- slider --}}
@@ -320,7 +334,7 @@
        "scrollX": false,
         "autoWidth": true,
         "keys": true,       
-       "responsive": true,
+        "responsive": true,
         "columnDefs": [ {
         "targets": 9,
         "data": "RespelSlug",
@@ -340,6 +354,11 @@
           return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";}}
       ]
     });
+    // var table = $('#RespelTable').DataTable();
+       
+    //       $('#RespelTable').css( 'display', 'table' );
+       
+    //   table.responsive.recalc();
   });
 </script>
 <script>
@@ -1327,7 +1346,6 @@ $(document).ready(function(){
 </script>
 
 @if(
-  Route::currentRouteName()=='tarifas.create'||
   Route::currentRouteName()=='tarifas.index'
 )
   <script>

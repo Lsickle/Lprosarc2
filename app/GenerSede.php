@@ -22,7 +22,7 @@ class GenerSede extends Model
 	}
 	public function generadors()
 	{
-	 return $this->belongsTo('App\Generador', 'FK_GSede' ,'ID_Gener');
+	 return $this->belongsTo('App\Generador', 'FK_GSede', 'ID_Gener');
 	}
 	public function SolicitudServicio()
     {
