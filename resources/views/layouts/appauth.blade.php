@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,6 +18,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{-- script de idioma --}}
+    <script>
+        //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
+        window.trans = @php
+            // copy all translations from /resources/lang/CURRENT_LOCALE/* to global JS variable
+            $lang_files = File::files(resource_path() . '/lang/' . App::getLocale());
+            $trans = [];
+            foreach ($lang_files as $f) {
+                $filename = pathinfo($f)['filename'];
+                $trans[$filename] = trans($filename);
+            }
+            $trans['adminlte_lang_message'] = trans('adminlte_lang::message');
+            echo json_encode($trans);
+            // echo $trans;
+        @endphp
+    </script>
     <noscript>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}
@@ -28,7 +45,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'LaraDex') }}
+                    {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -45,11 +62,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ trans('adminlte_lang::message.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ trans('adminlte_lang::message.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -62,7 +79,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ trans('adminlte_lang::message.signout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
