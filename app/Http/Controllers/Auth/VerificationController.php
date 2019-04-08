@@ -50,7 +50,7 @@ class VerificationController extends Controller
     public function show(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-                        ? redirect('clientes/create')
+                        ? redirect('/home')
                         : view('auth.verify');
     }
     /**
