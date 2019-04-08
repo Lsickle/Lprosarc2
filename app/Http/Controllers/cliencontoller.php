@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Departamento;
+use App\Municipio;
 use App\Cliente;
 use App\audit;
+use App\sede;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
@@ -21,10 +23,17 @@ class clientcontoller extends Controller
     {
         if(Auth::user()->UsRol === "Programador"){
             $clientes = Cliente::all();
+            $clientes = Cliente::where('CliDelete', 0)->get();
             return view('clientes.index', compact('clientes'));
         }
-        $clientes = Cliente::where('CliDelete', 0)->get();
-
+        if(Auth::user()->UsRol === "Cliente"){
+           return redirect()->route('sclientes.index');
+        }
+        // if(Auth::user()->UsRol === "Cliente"){
+        //     $cliente = Cientes::where()
+        // }
+        
+        
         return view('clientes.index', compact('clientes'));
     }
 
@@ -35,7 +44,13 @@ class clientcontoller extends Controller
      */
     public function create()
     {
-        return view('clientes.create');
+        if(Auth::user()->UsRol === "Cliente"){
+            $Departamentos = Departamento::all();
+            $Municipios = Municipio::all();
+            return view('clientes.create2', compact('Departamentos', 'Municipios'));
+        }else{
+            return view('clientes.create');
+        }
     }
 
     /**
@@ -46,6 +61,38 @@ class clientcontoller extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
+        if($request->input("number") == "1"){
+
+            $Cliente = new Cliente();
+            $Cliente->CliNit = $request->input('CliNit');
+            $Cliente->CliName = $request->input('CliName');
+            $Cliente->CliShortname = $request->input('CliShortname');
+            $Cliente->CliCategoria = 'Cliente';
+            // $Cliente->CliType = NULL;
+            $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
+            $Cliente->CliDelete = '0';
+            $Cliente->save();
+
+            $Sede = new Sede();
+            $Sede->SedeName = $request->input('SedeName');
+            $Sede->SedeAddress = $request->input('SedeAddress');
+            $Sede->SedePhone1 = $request->input('SedePhone1');
+            $Sede->SedeExt1 = $request->input('SedeExt1');
+            $Sede->SedePhone2 = $request->input('SedePhone2');
+            $Sede->SedeExt2 = $request->input('SedeExt2');
+            $Sede->SedeEmail = $request->input('SedeEmail');
+            $Sede->SedeCelular = $request->input('SedeCelular');
+            $Sede->SedeSlug = 'Sede-'.$request->input('SedeName');
+            $Sede->FK_SedeCli = $Cliente->ID_Cli;
+            $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+            $Sede->SedeDelete = 0;
+            $Sede->save();
+
+            return redirect()->route('clientes.index');
+
+        }else{
+
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
@@ -65,7 +112,7 @@ class clientcontoller extends Controller
         $log->save();
 
         return redirect()->route('clientes.index');
-        // return 'Saved';
+        }
     }
 
     /**
@@ -76,7 +123,12 @@ class clientcontoller extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        if(Auth::user()->UsRol === "Cliente"){
+            $user = Auth::user()->UsRol;
+
+            $cliente = cliente::where('CliSlug', $cliente)->first();
+            return view('clientes.show', compact('cliente', 'user'));
+        }
         return view('clientes.show', compact('cliente'));
         // return $cliente;
     }
@@ -89,7 +141,6 @@ class clientcontoller extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
         return view('clientes.edit', compact('cliente'));
     }
 

@@ -1435,10 +1435,11 @@ $(window).resize(function() {
 </script>
 @yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
-$(':submit').click(function() {
-    $(this).attr('disabled', 'disabled');
-});
+// <script>
+//   $(':submit').click(function() {
+//         $(this).attr('disabled','disabled');
+//   });
+// </script>
 
 </script>
 @if(

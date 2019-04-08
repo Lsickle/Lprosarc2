@@ -26,6 +26,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
 //    });
+// Route::get('/', function () {
+	// Only verified users may enter...
+	
+
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
