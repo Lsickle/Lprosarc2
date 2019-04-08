@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 
 
@@ -71,4 +71,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/logout', 'Auth\LoginController@logout');
 });

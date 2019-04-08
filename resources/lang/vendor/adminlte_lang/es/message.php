@@ -14,7 +14,7 @@ return [
     */
 
     'logged'                  => 'Usted está en el sistema!',
-    'someproblems'            => 'Hay algunos problemas con su entrada.',
+    'someproblems'            => 'Hay algún problema con sus datos.',
     'siginsession'            => 'Inicia sesión para acceder',
     'remember'                => 'Recuérdame',
     'buttonsign'              => 'Iniciar',
@@ -120,6 +120,7 @@ return [
     'address'                 => 'Dirección',
     'dropus'                  => 'Escríbanos',
     'yourname'                => 'Tu nombre',
+    'name'                    => 'Nombre',
     'emailaddress'            => 'Correo electrónico',
     'enteremail'              => 'Introducir el correo electrónico',
     'yourtext'                => 'Su Texto',
