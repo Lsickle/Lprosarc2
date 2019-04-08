@@ -2,7 +2,6 @@
 
 Aplicacion para administrar la informacion de los residuos peligrosos(Respel) en la Planta de tratamiento de Prosarc S.A ESP.
 
-
 ## Contributing
 
 - **[Luis De la hoz](https://github.com/Lsickle)**
