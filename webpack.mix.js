@@ -33,6 +33,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
+        'node_modules/inputmask/css/inputmask.css',
         'node_modules/select2/dist/css/select2.css'
     ], 'public/css/dependencias.css')
    .combine([
@@ -61,6 +62,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
         'node_modules/jquery-slimscroll/jquery.slimscroll.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
+        'node_modules/inputmask/dist/inputmask/inputmask.js',
+        'node_modules/inputmask/dist/inputmask/inputmask.date.extensions.js',
+        'node_modules/inputmask/dist/inputmask/inputmask.numeric.extensions.js',
         'node_modules/select2/dist/js/select2.full.js'
     ], 'public/js/dependencias.js')
    .scripts([
