@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        // $user = Auth::user();
+        $user = Auth::user();
         $this->middleware('guest');
     }
 
