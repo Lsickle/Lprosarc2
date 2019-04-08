@@ -11,6 +11,4 @@ Aplicacion para administrar la informacion de los residuos peligrosos(Respel) en
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Luis De la hoz via [sistemas@prosarc.com.co](mailto:sistemas@prosarc.com.co). All security vulnerabilities will be promptly addressed.
-
-## License
+If you discover a security vulnerability within Sigres, please send an e-mail to Luis De la hoz via [sistemas@prosarc.com.co](mailto:sistemas@prosarc.com.co). All security vulnerabilities will be promptly addressed.
