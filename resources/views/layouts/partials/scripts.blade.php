@@ -16,11 +16,6 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-{{-- slider --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
-<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
-
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
