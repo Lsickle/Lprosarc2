@@ -71,5 +71,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
-
 });
