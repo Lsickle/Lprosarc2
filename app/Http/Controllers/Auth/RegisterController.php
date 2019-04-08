@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/clientes/create';
 
     /**
      * Create a new controller instance.
@@ -71,11 +71,11 @@ class RegisterController extends Controller
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
                 'UsSlug'   => $data['name'].mt_rand(1,999),
-                'UsRol'    => "Usuario",
-                'UsRolDesc'    => "Usuario General",
+                'UsRol'    => "Cliente",
+                'UsRolDesc'    => "Cliente General",
                 'UsRol2'    => "Usuario",
                 'UsRolDesc2'    => "Usuario General",
-                'UsAvatar'    => "robot400x400.gif",
+                'UsAvatar'    => "1553803178git bot icon.png",
                 // 'FK_UserPers'    => "1",
                 // 'confirmation_code' => $data['name'].mt_rand(1,999),
                 // 'confirmed' => "0",

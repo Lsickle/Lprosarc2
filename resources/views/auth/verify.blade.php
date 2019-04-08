@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Verifica tu correo electrónico</div>
+@section('htmlheader_title','Verificación')
+@section('contentheader_title','Verificación de Correo ELectrónico')
 
-                <div class="card-body">
+@section('main-content')
+<div class="container-fluid spark-screen">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Verifica tu correo electrónico</h3>
+
+                <div class="box-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             Se ha enviado un nuevo enlace de verificación a su correo electrónico.

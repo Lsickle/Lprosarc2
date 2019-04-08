@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'sistemas3@prosarc.com.co'),
-        'name' => env('MAIL_FROM_NAME', 'Juan'),
+        'address' => env('MAIL_FROM_ADDRESS', 'register@prosarc.com.co'),
+        'name' => env('MAIL_FROM_NAME', 'Prosarc ESP'),
     ],
 
     /*
