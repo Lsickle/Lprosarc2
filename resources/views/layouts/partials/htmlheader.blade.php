@@ -25,16 +25,8 @@
     {{-- plugins de datatables --}}
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
 
-    {{-- selec2 --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-    {{-- select 2 --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-
-    {{-- script de idioma --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
   
     {{-- script de idioma --}}
     <script>

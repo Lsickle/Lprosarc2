@@ -20,7 +20,11 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        // return view('ordenCompra/cotizacion');
+        $variable = Sede::with('clientes.sede') 
+                ->where('ID_Sede', '=', '38')
+                ->select('clientes')
+                ->get();
+        return $variable;
 
         if(Auth::user()->UsRol === "Programador"){
             $cotizaciones = DB::table('cotizacions')
