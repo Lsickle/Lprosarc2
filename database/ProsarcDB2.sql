@@ -475,30 +475,30 @@ create table Tratamiento(
 
 /*tabla de requermientos del cliente por residuo "¡¡PENDIENTE!!"*/
 create table Requerimiento(
-	-- ReqFotoCargue boolean,
-	-- ReqFotoDescargue boolean,
-	-- ReqFotoPesaje boolean,
-	-- ReqFotoAlmacenado boolean,
-	-- ReqFotoMezclado boolean,
-	-- ReqFotoDestruccion boolean,
-	-- ReqVideoCargue boolean,
-	-- ReqVideoDescargue boolean,
-	-- ReqVideoPesaje boolean,
-	-- ReqVideoAlmacenado boolean,
-	-- ReqVideoMezclado boolean,
-	-- ReqVideoDestruccion boolean,
-	-- ReqAuditoria boolean,
-	-- ReqAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/
-	-- ReqDevolucion boolean,
-	-- ReqDevolucionTipo varchar(128), observacion de lo que se quiere que sea devuelto al cliente
-	-- ReqDatosPersonal boolean, /*datos de personal y vehiculo que van a la recogida de residuos*/
-	-- ReqPlanillas boolean, /*Planillas de pago de seguridad social*/
-	-- ReqAlistamiento boolean, /*Alistamiento de material*/
-	-- ReqCapacitacion boolean, /*Capacitación de personal dada por el cliente*/
-	-- ReqBascula boolean, /*Pesaje en báscula camionera*/
-	-- ReqMasPerson boolean, /*Personal adicional para cargue*/
-	-- ReqPlatform boolean, /*Vehículo con plataforma*/
-	-- ReqCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
+	ReqFotoCargue boolean,
+	ReqFotoDescargue boolean,
+	ReqFotoPesaje boolean,
+	ReqFotoAlmacenado boolean,
+	ReqFotoMezclado boolean,
+	ReqFotoDestruccion boolean,
+	ReqVideoCargue boolean,
+	ReqVideoDescargue boolean,
+	ReqVideoPesaje boolean,
+	ReqVideoAlmacenado boolean,
+	ReqVideoMezclado boolean,
+	ReqVideoDestruccion boolean,
+	ReqAuditoria boolean,
+	ReqAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/
+	ReqDevolucion boolean,
+	ReqDevolucionTipo varchar(128), observacion de lo que se quiere que sea devuelto al cliente
+	ReqDatosPersonal boolean, /*datos de personal y vehiculo que van a la recogida de residuos*/
+	ReqPlanillas boolean, /*Planillas de pago de seguridad social*/
+	ReqAlistamiento boolean, /*Alistamiento de material*/
+	ReqCapacitacion boolean, /*Capacitación de personal dada por el cliente*/
+	ReqBascula boolean, /*Pesaje en báscula camionera*/
+	ReqMasPerson boolean, /*Personal adicional para cargue*/
+	ReqPlatform boolean, /*Vehículo con plataforma*/
+	ReqCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
 	-- (SE CAMBIA ESTA TABLA PARA DEJARLA COMO TABLA DE UNION ENTRE RESPEL Y TRATAMIENTO CON SUS REQUERMIENTOS)
 	ID_Req int auto_increment unique,
 	FK_ReqRespel int, /*foranea de la tabla respel*/
@@ -520,6 +520,30 @@ create table SolicitudResiduo(
 	SolResKgRecibido int, /*cantidad en Kilogramos recibido*/
 	SolResKgConciliado int, /*cantidad en Kilogramos Conciliado*/
 	SolResKgTratado int, /*cantidad en Kilogramos Tratado*/
+	SolResFotoCargue boolean,
+	SolResFotoDescargue boolean,
+	SolResFotoPesaje boolean,
+	SolResFotoAlmacenado boolean,
+	SolResFotoMezclado boolean,
+	SolResFotoDestruccion boolean,
+	SolResVideoCargue boolean,
+	SolResVideoDescargue boolean,
+	SolResVideoPesaje boolean,
+	SolResVideoAlmacenado boolean,
+	SolResVideoMezclado boolean,
+	SolResVideoDestruccion boolean,
+	SolResAuditoria boolean,
+	SolResAuditoriaTipo varchar(16), /*"Presencial" / ""En linea"*/
+	SolResDevolucion boolean,
+	SolResDevolucionTipo varchar(128), /*observacion de lo que se quiere que sea devuelto al cliente*/
+	SolResDatosPersonal boolean, /*datos de personal y vehiculo que van a la recogida de residuos*/
+	SolResPlanillas boolean, /*Planillas de pago de seguridad social*/
+	SolResAlistamiento boolean, /*Alistamiento de material*/
+	SolResCapacitacion boolean, /*Capacitación de personal dada por el cliente*/
+	SolResBascula boolean, /*Pesaje en báscula camionera*/
+	SolResMasPerson boolean, /*Personal adicional para cargue*/
+	SolResPlatform boolean, /*Vehículo con plataforma*/
+	SolResCertiEspecial boolean, /*¿requiere valor especial en el certificado?*/
 	FK_SolResRespel int, /*foranea de la tabla de residuos*/
 	FK_SolResSolSer int, /*foranea de la tabla solicitud de servicio*/
 	primary key (ID_SolRes),

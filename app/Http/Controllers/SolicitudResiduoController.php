@@ -38,6 +38,9 @@ class SolicitudResiduoController extends Controller
      */
     public function create()
     {
+//         return $Servicio;
+        
+//           se ejecuta en el controlador de solicitud de servicio
         $SolRes = DB::table('solicitud_residuos')
             ->join('respels', 'solicitud_residuos.FK_SolResRespel', '=', 'respels.ID_Respel')
             ->select('respels.RespelName', 'respels.ID_Respel')

@@ -57,6 +57,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .combine([
         'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.css'
     ], 'public/css/datatable-plugins.css')
+   .combine([
+        'resources/assets/css/stilosPersonalizados.css'
+    ], 'public/css/stilosPersonalizados.css')
    .scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',

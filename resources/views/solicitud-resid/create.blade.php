@@ -31,6 +31,7 @@ Solicitudes de residuos
 							<form role="form" action="/solicitud-residuo" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
+									<input type="text" value="{{$Servicio->ID_SolSer}}" name="FK_SolResSolSer" id="FK_SolResSolSer">
 									<div class="col-md-6"> 
 										<label for="SolicitudResiduo">Respel</label>										
 										<select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" style="width: 100%" required>
