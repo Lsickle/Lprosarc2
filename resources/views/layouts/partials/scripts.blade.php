@@ -71,9 +71,6 @@
       //  table.responsive.recalc(); 
       // }; 
       // document.setTimeout(redibujar, 10000); // 5 seconds 
-     
-      
-
 		}); 
 $(window).load(function(){ 
     function show_popup(){ 
