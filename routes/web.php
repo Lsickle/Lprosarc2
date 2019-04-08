@@ -22,7 +22,7 @@ Route::get('/noscriptpage', function () {
     return view('noscriptpage');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
 //    });
