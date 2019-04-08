@@ -12,7 +12,7 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos Básicos de empresa</h3>
+					<h3 class="box-title">Datos Básicos de la empresa</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
 						<i class="fa fa-minus"></i></button>
@@ -124,18 +124,20 @@
                                                         <label for="sedeinputext2">Extensión 2</label>
                                                         <input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999">
                                                     </div>
-                                                    <div class="box-footer" style="float:left;">
-                                                        <button id="add" onclick="AddSedes()" class="btn btn-success"><i class="fas fa-plus"> </i> Agregar Sede</button>
-                                                    </div> 
-                                                    <div class="box-footer" style="float:left;">
-                                                        <button id="tel" onclick="Tel()"class="btn btn-info">Otro Teléfono</button>
+                                                    <div class="box-footer" style="display:flex; justify-content:center">
+                                                        <a id="tel" onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
                                                     </div>
                                                     <div id="divSede">
                                                     </div>
                                                     <input hidden value="1" name="number">
-                                                    
-                                                    <div class="box-footer" style="float:right; margin-right:5%">
-                                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                                    <div class="col-md-12">
+
+                                                        <div class="box-footer" style="float:left;">
+                                                            <a id="add" onclick="AddSedes()" class="btn btn-success"><i class="fas fa-plus"> </i> Agregar Sede</a>
+                                                        </div> 
+                                                        <div class="box-footer" style="float:right; margin-right:5%">
+                                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                                        </div>
                                                     </div>
 												</div>
 											</div>
@@ -164,98 +166,25 @@
         document.getElementById("tel").style.display = "none";
     }
     var contador = 1;
-		function AddSedes(){
-            var Sede = '
-<div id="Sede">
-<div id="container['+contador+']">
-<div class="col-md-12">
-<h2>Sede
-<button id="delete['+contador+']" onclick="fin()" class="btn btn-danger" style="float:right;"><i class="fas fa-plus"> </i> Borrar</button>
-</h2></div>
-<div class="col-md-6">
-<label for="sedeinputname['+contador+']">Nombre</label>
-<input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true">
-</div>
-<div class="col-md-6">
-<label for="sedeinputemail['+contador+']">Email</label>
-<input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required>
-</div>
-<div class="col-md-6">
-<label for="departamento['+contador+']">Departamento</label>
-<select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true">
-<option value="">Seleccione...</option>
-@foreach ($Departamentos as $Departamento)		
-<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
-@endforeach
-</select>
-</div>
-<div class="col-md-6">
-<label for="GSedemunicipio['+contador+']">Municipio</label>
-<select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled>
-<option value="">Seleccione...</option>
-@foreach ($Municipios as $Municipio)
-<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-@endforeach
-</select>
-</div>
-<div class="col-md-6">
-<label for="sedeinputcelular['+contador+']">Celular</label>
-<input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']">
-</div>
-<div class="col-md-6">
-<label for="sedeinputaddress['+contador+']">Dirección</label>
-<input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required>
-</div>
-<div class="col-md-6">
-<label for="sedeinputphone1['+contador+']">Teléfono</label>
-<input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16">
-</div>
-<div class="col-md-6">
-<label for="sedeinputext1['+contador+']">Extensión</label>
-<input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999">
-</div>
-<div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;">
-<label for="telefono2['+contador+']">Teléfono 2</label>
-<input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2['+contador+']" maxlength="16">
-</div>
-<div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;">
-<label for="ext2['+contador+']">Extensión 2</label>
-<input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2['+contador+']" max="9999">
-</div>
-<div class="box-footer" style="float:left;">
-<div class="col-md-6">
-<button id="add['+contador+']" onclick="AddSedes()" class="btn btn-success"><i class="fas fa-plus"> </i> Agregar Sede</button>
-</div>
-</div>
-<div class="box-footer" style="float:left;">
-<div class="col-md-6">
-<button class="btn btn-info" id="tel['+contador+']" onclick="TelExt()">Otro Teléfono</button>
-</div>
-</div>
-</div>';
-
-
+    function AddSedes(){
+        var Sede = '<div id="Sede"><div class="col-md-12"><h2>Sede <a id="delete['+contador+']" onclick="fin()" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a></h2></div><div class="col-md-6"><label for="sedeinputname['+contador+']">Nombre</label><input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true"></div><div class="col-md-6"><label for="sedeinputemail['+contador+']">Email</label><input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required></div><div class="col-md-6"><label for="departamento['+contador+']">Departamento</label><select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true"><option value="">Seleccione...</option>@foreach ($Departamentos as $Departamento)		<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>@endforeach</select></div><div class="col-md-6"><label for="GSedemunicipio['+contador+']">Municipio</label><select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled><option value="">Seleccione...</option>@foreach ($Municipios as $Municipio)<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>@endforeach</select></div><div class="col-md-6"><label for="sedeinputcelular['+contador+']">Celular</label><input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']"></div><div class="col-md-6"><label for="sedeinputaddress['+contador+']">Dirección</label><input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required></div><div class="col-md-6"><label for="sedeinputphone1['+contador+']">Teléfono</label><input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16"></div><div class="col-md-6"><label for="sedeinputext1['+contador+']">Extensión</label><input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999"></div><div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;"><label for="telefono2['+1+']">Teléfono 2</label><input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;"><label for="ext2['+1+']">Extensión 2</label><input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2" max="9999"></div><div class="box-footer" style="display:flex; justify-content:center"><a class="btn btn-info" id="tel['+contador+']" onclick="TelExt()" name="tel">Otro Teléfono</a></div></div>';
 
 $("#divSede").append(Sede);
-document.getElementById("add").style.display = "none";
+// $("#sedeinputphone1['+contador+']").children(Sede).remove();
 
-// document.getElementById("add['+contador+']").style.display = "none";
-
-contador= parseInt(contador)+1;
 
     function TelExt(){
-        document.getElementById("telefono2['+contador+']").style.display = "block";
-        document.getElementById("ext2['+contador+']").style.display = "block";
-        document.getElementById("tel['+contador+']").style.display = "none";
+        document.getElementsByName("SedePhone2").style.display = "block";
+        document.getElementsByName("SedeExt2").style.display = "block";
+        document.getElementsByName("tel").style.display = "none";
     }
     function fin(){
-        document.getElementById("container['+contador+']").style.display = "none";
+        document.getElementById("container['+contador+']").hidden;
     }
+    contador= parseInt(contador)+1;
+
 }
-    function AgregarRegistro(id) {
-			
-			
-		}
+
 </script>
 
 @endsection
