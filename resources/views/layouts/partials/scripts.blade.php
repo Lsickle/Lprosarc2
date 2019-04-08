@@ -1320,11 +1320,11 @@ $(document).ready(function(){
 @yield('NewScript')
 
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
-  $(':submit').click(function() {
-        $(this).attr('disabled','disabled');
-  });
-</script>
+// <script>
+//   $(':submit').click(function() {
+//         $(this).attr('disabled','disabled');
+//   });
+// </script>
 
 @if(
   Route::currentRouteName()=='tarifas.create'||
