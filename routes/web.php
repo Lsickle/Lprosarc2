@@ -73,3 +73,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
