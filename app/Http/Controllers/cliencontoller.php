@@ -45,9 +45,15 @@ class clientcontoller extends Controller
     public function create()
     {
         if(Auth::user()->UsRol === "Cliente"){
+            if(isset($_POST['Departamento'])){
+                $Municipios = Municipio::where('FK_MunCity', $_POST['Departamento']);
+            }else{
+                $Municipios = Municipio::where('FK_MunCity', 0);
+            }
+            
             $Departamentos = Departamento::all();
-            $Municipios = Municipio::all();
-            return view('clientes.create2', compact('Departamentos', 'Municipios'));
+           
+            return view('clientes.create2', compact('Departamentos', 'Municipios', 'Departamento'));
         }else{
             return view('clientes.create');
         }

@@ -83,10 +83,10 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="departamento">Departamento</label>
-                                                        <select class="form-control" id="departamento" name="Departamento" required="true">
-                                                            <option value="">Seleccione...</option>
+                                                        <select class="form-control" id="departamento" name="Departamento" required="true" >
+                                                            {{-- <option value="">Seleccione...</option> --}}
                                                             @foreach ($Departamentos as $Departamento)		
-                                                                <option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+                                                                <option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -165,25 +165,39 @@
         document.getElementById("sedeinputext2").style.display = "block";
         document.getElementById("tel").style.display = "none";
     }
+    function enabled(){
+        // var Departamento =document.getElementById("Departamento").value;
+        // if(Departamento !== ""){
+            var Departamento = document.getElementById("departamento").value;
+        // }
+            $.ajax({
+            type:'post',
+            url:'../app/Http/Controllers/cliencontroller.php',
+            data:Departamento   
+        });
+        document.getElementById("GSedemunicipio").disabled = false;
+    }
     var contador = 1;
     function AddSedes(){
-        var Sede = '<div id="Sede"><div class="col-md-12"><h2>Sede <a id="delete['+contador+']" onclick="fin()" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a></h2></div><div class="col-md-6"><label for="sedeinputname['+contador+']">Nombre</label><input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true"></div><div class="col-md-6"><label for="sedeinputemail['+contador+']">Email</label><input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required></div><div class="col-md-6"><label for="departamento['+contador+']">Departamento</label><select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true"><option value="">Seleccione...</option>@foreach ($Departamentos as $Departamento)		<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>@endforeach</select></div><div class="col-md-6"><label for="GSedemunicipio['+contador+']">Municipio</label><select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled><option value="">Seleccione...</option>@foreach ($Municipios as $Municipio)<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>@endforeach</select></div><div class="col-md-6"><label for="sedeinputcelular['+contador+']">Celular</label><input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']"></div><div class="col-md-6"><label for="sedeinputaddress['+contador+']">Dirección</label><input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required></div><div class="col-md-6"><label for="sedeinputphone1['+contador+']">Teléfono</label><input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16"></div><div class="col-md-6"><label for="sedeinputext1['+contador+']">Extensión</label><input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999"></div><div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;"><label for="telefono2['+1+']">Teléfono 2</label><input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;"><label for="ext2['+1+']">Extensión 2</label><input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2" max="9999"></div><div class="box-footer" style="display:flex; justify-content:center"><a class="btn btn-info" id="tel['+contador+']" onclick="TelExt()" name="tel">Otro Teléfono</a></div></div>';
+        var Sede = '<div id="Sede['+contador+']"><div class="col-md-12"><h2>Sede <a id="delete['+contador+']" onclick="fin('+contador+')" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a></h2></div><div class="col-md-6"><label for="sedeinputname['+contador+']">Nombre</label><input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true"></div><div class="col-md-6"><label for="sedeinputemail['+contador+']">Email</label><input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required></div><div class="col-md-6"><label for="departamento['+contador+']">Departamento</label><select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true" ><option value="">Seleccione...</option>@foreach ($Departamentos as $Departamento)		<option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>@endforeach</select></div><div class="col-md-6"><label for="GSedemunicipio['+contador+']">Municipio</label><select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled="true"><option value="">Seleccione...</option>@foreach ($Municipios as $Municipio)<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>@endforeach</select></div><div class="col-md-6"><label for="sedeinputcelular['+contador+']">Celular</label><input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']"></div><div class="col-md-6"><label for="sedeinputaddress['+contador+']">Dirección</label><input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required></div><div class="col-md-6"><label for="sedeinputphone1['+contador+']">Teléfono</label><input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16"></div><div class="col-md-6"><label for="sedeinputext1['+contador+']">Extensión</label><input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999"></div><div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;"><label for="telefono2['+contador+']">Teléfono 2</label><input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2['+contador+']" maxlength="16"></div><div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;"><label for="ext2['+contador+']">Extensión 2</label><input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2['+contador+']" max="9999"></div><div class="box-footer" style="display:flex; justify-content:center"><a class="btn btn-info" id="tel['+contador+']" onclick="TelExt('+contador+')" name="tel">Otro Teléfono</a></div></div></div>';
 
-$("#divSede").append(Sede);
+        $("#divSede").append(Sede);
 // $("#sedeinputphone1['+contador+']").children(Sede).remove();
 
 
-    function TelExt(){
-        document.getElementsByName("SedePhone2").style.display = "block";
-        document.getElementsByName("SedeExt2").style.display = "block";
-        document.getElementsByName("tel").style.display = "none";
-    }
-    function fin(){
-        document.getElementById("container['+contador+']").hidden;
-    }
+    
     contador= parseInt(contador)+1;
-
 }
+    
+    function TelExt(id){
+        document.getElementById("SedePhone2"+id).style.display = "block";
+        document.getElementById("SedeExt2"+id).style.display = "block";
+        document.getElementById("tel"+id).style.display = "none";
+    }
+    function fin(id){
+        document.getElementById("Sede"+id).style.display = "none";
+    }
+    
 
 </script>
 
