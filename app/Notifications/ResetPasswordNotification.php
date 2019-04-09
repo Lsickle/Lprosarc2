@@ -2,20 +2,37 @@
 
 namespace App\Notifications;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyEmail extends Notification
+class ResetPasswordNotification extends Notification
 {
+    /**
+     * The password reset token.
+     *
+     * @var string
+     */
+    public $token;
+
     /**
      * The callback that should be used to build the mail message.
      *
      * @var \Closure|null
      */
     public static $toMailCallback;
+
+    /**
+     * Create a notification instance.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
 
     /**
      * Get the notification's channels.
@@ -37,32 +54,16 @@ class VerifyEmail extends Notification
     public function toMail($notifiable)
     {
         if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable);
+            return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
 
         return (new MailMessage)
-            ->subject('Confirmación de correo electrónico')
+            ->subject('Restauración de contraseña')
             ->greeting('¡Hola!, '.$notifiable->name)
-            ->line('Bienvenido(a), esperamos que tenga una excelente experiencia con nosotros, por favor, haga clic en el botón de abajo para verificar su dirección de correo electrónico.')
-            ->action(
-                'Confirmar',
-                $this->verificationUrl($notifiable)
-            )
-            ->line('Si no ha creado una cuenta, no se requiere ninguna acción adicional.')
+            ->line('Ha recibido este mensaje porque se solicitó un restablecimiento de contraseña para su cuenta, por favor, haga clic en el botón de abajo para realizar el cambio de su contraseña.')
+            ->action('Restablecer', url(config('app.url').route('password.reset', $this->token, false)))
+            ->line('Si no ha solicitado el restablecimiento de contraseña, omita este correo electrónico.')
             ->salutation('Saludos, Prosarc S.A ESP');
-    }
-
-    /**
-     * Get the verification URL for the given notifiable.
-     *
-     * @param  mixed  $notifiable
-     * @return string
-     */
-    protected function verificationUrl($notifiable)
-    {
-        return URL::temporarySignedRoute(
-            'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
-        );
     }
 
     /**

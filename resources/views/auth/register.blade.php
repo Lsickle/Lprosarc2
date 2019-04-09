@@ -4,20 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="margin-top: 10%;">
-                <div class="card-header">{{ trans('adminlte_lang::message.registermember') }}</div>
+            <div class="card">
+                <div class="card-header">{{ trans('adminlte_lang::message.register') }}</div>
 
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -65,7 +54,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ trans('adminlte_lang::message.retypepassword') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ trans('adminlte_lang::message.confirmpassword') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>

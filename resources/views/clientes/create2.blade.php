@@ -55,23 +55,44 @@
 								            <div class="row">
 												<div id="step-1" class="">
 
-													<div class="form-group">
+													<div class="col-md-12">
                                                         <label for="ClienteInputNit">NIT</label>
                                                         <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="ClienteInputRazon">Razon Social</label>
+                                                    <div class="col-md-12">
+                                                        <label for="ClienteInputRazon">Razón Social</label>
                                                         <input required="true" name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="">Nombre Corto</label>
+                                                    <div class="col-md-12">
+                                                        <label for="ClienteInputNombre">Nombre Corto</label>
                                                         <input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <label for="tipo">Tipo de Empresa</label>
+                                                        <select class="form-control" id="tipo" name="CliType" required>
+                                                            <option onclick="HiddenOtroType()" value="">Seleccione...</option>
+                                                            <option onclick="HiddenOtroType()">Organico</option>
+                                                            <option onclick="HiddenOtroType()">Biologico</option>
+                                                            <option onclick="HiddenOtroType()">Industrial</option>
+                                                            <option onclick="HiddenOtroType()" >Medicamentos</option>
+                                                            <option onclick="OtroType()">Otro</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6" id="otroTyp">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="categoria">Categoría</label>
+                                                        <select class="form-control" id="categoria" name="CliCategoria" required>
+                                                            <option value="">Seleccione...</option>
+                                                            <option>Cliente</option>
+                                                            <option>Transportador</option>
+                                                            <option>Proveedor</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-
                                                 <div id="step-2" class="">
                                                     <div class="col-md-12">
-                                                        <h2>Sede</h2>
+                                                        <h2>Sede Principal</h2>
                                                     </div>
 													<div class="col-md-6">
                                                         <label for="sedeinputname">Nombre</label>
@@ -84,9 +105,9 @@
                                                     <div class="col-md-6">
                                                         <label for="departamento">Departamento</label>
                                                         <select class="form-control" id="departamento" name="Departamento" required="true" >
-                                                            {{-- <option value="">Seleccione...</option> --}}
+                                                            <option onclick="Disabled()" value="">Seleccione...</option>
                                                             @foreach ($Departamentos as $Departamento)		
-                                                                <option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>
+                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -107,6 +128,7 @@
                                                         <label for="sedeinputaddress">Dirección</label>
                                                         <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required>
                                                     </div>
+                                                    
                                                     <div class="col-md-6">
                                                         <label for="sedeinputphone1">Teléfono</label>
                                                         <input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16">
@@ -115,30 +137,23 @@
                                                         <label for="sedeinputext1">Extensión</label>
                                                         <input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" max="9999">
                                                     </div>
-
-                                                    <div class="col-md-6" id="sedeinputphone2" style="display: none;">
-                                                        <label for="sedeinputphone2">Teléfono 2</label>
-                                                        <input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16">
-                                                    </div>
-                                                    <div class="col-md-6" id="sedeinputext2" style="display: none;">
-                                                        <label for="sedeinputext2">Extensión 2</label>
-                                                        <input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999">
+                                                    <div id="telefono2">
                                                     </div>
                                                     <div class="box-footer" style="display:flex; justify-content:center">
                                                         <a id="tel" onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
                                                     </div>
                                                     <div id="divSede">
                                                     </div>
+                                                    <p id="p"></p>
                                                     <input hidden value="1" name="number">
                                                     <div class="col-md-12">
-
                                                         <div class="box-footer" style="float:left;">
                                                             <a id="add" onclick="AddSedes()" class="btn btn-success"><i class="fas fa-plus"> </i> Agregar Sede</a>
                                                         </div> 
                                                         <div class="box-footer" style="float:right; margin-right:5%">
                                                             <button type="submit" class="btn btn-primary">Registrar</button>
                                                         </div>
-                                                    </div>
+											    	</div>
 												</div>
 											</div>
 										</div>
@@ -161,42 +176,115 @@
 </div>
 <script>
     function Tel(){
-        document.getElementById("sedeinputphone2").style.display = "block";
-        document.getElementById("sedeinputext2").style.display = "block";
-        document.getElementById("tel").style.display = "none";
+        var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
+        $('#telefono2').append(Telefono);
+        $('#tel').remove();
     }
-    function enabled(){
-        // var Departamento =document.getElementById("Departamento").value;
-        // if(Departamento !== ""){
-            var Departamento = document.getElementById("departamento").value;
-        // }
-            $.ajax({
-            type:'post',
-            url:'../app/Http/Controllers/cliencontroller.php',
-            data:Departamento   
-        });
+    function Enabled(){
+        var Departamento = document.getElementById("departamento").value;
+
+        $("#p").load("../Http/Controllers/cliencontroller.php",{Departamento}); 
+        // $.ajax({
+        //     type:'post',
+        //     url:'/app/Http/Controllers/cliencontroller.php',
+        //     data:Departamento,
+        // });
+
         document.getElementById("GSedemunicipio").disabled = false;
+        // alert(Departamento);
     }
-    var contador = 1;
-    function AddSedes(){
-        var Sede = '<div id="Sede['+contador+']"><div class="col-md-12"><h2>Sede <a id="delete['+contador+']" onclick="fin('+contador+')" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a></h2></div><div class="col-md-6"><label for="sedeinputname['+contador+']">Nombre</label><input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true"></div><div class="col-md-6"><label for="sedeinputemail['+contador+']">Email</label><input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required></div><div class="col-md-6"><label for="departamento['+contador+']">Departamento</label><select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true" ><option value="">Seleccione...</option>@foreach ($Departamentos as $Departamento)		<option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>@endforeach</select></div><div class="col-md-6"><label for="GSedemunicipio['+contador+']">Municipio</label><select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled="true"><option value="">Seleccione...</option>@foreach ($Municipios as $Municipio)<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>@endforeach</select></div><div class="col-md-6"><label for="sedeinputcelular['+contador+']">Celular</label><input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']"></div><div class="col-md-6"><label for="sedeinputaddress['+contador+']">Dirección</label><input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required></div><div class="col-md-6"><label for="sedeinputphone1['+contador+']">Teléfono</label><input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16"></div><div class="col-md-6"><label for="sedeinputext1['+contador+']">Extensión</label><input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999"></div><div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;"><label for="telefono2['+contador+']">Teléfono 2</label><input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2['+contador+']" maxlength="16"></div><div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;"><label for="ext2['+contador+']">Extensión 2</label><input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2['+contador+']" max="9999"></div><div class="box-footer" style="display:flex; justify-content:center"><a class="btn btn-info" id="tel['+contador+']" onclick="TelExt('+contador+')" name="tel">Otro Teléfono</a></div></div></div>';
+    function Disabled(){
+        document.getElementById("GSedemunicipio").disabled = true;
+    }
 
-        $("#divSede").append(Sede);
-// $("#sedeinputphone1['+contador+']").children(Sede).remove();
+    function OtroType(){
+        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType"></div>';
+        $('#otroTyp').append(Otro);
+    }
+    function HiddenOtroType(){
+        $('#otroType').remove();
+    }
+    
+//     var contador = 1;
+//     function AddSedes(){
+//         var Sede = '
+// <div id="Sede['+contador+']">
+// <div class="col-md-12">
+// <h2>Sede 
+// <a id="delete['+contador+']" onclick="fin('+contador+')" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a>
+// </h2></div>
+// <div class="col-md-6">
+// <label for="sedeinputname['+contador+']">Nombre</label>
+// <input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true">
+// </div>
+// <div class="col-md-6">
+// <label for="sedeinputemail['+contador+']">Email</label>
+// <input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required>
+// </div>
+// <div class="col-md-6">
+// <label for="departamento['+contador+']">Departamento</label>
+// <select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true" >
+// <option value="">Seleccione...</option>
+// @foreach ($Departamentos as $Departamento)		
+// <option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>
+// @endforeach
+// </select>
+// </div>
+// <div class="col-md-6">
+// <label for="GSedemunicipio['+contador+']">Municipio</label>
+// <select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled="true">
+// <option value="">Seleccione...</option>
+// @foreach ($Municipios as $Municipio)
+// <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+// @endforeach
+// </select>
+// </div>
+// <div class="col-md-6">
+// <label for="sedeinputcelular['+contador+']">Celular</label>
+// <input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']">
+// </div>
+// <div class="col-md-6">
+// <label for="sedeinputaddress['+contador+']">Dirección</label>
+// <input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required>
+// </div>
+// <div class="col-md-6">
+// <label for="sedeinputphone1['+contador+']">Teléfono</label>
+// <input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16">
+// </div>
+// <div class="col-md-6">
+// <label for="sedeinputext1['+contador+']">Extensión</label>
+// <input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999">
+// </div>
+// <div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;">
+// <label for="telefono2['+contador+']">Teléfono 2</label>
+// <input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2['+contador+']" maxlength="16">
+// </div>
+// <div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;">
+// <label for="ext2['+contador+']">Extensión 2</label>
+// <input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2['+contador+']" max="9999">
+// </div>
+// <div class="box-footer" style="display:flex; justify-content:center">
+// <a class="btn btn-info" id="tel['+contador+']" onclick="TelExt('+contador+')" name="tel">Otro Teléfono</a>
+// </div>
+// </div>
+// </div>';
+
+//         $("#divSede").append(Sede);
+// // $("#sedeinputphone1['+contador+']").children(Sede).remove();
 
 
     
-    contador= parseInt(contador)+1;
-}
+//     contador= parseInt(contador)+1;
+// }
     
-    function TelExt(id){
-        document.getElementById("SedePhone2"+id).style.display = "block";
-        document.getElementById("SedeExt2"+id).style.display = "block";
-        document.getElementById("tel"+id).style.display = "none";
-    }
-    function fin(id){
-        document.getElementById("Sede"+id).style.display = "none";
-    }
+//     function TelExt(id){
+//         document.getElementById("SedePhone2"+id).style.display = "block";
+//         document.getElementById("SedeExt2"+id).style.display = "block";
+//         document.getElementById("tel"+id).style.display = "none";
+//     }
+//     function fin(id){
+//         document.getElementById("Sede"+id).style.display = "none";
+//     }
     
 
 </script>

@@ -185,13 +185,13 @@ Editar Solicitud de servicio
                                                             <div class="divReq">
                                                                 <label title="Foto Cargue">F.Ca</label>
                                                                 <label title="Foto Descargue">F.De</label>
-                                                                <label title="Foto Persaje">F.Pe</label>
+                                                                <label title="Foto Pesaje">F.Pe</label>
                                                                 <label title="Foto Reempacado">F.Re</label>
                                                                 <label title="Foto Mezclaje">F.Me</label>
                                                                 <label title="Foto Destrucción">F.Des</label>
                                                                 <label title="Video Cargue">V.Ca</label>
                                                                 <label title="Video Descargue">V.De</label>
-                                                                <label title="Video Persaje">V.Pe</label>
+                                                                <label title="Video Pesaje">V.Pe</label>
                                                                 <label title="Video Reempacado">V.Re</label>
                                                                 <label title="Video Mezclaje">V.Me</label>
                                                                 <label title="Video Destrucción">V.Des</label>
