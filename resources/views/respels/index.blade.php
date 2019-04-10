@@ -13,8 +13,7 @@
           <a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
         </div>
         <!-- /.box-header -->
-        <div class="box-body">
-          <table id="RespelTable" class="table table-bordered table-striped">
+        <div class="box-body" style="color: white; border-color:white;">
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -35,7 +34,7 @@
 
               </tr>
             </thead>
-            <tbody hidden onload="renderTable()" id="readyTable">
+            <tbody onload="renderTable()" id="readyTable">
               {{-- <h1 id="loadingTable">LOADING...</h1> --}}
               <div class="fingerprint-spinner" id="loadingTable">
                 <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>

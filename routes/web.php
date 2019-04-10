@@ -72,4 +72,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
+	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
 });

@@ -185,4 +185,16 @@ class sclientcontroller extends Controller
 
         return redirect()->route('sclientes.index');
     }
+
+    public function getMunicipio(Request $request, $id) 
+    { //Llamado de los modelos para select dependientes de estado 
+        if($request->ajax())
+        { 
+            $municipios = Municipio::where('FK_MunCity',$id)->get();
+            return response()->json($municipios); 
+        }
+        return $municipios;
+    }
+
+
 }
