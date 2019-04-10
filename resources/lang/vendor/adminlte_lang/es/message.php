@@ -128,6 +128,7 @@ return [
     'email'                   => 'Correo Electrónico',
     'username'                => 'Nombre de usuario',
     'password'                => 'Contraseña',
+    'confirmpassword'         => 'Confirmar contraseña',
     'retypepassword'          => 'Vuelva a escribir la contraseña',
     'fullname'                => 'Nombre completo',
     'registererror'           => 'Error de Registro!',
