@@ -11,6 +11,9 @@ use App\sede;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
+use App\Area;
+use App\Cargo;
+use App\Personal;
 
 class clientcontoller extends Controller
 {
@@ -42,17 +45,21 @@ class clientcontoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function Ajax(Request $request, $id){
+        if($request->ajax()){ 
+            // $expediente = Expediente::create($request->all());
+            // return "im in AjaxController index";
+            $Municipios = Municipio::where('FK_MunCity', $id)->get();
+            return response()->json(['message' => 'Insertado correctamente']);
+
+            // $Departamento = $_POST['departamento'];
+        }
+    }
+    public function create(Request $request)
     {
         if(Auth::user()->UsRol === "Cliente"){
-            if(isset($_REQUEST['Departamento'])){
-
-                $Municipios = Municipio::where('FK_MunCity', $_REQUEST['Departamento']);
-            }else{
-                echo "Null";
-                $Municipios = Municipio::where('FK_MunCity', 0);
-            }
-            // $Municipios = Municipio::all();
+            // $Municipios = Municipio::where('FK_MunCity', 1)->get();
+            $Municipios = Municipio::all();
             $Departamentos = Departamento::all();
            
             return view('clientes.create2', compact('Departamentos', 'Municipios', 'Departamento'));
@@ -96,6 +103,25 @@ class clientcontoller extends Controller
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->SedeDelete = 0;
             $Sede->save();
+            
+            $Area = new Area();
+            $Area->AreaName = $request->input("AreaName");
+            $Area->save();
+            
+            $Cargo = new Cargo();
+            $Cargo->CargName = $request->input("CargName");
+            $Cargo->save();
+            
+            $Personal = new Personal();
+            $Personal->PersFirstName = $request->input("PersFirstName"); 
+            $Personal->PersLastName = $request->input("PersLastName"); 
+            $Personal->PersEmail = $request->input("PersEmail"); 
+            $Personal->PersSecondName = $request->input("PersSecondName"); 
+            $Personal->PersType = 1;//falta definir que boolean es externo
+            $Personal->save();
+
+            
+
 
             return redirect()->route('clientes.index');
 
@@ -110,14 +136,6 @@ class clientcontoller extends Controller
         $Cliente->CliSlug = 'Cli-'.$request->input('CliShortname');
         $Cliente->CliDelete = '0';
         $Cliente->save();
-
-        $log = new audit();
-        $log->AuditTabla="clientes";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Cliente->ID_Cli;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
         return redirect()->route('clientes.index');
         }

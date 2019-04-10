@@ -34,6 +34,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 	Route::resource('/clientes', 'clientcontoller');
+	Route::post('/clientes-2/{id}', 'clientcontoller@Ajax');
+	// Route::post('/clientes-2', 'clientcontoller@create', fuction()){
+	// 	if(Request::ajax()){      
+	// 		return  Response::json(Request::all());
+	// 	};
+	// }
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');

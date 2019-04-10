@@ -50,6 +50,7 @@
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la Empresa</small></a></li>
 												<li><a href="#step-2"><b>Paso 2</b><br /><small>Datos de la sede</small></a></li>
+												<li><a href="#step-3"><b>Paso 3</b><br /><small>Datos de la persona de Contacto</small></a></li>
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
@@ -80,6 +81,7 @@
                                                     </div>
                                                     <div class="col-md-6" id="otroTyp">
                                                     </div>
+                                                    {{-- @if(Auth::user()->UsRol !== "Cliente") --}}
                                                     <div class="col-md-6">
                                                         <label for="categoria">Categoría</label>
                                                         <select class="form-control" id="categoria" name="CliCategoria" required>
@@ -89,6 +91,7 @@
                                                             <option>Proveedor</option>
                                                         </select>
                                                     </div>
+                                                    {{-- @endif --}}
                                                 </div>
                                                 <div id="step-2" class="">
                                                     <div class="col-md-12">
@@ -107,17 +110,17 @@
                                                         <select class="form-control" id="departamento" name="Departamento" required="true" >
                                                             <option onclick="Disabled()" value="">Seleccione...</option>
                                                             @foreach ($Departamentos as $Departamento)		
-                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
+                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled({{$Departamento->ID_Depart}})">{{$Departamento->DepartName}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="GSedemunicipio">Municipio</label>
                                                         <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required disabled>
-                                                        <option value="">Seleccione...</option>
-                                                        @foreach ($Municipios as $Municipio)
-                                                            <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-                                                        @endforeach
+                                                            <option value="">Seleccione...</option>
+                                                            @foreach ($Municipios as $Municipio) 
+                                                                <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
@@ -144,17 +147,40 @@
                                                     </div>
                                                     <div id="divSede">
                                                     </div>
-                                                    <p id="p"></p>
+                                                </div>
+                                                <div id="step-3" class="">
+                                                    <h2>Persona de Contacto</h2>
+                                                    <div class="col-md-6">
+                                                        <label for="AreaName">Area</label>
+                                                        <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="CargName">Cargo</label>
+                                                        <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="PersFirstName">Nombre</label>
+                                                        <input type="text" class="form-control" id="PersFirstName" placeholder="Nombre de la Persona" name="PersFirstName">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="PersLastName">Apellido</label>
+                                                        <input type="text" class="form-control" id="PersLastName" placeholder="Apellido de la Persona" name="PersLastName">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="PersEmail">Email</label>
+                                                        <input type="text" class="form-control" id="PersEmail" placeholder="Email de la Persona" name="PersEmail">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="PersSecondName">Celular</label>
+                                                        <input type="text" class="form-control" id="PersSecondName" placeholder="Numero de celular" name="PersCellphone">
+                                                    </div>
                                                     <input hidden value="1" name="number">
                                                     <div class="col-md-12">
-                                                        <div class="box-footer" style="float:left;">
-                                                            <a id="add" onclick="AddSedes()" class="btn btn-success"><i class="fas fa-plus"> </i> Agregar Sede</a>
-                                                        </div> 
                                                         <div class="box-footer" style="float:right; margin-right:5%">
                                                             <button type="submit" class="btn btn-primary">Registrar</button>
                                                         </div>
-											    	</div>
-												</div>
+                                                    </div>
+                                                </div>
 											</div>
 										</div>
 									</div>
@@ -180,15 +206,29 @@
         $('#telefono2').append(Telefono);
         $('#tel').remove();
     }
-    function Enabled(){
-        var Departamento = document.getElementById("departamento").value;
-
-        $("#p").load("../Http/Controllers/cliencontroller.php",{Departamento}); 
-        // $.ajax({
-        //     type:'post',
-        //     url:'/app/Http/Controllers/cliencontroller.php',
-        //     data:Departamento,
-        // });
+    function Enabled(id){
+        var departamento = document.getElementById("departamento").value;
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url:"{{url('/clientes-2')}}",
+            method:'post',
+            // type:"POST",
+            dataType: 'json',
+            data:{
+                departamento
+            },
+            success: function (msg) {
+                alert("Se ha realizado el POST con exito " + departamento);
+        }
+        }); 
+        // var Municipio = '<label for="GSedemunicipio">Municipio</label> <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required> <option value="">Seleccione...</option> @foreach($Municipios as $Municipio) @if($Municipio->FK_MunCity == 16) <option value="{{$Municipio->ID_Mun}} '+id+'">{{$Municipio->MunName}}</option>  @endif @endforeach </select>';
+        // $('#Municipio').empty();
+        // $('#Municipio').append(Municipio);
 
         document.getElementById("GSedemunicipio").disabled = false;
         // alert(Departamento);
@@ -196,7 +236,6 @@
     function Disabled(){
         document.getElementById("GSedemunicipio").disabled = true;
     }
-
     function OtroType(){
         var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType"></div>';
         $('#otroTyp').append(Otro);
@@ -204,89 +243,6 @@
     function HiddenOtroType(){
         $('#otroType').remove();
     }
-    
-//     var contador = 1;
-//     function AddSedes(){
-//         var Sede = '
-// <div id="Sede['+contador+']">
-// <div class="col-md-12">
-// <h2>Sede 
-// <a id="delete['+contador+']" onclick="fin('+contador+')" class="btn btn-danger" style="float:right;"><i class="fas fa-times"></i> Borrar</a>
-// </h2></div>
-// <div class="col-md-6">
-// <label for="sedeinputname['+contador+']">Nombre</label>
-// <input type="text" class="form-control" id="sedeinputname['+contador+']" placeholder="Prosarc" name="SedeName['+contador+']" required="true">
-// </div>
-// <div class="col-md-6">
-// <label for="sedeinputemail['+contador+']">Email</label>
-// <input type="email" class="form-control" id="sedeinputemail['+contador+']" placeholder="Sistemas@prosarc.com" name="SedeEmail['+contador+']" required>
-// </div>
-// <div class="col-md-6">
-// <label for="departamento['+contador+']">Departamento</label>
-// <select class="form-control" id="departamento['+contador+']" name="Departamento['+contador+']" required="true" >
-// <option value="">Seleccione...</option>
-// @foreach ($Departamentos as $Departamento)		
-// <option value="{{$Departamento->ID_Depart}}" onclick="enabled()">{{$Departamento->DepartName}}</option>
-// @endforeach
-// </select>
-// </div>
-// <div class="col-md-6">
-// <label for="GSedemunicipio['+contador+']">Municipio</label>
-// <select class="form-control" id="GSedemunicipio['+contador+']" name="FK_SedeMun['+contador+']" required disabled="true">
-// <option value="">Seleccione...</option>
-// @foreach ($Municipios as $Municipio)
-// <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-// @endforeach
-// </select>
-// </div>
-// <div class="col-md-6">
-// <label for="sedeinputcelular['+contador+']">Celular</label>
-// <input type="text" class="form-control" id="sedeinputcelular['+contador+']" placeholder="3014145321" name="SedeCelular['+contador+']">
-// </div>
-// <div class="col-md-6">
-// <label for="sedeinputaddress['+contador+']">Dirección</label>
-// <input type="text" class="form-control" id="sedeinputaddress['+contador+']" placeholder="cll 23 #11c-03" name="SedeAddress['+contador+']" required>
-// </div>
-// <div class="col-md-6">
-// <label for="sedeinputphone1['+contador+']">Teléfono</label>
-// <input type="tel" class="form-control" id="sedeinputphone1['+contador+']" placeholder="031-4123141" name="SedePhone1['+contador+']" maxlength="16">
-// </div>
-// <div class="col-md-6">
-// <label for="sedeinputext1['+contador+']">Extensión</label>
-// <input type="number" class="form-control" id="sedeinputext1['+contador+']" placeholder="1555" name="SedeExt1['+contador+']" max="9999">
-// </div>
-// <div class="col-md-6" id="sedeinputphone2['+contador+']" style="display: none;">
-// <label for="telefono2['+contador+']">Teléfono 2</label>
-// <input type="tel" class="form-control" id="telefono2['+contador+']" placeholder="(031)-412 3141" name="SedePhone2['+contador+']" maxlength="16">
-// </div>
-// <div class="col-md-6" id="sedeinputext2['+contador+']" style="display: none;">
-// <label for="ext2['+contador+']">Extensión 2</label>
-// <input type="number" class="form-control" id="ext2['+contador+']" placeholder="1555" name="SedeExt2['+contador+']" max="9999">
-// </div>
-// <div class="box-footer" style="display:flex; justify-content:center">
-// <a class="btn btn-info" id="tel['+contador+']" onclick="TelExt('+contador+')" name="tel">Otro Teléfono</a>
-// </div>
-// </div>
-// </div>';
-
-//         $("#divSede").append(Sede);
-// // $("#sedeinputphone1['+contador+']").children(Sede).remove();
-
-
-    
-//     contador= parseInt(contador)+1;
-// }
-    
-//     function TelExt(id){
-//         document.getElementById("SedePhone2"+id).style.display = "block";
-//         document.getElementById("SedeExt2"+id).style.display = "block";
-//         document.getElementById("tel"+id).style.display = "none";
-//     }
-//     function fin(id){
-//         document.getElementById("Sede"+id).style.display = "none";
-//     }
-    
-
 </script>
 
 @endsection
