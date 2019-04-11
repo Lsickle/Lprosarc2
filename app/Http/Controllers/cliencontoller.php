@@ -14,6 +14,7 @@ use App\Http\Controllers\auditController;
 use App\Area;
 use App\Cargo;
 use App\Personal;
+use App\User;
 
 class clientcontoller extends Controller
 {
@@ -106,23 +107,31 @@ class clientcontoller extends Controller
             
             $Area = new Area();
             $Area->AreaName = $request->input("AreaName");
+            $Area->FK_AreaSede = $Sede->ID_Sede;
+            $Area->AreaDelete = 0;
             $Area->save();
             
             $Cargo = new Cargo();
             $Cargo->CargName = $request->input("CargName");
+            $Cargo->CargArea =  $Area->ID_Area;
+            $Cargo->CargDelete =  0;
             $Cargo->save();
             
+// return $user;
             $Personal = new Personal();
             $Personal->PersFirstName = $request->input("PersFirstName"); 
             $Personal->PersLastName = $request->input("PersLastName"); 
             $Personal->PersEmail = $request->input("PersEmail"); 
             $Personal->PersSecondName = $request->input("PersSecondName"); 
+            $Personal->FK_PersCargo = $Cargo->ID_Carg; 
+            $Personal->PersSlug = ; 
+            $Personal->PersDelete = 0; 
             $Personal->PersType = 1;//falta definir que boolean es externo
             $Personal->save();
 
-            
-
-
+            $user = User::where('id', Auth::user()->id)->first();
+            $user->FK_UserPers = $Personal->ID_Pers;
+            $user->save();
             return redirect()->route('clientes.index');
 
         }else{
