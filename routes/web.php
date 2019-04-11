@@ -72,6 +72,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
+	Route::get('/ClasificacionA', function(){
+		return view('layouts.RespelPartials.ClasificacionA');
+	})->name('ClasificacionA');
+	Route::get('/ClasificacionY', function(){
+		return view('layouts.RespelPartials.ClasificacionY');
+	})->name('ClasificacionY');
 });
 Auth::routes();
 

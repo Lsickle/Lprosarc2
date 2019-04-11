@@ -1435,12 +1435,11 @@ $(window).resize(function() {
 </script>
 @yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
+{{-- <script>
 $(':submit').click(function() {
     $(this).attr('disabled', 'disabled');
 });
-
-</script>
+</script> --}}
 @if(
 Route::currentRouteName()=='tarifas.index'
 )
@@ -1500,4 +1499,13 @@ $(document).ready(function() {
     });
 });
 
+</script>
+<script>
+$(document).ready(function() {
+    $('#Clasificacion').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "responsive": true,
+    });
+});
 </script>

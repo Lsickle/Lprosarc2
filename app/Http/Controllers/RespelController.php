@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\audit;
 use App\Respel;
 use App\Sede;
+use App\Cotizacion;
 use App\User;
 use App\Requerimiento;
-use App\Cotizacion;
 
 class RespelController extends Controller
 {
@@ -51,10 +51,9 @@ class RespelController extends Controller
     public function create()
     {
         // $Usuario -= Auth::user()->id;
-            $Sedes = DB::table('cotizacions')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
+            $Sedes = DB::table('clientes')
+            ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('sedes.ID_Sede', 'clientes.CliName')
             // ->where('clientes.ID_Cli', 1) 
             ->get();
 
@@ -71,68 +70,43 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
-        if ($request->hasfile('RespelHojaSeguridad')) {
-            $file = $request->file('RespelHojaSeguridad');
-            $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/img/', $name);
+        // return $request;
+        $Cotizacion = new Cotizacion;
+        $Cotizacion->CotiNumero = 6;
+        $Cotizacion->CotiFechaSolicitud = now();
+        $Cotizacion->CotiDelete = 0;
+        $Cotizacion->CotiStatus = "Pendiente";
+        $Cotizacion->save();
+
+        for ($x=0; $x < count($request['RespelName']); $x++) {
+            if ($request->hasfile('RespelHojaSeguridad')) {
+                $file = $request['RespelHojaSeguridad'][$x];
+                $name = time().$file->getClientOriginalName();
+                $file->move(public_path().'/img/', $name);
+            }
+            if ($request->hasfile('RespelTarj')) {
+                $file = $request['RespelTarj'][$x];
+                $tarj = time().$file->getClientOriginalName();
+                $file->move(public_path().'/img/', $tarj);
+            }
+            else{
+                $tarj = 'default.png';
+            }
+            $respel = new Respel();
+            $respel->RespelName = $request['RespelName'][$x];
+            $respel->RespelDescrip = $request['RespelDescrip'][$x];
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
+            $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
+            $respel->RespelStatus = $request['RespelStatus'][$x];
+            $respel->RespelEstado = $request['RespelEstado'][$x];
+            $respel->RespelHojaSeguridad = $name;
+            $respel->RespelTarj = $tarj;
+            $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
+            $respel->RespelSlug = "slug".$request['RespelName'][$x].date('YmdHis');
+            $respel->RespelDelete = 0;
+            $respel->save();
         }
-        if ($request->hasfile('RespelTarj')) {
-            $file = $request->file('RespelTarj');
-            $tarj = time().$file->getClientOriginalName();
-            $file->move(public_path().'/img/', $tarj);
-        }
-        else{
-            $tarj = 'default.png';
-        }
-
-        $respel = new Respel();
-        $respel->RespelName = $request->input('RespelName');
-        $respel->RespelDescrip = $request->input('RespelDescrip');
-        // $respel->RespelClasf4741 = $request->input('RespelClasf4741');
-        $respel->YRespelClasf4741 = $request->input('YRespelClasf4741');
-        $respel->ARespelClasf4741 = $request->input('ARespelClasf4741');
-        $respel->RespelIgrosidad = $request->input('RespelIgrosidad');
-        $respel->RespelStatus = $request->input('RespelStatus');
-        $respel->RespelEstado = $request->input('RespelEstado');
-        $respel->RespelHojaSeguridad = $name;
-        $respel->RespelTarj = $tarj;
-        $respel->FK_RespelCoti = $request->input('FK_RespelCoti');
-        $respel->RespelSlug = "slug".$request->input('RespelName').date('YmdHis');
-        $respel->RespelDelete = 0;
-        $respel->save();
-
-        $Requerimiento = new Requerimiento();
-        $Requerimiento->ReqFotoCargue = NULL;
-        $Requerimiento->ReqFotoDescargue = NULL;
-        $Requerimiento->ReqFotoPesaje = NULL;
-        $Requerimiento->ReqFotoReempacado = NULL;
-        $Requerimiento->ReqFotoMezclado = NULL;
-        $Requerimiento->ReqFotoDestruccion = NULL;
-
-        $Requerimiento->ReqVideoCargue = NULL;
-        $Requerimiento->ReqVideoDescargue = NULL;
-        $Requerimiento->ReqVideoPesaje = NULL;
-        $Requerimiento->ReqVideoReempacado = NULL;
-        $Requerimiento->ReqVideoMezclado = NULL;
-        $Requerimiento->ReqVideoDestruccion = NULL;
-
-        $Requerimiento->ReqAuditoria = NULL;
-        $Requerimiento->ReqAuditoriaTipo = NULL;
-        $Requerimiento->ReqDevolucion = NULL;
-        $Requerimiento->ReqDevolucionTipo = NULL;
-        $Requerimiento->ReqDatosPersonal = NULL;
-        $Requerimiento->ReqPlanillas = NULL;
-        $Requerimiento->ReqAlistamiento = NULL;
-        $Requerimiento->ReqCapacitacion = NULL;
-        $Requerimiento->ReqBascula = NULL;
-        $Requerimiento->ReqMasPerson = NULL;
-        $Requerimiento->ReqPlatform = NULL;
-        $Requerimiento->ReqCertiEspecial = NULL;
-        $Requerimiento->ReqSlug = 'ReqSlug'.$request->input('RespelName').date('YmdHis');
-        $Requerimiento->FK_ReqRespel = $respel->ID_Respel;
-        $Requerimiento->FK_ReqTrata = NULL;
-        $Requerimiento->FK_ReqTarifa = NULL;
-        $Requerimiento->save();
 
         return redirect()->route('respels.index');
     }
