@@ -211,14 +211,14 @@ $(document).ready(function() {
                 "targets": 5,
                 "data": "RespelHojaSeguridad",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
+                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             },
             {
                 "targets": 6,
                 "data": "RespelTarj",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
+                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             }
         ]
@@ -483,18 +483,18 @@ $(function() {
 @endif()
 <script>
 $(document).ready(function() {
-    $('input[name="CliNit"]').mask('999.999.999.999-9');
-    $('input[name="cliente"]').mask('999.999.999.999-9');
-    $('input[name="SedePhone2"]').mask('(999)-999 9999');
-    $('input[name="SedePhone1"]').mask('(999)-999 9999');
-    $('input[name="SedeCelular"]').mask('(999)-999 9999');
-    $('input[name="GenerNit"]').mask('999.999.999.999-9');
-    $('input[name="GSedePhone2"]').mask('(999)-999 9999');
-    $('input[name="GSedePhone1"]').mask('(999)-999 9999');
-    $('input[name="GSedeCelular"]').mask('(999)-999 9999');
-    $('input[name="GSedeinputext1"]').mask('999-9');
-    $('input[name="GSedeinputext2"]').mask('999-9');
-    $('input[name="CargSalary"]').mask('000.000.000.000');
+    // $('input[name="CliNit"]').mask('999.999.999.999-9');
+    // $('input[name="cliente"]').mask('999.999.999.999-9');
+    // $('input[name="SedePhone2"]').mask('(999)-999 9999');
+    // $('input[name="SedePhone1"]').mask('(999)-999 9999');
+    // $('input[name="SedeCelular"]').mask('(999)-999 9999');
+    // $('input[name="GenerNit"]').mask('999.999.999.999-9');
+    // $('input[name="GSedePhone2"]').mask('(999)-999 9999');
+    // $('input[name="GSedePhone1"]').mask('(999)-999 9999');
+    // $('input[name="GSedeCelular"]').mask('(999)-999 9999');
+    // $('input[name="GSedeinputext1"]').mask('999-9');
+    // $('input[name="GSedeinputext2"]').mask('999-9');
+    // $('input[name="CargSalary"]').mask('000.000.000.000');
 });
 </script>
 
