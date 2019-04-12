@@ -110,7 +110,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="departamento">Departamento</label>
-                                                        <select class="form-control" id="departamento" name="Departamento" required="true" >
+                                                        <select class="form-control departamento" id="departamento" name="Departamento" required="true" data-dependent="FK_SedeMun">
                                                             <option onclick="Disabled()" value="">Seleccione...</option>
                                                             @foreach ($Departamentos as $Departamento)		
                                                                 <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
@@ -118,12 +118,12 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="GSedemunicipio">Municipio</label>
-                                                        <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required disabled>
+                                                        <label for="FK_SedeMun">Municipio</label>
+                                                        <select class="form-control" id="FK_SedeMun" name="FK_SedeMun" required disabled>
                                                             <option value="">Seleccione...</option>
-                                                            @foreach ($Municipios as $Municipio) 
+                                                            {{-- @foreach ($Municipios as $Municipio) 
                                                                 <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
-                                                            @endforeach
+                                                            @endforeach --}}
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
@@ -150,21 +150,15 @@
                                                     </div>
                                                     <div id="divSede">
                                                     </div>
-                                                    <a href="step-1"class="btn btn-primary">Anterior</a>
-                                                    <a href="step-3"class="btn btn-primary">Siguiente</a>
+                                                    {{-- <a href="step-1"class="btn btn-primary">Anterior</a>
+                                                    <a href="step-3"class="btn btn-primary">Siguiente</a> --}}
                                                 </div>
                                                 <div id="step-3" class="">
                                                     <h2>Persona de Contacto</h2>
                                                     <div class="col-md-6">
                                                         <label for="AreaName">Area</label>
-                                                        {{-- <input type="text" class="form-control {{ $errors->has('AreaName') ? ' is-invalid' : '' }}" id="AreaName" placeholder="Nombre del Area" name="AreaName"> --}}
                                                         <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName" required>
                                                     </div>
-                                                    {{-- @if ($errors->has('AreaName'))
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $errors->first('AreaName') }}</strong>
-                                                        </span>
-                                                    @endif --}}
                                                     <div class="col-md-6">
                                                         <label for="CargName">Cargo</label>
                                                         <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName" required>
@@ -213,6 +207,67 @@
 	<!-- /.box -->
 </div>
 <script>
+    function Tel(){
+        var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
+        $('#telefono2').append(Telefono);
+        $('#tel').remove();
+    }
+    function Enabled(){
+        // var departamento = document.getElementById("departamento").value;
+        
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+        // $.ajax({
+        //     url:"{{url('/clientes-2')}}",
+        //     method:'post',
+        //     // type:"POST",
+        //     dataType: 'json',
+        //     data:{
+        //         departamento
+        //     },
+        //     success: function (msg) {
+        //         alert("Se ha realizado el POST con exito " + departamento);
+        // }
+        // }); 
+
+
+        document.getElementById("FK_SedeMun").disabled = false;
+    }
+    function Disabled(){
+        document.getElementById("FK_SedeMun").disabled = true;
+    }
+    function OtroType(){
+        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType"></div>';
+        $('#otroTyp').append(Otro);
+    }
+    function HiddenOtroType(){
+        $('#otroType').remove();
+    }
+</script>
+<script>
+    
+    $(document).ready(function{
+        $('.departamento').change(function(){
+            var select = $(this).attr("id");
+            var value = $(this).val();
+            var dependent = $(this).data('dependent');
+            var _token = $('input [name="token"]').val();
+            $.ajax({
+                url:"{{url ('/clientes-2')}}",
+                method:'POST',
+                data:{
+                    selelect:select, value:value, dependent:dependent, _token:_token
+                },
+                success:function(result){
+                    $('#'+dependent).html(result);
+                }
+            });
+        });
+    });
+
     // function verifyCli(){
     //     var ClienteInputNit, ClienteInputRazon, ClienteInputNombre, CliType;
     //     ClienteInputNit = document.getElementById("ClienteInputNit").value;
@@ -228,48 +283,7 @@
     //     // }else{
     //     // }
     // }
-    function Tel(){
-        var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
-        $('#telefono2').append(Telefono);
-        $('#tel').remove();
-    }
-    function Enabled(){
-        var departamento = document.getElementById("departamento").value;
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url:"{{url('/clientes-2')}}",
-            method:'post',
-            // type:"POST",
-            dataType: 'json',
-            data:{
-                departamento
-            },
-            success: function (msg) {
-                alert("Se ha realizado el POST con exito " + departamento);
-        }
-        }); 
-        // var Municipio = '<label for="GSedemunicipio">Municipio</label> <select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required> <option value="">Seleccione...</option> @foreach($Municipios as $Municipio) @if($Municipio->FK_MunCity == 16) <option value="{{$Municipio->ID_Mun}} '+id+'">{{$Municipio->MunName}}</option>  @endif @endforeach </select>';
-        // $('#Municipio').empty();
-        // $('#Municipio').append(Municipio);
 
-        document.getElementById("GSedemunicipio").disabled = false;
-        // alert(Departamento);
-    }
-    function Disabled(){
-        document.getElementById("GSedemunicipio").disabled = true;
-    }
-    function OtroType(){
-        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType"></div>';
-        $('#otroTyp').append(Otro);
-    }
-    function HiddenOtroType(){
-        $('#otroType').remove();
-    }
 </script>
 
 @endsection

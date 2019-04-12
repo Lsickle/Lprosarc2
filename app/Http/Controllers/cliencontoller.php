@@ -43,25 +43,36 @@ class clientcontoller extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function Ajax(Request $request, $id){
-        if($request->ajax()){ 
-            // $expediente = Expediente::create($request->all());
-            // return "im in AjaxController index";
-            $Municipios = Municipio::where('FK_MunCity', $id)->get();
-            return response()->json(['message' => 'Insertado correctamente']);
+    // public function Ajax(Request $request, $id){
+    //     if($request->ajax()){ 
+    //         // $expediente = Expediente::create($request->all());
+    //         // return "im in AjaxController index";
+    //         $Municipios = Municipio::where('FK_MunCity', $id)->get();
+    //         return response()->json(['message' => 'Insertado correctamente']);
 
-            // $Departamento = $_POST['departamento'];
+    //         // $Departamento = $_POST['departamento'];
+    //     }
+    // }
+    public function ajax(Request $request){
+        $select = $request->get('select');
+        $value = $request->get('value');
+        $dependent = $request->get('dependent');
+        $data = Municipio::where('FK_MunCity', $value)->get();
+
+        $output = '<option value="">Selec'.$dependent.'</option';
+        foreach($data as $Municipio){
+            $output .='<option value="'.$Municipio->ID_Mun.'>"'.$Municipio->MunName.'</option>';
         }
-    }
-
+        echo $output;
+    } 
     public function create()
     {
         if(Auth::user()->UsRol === "Cliente"){
             
             $Departamentos = Departamento::all();
-            $Municipios = Municipio::all();
+            // $Municipios = Municipio::all();
            
-            return view('clientes.create2', compact('Departamentos', 'Municipios', 'Departamento'));
+            return view('clientes.create2', compact('Departamentos', 'Municipios'));
         }else{
             return view('clientes.create');
         }
