@@ -184,6 +184,15 @@ $(document).ready(function() {
 });
 
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.smartwizardCli').smartWizard({
+        theme: 'arrows',
+        keyNavigation: true
+    });
+});
+
+</script>
 
 <!-- funcion para tabla de residuos -->
 <script>

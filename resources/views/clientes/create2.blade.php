@@ -46,7 +46,7 @@
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Añada la información necesaria completando los campos requeridos</p>
-										<div id="smartwizard">
+										<div class="smartwizardCli">
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la Empresa</small></a></li>
 												<li><a href="#step-2"><b>Paso 2</b><br /><small>Datos de la sede</small></a></li>
@@ -55,7 +55,6 @@
 											<!-- general form elements -->
 								            <div class="row">
 												<div id="step-1" class="">
-
 													<div class="col-md-12">
                                                         <label for="ClienteInputNit">NIT</label>
                                                         <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
@@ -76,12 +75,12 @@
                                                             <option onclick="HiddenOtroType()">Biologico</option>
                                                             <option onclick="HiddenOtroType()">Industrial</option>
                                                             <option onclick="HiddenOtroType()" >Medicamentos</option>
-                                                            <option onclick="OtroType()">Otro</option>
+                                                            <option onclick="OtroType()" value="">Otro</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6" id="otroTyp">
                                                     </div>
-                                                    {{-- @if(Auth::user()->UsRol !== "Cliente") --}}
+                                                    @if(Auth::user()->UsRol !== "Cliente")
                                                     <div class="col-md-6">
                                                         <label for="categoria">Categoría</label>
                                                         <select class="form-control" id="categoria" name="CliCategoria" required>
@@ -91,7 +90,11 @@
                                                             <option>Proveedor</option>
                                                         </select>
                                                     </div>
-                                                    {{-- @endif --}}
+                                                    @endif
+                                                    {{-- <button class="btn btn-primary" type="reset" href="#step-2">Siguiente</button> --}}
+                                                    {{-- <div class="box-footer" style="display:flex; justify-content:center">
+                                                            <a id="sasd" class="btn btn-primary" onclick="verifyCli()">Siguiente</a>
+                                                        </div> --}}
                                                 </div>
                                                 <div id="step-2" class="">
                                                     <div class="col-md-12">
@@ -110,7 +113,7 @@
                                                         <select class="form-control" id="departamento" name="Departamento" required="true" >
                                                             <option onclick="Disabled()" value="">Seleccione...</option>
                                                             @foreach ($Departamentos as $Departamento)		
-                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled({{$Departamento->ID_Depart}})">{{$Departamento->DepartName}}</option>
+                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -147,45 +150,54 @@
                                                     </div>
                                                     <div id="divSede">
                                                     </div>
+                                                    <a href="step-1"class="btn btn-primary">Anterior</a>
+                                                    <a href="step-3"class="btn btn-primary">Siguiente</a>
                                                 </div>
                                                 <div id="step-3" class="">
                                                     <h2>Persona de Contacto</h2>
                                                     <div class="col-md-6">
                                                         <label for="AreaName">Area</label>
-                                                        <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName">
+                                                        {{-- <input type="text" class="form-control {{ $errors->has('AreaName') ? ' is-invalid' : '' }}" id="AreaName" placeholder="Nombre del Area" name="AreaName"> --}}
+                                                        <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName" required>
                                                     </div>
+                                                    {{-- @if ($errors->has('AreaName'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('AreaName') }}</strong>
+                                                        </span>
+                                                    @endif --}}
                                                     <div class="col-md-6">
                                                         <label for="CargName">Cargo</label>
-                                                        <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName">
+                                                        <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="PersFirstName">Nombre</label>
-                                                        <input type="text" class="form-control" id="PersFirstName" placeholder="Nombre de la Persona" name="PersFirstName">
+                                                        <input type="text" class="form-control" id="PersFirstName" placeholder="Nombre de la Persona" name="PersFirstName" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="PersLastName">Apellido</label>
-                                                        <input type="text" class="form-control" id="PersLastName" placeholder="Apellido de la Persona" name="PersLastName">
+                                                        <input type="text" class="form-control" id="PersLastName" placeholder="Apellido de la Persona" name="PersLastName" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="PersEmail">Email</label>
-                                                        <input type="text" class="form-control" id="PersEmail" placeholder="Email de la Persona" name="PersEmail">
+                                                        <input type="text" class="form-control" id="PersEmail" placeholder="Email de la Persona" name="PersEmail" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="PersSecondName">Celular</label>
                                                         <input type="text" class="form-control" id="PersSecondName" placeholder="Numero de celular" name="PersCellphone">
                                                     </div>
+                                                    <a href="step-2"class="btn btn-primary">Anterior</a>
                                                     <input hidden value="1" name="number">
-                                                    <div class="col-md-12">
-                                                        <div class="box-footer" style="float:right; margin-right:5%">
-                                                            <button type="submit" class="btn btn-primary">Registrar</button>
-                                                        </div>
+                                                    <div class="box-footer" style="float:right; margin-right:5%">
+                                                        <button type="submit" class="btn btn-primary">Registrar</button>
                                                     </div>
                                                 </div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<!-- /.box-body -->
+                                {{-- <div class="col-md-12"> --}}
+                                    {{-- </div> --}}
+                                    <!-- /.box-body -->
 							</form>
 						</div>
 						<!-- /.box -->
@@ -201,12 +213,27 @@
 	<!-- /.box -->
 </div>
 <script>
+    // function verifyCli(){
+    //     var ClienteInputNit, ClienteInputRazon, ClienteInputNombre, CliType;
+    //     ClienteInputNit = document.getElementById("ClienteInputNit").value;
+    //     ClienteInputRazon = document.getElementById("ClienteInputRazon").value;
+    //     ClienteInputNombre = document.getElementById("ClienteInputNombre").value;
+
+    //     // CliType = document.getElementById("tipo").value;
+        
+    //     window.location = "#step-2";
+    //     // if(ClienteInputNit = null || ClienteInputRazon = null || ClienteInputNombre = null ){
+
+    //     // alert("llene los campos");
+    //     // }else{
+    //     // }
+    // }
     function Tel(){
         var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
         $('#telefono2').append(Telefono);
         $('#tel').remove();
     }
-    function Enabled(id){
+    function Enabled(){
         var departamento = document.getElementById("departamento").value;
         
         $.ajaxSetup({
