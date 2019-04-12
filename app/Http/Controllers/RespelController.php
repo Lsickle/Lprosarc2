@@ -11,6 +11,7 @@ use App\Sede;
 use App\Cotizacion;
 use App\User;
 use App\Requerimiento;
+use Illuminate\Validation\Validator;
 
 class RespelController extends Controller
 {
@@ -54,7 +55,7 @@ class RespelController extends Controller
             $Sedes = DB::table('clientes')
             ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('sedes.ID_Sede', 'clientes.CliName')
-            // ->where('clientes.ID_Cli', 1) 
+            ->where('clientes.ID_Cli', '<>', 1) 
             ->get();
 
             // return $Sedes;
@@ -70,12 +71,18 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
-        // return $request;
+        $validaciones = $request->validate([
+            'RespelName' => 'required',
+            'RespelIgrosidad' => 'required',
+            'RespelEstado' => 'required',
+            'RespelHojaSeguridad' => 'required',
+        ]);
         $Cotizacion = new Cotizacion;
         $Cotizacion->CotiNumero = 6;
         $Cotizacion->CotiFechaSolicitud = now();
         $Cotizacion->CotiDelete = 0;
         $Cotizacion->CotiStatus = "Pendiente";
+        $Cotizacion->FK_CotiSede = $request->input("Sede");
         $Cotizacion->save();
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
@@ -107,7 +114,6 @@ class RespelController extends Controller
             $respel->RespelDelete = 0;
             $respel->save();
         }
-
         return redirect()->route('respels.index');
     }
 
