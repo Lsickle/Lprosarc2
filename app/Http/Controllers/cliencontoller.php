@@ -86,7 +86,7 @@ class clientcontoller extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        return $request;
         if($request->input("number") == "1"){
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');

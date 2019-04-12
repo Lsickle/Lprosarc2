@@ -16,6 +16,15 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
+
+<script src="https://unpkg.com/imask"></script>
+
+<script>
+$(document).ready(function() {
+    $('#ClienteInputNit').inputmask("99-9999");
+
+});
+</script>
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
@@ -492,22 +501,17 @@ $(function() {
     </script>
 @endif()
 <script>
+// $(document).ready(function() {
+//     $('#ClienteInputNit').inputmask("999.999.999-9");
+    
+// });
 $(document).ready(function() {
-    // $('input[name="CliNit"]').mask('999.999.999.999-9');
-    $('#ClienteInputNit').mask('999.999.999-9');
-    // $('input[name="cliente"]').mask('999.999.999.999-9');
-    // $('input[name="SedePhone2"]').mask('(999)-999 9999');
-    // $('input[name="SedePhone1"]').mask('(999)-999 9999');
-    // $('input[name="SedeCelular"]').mask('(999)-999 9999');
-    // $('input[name="GenerNit"]').mask('999.999.999.999-9');
-    // $('input[name="GSedePhone2"]').mask('(999)-999 9999');
-    // $('input[name="GSedePhone1"]').mask('(999)-999 9999');
-    // $('input[name="GSedeCelular"]').mask('(999)-999 9999');
-    // $('input[name="GSedeinputext1"]').mask('999-9');
-    // $('input[name="GSedeinputext2"]').mask('999-9');
-    // $('input[name="CargSalary"]').mask('000.000.000.000');
+    $('#ClienteInputNit').inputmask({
+        mask: "mask": "999-999-999-9"
+    });
 });
 </script>
+{{--}} $('input[name="CliNit"]').mask('999.999.999.999-9');
 
 
 {{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}

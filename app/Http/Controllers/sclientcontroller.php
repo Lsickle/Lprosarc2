@@ -42,7 +42,7 @@ class sclientcontroller extends Controller
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
                 ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
-                ->where('sedes.SedeDelete', 0)
+                ->where('sedes.SedeDelete',  '=', '0')
                 ->get();
         }
         // return $cliente;

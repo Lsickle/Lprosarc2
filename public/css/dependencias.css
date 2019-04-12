@@ -1,3 +1,7 @@
+/*!
+ * Font Awesome Free 5.8.1 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 .fa,
 .fas,
 .far,
@@ -222,6 +226,9 @@ readers do not read off random characters that represent icons */
 
 .fa-air-freshener:before {
   content: "\f5d0"; }
+
+.fa-airbnb:before {
+  content: "\f834"; }
 
 .fa-algolia:before {
   content: "\f36c"; }
@@ -475,6 +482,9 @@ readers do not read off random characters that represent icons */
 .fa-battery-three-quarters:before {
   content: "\f241"; }
 
+.fa-battle-net:before {
+  content: "\f835"; }
+
 .fa-bed:before {
   content: "\f236"; }
 
@@ -586,6 +596,9 @@ readers do not read off random characters that represent icons */
 .fa-bookmark:before {
   content: "\f02e"; }
 
+.fa-bootstrap:before {
+  content: "\f836"; }
+
 .fa-bowling-ball:before {
   content: "\f436"; }
 
@@ -624,6 +637,9 @@ readers do not read off random characters that represent icons */
 
 .fa-btc:before {
   content: "\f15a"; }
+
+.fa-buffer:before {
+  content: "\f837"; }
 
 .fa-bug:before {
   content: "\f188"; }
@@ -888,6 +904,9 @@ readers do not read off random characters that represent icons */
 
 .fa-chrome:before {
   content: "\f268"; }
+
+.fa-chromecast:before {
+  content: "\f838"; }
 
 .fa-church:before {
   content: "\f51d"; }
@@ -1401,6 +1420,9 @@ readers do not read off random characters that represent icons */
 
 .fa-euro-sign:before {
   content: "\f153"; }
+
+.fa-evernote:before {
+  content: "\f839"; }
 
 .fa-exchange-alt:before {
   content: "\f362"; }
@@ -2181,6 +2203,9 @@ readers do not read off random characters that represent icons */
 
 .fa-italic:before {
   content: "\f033"; }
+
+.fa-itch-io:before {
+  content: "\f83a"; }
 
 .fa-itunes:before {
   content: "\f3b4"; }
@@ -3142,6 +3167,9 @@ readers do not read off random characters that represent icons */
 .fa-safari:before {
   content: "\f267"; }
 
+.fa-salesforce:before {
+  content: "\f83b"; }
+
 .fa-sass:before {
   content: "\f41e"; }
 
@@ -3421,6 +3449,9 @@ readers do not read off random characters that represent icons */
 .fa-speakap:before {
   content: "\f3f3"; }
 
+.fa-speaker-deck:before {
+  content: "\f83c"; }
+
 .fa-spider:before {
   content: "\f717"; }
 
@@ -3585,6 +3616,9 @@ readers do not read off random characters that represent icons */
 
 .fa-swimming-pool:before {
   content: "\f5c5"; }
+
+.fa-symfony:before {
+  content: "\f83d"; }
 
 .fa-synagogue:before {
   content: "\f69b"; }
@@ -4093,6 +4127,12 @@ readers do not read off random characters that represent icons */
 .fa-water:before {
   content: "\f773"; }
 
+.fa-wave-square:before {
+  content: "\f83e"; }
+
+.fa-waze:before {
+  content: "\f83f"; }
+
 .fa-weebly:before {
   content: "\f5cc"; }
 
@@ -4203,6 +4243,9 @@ readers do not read off random characters that represent icons */
 
 .fa-yahoo:before {
   content: "\f19e"; }
+
+.fa-yammer:before {
+  content: "\f840"; }
 
 .fa-yandex:before {
   content: "\f413"; }
@@ -5221,6 +5264,75 @@ readers do not read off random characters that represent icons */
     }
 }
 
+mark.im-caret {
+    animation: 1s blink step-end infinite !important;
+}
+
+mark.im-caret-select {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes blink {
+    from, to {
+        border-right-color: black;
+    }
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+span.im-static {
+    color: grey;
+}
+
+div.im-colormask {
+    display: inline-block;
+    border-style: inset;
+    border-width: 2px;
+    appearance: textfield;
+    cursor: text;
+}
+
+div.im-colormask > input, div.im-colormask > input:-webkit-autofill {
+    position: absolute !important;
+    display: inline-block;
+    background-color: transparent;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: transparent;
+    text-shadow: none;
+    appearance: caret;
+    border-style: none;
+    left: 0; /*calculated*/
+}
+
+div.im-colormask > input:focus {
+    outline: none;
+}
+
+div.im-colormask > input::selection {
+    background: none;
+}
+
+div.im-colormask > input::-moz-selection {
+    background: none;
+}
+
+div.im-colormask > input:-webkit-autofill ~ div {
+    background-color: rgb(250, 255, 189);
+}
+
+div.im-colormask > div {
+    color: black;
+    display: inline-block;
+    width: 100px; /*calculated*/
+}
+
+[im-insert="false"] {
+    caret-color: red;
+    caret-shape: block;
+}
 .select2-container {
   box-sizing: border-box;
   display: inline-block;

@@ -58,15 +58,15 @@
 												<div id="step-1" class="">
 													<div class="col-md-12">
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control CliNit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-X">
+                                                        <input type="text" name="CliNit" autofocus="true"  class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX-X" minlength="11" maxlength="11" required>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputRazon">Razón Social</label>
-                                                        <input required="true" name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
+                                                        <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputNombre">Nombre Corto</label>
-                                                        <input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
+                                                        <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="tipo">Tipo de Empresa</label>
@@ -103,11 +103,11 @@
                                                     </div>
 													<div class="col-md-6">
                                                         <label for="sedeinputname">Nombre</label>
-                                                        <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true">
+                                                        <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" maxlength="128" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sedeinputemail">Email</label>
-                                                        <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" required>
+                                                        <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" maxlength="128" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="departamento">Departamento</label>
@@ -129,11 +129,11 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sedeinputcelular">Celular</label>
-                                                        <input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular">
+                                                        <input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" maxlength="10">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sedeinputaddress">Dirección</label>
-                                                        <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required>
+                                                        <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" maxlength="128" required>
                                                     </div>
                                                     
                                                     <div class="col-md-6">
@@ -209,7 +209,7 @@
 </div>
 <script>
     function Tel(){
-        var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
+        var Telefono = '<div class="col-md-6" id="sedeinputphone2"><label for="sedeinputphone2">Teléfono 2</label><input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16"></div><div class="col-md-6" id="sedeinputext2"><label for="sedeinputext2">Extensión 2</label><input type="number" class="form-control" maxlength="4" id="sedeinputext2" placeholder="1555" name="SedeExt2" max="9999"></div>';
         $('#telefono2').append(Telefono);
         $('#tel').remove();
     }
@@ -239,7 +239,7 @@
         document.getElementById("FK_SedeMun").disabled = true;
     }
     function OtroType(){
-        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType"></div>';
+        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType" maxlength="32"></div>';
         $('#otroTyp').append(Otro);
     }
     function HiddenOtroType(){
