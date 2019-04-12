@@ -31,7 +31,8 @@ class RespelController extends Controller
             ->get();
 
             return view('respels.index', compact('Respels'));
-        }else{
+        }
+        else{
             $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
@@ -39,11 +40,9 @@ class RespelController extends Controller
             ->select('respels.*', 'clientes.CliName')
             ->where('respels.RespelDelete',0)
             ->get();   
-    }
-    
-    
+        }
         return view('respels.index', compact('Respels')); 
-}
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -51,16 +50,24 @@ class RespelController extends Controller
      */
     public function create()
     {
-        // $Usuario -= Auth::user()->id;
-            $Sedes = DB::table('clientes')
-            ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('sedes.ID_Sede', 'clientes.CliName')
-            ->where('clientes.ID_Cli', '<>', 1) 
-            ->get();
-
-            // return $Sedes;
-
-        return view('respels.create', compact('Sedes'));
+        if(Auth::user()->UsRol=='Cliente'){
+			$Sede = DB::table('personals')
+				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+				->select('sedes.ID_Sede')
+				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+				->get();
+			return view('respels.create', compact('Sede'));
+		}
+		else{
+			$Sedes = DB::table('clientes')
+				->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('sedes.ID_Sede', 'clientes.CliName')
+				->where('clientes.ID_Cli', '<>', 1) 
+				->get();
+			return view('respels.create', compact('Sedes'));
+        }
     }
 
     /**
