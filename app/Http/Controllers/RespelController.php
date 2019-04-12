@@ -12,7 +12,6 @@ use App\Cotizacion;
 use App\User;
 use App\Requerimiento;
 use Illuminate\Validation\Validator;
-
 class RespelController extends Controller
 {
     /**
@@ -78,6 +77,7 @@ class RespelController extends Controller
      */
     public function store(Request $request)
     {   
+        // return $request;
         $validaciones = $request->validate([
             'RespelName' => 'required',
             'RespelIgrosidad' => 'required',
@@ -96,12 +96,12 @@ class RespelController extends Controller
             if ($request->hasfile('RespelHojaSeguridad')) {
                 $file = $request['RespelHojaSeguridad'][$x];
                 $name = time().$file->getClientOriginalName();
-                $file->move(public_path().'/img/', $name);
+                $file->move(public_path().'/img/HojaSeguridad/',$name);
             }
             if ($request->hasfile('RespelTarj')) {
                 $file = $request['RespelTarj'][$x];
                 $tarj = time().$file->getClientOriginalName();
-                $file->move(public_path().'/img/', $tarj);
+                $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }
             else{
                 $tarj = 'default.png';
@@ -114,6 +114,7 @@ class RespelController extends Controller
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
+            $respel->RespelEstado = 'Pendiente';
             $respel->RespelHojaSeguridad = $name;
             $respel->RespelTarj = $tarj;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
@@ -132,16 +133,7 @@ class RespelController extends Controller
      */
     public function show($id)
     {
-        // return $id;
-        $Respels = Respel::where('RespelSlug',$id)->first();
-        // $Respels = DB::table('respels')
-        //     ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-        //     ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-        //     ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        //     ->select('respels.*', 'clientes.*', 'sedes.*')
-        //     ->where('respels.RespelSlug', '=', $id)
-        //     ->get();
-        // return $Respels;
+        $Respels = Respel::where('RespelSlug', $id)->first();
 
         return view('respels.show', compact('Respels'));
     }
@@ -155,9 +147,7 @@ class RespelController extends Controller
     public function edit($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
-        
-        $Requerimientos = Requerimiento::where('FK_ReqRespel',$Respels->ID_Respel)->first();   
-        
+
         $Sedes = DB::table('cotizacions')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -177,6 +167,7 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
         $Respels = Respel::where('ID_Respel', $id)->first();
         $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
         $Respels->fill($request->except('RespelTarj', 'RespelHojaSeguridad'));
