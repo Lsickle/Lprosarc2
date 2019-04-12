@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title')
-{{ trans('adminlte_lang::LangDeclar.declarmenu') }}
-@endsection
+@section('htmlheader_title', 'Respel')
 @section('main-content')
 <div class="container-fluid spark-screen">
   <div class="row">

@@ -32,12 +32,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
-    #adminlte_routes
+	#adminlte_routes
+	
 	Route::resource('/clientes', 'clientcontoller');
+	// Route::get('/clientes/create', 'clientcontoller@create');
+
 	// Route::resource('/clientes', 'clientcontoller@');
 	// Route::post('/clientes-2/{id}', 'clientcontoller@Ajax');
 	// Route::get('/clientes-2', 'clientcontoller@create');
-	Route::post('/clientes/2', 'clientcontoller@ajax')->name('clientes.ajax');
+	Route::post('/clientes-2', 'clientcontoller@ajax')->name('clientes.ajax');
 	// Route::post('/clientes-2', 'clientcontoller@create', fuction()){
 	// 	if(Request::ajax()){      
 	// 		return  Response::json(Request::all());
@@ -85,6 +88,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
+	Route::get('/ClasificacionA', function(){
+		return view('layouts.RespelPartials.ClasificacionA');
+	})->name('ClasificacionA');
+	Route::get('/ClasificacionY', function(){
+		return view('layouts.RespelPartials.ClasificacionY');
+	})->name('ClasificacionY');
 });
 Auth::routes();
 

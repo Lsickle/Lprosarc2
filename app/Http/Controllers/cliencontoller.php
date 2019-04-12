@@ -57,9 +57,9 @@ class clientcontoller extends Controller
         $select = $request->get('select');
         $value = $request->get('value');
         $dependent = $request->get('dependent');
-        $data = Municipio::where('FK_MunCity', $value)->get();
+        $data = Municipio::where($select, $value)->get();
 
-        $output = '<option value="">Selec'.$dependent.'</option';
+        $output = '<option value="">Selec'.$dependent.'</option>';
         foreach($data as $Municipio){
             $output .='<option value="'.$Municipio->ID_Mun.'>"'.$Municipio->MunName.'</option>';
         }
@@ -109,7 +109,8 @@ class clientcontoller extends Controller
             $Sede->SedeCelular = $request->input('SedeCelular');
             $Sede->SedeSlug = substr(md5(rand()), 0, 999999).$request->input('SedeName');
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
-            $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+            // $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+            $Sede->FK_SedeMun = 3;
             $Sede->SedeDelete = 0;
             $Sede->save();
             

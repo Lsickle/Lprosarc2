@@ -188,7 +188,8 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.smartwizardCli').smartWizard({
         theme: 'arrows',
-        keyNavigation: true
+        keyNavigation: false,
+        // backButtonSupport: false
     });
 });
 
@@ -493,6 +494,7 @@ $(function() {
 <script>
 $(document).ready(function() {
     // $('input[name="CliNit"]').mask('999.999.999.999-9');
+    $('#ClienteInputNit').mask('999.999.999-9');
     // $('input[name="cliente"]').mask('999.999.999.999-9');
     // $('input[name="SedePhone2"]').mask('(999)-999 9999');
     // $('input[name="SedePhone1"]').mask('(999)-999 9999');
@@ -1375,4 +1377,13 @@ $(document).ready(function() {
     });
 });
 
+</script>
+<script>
+$(document).ready(function() {
+    $('#Clasificacion').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "responsive": true,
+    });
+});
 </script>

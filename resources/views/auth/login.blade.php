@@ -47,9 +47,6 @@
                                     <label class="form-check-label" for="remember">
                                         {{ trans('adminlte_lang::message.remember') }}
                                     </label>
-                                    <label class="form-check-label" for="olvidar">
-                                        <a href="resetpassword">{{ __('Olvidaste tu Contraseña?') }}</a>
-                                    </label>
                                 </div>
                             </div>
                         </div>

@@ -42,7 +42,8 @@
 								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 							</div>
 							<form role="form" action="/clientes" method="POST" enctype="multipart/form-data">
-                                @csrf
+                                {{-- @csrf --}}
+                                {{ csrf_field() }}
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Añada la información necesaria completando los campos requeridos</p>
@@ -57,7 +58,7 @@
 												<div id="step-1" class="">
 													<div class="col-md-12">
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
+                                                        <input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control CliNit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-X">
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputRazon">Razón Social</label>
@@ -110,7 +111,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="departamento">Departamento</label>
-                                                        <select class="form-control departamento" id="departamento" name="Departamento" required="true" data-dependent="FK_SedeMun">
+                                                        <select class="form-control" id="departamento" name="departamento" required="true" data-dependent="FK_SedeMun">
                                                             <option onclick="Disabled()" value="">Seleccione...</option>
                                                             @foreach ($Departamentos as $Departamento)		
                                                                 <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
@@ -119,7 +120,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="FK_SedeMun">Municipio</label>
-                                                        <select class="form-control" id="FK_SedeMun" name="FK_SedeMun" required disabled>
+                                                        <select class="form-control" id="FK_SedeMun" name="FK_SedeMun"  disabled>
                                                             <option value="">Seleccione...</option>
                                                             {{-- @foreach ($Municipios as $Municipio) 
                                                                 <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
@@ -213,6 +214,8 @@
         $('#tel').remove();
     }
     function Enabled(){
+        document.getElementById("FK_SedeMun").disabled = false;
+    }
         // var departamento = document.getElementById("departamento").value;
         
         // $.ajaxSetup({
@@ -232,10 +235,6 @@
         //         alert("Se ha realizado el POST con exito " + departamento);
         // }
         // }); 
-
-
-        document.getElementById("FK_SedeMun").disabled = false;
-    }
     function Disabled(){
         document.getElementById("FK_SedeMun").disabled = true;
     }
@@ -248,23 +247,25 @@
     }
 </script>
 <script>
-    
-    $(document).ready(function{
-        $('.departamento').change(function(){
-            var select = $(this).attr("id");
-            var value = $(this).val();
-            var dependent = $(this).data('dependent');
-            var _token = $('input [name="token"]').val();
-            $.ajax({
-                url:"{{url ('/clientes-2')}}",
-                method:'POST',
-                data:{
-                    selelect:select, value:value, dependent:dependent, _token:_token
-                },
-                success:function(result){
-                    $('#'+dependent).html(result);
-                }
-            });
+    $(document).ready(function(){
+        $('#departamento').change(function(){
+            if($(this).val() != ''){
+                var select = $(this).attr("id");
+                var value = $(this).val();
+                var dependent = $(this).data('dependent');
+                var _token = $('input[name="token"]').val();
+                $.ajax({
+                    // url:"{{url('/clientes-2')}}",
+                    url:"{{ route('clientes.ajax') }}",
+                    method:'POST',
+                    data:{
+                        selelect:select, value:value, dependent:dependent, _token:_token
+                    },
+                    success:function(result){
+                        $('#'+dependent).html(result);
+                    }
+                });
+            }
         });
     });
 
