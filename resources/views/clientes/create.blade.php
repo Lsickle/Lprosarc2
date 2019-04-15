@@ -48,7 +48,7 @@
 									<div class="col-xs-6">
 										<label for="ClienteInputCategoria">Categoria</label>
 										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente">
-											<option>cliente</option>
+											{{-- <option>cliente</option> --}}
 											<option>generador</option>
 											<option>transportador</option>
 											<option>Proveedor</option>
