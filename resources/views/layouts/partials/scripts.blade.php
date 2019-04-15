@@ -67,13 +67,6 @@ $(document).ready(function() {
     // }; 
     // document.setTimeout(redibujar, 10000); // 5 seconds 
 });
-$(window).load(function() {
-    function show_popup() {
-        $("#cotizacionesTable").slideUp();
-    };
-    window.setTimeout(show_popup, 5000); // 5 seconds 
-})
-
 </script>
 @endif
 {{-- script para tabla de tratamientos --}}
@@ -113,8 +106,6 @@ $(document).ready(function() {
     });
 
     /*funcion para resaltar las busquedas*/
-    var table = $('#tratamientosTable').DataTable();
-
     table.on('draw', function() {
         var body = $(table.table().body());
         body.unhighlight();
@@ -196,6 +187,43 @@ $(document).ready(function() {
 </script>
 
 <!-- funcion para tabla de residuos -->
+@if(Route::currentRouteName()=='respels.index')
+    <script>
+    $(document).ready(function() {
+        var table = $('#RespelTable');
+        table.DataTable({
+            "scrollX": false,
+            "autoWidth": true,
+            "keys": true,
+            "responsive": true,
+            "columnDefs": [{
+                    "targets": 9,
+                    "data": "RespelSlug",
+                    "render": function(data, type, row, meta) {
+                        return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";
+                    }
+                },
+                {
+                    "targets": 10,
+                    "data": "RespelSlug",
+                    "render": function(data, type, row, meta) {
+                        return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                    }
+                },
+                {
+                    "targets": 5,
+                    "data": "RespelHojaSeguridad",
+                    "render": function(data, type, row, meta) {
+                        return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
+                    }
+                },
+                {
+                    "targets": 6,
+                    "data": "RespelTarj",
+                    "render": function(data, type, row, meta) {
+                        return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
+                    }
+=======
 <script>
 $(document).ready(function() {
     $('#RespelTable').DataTable({
@@ -223,17 +251,19 @@ $(document).ready(function() {
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
-            }
-        ]
+            ]
+        });
+        /*funcion para resaltar las busquedas*/
+        var bod = $(table.table().body());
+        table.on('draw', function redibujar() {
+            bod.unhighlight();
+            bod.highlight(table.search());
+            bod.parent().style("color: black; border-color:black;");
+        });
+        bod.parent().style("color: black; border-color:black;");
     });
-    // var table = $('#RespelTable').DataTable();
-
-    //       $('#RespelTable').css( 'display', 'table' );
-
-    //   table.responsive.recalc();
-});
-
-</script>
+    </script>
+@endif
 <script>
 $(function() {
 
@@ -1362,6 +1392,32 @@ $(document).ready(function() {
 });
 
 </script>
+
+<script>
+    $('#departamento').on('change', function() { 
+        var id = $('#departamento').val();
+        // var id = $(this).children("option:selected").val();
+        // alert(id);
+
+
+        $.ajax({
+          url: "sclientes/"+id,
+          type: "GET",
+          dataType: "json",
+          error: function(element){
+            console.log(element);
+          }, 
+          success: function(response){
+            $('#GSedemunicipio').html('<option value="" selected="true"> Seleccione una opción </option>');
+            response.forEach(element => {
+              $("#GSedemunicipio").append('<option value="'+element.ID_Mun +'"> ' + element.MunName + ' </option>')
+            });
+          }
+        });
+
+    });
+</script>
+=======
 <script>
 $(document).ready(function() {
     $('#Clasificacion').DataTable({

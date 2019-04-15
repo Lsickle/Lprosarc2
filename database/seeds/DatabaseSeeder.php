@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MunicipiosTableSeeder::class);
         $this->call(RealclientesTableSeeder::class);
         $this->call(RealSedesTableSeeder::class);
-        $this->call(generadorsTableSeeder::class);
+        $this->call(GeneradorsTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(PersonalsTableSeeder::class);
