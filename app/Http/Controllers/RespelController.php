@@ -167,24 +167,39 @@ class RespelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        // return $request;
         $Respels = Respel::where('ID_Respel', $id)->first();
-        $Requerimientos = Requerimiento::where('FK_ReqRespel', $id)->first();
-        $Respels->fill($request->except('RespelTarj', 'RespelHojaSeguridad'));
-        
         if ($request->hasfile('RespelHojaSeguridad')) {
+            if(file_exists(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
+                unlink(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad);
+            }
             $file = $request->file('RespelHojaSeguridad');
             $name = time().$file->getClientOriginalName();
-            $Respels->RespelHojaSeguridad = $name;
-            $file->move(public_path().'/img/', $name);
+            $file->move(public_path().'/img/HojaSeguridad/',$name);
         }
-
+        else{
+            $name = $Respels->RespelHojaSeguridad;
+        }
         if ($request->hasfile('RespelTarj')) {
+            if(file_exists (public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj)){
+                unlink(public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj);
+            }
             $file = $request->file('RespelTarj');
             $tarj = time().$file->getClientOriginalName();
-            $Respels->RespelTarj = $tarj;
-            $file->move(public_path().'/img/', $tarj);
+            $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
         }
+        else{
+            $tarj = $Respels->RespelTarj;
+        }
+        $Respels->RespelName = $request->input('RespelName');
+        $Respels->RespelDescrip = $request->input('RespelDescrip');
+        $Respels->YRespelClasf4741 = $request->input('YRespelClasf4741');
+        $Respels->ARespelClasf4741 =$request->input('ARespelClasf4741');
+        $Respels->RespelIgrosidad = $request->input('RespelIgrosidad');
+        $Respels->RespelEstado = $request->input('RespelEstado');
+        $Respels->RespelStatus = $request->input('RespelStatus');
+        $Respels->RespelHojaSeguridad = $name;
+        $Respels->RespelTarj = $tarj;
         $Respels->save();
 
         $log = new audit();
@@ -195,7 +210,7 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        return redirect()->route('respels.index');
+        return redirect()->route('respels.show', [$Respels->RespelSlug]);
     }
 
     /**
