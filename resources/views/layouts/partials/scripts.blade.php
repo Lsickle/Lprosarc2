@@ -180,6 +180,10 @@ $(document).ready(function() {
     $('.smartwizard').smartWizard({
         theme: 'arrows',
         keyNavigation: true
+        lang: {  
+                next: 'Siguiente', 
+                previous: 'Anterior'
+        },
     });
 });
 
@@ -189,7 +193,14 @@ $(document).ready(function() {
     $('.smartwizardCli').smartWizard({
         theme: 'arrows',
         keyNavigation: false,
-        // backButtonSupport: false
+        lang: {  
+                next: 'Siguiente', 
+                previous: 'Anterior'
+            },
+        anchorSettings: {
+            removeDoneStepOnNavigateBack: true,
+            anchorClickable: false,
+        },
     });
 });
 

@@ -39,6 +39,16 @@
                             <!-- form start -->
 							<form role="form" action="/clientes" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Añada la información necesaria completando los campos requeridos</p>
@@ -50,6 +60,7 @@
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
+                                                
 												<div id="step-1" class="">
 													<div class="col-md-12">
                                                         <label for="ClienteInputNit">NIT</label>
@@ -137,9 +148,9 @@
                                                     </div>
                                                     <div id="telefono2">
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12" id="tel">
                                                         <div class="box-footer" style="display:flex; justify-content:center">
-                                                            <a id="tel" onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
+                                                            <a onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,9 +189,6 @@
 										</div>
 									</div>
 								</div>
-                                {{-- <div class="col-md-12"> --}}
-                                    {{-- </div> --}}
-                                    <!-- /.box-body -->
 							</form>
 						</div>
 						<!-- /.box -->
@@ -197,15 +205,20 @@
 </div>
 <script>
     function Tel(){
-        var Telefono = `<div class="col-md-6" id="sedeinputphone2">
-                            <label for="sedeinputphone2">Teléfono 2</label>
-                            <input type="tel" class="form-control phone" id="sedeinputphone2" placeholder="(03) 1 412 3140" name="SedePhone2">
+        var Telefono = `<div class="col-md-6">
+                            <label for="sedeinputphone1">Teléfono 2</label>
+                            <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="(03) 1 4123141" name="SedePhone1">
                         </div>
-                        <div class="col-md-6" id="sedeinputext2">
-                            <label for="sedeinputext2">Extensión 2</label>
-                            <input type="text" class="form-control extension" id="sedeinputext2" placeholder="159" name="SedeExt2">
+                        <div class="col-md-6">
+                            <label for="sedeinputext1">Extensión 2</label>
+                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1">
                         </div>`;
         $('#telefono2').append(Telefono);
+        
+        $(document).ready(function() {
+            $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
+            $('.extension').inputmask({mask: "[9][9][9]"});
+        });
         $('#tel').remove();
     }
     function Enabled(){
