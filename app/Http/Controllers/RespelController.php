@@ -38,7 +38,7 @@ class RespelController extends Controller
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.*', 'clientes.CliName')
             ->where('respels.RespelDelete',0)
-            ->get();   
+            ->get();
         }
         return view('respels.index', compact('Respels')); 
     }

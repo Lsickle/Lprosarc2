@@ -204,28 +204,21 @@ $(document).ready(function() {
         "keys": true,
         "responsive": true,
         "columnDefs": [{
-                "targets": 9,
+                "targets": 8,
                 "data": "RespelSlug",
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";
                 }
             },
             {
-                "targets": 10,
-                "data": "RespelSlug",
-                "render": function(data, type, row, meta) {
-                    return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-                }
-            },
-            {
-                "targets": 5,
+                "targets": 4,
                 "data": "RespelHojaSeguridad",
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             },
             {
-                "targets": 6,
+                "targets": 5,
                 "data": "RespelTarj",
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";

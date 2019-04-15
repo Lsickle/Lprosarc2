@@ -15,23 +15,7 @@ Respel-Editar
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
-					{{-- <a href="/requerimientos/{{$Requerimientos->ReqSlug}}/edit" class="btn btn-primary" style="float: right; margin-left: 1%;">Editar Requerimientos</a> --}}
-								   
-					@if($Respels->RespelDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->ID_Respel}}' class='btn btn-danger' style="float: right;">Borrar</a>
-						<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input  type="submit" id="Eliminar{{$Respels->ID_Respel}}" style="display: none;">
-						</form>
-						@else
-						<form action='/respels/{{$Respels->RespelSlug}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="Añadir">
-						</form>
-					@endif
+					<h3 class="box-title">Edición de Residuos</h3>
 				</div>
 				<div class="row">
 					<!-- left column -->
