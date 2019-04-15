@@ -16,15 +16,6 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-
-<script src="https://unpkg.com/imask"></script>
-
-<script>
-$(document).ready(function() {
-    $('#ClienteInputNit').inputmask("99-9999");
-
-});
-</script>
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
@@ -500,19 +491,15 @@ $(function() {
     })
     </script>
 @endif()
+{{-- Mascaras del cliente --}}
 <script>
-// $(document).ready(function() {
-//     $('#ClienteInputNit').inputmask("999.999.999-9");
-    
-// });
-$(document).ready(function() {
-    $('#ClienteInputNit').inputmask({
-        mask: "mask": "999-999-999-9"
+    $(document).ready(function() {
+        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9]"});
+        $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
+        $('.mobile').inputmask({mask: "(+57) [9][9][9] [9][9][9] [9][9][9][9]"});
+        $('.extension').inputmask({mask: "[9][9][9]"});
     });
-});
-</script>
-{{--}} $('input[name="CliNit"]').mask('999.999.999.999-9');
-
+    </script>
 
 {{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
 {{-- <script type="text/javascript">
