@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class generadorsTableSeeder extends Seeder
+class GeneradorsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class generadorsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\generador::class, 10)->create()->each(function(App\generador $Gen){
+        factory(App\Generador::class, 10)->create()->each(function(App\Generador $Gen){
             $id= $Gen->ID_Gener;
             $Gen->GenerSede()->saveMany(factory(App\GenerSede::class, 3)->make([
                 'FK_GSede' => $id,   

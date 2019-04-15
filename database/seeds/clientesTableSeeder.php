@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class clientesTableSeeder extends Seeder
+class ClientesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class clientesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Cliente::class, 12)->create()->each(function(App\cliente $Cli){
+        factory(App\Cliente::class, 12)->create()->each(function(App\Cliente $Cli){
             $id= $Cli->ID_Cli;
             $Cli->sede()->saveMany(factory(App\Sede::class, 5)->make([
                 'FK_SedeCli' => $id,   
