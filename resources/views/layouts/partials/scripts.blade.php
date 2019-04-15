@@ -69,141 +69,6 @@ $(document).ready(function() {
 });
 </script>
 @endif
-
-{{-- slider --}}
-<script>
-$(document).ready(function() {
-    $('#CargueRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#DescargueRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#PesajeRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#ReempacadoRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#MezcladoRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#DestruccionRec').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#CargueVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#DescargueVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#PesajeVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#ReempacadoVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#MezcladoVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    $('#DestruccionVideo').bxSlider({
-        mode: 'fade',
-        captions: true,
-        adaptiveHeight: true,
-        slideWidth: 1200
-    });
-});
-
-</script>
-
 {{-- script para tabla de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.index')
 <script>
@@ -310,6 +175,16 @@ $(document).ready(function() {
 });
 
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.smartwizardCli').smartWizard({
+        theme: 'arrows',
+        keyNavigation: false,
+        // backButtonSupport: false
+    });
+});
+
+</script>
 
 <!-- funcion para tabla de residuos -->
 @if(Route::currentRouteName()=='respels.index')
@@ -374,14 +249,14 @@ $(document).ready(function() {
                 "targets": 5,
                 "data": "RespelHojaSeguridad",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             },
             {
                 "targets": 6,
                 "data": "RespelTarj",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             ]
         });
@@ -646,23 +521,15 @@ $(function() {
     })
     </script>
 @endif()
+{{-- Mascaras del cliente --}}
 <script>
-$(document).ready(function() {
-    // $('input[name="CliNit"]').mask('999.999.999.999-9');
-    // $('input[name="cliente"]').mask('999.999.999.999-9');
-    // $('input[name="SedePhone2"]').mask('(999)-999 9999');
-    // $('input[name="SedePhone1"]').mask('(999)-999 9999');
-    // $('input[name="SedeCelular"]').mask('(999)-999 9999');
-    // $('input[name="GenerNit"]').mask('999.999.999.999-9');
-    // $('input[name="GSedePhone2"]').mask('(999)-999 9999');
-    // $('input[name="GSedePhone1"]').mask('(999)-999 9999');
-    // $('input[name="GSedeCelular"]').mask('(999)-999 9999');
-    // $('input[name="GSedeinputext1"]').mask('999-9');
-    // $('input[name="GSedeinputext2"]').mask('999-9');
-    // $('input[name="CargSalary"]').mask('000.000.000.000');
-});
-</script>
-
+    $(document).ready(function() {
+        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9]"});
+        $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
+        $('.mobile').inputmask({mask: "(+57) [9][9][9] [9][9][9] [9][9][9][9]"});
+        $('.extension').inputmask({mask: "[9][9][9]"});
+    });
+    </script>
 
 {{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
 {{-- <script type="text/javascript">
@@ -1465,10 +1332,11 @@ $(window).resize(function() {
 </script>
 @yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
-<script>
-$(':submit').click(function() {
-    $(this).attr('disabled', 'disabled');
-});
+// <script>
+//   $(':submit').click(function() {
+//         $(this).attr('disabled','disabled');
+//   });
+// </script>
 
 </script>
 @if(
@@ -1555,4 +1423,14 @@ $(document).ready(function() {
         });
 
     });
+</script>
+=======
+<script>
+$(document).ready(function() {
+    $('#Clasificacion').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "responsive": true,
+    });
+});
 </script>

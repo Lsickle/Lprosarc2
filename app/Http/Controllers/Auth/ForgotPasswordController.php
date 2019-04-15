@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -31,6 +32,11 @@ class ForgotPasswordController extends Controller
      */
     public function sendResetLinkEmail(Request $request)
     {
+        $data = $request->input("email");
+        Mail::send('emails.confirmation_code', $data, function($message) use ($data) {
+            $message->to($data['email'])->subject('Confirmación de Correo');
+        });
+        
         $this->validateEmail($request);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -70,6 +76,8 @@ class ForgotPasswordController extends Controller
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
+        
+
         if ($request->expectsJson()) {
             return new JsonResponse([
                 'message' =>  'The given data was invalid.',
