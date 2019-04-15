@@ -31,8 +31,6 @@
 								@csrf
 										
 								@include('layouts.RespelPartials.Respelform1')
-
-								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
