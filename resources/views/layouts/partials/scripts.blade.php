@@ -221,14 +221,14 @@ $(document).ready(function() {
                 "targets": 5,
                 "data": "RespelHojaSeguridad",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             },
             {
                 "targets": 6,
                 "data": "RespelTarj",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
             }
         ]
