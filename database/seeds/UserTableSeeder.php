@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\role;
+use App\Role;
 use App\User;
 
 

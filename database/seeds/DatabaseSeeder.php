@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 use App\User;
-use App\sede;
-use App\cliente;
+use App\Cede;
+use App\Cliente;
 use App\generador;
 use App\GenerSede;
-use App\departamento;
+use App\Departamento;
 use App\Municipios;
 use App\Area;
 use App\Cargo;
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MunicipiosTableSeeder::class);
         $this->call(RealclientesTableSeeder::class);
         $this->call(RealSedesTableSeeder::class);
-        $this->call(generadorsTableSeeder::class);
+        $this->call(GeneradorsTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(PersonalsTableSeeder::class);

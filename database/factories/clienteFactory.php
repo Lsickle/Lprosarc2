@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 
 /*factory para la tabla cliente*/
-$factory->define(App\cliente::class, function (Faker $faker) {
+$factory->define(App\Cliente::class, function (Faker $faker) {
 	$slug=$faker->numberBetween($min = 100, $max = 200);
 	$title = $faker->company();
 	$sufixcompany = $faker->randomElement(['C.A.', 'S.A.','SAS', 'ONG']);

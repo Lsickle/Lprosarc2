@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quotation extends Model
 {
-    protected $table = 'Quotations';
+    protected $table = 'quotations';
 
     protected $fillable = ['CotizNum', 'CotizStatus', 'CotizSubTotal'];
 

@@ -28,6 +28,9 @@ class CreateRespelsTable extends Migration
             $table->string('RespelSlug')->unique();
             $table->unsignedInteger('FK_RespelSede')->nullable();
             $table->foreign('FK_RespelSede')->references('ID_Sede')->on('sedes')->onDelete('cascade');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             // $table->foreign('FK_RespelGenerSede')->references('ID_GSede')->on('gener_sedes');
         });
     }
