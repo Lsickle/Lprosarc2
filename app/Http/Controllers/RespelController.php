@@ -21,23 +21,23 @@ class RespelController extends Controller
      */
     public function index(){ 
 
-    if(Auth::user()->UsRol === "Programador"){
-        $Respels = DB::table('respels')
-        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        ->select('respels.*', 'clientes.CliName')
-        ->get();
+        if(Auth::user()->UsRol === "Programador"){
+            $Respels = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.CliName')
+            ->get();
 
-        return view('respels.index', compact('Respels'));
-    }else{
-        $Respels = DB::table('respels')
-        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        ->select('respels.*', 'clientes.CliName')
-        ->where('respels.RespelDelete',0)
-        ->get();   
+            return view('respels.index', compact('Respels'));
+        }else{
+            $Respels = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.CliName')
+            ->where('respels.RespelDelete',0)
+            ->get();   
     }
     
     
@@ -72,12 +72,10 @@ class RespelController extends Controller
     public function store(Request $request)
     {   
         if ($request->hasfile('RespelHojaSeguridad')) {
-        $file = $request->file('RespelHojaSeguridad');
-        $name = time().$file->getClientOriginalName();
-        $file->move(public_path().'/img/', $name);
-    }
-
-
+            $file = $request->file('RespelHojaSeguridad');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/img/', $name);
+        }
         if ($request->hasfile('RespelTarj')) {
             $file = $request->file('RespelTarj');
             $tarj = time().$file->getClientOriginalName();
@@ -148,13 +146,14 @@ class RespelController extends Controller
     public function show($id)
     {
         // return $id;
-        $Respels = DB::table('respels')
-        ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-        ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-        ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        ->select('respels.*', 'clientes.*', 'sedes.*')
-        ->where('respels.RespelSlug', '=', $id)
-        ->get();
+        $Respels = Respel::where('RespelSlug',$id)->first();
+        // $Respels = DB::table('respels')
+        //     ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+        //     ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+        //     ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+        //     ->select('respels.*', 'clientes.*', 'sedes.*')
+        //     ->where('respels.RespelSlug', '=', $id)
+        //     ->get();
         // return $Respels;
 
         return view('respels.show', compact('Respels'));
