@@ -72,6 +72,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/inputmask/dist/inputmask/jquery.inputmask.js',
         'node_modules/inputmask/dist/jquery.inputmask.bundle.js',
         'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
+        'node_modules/bootstrap-validator/dist/validator.js',
         'node_modules/select2/dist/js/select2.full.js'
     ], 'public/js/dependencias.js')
    .scripts([

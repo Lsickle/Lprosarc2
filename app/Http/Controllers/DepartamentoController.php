@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\departamento;
+use App\Departamento;
+use Illuminate\Support\Facades\DB;
 
 class DepartamentoController extends Controller
 {
@@ -70,7 +71,13 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $municipio = DB::table('municipios')
+            ->select('*')
+            ->where('FK_MunCity', $id)
+            ->get();
+            return response()->json($municipio);
+        }
     }
 
     /**
