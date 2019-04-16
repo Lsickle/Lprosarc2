@@ -168,7 +168,7 @@ $(document).ready(function() {
 
 </script>
 {{-- script para formulario en smart-wizzard --}}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 $(document).ready(function() {
     $('.smartwizard').smartWizard({
         theme: 'arrows',
@@ -179,8 +179,7 @@ $(document).ready(function() {
         },
     });
 });
-
-</script>
+</script> --}}
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -207,11 +206,11 @@ $(document).ready(function() {
         var btnCancel = $('<button></button>').text('Cancel')
                                          .addClass('btn btn-danger')
                                          .on('click', function(){
-                                                $('.smartwizardCli').smartWizard("reset");
+                                                $('.smartwizard').smartWizard("reset");
                                                 $('#myForm').find("input, textarea").val("");
                                             });
         // Smart Wizard
-        $('.smartwizardCli').smartWizard({
+        $('.smartwizard').smartWizard({
                 selected: 0,
                 theme: 'arrows',
                 transitionEffect:'fade',
@@ -226,7 +225,7 @@ $(document).ready(function() {
                         }
              });
 
-        $(".smartwizardCli").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+        $(".smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
             var elmForm = $("#form-step-" + stepNumber);
             // stepDirection === 'forward' :- this condition allows to do the form validation
             // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
@@ -241,7 +240,7 @@ $(document).ready(function() {
             return true;
         });
 
-        $(".smartwizardCli").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
+        $(".smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
             // Enable finish button only on last step
             if(stepNumber == 3){
                 $('.btn-finish').removeClass('disabled');
@@ -432,89 +431,6 @@ $(function() {
 });
 
 </script>
-{{-- <script>
-// funcion para da formato a la tabla
-$(function() {
-    $('#example4').DataTable({
-        "scrollX": false,
-        "autoWidth": true,
-        "keys": true,
-        "responsive": true,
-        "processing": true,
-        "columnDefs": [{
-            "targets": 8,
-            "data": "GSedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
-            }
-        }]
-    });
-});
-
-</script> --}}
-{{-- <script>
-$(function() {
-    $('#example3').DataTable({
-        "scrollX": false,
-        "autoWidth": true,
-        "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-            "targets": 6,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
-            }
-        }, {
-            "targets": 7,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
-    });
-});
-
-</script> --}}
-{{-- <script>
-$(function() {
-    $('#example2').DataTable({
-        "select": true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf'
-        ],
-        // "autoFill": true,
-        "scrollX": true,
-        // "scrollCollapse": true,
-        // "autoWidth": true,
-        "responsive": {
-            "breakpoints": [
-                { name: 'bigdesktop', width: Infinity },
-                { name: 'meddesktop', width: 1480 },
-                { name: 'smalldesktop', width: 1280 },
-                { name: 'medium', width: 1188 },
-                { name: 'tabletl', width: 1024 },
-                { name: 'btwtabllandp', width: 848 },
-                { name: 'tabletp', width: 768 },
-                { name: 'mobilel', width: 480 },
-                { name: 'mobilep', width: 320 }
-            ]
-        },
-        "keys": true,
-        "colReorder": true,
-        "columnDefs": [{
-            "targets": 10,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
-            }
-        }]
-        // "fixedColumns": true
-    });
-});
-
-</script> --}}
 @if(Route::currentRouteName()=='clientes.index')
     <script>
     $(document).ready(function() {
@@ -590,51 +506,6 @@ $(function() {
         $('.extension').inputmask({mask: "[9][9][9]"});
     });
     </script>
-
-{{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
-{{-- <script type="text/javascript">
-{
-    {
-        --$("select[name='DeclarSede']").change(function() {
-            var DeclarSede_id = $("select[name='DeclarSede']").val();
-            if (DeclarSede_id !== '' && DeclarSede_id !== null) {
-                $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-                $ajax({
-                    type: 'GET',
-                    url: { { url("/declaraciones/create") } },
-                    data: { id: DeclarSede_id },
-                }).done(function(data) {
-                    $.each(data, function(key, value) {
-                        $("select[name='DeclarGenerSede']")
-                            .apend($("<option></option>")
-                                .attr("value", key)
-                                .text(value));
-                    });
-                }).fail(function(jqXHR, textStatus) {
-                    console.log(jqXHR);
-                });
-            } else {
-                $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-            }
-        });
-        --
-    }
-}
-$('select[name="DeclarSede"]').on('change', function(e) {
-    console.log(e);
-    var ID_Sede = e.target.value;
-
-    $.POST('/declaraciones' + ID_Sede, function(data) {
-        console.log(data);
-        $('select[name="DeclarGenerSede"]').empty();
-        $.each(data, function(index, subCatObj) {
-            $('select[name="DeclarGenerSede"]').append('' + subCatObj.name + '');
-        });
-    });
-});
-
-</script> --}}
-<!-- checkin imput -->
 <script>
 $(function() {
     $('.inputcheck').iCheck({
