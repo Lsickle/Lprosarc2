@@ -37,8 +37,18 @@
 								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 							</div>
                             <!-- form start -->
-							<form role="form" action="/clientes" method="POST" enctype="multipart/form-data">
+							<form role="form" id="myForm" action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator">
                                 @csrf
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Añada la información necesaria completando los campos requeridos</p>
@@ -50,14 +60,28 @@
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
-												<div id="step-1" class="">
-													<div class="col-md-12">
+                                                
+												<div id="step-1" class="tab-pane step-content">
+                                                    
+                                                    <div id="form-step-0" role="form" data-toggle="validator">
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <input type="text" name="CliNit" autofocus="true"  class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y"  required>
-                                                    </div>
-                                                    <div class="col-md-12">
+                                                        <div class="form-group has-error">
+                                                            <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required="">
+                                                            <div class="help-block with-errors">
+                                                                <ul class="list-unstyled">
+                                                                    <li>Please fill out this field.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                         <label for="ClienteInputRazon">Razón Social</label>
-                                                        <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required>
+                                                            <div class="form-group has-error">
+                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required="">
+                                                            <div class="help-block with-errors">
+                                                                <ul class="list-unstyled">
+                                                                    <li>Please fill out this field.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputNombre">Nombre Corto</label>
@@ -88,7 +112,9 @@
                                                     </div>
                                                     @endif
                                                 </div>
+                                            {{-- </div> --}}
                                                 <div id="step-2" class="">
+                                                <div id="form-step-1" role="form" data-toggle="validator">
                                                     <div class="col-md-12">
                                                         <h2>Sede Principal</h2>
                                                     </div>
@@ -110,8 +136,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="FK_SedeMun">Municipio</label>
-                                                        <select class="form-control" id="FK_SedeMun" name="FK_SedeMun"  disabled>
+                                                        <label for="municipio">Municipio</label>
+                                                        <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
                                                             <option value="">Seleccione...</option>
                                                             {{-- @foreach ($Municipios as $Municipio) 
                                                                 <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
@@ -137,13 +163,15 @@
                                                     </div>
                                                     <div id="telefono2">
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12" id="tel">
                                                         <div class="box-footer" style="display:flex; justify-content:center">
-                                                            <a id="tel" onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
+                                                            <a onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </div>
                                                 <div id="step-3" class="">
+                                                <div id="form-step-2" role="form" data-toggle="validator">
                                                     <h2>Persona de Contacto</h2>
                                                     <div class="col-md-6">
                                                         <label for="AreaName">Area</label>
@@ -169,6 +197,7 @@
                                                         <label for="PersSecondName">Celular</label>
                                                         <input type="text" class="form-control mobile" id="PersSecondName" placeholder="Numero de celular" name="PersCellphone">
                                                     </div>
+                                                </div>
                                                     <input hidden value="1" name="number">
                                                     <div class="box-footer" style="float:right; margin-right:5%">
                                                         <button type="submit" class="btn btn-primary">Registrar</button>
@@ -178,9 +207,6 @@
 										</div>
 									</div>
 								</div>
-                                {{-- <div class="col-md-12"> --}}
-                                    {{-- </div> --}}
-                                    <!-- /.box-body -->
 							</form>
 						</div>
 						<!-- /.box -->
@@ -196,20 +222,31 @@
 	<!-- /.box -->
 </div>
 <script>
+    function Redirect(){
+        if(':submit'){
+
+        location.href='#step-2';
+        }
+    }
     function Tel(){
-        var Telefono = `<div class="col-md-6" id="sedeinputphone2">
-                            <label for="sedeinputphone2">Teléfono 2</label>
-                            <input type="tel" class="form-control phone" id="sedeinputphone2" placeholder="(03) 1 412 3140" name="SedePhone2">
+        var Telefono = `<div class="col-md-6">
+                            <label for="sedeinputphone1">Teléfono 2</label>
+                            <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="(03) 1 4123141" name="SedePhone1">
                         </div>
-                        <div class="col-md-6" id="sedeinputext2">
-                            <label for="sedeinputext2">Extensión 2</label>
-                            <input type="text" class="form-control extension" id="sedeinputext2" placeholder="159" name="SedeExt2">
+                        <div class="col-md-6">
+                            <label for="sedeinputext1">Extensión 2</label>
+                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1">
                         </div>`;
         $('#telefono2').append(Telefono);
+        
+        $(document).ready(function() {
+            $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
+            $('.extension').inputmask({mask: "[9][9][9]"});
+        });
         $('#tel').remove();
     }
     function Enabled(){
-        document.getElementById("FK_SedeMun").disabled = false;
+        document.getElementById("municipio").disabled = false;
     }
         // var departamento = document.getElementById("departamento").value;
         
@@ -241,7 +278,7 @@
         $('#otroType').remove();
     }
 </script>
-<script>
+{{--<script>
     $(document).ready(function(){
         $('#departamento').change(function(){
             if($(this).val() != ''){
@@ -280,6 +317,6 @@
     //     // }
     // }
 
-</script>
+</script>--}}
 
 @endsection
