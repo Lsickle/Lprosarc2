@@ -82,11 +82,10 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                            <div class="form-group">
-                                                        <label for="ClienteInputNombre">Nombre Corto</label>
-                                                        <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                        <div class="form-group">
+                                                            <label for="ClienteInputNombre">Nombre Corto</label>
+                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="tipo">Tipo de Empresa</label>

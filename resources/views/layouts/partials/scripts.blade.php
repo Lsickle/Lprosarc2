@@ -186,23 +186,22 @@ $(document).ready(function() {
         $('.smartwizard').smartWizard({
             selected: 0,
             theme: 'arrows',
-            keyNavigation: true,
             transitionEffect:'fade',
             toolbarSettings: {
                 toolbarPosition: 'bottom',
-                            },
-            anchorSettings: {
-                markDoneStep: true, 
-                markAllPreviousStepsAsDone: true, 
-                removeDoneStepOnNavigateBack: true,
-                enableAnchorOnDoneStep: true 
             },
             lang: {  
                 next: 'Siguiente', 
                 previous: 'Anterior'
             },
-        });
-        $(".smartwizard").on("leaveStep", function(e, stepNumber, stepDirection) {
+            anchorSettings: {
+                markDoneStep: true, 
+                markAllPreviousStepsAsDone: true,
+                removeDoneStepOnNavigateBack: true,
+                enableAnchorOnDoneStep: true
+            }
+            });
+        $(".smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
             var elmForm = $("#form-step-" + stepNumber);
             if(stepDirection === 'forward' && elmForm){
                 elmForm.validator('validate');
@@ -216,7 +215,6 @@ $(document).ready(function() {
         });
     });
 </script>
-
 <!-- funcion para tabla de residuos -->
 @if(Route::currentRouteName()=='respels.index')
     <script>
