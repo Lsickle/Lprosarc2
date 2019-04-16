@@ -37,7 +37,7 @@
 								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
 							</div>
                             <!-- form start -->
-							<form role="form" action="/clientes" method="POST" enctype="multipart/form-data">
+							<form role="form" id="myForm" action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator">
                                 @csrf
                                 @if ($errors->any())
                                     <div class="alert alert-danger" role="alert">
@@ -62,9 +62,17 @@
 								            <div class="row">
                                                 
 												<div id="step-1" class="">
-													<div class="col-md-12">
+                                                    <div id="form-step-0" role="form" data-toggle="validator">
+                                                        
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <input type="text" name="CliNit" autofocus="true"  class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y"  required>
+                                                        <div class="col-md-12">
+                                                            <input type="text" name="CliNit" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required>
+                                                        </div>
+                                                        <div class="help-block with-errors">
+                                                            <ul class="list-unstyled">
+                                                                <li>Please fill out this field.</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputRazon">Razón Social</label>
@@ -98,8 +106,15 @@
                                                         </select>
                                                     </div>
                                                     @endif
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary" onclick="Redirect()">Siguiente button</button>
+                                                        <input type="button" value="Input" href="#step-2" link="#step-2">
+                                                        <a href="#step-2" class="btn btn-primary">Siguiente a</a>
+                                                    </div>
                                                 </div>
+                                            {{-- </div> --}}
                                                 <div id="step-2" class="">
+                                                <div id="form-step-1" role="form" data-toggle="validator">
                                                     <div class="col-md-12">
                                                         <h2>Sede Principal</h2>
                                                     </div>
@@ -154,7 +169,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </div>
                                                 <div id="step-3" class="">
+                                                <div id="form-step-2" role="form" data-toggle="validator">
                                                     <h2>Persona de Contacto</h2>
                                                     <div class="col-md-6">
                                                         <label for="AreaName">Area</label>
@@ -180,6 +197,7 @@
                                                         <label for="PersSecondName">Celular</label>
                                                         <input type="text" class="form-control mobile" id="PersSecondName" placeholder="Numero de celular" name="PersCellphone">
                                                     </div>
+                                                </div>
                                                     <input hidden value="1" name="number">
                                                     <div class="box-footer" style="float:right; margin-right:5%">
                                                         <button type="submit" class="btn btn-primary">Registrar</button>
@@ -204,6 +222,12 @@
 	<!-- /.box -->
 </div>
 <script>
+    function Redirect(){
+        if(':submit'){
+
+        location.href='#step-2';
+        }
+    }
     function Tel(){
         var Telefono = `<div class="col-md-6">
                             <label for="sedeinputphone1">Teléfono 2</label>
@@ -254,7 +278,7 @@
         $('#otroType').remove();
     }
 </script>
-<script>
+{{--<script>
     $(document).ready(function(){
         $('#departamento').change(function(){
             if($(this).val() != ''){
@@ -293,6 +317,6 @@
     //     // }
     // }
 
-</script>
+</script>--}}
 
 @endsection
