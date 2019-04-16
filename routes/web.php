@@ -93,6 +93,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/ClasificacionA', function(){
 		return view('layouts.RespelPartials.ClasificacionA');
 	})->name('ClasificacionA');
+	Route::get('/NA', function(){
+		return view('Prueba.index');
+	})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){
 		return view('layouts.RespelPartials.ClasificacionY');
 	})->name('ClasificacionY');

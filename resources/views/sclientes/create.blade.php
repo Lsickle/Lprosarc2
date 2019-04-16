@@ -60,9 +60,6 @@
 											<label for="municipio">Municipio</label>
 											<select class="form-control" id="municipio" name="FK_SedeMun" required="true">
 											<option value="1">Seleccione...</option>
-											@foreach ($Municipios as $Municipio)
-												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-											@endforeach
 											</select>
 										</div>
 									<div class="col-md-6">
