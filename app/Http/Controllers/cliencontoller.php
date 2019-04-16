@@ -100,7 +100,7 @@ class clientcontoller extends Controller
                 'SedePhone2' => 'max:32|min:14|nullable',
                 'SedeExt2' => 'max:5|nullable',
                 'SedeEmail' => 'required|email|unique:sedes,SedeEmail',
-                'SedeCelular' => 'numeric|min:18|max:18',
+                'SedeCelular' => 'min:18|max:18',
 
                 'AreaName' => 'required|max:128',
 

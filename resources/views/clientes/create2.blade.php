@@ -61,22 +61,27 @@
 											<!-- general form elements -->
 								            <div class="row">
                                                 
-												<div id="step-1" class="">
+												<div id="step-1" class="tab-pane step-content">
+                                                    
                                                     <div id="form-step-0" role="form" data-toggle="validator">
-                                                        
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" name="CliNit" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required>
+                                                        <div class="form-group has-error">
+                                                            <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required="">
+                                                            <div class="help-block with-errors">
+                                                                <ul class="list-unstyled">
+                                                                    <li>Please fill out this field.</li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                        <div class="help-block with-errors">
-                                                            <ul class="list-unstyled">
-                                                                <li>Please fill out this field.</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
                                                         <label for="ClienteInputRazon">Razón Social</label>
-                                                        <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required>
+                                                            <div class="form-group has-error">
+                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required="">
+                                                            <div class="help-block with-errors">
+                                                                <ul class="list-unstyled">
+                                                                    <li>Please fill out this field.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="ClienteInputNombre">Nombre Corto</label>
@@ -106,11 +111,6 @@
                                                         </select>
                                                     </div>
                                                     @endif
-                                                    <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-primary" onclick="Redirect()">Siguiente button</button>
-                                                        <input type="button" value="Input" href="#step-2" link="#step-2">
-                                                        <a href="#step-2" class="btn btn-primary">Siguiente a</a>
-                                                    </div>
                                                 </div>
                                             {{-- </div> --}}
                                                 <div id="step-2" class="">
@@ -136,8 +136,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="FK_SedeMun">Municipio</label>
-                                                        <select class="form-control" id="FK_SedeMun" name="FK_SedeMun"  disabled>
+                                                        <label for="municipio">Municipio</label>
+                                                        <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
                                                             <option value="">Seleccione...</option>
                                                             {{-- @foreach ($Municipios as $Municipio) 
                                                                 <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
@@ -246,7 +246,7 @@
         $('#tel').remove();
     }
     function Enabled(){
-        document.getElementById("FK_SedeMun").disabled = false;
+        document.getElementById("municipio").disabled = false;
     }
         // var departamento = document.getElementById("departamento").value;
         
