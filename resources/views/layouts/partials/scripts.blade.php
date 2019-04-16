@@ -210,9 +210,6 @@ $(document).ready(function() {
                                                 $('.smartwizardCli').smartWizard("reset");
                                                 $('#myForm').find("input, textarea").val("");
                                             });
-
-
-
         // Smart Wizard
         $('.smartwizardCli').smartWizard({
                 selected: 0,
@@ -255,52 +252,6 @@ $(document).ready(function() {
 
     });
 </script>
-{{--<script type="text/javascript">
-$(document).ready(function() {
-    $('.smartwizardCli').smartWizard({
-        
-        keyNavigation: false,
-        // anchorSettings: {
-        //     removeDoneStepOnNavigateBack: true,
-        //     anchorClickable: false,
-        // },
-        // toolbarSettings:{
-        //     toolbarPosition: 'none',
-        // }
-        selected: 0,
-        // theme: 'dots',
-        transitionEffect:'fade',
-        toolbarSettings: {
-                            toolbarPosition: 'bottom',
-                        //   toolbarExtraButtons: [btnFinish, btnCancel]
-                        },
-        anchorSettings: {
-                    markDoneStep: true, // add done css
-                    markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-                    removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
-                    enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-                }
-    });
-    $(".smartwizardCli").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-        var elmForm = $("#form-step-" + stepNumber);
-        // var elmForm = $("#step-1" );
-        
-        // stepDirection === 'forward' :- this condition allows to do the form validation
-        // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
-        if(stepDirection === 'forward' && elmForm){
-            elmForm.validator('validate');
-            // alert(elmForm)
-            var elmErr = elmForm.children('.has-error');
-            if(elmErr && elmErr.length > 0){
-                // Form validation failed
-                return false;
-            }
-        }
-        return true;
-    });
-});
-
-</script>--}}
 
 <!-- funcion para tabla de residuos -->
 @if(Route::currentRouteName()=='respels.index')
