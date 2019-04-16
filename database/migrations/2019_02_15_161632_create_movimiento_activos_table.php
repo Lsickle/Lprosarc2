@@ -19,8 +19,8 @@ class CreateMovimientoActivosTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('FK_ActPerson')->nullable();
             $table->unsignedInteger('FK_MovInv')->nullable();
-            $table->foreign('FK_ActPerson')->references('ID_Pers')->on('Personals')->onDelete('set null');
-            $table->foreign('FK_MovInv')->references('ID_Act')->on('Activos')->onDelete('cascade');
+            $table->foreign('FK_ActPerson')->references('ID_Pers')->on('personals')->onDelete('set null');
+            $table->foreign('FK_MovInv')->references('ID_Act')->on('activos')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

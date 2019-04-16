@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Departamento extends Model
 {
-    protected $table = 'Departamentos';
+    protected $table = 'departamentos';
 
     protected $fillable = ['DepartName', 'DepartRegionName', 'DepartCapitalName'];
     
@@ -14,6 +14,6 @@ class Departamento extends Model
 
     public function Municipios()
     {
-        return $this->hasMany('App\Municipio', 'ID_Mun', 'id');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Municipio', 'ID_Mun');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
     }
 }

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model{
-    protected $table = 'Cargos';
+    protected $table = 'cargos';
     protected $fillable = ['CargName','CargSalary','CargGrade','CargDelete','SelectArea'];
     protected $primaryKey = 'ID_Carg';
 
