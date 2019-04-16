@@ -6,25 +6,22 @@
 <label>Descripcion</label>
 <input name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->RespelDescrip}}" required>
 </div>
-<div class="col-md-6" style="padding-top: 18px;">
-	<label>Tipo de clasificación</label>
+<div class="col-md-6" style="text-align: center;">
+	<label>Tipo de clasificación</label><br>
 	@if($Respels->YRespelClasf4741 <> null)
-		<label style="margin: 0 3em;"> <spam> Y </spam>
-			<input type="radio" id="ClasifY" checked="" onclick="Agregar()" name="ResTippCasif" value="Y"> 
-		</label>
-		<label> <spam> A </spam>
-			<input type="radio" id="ClasifA" onclick="Agregar()" name="ResTippCasif" value="A"> 
-		</label>
+		<a class="btn btn-success" id="ClasifY" onclick="AgregarY()">Y</a>
+		<a class="btn btn-primary" id="ClasifA" onclick="AgregarA()">A</a>
 	@else
-		<label style="margin: 0 3em;"> <spam> Y </spam>
-			<input type="radio" id="ClasifY" onclick="Agregar()" name="ResTippCasif" value="Y"> 
-		</label>
-		<label> <spam> A </spam>
-			<input type="radio" id="ClasifA" checked="" onclick="Agregar()" name="ResTippCasif" value="A"> 
-		</label>
+		<a class="btn btn-primary" id="ClasifY" onclick="AgregarY()">Y</a>
+		<a class="btn btn-success" id="ClasifA" onclick="AgregarA()">A</a>
 	@endif
 </div>
 <div class="col-md-6" id="Clasif">
+	@if($Respels->YRespelClasf4741 <> null)
+		@include('layouts.RespelPartials.layoutsRes.ClasificacionYEdit')
+	@else
+		@include('layouts.RespelPartials.layoutsRes.ClasificacionAEdit')
+	@endif
 </div>
 <div class="col-md-6">
 	<label>Peligrosidad del residuo</label>
@@ -84,7 +81,6 @@
 	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionAEdit')`;
 	@if($Respels->YRespelClasf4741 <> null)
 		window.onload = function(){ 
-			$("#Clasif").append(ClasifY);
 			$("#RespelHojaSeguridad").change(function() {
 				var HojaSeguridadName = $("#RespelHojaSeguridad")[0].files[0]['name'];
 				$("#HojaSeguridadActual").val(HojaSeguridadName);
@@ -96,7 +92,6 @@
 		}
 	@else
 		window.onload = function(){
-			$("#Clasif").append(ClasifA);
 			$("#RespelHojaSeguridad").change(function() {
 				var HojaSeguridadName = $("#RespelHojaSeguridad")[0].files[0]['name'];
 				$("#HojaSeguridadActual").val(HojaSeguridadName);
@@ -107,15 +102,18 @@
 			});
 		}
 	@endif
-	function Agregar()
-		{
-			if ($("#ClasifY").prop('checked')){
-				$("#Clasif").empty();
-				$("#Clasif").append(ClasifY);
-			}
-			else{
-				$("#Clasif").empty();
-				$("#Clasif").append(ClasifA);
-			}
-		}
+	function AgregarY(){
+		$("#ClasifY").addClass("btn btn-success");
+		$("#ClasifA").removeClass("btn btn-success");
+		$("#ClasifA").addClass("btn btn-primary");
+		$("#Clasif").empty();
+		$("#Clasif").append(ClasifY);
+	}
+	function AgregarA(){
+		$("#ClasifA").addClass("btn btn-success");
+		$("#ClasifY").removeClass("btn btn-success");
+		$("#ClasifY").addClass("btn btn-primary");
+		$("#Clasif").empty();
+		$("#Clasif").append(ClasifA);
+	}
 </script>

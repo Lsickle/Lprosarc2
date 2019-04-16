@@ -17,7 +17,7 @@ class AddForeignRecorsolserToRecorridosTable extends Migration
             $table->unsignedInteger('FK_RecorSolSer')->nullable();
             $table->unsignedInteger('FK_RecorProgveh')->nullable();
             $table->foreign('FK_RecorSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade'); 
-            $table->foreign('FK_RecorProgveh')->references('ID_ProgVeh')->on('ProgVehiculos')->onDelete('cascade'); 
+            $table->foreign('FK_RecorProgveh')->references('ID_ProgVeh')->on('progvehiculos')->onDelete('cascade'); 
         });
     }
 

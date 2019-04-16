@@ -1,5 +1,6 @@
 <div id="Respels">
 	<div id="Residuo">
+		<div class="col-md-12"> <hr> </div>
 		<div class="col-md-6">
 			<label>Nombre</label>
 			<input name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
@@ -8,14 +9,14 @@
 			<label>Descripcion</label>
 			<input name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
 		</div> 
-		<div class="col-md-6" style="padding-top: 18px;">
-			<label>Tipo de clasificación</label> <label style="margin: 0 3em;"> <spam> Y </spam>
-				<input type="radio" id="ClasifY0" checked="" onclick="Agregar(0)" name="ResTippCasif" value="Y"> </label>
-			<label> <spam> A </spam>
-			<input type="radio" id="ClasifA0" onclick="Agregar(0)" name="ResTippCasif" value="A"> </label>
-		</div> 
+		<div class="col-md-6" style="text-align: center;">
+			<label>Tipo de clasificación</label><br>
+			<a class="btn btn-success" id="ClasifY0" onclick="AgregarY(0)">Y</a>
+			<a class="btn btn-primary" id="ClasifA0" onclick="AgregarA(0)">A</a>
+		</div>
 		<div class="col-md-6" id="Clasif0">
-		</div> 
+			@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')
+		</div>
 		<div class="col-md-6">
 			<label>Peligrosidad del residuo</label>
 			<select name="RespelIgrosidad[]" class="form-control" required>
@@ -30,7 +31,7 @@
 		<div class="col-md-6">
 			<label>Estado del residuo</label>
 			<select name="RespelEstado[]" class="form-control" required>
-				<option value="">Selecione...</option>
+				<option value="Liquido">Selecione...</option>
 				<option value="Liquido">Liquido</option>
 				<option value="Solido">Solido</option>
 				<option value="Gaseoso">Gaseoso</option>
@@ -45,8 +46,6 @@
 			<label>Tarjeta De Emergencia</label>
 			<input name="RespelTarj[]" type="file" class="form-control" accept=".pdf">
 		</div> 
-		<div class="col-md-12"> <hr>
-		</div> 
 	</div>
 </div>
 
@@ -54,24 +53,27 @@
 	var contador = 1;
 	var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
 	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
-	window.onload = function(){ $("#Clasif0").append(ClasifY); }
+	window.onload = function(){ $("#DivClasifY0").append(ClasifY); }
 	function AgregarRes(){
 		var Residuo = `@include('layouts.RespelPartials.layoutsRes.CreateResiduos')`;
 		$("#Respels").append(Residuo);
 		$("#Clasif"+contador).append(ClasifY);
 		contador= parseInt(contador)+1;
 	}
-	function Agregar(id)
-		{
-			if ($("#ClasifY"+id).prop('checked')){
-				$("#Clasif"+id).empty();
-				$("#Clasif"+id).append(ClasifY);
-			}
-			else{
-				$("#Clasif"+id).empty();
-				$("#Clasif"+id).append(ClasifA);
-			}
-		}
+	function AgregarY(id){
+		$("#ClasifY"+id).addClass("btn btn-success");
+		$("#ClasifA"+id).removeClass("btn btn-success");
+		$("#ClasifA"+id).addClass("btn btn-primary");
+		$("#Clasif"+id).empty();
+		$("#Clasif"+id).append(ClasifY);
+	}
+	function AgregarA(id){
+		$("#ClasifA"+id).addClass("btn btn-success");
+		$("#ClasifY"+id).removeClass("btn btn-success");
+		$("#ClasifY"+id).addClass("btn btn-primary");
+		$("#Clasif"+id).empty();
+		$("#Clasif"+id).append(ClasifA);
+	}
 	function EliminarRes(id){
 		$("#Residuo"+id).remove();
 	}

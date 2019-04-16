@@ -26,13 +26,14 @@ class Respel extends Model
     	return $this->hasMany('App\Requerimiento','ID_Req', 'id');//como residuos tiene muchos requerimientos
     }
 
-    public function Tratamiento(){
-    	return $this->hasMany('App\Tratamiento','ID_Trat','id');//como residuos tiene muchos tratamientos
-    }
+    // public function Tratamiento(){
+    // 	return $this->hasMany('App\Tratamiento','ID_Trat','id');//como residuos tiene muchos tratamientos
+    // }
 
-    public function SolicitudResiduo(){
-        return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
-    }
+    // public function SolicitudResiduo(){
+    //     return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
+    // }
+    
     public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}

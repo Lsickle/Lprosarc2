@@ -11,19 +11,21 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<div class="col-md-12">
-						@if($Respels->RespelDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-							<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input  type="submit" id="Eliminar{{$Respels->RespelSlug}}" style="display: none;">
-							</form>
-						@else
-							<form action='/solicitud-Respels/{{$Respels->RespelSlug}}' method='POST' style="float: right;">
-								@method('DELETE')
-								@csrf
-								<input type="submit" class='btn btn-success' value="Añadir">
-							</form>
+						@if(Auth::user()->UsRol === "Cliente" && $Respels->RespelStatus <> "Aprobado")
+							@if($Respels->RespelDelete == 0)
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+								<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
+									@method('DELETE')
+									@csrf
+									<input  type="submit" id="Eliminar{{$Respels->RespelSlug}}" style="display: none;">
+								</form>
+							@else
+								<form action='/respels/{{$Respels->RespelSlug}}' method='POST' style="float: right;">
+									@method('DELETE')
+									@csrf
+									<input type="submit" class='btn btn-success' value="Añadir">
+								</form>
+							@endif
 						@endif
 						<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning" style="float: right; margin-right: 5px;">Editar</a>
 					</div>
@@ -84,7 +86,7 @@
 										<th>Hoja de seguridad:</th>
 										<td>
 											<h4>
-												<a method='get' href='/img/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-primary'><i class="fas fa-search"></i></a>
+												<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-primary'><i class="fas fa-search"></i></a>
 											</h4>
 										</td>
 									</tr>
@@ -92,7 +94,7 @@
 										<th>Tarjeta De Emergencia:</th>
 										<td>
 											<h4>
-												<a method='get' href='/img/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-primary'><i class="fas fa-search"></i></a>
+												<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-primary'><i class="fas fa-search"></i></a>
 											</h4>
 										</td>
 									</tr>

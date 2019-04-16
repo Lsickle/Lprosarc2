@@ -1,4 +1,5 @@
 <div id="Residuo`+contador+`">
+	<div class="col-md-12"> <hr> </div>
 	<div class="col-md-12">
 		<label onclick="EliminarRes(`+contador+`)" style="float: right; color: red; margin-top: 0; font-size: 2em;">
 			<i class="fas fa-times-circle"></i>
@@ -12,16 +13,10 @@
 		<label>Descripcion</label>
 		<input name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
 	</div>
-	<div class="col-md-6" style="padding-top: 18px;">
-		<label>Tipo de clasificación</label>
-		<label style="margin: 0 3em;">
-			<spam> Y</spam>
-			<input type="radio" id="ClasifY`+contador+`" checked="" onclick="Agregar(`+contador+`)" name="ResTippCasif" value="Y">
-		</label>
-		<label>
-			<spam> A</spam>
-			<input type="radio" id="ClasifA`+contador+`" onclick="Agregar(`+contador+`)" name="ResTippCasif" value="A">
-		</label>
+	<div class="col-md-6" style="text-align: center;">
+		<label>Tipo de clasificación</label><br>
+		<a class="btn btn-success" id="ClasifY`+contador+`" onclick="AgregarY(`+contador+`)">Y</a>
+		<a class="btn btn-primary" id="ClasifA`+contador+`" onclick="AgregarA(`+contador+`)">A</a>
 	</div>
 	<div class="col-md-6" id="Clasif`+contador+`">
 	</div>
@@ -39,7 +34,7 @@
 	<div class="col-md-6">
 		<label>Estado del residuo</label>
 		<select name="RespelEstado[]" class="form-control" required>
-			<option value="">Selecione...</option>
+			<option value="Solido">Selecione...</option>
 			<option value="Liquido">Liquido</option>
 			<option value="Solido">Solido</option>
 			<option value="Gaseoso">Gaseoso</option>
@@ -53,8 +48,5 @@
 	<div class="col-md-6">
 		<label>Tarjeta De Emergencia</label>
 		<input name="RespelTarj[]" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf">
-	</div>
-	<div class="col-md-12">
-		<hr>
 	</div>
 </div>
