@@ -86,8 +86,41 @@ class clientcontoller extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
         if($request->input("number") == "1"){
+            $rules = [
+                'CliNit' => 'required|max:13|min:13|unique:clientes,CliNit',
+                'CliName' => 'required|max:255|unique:clientes,CliName',
+                'CliShortname' => 'required|max:255|unique:clientes,CliName',
+                'CliType' => 'required|max:32',
+
+                'SedeName' => 'required|max:128|min:1',
+                'SedeAddress' => 'required|max:255',
+                'SedePhone1' => 'max:32|min:14|nullable',
+                'SedeExt1' => 'max:5|nullable',
+                'SedePhone2' => 'max:32|min:14|nullable',
+                'SedeExt2' => 'max:5|nullable',
+                'SedeEmail' => 'required|email|unique:sedes,SedeEmail',
+                'SedeCelular' => 'min:18|max:18',
+
+                'AreaName' => 'required|max:128',
+
+                'CargName' => 'required|max:128|alpha',
+
+                'PersFirstName' => 'required|alpha|max:64',
+                'PersLastName' => 'required|alpha|max:64',
+                'PersEmail' => 'required|email|max:255',
+                'PersSecondName' => 'alpha|max:64',
+
+
+            ];
+            $messages = [
+                'CliNit.required' => 'El NIT es requerido.',
+                'CliNit.unique:clientes,CliNit' => 'El NIT ya existe',
+                'CliNit.max:13' => 'El NIT debe tener un máximo de 10 caracteres.',
+                'CliNit.min:13' => 'El NIT debe no puede tener menos de 10 caracteres',
+            ];
+            $this->validate($request, $rules, $messages);
+
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
