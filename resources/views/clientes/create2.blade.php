@@ -68,38 +68,47 @@
                                                         <div class="form-group">
                                                             <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required="">
                                                             <div class="help-block with-errors">
-                                                                <ul class="list-unstyled">
-                                                                    <li>Please fill out this field.</li>
-                                                                </ul>
                                                             </div>
                                                         </div>
-                                                        <label for="ClienteInputRazon">Razón Social</label>
+                                                    </div>
                                                             <div class="form-group">
+                                                        <div class="col-md-6">
+                                                                <label for="ClienteInputRazon">Razón Social</label>
                                                             <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required="">
                                                             <div class="help-block with-errors">
-                                                                <ul class="list-unstyled">
-                                                                    <li>Please fill out this field.</li>
-                                                                </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="ClienteInputNombre">Nombre Corto</label>
-                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
+                                                        <div class="col-md-6">
+                                                                <label for="ClienteInputNombre">Nombre Corto</label>
+                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
                                                         <label for="tipo">Tipo de Empresa</label>
-                                                        <select class="form-control" id="tipo" name="CliType" required>
-                                                            <option onclick="HiddenOtroType()" value="">Seleccione...</option>
-                                                            <option onclick="HiddenOtroType()">Organico</option>
-                                                            <option onclick="HiddenOtroType()">Biologico</option>
-                                                            <option onclick="HiddenOtroType()">Industrial</option>
-                                                            <option onclick="HiddenOtroType()" >Medicamentos</option>
-                                                            <option onclick="OtroType()" value="">Otro</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6" id="otroTyp">
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <select class="form-control" id="tipo" name="CliType" required>
+                                                                <option onclick="HiddenOtroType()" value="">Seleccione...</option>
+                                                                <option onclick="HiddenOtroType()">Organico</option>
+                                                                <option onclick="HiddenOtroType()">Biologico</option>
+                                                                <option onclick="HiddenOtroType()">Industrial</option>
+                                                                <option onclick="HiddenOtroType()" >Medicamentos</option>
+                                                                <option onclick="OtroType()" value="">Otro</option>
+                                                            </select>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        <div id="otro" style="display: none;">
+                                                            
+                                                            <label for="otroType">¿Cuál?</label>
+                                                            <div class="form-group">
+                                                                <input name="CliType" type="text" class="form-control" id="otroType" maxlength="32">
+                                                                <div class="help-block with-errors">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {{-- </div> --}}
+                                                
                                                     @if(Auth::user()->UsRol !== "Cliente")
                                                     <div class="col-md-6">
                                                         <label for="categoria">Categoría</label>
@@ -112,63 +121,72 @@
                                                     </div>
                                                     @endif
                                                 </div>
-                                            {{-- </div> --}}
                                                 <div id="step-2" class="">
-                                                <div id="form-step-1" role="form" data-toggle="validator">
-                                                    <div class="col-md-12">
-                                                        <h2>Sede Principal</h2>
-                                                    </div>
-													<div class="col-md-6">
-                                                        <label for="sedeinputname">Nombre</label>
-                                                        <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" maxlength="128" required>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputemail">Email</label>
-                                                        <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" maxlength="128" required>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="departamento">Departamento</label>
-                                                        <select class="form-control" id="departamento" name="departamento" required="true" data-dependent="FK_SedeMun">
-                                                            <option onclick="Disabled()" value="">Seleccione...</option>
-                                                            @foreach ($Departamentos as $Departamento)		
-                                                                <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="municipio">Municipio</label>
-                                                        <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
-                                                            <option value="">Seleccione...</option>
-                                                            {{-- @foreach ($Municipios as $Municipio) 
-                                                                <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
-                                                            @endforeach --}}
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputcelular">Celular</label>
-                                                        <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="(+57) 301 414 5321" name="SedeCelular">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputaddress">Dirección</label>
-                                                        <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" maxlength="128" required>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputphone1">Teléfono</label>
-                                                        <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="(03) 1 4123141" name="SedePhone1">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="sedeinputext1">Extensión</label>
-                                                        <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1">
-                                                    </div>
-                                                    <div id="telefono2">
-                                                    </div>
-                                                    <div class="col-md-12" id="tel">
-                                                        <div class="box-footer" style="display:flex; justify-content:center">
-                                                            <a onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
+                                                    <div id="form-step-1" role="form" data-toggle="validator">
+                                                        <div class="col-md-12">
+                                                            <h2>Sede Principal</h2>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputname">Nombre</label>
+                                                            <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" maxlength="128" required>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputemail">Email</label>
+                                                            <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" maxlength="128" required>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="departamento">Departamento</label>
+                                                            <select class="form-control" id="departamento" name="departamento" required="true" data-dependent="FK_SedeMun">
+                                                                <option onclick="Disabled()" value="">Seleccione...</option>
+                                                                @foreach ($Departamentos as $Departamento)		
+                                                                    <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="municipio">Municipio</label>
+                                                            <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
+                                                                <option value="">Seleccione...</option>
+                                                                {{-- @foreach ($Municipios as $Municipio) 
+                                                                    <option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option> 
+                                                                @endforeach --}}
+                                                            </select>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputcelular">Celular</label>
+                                                            <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="(+57) 301 414 5321" name="SedeCelular">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputaddress">Dirección</label>
+                                                            <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" maxlength="128" required>
+                                                            <div class="help-block with-errors">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputphone1">Teléfono</label>
+                                                            <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="(03) 1 4123141" name="SedePhone1">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="sedeinputext1">Extensión</label>
+                                                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1">
+                                                        </div>
+                                                        <div id="telefono2">
+                                                        </div>
+                                                        <div class="col-md-12" id="tel">
+                                                            <div class="box-footer" style="display:flex; justify-content:center">
+                                                                <a onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                 </div>
                                                 <div id="step-3" class="">
                                                 <div id="form-step-2" role="form" data-toggle="validator">
@@ -222,12 +240,6 @@
 	<!-- /.box -->
 </div>
 <script>
-    function Redirect(){
-        if(':submit'){
-
-        location.href='#step-2';
-        }
-    }
     function Tel(){
         var Telefono = `<div class="col-md-6">
                             <label for="sedeinputphone1">Teléfono 2</label>
@@ -248,75 +260,26 @@
     function Enabled(){
         document.getElementById("municipio").disabled = false;
     }
-        // var departamento = document.getElementById("departamento").value;
-        
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-        // $.ajax({
-        //     url:"{{url('/clientes-2')}}",
-        //     method:'post',
-        //     // type:"POST",
-        //     dataType: 'json',
-        //     data:{
-        //         departamento
-        //     },
-        //     success: function (msg) {
-        //         alert("Se ha realizado el POST con exito " + departamento);
-        // }
-        // }); 
     function Disabled(){
         document.getElementById("FK_SedeMun").disabled = true;
     }
     function OtroType(){
-        var Otro ='<div id="otroType"><label for="otroType">¿Cuál?</label><input name="CliType" type="text" class="form-control" id="otroType" maxlength="32"></div>';
-        $('#otroTyp').append(Otro);
+//         var Otro = `    <div id="form-step-0" role="form" data-toggle="validator">
+//                 <div class="form-group">
+
+//                             <label for="otroType">¿Cuál?</label>
+//                             <input name="CliType" type="text" class="form-control" id="otroType" maxlength="32">
+//                             <div class="help-block with-errors">
+//                             </div>
+//                             </div>
+//                         </div>
+// `;
+//         $('#otro').append(Otro);
+document.getElementById("otro").style.display = 'block';
     }
     function HiddenOtroType(){
-        $('#otroType').remove();
+        // $('#otro').empty();
+        document.getElementById("otro").style.display = 'none';
     }
 </script>
-{{--<script>
-    $(document).ready(function(){
-        $('#departamento').change(function(){
-            if($(this).val() != ''){
-                var select = $(this).attr("id");
-                var value = $(this).val();
-                var dependent = $(this).data('dependent');
-                var _token = $('input[name="token"]').val();
-                $.ajax({
-                    // url:"{{url('/clientes-2')}}",
-                    url:"{{ route('clientes.ajax') }}",
-                    method:'POST',
-                    data:{
-                        selelect:select, value:value, dependent:dependent, _token:_token
-                    },
-                    success:function(result){
-                        $('#'+dependent).html(result);
-                    }
-                });
-            }
-        });
-    });
-
-    // function verifyCli(){
-    //     var ClienteInputNit, ClienteInputRazon, ClienteInputNombre, CliType;
-    //     ClienteInputNit = document.getElementById("ClienteInputNit").value;
-    //     ClienteInputRazon = document.getElementById("ClienteInputRazon").value;
-    //     ClienteInputNombre = document.getElementById("ClienteInputNombre").value;
-
-    //     // CliType = document.getElementById("tipo").value;
-        
-    //     window.location = "#step-2";
-    //     // if(ClienteInputNit = null || ClienteInputRazon = null || ClienteInputNombre = null ){
-
-    //     // alert("llene los campos");
-    //     // }else{
-    //     // }
-    // }
-
-</script>--}}
-
 @endsection
