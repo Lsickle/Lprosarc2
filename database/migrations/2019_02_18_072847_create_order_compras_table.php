@@ -13,7 +13,7 @@ class CreateOrderComprasTable extends Migration
      */
     public function up()
     {
-        Schema::create('OrdenCompras', function (Blueprint $table) {
+        Schema::create('ordencompras', function (Blueprint $table) {
 
             $table->increments('ID_Orden');
             $table->integer('OrdenNum');

@@ -2,7 +2,7 @@
 	<a href="{{route('ClasificacionA')}}" target="_blank"> Decreto Número 4741</a>
 </label>
 <select name="ARespelClasf4741[]" class="form-control">
-	<option value="">Selecione...</option>
+	<option value="A1010">Selecione...</option>
 	<option value="A1010">A1010</option>
 	<option value="A1020">A1020</option>
 	<option value="A1030">A1030</option>

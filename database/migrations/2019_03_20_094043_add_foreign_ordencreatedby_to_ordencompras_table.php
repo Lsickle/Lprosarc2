@@ -15,7 +15,7 @@ class AddForeignOrdencreatedbyToOrdencomprasTable extends Migration
     {
         Schema::table('ordencompras', function (Blueprint $table) {
             $table->unsignedInteger('FK_OrdenCreateBy')->nullable();
-            $table->foreign('FK_OrdenCreateBy')->references('id')->on('Users')->onDelete('set null');
+            $table->foreign('FK_OrdenCreateBy')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignOrdencreatedbyToOrdencomprasTable extends Migration
      */
     public function down()
     {
-        Schema::table('ordencompras', function (Blueprint $table) {
+        Schema::table('OrdenCompras', function (Blueprint $table) {
             $table->dropForeign('ordencompras_fk_ordencreateby_foreign');
             $table->dropColumn('FK_OrdenCreateBy');
         });

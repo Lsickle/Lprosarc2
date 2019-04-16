@@ -27,7 +27,7 @@ class CreateActivosTable extends Migration
             $table->unsignedInteger('FK_ActSub')->nullable();
             $table->unsignedInteger('FK_ActSede')->nullable();
             $table->foreign('FK_ActSub')->references('ID_SubCat')->on('subcategoria_activos')->onDelete('set null');
-            $table->foreign('FK_ActSede')->references('ID_Sede')->on('Sedes')->onDelete('cascade');
+            $table->foreign('FK_ActSede')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

@@ -2,7 +2,7 @@
 	<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741</a>
 </label>
 <select name="YRespelClasf4741[]" class="form-control">
-	<option value="">Selecione...</option>
+	<option value="Y1">Selecione...</option>
 	<option value="Y1">Y1</option>
 	<option value="Y2">Y2</option>
 	<option value="Y3">Y3</option>

@@ -13,7 +13,7 @@ class CreateQuotationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Quotations', function (Blueprint $table) {
+        Schema::create('quotations', function (Blueprint $table) {
             $table->increments('ID_Cotiz');
             $table->integer('CotizNum');
             $table->string('CotizStatus', 32);
@@ -21,8 +21,8 @@ class CreateQuotationsTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('FK_CotizOrden')->nullable();
             $table->unsignedInteger('FK_CotizSede')->nullable();
-            $table->foreign('FK_CotizOrden')->references('ID_Orden')->on('OrdenCompras')->onDelete('cascade');
-            $table->foreign('FK_CotizSede')->references('ID_Sede')->on('Sedes')->onDelete('cascade');
+            $table->foreign('FK_CotizOrden')->references('ID_Orden')->on('ordencompras')->onDelete('cascade');
+            $table->foreign('FK_CotizSede')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

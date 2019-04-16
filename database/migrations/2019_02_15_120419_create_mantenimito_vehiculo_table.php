@@ -13,7 +13,7 @@ class CreateMantenimitoVehiculoTable extends Migration
      */
     public function up()
     {
-        Schema::create('MantenVehics', function (Blueprint $table) {
+        Schema::create('mantenvehics', function (Blueprint $table) {
             $table->increments('ID_Mv');
             $table->integer('MvKm');
             $table->boolean('MvStatus');
