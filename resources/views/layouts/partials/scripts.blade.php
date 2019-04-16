@@ -169,38 +169,25 @@ $(document).ready(function() {
 </script>
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
-$(document).ready(function() {
-    $('.smartwizard').smartWizard({
-        theme: 'arrows',
-        keyNavigation: true,
-        lang: {  
-            next: 'Siguiente', 
-            previous: 'Anterior'
-        },
-    });
-});
-
-</script>
-<script type="text/javascript">
     $(document).ready(function(){
         $('.smartwizard').smartWizard({
-                selected: 0,
-                theme: 'arrows',
-                transitionEffect:'fade',
-                toolbarSettings: {
-                    toolbarPosition: 'bottom',
-                },
-                lang: {  
-                    next: 'Siguiente', 
-                    previous: 'Anterior'
-                },
-                anchorSettings: {
-                    markDoneStep: true, 
-                    markAllPreviousStepsAsDone: true,
-                    removeDoneStepOnNavigateBack: true,
-                    enableAnchorOnDoneStep: true
-                }
-             });
+            selected: 0,
+            theme: 'arrows',
+            transitionEffect:'fade',
+            toolbarSettings: {
+                toolbarPosition: 'bottom',
+            },
+            lang: {  
+                next: 'Siguiente', 
+                previous: 'Anterior'
+            },
+            anchorSettings: {
+                markDoneStep: true, 
+                markAllPreviousStepsAsDone: true,
+                removeDoneStepOnNavigateBack: true,
+                enableAnchorOnDoneStep: true
+            }
+            });
         $(".smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
             var elmForm = $("#form-step-" + stepNumber);
             if(stepDirection === 'forward' && elmForm){
@@ -252,7 +239,6 @@ $(document).ready(function() {
                     "render": function(data, type, row, meta) {
                         return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
                     }
-=======
 <script>
 $(document).ready(function() {
     $('#RespelTable').DataTable({
