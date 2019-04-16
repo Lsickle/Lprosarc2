@@ -1,18 +1,1 @@
-.divReq label, .divReq div{
-	margin: 0 2% 1% 0;
-	width: 22px;
-	height: 22px;
-}
-.divRes #divResiduos .col-md-3{
-	text-align: center;
-	padding-top: 2.5%;
-	padding-bottom: 4%;
-	border-radius: 1%;
-	border: 1px solid #dddddd;
-}
-.text-aline-center div{
-	text-align: center;
-}
-.text-aline-center .col-md-5, .text-aline-center .col-md-12,.text-aline-center .col-md-6{
-	text-align: left;
-}
+.divReq div,.divReq label{margin:0 2% 1% 0;width:22px;height:22px}.divRes #divResiduos .col-md-3{text-align:center;padding-top:2.5%;padding-bottom:4%;border-radius:1%;border:1px solid #ddd}.text-aline-center div{text-align:center}.text-aline-center .col-md-12,.text-aline-center .col-md-5,.text-aline-center .col-md-6{text-align:left}
