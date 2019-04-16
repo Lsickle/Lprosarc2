@@ -1417,7 +1417,6 @@ $(document).ready(function() {
 
     });
 </script>
-=======
 <script>
 $(document).ready(function() {
     $('#Clasificacion').DataTable({
@@ -1426,4 +1425,32 @@ $(document).ready(function() {
         "responsive": true,
     });
 });
+</script>
+<script>
+    $(document).ready(function(){
+        $("#departamento").change(function(e){
+            id=$("#departamento").val();
+            e.preventDefault();
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+                url: "{{url('/muni-depart')}}/"+id,
+                method: 'GET',
+                data:{},
+                success: function(res){
+                    $("#municipio").empty();
+                    var municipio = new Array();
+                    for(var i = res.length -1; i >= 0; i--){
+                        if ($.inArray(res[i].ID_Mun, municipio) < 0) {
+                            $("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+                            municipio.push(res[i].ID_Mun);
+                        }
+                    }
+                }
+            })
+        });
+    });
 </script>
