@@ -16,3 +16,10 @@
 .text-aline-center .col-md-5, .text-aline-center .col-md-12,.text-aline-center .col-md-6{
 	text-align: left;
 }
+.help-block, .with-errors{
+	display: inline;
+	float: right;
+	margin-top: 0;
+	margin-bottom: 0;
+	color: red;
+}

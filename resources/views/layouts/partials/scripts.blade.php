@@ -168,7 +168,6 @@ $(document).ready(function() {
 
 </script>
 {{-- script para formulario en smart-wizzard --}}
-<<<<<<< HEAD
 {{-- <script type="text/javascript">
 $(document).ready(function() {
     $('.smartwizard').smartWizard({
@@ -252,6 +251,7 @@ $(document).ready(function() {
                     "render": function(data, type, row, meta) {
                         return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
                     }
+    </script>
 <script>
 $(document).ready(function() {
     $('#RespelTable').DataTable({
@@ -1351,6 +1351,31 @@ $(document).ready(function() {
                     }
                 }
             })
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        var type = $("#PersType").val();
+        if(type == 0){
+            $("#PersAddress").prop('required', false);
+        }
+        $("#PersType").change(function(){
+            type = $("#PersType").val();
+            if(type == 1){
+                $("#PersAddress").prop('required', true);
+                $("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
+                $("#PersEPS").prop('required', true);
+                $("#PersEPS").before('<small class="help-block with-errors eps">*</small>');
+                $("#PersARL").prop('required', true);
+                $("#PersARL").before('<small class="help-block with-errors arl">*</small>');
+            }
+            else{
+                $('small').remove('.dir, .eps, .arl');
+                $("#PersAddress").prop('required', false);
+                $("#PersEPS").prop('required', false);
+                $("#PersARL").prop('required', false);
+            }
         });
     });
 </script>
