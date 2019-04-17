@@ -80,17 +80,17 @@
                                                             <label for="tipo">Tipo de Empresa</label><small class="help-block with-errors">*</small>
                                                             <select class="form-control" id="tipo" name="CliType" required>
                                                                 <option onclick="HiddenOtroType()" value="">Seleccione...</option>
-                                                                <option onclick="HiddenOtroType()">Organico</option>
-                                                                <option onclick="HiddenOtroType()">Biologico</option>
-                                                                <option onclick="HiddenOtroType()">Industrial</option>
-                                                                <option onclick="HiddenOtroType()" >Medicamentos</option>
+                                                                <option onclick="HiddenOtroType()" value="Organico">Organico</option>
+                                                                <option onclick="HiddenOtroType()" value="Biologico">Biologico</option>
+                                                                <option onclick="HiddenOtroType()" value="Industrial">Industrial</option>
+                                                                <option onclick="HiddenOtroType()" value="Medicamentos">Medicamentos</option>
                                                                 <option onclick="OtroType()" value="">Otro</option>
                                                             </select>
                                                             
                                                         </div>
                                                         <div id="otro" style="display: none;" class="col-md-6 form-group">
                                                             <label for="otroType">¿Cuál?</label><small class="help-block with-errors">*</small>
-                                                            <input name="CliType" type="text" class="form-control" id="otroType" minlength="5" maxlength="32">
+                                                            <input name="tipoCual" type="text" class="form-control" id="otroType" minlength="5" maxlength="32">
                                                         </div>
                                                     </div>
                                                     @if(Auth::user()->UsRol === "admin")
@@ -107,13 +107,7 @@
                                                 </div>
                                                 <div id="step-2" class="">
                                                     <div id="form-step-1" role="form" data-toggle="validator">
-                                                        <div class="col-md-3">
-                                                            {{-- <div class="alert alert-info" role="alert"> --}}
-                                                                    <div class="alert alert-warning " role="alert">
-                                                                <p>Después podra añadir mas Sedes</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-9">
                                                             <h2>Sede Principal</h2>
                                                         </div>
                                                         <div class="form-group col-md-6">

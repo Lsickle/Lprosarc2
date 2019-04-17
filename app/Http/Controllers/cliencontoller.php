@@ -26,15 +26,18 @@ class clientcontoller extends Controller
     public function index()
     {
         if(Auth::user()->UsRol === "Programador"){
-            $clientes = Cliente::all();
             $clientes = Cliente::where('CliDelete', 0)->get();
             return view('clientes.index', compact('clientes'));
         }
         if(Auth::user()->UsRol === "Cliente"){
            return redirect()->route('sclientes.index');
         }
-        
-        return view('clientes.index', compact('clientes'));
+        if(Auth::user()->UsRol === "admin"){
+            $clientes = Cliente::all();
+            return view('clientes.index', compact('clientes'));
+        }else{
+            return view('errors.403');
+        }
     }
 
     /**
@@ -43,16 +46,6 @@ class clientcontoller extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // public function Ajax(Request $request, $id){
-    //     if($request->ajax()){ 
-    //         // $expediente = Expediente::create($request->all());
-    //         // return "im in AjaxController index";
-    //         $Municipios = Municipio::where('FK_MunCity', $id)->get();
-    //         return response()->json(['message' => 'Insertado correctamente']);
-
-    //         // $Departamento = $_POST['departamento'];
-    //     }
-    // }
     public function ajax(Request $request){
         $select = $request->get('select');
         $value = $request->get('value');
@@ -68,13 +61,13 @@ class clientcontoller extends Controller
     public function create()
     {
         if(Auth::user()->UsRol === "Cliente"){
-            
             $Departamentos = Departamento::all();
-            // $Municipios = Municipio::all();
-           
             return view('clientes.create2', compact('Departamentos', 'Municipios'));
-        }else{
+        }
+        if(Auth::user()->UsRol === "admin"){
             return view('clientes.create');
+        }else{
+            return view('errors.403');
         }
     }
 
@@ -87,22 +80,23 @@ class clientcontoller extends Controller
     public function store(Request $request)
     {
         if($request->input("number") == "1"){
-            $rules = [
+            $validate = $request->validate = [
                 'CliNit' => 'required|max:13|min:13|unique:clientes,CliNit',
                 'CliName' => 'required|max:255|unique:clientes,CliName',
                 'CliShortname' => 'required|max:255|unique:clientes,CliName',
-                'CliType' => 'required|max:32',
+                'CliType' => 'max:32|alpha|nullable',
+                'tipoCual' => 'max:32|alpha|nullable',
 
                 'SedeName' => 'required|max:128|min:1',
-                'SedeAddress' => 'required|max:255',
+                'SedeAddress' => 'alpha_num|srequired|max:255',
                 'SedePhone1' => 'max:32|min:14|nullable',
                 'SedeExt1' => 'max:5|nullable',
                 'SedePhone2' => 'max:32|min:14|nullable',
                 'SedeExt2' => 'max:5|nullable',
                 'SedeEmail' => 'required|email|unique:sedes,SedeEmail',
-                'SedeCelular' => 'min:18|max:18',
+                'SedeCelular' => 'min:10|max:12',
 
-                'AreaName' => 'required|max:128',
+                'AreaName' => 'required|max:128|alpha',
 
                 'CargName' => 'required|max:128|alpha',
 
@@ -110,23 +104,18 @@ class clientcontoller extends Controller
                 'PersLastName' => 'required|alpha|max:64',
                 'PersEmail' => 'required|email|max:255',
                 'PersSecondName' => 'alpha|max:64',
-
-
             ];
-            $messages = [
-                'CliNit.required' => 'El NIT es requerido.',
-                'CliNit.unique:clientes,CliNit' => 'El NIT ya existe',
-                'CliNit.max:13' => 'El NIT debe tener un máximo de 10 caracteres.',
-                'CliNit.min:13' => 'El NIT debe no puede tener menos de 10 caracteres',
-            ];
-            $this->validate($request, $rules, $messages);
 
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
             $Cliente->CliCategoria = 'Cliente';
-            $Cliente->CliType = $request->input('CliType');
+            if($request->input('CliType') === " "){
+                $Cliente->CliType = $request->input('tipoCual');
+            }else{
+                $Cliente->CliType = $request->input('CliType');
+            }
             $Cliente->CliSlug = substr(md5(rand()), 0, 999999).$request->input('CliShortname');
             $Cliente->CliDelete = 0;
             $Cliente->save();
