@@ -18,20 +18,10 @@
               <form role="form" action="/personal" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                  <div class="fingerprint-spinner" id="loadingTable">
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                  </div>
+                  @include('layouts.partials.spinner')
                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
                   <div class="tab-pane" id="addRowWizz">
-                    <p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
+                    <p>Ingrese la información necesaria completando todos los campos requeridos según la información del residuo que desea registrar en cada paso</p>
                     <div id="smartwizard">
                       <ul>
                         <li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de Contacto</small></a></li>
@@ -72,7 +62,7 @@
                               <input  required="true" name="PersCellphone" autofocus="true" type="text" class="form-control" id="PersCellphone">
                             </div>
                             <div class="col-xs-6">
-                              <label for="PersAddress">Direccion</label>
+                              <label for="PersAddress">Dirección</label>
                               <input  required="true" name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress">
                             </div>
                             <div class="col-xs-6">
@@ -99,7 +89,7 @@
                             <input name="PersBirthday" autofocus="true" type="date" class="form-control" id="PersBirthday">
                           </div>
                           <div class="col-xs-6">
-                            <label for="PersPhoneNumber">Numero de Telefono</label>
+                            <label for="PersPhoneNumber">Número de Telefono</label>
                             <input name="PersPhoneNumber" autofocus="true" type="text" class="form-control" id="PersPhoneNumber">
                           </div>
                           <div class="col-xs-6">
@@ -111,7 +101,7 @@
                             <input name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL">
                           </div>
                           <div class="form-group" style="margin-left: 1em; margin-right: 1em;">
-                            <label for="PersLibreta">Numero de Libreta</label>
+                            <label for="PersLibreta">Número de Libreta</label>
                             <input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta">
                           </div>
                           <div class="col-xs-6">
@@ -119,7 +109,7 @@
                             <input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank">
                           </div>
                           <div class="col-xs-6">
-                            <label for="PersBankAccaunt">Numero de Cuenta</label>
+                            <label for="PersBankAccaunt">Número de Cuenta</label>
                             <input name="PersBankAccaunt" autofocus="true" type="text" class="form-control" id="PersBankAccaunt">
                           </div>
                           <div class="col-xs-6">
@@ -131,7 +121,7 @@
                             <input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida">
                           </div>
                           <div class="form-group" style="margin-left: 1em; margin-right: 1em;">
-                            <label for="PersPase">Numero del Pase</label>
+                            <label for="PersPase">Número del Pase</label>
                             <input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase">
                           </div>
                         </div>

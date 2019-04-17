@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Articulos
+Artículos
 @endsection
 @section('contentheader_title')
-Articulos por Proveedor
+Artículos por Proveedor
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

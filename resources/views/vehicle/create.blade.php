@@ -30,7 +30,7 @@ Registro de vehiculos
 								@csrf
 								<div class="box-body">
 									<div class="col-md-6">
-										<label for="VehicPlaca">Numero de placa</label>
+										<label for="VehicPlaca">Número de placa</label>
 										<input type="text" class="form-control" id="VehicPlaca" name="VehicPlaca" required="true">
 									</div>
 									<div class="col-md-6">

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-    Nueva Cotizacion
+    Nueva Cotización
 @endsection
 @section('contentheader_title')
-    Nueva Cotizacion
+    Nueva Cotización
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -42,7 +42,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label for="CotizacionStatus">Status de cotizacion</label>
+                                        <label for="CotizacionStatus">Status de cotización</label>
                                         <select class="form-control" id="CotizacionStatus" name="CotiStatus" disabled >
                                             <option>Pendiente</option>
                                             <option>Aprobada</option>

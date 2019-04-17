@@ -16,7 +16,7 @@
 								@csrf
 								<div class="box-body">
 									<div class="col-xs-6">
-										<label for="NombreArea">Nombre Area</label>
+										<label for="NombreArea">Nombre del área</label>
 										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" >
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">

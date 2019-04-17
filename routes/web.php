@@ -49,7 +49,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');
-	Route::resource('/declaraciones', 'DeclarController');
 	Route::resource('/respels', 'RespelController');
 	Route::resource('/permisos', 'RolesController');
 	Route::resource('/audits', 'auditController');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Change Title here!
+Edición de cotización
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -17,18 +17,18 @@ Change Title here!
 
                         {{-- numero de cotizacion --}}
                         <div class="col-md-6">
-                            <label for="numerocotizacion">Numero de Cotizacion</label>
+                            <label for="numerocotizacion">Numero de Cotización</label>
                             <input class="form-control" type="text" name="CotiNumero" id="numerocotizacion" value="{{$cotizacion->CotiNumero}}" disabled>
                         </div>
                         {{-- numero de cotizacion para enviar --}}
                         <div class="col-md-6" hidden>
-                            <label for="numerocotizacion">Numero de Cotizacion</label>
+                            <label for="numerocotizacion">Número de Cotización</label>
                             <input class="form-control" type="text" name="CotiNumero" id="numerocotizacion" value="{{$cotizacion->CotiNumero}}">
                         </div>
 
                         {{-- sede del cliente --}}
                         <div class="col-md-6">
-                            <label for="selectsede">Sede del Cliente</label>
+                            <label for="selectsede">Sede del cliente</label>
                             <select class="form-control" id="selectsede" name="FK_CotiSede" required="true">
                                 @foreach($sedes as $sede)
                                 <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
@@ -70,7 +70,7 @@ Change Title here!
 
                         {{-- Status de la cotizacion --}}
                         <div class="col-md-6">
-                            <label for="CotizacionStatus">Status de cotizacion</label>
+                            <label for="CotizacionStatus">Status de cotización</label>
                             <select class="form-control" id="CotizacionStatus" name="CotiStatus">
                                 <option>Pendiente</option>
                                 <option>Aprobada</option>
@@ -92,7 +92,7 @@ Change Title here!
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        Lista de residuos seleccionables para la cotizacion
+                                        Lista de residuos seleccionables para la cotización
                                     </div>
                                     <!-- /.box-body -->
                                 </div>
@@ -107,13 +107,13 @@ Change Title here!
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Clasificacion Y</th>
-                                        <th>Clasificacion A</th>
+                                        <th>Clasificación Y</th>
+                                        <th>Clasificación A</th>
                                         <th>Peligrosidad</th>
-                                        <th>Edo. Fisico</th>
+                                        <th>Edo. Físico</th>
                                         <th>Hoja de Seguridad</th>
                                         <th>Tarj de Emergencia</th>
-                                        <th>Aprobacion</th>
+                                        <th>Aprobación</th>
                                         <th>Generado por</th>
                                         <th>Seleccionar</th>
                                         <th>Editar</th>
