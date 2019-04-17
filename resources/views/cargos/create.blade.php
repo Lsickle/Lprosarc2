@@ -35,7 +35,7 @@
 										</select>
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">
-										<label for="AreaSelect">Area</label>
+										<label for="AreaSelect">Área</label>
 										<select name="SelectArea" id="AreaSelect" class="form-control">
 											@foreach($Areas as $Area)
 												<option value="{{$Area->ID_Area}}">{{$Area->AreaName}}</option>

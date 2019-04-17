@@ -37,7 +37,7 @@
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Quick Example</h3>
+								<h3 class="box-title">Formulario de edición</h3>
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -50,7 +50,7 @@
 										<input name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-Y" value="{{$cliente->CliNit}}">
 									</div>
 									<div class="form-group">
-										<label for="ClienteInputRazon">Razon social</label>
+										<label for="ClienteInputRazon">Razón social</label>
 										<input name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." value="{{$cliente->CliName}}">
 									</div>
 									<div class="form-group">
@@ -58,7 +58,7 @@
 										<input name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" value="{{$cliente->CliShortname}}">
 									</div>
 									<div class="form-group">
-										<label for="ClienteInputCategoria">Categoria</label>
+										<label for="ClienteInputCategoria">Categoría</label>
 										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente" value="{{$cliente->CliCategoria}}">
 											<option>cliente</option>
 											<option>generador</option>
@@ -70,9 +70,9 @@
 									<div class="form-group">
 										<label for="ClienteInputTipo">Tipo de empresa</label>
 										<select name="CliType" class="form-control" id="ClienteInputTipo" {{-- placeholder="biologico" --}} value="{{$cliente->CliType}}">
-											<option>biologico</option>
-											<option>industrial</option>
-											<option>medicamentos</option>
+											<option>Biológico</option>
+											<option>Industrial</option>
+											<option>Medicamentos</option>
 											<option>otros</option>
 										</select>
 									</div>

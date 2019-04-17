@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-    Nueva Tratamiento
+   Tratamiento
 @endsection
 @section('contentheader_title')
     Nueva Tratamiento

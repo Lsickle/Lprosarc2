@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('htmlheader_title', 'Vehiculos')
 @section('contentheader_title')
-Edicion de vehiculos
+Edición de vehiculos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

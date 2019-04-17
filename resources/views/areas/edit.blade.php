@@ -11,7 +11,7 @@
 	                @component('layouts.partials.modal')
 	                    {{$Areas->ID_Area}}
 	                @endcomponent
-					<h3 class="box-title">Datos de la area </h3>
+					<h3 class="box-title">Datos del área </h3>
 					@if($Areas->AreaDelete == 0)
 						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->ID_Area}}' class='btn btn-danger' style="float: right;">Eliminar</a>
 						<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
@@ -37,7 +37,7 @@
 								@csrf
 								<div class="box-body">
 									<div class="col-xs-6">
-										<label for="NombreArea">Nombre Area</label>
+										<label for="NombreArea">Nombre del área</label>
 										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" value="{{$Areas->AreaName}}">
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">

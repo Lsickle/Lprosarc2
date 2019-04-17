@@ -36,17 +36,7 @@
                 @method('PATCH')
                 @csrf
                 {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                  <div class="fingerprint-spinner" id="loadingTable">
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                    <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                  </div>
+                  @include('layouts.partials.spinner')
                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
                   <div class="tab-pane" id="addRowWizz">
                     <div id="smartwizard">
@@ -60,13 +50,13 @@
                               <label for="PersDocType">Tipo de Documento</label>
                               <select name="PersDocType" id="PersDocType" class="form-control">
                                   <option value="{{$Persona->PersDocType}}">Seleccione...</option>
-                                  <option value="CC">Cedula de Ciudadania</option>
+                                  <option value="CC">Cedula de Ciudadanía</option>
                                   <option value="CE">Cedula Extranjera</option>
                                   <option value="RUT">Rut</option>
                               </select>
                             </div>
                             <div class="col-xs-6">
-                              <label for="PersDocNumber">Numero del Documento</label>
+                              <label for="PersDocNumber">Número del Documento</label>
                               <input minlength="7" maxlength="12" required="true" name="PersDocNumber" autofocus="true" type="text" class="form-control" id="PersDocNumber" value="{{$Persona->PersDocNumber}}">
                             </div>
                             <div class="col-xs-6">
@@ -82,11 +72,11 @@
                               <input  required="true" name="PersLastName" autofocus="true" type="text" class="form-control" id="PersLastName" value="{{$Persona->PersLastName}}">
                             </div>
                             <div class="col-xs-6">
-                              <label for="PersCellphone">Numero de Celular</label>
+                              <label for="PersCellphone">Número de Celular</label>
                               <input name="PersCellphone" autofocus="true" type="text" class="form-control" id="PersCellphone" value="{{$Persona->PersCellphone}}">
                             </div>
                             <div class="col-xs-6">
-                              <label for="PersAddress">Direccion</label>
+                              <label for="PersAddress">Dirección</label>
                               <input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" value="{{$Persona->PersAddress}}">
                             </div>
                             <div class="col-xs-6">
@@ -113,7 +103,7 @@
                             <input name="PersBirthday" autofocus="true" type="text" class="form-control" id="PersBirthday" value="{{$Persona->PersBirthday}}">
                           </div>
                           <div class="col-xs-6">
-                            <label for="PersPhoneNumber">Numero de Telefono</label>
+                            <label for="PersPhoneNumber">Número de Telefono</label>
                             <input name="PersPhoneNumber" autofocus="true" type="text" class="form-control" id="PersPhoneNumber" value="{{$Persona->PersPhoneNumber}}">
                           </div>
                           <div class="col-xs-6">
@@ -125,7 +115,7 @@
                             <input name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" value="{{$Persona->PersARL}}">
                           </div>
                           <div class="form-group" style="margin-left: 1em; margin-right: 1em;">
-                            <label for="PersLibreta">Numero de Libreta</label>
+                            <label for="PersLibreta">Número de Libreta</label>
                             <input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta" value="{{$Persona->PersLibreta}}">
                           </div>
                           <div class="col-xs-6">
@@ -133,7 +123,7 @@
                             <input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank" value="{{$Persona->PersBank}}">
                           </div>
                           <div class="col-xs-6">
-                            <label for="PersBankAccaunt">Numero de Cuenta</label>
+                            <label for="PersBankAccaunt">Número de Cuenta</label>
                             <input name="PersBankAccaunt" autofocus="true" type="text" class="form-control" id="PersBankAccaunt" value="{{$Persona->PersBankAccaunt}}">
                           </div>
                           <div class="col-xs-6">
@@ -145,7 +135,7 @@
                             <input name="PersSalida" autofocus="true" type="text" class="form-control" id="PersSalida" value="{{$Persona->PersSalida}}">
                           </div>
                           <div class="form-group" style="margin-left: 1em; margin-right: 1em;">
-                            <label for="PersPase">Numero del Pase</label>
+                            <label for="PersPase">Número del Pase</label>
                             <input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{$Persona->PersPase}}">
                           </div>
                         </div>

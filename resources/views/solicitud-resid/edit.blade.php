@@ -53,7 +53,7 @@ Editar Solicitud de Residuo
                                 <div class="box-body">
                                     <div class="col-md-6"> 
                                         <input hidden value="{{$SolRes->FK_SolResRespel}}" name="FK_SolResRespel">
-                                        <label for="SolicitudResiduo">Respel</label>										
+                                        <label for="SolicitudResiduo">Residuo</label>										
                                         <select id="SolicitudResiduo" multiple="multiple" name="FK_SolResRespel" class="form-control"  style="width: 100%">
                                             @foreach ($Respels as $Respel)
                                             <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
@@ -70,7 +70,7 @@ Editar Solicitud de Residuo
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="soliresidinputext1">Kg Enviado</label>
+                                        <label for="soliresidinputext1">Kg Enviados</label>
                                         <input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="SolResKgEnviado" max="99999999" value="{{$SolRes->SolResKgEnviado}}">
                                     </div>
                                     <div class="col-md-6">
@@ -82,7 +82,7 @@ Editar Solicitud de Residuo
                                         <input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="SolResKgConciliado" max="99999999" value="{{$SolRes->SolResKgConciliado}}">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="soliresidinputext4">Kg Tratado</label>
+                                        <label for="soliresidinputext4">Kg Tratados</label>
                                         <input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="SolResKgTratado"  max="99999999" value="{{$SolRes->SolResKgTratado}}">
                                     </div>
                                 </div>

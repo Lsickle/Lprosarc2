@@ -216,42 +216,6 @@ $(document).ready(function() {
 </script>
 <!-- funcion para tabla de residuos -->
 @if(Route::currentRouteName()=='respels.index')
-    <script>
-    $(document).ready(function() {
-        var table = $('#RespelTable');
-        table.DataTable({
-            "scrollX": false,
-            "autoWidth": true,
-            "keys": true,
-            "responsive": true,
-            "columnDefs": [{
-                    "targets": 9,
-                    "data": "RespelSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";
-                    }
-                },
-                {
-                    "targets": 10,
-                    "data": "RespelSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a href='/respels/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-                    }
-                },
-                {
-                    "targets": 5,
-                    "data": "RespelHojaSeguridad",
-                    "render": function(data, type, row, meta) {
-                        return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
-                    }
-                },
-                {
-                    "targets": 6,
-                    "data": "RespelTarj",
-                    "render": function(data, type, row, meta) {
-                        return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
-                    }
-    </script>
 <script>
 $(document).ready(function() {
     $('#RespelTable').DataTable({
@@ -259,7 +223,8 @@ $(document).ready(function() {
         "autoWidth": true,
         "keys": true,
         "responsive": true,
-        "columnDefs": [{
+        "columnDefs": [
+            {
                 "targets": 8,
                 "data": "RespelSlug",
                 "render": function(data, type, row, meta) {
@@ -279,7 +244,7 @@ $(document).ready(function() {
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
-            ]
+            }]
         });
         /*funcion para resaltar las busquedas*/
         var bod = $(table.table().body());
@@ -290,7 +255,7 @@ $(document).ready(function() {
         });
         bod.parent().style("color: black; border-color:black;");
     });
-    </script>
+</script>
 @endif
 <script>
 $(function() {

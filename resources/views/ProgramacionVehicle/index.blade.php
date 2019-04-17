@@ -33,18 +33,18 @@ Programacion
 								<div class="box-body">
 									
 									<div class="col-md-6">
-										<label for="programnputext0">Km inicio del dia</label>
+										<label for="programnputext0">Km inicio del día</label>
 										<input type="number" class="form-control" id="programnputext0" placeholder="999999" name="km" max="999999">
 									</div>
 									<div class="col-md-6">
-										<label for="programnputext1">Fecha Programacion</label>
+										<label for="programnputext1">Fecha Programación</label>
 										<input type="date" class="form-control" id="programnputext1" name="date">
 									</div>
 									<div class="col-md-6">
 										<label for="programnputoption1">Turno</label>
 										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Turno" required="true">
 											<option>Seleccione...</option>
-											<option>Dia</option>
+											<option>Día</option>
 											<option>Tarde</option>
 										</select>
 									</div>

@@ -17,7 +17,7 @@
           <table id="clientesTable" class="table table-compact table-bordered table-striped">
             <thead>
               <tr>
-                <th>Categoria</th>
+                <th>Categoría</th>
                 <th>Nombre</th>
                 <th>NIT</th>
                 <th>Creado el</th>

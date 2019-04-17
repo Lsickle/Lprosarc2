@@ -3,7 +3,7 @@
 Actualizar Tarifa
 @endsection
 @section('contentheader_title')
-Actualizcion de Tarifa
+Actualizción de Tarifa
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
