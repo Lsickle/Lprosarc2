@@ -42,7 +42,7 @@
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Añada la información necesaria completando los campos requeridos</p>
-										<div class="smartwizardCli">
+										<div class="smartwizard">
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la Empresa</small></a></li>
 												<li><a href="#step-2"><b>Paso 2</b><br /><small>Datos de la sede</small></a></li>
@@ -55,7 +55,7 @@
                                                     
                                                     <div id="form-step-0" role="form" data-toggle="validator">
                                                         <label for="ClienteInputNit">NIT</label>
-                                                        <div class="form-group has-error">
+                                                        <div class="form-group">
                                                             <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y" required="">
                                                             <div class="help-block with-errors">
                                                                 <ul class="list-unstyled">
@@ -64,7 +64,7 @@
                                                             </div>
                                                         </div>
                                                         <label for="ClienteInputRazon">Razón Social</label>
-                                                            <div class="form-group has-error">
+                                                            <div class="form-group">
                                                             <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." maxlength="255" required="">
                                                             <div class="help-block with-errors">
                                                                 <ul class="list-unstyled">
@@ -72,10 +72,10 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label for="ClienteInputNombre">Nombre Corto</label>
-                                                        <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                        <div class="form-group">
+                                                            <label for="ClienteInputNombre">Nombre Corto</label>
+                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="tipo">Tipo de Empresa</label>
