@@ -33,7 +33,7 @@ Solicitudes de residuos
 								<div class="box-body">
 									<input type="text" value="{{$Servicio->ID_SolSer}}" name="FK_SolResSolSer" id="FK_SolResSolSer">
 									<div class="col-md-6"> 
-										<label for="SolicitudResiduo">Respel</label>										
+										<label for="SolicitudResiduo">Residuo</label>										
 										<select id="SolicitudResiduo" multiple="multiple" name="SolResRespel" class="form-control" style="width: 100%" required>
 											@foreach ($SolRes as $SolRe)
 											<option value="{{$SolRe->ID_Respel}}">{{$SolRe->RespelName}}</option>
@@ -50,7 +50,7 @@ Solicitudes de residuos
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="soliresidinputext1">Kg Enviado</label>
+										<label for="soliresidinputext1">Kg Enviados</label>
 										<input type="number" class="form-control" id="soliresidinputext1" placeholder="46586" name="SolResKgEnviado" max="99999999">
 									</div>
 									<div class="col-md-6">
@@ -62,7 +62,7 @@ Solicitudes de residuos
 										<input type="number" class="form-control" id="soliresidinputext3" placeholder="789678" name="SolResKgConciliado" max="99999999">
 									</div>
 									<div class="col-md-6">
-										<label for="soliresidinputext4">Kg Tratado</label>
+										<label for="soliresidinputext4">Kg Tratados</label>
 										<input type="number" class="form-control" id="soliresidinputext4" placeholder="100098" name="SolResKgTratado"  max="99999999">
 									</div>
 								</div>

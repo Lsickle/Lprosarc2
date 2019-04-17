@@ -47,7 +47,7 @@ Datos de Activos
                                 @csrf
                                 @method('PUT')
 								<div class="col-md-6">
-									<label for="activo">Categoria</label>
+									<label for="activo">Categoría</label>
 									<select class="form-control" id="activo" name="categoria" required>
 										<option>{{$Categoria->CatName}}</option>
 										@foreach ($Categorias as $Categoria)
@@ -57,7 +57,7 @@ Datos de Activos
 								</div>
 							{{-- </div> --}}
 								<div class="col-md-6">
-									<label for="activo">SubCategoria</label>
+									<label for="activo">Subcategoria</label>
 									<select class="form-control" id="activo" name="FK_ActSub" required>
 										<option value="{{$Activos->FK_ActSub}}">{{$SubActivo->SubCatName}}</option>
 										@foreach ($SubActivos as $SubActivo)

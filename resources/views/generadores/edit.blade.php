@@ -50,12 +50,12 @@
 										<input minlength="17" maxlength="17" required="true" name="GenerNit" autofocus="true" type="text" class="form-control" id="GenerInputNit" placeholder="XXX.XXX.XXX.XXX-X" value="{{$generadors->GenerNit}}">
 									</div>
 									<div class="col-xs-6">
-										<label for="GenerInputRazon">Razon social</label>
-										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="ALIMENTOS BALANCEADOS TEQUENDAMA S.A." value="{{$generadors->GenerName}}">
+										<label for="GenerInputRazon">Razón social</label>
+										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="Prosarc S.A. ESP." value="{{$generadors->GenerName}}">
 									</div>
 									<div class="col-xs-6">
 										<label for="">Nombre Corto</label>
-										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="ALBATEQ SA" value="{{$generadors->GenerShortname}}">
+										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="Prosarc" value="{{$generadors->GenerShortname}}">
 									</div>
 									<div class="col-xs-6">
 										<label for="GenerInputTipo">Tipo de empresa</label>

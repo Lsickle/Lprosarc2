@@ -84,7 +84,7 @@
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="sedeinputaddress">Direccion</label>
+										<label for="sedeinputaddress">Dirección</label>
 										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true" value="{{$Sede->SedeAddress}}">
 									</div>
 									<div class="col-md-6">

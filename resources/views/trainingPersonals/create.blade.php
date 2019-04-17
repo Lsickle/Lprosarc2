@@ -15,11 +15,11 @@
 							<form role="form" action="/capacitacion-personal" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="col-xs-6">
-										<label for="CapaPersDate">Aprovacion de la Capacitacion</label>
+										<label for="CapaPersDate">Aprobación de la Capacitación</label>
 										<input required="true" name="CapaPersDate" autofocus="true" type="date" class="form-control" id="CapaPersDate" >
 									</div>
 								<div class="col-xs-6">
-									<label for="CapaPersExpire">Expiracion de la Capacitacion</label>
+									<label for="CapaPersExpire">Expiración de la Capacitación</label>
 									<input required="true" name="CapaPersExpire" autofocus="true" type="date" class="form-control" id="CapaPersExpire" >
 								</div>
 									<div class="col-xs-6">
@@ -42,7 +42,7 @@
 									</div>
 								<div class="box-body">
 									<div class="col-xs-6" style="padding-left: 0; ">
-										<label for="FK_Sede">Sede de la Capacitacion</label>
+										<label for="FK_Sede">Sede de la Capacitación</label>
 										<select name="FK_Sede" id="FK_Sede" class="form-control">
 											<option value="1">Seleccione...</option>
 											@foreach($Sedes as $Sede)

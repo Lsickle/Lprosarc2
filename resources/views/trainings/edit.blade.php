@@ -37,7 +37,7 @@
 								@csrf
 								<div class="box-body">
 									<div class="col-xs-6">
-										<label for="CapaName">Nombre de la Capacitacion</label>
+										<label for="CapaName">Nombre de la Capacitación</label>
 										<input required="true" name="CapaName" autofocus="true" type="text" class="form-control" id="CapaName" value="{{$training->CapaName}}">
 									</div>
 									<div class="col-xs-6" style="padding-left: 0; ">

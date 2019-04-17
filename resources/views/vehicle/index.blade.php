@@ -19,25 +19,14 @@
                   <th>Tipo</th>
                   <th>Capacidad</th>
                   <th>Km Actual</th>
-                  <th>Prosedencia</th>
+                  <th>Procedencia</th>
                   <th>Sede</th>
                   <th>Fecha Registrado</th>
                   <th>Editar</th>
                 </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
-              <div class="fingerprint-spinner" id="loadingTable">
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-              </div>
-              
+              @include('layouts.partials.spinner')              
               @foreach ($Vehicles as $Vehicle)
                 <tr @if($Vehicle->VehicDelete === 1)
                       style="color: red;" 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Solicitude de servicio
+Solicitud de servicio
 @endsection
 @section('contentheader_title')
 Editar Solicitud de servicio
@@ -76,14 +76,14 @@ Editar Solicitud de servicio
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="SolResAuditoriaTipo">Aditable Tipo</label>
+                                    <label for="SolResAuditoriaTipo">Tipo de auditoria</label>
                                     <select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required>
                                         <option value="Presencial">Presencial</option>
                                         <option value="Virtual">Virtual</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6" style="padding-top: 2%; text-align: center;">
-                                    <label for="inputcheck">¿Usaria de nuevo la solicitud?</label>
+                                    <label for="inputcheck">¿Usara de nuevo la solicitud?</label>
                                     @if($Solicitud->SolSerFrecuencia <> null)
                                         <input class="CalendarSwitch" type="radio" checked="" name="ReqAuditoriaTipo"/>
                                     @else

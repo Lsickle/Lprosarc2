@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Cotizacion
+Cotización
 @endsection
 @section('contentheader_title')
-Cotizacion
+Cotización
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -33,11 +33,11 @@ Cotizacion
 								<div class="box-body">
 									
 									<div class="col-md-6">
-										<label for="cotizacioninputext1">Numero de cotizacion</label>
+										<label for="cotizacioninputext1">Numero de cotización</label>
 										<input type="text" class="form-control" id="cotizacioninputext1" placeholder="0000010" name="numcotizacion">
 									</div>
                                     <div class="col-md-6">
-										<label for="program">Estado de cotizacion</label>
+										<label for="program">Estado de cotización</label>
 										<select class="form-control" id="program" name="cotizacion" required="true">
 											<option>Seleccione...</option>
 											<option>Aprobada</option>
@@ -45,7 +45,7 @@ Cotizacion
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="cotizacioninputext3">Subtotal de cotizacion</label>
+										<label for="cotizacioninputext3">Subtotal de cotización</label>
 										<input type="number" class="form-control" id="cotizacioninputext3" placeholder="988888" name="subtotal" max="999.999.999.999">
 									</div>
 								</div>

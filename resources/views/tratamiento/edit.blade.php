@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Edicion de Tratamiento
+Edición de Tratamiento
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

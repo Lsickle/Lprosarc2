@@ -29,7 +29,8 @@ class UserTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Luis';
-        $user->email = 'suser@gmail.com';
+        $user->email = '2019-04-17 10:25:10';
+        $user->email_verified_at = 'suser@gmail.com';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Luis1';
         $user->UsRol = 'Programador';
@@ -39,11 +40,13 @@ class UserTableSeeder extends Seeder
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
         $user->save();
+        
         /*$user->roles()->attach($role_suser);*/
 
         $user = new User();
         $user->name = 'Vigilante';
         $user->email = 'User@gmail.com';
+        $user->email = '2019-04-17 10:25:11';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'User1';
         $user->UsRol = 'Vigilante';
@@ -58,6 +61,7 @@ class UserTableSeeder extends Seeder
         $user = new User();
         $user->name = 'Leider';
         $user->email = 'admin@gmail.com';
+        $user->email = '2019-04-17 10:25:11';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Leider1';
         $user->UsRol = 'admin';

@@ -37,7 +37,7 @@ Orden de Compra
 										<input type="text" class="form-control" id="ordeninputext1" placeholder="0000001" name="numerorden">
 									</div>
                                     <div class="col-md-6">
-										<label for="program">Estado de cotizacion</label>
+										<label for="program">Estado de cotización</label>
 										<select class="form-control" id="program" name="cotizacion" required="true">
 											<option>Seleccione...</option>
 											<option>Autorizada</option>
@@ -48,7 +48,7 @@ Orden de Compra
 										</select>
 									</div>
 									<div class="col-md-6">
-										<label for="ordeninputext3">Numero de factura</label>
+										<label for="ordeninputext3">Número de factura</label>
 										<input type="text" class="form-control" id="ordeninputext3" placeholder="0000099" name="factura">
 									</div>
 									<div class="col-md-6">

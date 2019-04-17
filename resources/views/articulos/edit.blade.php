@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Articulos
+Artículos
 @endsection
 @section('contentheader_title')
-Articulos por Proveedor
+Artículos por Proveedor
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -47,7 +47,7 @@ Articulos por Proveedor
 								@method('PUT')
 								@csrf
 								<div class="col-md-6">
-									<label for="articuloxprov">Numero de Cotizacion</label>
+									<label for="articuloxprov">Número de Cotización</label>
 									<select class="form-control" id="articuloxprov" name="FK_ArtCotiz" required>
 										<option value="{{$ArtProvs->FK_ArtCotiz}}">{{$Quotation->CotizNum}}</option>
 										@foreach ($Quotations as $Quotation)
@@ -65,7 +65,7 @@ Articulos por Proveedor
 									</select>
 								</div>
 								<div class="col-md-6">
-									<label for="articuloxprov1">Forma del articulo</label>
+									<label for="articuloxprov1">Forma del artículo</label>
 									<select class="form-control" id="articuloxprov1" name="ArtiUnidad" required>
 										@if ($ArtProvs->ArtiUnidad == 0)
 											<option value="0">Unidad</option>
@@ -85,7 +85,7 @@ Articulos por Proveedor
 									<input type="text" class="form-control" id="articuloxprovinputext2" placeholder="150000" name="ArtiPrecio" value="{{$ArtProvs->ArtiPrecio}}" required>
 								</div>
 								<div class="col-md-6">
-									<label for="articuloxprovinputext3">Articulo costo por unidad </label>
+									<label for="articuloxprovinputext3">Artículo costo por unidad </label>
 									<input type="number" class="form-control" id="articuloxprovinputext3" placeholder="12345" name="ArtiCostoUnid" value="{{$ArtProvs->ArtiCostoUnid}}" max="9999999" required>
 								</div>
 								<div class="col-md-6">

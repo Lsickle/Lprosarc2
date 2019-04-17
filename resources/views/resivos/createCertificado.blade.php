@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Create
+Certificado
 @endsection
 @section('contentheader_title')
-Certificado
+Nuevo Certificado
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

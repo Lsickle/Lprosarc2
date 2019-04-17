@@ -38,12 +38,12 @@
 										<input minlength="17" maxlength="17" required="true" name="GenerNit" autofocus="true" type="text" class="form-control" id="GenerInputNit" placeholder="XXX.XXX.XXX.XXX-X">
 									</div>
 									<div class="col-xs-6">
-										<label for="GenerInputRazon">Razon social</label>
-										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="ALIMENTOS BALANCEADOS TEQUENDAMA S.A.">
+										<label for="GenerInputRazon">Razón social</label>
+										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="Prosarc S.A. ESP.">
 									</div>
 									<div class="col-xs-6">
 										<label for="">Nombre Corto</label>
-										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="ALBATEQ SA">
+										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="Prosarc">
 									</div>
 									<div class="col-xs-6">
 										<label for="GenerInputTipo">Tipo de empresa</label>
