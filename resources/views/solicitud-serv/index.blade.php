@@ -23,7 +23,7 @@ Servicios
                 <tr>
                   <th>Cliente</th>
                   <th>Estado</th>
-                  <th>Persona Acargo</th>
+                  <th>Persona encargada</th>
                   <th>Email</th>
                   <th>Cantidad (Total)</th>
                   <th>Tipo del vehiculo</th>
@@ -32,17 +32,7 @@ Servicios
                 
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
-                <div class="fingerprint-spinner" id="loadingTable">
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                </div>
+                @include('layouts.partials.spinner')
                 @foreach ($Servicios as $Servicio)
                     @if($Servicio->SolSerDelete == 1)
                       <tr style="color: red;">

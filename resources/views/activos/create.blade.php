@@ -3,7 +3,7 @@
 Activos
 @endsection
 @section('contentheader_title')
-Registros de Activos
+Registro de Activos
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -30,7 +30,7 @@ Registros de Activos
 							<form role="form" action="/activos" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="col-md-6">
-									<label for="activo">Categoria</label>
+									<label for="activo">Categoría</label>
 									<select class="form-control" id="activo" name="categoria" required>
 										<option>Seleccione...</option>
 										@foreach ($Categorias as $Categoria)
@@ -39,7 +39,7 @@ Registros de Activos
 									</select>
 								</div>
 								<div class="col-md-6">
-									<label for="activo1">SubCategoria</label>
+									<label for="activo1">Subcategoría</label>
 									<select class="form-control" id="activo1" name="FK_ActSub" required>
 										<option>Seleccione...</option>
 										@foreach ($SubActivos as $SubActivo)

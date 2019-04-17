@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title','Cargos')
-@section('contentheader_title','Edicion de Cargos')
+@section('contentheader_title','Edición de Cargos')
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -56,7 +56,7 @@
 										</select>
 									</div>
 									<div class="col-xs-6">
-										<label for="AreaSelect">Area</label>
+										<label for="AreaSelect">Área</label>
 										<select name="SelectArea" id="AreaSelect" class="form-control">
 											<option value="{{$Cargos->CargArea}}">Seleccione...</option>
 											@foreach($Areas as $Area)

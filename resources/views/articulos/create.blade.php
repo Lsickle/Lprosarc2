@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Articulos
+Artículos
 @endsection
 @section('contentheader_title')
-Registros de Articulos por Proveedor
+Registros de Artículos por Proveedor
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -31,7 +31,7 @@ Registros de Articulos por Proveedor
 								@csrf
 							{{-- </div> --}}
                                 <div class="col-md-6">
-                                    <label for="articuloxprov">Numero de Cotizacion</label>
+                                    <label for="articuloxprov">Número de Cotización</label>
                                     <select class="form-control" id="articuloxprov" name="FK_ArtCotiz" required>
                                         <option>Seleccione...</option>
 									@foreach ($Quotations as $Quotation)
@@ -49,7 +49,7 @@ Registros de Articulos por Proveedor
                                     </select>
 								</div>
                                 <div class="col-md-6">
-                                    <label for="articuloxprov">Forma del articulo</label>
+                                    <label for="articuloxprov">Forma del artículo</label>
                                     <select class="form-control" id="articuloxprov" name="ArtiUnidad" required>
                                         <option>Seleccione...</option>
                                         <option value="0">Unidad</option>

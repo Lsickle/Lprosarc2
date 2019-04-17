@@ -11,7 +11,7 @@
 					@component('layouts.partials.modal')
 	                    {{$CapaPer->ID_CapPers}}
 	                @endcomponent
-					<h3 class="box-title">Datos de la capacitacion de una persona</h3>
+					<h3 class="box-title">Datos de la capacitación de una persona</h3>
 					@if($CapaPer->CapaPersDelete === 0)
 						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$CapaPer->ID_CapPers}}' class='btn btn-danger' style="float: right;">Eliminar</a>
 						<form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST'>
@@ -37,11 +37,11 @@
 								@method('PATCH')
 								@csrf
 								<div class="col-xs-6">
-										<label for="CapaPersDate">Aprovacion de la Capacitacion</label>
+										<label for="CapaPersDate">Aprobación de la Capacitación</label>
 										<input required="true" name="CapaPersDate" autofocus="true" type="text" class="form-control" id="CapaPersDate" value="{{$CapaPer->CapaPersDate}}">
 									</div>
 								<div class="col-xs-6">
-									<label for="CapaPersExpire">Expiracion de la Capacitacion</label>
+									<label for="CapaPersExpire">Expiración de la Capacitación</label>
 									<input required="true" name="CapaPersExpire" autofocus="true" type="text" class="form-control" id="CapaPersExpire" value="{{$CapaPer->CapaPersExpire}}">
 								</div>
 									<div class="col-xs-6">
@@ -54,7 +54,7 @@
 										</select>
 									</div>
 									<div class="col-xs-6">
-										<label for="FK_Capa">Capacitacion</label>
+										<label for="FK_Capa">Capacitación</label>
 										<select name="FK_Capa" id="FK_Capa" class="form-control">
 											<option value="{{$CapaPer->FK_Capa}}">Seleccione...</option>
 											@foreach($Trainings as $Training)
@@ -64,7 +64,7 @@
 									</div>
 								<div class="box-body">
 									<div class="col-xs-6" style="padding-left: 0; ">
-										<label for="FK_Sede">Sede de la Capacitacion</label>
+										<label for="FK_Sede">Sede de la Capacitación</label>
 										<select name="FK_Sede" id="FK_Sede" class="form-control">
 											<option value="{{$CapaPer->FK_Sede}}">Seleccione...</option>
 											@foreach($Sedes as $Sede)

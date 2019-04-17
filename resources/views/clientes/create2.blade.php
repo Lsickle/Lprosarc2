@@ -25,17 +25,7 @@
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-                            <div class="fingerprint-spinner" id="loadingTable">
-                                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-							</div>
+                            @include('layouts.partials.spinner')
                             <!-- form start -->
 							<form role="form" id="myForm" action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator">
                                 @csrf
@@ -56,7 +46,7 @@
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de la Empresa</small></a></li>
 												<li><a href="#step-2"><b>Paso 2</b><br /><small>Datos de la sede</small></a></li>
-												<li><a href="#step-3"><b>Paso 3</b><br /><small>Datos de la persona de Contacto</small></a></li>
+												<li><a href="#step-3"><b>Paso 3</b><br /><small>Datos de la persona de contacto</small></a></li>
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">

@@ -46,7 +46,7 @@ Registro de Mantenimientos
 										<select name="MvType" id="MvType" class="form-control">
 											<option value="Aceite">Seleccione...</option>
 											<option value="Aceite">Aceite</option>
-											<option value="Tecnomecanica">Tecnomecanica</option>
+											<option value="Tecnomecanica">Tecno-mecánica</option>
 											<option value="Tanqueo">Tanqueo</option>
 											<option value="Otro">Otro</option>
 										</select>

@@ -32,24 +32,14 @@ Respel-Editar
 							<!-- /.box-header -->
                             <!-- form start -->
                             
-							<div class="fingerprint-spinner" id="loadingTable">
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-								<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-							</div>
+							@include('layouts.partials.spinner')
 							<form role="form" action="/requerimientos/{{$Requerimientos->ReqSlug}}" method="POST" enctype="multipart/form-data" name="edit">
 								@method('PUT')
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 								<div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
-										<p>Actualice la información necesaria completando los campos requeridos según la informacion del residuo que registro</p>
+										<p>Actualice la información necesaria completando los campos requeridos según la información del residuo que registro</p>
 										<div id="smartwizard">
 											<ul>
 												<li><a href="#step-1"><b>Paso 1</b><br /><small>Requerimientos-Fotos</small></a></li> --}}

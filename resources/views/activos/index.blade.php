@@ -21,8 +21,8 @@ Activos
           <table id="ActivoTable" class="table table-compact table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Categoria</th>
-                    <th>SubCategoria</th>
+                    <th>Categoría</th>
+                    <th>Subcategoría</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>
                     <th>Forma</th>

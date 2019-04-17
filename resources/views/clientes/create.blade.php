@@ -26,7 +26,7 @@
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Quick Example</h3>
+								<h3 class="box-title">Formulario de registro</h3>
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -38,7 +38,7 @@
 										<input minlength="17" maxlength="17" required="true" name="CliNit" autofocus="true" type="text" class="form-control" id="ClienteInputNit" placeholder="XXX.XXX.XXX.XXX-X">
 									</div>
 									<div class="form-group">
-										<label for="ClienteInputRazon">Razon social</label>
+										<label for="ClienteInputRazon">Razón social</label>
 										<input required="true" name="CliName" type="text" class="form-control" id="ClienteInputRazon" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.">
 									</div>
 									<div class="form-group">
@@ -46,7 +46,7 @@
 										<input required="true" name="CliShortname" type="text" class="form-control" id="ClienteInputNombre" placeholder="Prosarc">
 									</div>
 									<div class="col-xs-6">
-										<label for="ClienteInputCategoria">Categoria</label>
+										<label for="ClienteInputCategoria">Categoría</label>
 										<select name="CliCategoria" class="form-control" id="ClienteInputCategoria" placeholder="Cliente">
 											{{-- <option>cliente</option> --}}
 											<option>generador</option>

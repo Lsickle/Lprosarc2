@@ -36,17 +36,7 @@
                 <tbody hidden onload="renderTable()" id="readyTable">
 
               {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                   <div class="fingerprint-spinner" id="loadingTable">
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                     <div class="spinner-ring"></div>
-                   </div>
+                   @include('layouts.partials.spinner')
                 	@foreach($sedes as $Sede)
 						        <tr @if($Sede->SedeDelete === 1)
                           style="color: red;" 

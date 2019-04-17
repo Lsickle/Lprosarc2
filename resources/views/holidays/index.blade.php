@@ -11,7 +11,7 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Dias Festivos</h3>
+            <h3 class="box-title">Días Festivos</h3>
             <a href="areas/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
@@ -24,17 +24,7 @@
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
                 {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                <div class="fingerprint-spinner" id="loadingTable">
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                </div>
+                @include('layouts.partials.spinner')
                 @foreach($Holidays as $Holiday)
                 <tr>
                   <td>{{$Holiday->SedeName}}</td>
