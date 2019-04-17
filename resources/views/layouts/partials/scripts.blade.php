@@ -450,6 +450,7 @@ $(function() {
         //  table.responsive.recalc(); 
         // }; 
         // document.setTimeout(redibujar, 10000); // 5 seconds 
+        // inputEventOnly: true
     });
     $(window).load(function() {
         function show_popup() {
@@ -466,6 +467,18 @@ $(function() {
         $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
         $('.mobile').inputmask({mask: "(+57) [9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9]"});
+        Inputmask("999.999.999", {
+                positionCaretOnClick: "radixFocus",
+                radixPoint: ",",
+                _radixDance: true,
+                numericInput: true,
+                placeholder: "0",
+                definitions: {
+                    "0": {
+                        validator: "true"
+                    }
+                }
+           }).mask('.number');
     });
     </script>
 <script>
@@ -1225,11 +1238,11 @@ $(window).resize(function() {
 </script>
 @yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
-// <script>
-//   $(':submit').click(function() {
-//         $(this).attr('disabled','disabled');
-//   });
-// </script>
+{{-- <script>
+  $(':submit').click(function() {
+        $(this).attr('disabled','disabled');
+  });
+</script> --}}
 
 </script>
 @if(
@@ -1369,9 +1382,13 @@ $(document).ready(function() {
                 $("#PersEPS").before('<small class="help-block with-errors eps">*</small>');
                 $("#PersARL").prop('required', true);
                 $("#PersARL").before('<small class="help-block with-errors arl">*</small>');
+                $("#PersIngreso").prop('required', true);
+                $("#PersIngreso").before('<small class="help-block with-errors ingr">*</small>');
+                $("#PersSalida").prop('required', true);
+                $("#PersSalida").before('<small class="help-block with-errors sali">*</small>');
             }
             else{
-                $('small').remove('.dir, .eps, .arl');
+                $('small').remove('.dir, .eps, .arl, .ingr, .sali');
                 $("#PersAddress").prop('required', false);
                 $("#PersEPS").prop('required', false);
                 $("#PersARL").prop('required', false);

@@ -12,7 +12,7 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form role="form" action="/personal" method="POST" enctype="multipart/form-data">
+					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 						<div class="fingerprint-spinner" id="loadingTable">
@@ -31,8 +31,8 @@
 								<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
 								<div class="smartwizard">
 									<ul>
-										<li><a href="#step-1"><b>Datos de Contacto</b></a></li>
-										<li><a href="#step-2"><b>Requerimientos-Fotos</b></a></li>
+										<li><a href="#step-1"><b>Paso 1</b><br /><small>Datos de Contacto</small></a></li>
+										<li><a href="#step-2"><b>Paso 2</b><br /><small>Requerimientos-Fotos</small></a></li>
 									</ul>
 									<div>
 										<div id="step-1" class="">
@@ -50,7 +50,7 @@
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors">*</small>
-														<input minlength="7" maxlength="12" required name="PersDocNumber" {{-- autofocus="true" --}} type="text" class="form-control" id="PersDocNumber">
+														<input minlength="7" maxlength="12" required name="PersDocNumber" type="text" class="form-control number" id="PersDocNumber">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
@@ -67,7 +67,7 @@
 													@if(Auth::user()->UsRol == 'Programador' || Auth::user()->UsRol == 'Administrador')
 														<div class="form-group col-md-6">
 															<label for="PersType">Tipo de Persona</label><small class="help-block with-errors">*</small>
-															<select name="PersType" id="PersType" class="form-control">
+															<select name="PersType" id="PersType" class="form-control" required>
 																<option value="">Seleccione...</option>
 																<option value="1">Interna</option>
 																<option value="0">Externa</option>
@@ -89,14 +89,10 @@
 														<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
 															<option value="">Seleccione...</option>
 															@foreach($Cargos as $Cargo)
-															<option value="{{$Cargo->ID_Carg}}">{{$Cargo->CargName}} de {{$Cargo->AreaName}}</option>
+																<option value="{{$Cargo->ID_Carg}}">{{$Cargo->CargName}} de {{$Cargo->AreaName}}</option>
 															@endforeach
 														</select>
 													</div>
-													{{-- <div class="form-group col-md-6">
-														<label for="PersEPS">EPS</label><small class="help-block with-errors">*</small>
-														<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS" required="">
-													</div> --}}
 												</div>
 											</div>
 										</div>
@@ -112,8 +108,8 @@
 														<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control" id="PersPhoneNumber">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersEPS">EPS</label><small class="help-block with-errors">*</small>
-														<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS" required="">
+														<label for="PersEPS">EPS</label>
+														<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersARL">ARL</label>
