@@ -66,7 +66,7 @@
                                                     <div id="form-step-0" role="form" data-toggle="validator">
                                                         <div class="form-group col-md-12">
                                                             <label for="ClienteInputNit">NIT</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="CliNit" class="form-control nit" minlength="13" maxlength="13" id="ClienteInputNit" placeholder="XXX.XXX.XXX-Y"  required>
+                                                            <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" minlength="13" maxlength="13" placeholder="XXX.XXX.XXX-Y" required>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputRazon">Razón Social</label><small class="help-block with-errors">*</small>
@@ -74,7 +74,7 @@
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputNombre">Nombre Corto</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" maxlength="255" required>
+                                                            <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" minlength="2"  maxlength="100" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="tipo">Tipo de Empresa</label><small class="help-block with-errors">*</small>
@@ -107,34 +107,34 @@
                                                 </div>
                                                 <div id="step-2" class="">
                                                     <div id="form-step-1" role="form" data-toggle="validator">
+                                                        <div class="col-md-3">
+                                                            {{-- <div class="alert alert-info" role="alert"> --}}
+                                                                    <div class="alert alert-warning " role="alert">
+                                                                <p>Después podra añadir mas Sedes</p>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-12">
                                                             <h2>Sede Principal</h2>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="sedeinputname">Nombre</label>
+                                                            <label for="sedeinputname">Nombre</label><small class="help-block with-errors">*</small>
                                                             <input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" maxlength="128" required>
-                                                            <div class="help-block with-errors">
-                                                            </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="sedeinputemail">Email</label>
+                                                            <label for="sedeinputemail">Email</label><small class="help-block with-errors">*</small>
                                                             <input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@prosarc.com" name="SedeEmail" maxlength="128" required>
-                                                            <div class="help-block with-errors">
-                                                            </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="departamento">Departamento</label>
+                                                            <label for="departamento">Departamento</label><small class="help-block with-errors">*</small>
                                                             <select class="form-control" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
                                                                 <option onclick="Disabled()" value="">Seleccione...</option>
                                                                 @foreach ($Departamentos as $Departamento)		
                                                                     <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <div class="help-block with-errors">
-                                                            </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="municipio">Municipio</label>
+                                                            <label for="municipio">Municipio</label><small class="help-block with-errors">*</small>
                                                             <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
                                                                 <option value="">Seleccione...</option>
                                                                 {{-- @foreach ($Municipios as $Municipio) 
@@ -145,28 +145,26 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label for="sedeinputcelular">Celular</label>
+                                                            <label for="sedeinputcelular">Celular</label><small class="help-block with-errors">*</small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="301 414 5321" name="SedeCelular">
+                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="301 414 5321" name="SedeCelular" minlength="12"  maxlength="12">
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="sedeinputaddress">Dirección</label>
-                                                            <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" maxlength="128" required>
-                                                            <div class="help-block with-errors">
-                                                            </div>
+                                                            <label for="sedeinputaddress">Dirección</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" minlength="5"  maxlength="128" required>
                                                         </div>
                                                         <div class="col-md-6">
                                                                 <label for="sedeinputphone1">Teléfono</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(03)</span>
-                                                                <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="1 4123141" name="SedePhone1">
+                                                                <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="1 4123141" name="SedePhone1" minlength="9"  maxlength="9">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                                <label for="sedeinputext1">Extensión</label>
-                                                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1">
+                                                                <label for="sedeinputext1">Extensión</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1" maxlength="3">
                                                         </div>
                                                         <div id="telefono2">
                                                         </div>
@@ -175,25 +173,27 @@
                                                                 <a onclick="Tel()"class="btn btn-info">Otro Teléfono</a>
                                                             </div>
                                                         </div>
+                                                        
+
                                                     </div>
                                                 </div>
                                                 <div id="step-3" class="">
                                                     <div id="form-step-2" role="form" data-toggle="validator">
                                                         <h2>Persona de Contacto</h2>
                                                         <div class="form-group col-md-6">
-                                                            <label for="AreaName">Area</label>
+                                                            <label for="AreaName">Area</label><small class="help-block with-errors">*</small>
                                                             <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="CargName">Cargo</label>
+                                                            <label for="CargName">Cargo</label><small class="help-block with-errors">*</small>
                                                             <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersFirstName">Nombre</label>
+                                                            <label for="PersFirstName">Nombre</label><small class="help-block with-errors">*</small>
                                                             <input type="text" class="form-control" id="PersFirstName" placeholder="Nombre de la Persona" name="PersFirstName" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersLastName">Apellido</label>
+                                                            <label for="PersLastName">Apellido</label><small class="help-block with-errors">*</small>
                                                             <input type="text" class="form-control" id="PersLastName" placeholder="Apellido de la Persona" name="PersLastName" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
@@ -232,8 +232,11 @@
 <script>
     function Tel(){
         var Telefono = `<div class="col-md-6">
-                            <label for="sedeinputphone1">Teléfono 2</label>
-                            <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="(03) 1 4123141" name="SedePhone1">
+            <label for="sedeinputphone1">Teléfono 2</label>
+            <div class="input-group">
+                            <span class="input-group-addon">(03)</span>
+                            <input type="tel" class="form-control phone" id="sedeinputphone1" placeholder="1 4123141" name="SedePhone1">
+                        </div>
                         </div>
                         <div class="col-md-6">
                             <label for="sedeinputext1">Extensión 2</label>
@@ -242,7 +245,7 @@
         $('#telefono2').append(Telefono);
         
         $(document).ready(function() {
-            $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
+            $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]",greedy: false});
             $('.extension').inputmask({mask: "[9][9][9]"});
         });
         $('#tel').remove();

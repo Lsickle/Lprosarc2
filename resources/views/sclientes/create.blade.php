@@ -48,7 +48,7 @@
 									</div> --}}
 									<div class="col-md-6">
 											<label for="departamento">Departamento</label>
-											<select class="form-control" id="departamento" name="Departamento" required="true">
+											<select class="form-control" id="departamento" name="departamento" required="true">
 												<option value="1">Seleccione...</option>
 												@foreach ($Departamentos as $Departamento)		
 													<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
@@ -57,12 +57,9 @@
 											</select>
 										</div>
 										<div class="col-md-6">
-											<label for="GSedemunicipio">Municipio</label>
-											<select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required="true">
+											<label for="municipio">Municipio</label>
+											<select class="form-control" id="municipio" name="FK_SedeMun" required="true">
 											<option value="1">Seleccione...</option>
-											@foreach ($Municipios as $Municipio)
-												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-											@endforeach
 											</select>
 										</div>
 									<div class="col-md-6">

@@ -172,6 +172,7 @@ $(document).ready(function() {
     $(document).ready(function(){
         $('.smartwizard').smartWizard({
             selected: 0,
+            keyNavigation: false,
             theme: 'arrows',
             transitionEffect:'fade',
             toolbarSettings: {
@@ -385,89 +386,6 @@ $(function() {
 });
 
 </script>
-{{-- <script>
-// funcion para da formato a la tabla
-$(function() {
-    $('#example4').DataTable({
-        "scrollX": false,
-        "autoWidth": true,
-        "keys": true,
-        "responsive": true,
-        "processing": true,
-        "columnDefs": [{
-            "targets": 8,
-            "data": "GSedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sgeneradores/" + data + "' class='btn btn-primary'>Ver</a>";
-            }
-        }]
-    });
-});
-
-</script> --}}
-{{-- <script>
-$(function() {
-    $('#example3').DataTable({
-        "scrollX": false,
-        "autoWidth": true,
-        "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-            "targets": 6,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
-            }
-        }, {
-            "targets": 7,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
-    });
-});
-
-</script> --}}
-{{-- <script>
-$(function() {
-    $('#example2').DataTable({
-        "select": true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf'
-        ],
-        // "autoFill": true,
-        "scrollX": true,
-        // "scrollCollapse": true,
-        // "autoWidth": true,
-        "responsive": {
-            "breakpoints": [
-                { name: 'bigdesktop', width: Infinity },
-                { name: 'meddesktop', width: 1480 },
-                { name: 'smalldesktop', width: 1280 },
-                { name: 'medium', width: 1188 },
-                { name: 'tabletl', width: 1024 },
-                { name: 'btwtabllandp', width: 848 },
-                { name: 'tabletp', width: 768 },
-                { name: 'mobilel', width: 480 },
-                { name: 'mobilep', width: 320 }
-            ]
-        },
-        "keys": true,
-        "colReorder": true,
-        "columnDefs": [{
-            "targets": 10,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-primary'>Ver</a>";
-            }
-        }]
-        // "fixedColumns": true
-    });
-});
-
-</script> --}}
 @if(Route::currentRouteName()=='clientes.index')
     <script>
     $(document).ready(function() {
@@ -537,57 +455,27 @@ $(function() {
 {{-- Mascaras del cliente --}}
 <script>
     $(document).ready(function() {
-        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9][9]"});
-        $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]",greedy: false});
+        // $('.nit').inputmask('999.999.999-9');
+        // $('.nit').inputmask('999.999.999-9',{ 
+        //     clearIncomplete: true,
+        //     greedy: false,
+        // });
+
+        // $('.nit').inputmask('* (8,40)'{
+        //     mask: "[9][9][9.][9][9][9.][9][9][9-][9][9]",
+        //     clearIncomplete: true,
+        //     greedy: false,
+        // });
+        $('.nit').inputmask("999.999.999-9",{
+            "onincomplete" : function () {
+                $('.nit').prop('minleigt', 13);
+            }
+        });
+        $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9]"});
     });
     </script>
-
-{{-- funcion para recargar lista de generadores de cada cliente mediante ajax--}}
-{{-- <script type="text/javascript">
-{
-    {
-        --$("select[name='DeclarSede']").change(function() {
-            var DeclarSede_id = $("select[name='DeclarSede']").val();
-            if (DeclarSede_id !== '' && DeclarSede_id !== null) {
-                $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-                $ajax({
-                    type: 'GET',
-                    url: { { url("/declaraciones/create") } },
-                    data: { id: DeclarSede_id },
-                }).done(function(data) {
-                    $.each(data, function(key, value) {
-                        $("select[name='DeclarGenerSede']")
-                            .apend($("<option></option>")
-                                .attr("value", key)
-                                .text(value));
-                    });
-                }).fail(function(jqXHR, textStatus) {
-                    console.log(jqXHR);
-                });
-            } else {
-                $("select[name='DeclarGenerSede']").prop('disabled', false).find('option[value]').remove();
-            }
-        });
-        --
-    }
-}
-$('select[name="DeclarSede"]').on('change', function(e) {
-    console.log(e);
-    var ID_Sede = e.target.value;
-
-    $.POST('/declaraciones' + ID_Sede, function(data) {
-        console.log(data);
-        $('select[name="DeclarGenerSede"]').empty();
-        $.each(data, function(index, subCatObj) {
-            $('select[name="DeclarGenerSede"]').append('' + subCatObj.name + '');
-        });
-    });
-});
-
-</script> --}}
-<!-- checkin imput -->
 <script>
 $(function() {
     $('.inputcheck').iCheck({
@@ -1442,4 +1330,57 @@ $(document).ready(function() {
         "responsive": true,
     });
 });
+</script>
+<script>
+    $(document).ready(function(){
+        $("#departamento").change(function(e){
+            id=$("#departamento").val();
+            e.preventDefault();
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+                url: "{{url('/muni-depart')}}/"+id,
+                method: 'GET',
+                data:{},
+                success: function(res){
+                    $("#municipio").empty();
+                    var municipio = new Array();
+                    for(var i = res.length -1; i >= 0; i--){
+                        if ($.inArray(res[i].ID_Mun, municipio) < 0) {
+                            $("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+                            municipio.push(res[i].ID_Mun);
+                        }
+                    }
+                }
+            })
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        var type = $("#PersType").val();
+        if(type == 0){
+            $("#PersAddress").prop('required', false);
+        }
+        $("#PersType").change(function(){
+            type = $("#PersType").val();
+            if(type == 1){
+                $("#PersAddress").prop('required', true);
+                $("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
+                $("#PersEPS").prop('required', true);
+                $("#PersEPS").before('<small class="help-block with-errors eps">*</small>');
+                $("#PersARL").prop('required', true);
+                $("#PersARL").before('<small class="help-block with-errors arl">*</small>');
+            }
+            else{
+                $('small').remove('.dir, .eps, .arl');
+                $("#PersAddress").prop('required', false);
+                $("#PersEPS").prop('required', false);
+                $("#PersARL").prop('required', false);
+            }
+        });
+    });
 </script>
