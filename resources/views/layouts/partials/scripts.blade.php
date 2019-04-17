@@ -239,6 +239,11 @@ $(document).ready(function() {
                     "render": function(data, type, row, meta) {
                         return "<a method='get' href='/img/" + data + "' target='_blank' class='btn btn-primary'>Mirar</a>";
                     }
+                }
+            ]    
+        })
+    });
+    </script>
 <script>
 $(document).ready(function() {
     $('#RespelTable').DataTable({
@@ -266,7 +271,7 @@ $(document).ready(function() {
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
                 }
-            ]
+            }]
         });
         /*funcion para resaltar las busquedas*/
         var bod = $(table.table().body());
@@ -532,9 +537,9 @@ $(function() {
 {{-- Mascaras del cliente --}}
 <script>
     $(document).ready(function() {
-        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9]"});
-        $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
-        $('.mobile').inputmask({mask: "(+57) [9][9][9] [9][9][9] [9][9][9][9]"});
+        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9][9]"});
+        $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]",greedy: false});
+        $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9]"});
     });
     </script>
@@ -1282,8 +1287,7 @@ $(document).ready(function() {
 
 </script>
 <script>
-var rol = "<?php
-echo Auth::user()->UsRol; ?> ";
+var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
 $(document).ready(function() {
@@ -1340,13 +1344,11 @@ $(window).resize(function() {
 </script>
 @yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
-// <script>
-//   $(':submit').click(function() {
-//         $(this).attr('disabled','disabled');
-//   });
-// </script>
-
-</script>
+{{-- <script>
+  $(':submit').click(function() {
+        $(this).attr('disabled','disabled');
+  });
+</script> --}}
 @if(
 Route::currentRouteName()=='tarifas.index'
 )
@@ -1432,7 +1434,6 @@ $(document).ready(function() {
 
     });
 </script>
-=======
 <script>
 $(document).ready(function() {
     $('#Clasificacion').DataTable({
