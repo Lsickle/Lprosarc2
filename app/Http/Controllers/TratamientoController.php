@@ -27,20 +27,18 @@ class TratamientoController extends Controller
         if(Auth::user()->UsRol === "Programador"){
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-                ->join('respels', 'tratamientos.FK_TratRespel', '=', 'respels.ID_Respel')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.RespelName', 'tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->select('tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->get();
         } else{
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-                ->join('respels', 'tratamientos.FK_TratRespel', '=', 'respels.ID_Respel')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.RespelName', 'tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->select('tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->where('tratamientos.TratDelete', 0)
                 ->get();
 

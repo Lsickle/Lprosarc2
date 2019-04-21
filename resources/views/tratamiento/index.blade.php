@@ -21,7 +21,6 @@ Lista de Tratamientos
 								<th>Proveedor</th>
 								<th>Nombre</th>
 								<th>Pretratamiento</th>
-								<th>Residuo</th>
 								<th>Dirección</th>
 								<th>Ver Mas</th>
 							</tr>
@@ -42,7 +41,6 @@ Lista de Tratamientos
 								<td>{{$tratamiento->CliShortname}}</td>
 								<td>{{$tratamiento->TratName}}</td>
 								<td>{{$tratamiento->TratPretratamiento}}</td>
-								<td>{{$tratamiento->RespelName}}</td>
 								<td>{{$tratamiento->SedeAddress}}</td>
 								<td>{{$tratamiento->ID_Trat}}</td>
 							</tr>
