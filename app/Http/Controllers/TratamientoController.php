@@ -79,7 +79,6 @@ class TratamientoController extends Controller
         $tratamiento->TratTipo = $request->input('TratTipo');
         $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
-        $tratamiento->FK_TratRespel = $request->input('FK_TratRespel');
         $tratamiento->TratDelete = 0;
         $tratamiento->save();
 
@@ -158,7 +157,6 @@ class TratamientoController extends Controller
         $tratamiento->TratTipo = $request->input('TratTipo');
         $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
-        $tratamiento->FK_TratRespel = $request->input('FK_TratRespel');
         $tratamiento->update();
 
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
