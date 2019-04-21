@@ -110,10 +110,10 @@ class TarifaController extends Controller
                 ->select('tarifas.*', 'requerimientos.*', 'tratamientos.*', 'respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
                 ->first();
         }
-
-        if ($Tarifarelacionada!=='') {
-            $tarifa=$Tarifarelacionada;
-        }
+        /*bloque comentado para poder entrar a la tarifa con id 5*/
+        // if ($Tarifarelacionada!=='') {
+        //     $tarifa=$Tarifarelacionada;
+        // }
 
         return view('tarifas.show', compact('tarifa'));
         
