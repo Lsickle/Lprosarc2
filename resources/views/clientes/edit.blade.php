@@ -48,7 +48,7 @@ Edita tus datos
 								@csrf
 								@method('PUT')
 								<div class="box-body">
-									<div class="form-group col-md-12">
+									<div class="form-group col-md-6">
 										<label for="ClienteInputNit">NIT</label><small class="help-block with-errors"></small>
 										<input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="XXX.XXX.XXX-Y" required value="{{$cliente->CliNit}}">
 									</div>

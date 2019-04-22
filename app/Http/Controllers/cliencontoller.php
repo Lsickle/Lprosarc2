@@ -185,17 +185,18 @@ class clientcontoller extends Controller
     public function show($id)
     {
         if(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+            
             $user = User::where('UsSlug', $id)->first(); 
             $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
             $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();
             $area = Area::select('FK_AreaSede')->where('ID_Area', $cargo->CargArea)->first();
             $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
             $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
+
             return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
         }else{
             return view('clientes.show', compact('cliente'));
         }
-        // return $cliente;
     }
 
     /**
@@ -259,6 +260,5 @@ class clientcontoller extends Controller
         $log->save();
 
         return redirect()->route('clientes.index');
-
     }
 }
