@@ -30,13 +30,17 @@ class clientcontoller extends Controller
             return view('clientes.index', compact('clientes'));
         }
         if(Auth::user()->UsRol === "Cliente"){
-           return redirect()->route('sclientes.index');
+            if(Auth::user()->FK_UserPers === NULL){
+                return redirect()->route('clientes.create');
+            }else{
+                return redirect()->route('home');
+            }
         }
         if(Auth::user()->UsRol === "admin"){
             $clientes = Cliente::all();
             return view('clientes.index', compact('clientes'));
         }else{
-            return view('errors.403');
+            abort(403);
         }
     }
 
@@ -45,29 +49,20 @@ class clientcontoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function ajax(Request $request){
-        $select = $request->get('select');
-        $value = $request->get('value');
-        $dependent = $request->get('dependent');
-        $data = Municipio::where($select, $value)->get();
-
-        $output = '<option value="">Selec'.$dependent.'</option>';
-        foreach($data as $Municipio){
-            $output .='<option value="'.$Municipio->ID_Mun.'>"'.$Municipio->MunName.'</option>';
-        }
-        echo $output;
-    } 
     public function create()
     {
         if(Auth::user()->UsRol === "Cliente"){
-            $Departamentos = Departamento::all();
-            return view('clientes.create2', compact('Departamentos', 'Municipios'));
+            if(Auth::user()->FK_UserPers === NULL){
+                $Departamentos = Departamento::all();
+                return view('clientes.create2', compact('Departamentos', 'Municipios'));
+            }else{
+                return redirect()->route('home');
+            }
         }
         if(Auth::user()->UsRol === "admin"){
             return view('clientes.create');
         }else{
-            return view('errors.403');
+            abort(403);
         }
     }
 
@@ -111,12 +106,12 @@ class clientcontoller extends Controller
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
             $Cliente->CliCategoria = 'Cliente';
-            if($request->input('CliType') === " "){
+            if($request->input('CliType') === NULL){
                 $Cliente->CliType = $request->input('tipoCual');
             }else{
                 $Cliente->CliType = $request->input('CliType');
             }
-            $Cliente->CliSlug = substr(md5(rand()), 0, 999999).$request->input('CliShortname');
+            $Cliente->CliSlug = substr(md5(rand()), 5, 8).$request->input('CliShortname').substr(md5(rand()), 5, 8);
             $Cliente->CliDelete = 0;
             $Cliente->save();
 
@@ -129,7 +124,7 @@ class clientcontoller extends Controller
             $Sede->SedeExt2 = $request->input('SedeExt2');
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 0, 999999).$request->input('SedeName');
+            $Sede->SedeSlug = substr(md5(rand()), 5, 8).$request->input('SedeName').substr(md5(rand()), 5, 8);
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             // $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->FK_SedeMun = 3;
@@ -154,7 +149,7 @@ class clientcontoller extends Controller
             $Personal->PersEmail = $request->input("PersEmail"); 
             $Personal->PersSecondName = $request->input("PersSecondName"); 
             $Personal->PersType = 1;//falta definir que boolean es externo
-            $Personal->PersSlug = substr(md5(rand()), 0, 5).$request->input("PersFirstName"); 
+            $Personal->PersSlug = substr(md5(rand()), 5, 8).$request->input("PersFirstName").substr(md5(rand()), 5, 8); 
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
@@ -173,7 +168,7 @@ class clientcontoller extends Controller
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
-        $Cliente->CliSlug = substr(md5(rand()), 0, 999999).$request->input('CliShortname');
+        $Cliente->CliSlug = substr(md5(rand()), 5, 8).$request->input('CliShortname').substr(md5(rand()), 5, 8);
         $Cliente->CliDelete = '0';
         $Cliente->save();
 
@@ -187,15 +182,19 @@ class clientcontoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show($id)
     {
-        if(Auth::user()->UsRol === "Cliente"){
-            $user = Auth::user()->UsRol;
-
-            $cliente = cliente::where('CliSlug', $cliente)->first();
-            return view('clientes.show', compact('cliente', 'user'));
+        if(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+            $user = User::where('UsSlug', $id)->first(); 
+            $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
+            $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();
+            $area = Area::select('FK_AreaSede')->where('ID_Area', $cargo->CargArea)->first();
+            $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
+            $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
+            return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
+        }else{
+            return view('clientes.show', compact('cliente'));
         }
-        return view('clientes.show', compact('cliente'));
         // return $cliente;
     }
 
