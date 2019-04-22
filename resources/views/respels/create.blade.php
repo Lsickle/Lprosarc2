@@ -21,13 +21,13 @@
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 								@csrf
 								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
-									<div class="col-md-12">
+									<div class="col-md-12 form-group">
 										<label for="Sede">Cliente</label>
-										<select name="Sede" id="Sede" class="form-control">
-											<option value="2">Seleccione</option>
+										<select name="Sede" id="Sede" class="form-control" required>
+											<option value="">Seleccione</option>
 											@foreach($Sedes as $Cliente)
 												<option value="{{$Cliente->ID_Sede}}">{{$Cliente->CliName}}</option>
 											@endforeach
