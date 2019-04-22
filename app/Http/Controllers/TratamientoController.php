@@ -27,20 +27,18 @@ class TratamientoController extends Controller
         if(Auth::user()->UsRol === "Programador"){
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-                ->join('respels', 'tratamientos.FK_TratRespel', '=', 'respels.ID_Respel')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.RespelName', 'tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->select('tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->get();
         } else{
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-                ->join('respels', 'tratamientos.FK_TratRespel', '=', 'respels.ID_Respel')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.RespelName', 'tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
+                ->select('tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->where('tratamientos.TratDelete', 0)
                 ->get();
 
@@ -81,7 +79,6 @@ class TratamientoController extends Controller
         $tratamiento->TratTipo = $request->input('TratTipo');
         $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
-        $tratamiento->FK_TratRespel = $request->input('FK_TratRespel');
         $tratamiento->TratDelete = 0;
         $tratamiento->save();
 
@@ -160,7 +157,6 @@ class TratamientoController extends Controller
         $tratamiento->TratTipo = $request->input('TratTipo');
         $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
-        $tratamiento->FK_TratRespel = $request->input('FK_TratRespel');
         $tratamiento->update();
 
         /*codigo para incluir la actualizacion en la tabla de auditoria*/

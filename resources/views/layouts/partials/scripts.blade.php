@@ -99,7 +99,7 @@ $(document).ready(function() {
         autoWith: true,
         searchHighlight: true,
         columnDefs: [{
-            "targets": 7,
+            "targets": 6,
             "data": "ID_Trat",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/tratamiento/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
@@ -168,22 +168,11 @@ $(document).ready(function() {
 
 </script>
 {{-- script para formulario en smart-wizzard --}}
-{{-- <script type="text/javascript">
-$(document).ready(function() {
-    $('.smartwizard').smartWizard({
-        theme: 'arrows',
-        keyNavigation: true,
-        lang: {  
-            next: 'Siguiente', 
-            previous: 'Anterior'
-        },
-    });
-});
-</script> --}}
 <script type="text/javascript">
     $(document).ready(function(){
         $('.smartwizard').smartWizard({
             selected: 0,
+            keyNavigation: false,
             theme: 'arrows',
             transitionEffect:'fade',
             toolbarSettings: {
@@ -428,9 +417,25 @@ $(function() {
 {{-- Mascaras del cliente --}}
 <script>
     $(document).ready(function() {
-        $('.nit').inputmask({mask: "[9][9][9.][9][9][9.][9][9][9-][9]"});
-        $('.phone').inputmask({mask: "(03) [9] [9][9][9][9][9][9][9]",greedy: false});
-        $('.mobile').inputmask({mask: "(+57) [9][9][9] [9][9][9] [9][9][9][9]"});
+        // $('.nit').inputmask('999.999.999-9');
+        $('.nit').inputmask('99[9.]99[9.]99[9-]9',{ 
+            clearIncomplete: true,
+            greedy: false,
+            placeholder:" ",
+        });
+
+        // $('.nit').inputmask('* (8,40)'{
+        //     mask: "[9][9][9.][9][9][9.][9][9][9-][9][9]",
+        //     clearIncomplete: true,
+        //     greedy: false,
+        // });
+        // $('.nit').inputmask("999.999.999-9",{
+        //     "onincomplete" : function () {
+        //         $('.nit').prop('minleigt', 13);
+        //     }
+        // });
+        $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]"});
+        $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9]"});
         Inputmask("999.999.999", {
                 positionCaretOnClick: "radixFocus",
@@ -1145,8 +1150,7 @@ $(document).ready(function() {
 
 </script>
 <script>
-var rol = "<?php
-echo Auth::user()->UsRol; ?> ";
+var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
 $(document).ready(function() {
@@ -1208,8 +1212,6 @@ $(window).resize(function() {
         $(this).attr('disabled','disabled');
   });
 </script> --}}
-
-</script>
 @if(
 Route::currentRouteName()=='tarifas.index'
 )
