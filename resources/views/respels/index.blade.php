@@ -23,7 +23,11 @@
 								<th>Tarj de Emergencia</th>
 								<th>Estado</th>
 								<th>Generado por</th>
+								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
+								<th>Evaluar</th>
+								@else
 								<th>Ver Más...</th>
+								@endif
 							</tr>
 						</thead>
 						<tbody hidden onload="renderTable()" id="readyTable">
