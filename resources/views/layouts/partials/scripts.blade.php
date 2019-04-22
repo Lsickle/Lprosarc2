@@ -416,26 +416,10 @@ $(function() {
 {{-- Mascaras del cliente --}}
 <script>
     $(document).ready(function() {
-        // $('.nit').inputmask('999.999.999-9');
-        $('.nit').inputmask('99[9.]99[9.]99[9-]9',{ 
-            clearIncomplete: true,
-            greedy: false,
-            placeholder:" ",
-        });
-
-        // $('.nit').inputmask('* (8,40)'{
-        //     mask: "[9][9][9.][9][9][9.][9][9][9-][9][9]",
-        //     clearIncomplete: true,
-        //     greedy: false,
-        // });
-        // $('.nit').inputmask("999.999.999-9",{
-        //     "onincomplete" : function () {
-        //         $('.nit').prop('minleigt', 13);
-        //     }
-        // });
+        $('.nit').inputmask({mask:"[9][9][9.][9][9][9.][9][9][9-][9]"});
         $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
-        $('.extension').inputmask({mask: "[9][9][9]"});
+        $('.extension').inputmask({mask: "[9][9][9][9][9]"});
     });
     </script>
 <script>
