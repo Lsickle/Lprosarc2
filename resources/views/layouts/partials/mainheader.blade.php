@@ -148,7 +148,11 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('/user/profile') }}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>
+                                    @if (Auth::user()->UsRol === "Cliente")
+                                        <a href="{{route('cliente', Auth::user()->UsSlug)}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>  
+                                    @else
+                                    <a href="{{route('personal', Auth::user()->UsSlug)}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>
+                                    @endif
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ url('/logout') }}" class="btn btn-default btn-flat" id="logout"
