@@ -30,11 +30,11 @@ class clientcontoller extends Controller
             return view('clientes.index', compact('clientes'));
         }
         if(Auth::user()->UsRol === "Cliente"){
-            // if(Auth::user()->FK_UserPers === NULL){
+            if(Auth::user()->FK_UserPers === NULL){
                 return redirect()->route('clientes.create');
-            // }else{
-                // return redirect()->route('home');
-            // }
+            }else{
+                return redirect()->route('home');
+            }
         }
         if(Auth::user()->UsRol === "admin"){
             $clientes = Cliente::all();
@@ -52,14 +52,12 @@ class clientcontoller extends Controller
     public function create()
     {
         if(Auth::user()->UsRol === "Cliente"){
-            // if(Auth::user()->FK_UserPers === NULL){
-            //     $Departamentos = Departamento::all();
-            //     return view('clientes.create2', compact('Departamentos', 'Municipios'));
-            // }else{
-            //     return redirect()->route('home');
-            // }
-            $Departamentos = Departamento::all();
-            return view('clientes.create2', compact('Departamentos', 'Municipios'));
+            if(Auth::user()->FK_UserPers === NULL){
+                $Departamentos = Departamento::all();
+                return view('clientes.create2', compact('Departamentos', 'Municipios'));
+            }else{
+                return redirect()->route('home');
+            }
         }
         if(Auth::user()->UsRol === "admin"){
             return view('clientes.create');
@@ -186,7 +184,7 @@ class clientcontoller extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->UsRol === "Cliente"){
+        if(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
             $user = User::where('UsSlug', $id)->first(); 
             $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
             $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();

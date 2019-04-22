@@ -207,7 +207,12 @@ $(document).ready(function() {
 @if(Route::currentRouteName()=='respels.index')
 <script>
 $(document).ready(function() {
-    $('#RespelTable').DataTable({
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+    /*var define los botones que se usaran segun el rol de usuario*/
+    if (rol == 'JefeOperacion'||rol == 'admin'||rol == 'Programador') {
+        $('#RespelTable').DataTable({
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
@@ -217,24 +222,56 @@ $(document).ready(function() {
                 "targets": 8,
                 "data": "RespelSlug",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/respels/" + data + "' class='btn btn-success'>Ver</a>";
+                    return "<a method='get' href='/respels/" + data + "/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a>";
                 }
             },
             {
                 "targets": 4,
                 "data": "RespelHojaSeguridad",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
                 }
             },
             {
                 "targets": 5,
                 "data": "RespelTarj",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-search'></i></a>";
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
                 }
             }]
         });
+    }else{
+        $('#RespelTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": 8,
+                "data": "RespelSlug",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/respels/" + data + "' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a>";
+                }
+            },
+            {
+                "targets": 4,
+                "data": "RespelHojaSeguridad",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
+                }
+            },
+            {
+                "targets": 5,
+                "data": "RespelTarj",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
+                }
+            }]
+        });
+    }
+
+    
         /*funcion para resaltar las busquedas*/
         var bod = $(table.table().body());
         table.on('draw', function redibujar() {
