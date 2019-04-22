@@ -21,7 +21,7 @@
 								<th>Estado del residuo</th>
 								<th>Hoja de Seguridad</th>
 								<th>Tarj de Emergencia</th>
-								<th>Estado</th>
+								<th>Estado de aprobación</th>
 								<th>Generado por</th>
 								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
 								<th>Evaluar</th>

@@ -114,7 +114,7 @@ class RespelController extends Controller
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
-            $respel->RespelEstado = 'Pendiente';
+            $respel->RespelStatus = 'Pendiente';
             $respel->RespelHojaSeguridad = $name;
             $respel->RespelTarj = $tarj;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;

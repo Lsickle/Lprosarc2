@@ -24,7 +24,7 @@
 	@endif
 </div>
 <div class="col-md-6">
-	<label>Peligrosidad del residuo</label>
+	<label>Peligrosidad</label>
 	<select name="RespelIgrosidad" class="form-control" disabled>
 		<option {{$Respels->RespelIgrosidad == 'Inflamable' ? 'selected' : '' }}>Inflamable</option>
 		<option {{$Respels->RespelIgrosidad == 'Toxico' ? 'selected' : '' }}>Toxico</option>
@@ -34,7 +34,7 @@
 	</select>
 </div>
 <div class="col-md-6">
-	<label>Estado del residuo</label>
+	<label>Estado Físico</label>
 	<select name="RespelEstado" class="form-control" disabled>
 		<option {{$Respels->RespelEstado == 'Liquido' ? 'selected' : '' }}>Liquido</option>
 		<option {{$Respels->RespelEstado == 'Solido' ? 'selected' : '' }}>Solido</option>
@@ -58,17 +58,9 @@
 	<label>Ver</label><br>
 	<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
 </div>
-
-<div class="col-md-12">
-	<label>Estado de aprobación</label>
-	<select name="RespelStatus" class="form-control">
-		<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-		<option {{$Respels->RespelStatus == 'Negado' ? 'selected' : '' }}>Negado</option>
-		<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-		<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
-	</select>
-</div>
-
+	
+	
 <script>
+
 
 </script>
