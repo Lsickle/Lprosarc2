@@ -455,7 +455,7 @@ $(function() {
 <script>
     $(document).ready(function() {
         $('.nit').inputmask({mask:"[9][9][9.][9][9][9.][9][9][9-][9]"});
-        $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]"});
+        $('.phone').inputmask({mask: "03[9-][9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
         $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
@@ -1344,5 +1344,34 @@ $(document).ready(function() {
         });
     });
 </script>
-
+{{-- extension de la sede --}}
+@if(Route::currentRouteName()=='clientes.create')
+<script>
+    $(document).ready(function() {
+        $(".tel").change(function(){
+            if($(this).val().length>10){
+                $('.ext').attr('disabled',false);
+            }else{
+                $('.ext').attr('disabled',true);
+            };
+        });
+    });
+</script>
+@endif
+@if(Route::currentRouteName()=='clientes.create' || Route::currentRouteName()=='clientes.edit')
+<script>
+	function OtroType(){
+        document.getElementById("otro").style.display = 'block';
+        $('#tipo').prop('required', false);
+        $('#otroType').prop('required', true);
+        $('.form').validator('update');
+    }
+    function HiddenOtroType(){
+        document.getElementById("otro").style.display = 'none';
+        $('#tipo').prop('required', true);
+        $('#otroType').prop('required', false);
+        $('.form').validator('update');
+    }
+</script>
+@endif
 @yield('NewScript')

@@ -44,47 +44,50 @@ Edita tus datos
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator">
+							<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
 								@csrf
 								@method('PUT')
 								<div class="box-body">
 									<div class="form-group col-md-6">
-										<label for="ClienteInputNit">NIT</label><small class="help-block with-errors"></small>
+										<label for="ClienteInputNit">NIT</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="XXX.XXX.XXX-Y" required value="{{$cliente->CliNit}}">
 									</div>
 									<div class="col-md-6 form-group">
-										<label for="ClienteInputRazon">Razón Social</label><small class="help-block with-errors"></small>
+										<label for="ClienteInputRazon">Razón Social</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="5"  maxlength="100" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." required value="{{$cliente->CliName}}">
 									</div>
 									<div class="col-md-6 form-group">
-										<label for="ClienteInputNombre">Nombre Corto</label><small class="help-block with-errors"></small>
+										<label for="ClienteInputNombre">Nombre Corto</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" minlength="2"  maxlength="100" required value="{{$cliente->CliShortname}}">
 									</div>
-									<div class="form-group col-md-6">
-										<label for="tipo">Tipo de Empresa</label><small class="help-block with-errors"></small>
-										<select class="form-control" id="tipo" name="CliType" required value="{{$cliente->CliType}}">
-											<option onclick="HiddenOtroType()" value="Organico">Organico</option>
-											<option onclick="HiddenOtroType()" value="Biologico">Biologico</option>
-											<option onclick="HiddenOtroType()" value="Industrial">Industrial</option>
-											<option onclick="HiddenOtroType()" value="Medicamentos">Medicamentos</option>
-											<option onclick="OtroType()" value="">Otro</option>
-										</select>
-										
-									</div>
-									<div id="otro" class="form-group col-md-6">
-									</div>
 									@if(Auth::user()->UsRol === "admin")
-									<div class="col-md-6">
+									<div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
 										<label for="categoria">Categoría</label>
-										<select class="form-control" id="categoria" name="CliCategoria" required value="{{$cliente->CliCategoria}}">
-											<option value="">Seleccione...</option>
-											<option>Cliente</option>
-											<option>Transportador</option>
-											<option>Proveedor</option>
+										<select class="form-control" id="categoria" name="CliCategoria" required>
+											<option {{ $cliente->CliCategoria == 'Cliente' ? 'selected' : '' }}>Cliente</option>
+											<option {{ $cliente->CliCategoria == 'Transportador' ? 'selected' : '' }}>Transportador</option>
+											<option {{ $cliente->CliCategoria == 'Proveedor' ? 'selected' : '' }}>Proveedor</option>
 										</select>
 									</div>
 									@endif
-
+									<div class="form-group col-md-6">
+										<label for="tipo">Tipo de Empresa</label><small class="help-block with-errors">*</small>
+										<select class="form-control tipo" id="tipo" name="CliType" required>
+											@if($cliente->CliType !== 'Medicamentos' || $cliente->CliType !== 'Organico' ||  $cliente->CliType !== 'Biologico' || $cliente->CliType !== 'Industrial')
+												<option onclick="HiddenOtroType()" value="{{$cliente->CliType}}">{{$cliente->CliType}}</option>
+											@else
+											@endif
+											<option onclick="HiddenOtroType()" {{ $cliente->CliType == 'Organico' ? 'selected' : '' }}>Organico</option>
+											<option onclick="HiddenOtroType()" {{ $cliente->CliType == 'Biologico' ? 'selected' : '' }}>Biologico</option>
+											<option onclick="HiddenOtroType()" {{ $cliente->CliType == 'Industrial' ? 'selected' : '' }}>Industrial</option>
+											<option onclick="HiddenOtroType()" {{ $cliente->CliType == 'Medicamentos' ? 'selected' : '' }}>Medicamentos</option>
+											<option onclick="OtroType()" value="">Otro</option>
+										</select>
+									</div>
+									<div id="otro" class="form-group col-md-6 otro" style="display: none;">
+										<label for="otroType">¿Cuál?</label><small class="help-block with-errors">*</small>
+										<input name="tipoCual" type="text" class="form-control otroType" id="otroType" data-smaxlength="32">
+									</div>
 								</div>
 								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Actualizar</button>
@@ -104,17 +107,4 @@ Edita tus datos
 	</div>
 	<!-- /.box -->
 </div>
-<script>
-function OtroType(){
-        var Otro = `<label for="otroType">¿Cuál?</label><small class="help-block with-errors">*</small>
-                    <input name="tipoCual" type="text" class="form-control" id="otroType" data-smaxlength="32" required>`;
-        $('#otro').append(Otro);
-        $('#tipo').prop('required', false);
-        $('#myForm1').validator('update');
-    }
-    function HiddenOtroType(){
-        $('#otro').empty();
-        $('#myForm1').validator('update');
-    }
-</script>
 @endsection
