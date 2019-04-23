@@ -76,6 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/muni-depart/{id}', 'DepartamentoController@update');
+	Route::get('/cargo-area/{id}', 'PersonalController@CargosAreas');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');

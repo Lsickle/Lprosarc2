@@ -441,6 +441,7 @@ $(function() {
         //  table.responsive.recalc(); 
         // }; 
         // document.setTimeout(redibujar, 10000); // 5 seconds 
+        // inputEventOnly: true
     });
     $(window).load(function() {
         function show_popup() {
@@ -449,7 +450,7 @@ $(function() {
         window.setTimeout(show_popup, 5000); // 5 seconds 
     })
     </script>
-@endif()
+@endif
 {{-- Mascaras del cliente --}}
 <script>
     $(document).ready(function() {
@@ -457,6 +458,10 @@ $(function() {
         $('.phone').inputmask({mask: "[9] [9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
+        $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
+        $('.bank').inputmask({mask: "[9][9][9][9] [9][9][9][9] [9][9][9][9] [9][9][9][9]"});
+        $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
+        $('.nombres').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}]"});
     });
     </script>
 <script>
@@ -1213,7 +1218,6 @@ $(window).resize(function() {
 });
 
 </script>
-@yield('NewScript')
 {{-- script para evitar el envio multiple de formularios --}}
 {{-- <script>
   $(':submit').click(function() {
@@ -1281,13 +1285,11 @@ $(document).ready(function() {
 
 </script>
 
-<script>
+{{-- <script>
     $('#departamento').on('change', function() { 
         var id = $('#departamento').val();
         // var id = $(this).children("option:selected").val();
         // alert(id);
-
-
         $.ajax({
           url: "sclientes/"+id,
           type: "GET",
@@ -1304,7 +1306,7 @@ $(document).ready(function() {
         });
 
     });
-</script>
+</script> --}}
 <script>
 $(document).ready(function() {
     $('#Clasificacion').DataTable({
@@ -1342,28 +1344,5 @@ $(document).ready(function() {
         });
     });
 </script>
-<script>
-    $(document).ready(function(){
-        var type = $("#PersType").val();
-        if(type == 0){
-            $("#PersAddress").prop('required', false);
-        }
-        $("#PersType").change(function(){
-            type = $("#PersType").val();
-            if(type == 1){
-                $("#PersAddress").prop('required', true);
-                $("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
-                $("#PersEPS").prop('required', true);
-                $("#PersEPS").before('<small class="help-block with-errors eps">*</small>');
-                $("#PersARL").prop('required', true);
-                $("#PersARL").before('<small class="help-block with-errors arl">*</small>');
-            }
-            else{
-                $('small').remove('.dir, .eps, .arl');
-                $("#PersAddress").prop('required', false);
-                $("#PersEPS").prop('required', false);
-                $("#PersARL").prop('required', false);
-            }
-        });
-    });
-</script>
+
+@yield('NewScript')
