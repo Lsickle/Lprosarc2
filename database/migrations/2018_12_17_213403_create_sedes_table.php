@@ -18,9 +18,9 @@ class CreateSedesTable extends Migration
             $table->string('SedeName', 128);
             $table->string('SedeAddress', 255);
             $table->string('SedePhone1', 32)->nullable();
-            $table->unsignedSmallInteger('SedeExt1')->nullable();
+            $table->unsignedMediumInteger('SedeExt1')->nullable();
             $table->string('SedePhone2', 32)->nullable();
-            $table->unsignedSmallInteger('SedeExt2')->nullable();
+            $table->unsignedMediumInteger('SedeExt2')->nullable();
             $table->string('SedeEmail', 128);
             $table->string('SedeCelular', 32)->nullable();
             $table->timestamps();  

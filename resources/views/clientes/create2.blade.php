@@ -139,7 +139,7 @@
                                                         </div>
                                                         <div class="col-md-6 form-group">
                                                                 <label for="sedeinputext1">Extensión</label><small class="help-block with-errors"></small>
-                                                            <input type="text" class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1" data-minlength="3" data-maxlength="5">
+                                                            <input type="text" disabled class="form-control extension" id="sedeinputext1" placeholder="155" name="SedeExt1" data-minlength="3" data-maxlength="5">
                                                         </div>
                                                         <div id="telefono2">
                                                         </div>
@@ -243,5 +243,16 @@
         $('#otro').empty();
         $('#myForm1').validator('update');
     }
+</script>
+<script>
+    $(document).ready(function(){
+        type = $("#sedeinputphone1").val();
+        $("#sedeinputphone1").change(function(){
+            type = $("#sedeinputphone1").val();
+            if(type !== null){
+                $('#sedeinputext1').prop('disabled', false);
+            }
+        });
+    });
 </script>
 @endsection
