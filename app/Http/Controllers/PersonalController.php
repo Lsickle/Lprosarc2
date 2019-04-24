@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Personal;
+use App\Area;
+use App\Cargo;
 use App\audit;
 
 class PersonalController extends Controller
@@ -39,11 +41,21 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        $Cargos = DB::table('cargos')
-            ->join('areas', 'CargArea', '=', 'ID_Area')
-            ->select('cargos.ID_Carg','cargos.CargName', 'areas.AreaName')
+        $Areas = DB::table('areas')
+            ->select('areas.ID_Area', 'areas.AreaName')
             ->get();
-        return view('personal.create', compact('Cargos'));
+        return view('personal.create', compact('Areas'));
+    }
+
+    public function CargosAreas(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $Cargos = DB::table('cargos')
+            ->select('*')
+            ->where('CargArea', $id)
+            ->get();
+            return response()->json($Cargos);
+        }
     }
     /**
      * Store a newly created resource in storage.
@@ -52,16 +64,51 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+        // return $request;
+        if($request->input('NewCargo') <> null){
+            if($request->input('NewArea') <> null){
+                $newArea = new Area();
+                $newArea->AreaName = $request->input('NewArea');
+                if($request->input('PersType') == 0){
+                    $newArea->FK_AreaSede = 2;
+                }
+                else{
+                    $newArea->FK_AreaSede = 1;
+                }
+                $newArea->AreaDelete = 0;
+                $newArea->save();
+
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $newArea->ID_Area;
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+            else{
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $request->input('CargArea');
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+        }
+        else{
+            $Cargo = $request->input('FK_PersCargo');
+        }
+
         $Personal = new Personal();
+        $Personal->PersType = $request->input('PersType');
         $Personal->PersDocType = $request->input('PersDocType');
         $Personal->PersDocNumber = $request->input('PersDocNumber');
         $Personal->PersFirstName = $request->input('PersFirstName');
         $Personal->PersSecondName = $request->input('PersSecondName');
         $Personal->PersLastName = $request->input('PersLastName');
+        $Personal->PersEmail = $request->input('PersEmail');
         $Personal->PersCellphone = $request->input('PersCellphone');
         $Personal->PersAddress = $request->input('PersAddress');
-        $Personal->PersType = $request->input('PersType');
-        $Personal->FK_PersCargo = $request->input('FK_PersCargo');
+        $Personal->FK_PersCargo = $Cargo;
         $Personal->PersBirthday = $request->input('PersBirthday');
         $Personal->PersPhoneNumber = $request->input('PersPhoneNumber');
         $Personal->PersEPS = $request->input('PersEPS');
@@ -72,8 +119,9 @@ class PersonalController extends Controller
         $Personal->PersIngreso = $request->input('PersIngreso');
         $Personal->PersSalida = $request->input('PersSalida');
         $Personal->PersPase = $request->input('PersPase');
-        $Personal->PersSlug = "pers".$Personal->PersDocNumber.date('Ymd')."prosarc";
         $Personal->PersDelete = 0;
+        $Cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $Personal->PersSlug = "pers".substr(str_shuffle($Cadena), 0, 80)."prosarc";
         $Personal->save();
 
         $log = new audit();

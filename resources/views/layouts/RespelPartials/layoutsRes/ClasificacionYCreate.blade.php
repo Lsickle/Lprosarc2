@@ -1,8 +1,9 @@
+<input type="text" hidden="" name="ARespelClasf4741[]" value="">
 <label >Clasificacion Y, segun
 	<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741</a>
 </label>
-<select name="YRespelClasf4741[]" class="form-control">
-	<option value="Y1">Selecione...</option>
+<select name="YRespelClasf4741[]" class="form-control" required>
+	<option value="">Selecione...</option>
 	<option value="Y1">Y1</option>
 	<option value="Y2">Y2</option>
 	<option value="Y3">Y3</option>
@@ -49,4 +50,3 @@
 	<option value="Y44">Y44</option>
 	<option value="Y45">Y45</option>
 </select>
-<input type="text" hidden="" name="ARespelClasf4741[]" value="">

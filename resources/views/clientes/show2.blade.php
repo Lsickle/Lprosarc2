@@ -35,9 +35,10 @@
                 </li>
               </ul>
 
-          		<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning btn-block"><b>Editar</b></a>
+          	<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning btn-block"><b>Editar</b></a>
 						<br>
-			</div>
+      
+</div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

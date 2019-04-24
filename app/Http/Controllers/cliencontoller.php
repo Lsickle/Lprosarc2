@@ -26,18 +26,14 @@ class clientcontoller extends Controller
     public function index()
     {
         if(Auth::user()->UsRol === "Programador"){
-            $clientes = Cliente::where('CliDelete', 0)->get();
+            $clientes = Cliente::all();
             return view('clientes.index', compact('clientes'));
         }
         if(Auth::user()->UsRol === "Cliente"){
-            if(Auth::user()->FK_UserPers === NULL){
-                return redirect()->route('clientes.create');
-            }else{
-                return redirect()->route('home');
-            }
+            return redirect()->route('home');
         }
         if(Auth::user()->UsRol === "admin"){
-            $clientes = Cliente::all();
+            $clientes = Cliente::where('CliDelete', 0)->get();
             return view('clientes.index', compact('clientes'));
         }else{
             abort(403);
@@ -54,13 +50,14 @@ class clientcontoller extends Controller
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
                 $Departamentos = Departamento::all();
-                return view('clientes.create2', compact('Departamentos', 'Municipios'));
+                return view('clientes.create2', compact('Departamentos'));
             }else{
                 return redirect()->route('home');
             }
         }
         if(Auth::user()->UsRol === "admin"){
-            return view('clientes.create');
+            $Departamentos = Departamento::all();
+                return view('clientes.create2', compact('Departamentos'));
         }else{
             abort(403);
         }
@@ -80,6 +77,7 @@ class clientcontoller extends Controller
                 'CliName' => 'required|max:255|unique:clientes,CliName',
                 'CliShortname' => 'required|max:255|unique:clientes,CliName',
                 'CliType' => 'max:32|alpha|nullable',
+                'CliCategoria' => 'max:32|alpha|nullable',
                 'tipoCual' => 'max:32|alpha|nullable',
 
                 'SedeName' => 'required|max:128|min:1',
@@ -105,7 +103,11 @@ class clientcontoller extends Controller
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
-            $Cliente->CliCategoria = 'Cliente';
+            if(Auth::user()->UsRol === "Cliente"){
+                $Cliente->CliCategoria = 'Cliente';
+            }else{
+                $Cliente->CliCategoria = $request->input('CliCategoria');
+            }
             if($request->input('CliType') === NULL){
                 $Cliente->CliType = $request->input('tipoCual');
             }else{
@@ -119,14 +121,22 @@ class clientcontoller extends Controller
             $Sede->SedeName = $request->input('SedeName');
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
-            $Sede->SedeExt1 = $request->input('SedeExt1');
+            if($request->input('SedePhone1') === null){
+                $Sede->SedeExt1 = null;
+            }else{
+                $Sede->SedeExt1 = $request->input('SedeExt1');
+            }
             $Sede->SedePhone2 = $request->input('SedePhone2');
-            $Sede->SedeExt2 = $request->input('SedeExt2');
+            if($request->input('SedePhone2') === null){
+                $Sede->SedeExt2 = null;
+            }else{
+                $Sede->SedeExt2 = $request->input('SedeExt2');
+            }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
             $Sede->SedeSlug = substr(md5(rand()), 5, 8).$request->input('SedeName').substr(md5(rand()), 5, 8);
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
-            // $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+            $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->FK_SedeMun = 3;
             $Sede->SedeDelete = 0;
             $Sede->save();
@@ -154,12 +164,12 @@ class clientcontoller extends Controller
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
 
-            $user = User::where('id', Auth::user()->id)->first();
-            $user->FK_UserPers = $Personal->ID_Pers;
-            $user->save();
-
+            if(Auth::user()->UsRol === "Cliente"){
+                $user = User::where('id', Auth::user()->id)->first();
+                $user->FK_UserPers = $Personal->ID_Pers;
+                $user->save();
+            }
             return redirect()->route('clientes.index');
-
         }else{
 
         $Cliente = new Cliente();
@@ -182,20 +192,30 @@ class clientcontoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-        if(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
-            $user = User::where('UsSlug', $id)->first(); 
+        if(Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+            $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
+            return view('clientes.show', compact('cliente'));
+        }else{
+            abort(403);
+        }
+    }
+    public function viewClient($id)
+    {
+        if(Auth::user()->UsRol === "Cliente"){
+            
+            $user = User::select('FK_UserPers')->where('UsSlug', $id)->first(); 
             $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
             $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();
             $area = Area::select('FK_AreaSede')->where('ID_Area', $cargo->CargArea)->first();
             $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
             $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
-            return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
+
+            return view('clientes.show2', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
         }else{
-            return view('clientes.show', compact('cliente'));
+            abort(403);
         }
-        // return $cliente;
     }
 
     /**
@@ -218,8 +238,15 @@ class clientcontoller extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {   
-        $cliente->fill($request->except('created_at'));
+        $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
+        $cliente->fill($request->except('CliType'));
+        if($request->input('CliType') === NULL){
+            $cliente->CliType = $request->input('tipoCual');
+        }else{
+            $cliente->CliType = $request->input('CliType');
+        }
         $cliente->save();
+
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="clientes";
@@ -228,7 +255,6 @@ class clientcontoller extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request->all());
         $log->save();
-        // return $log->Auditlog;
         return redirect()->route('clientes.index');
     }
 
@@ -259,6 +285,5 @@ class clientcontoller extends Controller
         $log->save();
 
         return redirect()->route('clientes.index');
-
     }
 }
