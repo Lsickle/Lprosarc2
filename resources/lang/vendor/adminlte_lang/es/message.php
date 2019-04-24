@@ -170,5 +170,9 @@ return [
     'sclientregistertittle'   => 'Registro de sede del cliente',
     'Generregistertittle'     => 'Registro de Generador',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
-    'sclientmenu'             => 'Sedes del cliente',  
+    'sclientmenu'             => 'Sedes del cliente',
+    'prosarccorto'            => 'Prosarc S.A ESP.',
+    'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
+    'Appname'                 => 'SiReS',
+    
 ];
