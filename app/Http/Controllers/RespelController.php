@@ -9,6 +9,7 @@ use App\audit;
 use App\Respel;
 use App\Sede;
 use App\Cotizacion;
+use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
 use Illuminate\Validation\Validator;
@@ -148,14 +149,19 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
 
+        $tratamientos = DB::table('tratamientos')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'tratamientos.*')
+            ->get();
+
         $Sedes = DB::table('cotizacions')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('sedes.*', 'clientes.*', 'cotizacions.*')
-            // ->where('clientes.ID_Cli', 1) 
             ->get();
 
-        return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos'));
+        return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
     }
 
     /**

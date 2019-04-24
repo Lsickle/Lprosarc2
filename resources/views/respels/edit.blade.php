@@ -64,7 +64,7 @@ Respel-Tratamiento
 @endcomponent
 <div class="container-fluid spark-screen">
 	<!-- form start -->
-	<form role="form" action="/Requerimientos/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
+	<form id="evaluacioncomercial" role="form" action="/Requerimientos/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
 		@method('POST')
 		@csrf
 		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
@@ -123,119 +123,49 @@ Respel-Tratamiento
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
 								<li class="nav-item active">
-									<a class="nav-link" href="#Residuo" data-toggle="tab">Residuo</a>
+									<a class="nav-link" href="#Residuopane" data-toggle="tab">Residuo</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#Tratamientos" data-toggle="tab">Tratamientos</a>
+									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">Tratamientos</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#Requerimientos" data-toggle="tab">Requerimientos</a>
+									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">Requerimientos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">Tarifas</a>
 								</li>
 							</ul>
 							<!-- nav-content -->
 							<div class="tab-content" style="min-height:40vh;">
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Residuo">
+								<div class="tab-pane fade in active" id="Residuopane">
 									<div class="form-horizontal">
-										@include('layouts.RespelPartials.trata-requerimiento')
+										@include('layouts.respel-comercial.respel-residuo')
 									</div>
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade " id="Tratamientos">
-									<!-- The timeline -->
-									<ul class="timeline timeline-inverse">
-										<!-- timeline time label -->
-										<li class="time-label">
-											<span class="bg-red">
-												10 Feb. 2014
-											</span>
-										</li>
-										<!-- /.timeline-label -->
-										<!-- timeline item -->
-										<li>
-											<i class="fa fa-envelope bg-blue"></i>
-											<div class="timeline-item">
-												<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-												<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-												<div class="timeline-body">
-													Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-													weebly ning heekya handango imeem plugg dopplr jibjab, movity
-													jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-													quora plaxo ideeli hulu weebly balihoo...
-												</div>
-												<div class="timeline-footer">
-													<a class="btn btn-primary btn-xs">Read more</a>
-													<a class="btn btn-danger btn-xs">Delete</a>
-												</div>
-											</div>
-										</li>
-										<!-- END timeline item -->
-										<!-- timeline item -->
-										<li>
-											<i class="fa fa-user bg-aqua"></i>
-											<div class="timeline-item">
-												<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-												<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-												</h3>
-											</div>
-										</li>
-										<!-- END timeline item -->
-										<!-- timeline item -->
-										<li>
-											<i class="fa fa-comments bg-yellow"></i>
-											<div class="timeline-item">
-												<span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-												<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-												<div class="timeline-body">
-													Take me to your leader!
-													Switzerland is small and neutral!
-													We are more like Germany, ambitious and misunderstood!
-												</div>
-												<div class="timeline-footer">
-													<a class="btn btn-warning btn-flat btn-xs">View comment</a>
-												</div>
-											</div>
-										</li>
-										<!-- END timeline item -->
-										<!-- timeline time label -->
-										<li class="time-label">
-											<span class="bg-green">
-												3 Jan. 2014
-											</span>
-										</li>
-										<!-- /.timeline-label -->
-										<!-- timeline item -->
-										<li>
-											<i class="fa fa-camera bg-purple"></i>
-											<div class="timeline-item">
-												<span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-												<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-												<div class="timeline-body">
-													<img src="http://placehold.it/150x100" alt="..." class="margin">
-													<img src="http://placehold.it/150x100" alt="..." class="margin">
-													<img src="http://placehold.it/150x100" alt="..." class="margin">
-													<img src="http://placehold.it/150x100" alt="..." class="margin">
-												</div>
-											</div>
-										</li>
-										<!-- END timeline item -->
-										<li>
-											<i class="fa fa-clock-o bg-gray"></i>
-										</li>
-									</ul>
+								<div class="tab-pane fade " id="Tratamientospane">
+									@include('layouts.respel-comercial.respel-tratamiento')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
-								<div class="tab-pane fade" id="Requerimientos">
-									@include('layouts.RespelPartials.trata-requerimiento')
+								<div class="tab-pane fade" id="Requerimientospane">
+									@include('layouts.respel-comercial.respel-requerimiento')
+								</div>
+								<!-- /.tab-pane fade -->
+								<!-- tab-pane fade -->
+								<div class="tab-pane fade" id="tarifaspane">
+									<div class="form-horizontal">
+										@include('layouts.respel-comercial.respel-tarifas')
+									</div>
 								</div>
 								<!-- /.tab-pane fade -->
 							</div>
 							<!-- /.tab-content -->
 						</div>
 						<div class="row">
-							<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
+							 <input class="btn btn-primary pull-right" type="submit" value="Actualizar" style="margin-right:5em" />
 						</div>
 						<!-- /.nav-tabs-custom -->
 					</div>
