@@ -139,8 +139,6 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // return $request;
-        // return $sede[0];
         if($request->input('NewCargo') <> null){
             if($request->input('NewArea') <> null){
                 $newArea = new Area();
@@ -191,12 +189,10 @@ class PersonalController extends Controller
         $Personal->PersSalida = $request->input('PersSalida');
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersDelete = 0;
-        $Personal->PersSlug = "pers".substr(md5(rand()), 60,80)."SiRes";
+        $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);
         $Personal->save();
-
         return redirect()->route('personal.index');;
     }
-
     /**
      * Display the specified resource.
      *
