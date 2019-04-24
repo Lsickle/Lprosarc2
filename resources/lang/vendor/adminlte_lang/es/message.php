@@ -267,4 +267,10 @@ return [
 
     // municipio
     'municipio'               =>'Municipio',
+    
+    // 
+    'prosarccorto'            => 'Prosarc S.A ESP.',
+    'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
+    'Appname'                 => 'SiReS',
+    
 ];

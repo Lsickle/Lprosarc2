@@ -32,6 +32,8 @@ use App\Certificado;
 use App\ArticuloPorProveedor;
 use App\MovimientoActivo;
 use App\Tarifa;
+use App\Pretratamiento;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -70,6 +72,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(TratamientoTableSeeder::class);
+        $this->call(PretratamientosTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
