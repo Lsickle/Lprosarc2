@@ -155,7 +155,7 @@
                                             <a href="{{route('cliente', Auth::user()->UsSlug)}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>  
                                         @endif
                                     @else
-                                        <a href="{{url('personal/')}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>
+                                        <a href="{{url('personal')}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>
                                     @endif
                                 </div>
                                 <div class="pull-right">

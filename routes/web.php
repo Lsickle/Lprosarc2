@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/place/municipal','municipalityController');
 	Route::resource('/cargos','CargoController');
 	Route::resource('/personal', 'PersonalController');
+	Route::get('/personal-interno', 'PersonalController@indexInterno');
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
@@ -76,6 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/muni-depart/{id}', 'DepartamentoController@update');
+	Route::get('/area-sede/{id}', 'PersonalController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'PersonalController@CargosAreas');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
