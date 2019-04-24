@@ -94,11 +94,13 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE PERSONAL*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol === "AuxiliarLogistica",
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-users"></i> <span>Personal</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
-            ->add(Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Listar'))
+            ->addif(Auth::user()->UsRol === "Cliente", Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Personal'))
+            ->addif(Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador", Link::toUrl('/personal-interno', '<i class="fas fa-list-alt"></i> Personal Interno'))
+            ->addif(Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol === "AuxiliarLogistica", Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Personal Clientes'))
             ->add(Link::toUrl('/asistencia', '<i class="fas fa-tasks"></i> Asistencia'))
             ->add(Link::toUrl('/horario', '<i class="fas fa-user-clock"></i> Horario'))
             ->add(Link::toUrl('/cargos', '<i class="fas fa-tools"></i> Cargos'))
