@@ -35,17 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	
 	Route::resource('/clientes', 'clientcontoller');
-	// Route::get('/clientes/create', 'clientcontoller@create');
-
-	// Route::resource('/clientes', 'clientcontoller@');
-	// Route::post('/clientes-2/{id}', 'clientcontoller@Ajax');
-	// Route::get('/clientes-2', 'clientcontoller@create');
-	Route::post('/clientes-2', 'clientcontoller@ajax')->name('clientes.ajax');
-	// Route::post('/clientes-2', 'clientcontoller@create', fuction()){
-	// 	if(Request::ajax()){      
-	// 		return  Response::json(Request::all());
-	// 	};
-	// }
+	Route::get('/cliente/{id}', 'clientcontoller@show')->name('cliente');
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');

@@ -18,7 +18,7 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-
+              
               <h3 class="profile-username text-center">{{$cliente->CliShortname}}</h3>
 
               <p class="text-muted text-center">{{$cliente->CliCategoria}}</p>
@@ -35,18 +35,8 @@
                 </li>
               </ul>
 
-          	<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
+          	<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning btn-block"><b>Editar</b></a>
 						<br>
-{{--             <form action="/sclientes/create" class="form-group" method="POST">
-              @csrf
-                <input type="text" name="CliSlug" value="{{$cliente->CliSlug}}" hidden="true">
-                <button type="submit" class="btn btn-primary btn-block">Agregar Sede</button>
-            </form> --}}
-      			<form action="/clientes/{{$cliente->ID_Cli}}" class="form-group" method="POST">
-      				@csrf
-              @method('DELETE')
-      					<button type="submit" class="btn btn-danger btn-block">Borrar</button>
-            </form>
       
 </div>
             <!-- /.box-body -->
@@ -60,14 +50,6 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-              <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
-              </p>
-
-              <hr>
-
               <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
               <p class="text-muted">Malibu, California</p>
@@ -98,12 +80,9 @@
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li><a href="#timeline" data-toggle="tab">Sedes</a></li>
               <li class="active"><a href="#activity" data-toggle="tab">Generadores</a></li>
-              <li><a href="#timeline" data-toggle="tab">Declaraciones</a></li>
+              <li><a href="#timeline" data-toggle="tab">Sedes</a></li>
               <li><a href="#settings" data-toggle="tab">Ordenes</a></li>
-              <li><a href="#settings" data-toggle="tab">Certificaciones</a></li>
-              <li><a href="#settings" data-toggle="tab">Manifiestos</a></li>
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
