@@ -62,7 +62,12 @@ class TratamientoController extends Controller
                 ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
                 ->get();
 
-        $sedes = Sede::All();
+        $sedes = DB::table('sedes')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->where('CliCategoria', '=', 'proveedor')
+                ->select('sedes.*', 'clientes.*')
+                ->get();
+                
         return view('tratamiento.create', compact('residuos', 'sedes'));
     }
 

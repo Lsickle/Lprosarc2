@@ -25,6 +25,8 @@ return [
     'register'                => 'Registro',
     'login2'                  => ' LogIn',
     'login'                   => 'Iniciar Sesión',
+    'create'                  => 'Crear',
+    'type'                    => 'tipo',
     'membership'              => 'Ya estoy Registrado',
     'passwordclickreset'      => 'Haga clic aquí para restablecer la contraseña:',
     'signGithub'              => 'Entra con Github',

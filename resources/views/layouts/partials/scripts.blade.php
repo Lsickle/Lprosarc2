@@ -147,6 +147,18 @@ $(document).ready(function() {
 });
 
 </script>
+
+<script>
+$(document).ready(function() {
+    $('#select2sedes').select2({
+        placeholder: "Seleccione el gestor",
+        allowClear: true,
+        width: 'resolve'
+    });
+});
+
+</script>
+
 <script>
 $(document).ready(function() {
     $('#SolicitudResiduo').select2({
