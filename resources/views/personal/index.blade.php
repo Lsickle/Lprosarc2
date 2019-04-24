@@ -24,6 +24,7 @@
                   <th>Celular</th>
                   <th>Cargo</th>
                   <th>Area</th>
+                  <th>Cliente</th>
                   <th>Ver más</th>
                 </tr>
               </thead>
@@ -41,6 +42,7 @@
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>
+                  <td>{{$Personal->CliShortname}}</td>
                   <td>{{$Personal->PersSlug}}</td>
                 </tr>
                 @endforeach
