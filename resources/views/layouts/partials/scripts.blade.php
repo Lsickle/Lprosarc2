@@ -717,7 +717,7 @@ $(document).ready(function() {
         "keys": true,
         "responsive": true,
         "columnDefs": [{
-                "targets": 6,
+                "targets": 7,
                 "data": "PersSlug",
                 "render": function(data, type, row, meta) {
                     return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";

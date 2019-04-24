@@ -26,7 +26,7 @@ class PersonalController extends Controller
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
                 ->where('clientes.ID_Cli', '<>', 1)
                 ->get();
             return view('personal.index', compact('Personals'));
@@ -38,7 +38,7 @@ class PersonalController extends Controller
                     ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                     ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
                     ->where('personals.PersDelete',0)
                     ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
@@ -51,7 +51,7 @@ class PersonalController extends Controller
                     ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                     ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
                     ->where('personals.PersDelete',0)
                     ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                     ->get();
@@ -62,7 +62,7 @@ class PersonalController extends Controller
             return route('home');
         }
     }
-     public function indexInterno(){
+    public function indexInterno(){
         /*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
         if(Auth::user()->UsRol === "Programador"){
             $Personals = DB::table('personals')
@@ -92,7 +92,7 @@ class PersonalController extends Controller
         else{
             return route('home');
         }
-     }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -200,12 +200,19 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $Personas = DB::table('personals')
-            ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
-            ->select('personals.*', 'cargos.CargName')
-            ->where('PersSlug',$id)
-            ->get();
-         return view('personal.show', compact('Personas'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Personas = DB::table('personals')
+                ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('personals.*', 'cargos.CargName','sedes.SedeName')
+                ->where('PersSlug',$id)
+                ->get();
+             return view('personal.show', compact('Personas'));
+         }
+        else{
+            return route('home');
+        }
     }
 
     /**
@@ -215,17 +222,24 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Persona = Personal::where('PersSlug', $id)->first();
-        $Cargos = DB::table('cargos')
-            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->select('areas.ID_Area','cargos.*', 'areas.AreaName')
-            ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
-            ->get();
-        $Areas = DB::table('areas')
-            ->select('ID_Area', 'AreaName')
-            ->where('ID_Area', '<>', $Cargos[0]->CargArea)
-            ->get();
-        return view('personal.edit', compact('Persona', 'Cargos', 'Areas'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Persona = Personal::where('PersSlug', $id)->first();
+            $Cargos = DB::table('cargos')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
+                ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
+                ->get();
+            $Sedes = DB::table('sedes')
+                ->select('sedes.ID_Sede', 'sedes.SedeName')
+                ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
+                ->where('sedes.ID_Sede', '<>', $Cargos[0]->ID_Sede)
+                ->get();
+            return view('personal.edit', compact('Persona', 'Cargos', 'Sedes'));
+        }
+        else{
+            return route('home');
+        }
     }
 
     /**
@@ -241,12 +255,7 @@ class PersonalController extends Controller
             if($request->input('NewArea') <> null){
                 $newArea = new Area();
                 $newArea->AreaName = $request->input('NewArea');
-                if($request->input('PersType') == 0){
-                    $newArea->FK_AreaSede = 2;
-                }
-                else{
-                    $newArea->FK_AreaSede = 1;
-                }
+                $newArea->FK_AreaSede = $request->input('Sede');
                 $newArea->AreaDelete = 0;
                 $newArea->save();
 

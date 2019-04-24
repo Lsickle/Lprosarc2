@@ -15,6 +15,9 @@
 					<div class="box box-primary">
 						<div class="box-body box-profile">
 							<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-success pull-right"><b>Editar</b></a>
+							@component('layouts.partials.modal')
+							{{$Persona->ID_Pers}}
+							@endcomponent
 							@if($Persona->PersDelete == 0)
 							  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'>Eliminar</a>
 							  <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
@@ -44,6 +47,9 @@
 							@if(Auth::user()->UsRol == 'Cliente')
 								<li class="list-group-item">
 									<b>Dirección</b> <a class="pull-right">{{$Persona->PersAddress <> null ? $Persona->PersAddress : 'No se encontró registro'}}</a>
+								</li>
+								<li class="list-group-item">
+									<b>Sede</b> <a class="pull-right">{{$Persona->SedeName <> null ? $Persona->SedeName : 'No se encontró registro'}}</a>
 								</li>
 							@endif
 							</ul>
@@ -96,6 +102,9 @@
 											</div>
 											<div class="col-md-6">
 												<label>Fecha de Nacimiento</label><h5>{{$Persona->PersBirthday <> null ? $Persona->PersBirthday : 'No se encontró registro'}}</h5>
+											</div>
+											<div class="col-md-6">
+												<label>Sede</label><h5>{{$Persona->SedeName <> null ? $Persona->SedeName : 'No se encontró registro'}}</h5>
 											</div>
 										</div>
 									</div>
