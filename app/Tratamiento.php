@@ -18,4 +18,9 @@ class Tratamiento extends Model
 	 return $this->belongsTo('App\Respel', 'FK_Tratrespel', 'ID_Respel');
 	}
 
+	public function pretratamientos()
+	{
+	 return $this->hasMany('App\Pretratamiento', 'ID_PreTrat');
+	}
+
 }
