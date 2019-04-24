@@ -41,7 +41,7 @@
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>
-                  <td>{{$Personal->PersSlug}}</td>
+                  <td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>Ver</a></td>
                 </tr>
                 @endforeach
               </tbody>
