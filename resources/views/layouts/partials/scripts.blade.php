@@ -455,14 +455,14 @@ $(function() {
 <script>
     $(document).ready(function() {
         $('.nit').inputmask({mask:"[9][9][9.][9][9][9.][9][9][9-][9]"});
-        $('.phone').inputmask({mask: "03[9-][9][9][9][9][9][9][9]"});
-        $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
+        $('.phone').inputmask({mask: "03[9 ][9][9][9][9][9][9][9]"});
+        $('.mobile').inputmask({mask: "3[9][9 ][9][9][9 ][9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
         $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
-        $('.bank').inputmask({mask: "[9][9][9][9] [9][9][9][9] [9][9][9][9] [9][9][9][9]"});
+        $('.bank').inputmask({mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]"});
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.nombres').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}]"});
-    });
+        });
     </script>
 <script>
 $(function() {
@@ -1345,7 +1345,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName()=='clientes.create')
+@if(Route::currentRouteName() === 'clientes.create')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){

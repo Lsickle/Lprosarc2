@@ -76,7 +76,6 @@ class clientcontoller extends Controller
                 'CliNit' => 'required|max:13|min:13|unique:clientes,CliNit',
                 'CliName' => 'required|max:255|unique:clientes,CliName',
                 'CliShortname' => 'required|max:255|unique:clientes,CliName',
-                'CliType' => 'max:32|alpha|nullable',
                 'CliCategoria' => 'max:32|alpha|nullable',
                 'tipoCual' => 'max:32|alpha|nullable',
 
@@ -108,12 +107,7 @@ class clientcontoller extends Controller
             }else{
                 $Cliente->CliCategoria = $request->input('CliCategoria');
             }
-            if($request->input('CliType') === NULL){
-                $Cliente->CliType = $request->input('tipoCual');
-            }else{
-                $Cliente->CliType = $request->input('CliType');
-            }
-            $Cliente->CliSlug = substr(md5(rand()), 9999, 99999).$request->input('CliShortname');
+            $Cliente->CliSlug = substr(md5(rand()), 0, 99999).$request->input('CliShortname');
             $Cliente->CliDelete = 0;
             $Cliente->save();
 
@@ -134,7 +128,7 @@ class clientcontoller extends Controller
             }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 9999, 99999).$request->input('SedeName');
+            $Sede->SedeSlug = substr(md5(rand()), 0, 99999).$request->input('SedeName');
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->FK_SedeMun = 3;
@@ -161,7 +155,7 @@ class clientcontoller extends Controller
             $Personal->PersDocType = $request->input("PersDocType");
             $Personal->PersDocNumber = $request->input("PersDocNumber");
             $Personal->PersType = 1;//falta definir que boolean es externo
-            $Personal->PersSlug = substr(md5(rand()), 9999, 99999).$request->input("PersFirstName"); 
+            $Personal->PersSlug = substr(md5(rand()), 0, 99999).$request->input("PersFirstName"); 
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
@@ -180,7 +174,7 @@ class clientcontoller extends Controller
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
-        $Cliente->CliSlug = substr(md5(rand()), 9999, 99999).$request->input('CliShortname');
+        $Cliente->CliSlug = substr(md5(rand()), 0, 99999).$request->input('CliShortname');
         $Cliente->CliDelete = '0';
         $Cliente->save();
 
@@ -241,14 +235,8 @@ class clientcontoller extends Controller
     public function update(Request $request, Cliente $cliente)
     {   
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
-        $cliente->fill($request->except('CliType'));
-        if($request->input('CliType') === NULL){
-            $cliente->CliType = $request->input('tipoCual');
-        }else{
-            $cliente->CliType = $request->input('CliType');
-        }
+        $cliente->fill($request->all());
         $cliente->save();
-
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="clientes";
@@ -268,24 +256,27 @@ class clientcontoller extends Controller
      */
     // public function destroy($id, Cliente $cliente)
     public function destroy($id){
-        $Cliente = Cliente::where('CliSlug', $id)->first();
-            if ($Cliente->CliDelete == 0) {
-                $Cliente->CliDelete = 1;
-            }
-            else{
-                $Cliente->CliDelete = 0;
-            }
-        $Cliente->save();
-        
+        if(Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+            $Cliente = Cliente::where('CliSlug', $id)->first();
+                if ($Cliente->CliDelete == 0) {
+                    $Cliente->CliDelete = 1;
+                }
+                else{
+                    $Cliente->CliDelete = 0;
+                }
+            $Cliente->save();
 
-        $log = new audit();
-        $log->AuditTabla="clientes";
-        $log->AuditType="Eliminado";
-        $log->AuditRegistro=$Cliente->ID_Cli;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog = $Cliente->CliDelete;
-        $log->save();
-
-        return redirect()->route('clientes.index');
+            $log = new audit();
+            $log->AuditTabla="clientes";
+            $log->AuditType="Eliminado";
+            $log->AuditRegistro=$Cliente->ID_Cli;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog = $Cliente->CliDelete;
+            $log->save();
+    
+            return redirect()->route('clientes.index');
+        }else{
+            abort(403);
+        }
     }
 }
