@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	
 	Route::resource('/clientes', 'clientcontoller');
-	Route::get('/cliente/{id}', 'clientcontoller@show')->name('cliente');
+	Route::get('/cliente/{id}', 'clientcontoller@viewClient')->name('cliente');
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');
