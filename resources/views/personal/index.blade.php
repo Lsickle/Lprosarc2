@@ -25,7 +25,9 @@
                   <th>Cargo</th>
                   <th>Area</th>
                   <th>Cliente</th>
-                  <th>Ver más</th>
+                  @if(Auth::user()->UsRol <> "JefeLogistica" || Auth::user()->UsRol <> "AsistenteLogistica" || Auth::user()->UsRol <> "AuxiliarLogistica")
+                    <th>Ver más</th>
+                  @endif
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -43,7 +45,9 @@
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>
                   <td>{{$Personal->CliShortname}}</td>
-                  <td>{{$Personal->PersSlug}}</td>
+                  @if(Auth::user()->UsRol <> "JefeLogistica" || Auth::user()->UsRol <> "AsistenteLogistica" || Auth::user()->UsRol <> "AuxiliarLogistica")
+                    <td>{{$Personal->PersSlug}}</td>
+                  @endif
                 </tr>
                 @endforeach
               </tbody>
