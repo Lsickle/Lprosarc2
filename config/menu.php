@@ -15,7 +15,7 @@ Menu::macro('adminlteSeparator', function ($title) {
     return Html::raw($title)->addParentClass('header');
 });
 Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
-    if (Auth::user()->email_verified_at <> null) {
+    if (Auth::user()->email_verified_at <> null && Auth::user()->FK_UserPers <> NULL) {
         return Menu::adminlteMenu()
 
             /*ECABEZAMIENTO TITULO*/
