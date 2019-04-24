@@ -65,7 +65,7 @@
                                                             <label for="ClienteInputNombre">Nombre Corto</label><small class="help-block with-errors">*</small>
                                                             <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" minlength="2"  maxlength="100" required>
                                                         </div>
-                                                        <div class="form-group col-md-6">
+                                                        {{-- <div class="form-group col-md-6">
                                                             <label for="tipo">Tipo de Empresa</label><small class="help-block with-errors">*</small>
                                                             <select class="form-control" id="tipo" name="CliType" required>
                                                                 <option onclick="HiddenOtroType()">Organico</option>
@@ -78,7 +78,7 @@
                                                         <div id="otro" class="form-group col-md-6" style="display: none;">
                                                             <label for="otroType">¿Cuál?</label><small class="help-block with-errors">*</small>
                                                             <input name="tipoCual" type="text" class="form-control" id="otroType" data-smaxlength="32">
-                                                        </div>
+                                                        </div> --}}
                                                         @if(Auth::user()->UsRol === "admin")
                                                         <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                             <label for="categoria">Categoría</label>
@@ -121,10 +121,10 @@
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6 form-group">
-                                                            <label for="sedeinputcelular">Celular</label><small class="help-block with-errors"></small>
+                                                            <label for="sedeinputcelular">Celular</label><small class="help-block with-errors">* </small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="301 414 5321" name="SedeCelular" data-minlength="12">
+                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="301 414 5321" name="SedeCelular" data-minlength="12" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
@@ -141,7 +141,7 @@
                                                         </div>
                                                         <div id="telefono2" class="col-md-6 form-group" style="display: none;">
                                                             <label for="sedeinputphone2">Teléfono 2</label><small class="help-block with-errors"></small>
-                                                            <input type="tel" class="form-control phone tel2" id="sedeinputphone2" placeholder="1 4123141" name="SedePhone1" data-minlength="9"  data-maxlength="9">
+                                                            <input type="tel" class="form-control phone tel2" id="sedeinputphone2" placeholder="1 4123141" name="SedePhone1" data-minlength="11"  data-maxlength="11">
                                                         </div>
                                                         <div id="extension2" class="col-md-6 form-group" style="display: none;">
                                                             <label for="sedeinputext2">Extensión 2</label><small class="help-block with-errors"></small>
@@ -159,36 +159,55 @@
                                                         <h2>Persona de Contacto</h2>
                                                         <div class="form-group col-md-6">
                                                             <label for="AreaName">Area</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" class="form-control" id="AreaName" placeholder="Nombre del Area" name="AreaName"  maxlength="128" required>
+                                                            <input type="text" class="form-control inputText" id="AreaName" placeholder="Nombre del Area" name="AreaName"  maxlength="128" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="CargName">Cargo</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" class="form-control" id="CargName" placeholder="Nombre del Cargo" name="CargName" maxlength="128" required>
+                                                            <input type="text" class="form-control inputText" id="CargName" placeholder="Nombre del Cargo" name="CargName" maxlength="128" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersFirstName">Nombre</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" class="form-control" id="PersFirstName" placeholder="Nombre de la Persona" name="PersFirstName" maxlength="25" required>
+                                                            <label for="PersDocType">Tipo de Documento</label><small class="help-block with-errors">*</small>
+                                                            <select class="form-control" id="PersDocType" name="PersDocType" required>
+                                                                <option value="CC">Cedula de Ciudadania</option>
+                                                                <option value="CE">Cedula Extranjera</option>
+                                                                <option value="NIT">Nit</option>
+                                                                <option value="RUT">Rut</option>
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersLastName">Apellido</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" class="form-control" id="PersLastName" placeholder="Apellido de la Persona" name="PersLastName" maxlength="64" required>
+                                                            <label for="PersDocNumber">Documento</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control" id="PersDocNumber" placeholder="Documento de Identidad" name="PersDocNumber" maxlength="128" required>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="PersSecondName">Segundo Nombre</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control nombres" id="PersSecondName" name="PersSecondName" maxlength="25">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="PersLastName">Apellidos</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="PersEmail">Email</label><small class="help-block with-errors">*</small>
-                                                            <input type="email" class="form-control" id="PersEmail" placeholder="Email de la Persona" name="PersEmail" maxlength="255" required>
+                                                            <input type="email" class="form-control" id="PersEmail" placeholder="correo electronico de la Persona" name="PersEmail" maxlength="255" required>
                                                             
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersSecondName">Celular</label><small class="help-block with-errors"></small>
+                                                            <label for="PersCellphone">Celular</label><small class="help-block with-errors"></small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="PersSecondName" placeholder="Numero de celular" name="PersCellphone" data-minlength="12"  maxlength="12">
+                                                                <input type="text" class="form-control mobile" id="PersCellphone" placeholder="Numero de celular de la Persona" name="PersCellphone" data-minlength="12"  maxlength="12">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <input hidden value="1" name="number">
-                                                    <div class="box-footer" style="float:right; margin-right:5%;">
-                                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                                    <div class="form-group col-md-12">
+                                                        <div class="box-footer" style="float:right; margin-right:5%;">
+                                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                                        </div>
                                                     </div>
                                                 </div>
 											</div>

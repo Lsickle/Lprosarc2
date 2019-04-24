@@ -48,15 +48,15 @@ Edita tus datos
 								@csrf
 								@method('PUT')
 								<div class="box-body">
-									<div class="form-group col-md-6">
+									<div class="form-group col-md-12">
 										<label for="ClienteInputNit">NIT</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="XXX.XXX.XXX-Y" required value="{{$cliente->CliNit}}">
 									</div>
-									<div class="col-md-6 form-group">
+									<div class="col-md-12 form-group">
 										<label for="ClienteInputRazon">Razón Social</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="5"  maxlength="100" placeholder="PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP." required value="{{$cliente->CliName}}">
 									</div>
-									<div class="col-md-6 form-group">
+									<div class="col-md-12 form-group">
 										<label for="ClienteInputNombre">Nombre Corto</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" placeholder="Prosarc" minlength="2"  maxlength="100" required value="{{$cliente->CliShortname}}">
 									</div>
@@ -70,7 +70,7 @@ Edita tus datos
 										</select>
 									</div>
 									@endif
-									<div class="form-group col-md-6">
+									{{-- <div class="form-group col-md-12">
 										<label for="tipo">Tipo de Empresa</label><small class="help-block with-errors">*</small>
 										<select class="form-control tipo" id="tipo" name="CliType" required>
 											@if($cliente->CliType !== 'Medicamentos' || $cliente->CliType !== 'Organico' ||  $cliente->CliType !== 'Biologico' || $cliente->CliType !== 'Industrial')
@@ -84,10 +84,10 @@ Edita tus datos
 											<option onclick="OtroType()" value="">Otro</option>
 										</select>
 									</div>
-									<div id="otro" class="form-group col-md-6 otro" style="display: none;">
+									<div id="otro" class="form-group col-md-12 otro" style="display: none;">
 										<label for="otroType">¿Cuál?</label><small class="help-block with-errors">*</small>
 										<input name="tipoCual" type="text" class="form-control otroType" id="otroType" data-smaxlength="32">
-									</div>
+									</div> --}}
 								</div>
 								<div class="box-footer" style="float:right; margin-right:5%">
 									<button type="submit" class="btn btn-primary">Actualizar</button>

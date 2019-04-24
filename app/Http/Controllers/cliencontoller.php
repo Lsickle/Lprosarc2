@@ -113,7 +113,7 @@ class clientcontoller extends Controller
             }else{
                 $Cliente->CliType = $request->input('CliType');
             }
-            $Cliente->CliSlug = substr(md5(rand()), 5, 8).$request->input('CliShortname').substr(md5(rand()), 5, 8);
+            $Cliente->CliSlug = substr(md5(rand()), 9999, 99999).$request->input('CliShortname');
             $Cliente->CliDelete = 0;
             $Cliente->save();
 
@@ -134,7 +134,7 @@ class clientcontoller extends Controller
             }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 5, 8).$request->input('SedeName').substr(md5(rand()), 5, 8);
+            $Sede->SedeSlug = substr(md5(rand()), 9999, 99999).$request->input('SedeName');
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->FK_SedeMun = 3;
@@ -158,8 +158,10 @@ class clientcontoller extends Controller
             $Personal->PersLastName = $request->input("PersLastName"); 
             $Personal->PersEmail = $request->input("PersEmail"); 
             $Personal->PersSecondName = $request->input("PersSecondName"); 
+            $Personal->PersDocType = $request->input("PersDocType");
+            $Personal->PersDocNumber = $request->input("PersDocNumber");
             $Personal->PersType = 1;//falta definir que boolean es externo
-            $Personal->PersSlug = substr(md5(rand()), 5, 8).$request->input("PersFirstName").substr(md5(rand()), 5, 8); 
+            $Personal->PersSlug = substr(md5(rand()), 9999, 99999).$request->input("PersFirstName"); 
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
@@ -178,7 +180,7 @@ class clientcontoller extends Controller
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
         $Cliente->CliType = $request->input('CliType');
-        $Cliente->CliSlug = substr(md5(rand()), 5, 8).$request->input('CliShortname').substr(md5(rand()), 5, 8);
+        $Cliente->CliSlug = substr(md5(rand()), 9999, 99999).$request->input('CliShortname');
         $Cliente->CliDelete = '0';
         $Cliente->save();
 

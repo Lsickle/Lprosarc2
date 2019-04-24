@@ -1358,7 +1358,7 @@ $(document).ready(function() {
     });
 </script>
 @endif
-@if(Route::currentRouteName()=='clientes.create' || Route::currentRouteName()=='clientes.edit')
+{{-- @if(Route::currentRouteName()=='clientes.create' || Route::currentRouteName()=='clientes.edit')
 <script>
 	function OtroType(){
         document.getElementById("otro").style.display = 'block';
@@ -1373,5 +1373,5 @@ $(document).ready(function() {
         $('.form').validator('update');
     }
 </script>
-@endif
+@endif --}}
 @yield('NewScript')
