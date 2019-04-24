@@ -24,10 +24,7 @@
                   <th>Celular</th>
                   <th>Cargo</th>
                   <th>Area</th>
-                  <th>Cliente</th>
-                  @if(Auth::user()->UsRol <> "JefeLogistica" || Auth::user()->UsRol <> "AsistenteLogistica" || Auth::user()->UsRol <> "AuxiliarLogistica")
-                    <th>Ver más</th>
-                  @endif
+                  <th>Ver más</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -44,10 +41,7 @@
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>
-                  <td>{{$Personal->CliShortname}}</td>
-                  @if(Auth::user()->UsRol <> "JefeLogistica" || Auth::user()->UsRol <> "AsistenteLogistica" || Auth::user()->UsRol <> "AuxiliarLogistica")
-                    <td>{{$Personal->PersSlug}}</td>
-                  @endif
+                  <td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>Ver</a></td>
                 </tr>
                 @endforeach
               </tbody>

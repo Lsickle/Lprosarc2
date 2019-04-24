@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\userController;
 use App\Personal;
 use App\Area;
 use App\Cargo;
@@ -18,21 +19,79 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        /*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
         if(Auth::user()->UsRol === "Programador"){
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                 ->join('areas', 'CargArea', '=', 'ID_Area')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
+                ->where('clientes.ID_Cli', '<>', 1)
                 ->get();
             return view('personal.index', compact('Personals'));
         }
-        $Personals = DB::table('personals')
+        /*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
+        elseif(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol === "AuxiliarLogistica"){
+            $Personals = DB::table('personals')
+                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
+                    ->where('personals.PersDelete',0)
+                    ->where('clientes.ID_Cli', '<>', 1)
+                    ->get();
+            return view('personal.index', compact('Personals'));
+        }
+        /*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
+        elseif(Auth::user()->UsRol === "Cliente"){
+            $Personals = DB::table('personals')
+                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
+                    ->where('personals.PersDelete',0)
+                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+                    ->get();
+            return view('personal.index', compact('Personals'));
+        }
+        /*Validacion para usuarios no permitidos en esta vista*/
+        else{
+            return route('home');
+        }
+    }
+    public function indexInterno(){
+        /*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
+        if(Auth::user()->UsRol === "Programador"){
+            $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                 ->join('areas', 'CargArea', '=', 'ID_Area')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
-                ->where('personals.PersDelete',0)
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                ->where('clientes.ID_Cli', 1)
                 ->get();
-        return view('personal.index', compact('Personals'));
+            return view('personal.indexinterno', compact('Personals'));
+        }
+        /*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
+        elseif(Auth::user()->UsRol === "Administrador"){
+            $Personals = DB::table('personals')
+                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                    ->where('personals.PersDelete',0)
+                    ->where('clientes.ID_Cli', 1)
+                    ->get();
+            return view('personal.indexinterno', compact('Personals'));
+        }
+        /*Validacion para usuarios no permitidos en esta vista*/
+        else{
+            return route('home');
+        }
     }
 
     /**
@@ -41,12 +100,28 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        $Areas = DB::table('areas')
-            ->select('areas.ID_Area', 'areas.AreaName')
-            ->get();
-        return view('personal.create', compact('Areas'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Sedes = DB::table('sedes')
+                ->select('sedes.ID_Sede', 'sedes.SedeName')
+                ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
+                ->get();
+            return view('personal.create', compact('Sedes'));
+        }
+        else{
+            return route('home');
+        }
     }
 
+    public function AreasSedes(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $Areas = DB::table('areas')
+                ->select('*')
+                ->where('FK_AreaSede', $id)
+                ->get();
+            return response()->json($Areas);
+        }
+    }
     public function CargosAreas(Request $request, $id)
     {
         if ($request->ajax()) {
@@ -64,17 +139,11 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // return $request;
         if($request->input('NewCargo') <> null){
             if($request->input('NewArea') <> null){
                 $newArea = new Area();
                 $newArea->AreaName = $request->input('NewArea');
-                if($request->input('PersType') == 0){
-                    $newArea->FK_AreaSede = 2;
-                }
-                else{
-                    $newArea->FK_AreaSede = 1;
-                }
+                $newArea->FK_AreaSede = $request->input('Sede');
                 $newArea->AreaDelete = 0;
                 $newArea->save();
 
@@ -120,21 +189,10 @@ class PersonalController extends Controller
         $Personal->PersSalida = $request->input('PersSalida');
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersDelete = 0;
-        $Cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
-        $Personal->PersSlug = "pers".substr(str_shuffle($Cadena), 0, 80)."prosarc";
+        $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);
         $Personal->save();
-
-        $log = new audit();
-        $log->AuditTabla="Personal";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Personal->ID_Pers;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-
         return redirect()->route('personal.index');;
     }
-
     /**
      * Display the specified resource.
      *
@@ -142,12 +200,19 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $Personas = DB::table('personals')
-            ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
-            ->select('personals.*', 'cargos.CargName')
-            ->where('PersSlug',$id)
-            ->get();
-         return view('personal.show', compact('Personas'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Personas = DB::table('personals')
+                ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('personals.*', 'cargos.CargName','sedes.SedeName')
+                ->where('PersSlug',$id)
+                ->get();
+             return view('personal.show', compact('Personas'));
+         }
+        else{
+            return route('home');
+        }
     }
 
     /**
@@ -157,12 +222,24 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Persona = Personal::where('PersSlug', $id)->first();
-        $Cargos = DB::table('cargos')
-            ->join('areas', 'CargArea', '=', 'ID_Area')
-            ->select('cargos.ID_Carg','cargos.CargName', 'areas.AreaName')
-            ->get();
-        return view('personal.edit', compact('Persona', 'Cargos'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Persona = Personal::where('PersSlug', $id)->first();
+            $Cargos = DB::table('cargos')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
+                ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
+                ->get();
+            $Sedes = DB::table('sedes')
+                ->select('sedes.ID_Sede', 'sedes.SedeName')
+                ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
+                ->where('sedes.ID_Sede', '<>', $Cargos[0]->ID_Sede)
+                ->get();
+            return view('personal.edit', compact('Persona', 'Cargos', 'Sedes'));
+        }
+        else{
+            return route('home');
+        }
     }
 
     /**
@@ -173,10 +250,39 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $Persona = Personal::where('PersSlug', $id)->first();
-        $Persona->fill($request->all());
-        $Persona->save();
+        // return $request;
+        if($request->input('NewCargo') <> null){
+            if($request->input('NewArea') <> null){
+                $newArea = new Area();
+                $newArea->AreaName = $request->input('NewArea');
+                $newArea->FK_AreaSede = $request->input('Sede');
+                $newArea->AreaDelete = 0;
+                $newArea->save();
 
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $newArea->ID_Area;
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+            else{
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $request->input('CargArea');
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+        }
+        else{
+            $Cargo = $request->input('FK_PersCargo');
+        }
+        
+        $Persona = Personal::where('PersSlug', $id)->first();
+        $Persona->fill($request->except('FK_PersCargo'));
+        $Persona->FK_PersCargo = $Cargo;
+        $Persona->save();
 
         $log = new audit();
         $log->AuditTabla = "personals";
