@@ -14,18 +14,7 @@
 					<!-- form start -->
 					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
-						{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-						<div class="fingerprint-spinner" id="loadingTable">
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-							<div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-						</div>
+						@include('layouts.partials.spinner')
 						<div class="box-body" hidden onload="renderTable()" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
 								<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>

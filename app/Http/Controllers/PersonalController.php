@@ -159,10 +159,15 @@ class PersonalController extends Controller
     public function edit($id){
         $Persona = Personal::where('PersSlug', $id)->first();
         $Cargos = DB::table('cargos')
-            ->join('areas', 'CargArea', '=', 'ID_Area')
-            ->select('cargos.ID_Carg','cargos.CargName', 'areas.AreaName')
+            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+            ->select('areas.ID_Area','cargos.CargArea', 'areas.AreaName')
+            ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
             ->get();
-        return view('personal.edit', compact('Persona', 'Cargos'));
+        // return $Cargos[0]->CargArea;
+        $Areas = DB::table('areas')
+            ->where('ID_Area', '<>', $Cargos[0]->CargArea)
+            ->get();
+        return view('personal.edit', compact('Persona', 'Cargos', 'Areas'));
     }
 
     /**

@@ -19,13 +19,13 @@
             <table id="PersonalsTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Doctype</th>
+                  <th>Tioo de Documento</th>
                   <th>Documento</th>
                   <th>Nombre</th>
                   <th>Telefono</th>
                   <th>Cargo</th>
+                  <th>Area</th>
                   <th>Ver más</th>
-                  <th>Editar</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">
@@ -40,8 +40,8 @@
                   <td>{{$Personal->PersDocNumber}}</td>
                   <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
                   <td>{{$Personal->PersCellphone}}</td>
-                  <td>{{$Personal->CargName." de ".$Personal->AreaName}}</td>
-                  <td>{{$Personal->PersSlug}}</td>
+                  <td>{{$Personal->CargName}}</td>
+                  <td>{{$Personal->AreaName}}</td>
                   <td>{{$Personal->PersSlug}}</td>
                 </tr>
                 @endforeach
