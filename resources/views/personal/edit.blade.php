@@ -29,7 +29,7 @@
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
-				<form role="form" action="/personal/{{$Persona->PersSlug}}" method="POST" enctype="multipart/form-data">
+				<form role="form" action="/personal/{{$Persona->PersSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 					@method('PATCH')
 					@csrf
 					{{-- <h1 id="loadingTable">LOADING...</h1> --}}
@@ -55,7 +55,7 @@
 												<div class="form-group col-md-6">
 													<label for="CargArea">Area</label><small class="help-block with-errors">*</small>
 													<select name="CargArea" id="CargArea" class="form-control" required>
-														<option onclick="HiddenNewInputA()" value="">Seleccione...</option>
+														<option onclick="HiddenNewInputA()" value="{{$Cargos[0]->ID_Area}}">{{$Cargos[0]->AreaName}}</option>
 														@foreach($Areas as $Area)
 															<option onclick="HiddenNewInputA()" value="{{$Area->ID_Area}}">{{$Area->AreaName}}</option>
 														@endforeach
@@ -65,7 +65,7 @@
 												<div class="form-group col-md-6" id="divFK_PersCargo" >
 													<label for="FK_PersCargo">Cargo del Personal</label><small class="help-block with-errors">*</small>
 													<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
-														<option value="{{$Persona->PersSlug}}">Seleccione...</option>
+														<option value="{{$Cargos[0]->ID_Carg}}">{{$Cargos[0]->CargName}}</option>
 													</select>
 												</div>
 												<div class="form-group col-md-6" id="NewArea" style="display: none;">
@@ -93,36 +93,36 @@
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors">*</small>
-													<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="Use minimo 6 caracteres" type="text" class="form-control document" id="PersDocNumber">
+													<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="Use minimo 6 caracteres" type="text" class="form-control document" id="PersDocNumber" value="{{$Persona->PersDocNumber}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
-													<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName">
+													<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{$Persona->PersFirstName}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersSecondName">Segundo Nombre</label>
-													<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName">
+													<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName" value="{{$Persona->PersSecondName}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersLastName">Apellidos</label><small class="help-block with-errors">*</small>
-													<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName">
+													<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName" value="{{$Persona->PersLastName}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersEmail">Correo Electrónico</label><small class="help-block with-errors">*</small>
-													<input type="email" name="PersEmail" id="PersEmail" class="form-control" required>
+													<input type="email" name="PersEmail" id="PersEmail" class="form-control" required value="{{$Persona->PersEmail}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersCellphone">Numero de Celular</label><small class="help-block with-errors">*</small>
-													<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="Use minimo 10 caracteres" class="form-control mobile" id="PersCellphone">
+													<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="Use minimo 10 caracteres" class="form-control mobile" id="PersCellphone" value="{{$Persona->PersCellphone}}">
 												</div>
 												<div class="form-group col-md-6">
 													<label for="PersAddress">Direccion</label>
-													<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress">
+													<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" value="{{$Persona->PersAddress}}">
 												</div>
 											</div>
 											@if(Auth::user()->UsRol == 'Cliente')
 												<div class="box-footer" style="float:right; margin-right:5%;">
-													<button type="submit" class="btn btn-primary">Registrar</button>
+													<button type="submit" class="btn btn-primary">Actualizar</button>
 												</div>
 											@endif
 										</div>
@@ -133,47 +133,47 @@
 												<div id="form-step-2" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
 														<label for="PersBirthday">Fecha de Nacimiento</label>
-														<input name="PersBirthday" autofocus="true" type="date" class="form-control" id="PersBirthday">
+														<input name="PersBirthday" autofocus="true" type="text" class="form-control fechas" id="PersBirthday" value="{{$Persona->PersBirthday}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersPhoneNumber">Numero de Telefono Local</label>
-														<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber">
+														<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber" value="{{$Persona->PersPhoneNumber}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersEPS">EPS</label><small class="help-block with-errors dir">*</small>
-														<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS" required>
+														<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS" required value="{{$Persona->PersEPS}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersARL">ARL</label><small class="help-block with-errors dir">*</small>
-														<input name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required>
+														<input name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required value="{{$Persona->PersARL}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersLibreta">Numero de Libreta</label>
-														<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta">
+														<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta" value="{{$Persona->PersLibreta}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersPase">Numero del Pase</label>
-														<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase">
+														<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{$Persona->PersPase}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersBank">Banco</label>
-														<input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank">
+														<input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank" value="{{$Persona->PersBank}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersBankAccaunt">Numero de Cuenta</label><small class="help-block with-errors"></small>
-														<input data-minlength="19" name="PersBankAccaunt" data-error="Use minimo 16 caracteres" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt">
+														<input data-minlength="19" name="PersBankAccaunt" data-error="Use minimo 16 caracteres" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{$Persona->PersBankAccaunt}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersIngreso">Fecha de Entrada</label><small class="help-block with-errors dir">*</small>
-														<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required>
+														<input name="PersIngreso" autofocus="true" type="text" class="form-control fechas" id="PersIngreso" required value="{{$Persona->PersIngreso}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersSalida">Fecha de Salida</label><small class="help-block with-errors dir">*</small>
-														<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required>
+														<input name="PersSalida" autofocus="true" type="text" class="form-control fechas" id="PersSalida" required value="{{$Persona->PersSalida}}">
 													</div>
 												</div>
 												<div class="box-footer" style="float:right; margin-right:5%;">
-													<button type="submit" class="btn btn-primary">Registrar</button>
+													<button type="submit" class="btn btn-primary">Actualizar</button>
 												</div>
 											</div>
 										</div>
@@ -184,14 +184,82 @@
 					</div>
 					
 					<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
-					<!-- /.box-body -->
-					<div class="box-footer">
-						<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
-					</div>
 				</form>
 			</div>
 			<!-- /.box -->
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+	<script>
+		$(document).ready(function(){
+			$('#CargArea').on('change', function() { 
+				var id = $('#CargArea').val();
+				if(id != 0){
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{url('/cargo-area')}}/"+id,
+						method: 'GET',
+						data:{},
+						success: function(res){
+							if(res != ''){
+								$("#FK_PersCargo").empty();
+								var cargos = new Array();
+								for(var i = res.length -1; i >= 0; i--){
+									if ($.inArray(res[i].ID_Mun, cargos) < 0) {
+										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].ID_Carg}">${res[i].CargName}</option>`);
+										cargos.push(res[i].ID_Mun);
+									}
+								}
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+							}
+							else{
+								$("#FK_PersCargo").empty();
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								document.getElementById("NewCargo").style.display = 'block';
+								document.getElementById("NewInputC").required = true;
+							}
+						}
+					})
+				}
+			});
+		});
+		function NewInputA(){
+			document.getElementById("NewArea").style.display = 'block';
+			document.getElementById("NewInputA").required = true;
+			document.getElementById("divFK_PersCargo").style.display = 'none';
+			document.getElementById("FK_PersCargo").required = false;
+			document.getElementById("NewCargo").style.display = 'block';
+			document.getElementById("NewInputC").required = true;
+		}
+		function HiddenNewInputA(){
+			document.getElementById("NewArea").style.display = 'none';
+			document.getElementById("NewInputA").required = false;
+			document.getElementById("divFK_PersCargo").style.display = 'block';
+			document.getElementById("FK_PersCargo").required = true;
+			document.getElementById("NewCargo").style.display = 'none';
+			document.getElementById("NewInputC").required = false;
+		}
+		function NewInputC(){
+			document.getElementById("NewCargo").style.display = 'block';
+			document.getElementById("NewInputC").required = true;
+		}
+		function HiddenNewInputC(){
+			document.getElementById("NewCargo").style.display = 'none';
+			document.getElementById("NewInputC").required = false;
+		}
+
+		$(document).ready(function(){
+			var type = $("#PersType").val();
+			if(type == 1){
+				$("#PersAddress").prop('required', true);
+				$("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
+			}
+		});
+	</script>
 @endsection

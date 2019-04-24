@@ -19,10 +19,10 @@
             <table id="PersonalsTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Tioo de Documento</th>
                   <th>Documento</th>
                   <th>Nombre</th>
-                  <th>Telefono</th>
+                  <th>Correo Electronico</th>
+                  <th>Celular</th>
                   <th>Cargo</th>
                   <th>Area</th>
                   <th>Ver más</th>
@@ -36,9 +36,9 @@
                       style="color: red;" 
                     @endif
                 >
-                  <td>{{$Personal->PersDocType}}</td>
-                  <td>{{$Personal->PersDocNumber}}</td>
+                  <td>{{$Personal->PersDocType." ".$Personal->PersDocNumber}}</td>
                   <td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
+                  <td>{{$Personal->PersEmail}}</td>
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>

@@ -22,7 +22,7 @@ class PersonalController extends Controller
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                  ->join('areas', 'CargArea', '=', 'ID_Area')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName')
                 ->get();
             return view('personal.index', compact('Personals'));
         }
@@ -121,16 +121,8 @@ class PersonalController extends Controller
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersDelete = 0;
         $Cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
-        $Personal->PersSlug = "pers".substr(str_shuffle($Cadena), 0, 80)."prosarc";
+        $Personal->PersSlug = "pers".substr(md5(rand()), 60,80)."SiRes";
         $Personal->save();
-
-        $log = new audit();
-        $log->AuditTabla="Personal";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Personal->ID_Pers;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
 
         return redirect()->route('personal.index');;
     }
@@ -160,11 +152,11 @@ class PersonalController extends Controller
         $Persona = Personal::where('PersSlug', $id)->first();
         $Cargos = DB::table('cargos')
             ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->select('areas.ID_Area','cargos.CargArea', 'areas.AreaName')
+            ->select('areas.ID_Area','cargos.*', 'areas.AreaName')
             ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
             ->get();
-        // return $Cargos[0]->CargArea;
         $Areas = DB::table('areas')
+            ->select('ID_Area', 'AreaName')
             ->where('ID_Area', '<>', $Cargos[0]->CargArea)
             ->get();
         return view('personal.edit', compact('Persona', 'Cargos', 'Areas'));
@@ -178,10 +170,44 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $Persona = Personal::where('PersSlug', $id)->first();
-        $Persona->fill($request->all());
-        $Persona->save();
+        // return $request;
+        if($request->input('NewCargo') <> null){
+            if($request->input('NewArea') <> null){
+                $newArea = new Area();
+                $newArea->AreaName = $request->input('NewArea');
+                if($request->input('PersType') == 0){
+                    $newArea->FK_AreaSede = 2;
+                }
+                else{
+                    $newArea->FK_AreaSede = 1;
+                }
+                $newArea->AreaDelete = 0;
+                $newArea->save();
 
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $newArea->ID_Area;
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+            else{
+                $newCargo = new Cargo();
+                $newCargo->CargName = $request->input('NewCargo');
+                $newCargo->CargArea = $request->input('CargArea');
+                $newCargo->CargDelete = 0;
+                $newCargo->save();
+                $Cargo = $newCargo->ID_Carg;
+            }
+        }
+        else{
+            $Cargo = $request->input('FK_PersCargo');
+        }
+        
+        $Persona = Personal::where('PersSlug', $id)->first();
+        $Persona->fill($request->except('FK_PersCargo'));
+        $Persona->FK_PersCargo = $Cargo;
+        $Persona->save();
 
         $log = new audit();
         $log->AuditTabla = "personals";

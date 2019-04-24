@@ -462,6 +462,7 @@ $(function() {
         $('.bank').inputmask({mask: "[9][9][9][9] [9][9][9][9] [9][9][9][9] [9][9][9][9]"});
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.nombres').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}]"});
+        $('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd"});
     });
     </script>
 <script>
