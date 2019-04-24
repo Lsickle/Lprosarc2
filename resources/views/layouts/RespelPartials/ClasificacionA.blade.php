@@ -8,7 +8,7 @@
 				<div class="box">
 					<!-- box-header -->
 					<div class="box-header">
-					<h3 class="box-title">Clasificacion A, segun Decreto Número 4741</h3>
+					<h3 class="box-title">Clasificacion A, según Decreto Número 4741</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- box-body -->

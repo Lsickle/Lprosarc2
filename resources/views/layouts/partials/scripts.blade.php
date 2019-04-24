@@ -1313,6 +1313,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "responsive": true,
+        "ordering":  false
     });
 });
 </script>
