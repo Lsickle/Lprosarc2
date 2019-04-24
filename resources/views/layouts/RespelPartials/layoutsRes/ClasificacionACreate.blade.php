@@ -1,8 +1,9 @@
+<input type="text" hidden="" name="YRespelClasf4741[]" value="">
 <label >Clasificacion A, segun
 	<a href="{{route('ClasificacionA')}}" target="_blank"> Decreto Número 4741</a>
 </label>
-<select name="ARespelClasf4741[]" class="form-control">
-	<option value="A1010">Selecione...</option>
+<select name="ARespelClasf4741[]" class="form-control" required>
+	<option value="">Selecione...</option>
 	<option value="A1010">A1010</option>
 	<option value="A1020">A1020</option>
 	<option value="A1030">A1030</option>
@@ -64,4 +65,3 @@
 	<option value="A4150">A4150</option>
 	<option value="A4160">A4160</option>
 </select>
-<input type="text" hidden="" name="YRespelClasf4741[]" value="">
