@@ -23,7 +23,7 @@
 						<tbody>
 							<tr>
 								<td>Y1</td>
-								<td>Desechos clínicos resultantes de la atención médica prestada en hospitales, centros médicos y clínicas </td>
+								<td>Desechos clínicos resultantes de la atención médica prestada en hospitales, centros médicos y clínicas</td>
 							</tr>
 							<tr>
 								<td>Y2</td>
@@ -35,7 +35,7 @@
 							</tr>
 							<tr>
 								<td>Y4</td>
-								<td>Desechos resultantes de ¡a producción, la preparación y la utilización de biocidas y productos fitofarmacéuticos</td>
+								<td>Desechos resultantes de la producción, la preparación y la utilización de biocidas y productos fitofarmacéuticos</td>
 							</tr>
 							<tr>
 								<td>Y5</td>
@@ -59,7 +59,7 @@
 							</tr>
 							<tr>
 								<td>Y10</td>
-								<td>Sustancias y artículos de desecho que contengan, o estén contaminados por, bifeniíos policlorados (PCB), terfeniios policlorados (PCT) o bifeniíos polibromados (PBB)</td>
+								<td>Sustancias y artículos de desecho que contengan, o estén contaminados por, bifenilos policlorados (PCB), terfenilos policlorados (PCT) o bifenilos polibromados (PBB)</td>
 							</tr>
 							<tr>
 								<td>Y11</td>
