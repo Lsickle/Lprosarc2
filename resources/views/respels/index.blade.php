@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title', 'Respel')
+@section('contentheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -7,7 +8,6 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3>
 					<a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
 				<!-- /.box-header -->

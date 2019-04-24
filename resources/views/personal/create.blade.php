@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title','Personal')
-@section('contentheader_title', 'Reguistro de Personal')
+@section('contentheader_title', 'Registro de Personal')
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
@@ -8,7 +8,6 @@
 				<!-- /.box -->
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Registro de personal</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
@@ -34,13 +33,18 @@
 											<div class="col-md-12">
 												<div id="form-step-0" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
+														<label for="Sede">Sede</label><small class="help-block with-errors">*</small>
+														<select name="Sede" id="Sede" class="form-control" required>
+															<option value="">Seleccione...</option>
+															@foreach($Sedes as $Sede)
+																<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+															@endforeach
+														</select>
+													</div>
+													<div class="form-group col-md-6">
 														<label for="CargArea">Area</label><small class="help-block with-errors">*</small>
 														<select name="CargArea" id="CargArea" class="form-control" required>
-															<option onclick="HiddenNewInputA()" value="">Seleccione...</option>
-															@foreach($Areas as $Area)
-																<option onclick="HiddenNewInputA()" value="{{$Area->ID_Area}}">{{$Area->AreaName}}</option>
-															@endforeach
-															<option onclick="NewInputA()" value="0">Nueva Area</option>
+															<option value="">Seleccione...</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
@@ -176,6 +180,46 @@
 @section('NewScript')
 	<script>
 		$(document).ready(function(){
+			$('#Sede').on('change', function() { 
+				var id = $('#Sede').val();
+				if(id != 0){
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+						}
+					});
+					$.ajax({
+						url: "{{url('/area-sede')}}/"+id,
+						method: 'GET',
+						data:{},
+						success: function(res){
+							if(res != ''){
+								$("#CargArea").empty();
+								var areas = new Array();
+								$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="">Seleccione...</option>`);
+								for(var i = res.length -1; i >= 0; i--){
+									if ($.inArray(res[i].ID_Area, areas) < 0) {
+										$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="${res[i].ID_Area}">${res[i].AreaName}</option>`);
+										areas.push(res[i].ID_Area);
+									}
+								}
+								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nuevo Area</option>`);
+							}
+							else{
+								$("#CargArea").empty();
+								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nueva Area</option>`);
+								document.getElementById("NewArea").style.display = 'block';
+								document.getElementById("NewInputA").required = true;
+								$("#FK_PersCargo").empty();
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								document.getElementById("NewCargo").style.display = 'block';
+								document.getElementById("NewInputC").required = true;
+							}
+						}
+					})
+				}
+			});
+
 			$('#CargArea').on('change', function() { 
 				var id = $('#CargArea').val();
 				if(id != 0){
@@ -192,10 +236,11 @@
 							if(res != ''){
 								$("#FK_PersCargo").empty();
 								var cargos = new Array();
+								$("#FK_PersCargo").append(`<option onclick="HiddenNewInputA()" value="">Seleccione...</option>`);
 								for(var i = res.length -1; i >= 0; i--){
-									if ($.inArray(res[i].ID_Mun, cargos) < 0) {
+									if ($.inArray(res[i].ID_Carg, cargos) < 0) {
 										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].ID_Carg}">${res[i].CargName}</option>`);
-										cargos.push(res[i].ID_Mun);
+										cargos.push(res[i].ID_Carg);
 									}
 								}
 								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
@@ -210,6 +255,7 @@
 					})
 				}
 			});
+
 		});
 		function NewInputA(){
 			document.getElementById("NewArea").style.display = 'block';

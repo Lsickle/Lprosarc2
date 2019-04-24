@@ -29,7 +29,6 @@
 							    <input type="submit" class='btn btn-success pull-left' value="Añadir">
 							  </form>
 							@endif
-							<img class="profile-user-img img-responsive img-circle" src="/img/robot400x400.gif" alt="User profile picture">
 							<h3 class="profile-username text-center">{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</h3>
 							<p class="text-muted text-center">{{$Persona->CargName}}</p>
 							<ul class="list-group list-group-unbordered">
