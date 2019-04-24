@@ -222,19 +222,24 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Persona = Personal::where('PersSlug', $id)->first();
-        $Cargos = DB::table('cargos')
-            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
-            ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
-            ->get();
-        $Sedes = DB::table('sedes')
-            ->select('sedes.ID_Sede', 'sedes.SedeName')
-            ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-            ->where('sedes.ID_Sede', '<>', $Cargos[0]->ID_Sede)
-            ->get();
-        return view('personal.edit', compact('Persona', 'Cargos', 'Sedes'));
+        if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
+            $Persona = Personal::where('PersSlug', $id)->first();
+            $Cargos = DB::table('cargos')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
+                ->where('cargos.ID_Carg', $Persona->FK_PersCargo)
+                ->get();
+            $Sedes = DB::table('sedes')
+                ->select('sedes.ID_Sede', 'sedes.SedeName')
+                ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
+                ->where('sedes.ID_Sede', '<>', $Cargos[0]->ID_Sede)
+                ->get();
+            return view('personal.edit', compact('Persona', 'Cargos', 'Sedes'));
+        }
+        else{
+            return route('home');
+        }
     }
 
     /**
