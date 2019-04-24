@@ -208,7 +208,7 @@ class clientcontoller extends Controller
             $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
             $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
 
-            return view('clientes.show2', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
+            return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
         }else{
             abort(403);
         }
