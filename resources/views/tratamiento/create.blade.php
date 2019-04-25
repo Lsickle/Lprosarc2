@@ -42,6 +42,22 @@
                                         <input id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
+                                    <div class="col-md-12">
+                                      <div class="box box-solid">
+                                        <div class="box-header with-border">
+                                          <h3 class="box-title">Pretratamientos</h3>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                          <div class="box-group" id="accordion">
+
+                                          </div>
+                                        </div>
+                                        <!-- /.box-body -->
+                                      </div>
+                                      <!-- /.box -->
+                                    </div>
+                                    <!-- /.col -->
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
@@ -66,7 +82,7 @@
     var contador = 1;
     function AgregarPreTrat(){
         var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
-        $(".box-body").append(pretratamiento);
+        $("#accordion").append(pretratamiento);
         $("#createtratamientoForm").validator('update');
         contador= parseInt(contador)+1;
     }

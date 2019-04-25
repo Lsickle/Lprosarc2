@@ -20,6 +20,7 @@ return [
     'pretratdescript'       => 'Descripción del PreTratamiento',
     'tratcreate'            => 'Crear Tratamiento',
     'pretratadd'            => 'Añadir Pretratamiento',
+    'pretrat'               => 'Pretratamiento',
 
 
 ];
