@@ -16,6 +16,7 @@ class CreatePretratamientosTable extends Migration
         Schema::create('pretratamientos', function (Blueprint $table) {
             $table->increments('ID_PreTrat');
             $table->string('PreTratName');
+            $table->string('PreTratDescription')->nullable();
             $table->boolean('PreTratDelete');
             $table->unsignedInteger('FK_Pre_Trat');
             $table->foreign('FK_Pre_Trat')->references('ID_Trat')->on('tratamientos');

@@ -17,6 +17,7 @@ return [
     'tratname'              => 'Nombre',
     'manager'               => 'Gestor',
     'pretratname'           => 'Nombre del PreTratamiento',
+    'pretratdescript'       => 'Descripción del PreTratamiento',
     'tratcreate'            => 'Crear Tratamiento',
     'pretratadd'            => 'Añadir Pretratamiento',
 
