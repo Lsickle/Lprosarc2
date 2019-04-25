@@ -147,6 +147,18 @@ $(document).ready(function() {
 });
 
 </script>
+
+<script>
+$(document).ready(function() {
+    $('#select2sedes').select2({
+        placeholder: "Seleccione el gestor",
+        allowClear: true,
+        width: 'resolve'
+    });
+});
+
+</script>
+
 <script>
 $(document).ready(function() {
     $('#SolicitudResiduo').select2({
@@ -455,11 +467,11 @@ $(function() {
 <script>
     $(document).ready(function() {
         $('.nit').inputmask({mask:"[9][9][9.][9][9][9.][9][9][9-][9]"});
-        $('.phone').inputmask({mask: "03[9-][9][9][9][9][9][9][9]"});
-        $('.mobile').inputmask({mask: "[9][9][9] [9][9][9] [9][9][9][9]"});
+        $('.phone').inputmask({mask: "03[9 ][9][9][9][9][9][9][9]"});
+        $('.mobile').inputmask({mask: "3[9][9 ][9][9][9 ][9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
         $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
-        $('.bank').inputmask({mask: "[9][9][9][9] [9][9][9][9] [9][9][9][9] [9][9][9][9]"});
+        $('.bank').inputmask({mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]"});
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.nombres').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd"});
@@ -1355,7 +1367,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName()=='clientes.create')
+@if(Route::currentRouteName() === 'clientes.create')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1366,22 +1378,6 @@ $(document).ready(function() {
             };
         });
     });
-</script>
-@endif
-@if(Route::currentRouteName()=='clientes.create' || Route::currentRouteName()=='clientes.edit')
-<script>
-	function OtroType(){
-        document.getElementById("otro").style.display = 'block';
-        $('#tipo').prop('required', false);
-        $('#otroType').prop('required', true);
-        $('.form').validator('update');
-    }
-    function HiddenOtroType(){
-        document.getElementById("otro").style.display = 'none';
-        $('#tipo').prop('required', true);
-        $('#otroType').prop('required', false);
-        $('.form').validator('update');
-    }
 </script>
 @endif
 <script>
