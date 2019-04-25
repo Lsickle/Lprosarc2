@@ -141,6 +141,31 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'CliNit'        => 'Nit',
+        'CliName'       => 'Razón Social',
+        'CliShortname'  => 'Nombre Corto',
+        'CliCategoria'  => 'Categoría',
+
+        'SedeEmail'     => 'Email de la Sede',
+        'SedeName'      => 'Nombre de la Sede',
+        'SedeAddress'   => 'Dirrección de la Sede',
+        'SedePhone1'    => 'Teléfono 1 de la Sede',
+        'SedeExt1'      => 'Extensión 1 de la Sede',
+        'SedePhone2'    => 'Teléfono 2 de la Sede',
+        'SedeExt2'      => 'Extensión 1 de la Sede',
+        'SedeCelular'   => 'Celular de la Sede',
+
+        'PersDocNumber' => 'Número de Documento',
+        'PersEmail'     => 'Email del Personal',
+        'PersFirstName' => 'Primer Nombre de la Persona',
+        'PersLastName'  => 'Apellidos de la Persona',
+        'PersSecondName'=> 'Segundo Nombre de la Persona',
+        'PersDocType'   => 'Tipo de Documento',
+        
+        'AreaName'      => 'Nombre del Area',
+        
+        'CargName'      => 'Nombre del cargo',
+    ],
 
 ];
