@@ -100,6 +100,7 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
+        /*Validacion para personas autorisadas a crear una persona*/
         if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
             $Sedes = DB::table('sedes')
                 ->select('sedes.ID_Sede', 'sedes.SedeName')
@@ -111,7 +112,7 @@ class PersonalController extends Controller
             return route('home');
         }
     }
-
+    /*Funcion para ver por medio de Ajax las areas que le competen a una Sede*/
     public function AreasSedes(Request $request, $id)
     {
         if ($request->ajax()) {
@@ -122,6 +123,7 @@ class PersonalController extends Controller
             return response()->json($Areas);
         }
     }
+    /*Funcion para ver por medio de Ajax los cargos que le competen a una Area*/
     public function CargosAreas(Request $request, $id)
     {
         if ($request->ajax()) {
@@ -139,7 +141,9 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+        /*Valida si se ha creado un nuevo cargo*/
         if($request->input('NewCargo') <> null){
+            /*Valida si se ha creado una nueva area*/
             if($request->input('NewArea') <> null){
                 $newArea = new Area();
                 $newArea->AreaName = $request->input('NewArea');
@@ -205,10 +209,12 @@ class PersonalController extends Controller
                 ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->select('personals.*', 'cargos.CargName','sedes.SedeName')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
                 ->where('PersSlug',$id)
                 ->get();
-             return view('personal.show', compact('Personas'));
+            $IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+             return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
          }
         else{
             return route('home');
