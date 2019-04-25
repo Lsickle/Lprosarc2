@@ -16,7 +16,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliName = 'Prosarc S.A. ESP.';
 		$cliente->CliNit = '900.079.188-0';
 		$cliente->CliShortname = 'Prosarc S.A. ESP.';
-		$cliente->CliCategoria = 'proveedor';
+		$cliente->CliCategoria = 'Proveedor';
 		$cliente->CliSlug = '900.079.188-0974';
 		$cliente->CliDelete = 0;
 		$cliente->save();

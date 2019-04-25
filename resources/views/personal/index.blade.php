@@ -11,7 +11,9 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <a href="personal/create" class="btn btn-primary" style="float: right;">Crear</a>
+            @if(Auth::user()->UsRol === "Cliente")
+            	<a href="personal/create" class="btn btn-primary" style="float: right;">Crear</a>
+            @endif
           </div>
           <!-- /.box-header -->
           <div class="box-body">
