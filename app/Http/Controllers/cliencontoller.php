@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class clientcontoller extends Controller
         if(Auth::user()->UsRol === "Cliente"){
             return redirect()->route('home');
         }
-        if(Auth::user()->UsRol === "admin"){
+        if(Auth::user()->UsRol === "Administrador"){
             $clientes = Cliente::where('CliDelete', 0)->get();
             return view('clientes.index', compact('clientes'));
         }else{
@@ -55,7 +56,7 @@ class clientcontoller extends Controller
                 return redirect()->route('home');
             }
         }
-        if(Auth::user()->UsRol === "admin"){
+        if(Auth::user()->UsRol === "Administrador"){
             $Departamentos = Departamento::all();
                 return view('clientes.create2', compact('Departamentos'));
         }else{
@@ -72,31 +73,32 @@ class clientcontoller extends Controller
     public function store(Request $request)
     {
         if($request->input("number") == "1"){
-            $validate = $request->validate = [
-                'CliNit' => 'required|max:13|min:13|unique:clientes,CliNit',
-                'CliName' => 'required|max:255|unique:clientes,CliName',
-                'CliShortname' => 'required|max:255|unique:clientes,CliName',
-                'CliCategoria' => 'max:32|alpha|nullable',
-                'tipoCual' => 'max:32|alpha|nullable',
+            $validate = $request->validate([
+                'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit',
+                'CliName'       => 'required|max:255|unique:clientes,CliName',
+                'CliShortname'  => 'required|max:255|unique:clientes,CliName',
+                'CliCategoria'  => 'max:32|alpha|nullable',
 
-                'SedeName' => 'required|max:128|min:1',
-                'SedeAddress' => 'alpha_num|srequired|max:255',
-                'SedePhone1' => 'max:32|min:14|nullable',
-                'SedeExt1' => 'max:5|nullable',
-                'SedePhone2' => 'max:32|min:14|nullable',
-                'SedeExt2' => 'max:5|nullable',
-                'SedeEmail' => 'required|email|unique:sedes,SedeEmail',
-                'SedeCelular' => 'min:10|max:12',
+                'SedeName'      => 'required|max:128|min:1',
+                'SedeAddress'   => 'alpha_num|required|max:255',
+                'SedePhone1'    => 'max:11|min:11|nullable',
+                'SedeExt1'      => 'min:3|max:5|nullable',
+                'SedePhone2'    => 'max:11|min:11|nullable',
+                'SedeExt2'      => 'min:3|max:5|nullable',
+                'SedeEmail'     => 'required|email|max:128',
+                'SedeCelular'   => 'min:12|max:12',
 
-                'AreaName' => 'required|max:128|alpha',
+                'AreaName'      => 'required|max:128|alpha',
 
-                'CargName' => 'required|max:128|alpha',
+                'CargName'      => 'required|max:128|alpha',
 
                 'PersFirstName' => 'required|alpha|max:64',
-                'PersLastName' => 'required|alpha|max:64',
-                'PersEmail' => 'required|email|max:255',
-                'PersSecondName' => 'alpha|max:64',
-            ];
+                'PersLastName'  => 'required|alpha|max:64',
+                'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail',
+                'PersSecondName'=> 'alpha|max:64|nullable',
+                'PersDocNumber' => 'required|max:64|unique:personals,PersDocNumber',
+                'PersDocType'   => 'required|max:3|min:2',
+            ]);
 
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
@@ -115,16 +117,23 @@ class clientcontoller extends Controller
             $Sede->SedeName = $request->input('SedeName');
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
-            if($request->input('SedePhone1') === null){
-                $Sede->SedeExt1 = null;
+            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null || $request->input('SedeExt1') === null && $request->input('SedeExt2') !== null){
+
+                $Sede->SedeExt1 = $request->input('SedeExt2');
+                $Sede->SedePhone1 = $request->input('SedePhone2');
             }else{
-                $Sede->SedeExt1 = $request->input('SedeExt1');
-            }
-            $Sede->SedePhone2 = $request->input('SedePhone2');
-            if($request->input('SedePhone2') === null){
-                $Sede->SedeExt2 = null;
-            }else{
-                $Sede->SedeExt2 = $request->input('SedeExt2');
+                if($request->input('SedePhone1') === null){
+                    $Sede->SedeExt1 = null;
+                }else{
+                    $Sede->SedePhone2 = $request->input('SedePhone1');
+                    $Sede->SedeExt1 = $request->input('SedeExt1');
+                }
+                if($request->input('SedePhone2') === null){
+                    $Sede->SedeExt2 = null;
+                }else{
+                    $Sede->SedePhone2 = $request->input('SedePhone2');
+                    $Sede->SedeExt2 = $request->input('SedeExt2');
+                }
             }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
@@ -165,9 +174,9 @@ class clientcontoller extends Controller
                 $user->FK_UserPers = $Personal->ID_Pers;
                 $user->save();
             }
+            
             return redirect()->route('clientes.index');
         }else{
-
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
@@ -190,7 +199,7 @@ class clientcontoller extends Controller
      */
     public function show(Cliente $cliente)
     {
-        if(Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador"){
             $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
@@ -256,7 +265,7 @@ class clientcontoller extends Controller
      */
     // public function destroy($id, Cliente $cliente)
     public function destroy($id){
-        if(Auth::user()->UsRol === "admin" || Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador"){
             $Cliente = Cliente::where('CliSlug', $id)->first();
                 if ($Cliente->CliDelete == 0) {
                     $Cliente->CliDelete = 1;

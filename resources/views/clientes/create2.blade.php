@@ -11,7 +11,7 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
+				{{-- <div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.clientboxtitle') }}</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -19,7 +19,7 @@
 						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
 						<i class="fa fa-times"></i></button>
 					</div>
-				</div>
+				</div> --}}
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
@@ -65,7 +65,7 @@
                                                             <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
                                                             <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" minlength="2"  maxlength="100" required>
                                                         </div>
-                                                        @if(Auth::user()->UsRol === "admin")
+                                                        @if(Auth::user()->UsRol === "Administrador")
                                                         <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                             <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
                                                             <select class="form-control" id="categoria" name="CliCategoria" required>

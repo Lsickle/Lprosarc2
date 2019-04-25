@@ -159,7 +159,6 @@ return [
     'submit'                  => 'ENVIAR',
     'email'                   => 'Correo Electrónico',
     'password'                => 'Contraseña',
-    'create'                  => 'Crear',
     'list'                    => 'Listado',
     'register'                => 'Registrar',
     'updates'                 => 'Actualizacion',
@@ -174,6 +173,9 @@ return [
     'phoneplaceholder'        => '031 4123141',
     'extplaceholder'          => '155',
     'addressplaceholder'      => 'Cll 23 #11c-03',
+    'create'                  => 'Crear',
+    'edit'                    => 'Editar',
+    'delete'                  => 'Eliminar',
 
     // personal
     'fullname'                => 'Nombre completo',
