@@ -25,6 +25,15 @@ Editar datos
 							<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
 								@csrf
 								@method('PUT')
+								@if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 								<div class="box-body">
 									<div class="form-group col-md-12">
 										<label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>

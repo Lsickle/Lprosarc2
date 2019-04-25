@@ -48,6 +48,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             )
+            /*PESTAÑA DE MI CLIENTE*/
+            ->addIf(Auth::user()->UsRol === "Cliente",
+            (Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> '. trans('adminlte_lang::message.clientsidebar')))
+            )
             /*PESTAÑA DE SEDES*/
             ->addIf(Auth::user()->UsRol === "Cliente",
             (Menu::new()

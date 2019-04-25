@@ -169,6 +169,17 @@ $(document).ready(function() {
 });
 
 </script>
+<script>
+$(document).ready(function() {
+    $('.select').select2({
+        placeholder: "Seleccione...",
+        allowClear: true,
+        width: 'resolve',
+        width: '100%',
+    });
+});
+
+</script>
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 $(document).ready(function() {

@@ -212,6 +212,7 @@ return [
     'clientcliente'           => 'Cliente',
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
+    'clientsidebar'           => 'Mi Empresa',
 
     // sede
     'csederegister'           => 'Registro de sede',

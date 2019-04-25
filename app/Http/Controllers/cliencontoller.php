@@ -163,7 +163,7 @@ class clientcontoller extends Controller
             $Personal->PersSecondName = $request->input("PersSecondName"); 
             $Personal->PersDocType = $request->input("PersDocType");
             $Personal->PersDocNumber = $request->input("PersDocNumber");
-            $Personal->PersType = 1;//falta definir que boolean es externo
+            $Personal->PersType = 1;
             $Personal->PersSlug = substr(md5(rand()), 0, 99999).$request->input("PersFirstName"); 
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
@@ -206,7 +206,7 @@ class clientcontoller extends Controller
             abort(403);
         }
     }
-    public function viewClient($id)
+    public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === "Cliente"){
             
