@@ -12,6 +12,7 @@ use App\audit;
 use App\Departamento;
 use App\Municipio;
 use App\Tratamiento;
+use App\Pretratamiento;
 use App\Respel;
 
 class TratamientoController extends Controller
@@ -79,16 +80,36 @@ class TratamientoController extends Controller
      */
     public function store(Request $request)
     {   
+        // return $request;
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = $request->input('TratName');
-        $tratamiento->TratTipo = $request->input('TratTipo');
-        $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
+        /*determinar el tipo de tratamiento segun el gestor*/
+        if ($request->input('FK_TratProv') == 1) {
+            $tratamiento->TratTipo = 0; //interno
+        }else{
+            $tratamiento->TratTipo = 1; //Externo
+        }
         $tratamiento->TratDelete = 0;
         $tratamiento->save();
 
-        // return $tratamiento;
+        /*iteracion sobre los pretratamientos insertados en el formulario*/
+        for ($x=0; $x < count($request['PreTratName']); $x++) {
+            $pretratamiento = new Pretratamiento();
+            $pretratamiento->PreTratName = $request['PreTratName'][$x];
+            $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
+            $pretratamiento->PreTratDelete = 0;
+            $pretratamiento->save();
 
+            $log = new audit();
+            $log->AuditTabla="pretratamiento";
+            $log->AuditType="Creado";
+            $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$request->all();
+            $log->save();
+        }
+        /*registro de auditoria*/
         $log = new audit();
         $log->AuditTabla="tratamientos";
         $log->AuditType="Creado";

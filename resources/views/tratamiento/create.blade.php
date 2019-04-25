@@ -42,11 +42,6 @@
                                         <input id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label for="input1">{{ trans('adminlte_lang::LangTratamiento.pretratname') }}</label>
-                                        <input id="input1" class="form-control" type="text" name="PreTratName">
-                                    </div>
-
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
@@ -68,7 +63,7 @@
 </div>
 
 <script>
-    var contador = 2;
+    var contador = 1;
     function AgregarPreTrat(){
         var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
         $(".box-body").append(pretratamiento);
