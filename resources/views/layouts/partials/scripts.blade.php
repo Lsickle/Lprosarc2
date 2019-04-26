@@ -1376,20 +1376,5 @@ $(document).ready(function() {
     });
 </script>
 @endif
-{{-- @if(Route::currentRouteName()=='clientes.create' || Route::currentRouteName()=='clientes.edit')
-<script>
-	function OtroType(){
-        document.getElementById("otro").style.display = 'block';
-        $('#tipo').prop('required', false);
-        $('#otroType').prop('required', true);
-        $('.form').validator('update');
-    }
-    function HiddenOtroType(){
-        document.getElementById("otro").style.display = 'none';
-        $('#tipo').prop('required', true);
-        $('#otroType').prop('required', false);
-        $('.form').validator('update');
-    }
-</script>
-@endif --}}
+
 @yield('NewScript')

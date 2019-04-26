@@ -45,7 +45,7 @@
 											<ul>
 												<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
 												<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>
-                                                @if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Cliente")
+                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                                 <li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
                                                 @endif
 											</ul>
@@ -61,13 +61,13 @@
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="5"  maxlength="100" required>
+                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="2"  maxlength="100" required>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
                                                             <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" minlength="2"  maxlength="100" required>
                                                         </div>
-                                                        @if(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador")
+                                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                                         <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                             <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
                                                             <select class="form-control select" id="categoria" name="CliCategoria" required>
@@ -141,8 +141,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
+                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
+                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                                @if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Cliente")
+                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                                 <div id="step-3" class="">
                                                     <div id="form-step-2" role="form" data-toggle="validator">
                                                         <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
@@ -194,12 +199,11 @@
                                                         </div>
                                                     </div>
                                                     @endif
-                                                    {{-- <input hidden value="1" name="number"> --}}
+                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
+                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+                                                    </div>
                                                 </div>
 											</div>
-                                            <div class="box-footer form-group " style="float:right; margin-right:5%;">
-                                                <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
-                                            </div>
 										</div>
                                         {{-- <div class="col-md-12"> --}}
                                         {{-- </div> --}}

@@ -25,7 +25,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->action('HomeController@index', '<i class="fa fa-home"></i> <span>'.trans('adminlte_lang::message.home').'</span>')
 
             /*PESTAÑA DE CLIENTES*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             /*"PREPEND SIRVE PARA COLOCAR UN ETIQUETA FUERA DEL MENU (ul)"*/
             ->prepend('<a href="#"><i class="fa fa-id-card"></i> <span>'.trans('adminlte_lang::message.contacts').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18" style="color:#FFFFFF;" width="18" height="18"></i></a>')
@@ -49,7 +49,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE MI CLIENTE*/
-            ->addIf(Auth::user()->UsRol === "Cliente",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
             (Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> '. trans('adminlte_lang::message.clientsidebar')))
             )
             /*PESTAÑA DE SEDES*/
@@ -62,7 +62,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE GENERADORES*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.genermenu').' </span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -77,7 +77,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE RESIDUOS*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message."Cliente"') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-biohazard"></i> <span>'. trans('adminlte_lang::langresiduos.residuolisttitle').' </span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -88,7 +88,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE DOCUMENTOS*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-print"></i> <span>Documentos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -98,13 +98,13 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE PERSONAL*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol === "AuxiliarLogistica",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-users"></i> <span>Personal</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
             ->addif(Auth::user()->UsRol === "Cliente", Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Personal'))
-            ->addif(Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador", Link::toUrl('/personal-interno', '<i class="fas fa-list-alt"></i> Personal Interno'))
-            ->addif(Auth::user()->UsRol === "Administrador"  || Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol === "AuxiliarLogistica", Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Personal Clientes'))
+            ->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'), Link::toUrl('/personal-interno', '<i class="fas fa-list-alt"></i> Personal Interno'))
+            ->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica'), Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> Personal Clientes'))
             ->add(Link::toUrl('/asistencia', '<i class="fas fa-tasks"></i> Asistencia'))
             ->add(Link::toUrl('/horario', '<i class="fas fa-user-clock"></i> Horario'))
             ->add(Link::toUrl('/cargos', '<i class="fas fa-tools"></i> Cargos'))
@@ -114,7 +114,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE CAPACITACIONES*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-scroll"></i> <span>Capacitaciones</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -124,7 +124,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE VEHICULOS*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-truck-moving"></i> <span>Vehiculos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -135,7 +135,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE COMPRA*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-money-bill-wave"></i> <span>Compra</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -145,7 +145,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE COTIZACIONES*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",            
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),            
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-clipboard-list"></i> <span>Cotizaciones</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -155,7 +155,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE ACTIVOS*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>Activos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -165,7 +165,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE SOLICITUD*/
-            ->addIf(Auth::user()->UsRol === "Cliente" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>Solicitud</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             ->addParentClass('treeview')
@@ -175,11 +175,11 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             )
             /*PESTAÑA DE ARTICULOS*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Link::toUrl('/articulos-proveedor', '<i class="far fa-newspaper"></i> <span>Articulos</span>'))
             )
             /*PESTAÑA DE CODIGO QR*/
-            ->addIf(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador",
+            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
 
             (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>Codigo Qr</span>'))
             )
