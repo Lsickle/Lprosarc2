@@ -97,6 +97,7 @@ class TratamientoController extends Controller
         for ($x=0; $x < count($request['PreTratName']); $x++) {
             $pretratamiento = new Pretratamiento();
             $pretratamiento->PreTratName = $request['PreTratName'][$x];
+            $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
             $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
             $pretratamiento->PreTratDelete = 0;
             $pretratamiento->save();
