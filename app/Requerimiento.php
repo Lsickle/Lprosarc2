@@ -19,13 +19,9 @@
 			return $this->belongsTo('App\Respel','FK_ReqRespel', 'ID_Respel');
 		}
 		
-		public function Tratamiento()
+		public function tratamientos()
 		{
-			return $this->belongsTo('App\Respel', 'FK_ReqTrata', 'ID_Trat');
+			return $this->hasMany('App\Tratamiento', 'FK_ReqTrata', 'ID_Trat');
 		}
 
-		public function Tarifa()
-		{
-			return $this->belongsTo('App\Tarifa', 'FK_ReqTarifa', 'ID_Tarifa');
-		}
 	}
