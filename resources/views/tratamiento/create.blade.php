@@ -72,7 +72,9 @@
     }
     function EliminarPreTrat(id){
         $("#pretratname"+id).remove();
+        $("#pretratdescription"+id).remove();
         $("#createtratamientoForm").validator('update');
+        contador= parseInt(contador)-1;
     }
 </script>
 @endsection

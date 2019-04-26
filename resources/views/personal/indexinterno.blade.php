@@ -15,7 +15,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="PersonalsTable" class="table table-compact table-bordered table-striped">
+            <table id="PersonalsInternoTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Documento</th>
@@ -41,7 +41,7 @@
                   <td>{{$Personal->PersCellphone}}</td>
                   <td>{{$Personal->CargName}}</td>
                   <td>{{$Personal->AreaName}}</td>
-                  <td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>Ver</a></td>
+                  <td>{{$Personal->PersSlug}}</td>
                 </tr>
                 @endforeach
               </tbody>

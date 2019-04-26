@@ -749,7 +749,22 @@ $(document).ready(function() {
         ]
     });
 });
-
+$(document).ready(function() {
+    $('#PersonalsInternoTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true,
+        "columnDefs": [{
+                "targets": 6,
+                "data": "PersSlug",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+                }
+            }
+        ]
+    });
+});
 </script>
 <script>
 $(document).ready(function() {
@@ -1377,4 +1392,9 @@ $(document).ready(function() {
 </script>
 @endif
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
 @yield('NewScript')
