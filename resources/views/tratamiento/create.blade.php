@@ -43,17 +43,14 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                      <div class="box box-solid">
-                                        <div class="box-header with-border">
-                                          <h3 class="box-title">Pretratamientos</h3>
+                                      <div class="panel panel-default" style="margin-top: 2%;">
+                                        <div class="panel-heading">
+                                          <h3 class="panel-title">Pretratamientos</h3>
                                         </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                          <div class="box-group" id="accordion">
-
-                                          </div>
+                                        <div class="panel-body" id="pretratamientosPanel">
+                                          {{-- /*lista de pretratamientos*/ --}}
+                                          
                                         </div>
-                                        <!-- /.box-body -->
                                       </div>
                                       <!-- /.box -->
                                     </div>
@@ -80,15 +77,26 @@
 
 <script>
     var contador = 1;
+    function attachPopover(){
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                trigger: 'hover',
+                placement: 'auto',
+            });
+        });
+    };
     function AgregarPreTrat(){
         var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
-        $("#accordion").append(pretratamiento);
+        $("#pretratamientosPanel").append(pretratamiento);
         $("#createtratamientoForm").validator('update');
         contador= parseInt(contador)+1;
+        attachPopover();
     }
     function EliminarPreTrat(id){
         $("#pretratname"+id).remove();
         $("#pretratdescription"+id).remove();
+        $("#pretratsparator"+id).remove();
         $("#createtratamientoForm").validator('update');
         contador= parseInt(contador)-1;
     }
