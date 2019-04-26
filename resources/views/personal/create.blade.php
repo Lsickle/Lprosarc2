@@ -11,7 +11,7 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" {{-- data-toggle="validator" --}}>
 						@csrf
 						@include('layouts.partials.spinner')
 						<div class="box-body" hidden onload="renderTable()" id="readyTable">
@@ -78,8 +78,8 @@
 														</select>
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors">*</small>
-														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="Use minimo 6 caracteres" type="text" class="form-control document" id="PersDocNumber">
+														<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors errorsdoc">*</small>
+														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-remote-error="La Persona Ya Existe" data-minlength-error="Use minimo 6 caracteres" data-remote="" type="text" class="form-control document" id="PersDocNumber">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
@@ -159,7 +159,7 @@
 														</div>
 													</div>
 													<div class="box-footer" style="float:right; margin-right:5%;">
-														<button type="submit" class="btn btn-primary">Registrar</button>
+														<input type="submit" class="btn btn-primary" value="Registrar">
 													</div>
 												</div>
 											</div>
@@ -215,7 +215,7 @@
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
-						}
+						},
 					})
 				}
 			});
@@ -256,6 +256,42 @@
 				}
 			});
 
+			$('#PersDocNumber').on('change', function() { 
+				var id = $('#PersDocNumber').val();
+				$('#PersDocNumber').attr('data-remote', '/verif-document-personal/'+id);
+			});
+			// $('#PersDocNumber').on('change', function() { 
+			// 	var id = $('#PersDocNumber').val();
+			// 	if(id != 0){
+			// 		$.ajaxSetup({
+			// 			headers: {
+			// 				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+			// 			}
+			// 		});
+			// 		$.ajax({
+			// 			url: "/"+id,
+			// 			method: 'GET',
+			// 			data:{},
+			// 			success: function(res){
+			// 				alert(res);
+			// 				if(res != ''){
+			// 					$(".errorsdoc").empty();
+			// 					$(".errorsdoc").append('*');
+			// 					$('.sw-btn-next').show();
+			// 				}
+			// 				else{
+			// 					$(".errorsdoc").empty();
+			// 					$(".errorsdoc").append('Ya existe esta persona en la base de datos');
+			// 					$("#PersDocNumber").parent().addClass('has-error has-danger');
+			// 					$('.sw-btn-next').hide();
+			// 				}
+			// 			},
+			// 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			// 			       alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+			// 			   } 
+			// 		})
+			// 	}
+			// });
 		});
 		function NewInputA(){
 			document.getElementById("NewArea").style.display = 'block';

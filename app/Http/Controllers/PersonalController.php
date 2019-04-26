@@ -112,28 +112,6 @@ class PersonalController extends Controller
             return route('home');
         }
     }
-    /*Funcion para ver por medio de Ajax las areas que le competen a una Sede*/
-    public function AreasSedes(Request $request, $id)
-    {
-        if ($request->ajax()) {
-            $Areas = DB::table('areas')
-                ->select('*')
-                ->where('FK_AreaSede', $id)
-                ->get();
-            return response()->json($Areas);
-        }
-    }
-    /*Funcion para ver por medio de Ajax los cargos que le competen a una Area*/
-    public function CargosAreas(Request $request, $id)
-    {
-        if ($request->ajax()) {
-            $Cargos = DB::table('cargos')
-            ->select('*')
-            ->where('CargArea', $id)
-            ->get();
-            return response()->json($Cargos);
-        }
-    }
     /**
      * Store a newly created resource in storage.
      *

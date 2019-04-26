@@ -71,13 +71,6 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->ajax()) {
-            $municipio = DB::table('municipios')
-            ->select('*')
-            ->where('FK_MunCity', $id)
-            ->get();
-            return response()->json($municipio);
-        }
     }
 
     /**
