@@ -150,6 +150,19 @@ return [
     'Paso 2'                  => 'Paso 2',
     'Paso 3'                  => 'Paso 3',
     
+    // rol
+    'Administrador'           => 'Administrador',
+    'Programador'             => 'Programador',
+    'Cliente'                 => 'Cliente',
+    'JefeLogistica'           => 'JefeLogistica',
+    'JefeOperacion'           => 'JefeOperacion',
+    'AsistenteLogistica'      => 'AsistenteLogistica',
+    'AuxiliarLogistica'       => 'AuxiliarLogistica',
+    'SupervisorTurno'         => 'SupervisorTurno',
+    'EncargadoAlmacen'        => 'EncargadoAlmacen',
+    'EncargadoHorno'          => 'EncargadoHorno',
+    'Vigilante'               => 'Vigilante',
+
     // form
     'emailaddress'            => 'Correo electrónico',
     'post'                    => 'enviar',
@@ -217,6 +230,7 @@ return [
     'clientcliente'           => 'Cliente',
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
+    'clientsidebar'           => 'Mi Empresa',
 
     // sede
     'csederegister'           => 'Registro de sede',

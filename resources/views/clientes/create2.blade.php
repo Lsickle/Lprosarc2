@@ -45,7 +45,9 @@
 											<ul>
 												<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
 												<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>
-												<li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
+                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                                <li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
+                                                @endif
 											</ul>
 											<!-- general form elements -->
 								            <div class="row">
@@ -59,16 +61,16 @@
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="5"  maxlength="100" required>
+                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="2"  maxlength="100" required>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
                                                             <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" minlength="2"  maxlength="100" required>
                                                         </div>
-                                                        @if(Auth::user()->UsRol === "Administrador")
+                                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                                         <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                             <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
-                                                            <select class="form-control" id="categoria" name="CliCategoria" required>
+                                                            <select class="form-control select" id="categoria" name="CliCategoria" required>
                                                                 <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                                 <option>{{ trans('adminlte_lang::message.clientcliente') }}</option>
                                                                 <option>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
@@ -93,16 +95,16 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
-                                                            <select class="form-control" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
+                                                            <select class="form-control select" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
                                                                 <option onclick="Disabled()" value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                                 @foreach ($Departamentos as $Departamento)		
-                                                                    <option value="{{$Departamento->ID_Depart}}" onclick="Enabled()">{{$Departamento->DepartName}}</option>
+                                                                    <option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label>
-                                                            <select class="form-control" id="municipio" name="FK_SedeMun"  disabled>
+                                                            <select class="form-control select" id="municipio" name="FK_SedeMun">
                                                                 <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                             </select>
                                                         </div>
@@ -139,7 +141,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
+                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
+                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+                                                    </div>
+                                                    @endif
                                                 </div>
+                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                                 <div id="step-3" class="">
                                                     <div id="form-step-2" role="form" data-toggle="validator">
                                                         <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
@@ -153,7 +161,7 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="PersDocType">{{ trans('adminlte_lang::message.persdoctype') }}</label><small class="help-block with-errors">*</small>
-                                                            <select class="form-control" id="PersDocType" name="PersDocType" required>
+                                                            <select class="form-control select" id="PersDocType" name="PersDocType" required>
                                                                 <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                                 <option value="CC">{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
                                                                 <option value="CE">{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
@@ -170,7 +178,7 @@
                                                             <input type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label><small class="help-block with-errors">*</small>
+                                                            <label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label><small class="help-block with-errors"></small>
                                                             <input type="text" class="form-control nombres" id="PersSecondName" name="PersSecondName" maxlength="25">
                                                         </div>
                                                         <div class="form-group col-md-12">
@@ -190,15 +198,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <input hidden value="1" name="number">
-                                                    <div class="form-group col-md-12">
-                                                        <div class="box-footer" style="float:right; margin-right:5%;">
-                                                            <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
-                                                        </div>
+                                                    @endif
+                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
+                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
                                                     </div>
                                                 </div>
 											</div>
 										</div>
+                                        {{-- <div class="col-md-12"> --}}
+                                        {{-- </div> --}}
 									</div>
 								</div>
 							</form>
@@ -216,6 +224,14 @@
 	<!-- /.box -->
 </div>
 <script>
+    function Enabled(){
+        $('.municipio').attr('disabled',false);
+        // document.getElementById("municipio").disabled = false;
+    }
+    function Disabled(){
+        $('.municipio').attr('disabled',true);
+        // document.getElementById("municipio").disabled = true;
+    }
     function Tel(){
         $(".tel2").change(function(){
             if($(this).val().length>10){
@@ -228,12 +244,13 @@
         document.getElementById('extension2').style.display = 'block';
         $('#tel').remove();
     }
-    function Enabled(){
-        document.getElementById("municipio").disabled = false;
-    }
-    function Disabled(){
-        document.getElementById("FK_SedeMun").disabled = true;
-    }
+</script>
+<script>
+
+    $(".js-programmatic-enable").on("click", function () {
+  $(".js-example-disabled").prop("disabled", false);
+  $(".js-example-disabled-multi").prop("disabled", false);
+});
 </script>
 
 @endsection

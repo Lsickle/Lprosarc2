@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
+use App\Http\Requests\clienteStoreRequest;
 use App\Departamento;
 use App\Municipio;
 use App\Cliente;
 use App\audit;
-use App\sede;
+use App\Sede;
 use App\Area;
 use App\Cargo;
 use App\Personal;
@@ -26,14 +26,14 @@ class clientcontoller extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $clientes = Cliente::all();
             return view('clientes.index', compact('clientes'));
         }
-        if(Auth::user()->UsRol === "Cliente"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
             return redirect()->route('home');
         }
-        if(Auth::user()->UsRol === "Administrador"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $clientes = Cliente::where('CliDelete', 0)->get();
             return view('clientes.index', compact('clientes'));
         }else{
@@ -48,19 +48,22 @@ class clientcontoller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === "Cliente"){
-            if(Auth::user()->FK_UserPers === NULL){
+        switch (Auth::user()->UsRol) {
+            case "Cliente":
+                if(Auth::user()->FK_UserPers === NULL){
+                    $Departamentos = Departamento::all();
+                    return view('clientes.create2', compact('Departamentos'));
+                    break;
+                }else{
+                    return redirect()->route('home');
+                    break;
+                }
+            case "Administrador":
                 $Departamentos = Departamento::all();
                 return view('clientes.create2', compact('Departamentos'));
-            }else{
-                return redirect()->route('home');
-            }
-        }
-        if(Auth::user()->UsRol === "Administrador"){
-            $Departamentos = Departamento::all();
-                return view('clientes.create2', compact('Departamentos'));
-        }else{
-            abort(403);
+                break;
+            default:
+                abort(403);
         }
     }
 
@@ -70,46 +73,18 @@ class clientcontoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(clienteStoreRequest $request)
     {
-        if($request->input("number") == "1"){
-            $validate = $request->validate([
-                'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit',
-                'CliName'       => 'required|max:255|unique:clientes,CliName',
-                'CliShortname'  => 'required|max:255|unique:clientes,CliName',
-                'CliCategoria'  => 'max:32|alpha|nullable',
-
-                'SedeName'      => 'required|max:128|min:1',
-                'SedeAddress'   => 'alpha_num|required|max:255',
-                'SedePhone1'    => 'max:11|min:11|nullable',
-                'SedeExt1'      => 'min:3|max:5|nullable',
-                'SedePhone2'    => 'max:11|min:11|nullable',
-                'SedeExt2'      => 'min:3|max:5|nullable',
-                'SedeEmail'     => 'required|email|max:128',
-                'SedeCelular'   => 'min:12|max:12',
-
-                'AreaName'      => 'required|max:128|alpha',
-
-                'CargName'      => 'required|max:128|alpha',
-
-                'PersFirstName' => 'required|alpha|max:64',
-                'PersLastName'  => 'required|alpha|max:64',
-                'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail',
-                'PersSecondName'=> 'alpha|max:64|nullable',
-                'PersDocNumber' => 'required|max:64|unique:personals,PersDocNumber',
-                'PersDocType'   => 'required|max:3|min:2',
-            ]);
-
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
-            if(Auth::user()->UsRol === "Cliente"){
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
                 $Cliente->CliCategoria = 'Cliente';
             }else{
                 $Cliente->CliCategoria = $request->input('CliCategoria');
             }
-            $Cliente->CliSlug = substr(md5(rand()), 0, 99999).$request->input('CliShortname');
+            $Cliente->CliSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('CliShortname').substr(md5(rand()), 0,32);
             $Cliente->CliDelete = 0;
             $Cliente->save();
 
@@ -137,7 +112,7 @@ class clientcontoller extends Controller
             }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 0, 99999).$request->input('SedeName');
+            $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->FK_SedeMun = 3;
@@ -163,52 +138,38 @@ class clientcontoller extends Controller
             $Personal->PersSecondName = $request->input("PersSecondName"); 
             $Personal->PersDocType = $request->input("PersDocType");
             $Personal->PersDocNumber = $request->input("PersDocNumber");
-            $Personal->PersType = 1;//falta definir que boolean es externo
-            $Personal->PersSlug = substr(md5(rand()), 0, 99999).$request->input("PersFirstName"); 
+            $Personal->PersType = 1;
+            $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input("PersFirstName").substr(md5(rand()), 0,32);
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
 
-            if(Auth::user()->UsRol === "Cliente"){
-                $user = User::where('id', Auth::user()->id)->first();
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                $user = User::where('ID_Cli', Auth::user()->ID_Cli)->first();
                 $user->FK_UserPers = $Personal->ID_Pers;
                 $user->save();
             }
-            
             return redirect()->route('clientes.index');
-        }else{
-        $Cliente = new Cliente();
-        $Cliente->CliNit = $request->input('CliNit');
-        $Cliente->CliName = $request->input('CliName');
-        $Cliente->CliShortname = $request->input('CliShortname');
-        $Cliente->CliCategoria = $request->input('CliCategoria');
-        $Cliente->CliType = $request->input('CliType');
-        $Cliente->CliSlug = substr(md5(rand()), 0, 99999).$request->input('CliShortname');
-        $Cliente->CliDelete = '0';
-        $Cliente->save();
-
-        return redirect()->route('clientes.index');
-        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
     public function show(Cliente $cliente)
     {
-        if(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
         }
     }
-    public function viewClient($id)
+    public function viewClientShow($id)
     {
-        if(Auth::user()->UsRol === "Cliente"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
             
             $user = User::select('FK_UserPers')->where('UsSlug', $id)->first(); 
             $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
@@ -226,7 +187,7 @@ class clientcontoller extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
     public function edit(Cliente $cliente)
@@ -238,14 +199,22 @@ class clientcontoller extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente)
     {   
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
+        $validate = $request->validate([
+            'CliName'       => 'required|max:255|unique:clientes,CliName,'.$cliente->ID_Cli.',ID_Cli',
+            'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit,'.$cliente->ID_Cli.',ID_Cli',
+            'CliShortname'  => 'required|max:255|unique:clientes,CliShortname,'.$cliente->ID_Cli.',ID_Cli',
+            'CliCategoria'  => 'max:32|alpha|nullable',
+        ]);
+        
         $cliente->fill($request->all());
         $cliente->save();
+
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();
         $log->AuditTabla="clientes";
@@ -260,13 +229,12 @@ class clientcontoller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($id, Cliente $cliente)
-    public function destroy($id){
-        if(Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Programador"){
-            $Cliente = Cliente::where('CliSlug', $id)->first();
+    public function destroy($ID_Cli){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+            $Cliente = Cliente::where('CliSlug', $ID_Cli)->first();
                 if ($Cliente->CliDelete == 0) {
                     $Cliente->CliDelete = 1;
                 }
