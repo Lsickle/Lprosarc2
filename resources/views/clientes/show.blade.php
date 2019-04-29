@@ -15,10 +15,10 @@
           <!-- About Me Box -->
           <div class="box box-primary">
               <div class="box-body box-profile">
-                @if (Auth::user()->UsRol === 'Administrador' || Auth::user()->UsRol === 'Programador' || Auth::user()->UsRol === 'Cliente')
+                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente'))
                   <a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
                 @endif
-                @if (Auth::user()->UsRol === 'Administrador' || Auth::user()->UsRol === 'Programador')
+                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                 @component('layouts.partials.modal')
                 {{$cliente->ID_Cli}}
                 @endcomponent
@@ -38,7 +38,7 @@
 					@endif
                 @endif
                 <h3 class="profile-username text-center">{{$cliente->CliShortname}}</h3>
-                @if (Auth::user()->UsRol === 'Administrador' || Auth::user()->UsRol === 'Programador')
+                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                   	<p class="text-muted text-center">{{$cliente->CliCategoria}}</p>
                 @endif
 				<ul class="list-group list-group-unbordered">

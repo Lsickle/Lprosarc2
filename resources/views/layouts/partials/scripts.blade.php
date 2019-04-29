@@ -1390,6 +1390,21 @@ $(document).ready(function() {
         });
     });
 </script>
+<script>
+    $(document).ready(function(){    
+        if({{old('SedeExt2')}} !== null || {{old('SedePhone2')}} !== null){
+            $('#sedeinputext2').prop('disabled', false);
+        };
+        
+    });
+</script>
+<script>
+    $(document).ready(function(){    
+    if({{old('SedeExt1')}} !== null || {{old('SedePhone1')}} !== null ){
+            $('#sedeinputext1').prop('disabled', false);
+        };
+    });
+</script>
 @endif
 
 <script>
