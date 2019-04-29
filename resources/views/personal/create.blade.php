@@ -1,6 +1,10 @@
 @extends('layouts.app')
-@section('htmlheader_title','Personal')
-@section('contentheader_title', 'Registro de Personal')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.personaltitleregister') }}
+@endsection
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
@@ -11,19 +15,19 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" {{-- data-toggle="validator" --}}>
+					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@include('layouts.partials.spinner')
 						<div class="box-body" hidden onload="renderTable()" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
-								<p>Ingrese la informacion necesara completando todos los campos requeridos segun la informacion del residuo que desea registrar en cada paso</p>
+								<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>
 								<div class="smartwizard">
 									<ul>
-										<li><a href="#step-1"><b>Paso 1</b><br /><small>Area y cargo de la persona</small></a></li>
-										<li><a href="#step-2"><b>Paso 2</b><br /><small>Datos basicos de contacto</small></a></li>
+										<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso1smart-wizzard') }}</small></a></li>
+										<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso2smart-wizzard') }}</small></a></li>
 										@if(Auth::user()->UsRol == 'Programador' || Auth::user()->UsRol == 'Administrador')
 											<input name="PersType" id="PersType" type="text" hidden value="1">
-											<li><a href="#step-3"><b>Paso 3</b><br /><small>Complemento de datos de la personal</small></a></li>
+											<li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso3smart-wizzard') }}</small></a></li>
 										@else
 											<input name="PersType" id="PersType" type="text" hidden value="0">
 										@endif
@@ -79,7 +83,7 @@
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors errorsdoc">*</small>
-														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-remote-error="La Persona Ya Existe" data-minlength-error="Use minimo 6 caracteres" data-remote="" type="text" class="form-control document" id="PersDocNumber">
+														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="Use minimo 6 caracteres" type="text" class="form-control document" id="PersDocNumber">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
@@ -107,7 +111,7 @@
 													</div>
 												</div>
 												@if(Auth::user()->UsRol == 'Cliente')
-													<div class="box-footer" style="float:right; margin-right:5%;">
+													<div class="box-footer pull-right">
 														<button type="submit" class="btn btn-primary">Registrar</button>
 													</div>
 												@endif
@@ -255,43 +259,6 @@
 					})
 				}
 			});
-
-			$('#PersDocNumber').on('change', function() { 
-				var id = $('#PersDocNumber').val();
-				$('#PersDocNumber').attr('data-remote', '/verif-document-personal/'+id);
-			});
-			// $('#PersDocNumber').on('change', function() { 
-			// 	var id = $('#PersDocNumber').val();
-			// 	if(id != 0){
-			// 		$.ajaxSetup({
-			// 			headers: {
-			// 				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			// 			}
-			// 		});
-			// 		$.ajax({
-			// 			url: "/"+id,
-			// 			method: 'GET',
-			// 			data:{},
-			// 			success: function(res){
-			// 				alert(res);
-			// 				if(res != ''){
-			// 					$(".errorsdoc").empty();
-			// 					$(".errorsdoc").append('*');
-			// 					$('.sw-btn-next').show();
-			// 				}
-			// 				else{
-			// 					$(".errorsdoc").empty();
-			// 					$(".errorsdoc").append('Ya existe esta persona en la base de datos');
-			// 					$("#PersDocNumber").parent().addClass('has-error has-danger');
-			// 					$('.sw-btn-next').hide();
-			// 				}
-			// 			},
-			// 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			// 			       alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-			// 			   } 
-			// 		})
-			// 	}
-			// });
 		});
 		function NewInputA(){
 			document.getElementById("NewArea").style.display = 'block';

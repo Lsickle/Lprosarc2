@@ -180,14 +180,19 @@ return [
     // personal
     'fullname'                => 'Nombre completo',
 
+    'personalhtmlheader_title' => 'Personal',
+    'personaltitleregister'   => 'Registro de Personal',
     'personaltitleh2'         => 'Persona de Contacto',
+    'personalpaso1smart-wizzard' => 'Area y cargo de la persona',
+    'personalpaso2smart-wizzard' => 'Datos basicos de contacto',
+    'personalpaso3smart-wizzard' => 'Complemento de datos de la personal',
     'persdoctype'             => 'Tipo de Documento',
     'persdocument'            => 'Documento',
     'persfirstname'           => 'Primer Nombre',
     'perssecondtname'         => 'Segundo Nombre',
     'perslastname'            => 'Apellidos',
-    'persdoctypenit'           => 'Nit',
-    'persdoctyperut'           => 'Rut',
+    'persdoctypenit'          => 'Nit',
+    'persdoctyperut'          => 'Rut',
     'persdoctypecc'           => 'Cedula de Ciudadania',
     'persdoctypece'           => 'Cedula Extranjera',
 
