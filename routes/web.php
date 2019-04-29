@@ -47,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/place/municipal','municipalityController');
 	Route::resource('/cargos','CargoController');
 	Route::resource('/personal', 'PersonalController');
-	Route::get('/personal-interno', 'PersonalController@indexInterno');
+	Route::get('/personal-interno', 'PersonalController@indexInterno')->name('personal-interno');
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');

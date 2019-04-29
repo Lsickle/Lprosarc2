@@ -1,12 +1,16 @@
 @extends('layouts.app')
-@section('htmlheader_title','Personal')
-@section('contentheader_title', '')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.personaltitleshow') }}
+@endsection
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		{{-- seccion de prueba --}}
 		@foreach($Personas as $Persona)
 			<div class="row">
-				@if(Auth::user()->UsRol == 'Cliente' || $Persona->ID_Cli <> 1)
+				@if(Auth::user()->UsRol == 'Cliente' && $Persona->ID_Cli <> 1)
 					<div class="col-md-12" {{-- style="font-size: 2rem;" --}}>
 				@else
 					<div class="col-md-6">
@@ -42,10 +46,9 @@
 								<li class="list-group-item">
 									<b>Documento</b> <a class="pull-right textpopover">{{$Persona->PersDocType." ".$Persona->PersDocNumber}}</a>
 								</li>
-							@if(Auth::user()->UsRol == 'Cliente' || $Persona->ID_Cli <> 1)
+							@if(Auth::user()->UsRol == 'Cliente' && $Persona->ID_Cli <> 1)
 								<li class="list-group-item">
 									<b>Dirección</b> <a href="#" class="pull-right textpopover" title="Dirección" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersAddress}}</p>">{{$Persona->PersAddress}}</a>
-									{{-- <a href="#" class="pull-right textpopover" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersAddress}}</p>">{{$Persona->PersAddress <> null ? $Persona->PersAddress : 'N/A'}}</a> --}}
 								</li>
 								<li class="list-group-item">
 									<b>Cargo</b> <a class="pull-right textpopover">{{$Persona->CargName}}</a>

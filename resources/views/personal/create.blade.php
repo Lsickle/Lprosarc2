@@ -17,6 +17,15 @@
 					<!-- form start -->
 					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						@include('layouts.partials.spinner')
 						<div class="box-body" hidden onload="renderTable()" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
@@ -25,7 +34,7 @@
 									<ul>
 										<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso1smart-wizzard') }}</small></a></li>
 										<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso2smart-wizzard') }}</small></a></li>
-										@if(Auth::user()->UsRol == 'Programador' || Auth::user()->UsRol == 'Administrador')
+										@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador'))
 											<input name="PersType" id="PersType" type="text" hidden value="1">
 											<li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso3smart-wizzard') }}</small></a></li>
 										@else
@@ -37,33 +46,47 @@
 											<div class="col-md-12">
 												<div id="form-step-0" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
-														<label for="Sede">Sede</label><small class="help-block with-errors">*</small>
-														<select name="Sede" id="Sede" class="form-control" required>
-															<option value="">Seleccione...</option>
+														<label for="Sede">{{ trans('adminlte_lang::message.namesede') }}</label><small class="help-block with-errors">*</small>
+														<select name="Sede" id="Sede" class="form-control select" required>
+															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 															@foreach($Sedes as $Sede)
-																<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
+																<option value="{{$Sede->ID_Sede}}" {{old('Sede') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 															@endforeach
 														</select>
 													</div>
 													<div class="form-group col-md-6">
-														<label for="CargArea">Area</label><small class="help-block with-errors">*</small>
+														<label for="CargArea">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
 														<select name="CargArea" id="CargArea" class="form-control" required>
-															<option value="">Seleccione...</option>
+															@if($Areas == null)
+																<option value="" onclick="HiddenNewInputA()">{{ trans('adminlte_lang::message.select') }}</option>
+															@else
+																@foreach($Areas as $Area)
+																	<option value="{{$Area->ID_Area}}" onclick="HiddenNewInputA()" {{old('CargArea') == $Area->ID_Area ? 'selected' : '' }}>{{$Area->AreaName}}</option>
+																@endforeach
+																<option onclick="NewInputA()" value="0" {{old('CargArea') == 0 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.newarea') }}</option>
+															@endif
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
-														<label for="FK_PersCargo">Cargo del Personal</label><small class="help-block with-errors">*</small>
+														<label for="FK_PersCargo">{{ trans('adminlte_lang::message.personalcarg') }}</label><small class="help-block with-errors">*</small>
 														<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
-															<option value="">Seleccione...</option>
+															@if($Cargos == null)
+																<option value="" onclick="HiddenNewInputC()">{{ trans('adminlte_lang::message.select') }}</option>
+															@else
+																@foreach($Cargos as $Cargo)
+																	<option value="{{$Cargo->ID_Carg}}" onclick="HiddenNewInputC()" {{old('FK_PersCargo') == $Cargo->ID_Carg ? 'selected' : '' }}>{{$Cargo->CargName}}</option>
+																@endforeach
+																<option onclick="NewInputC()" value="0" {{old('FK_PersCargo') == 0 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.newcargo') }}</option>
+															@endif
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">
-														<label for="NewInputA">¿Cuál Area?</label><small class="help-block with-errors">*</small>
-														<input name="NewArea" type="text" id="NewInputA" class="form-control inputText">
+														<label for="NewInputA">{{ trans('adminlte_lang::message.namenewarea') }}</label><small class="help-block with-errors">*</small>
+														<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewArea" type="text" id="NewInputA" class="form-control inputText" value="{{ trans('adminlte_lang::message.newarea') }}">
 													</div>
 													<div class="form-group col-md-6" id="NewCargo" style="display: none;">
-														<label for="NewInputC">¿Cuál Cargo?</label><small class="help-block with-errors">*</small>
-														<input name="NewCargo" type="text" id="NewInputC" class="form-control inputText">
+														<label for="NewInputC">{{ trans('adminlte_lang::message.namenewcargo') }}</label><small class="help-block with-errors">*</small>
+														<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" value="{{ trans('adminlte_lang::message.newcargo') }}">
 													</div>
 												</div>
 											</div>
@@ -72,98 +95,102 @@
 											<div class="col-md-12">
 												<div id="form-step-1" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
-														<label for="PersDocType">Tipo de Documento</label><small class="help-block with-errors">*</small>
-														<select name="PersDocType" id="PersDocType" class="form-control" required>
-															<option value="">Seleccione...</option>
-															<option value="CC">Cedula de Ciudadania</option>
-															<option value="CE">Cedula Extranjera</option>
-															<option value="NIT">Nit</option>
-															<option value="RUT">Rut</option>
+														<label for="PersDocType">{{ trans('adminlte_lang::message.persdoctype') }}</label><small class="help-block with-errors">*</small>
+														<select name="PersDocType" id="PersDocType" class="form-control select" required>
+															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+															<option value="CC" {{old('PersDocType') == 'CC' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
+															<option value="CE" {{old('PersDocType') == 'CE' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypece') }}</option>
+															<option value="NIT" {{old('PersDocType') == 'NIT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
+															<option value="RUT" {{old('PersDocType') == 'RUT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersDocNumber">Numero del Documento</label><small class="help-block with-errors errorsdoc">*</small>
-														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="Use minimo 6 caracteres" type="text" class="form-control document" id="PersDocNumber">
+														<label for="PersDocNumber">{{ trans('adminlte_lang::message.persdocument') }}</label><small class="help-block with-errors errorsdoc">*</small>
+														<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" type="text" class="form-control document" id="PersDocNumber" value="{{old('PersDocNumber')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersFirstName">Primer Nombre</label><small class="help-block with-errors">*</small>
-														<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName">
+														<label for="PersFirstName">{{ trans('adminlte_lang::message.persfirstname') }}</label><small class="help-block with-errors">*</small>
+														<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersSecondName">Segundo Nombre</label>
-														<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName">
+														<label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label>
+														<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName" value="{{old('PersSecondName')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersLastName">Apellidos</label><small class="help-block with-errors">*</small>
-														<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName">
+														<label for="PersLastName">{{ trans('adminlte_lang::message.perslastname') }}</label><small class="help-block with-errors">*</small>
+														<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName" value="{{old('PersLastName')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersEmail">Correo Electrónico</label><small class="help-block with-errors">*</small>
-														<input type="email" name="PersEmail" id="PersEmail" class="form-control" required>
+														<label for="PersEmail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
+														<input type="email" name="PersEmail" id="PersEmail" class="form-control" required placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{old('PersEmail')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersCellphone">Numero de Celular</label><small class="help-block with-errors">*</small>
-														<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="Use minimo 10 caracteres" class="form-control mobile" id="PersCellphone">
+														<label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
+														<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersAddress">Direccion</label>
-														<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress">
+														<label for="PersAddress">{{ trans('adminlte_lang::message.address') }}</label>
+														<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
 													</div>
 												</div>
 												@if(Auth::user()->UsRol == 'Cliente')
+													<input type="text" name="PersEPS" hidden value="0">
+													<input type="text" name="PersARL" hidden value="0">
+													<input type="text" name="PersIngreso" hidden value="0000-00-00">
+													<input type="text" name="PersSalida" hidden value="0000-00-00">
 													<div class="box-footer pull-right">
-														<button type="submit" class="btn btn-primary">Registrar</button>
+														<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
 													</div>
 												@endif
 											</div>
 										</div>
-										@if(Auth::user()->UsRol == 'Programador' || Auth::user()->UsRol == 'Administrador')
+										@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador'))
 											<div id="step-3" class="">
 												<div class="col-md-12">
 													<div id="form-step-2" role="form" data-toggle="validator">
 														<div class="form-group col-md-6">
-															<label for="PersBirthday">Fecha de Nacimiento</label>
-															<input name="PersBirthday" autofocus="true" type="date" class="form-control" id="PersBirthday">
+															<label for="PersBirthday">{{ trans('adminlte_lang::message.persbirthday') }}</label>
+															<input name="PersBirthday" autofocus="true" type="date" class="form-control" id="PersBirthday" value="{{old('PersBirthday')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersPhoneNumber">Numero de Telefono Local</label>
-															<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber">
+															<label for="PersPhoneNumber">{{ trans('adminlte_lang::message.persphone') }}</label>
+															<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber" value="{{old('PersPhoneNumber')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersEPS">EPS</label><small class="help-block with-errors dir">*</small>
-															<input name="PersEPS" autofocus="true" type="text" class="form-control" id="PersEPS" required>
+															<label for="PersEPS">{{ trans('adminlte_lang::message.perseps') }}</label><small class="help-block with-errors dir">*</small>
+															<input data-minlength="5" name="PersEPS"  autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersEPS" required value="{{old('PersEPS')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersARL">ARL</label><small class="help-block with-errors dir">*</small>
-															<input name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required>
+															<label for="PersARL">{{ trans('adminlte_lang::message.persarl') }}</label><small class="help-block with-errors dir">*</small>
+															<input data-minlength="5" name="PersARL" autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersARL" required value="{{old('PersARL')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersLibreta">Numero de Libreta</label>
-															<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta">
+															<label for="PersLibreta">{{ trans('adminlte_lang::message.perslibreta') }}</label>
+															<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta" value="{{old('PersLibreta')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersPase">Numero del Pase</label>
-															<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase">
+															<label for="PersPase">{{ trans('adminlte_lang::message.perspase') }}</label>
+															<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{old('PersPase')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersBank">Banco</label>
-															<input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank">
+															<label for="PersBank">{{ trans('adminlte_lang::message.persbank') }}</label>
+															<input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank" value="{{old('PersBank')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersBankAccaunt">Numero de Cuenta</label><small class="help-block with-errors"></small>
-															<input data-minlength="19" name="PersBankAccaunt" data-error="Use minimo 16 caracteres" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt">
+															<label for="PersBankAccaunt">{{ trans('adminlte_lang::message.persbankaccaunt') }}</label><small class="help-block with-errors"></small>
+															<input data-minlength="19" name="PersBankAccaunt" data-error="{{ trans('adminlte_lang::message.data-error-minlength16') }}" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{old('PersBankAccaunt')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersIngreso">Fecha de Entrada</label><small class="help-block with-errors dir">*</small>
-															<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required>
+															<label for="PersIngreso">{{ trans('adminlte_lang::message.persingreso') }}</label><small class="help-block with-errors dir">*</small>
+															<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{old('PersIngreso')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersSalida">Fecha de Salida</label><small class="help-block with-errors dir">*</small>
-															<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required>
+															<label for="PersSalida">{{ trans('adminlte_lang::message.perssalida') }}</label><small class="help-block with-errors dir">*</small>
+															<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required value="{{old('PersSalida')}}">
 														</div>
 													</div>
 													<div class="box-footer" style="float:right; margin-right:5%;">
-														<input type="submit" class="btn btn-primary" value="Registrar">
+														<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
 													</div>
 												</div>
 											</div>
@@ -184,6 +211,19 @@
 @section('NewScript')
 	<script>
 		$(document).ready(function(){
+			if({{old('CargArea')}} == 0){
+				$("#NewInputA").val("{{old('NewArea')}}");
+				$('#FK_PersCargo').val("0");
+				document.getElementById("NewArea").style.display = 'block';
+				document.getElementById("NewInputA").required = true;
+				document.getElementById("divFK_PersCargo").style.display = 'none';
+				document.getElementById("FK_PersCargo").required = false;
+			}
+			if({{old('FK_PersCargo')}} == 0){
+				$("#NewInputC").val("{{old('NewCargo')}}");
+				document.getElementById("NewCargo").style.display = 'block';
+				document.getElementById("NewInputC").required = true;
+			}
 			$('#Sede').on('change', function() { 
 				var id = $('#Sede').val();
 				if(id != 0){
@@ -200,22 +240,22 @@
 							if(res != ''){
 								$("#CargArea").empty();
 								var areas = new Array();
-								$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="">Seleccione...</option>`);
+								$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 								for(var i = res.length -1; i >= 0; i--){
 									if ($.inArray(res[i].ID_Area, areas) < 0) {
 										$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="${res[i].ID_Area}">${res[i].AreaName}</option>`);
 										areas.push(res[i].ID_Area);
 									}
 								}
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nuevo Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="0">{{ trans('adminlte_lang::message.newarea') }}</option>`);
 							}
 							else{
 								$("#CargArea").empty();
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nueva Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="0">{{ trans('adminlte_lang::message.newarea') }}</option>`);
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
@@ -240,18 +280,18 @@
 							if(res != ''){
 								$("#FK_PersCargo").empty();
 								var cargos = new Array();
-								$("#FK_PersCargo").append(`<option onclick="HiddenNewInputA()" value="">Seleccione...</option>`);
+								$("#FK_PersCargo").append(`<option onclick="HiddenNewInputA()" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 								for(var i = res.length -1; i >= 0; i--){
 									if ($.inArray(res[i].ID_Carg, cargos) < 0) {
 										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].ID_Carg}">${res[i].CargName}</option>`);
 										cargos.push(res[i].ID_Carg);
 									}
 								}
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
 							}
 							else{
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
@@ -265,6 +305,7 @@
 			document.getElementById("NewInputA").required = true;
 			document.getElementById("divFK_PersCargo").style.display = 'none';
 			document.getElementById("FK_PersCargo").required = false;
+			// document.getElementById("FK_PersCargo").value = "0";
 			document.getElementById("NewCargo").style.display = 'block';
 			document.getElementById("NewInputC").required = true;
 		}

@@ -162,10 +162,23 @@ return [
         'PersLastName'  => 'Apellidos de la Persona',
         'PersSecondName'=> 'Segundo Nombre de la Persona',
         'PersDocType'   => 'Tipo de Documento',
-        
+        'PersCellphone' => 'Número de celular',
+        'PersAddress'   => 'Dirección',
+        'PersPhoneNumber' => 'Teléfono local',
+        'PersEPS'       => 'EPS',
+        'PersARL'       => 'ARL',
+        'PersLibreta'   => 'Número de Libreta',
+        'PersPase'      => 'Número del Pase',
+        'PersBank'      => 'Banco',
+        'PersBankAccaunt' => 'Número de Cuenta',
+        'PersIngreso'   => 'Fecha de Entrada',
+        'PersSalida'    => 'Fecha de Salida',
+
         'AreaName'      => 'Nombre del Area',
-        
+        'NewArea'       => 'Nombre de la nueva Area',
+
         'CargName'      => 'Nombre del cargo',
+        'NewCargo'       => 'Nombre del nuevo Cargo',
     ],
 
 ];

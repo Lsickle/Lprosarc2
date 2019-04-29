@@ -11,7 +11,7 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <a href="personal/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <a href="personal-interno/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">

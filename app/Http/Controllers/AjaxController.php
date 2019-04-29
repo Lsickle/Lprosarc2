@@ -43,23 +43,4 @@ class AjaxController extends Controller
 			return response()->json($Cargos);
 		}
 	}
-	/*Funcion para ver por medio de Ajax si una Persona ya se encuentra registrada*/
-	public function VerifDocumentPersonal(Request $request, $id)
-	{
-		if ($request->ajax()) {
-			$Verif = DB::table('personals')
-				->select('ID_Pers')
-				->where('PersDocNumber', $id)
-				->get();
-			// return response()->json($Verif);
-			if(count($Verif) > 0){
-				// return !http_response_code(200);
-				return false;
-			}
-			else{
-				// return http_response_code(200);
-				return true;
-			}
-		}
-	}
 }

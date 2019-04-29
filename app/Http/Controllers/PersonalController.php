@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PersonalStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
@@ -106,7 +107,25 @@ class PersonalController extends Controller
                 ->select('sedes.ID_Sede', 'sedes.SedeName')
                 ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
                 ->get();
-            return view('personal.create', compact('Sedes'));
+            if(old('Sede') == null){
+                $Areas = null;
+            }
+            else{
+                $Areas = DB::table('areas')
+                    ->select('ID_Area', 'AreaName')
+                    ->where('FK_AreaSede', old('Sede'))
+                    ->get();
+            }
+            if(old('CargArea') == null){
+                $Cargos = null;
+            }
+            else{
+                $Cargos = DB::table('cargos')
+                    ->select('ID_Carg', 'CargName')
+                    ->where('CargArea', old('CargArea'))
+                    ->get();
+            }
+            return view('personal.create', compact('Sedes', 'Areas', 'Cargos'));
         }
         else{
             return route('home');
@@ -118,7 +137,7 @@ class PersonalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(PersonalStoreRequest $request){
         /*Valida si se ha creado un nuevo cargo*/
         if($request->input('NewCargo') <> null){
             /*Valida si se ha creado una nueva area*/
@@ -173,7 +192,13 @@ class PersonalController extends Controller
         $Personal->PersDelete = 0;
         $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);
         $Personal->save();
-        return redirect()->route('personal.index');;
+
+        if(Auth::user()->UsRol === "Cliente"){
+            return redirect()->route('personal.index');
+        }
+        else if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador"){
+            return redirect()->route('personal-interno');
+        }
     }
     /**
      * Display the specified resource.
@@ -208,7 +233,7 @@ class PersonalController extends Controller
     public function edit($id){
         if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador" || Auth::user()->UsRol === "Cliente"){
             $Persona = Personal::where('PersSlug', $id)->first();
-            $Cargos = DB::table('cargos')
+            $Cargo = DB::table('cargos')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
@@ -217,9 +242,21 @@ class PersonalController extends Controller
             $Sedes = DB::table('sedes')
                 ->select('sedes.ID_Sede', 'sedes.SedeName')
                 ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-                ->where('sedes.ID_Sede', '<>', $Cargos[0]->ID_Sede)
+                ->where('sedes.ID_Sede', '<>', $Cargo[0]->ID_Sede)
                 ->get();
-            return view('personal.edit', compact('Persona', 'Cargos', 'Sedes'));
+            $Areas = DB::table('areas')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->select('areas.ID_Area', 'areas.AreaName')
+                ->where('areas.FK_AreaSede', $Cargo[0]->ID_Sede)
+                ->where('areas.ID_Area', '<>', $Cargo[0]->ID_Area)
+                ->get();
+            $Cargos = DB::table('cargos')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->select('cargos.*')
+                ->where('cargos.CargArea', $Cargo[0]->ID_Area)
+                ->where('cargos.ID_Carg', '<>', $Cargo[0]->ID_Carg)
+                ->get();
+            return view('personal.edit', compact('Persona', 'Cargo', 'Cargos', 'Sedes', 'Areas'));
         }
         else{
             return route('home');
@@ -234,7 +271,31 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        // return $request;
+        $Persona = Personal::where('PersSlug', $id)->first();
+        $validate = $request->validate([
+            'Sede'          => 'required',
+            'CargArea'      => 'required',
+            'FK_PersCargo'  => 'required',
+            'NewArea'       => 'max:128|min:4',
+            'NewCargo'      => 'max:128|min:4',
+            'PersDocType'   => 'required|max:3|min:2',
+            'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$Persona->ID_Pers.',ID_Pers',
+            'PersFirstName' => 'required|alpha|max:64',
+            'PersSecondName'=> 'alpha|max:64|nullable',
+            'PersLastName'  => 'required|alpha|max:64',
+            'PersEmail'     => 'required|email|max:255',
+            'PersCellphone' => 'required|min:12',
+            'PersAddress'   => 'max:255|nullable',
+            'PersPhoneNumber' => 'max:20|min:12|nullable',
+            'PersEPS'       => 'required|max:255|min:5',
+            'PersARL'       => 'required|max:255|min:5',
+            'PersLibreta'   => 'max:25',
+            'PersPase'      => 'max:25',
+            'PersBank'      => 'max:255',
+            'PersBankAccaunt' => 'max:64',
+            'PersIngreso'   => 'required|date|before:PersSalida',
+            'PersSalida'    => 'required|date|after:PersIngreso',
+        ]);
         if($request->input('NewCargo') <> null){
             if($request->input('NewArea') <> null){
                 $newArea = new Area();
@@ -263,7 +324,6 @@ class PersonalController extends Controller
             $Cargo = $request->input('FK_PersCargo');
         }
         
-        $Persona = Personal::where('PersSlug', $id)->first();
         $Persona->fill($request->except('FK_PersCargo'));
         $Persona->FK_PersCargo = $Cargo;
         $Persona->save();
@@ -276,7 +336,12 @@ class PersonalController extends Controller
         $log->Auditlog = $request->all();
         $log->save();
 
-        return redirect()->route('personal.index');
+        if(Auth::user()->UsRol === "Cliente"){
+            return redirect()->route('personal.index');
+        }
+        else if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador"){
+            return redirect()->route('personal-interno');
+        }
     }
 
     /**
@@ -303,6 +368,11 @@ class PersonalController extends Controller
         $log->Auditlog = $Persona->PersDelete;
         $log->save();
 
-        return redirect()->route('personal.index');
+        if(Auth::user()->UsRol === "Cliente"){
+            return redirect()->route('personal.index');
+        }
+        else if(Auth::user()->UsRol === "Programador" || Auth::user()->UsRol === "Administrador"){
+            return redirect()->route('personal-interno');
+        }
     }
 }
