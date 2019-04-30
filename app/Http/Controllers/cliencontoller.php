@@ -37,7 +37,7 @@ class clientcontoller extends Controller
                 return redirect()->route('home');
                 break;
 
-            case Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'):
+            case trans('adminlte_lang::message.Administrador'):
                 $clientes = Cliente::where('CliDelete', 0)->get();
                 return view('clientes.index', compact('clientes'));
                 break;
@@ -45,12 +45,6 @@ class clientcontoller extends Controller
             default:
                 abort(403);
         }
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-        // }
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-        // }else{
-        // }
     }
 
     /**

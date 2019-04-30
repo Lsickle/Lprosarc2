@@ -1392,7 +1392,7 @@ $(document).ready(function() {
 </script>
 <script>
     $(document).ready(function(){    
-        if({{old('SedeExt2')}} !== null || {{old('SedePhone2')}} !== null){
+        if({{old('SedeExt2')}} !== null){
             $('#sedeinputext2').prop('disabled', false);
         };
         
@@ -1400,9 +1400,23 @@ $(document).ready(function() {
 </script>
 <script>
     $(document).ready(function(){    
-    if({{old('SedeExt1')}} !== null || {{old('SedePhone1')}} !== null ){
+    if({{old('SedeExt1')}} !== null){
             $('#sedeinputext1').prop('disabled', false);
         };
+    });
+</script>
+<script>
+    $(document).ready(function(){  
+        if($('#sedeinputphone1').val()){
+            $('#sedeinputext1').prop('disabled', false);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function(){  
+        if($('#sedeinputphone2').val()){
+            $('#sedeinputext2').prop('disabled', false);
+        }
     });
 </script>
 @endif
