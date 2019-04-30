@@ -1096,7 +1096,7 @@ $(document).ready(function() {
         autoWith: true,
         searchHighlight: true,
         columnDefs: [{
-            "targets": 8,
+            "targets": 6,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/sclientes/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";

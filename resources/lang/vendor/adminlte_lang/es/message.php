@@ -249,17 +249,16 @@ return [
     'clientcontact'           => 'Contactos',
 
     // sede
-    'csederegister'           => 'Registro de sede',
-    'namesede'                => 'Sede',
     'csedeindex'              => 'Lista de sedes',
     'csedeupdate'             => 'Actualizar sede',
-    'sclientregistertittle'   => 'Registro de sede del cliente',
     'sclientmenu'             => 'Sedes del cliente',  
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
     'sclientsede'             => 'Sede',
-    'sclientregister'         => 'Registrar Sede',
+    'sclientsedes'             => 'Sedes',
+    'sclientregister'         => 'Nueva Sede',
     'sclientnamesede'         => 'Nombre de la Sede',
+    'sclientlistsede'         => 'Lista de Sedes',
 
     // generador
     'genermenu'               => 'Generadores',
@@ -277,9 +276,9 @@ return [
     'namenewarea'             => '¿Cuál Area?',
 
     // cargo
-    'cargoname'              => 'Cargo',
-    'newcargo'               => 'Nuevo Cargo',
-    'namenewcargo'             => '¿Cuál Cargo?',
+    'cargoname'               => 'Cargo',
+    'newcargo'                => 'Nuevo Cargo',
+    'namenewcargo'            => '¿Cuál Cargo?',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',

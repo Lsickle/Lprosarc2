@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
-use App\Http\Requests\clienteStoreRequest;
+use App\Http\Requests\ClienteStoreRequest;
 use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;
@@ -86,7 +86,7 @@ class clientcontoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(clienteStoreRequest $request)
+    public function store(ClienteStoreRequest $request)
     {
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');

@@ -192,10 +192,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @endif
                                                     <div class="box-footer form-group " style="float:right; margin-right:5%;">
                                                         <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
                                                     </div>
+                                                    @endif
                                                 </div>
 											</div>
 										</div>
