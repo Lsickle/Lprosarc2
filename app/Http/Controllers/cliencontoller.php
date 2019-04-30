@@ -26,19 +26,31 @@ class clientcontoller extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            $clientes = Cliente::all();
-            return view('clientes.index', compact('clientes'));
+        switch (Auth::user()->UsRol) {
+
+            case trans('adminlte_lang::message.Programador'):
+                $clientes = Cliente::all();
+                return view('clientes.index', compact('clientes'));
+                break;
+            
+            case trans('adminlte_lang::message.Cliente'): 
+                return redirect()->route('home');
+                break;
+
+            case Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'):
+                $clientes = Cliente::where('CliDelete', 0)->get();
+                return view('clientes.index', compact('clientes'));
+                break;
+
+            default:
+                abort(403);
         }
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            return redirect()->route('home');
-        }
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-            $clientes = Cliente::where('CliDelete', 0)->get();
-            return view('clientes.index', compact('clientes'));
-        }else{
-            abort(403);
-        }
+        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        // }
+        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        // }else{
+        // }
     }
 
     /**
@@ -49,18 +61,24 @@ class clientcontoller extends Controller
     public function create()
     {
         switch (Auth::user()->UsRol) {
-            case "Cliente":
+            case trans('adminlte_lang::message.Cliente'):
                 if(Auth::user()->FK_UserPers === NULL){
                     $Departamentos = Departamento::all();
-                    return view('clientes.create2', compact('Departamentos'));
+                    if (old('FK_SedeMun') !== null){
+                        $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
+                    }
+                    return view('clientes.create2', compact('Departamentos', 'Municipios'));
                     break;
                 }else{
                     return redirect()->route('home');
                     break;
                 }
-            case "Administrador":
+            case trans('adminlte_lang::message.Administrador'):
                 $Departamentos = Departamento::all();
-                return view('clientes.create2', compact('Departamentos'));
+                if (old('FK_SedeMun') !== null){
+                        $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
+                }
+                return view('clientes.create2', compact('Departamentos', 'Municipios'));
                 break;
             default:
                 abort(403);
@@ -89,7 +107,7 @@ class clientcontoller extends Controller
             $Cliente->save();
 
             $Sede = new Sede();
-            $Sede->SedeName = $request->input('SedeName');
+            $Sede->SedeName = $request->input('SedeName')."(Principal)";
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
             if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null || $request->input('SedeExt1') === null && $request->input('SedeExt2') !== null){
@@ -118,7 +136,9 @@ class clientcontoller extends Controller
             $Sede->FK_SedeMun = 3;
             $Sede->SedeDelete = 0;
             $Sede->save();
-            
+
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                
             $Area = new Area();
             $Area->AreaName = $request->input("AreaName");
             $Area->FK_AreaSede = $Sede->ID_Sede;
@@ -144,7 +164,7 @@ class clientcontoller extends Controller
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
 
-            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+            
                 $user = User::where('ID_Cli', Auth::user()->ID_Cli)->first();
                 $user->FK_UserPers = $Personal->ID_Pers;
                 $user->save();

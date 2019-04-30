@@ -153,7 +153,7 @@ return [
         'SedePhone1'    => 'Teléfono 1 de la Sede',
         'SedeExt1'      => 'Extensión 1 de la Sede',
         'SedePhone2'    => 'Teléfono 2 de la Sede',
-        'SedeExt2'      => 'Extensión 1 de la Sede',
+        'SedeExt2'      => 'Extensión 2 de la Sede',
         'SedeCelular'   => 'Celular de la Sede',
 
         'PersDocNumber' => 'Número de Documento',

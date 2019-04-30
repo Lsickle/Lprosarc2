@@ -229,9 +229,6 @@ return [
     // cliente
     'clientmenu'              => 'Clientes',
     'clientindex'             => 'Listado',
-    'clientregister'          => 'Registro',
-    'clientupdate'            => 'Actualizacion',
-    'clientaudit'             => 'Auditable',
     'clientregistertittle'    => 'Registro del cliente',
     'clientboxtitle'          => 'Datos Básicos de la empresa',
     'client'                  => 'Datos de la Empresa',
