@@ -89,11 +89,11 @@
 												</div>
 												<div class="form-group col-md-6" id="NewArea" style="display: none;">
 													<label for="NewInputA">{{ trans('adminlte_lang::message.namenewarea') }}</label><small class="help-block with-errors">*</small>
-													<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewArea" type="text" id="NewInputA" class="form-control inputText" value="{{ trans('adminlte_lang::message.newarea') }}">
+													<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewArea" type="text" id="NewInputA" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newarea') }}">
 												</div>
 												<div class="form-group col-md-6" id="NewCargo" style="display: none;">
 													<label for="NewInputC">{{ trans('adminlte_lang::message.namenewcargo') }}</label><small class="help-block with-errors">*</small>
-													<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" value="{{ trans('adminlte_lang::message.newcargo') }}">
+													<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newcargo') }}">
 												</div>
 											</div>
 										</div>

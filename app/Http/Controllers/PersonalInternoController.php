@@ -255,8 +255,16 @@ class PersonalInternoController extends Controller
             'PersIngreso'   => 'required|date|before:PersSalida',
             'PersSalida'    => 'required|date|after:PersIngreso',
         ]);
-        if($request->input('NewCargo') <> null){
-            if($request->input('NewArea') <> null){
+        $NuevaArea = $request->input('NewArea');
+        $NuevoCargo =  $request->input('NewCargo');
+        if($request->input('CargArea') <> "NewArea"){
+            $NuevaArea = null;
+        }
+        if($request->input('FK_PersCargo') <> "NewCargo"){
+            $NuevoCargo = null;
+        }
+        if($NuevoCargo <> null){
+            if($NuevaArea <> null){
                 $newArea = new Area();
                 $newArea->AreaName = $request->input('NewArea');
                 $newArea->FK_AreaSede = $request->input('Sede');
