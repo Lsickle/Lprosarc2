@@ -234,6 +234,9 @@ return [
     'sclientmenu'             => 'Sedes del cliente',  
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
+    'sclientsede'             => 'Sede',
+    'sclientregister'         => 'Registrar Sede',
+    'sclientnamesede'         => 'Nombre de la Sede',
 
     // generador
     'genermenu'               => 'Generadores',
