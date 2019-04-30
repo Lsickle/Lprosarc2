@@ -738,15 +738,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-                "targets": 7,
-                "data": "PersSlug",
-                "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
-                }
-            }
-        ]
+        "responsive": true
     });
 });
 $(document).ready(function() {
@@ -759,7 +751,7 @@ $(document).ready(function() {
                 "targets": 6,
                 "data": "PersSlug",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+                    return "<a method='get' href='/personalInterno/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
                 }
             }
         ]

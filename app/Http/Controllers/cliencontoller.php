@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\clienteStoreRequest;
+use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;
 use App\Cliente;
@@ -184,14 +185,10 @@ class clientcontoller extends Controller
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            $user = User::select('FK_UserPers')->where('UsSlug', $id)->first(); 
-            $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
-            $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();
-            $area = Area::select('FK_AreaSede')->where('ID_Area', $cargo->CargArea)->first();
-            $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
-            $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
-            
-            return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
+            $id = userController::IDClienteSegunUsuario();
+            $cliente = cliente::where('ID_Cli', $id)->first();
+
+            return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
         }

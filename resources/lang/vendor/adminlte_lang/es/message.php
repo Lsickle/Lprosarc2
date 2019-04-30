@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Language Lines
+    | Language Lines {{ trans('adminlte_lang::message.menssage') }}
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during authentication for various
@@ -177,8 +176,8 @@ return [
     'update'                  => 'Actualizar',
     'consult'                 => 'Consultar',
     'select'                  => 'Seleccione...',
-    'mobile'                  => 'Celular',
-    'phone'                   => 'Teléfono',
+    'mobile'                  => 'Número de celular',
+    'phone'                   => 'Teléfono local',
     'ext'                     => 'Extensión',
     'emailplaceholder'        => 'Example@gmail.com',
     'mobileplaceholder'       => '301 414 5321',
@@ -189,20 +188,43 @@ return [
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
     'createdthe'              => 'Creado el',
+    'add'                     => 'Agregar',
 
     // personal
     'fullname'                => 'Nombre completo',
 
+    'personalhtmlheader_title' => 'Personal',
+    'personaltitleindex'      => 'Mi Personal',
+    'personaltitleindex2'     => 'Personal Cliente',
+    'personaltitleregister'   => 'Registro de Personal',
+    'personaltitleedit'       => 'Edición del Personal',
+    'personaltitleshow'       => 'Perfil del Personal',
     'personaltitleh2'         => 'Persona de Contacto',
+    'personalpaso1smart-wizzard' => 'Area y cargo de la persona',
+    'personalpaso2smart-wizzard' => 'Datos basicos de contacto',
+    'personalpaso3smart-wizzard' => 'Complemento de datos de la personal',
+    'personalcarg'            => 'Cargo del Personal',
     'persdoctype'             => 'Tipo de Documento',
-    'persdocument'            => 'Documento',
+    'persdocument'            => 'Número del Documento',
+    'persname'                => 'Nombre Completo',
     'persfirstname'           => 'Primer Nombre',
     'perssecondtname'         => 'Segundo Nombre',
     'perslastname'            => 'Apellidos',
-    'persdoctypenit'           => 'Nit',
-    'persdoctyperut'           => 'Rut',
+    'persdataof'              => 'Datos de ',
+    'persdoctypenit'          => 'Nit',
+    'persdoctyperut'          => 'Rut',
     'persdoctypecc'           => 'Cedula de Ciudadania',
     'persdoctypece'           => 'Cedula Extranjera',
+    'persbirthday'            => 'Fecha de Nacimiento',
+    'persphone'               => 'Número de Telefono Local',
+    'perseps'                 => 'EPS',
+    'persarl'                 => 'ARL',
+    'perslibreta'             => 'Número de Libreta Militar',
+    'perspase'                => 'Número del Licencia de Conducir',
+    'persbank'                => 'Banco',
+    'persbankaccaunt'         => 'Número de Cuenta',
+    'persingreso'             => 'Fecha de Entrada',
+    'perssalida'              => 'Fecha de Salida',
 
     // cliente
     'clientmenu'              => 'Clientes',
@@ -228,6 +250,7 @@ return [
 
     // sede
     'csederegister'           => 'Registro de sede',
+    'namesede'                => 'Sede',
     'csedeindex'              => 'Lista de sedes',
     'csedeupdate'             => 'Actualizar sede',
     'sclientregistertittle'   => 'Registro de sede del cliente',
@@ -249,10 +272,14 @@ return [
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     
     // area
-    'areaname'                =>'Area',
+    'areaname'                => 'Area',
+    'newarea'                 => 'Nueva Area',
+    'namenewarea'             => '¿Cuál Area?',
 
     // cargo
-    'cargoname'               =>'Cargo',
+    'cargoname'              => 'Cargo',
+    'newcargo'               => 'Nuevo Cargo',
+    'namenewcargo'             => '¿Cuál Cargo?',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
@@ -276,5 +303,23 @@ return [
     'prosarccorto'            => 'Prosarc S.A ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
     'Appname'                 => 'SiReS',
-    
+
+    //Data error menssage
+    'data-error-minlength2'   => 'Use mínimo 2 caracteres',
+    'data-error-minlength4'   => 'Use mínimo 4 caracteres',
+    'data-error-minlength5'   => 'Use mínimo 5 caracteres',
+    'data-error-minlength6'   => 'Use mínimo 6 caracteres',
+    'data-error-minlength8'   => 'Use mínimo 8 caracteres',
+    'data-error-minlength10'  => 'Use mínimo 10 caracteres',
+    'data-error-minlength16'  => 'Use mínimo 16 caracteres',
+
+    // Menu
+    'MenuClienPers'           => ' Personal',
+    'MenuPersInter'           => ' Personal Interno',
+    'MenuPersClien'           => ' Personal Clientes',
+    'MenuPersAsis'            => ' Asistencia',
+    'MenuPersHorari'          => ' Horario',
+    'MenuPersCarg'            => ' Cargos',
+    'MenuPersAreas'           => ' Areas',
+    'MenuPersInven'           => ' Inventario Tecnologia',
 ];
