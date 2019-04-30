@@ -188,11 +188,14 @@ return [
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
+    'add'                     => 'Agregar',
 
     // personal
     'fullname'                => 'Nombre completo',
 
     'personalhtmlheader_title' => 'Personal',
+    'personaltitleindex'      => 'Mi Personal',
+    'personaltitleindex2'     => 'Personal Cliente',
     'personaltitleregister'   => 'Registro de Personal',
     'personaltitleedit'       => 'Edición del Personal',
     'personaltitleshow'       => 'Perfil del Personal',
@@ -203,9 +206,11 @@ return [
     'personalcarg'            => 'Cargo del Personal',
     'persdoctype'             => 'Tipo de Documento',
     'persdocument'            => 'Número del Documento',
+    'persname'                => 'Nombre Completo',
     'persfirstname'           => 'Primer Nombre',
     'perssecondtname'         => 'Segundo Nombre',
     'perslastname'            => 'Apellidos',
+    'persdataof'              => 'Datos de ',
     'persdoctypenit'          => 'Nit',
     'persdoctyperut'          => 'Rut',
     'persdoctypecc'           => 'Cedula de Ciudadania',
@@ -214,8 +219,8 @@ return [
     'persphone'               => 'Número de Telefono Local',
     'perseps'                 => 'EPS',
     'persarl'                 => 'ARL',
-    'perslibreta'             => 'Número de Libreta',
-    'perspase'                => 'Número del Pase',
+    'perslibreta'             => 'Número de Libreta Militar',
+    'perspase'                => 'Número del Licencia de Conducir',
     'persbank'                => 'Banco',
     'persbankaccaunt'         => 'Número de Cuenta',
     'persingreso'             => 'Fecha de Entrada',
@@ -317,4 +322,14 @@ return [
     'data-error-minlength6'   => 'Use minimo 6 caracteres',
     'data-error-minlength10'  => 'Use minimo 10 caracteres',
     'data-error-minlength16'  => 'Use minimo 16 caracteres',
+
+    // Menu
+    'MenuClienPers'           => ' Personal',
+    'MenuPersInter'           => ' Personal Interno',
+    'MenuPersClien'           => ' Personal Clientes',
+    'MenuPersAsis'            => ' Asistencia',
+    'MenuPersHorari'          => ' Horario',
+    'MenuPersCarg'            => ' Cargos',
+    'MenuPersAreas'           => ' Areas',
+    'MenuPersInven'           => ' Inventario Tecnologia',
 ];

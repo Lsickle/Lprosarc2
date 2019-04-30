@@ -170,6 +170,8 @@ return [
         'PersLibreta'   => 'Número de Libreta',
         'PersPase'      => 'Número del Pase',
         'PersBank'      => 'Banco',
+        'FK_PersCargo'  => 'Cargo del Personal',
+        'CargArea'      => 'Area',
         'PersBankAccaunt' => 'Número de Cuenta',
         'PersIngreso'   => 'Fecha de Entrada',
         'PersSalida'    => 'Fecha de Salida',
