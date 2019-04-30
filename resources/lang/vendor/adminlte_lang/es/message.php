@@ -58,6 +58,7 @@ return [
     'friends'                 => 'Amigos',
 
     'profile'                 => 'Perfil',
+    'profileedit'             => 'Edición de Perfil',
     'signout'                 => 'Salir',
     'landingdescription'      => 'Un laravel 5 paquete que cambia de forma predeterminada Laravel scaffolding/boilerplate a la plantilla AdminLTE con Bootstrap 3.0 y la página de destino Pratt',
     'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquet landing page - Uso de Pratt',
@@ -119,12 +120,14 @@ return [
     'passwordreset'           => 'Restablecer la contraseña',
     'username'                => 'Nombre de usuario',
     'confirmpassword'         => 'Confirmar contraseña',
+    'confirmpasswordfalse'    => 'La contraseñas no coinciden',
     'retypepassword'          => 'Vuelva a escribir la contraseña',
     'registererror'           => 'Error de Registro!',
     'loginerror'              => 'Error de Login!',
     'loggedin'                => 'Login correcto!',
     'entering'                => 'Entrando...',
     'registered'              => 'Usuario registrado!',
+    'change'                  => 'Cambiar',
 
     // error
     '404error'                => 'Página de error 404',
@@ -189,6 +192,12 @@ return [
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
     'add'                     => 'Agregar',
+    'newpassword'             => 'Nueva Contraseña',
+    'oldpassword'             => 'Contraseña Antigua',
+    'changepassword'          => 'Cambio de Contraseña',
+
+    'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
+    'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
 
     // personal
     'fullname'                => 'Nombre completo',

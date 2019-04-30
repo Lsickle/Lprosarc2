@@ -22,6 +22,13 @@ Route::get('/noscriptpage', function () {
     return view('noscriptpage');
 });
 
+/*Rutas del usuario*/
+Route::get('/profile/{id}', 'userController@show')->name('profile');
+Route::get('/profile/{id}/edit', 'userController@edit');
+Route::put('/profile/{id}','userController@update');
+Route::get('/profile/{id}/passwordreset', 'userController@viewchangepassword')->name('profile.changepassword');
+Route::patch('/profile/{id}', 'userController@changepassword');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
@@ -54,14 +61,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/asistencia', 'AssistancesController');
 	Route::resource('/compra/orden','OrdenCompraController');
-	Route::resource('/compra/cotizacion','QuotationController');
+	// Route::resource('/compra/cotizacion','QuotationController');
 	Route::resource('/activos','ActivoController');
 	Route::resource('/movimiento-activos','MovimientoActivoController');
 	Route::resource('/capacitacion','TrainingsController');
 	Route::resource('/capacitacion-personal','TrainingPersonalsController');
 	Route::resource('/inventariotech', 'InventarioTechonologiesController');
-	Route::resource('/recibo-material', 'ReciboMaterialController');
-	Route::resource('/respel-envios', 'RespelEnviosController');
+	// Route::resource('/recibo-material', 'ReciboMaterialController');
+	// Route::resource('/respel-envios', 'RespelEnviosController');
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::resource('/certificado', 'CertificadoController');
@@ -69,7 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 	Route::resource('/code', 'QrCodesController');
 	Route::resource('/horario', 'HorarioController');
-	Route::resource('/asistencias', 'AsistenciaController');
+	// Route::resource('/asistencias', 'AsistenciaController');
 	Route::resource('/recurso', 'RecursoController');
 	Route::resource('/requerimientos', 'RequerimientoController');
 	Route::resource('/holidays', 'holidayController');
@@ -86,6 +93,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
-	Route::get('/verif-document-personal/{id}', 'AjaxController@VerifDocumentPersonal');
+
 });
 
