@@ -10,7 +10,7 @@
 		{{-- seccion de prueba --}}
 		@foreach($Personas as $Persona)
 			<div class="row">
-				<div class="col-md-12" {{-- style="font-size: 2rem;" --}}>
+				<div class="col-md-8 col-md-offset-2 col-xs-12">
 					<!-- Profile Image -->
 					<div class="box box-primary">
 						<div class="box-body box-profile">
