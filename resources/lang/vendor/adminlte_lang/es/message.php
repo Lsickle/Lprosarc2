@@ -64,8 +64,8 @@ return [
     'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquet landing page - Uso de Pratt',
     'description'             => 'Descripción',
     'showcase'                => 'Escaparate',
-    'contact'                 => 'Contacto',
-    'contacts'                 => 'Contactos',
+    // 'contact'                 => 'Contacto',
+    // 'contacts'                 => 'Contactos',
     'laravelpackage'          => '5 paquete que cambia por defecto laravel',
     'to'                      => 'a',
     'templatewith'            => 'plantilla con',
@@ -141,9 +141,6 @@ return [
     'serviceunavailable'      => 'Servicio no disponible',
     '503error'                => 'Página de error 503',
 
-    // 
-    'see'                     => 'Ver',
-
     // smart-wizzard
     'smartwizzardtitle'       => 'Añada la información necesaria completando los campos requeridos',
     'Paso 1'                  => 'Paso 1',
@@ -162,8 +159,10 @@ return [
     'EncargadoAlmacen'        => 'EncargadoAlmacen',
     'EncargadoHorno'          => 'EncargadoHorno',
     'Vigilante'               => 'Vigilante',
-
+    
     // form
+    'seemore'                 => 'Ver Más',
+    'see'                     => 'Ver',
     'emailaddress'            => 'Correo electrónico',
     'post'                    => 'enviar',
     'address'                 => 'Dirección',
@@ -189,6 +188,7 @@ return [
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
+    'createdthe'              => 'Creado el',
 
     // personal
     'fullname'                => 'Nombre completo',
@@ -223,6 +223,8 @@ return [
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
     'clientsidebar'           => 'Mi Empresa',
+    'clientindexboxtitle'     => 'Lista de Contactos',
+    'clientcontact'           => 'Contactos',
 
     // sede
     'csederegister'           => 'Registro de sede',
@@ -236,8 +238,6 @@ return [
     // generador
     'genermenu'               => 'Generadores',
     'generindex'              => 'lista de Generadores',
-    'generregister'           => 'Registro',
-    'generupdate'             => 'Actualizacion',
     'Generregistertittle'     => 'Registro de Generador',
 
     // generador sede
@@ -249,31 +249,19 @@ return [
     'areaname'                =>'Area',
 
     // cargo
-    'cargoname'              =>'Cargo',
+    'cargoname'               =>'Cargo',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
-    'declarregister'          => 'crear',
-    'declarread'              => 'consultar',
-    'decladelete'             => 'eliminar',
 
     // orden de compra
     'ordermenu'               => 'Ordenes',
-    'orderregister'           => 'Crear',
-    'orderread'               => 'Consultar',
-    'orderupdate'             => 'Actualizar',
 
     // certificado
     'certificatemenu'         => 'Certificados',
-    'certiregister'           => 'Crear',
-    'certiread'               => 'Consultar',
-    'certiupdate'             => 'Actualizar',
 
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
-    'manifregister'           => 'Crear',
-    'manifread'               => 'Consultar',
-    'manifupdate'             => 'Actualizar',
 
     // departamento
     'departamento'            =>'Departamento',

@@ -37,7 +37,7 @@
 												<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
 												<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>
                                                 @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                                <li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
+                                                    <li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
                                                 @endif
 											</ul>
 											<!-- general form elements -->
@@ -52,7 +52,7 @@
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="2"  maxlength="100" required value="{{ old('CliShortname') }}">
+                                                            <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  minlength="2"  maxlength="100" required value="{{ old('CliName') }}">
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
@@ -106,7 +106,7 @@
                                                             <label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="301 414 5321" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
+                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" data-error="{{ trans('adminlte_lang::message.mobileerrors') }}" placeholder="301 414 5321" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
@@ -119,7 +119,7 @@
                                                         </div>
                                                         <div class="col-md-6 form-group">
                                                                 <label for="sedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label><small class="help-block with-errors"></small>
-                                                            <input type="text" disabled class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-minlength="3" data-maxlength="5" value="{{ old('SedeExt1') }}">
+                                                            <input type="text" disabled class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-minlength="2" data-maxlength="5" value="{{ old('SedeExt1') }}">
                                                         </div>
                                                         <div id="telefono2" class="col-md-6 form-group" style="display: none;">
                                                             <label for="sedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label><small class="help-block with-errors"></small>
@@ -127,7 +127,7 @@
                                                         </div>
                                                         <div id="extension2" class="col-md-6 form-group" style="display: none;">
                                                             <label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
-                                                            <input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="3" maxlength="5" disabled value="{{ old('SedeExt2') }}">
+                                                            <input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" disabled value="{{ old('SedeExt2') }}">
                                                         </div>
                                                         <div class="col-md-12" id="tel">
                                                             <div class="box-footer" style="display:flex; justify-content:center">
@@ -188,7 +188,7 @@
                                                             <label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" data-minlength="12"  maxlength="12" value="{{ old('PersCellphone') }}" required>
+                                                                <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" data-minlength="12"  maxlength="12" data-error={{ trans('adminlte_lang::message.mobileerrors') }} value="{{ old('PersCellphone') }}" required>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -28,7 +28,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),
             (Menu::new()
             /*"PREPEND SIRVE PARA COLOCAR UN ETIQUETA FUERA DEL MENU (ul)"*/
-            ->prepend('<a href="#"><i class="fa fa-id-card"></i> <span>'.trans('adminlte_lang::message.contacts').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+            ->prepend('<a href="#"><i class="fa fa-id-card"></i> <span>'.trans('adminlte_lang::message.clientcontact').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18" style="color:#FFFFFF;" width="18" height="18"></i></a>')
             
             /*LE ASIGNA UNA CLASE A ESA ETIQUETA CUANDO ¡NO! ESTA ACTIVA*/
             ->addParentClass('treeview')
