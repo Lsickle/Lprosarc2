@@ -7,8 +7,11 @@
             @if (! Auth::guest())
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="../../../img/{{ Auth::user()->UsAvatar }}"
-                        class="img-circle" alt="User Image" />
+                        @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
+                            <img class="img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
+                        @else
+                            <img class="img-circle" src="../../../img/default.png" alt="User Image">
+                        @endif
                     </div>
                     <div class="pull-left info">
                         <p style="overflow: hidden;text-overflow: ellipsis;max-width: 160px;" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</p>

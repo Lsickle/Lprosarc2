@@ -79,8 +79,18 @@ class userController extends Controller
         $validate = $request->validate([
             'name'          => 'required',
             'email'         => 'required|unique:users,email,'.$user->id.',id',
+            'UsAvatar'      => 'mimes:jpeg,jpg,png,gif,web',
         ]);
         // return $request;
+        if($request->hasfile('UsAvatar')){
+            if($user->UsAvatar <> null && file_exists(public_path().'/img/ImagesProfile/'.$user->UsAvatar)){
+                unlink(public_path().'/img/ImagesProfile/'.$user->UsAvatar);
+            }
+            $file = $request->file('UsAvatar');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/img/ImagesProfile/',$name);
+            $user->UsAvatar = $name;
+        }
         $user->name = $request->input('name');
         if($request->input('email') <> $user->email){
         	$user->email_verified_at = null;

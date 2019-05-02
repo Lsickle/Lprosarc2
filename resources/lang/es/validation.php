@@ -142,6 +142,8 @@ return [
     */
 
     'attributes' => [
+        'UsAvatar'      => 'Foto de perfil',
+
         'CliNit'        => 'Nit',
         'CliName'       => 'Razón Social',
         'CliShortname'  => 'Nombre Corto',
