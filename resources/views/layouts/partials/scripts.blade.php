@@ -1095,13 +1095,18 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        columnDefs: [{
-            "targets": 6,
+        columnDefs: [
+            {"targets": 5,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/sclientes/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
+            }},
+            {"targets": 4,
+            "data": "SedeSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
+            }},
+        ]
     });
     /*funcion para resaltar las busquedas*/
     var table = $('#sedes').DataTable();
