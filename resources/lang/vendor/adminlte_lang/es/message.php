@@ -280,10 +280,13 @@ return [
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     
     // area
-    'areaname'                => 'Area',
-    'newarea'                 => 'Nueva Area',
-    'namenewarea'             => '¿Cuál Area?',
+    'areatitle'               => 'Áreas',
+    'areaname'                => 'Nombre del Área',
+    'newarea'                 => 'Nueva Área',
+    'namenewarea'             => '¿Cuál Área?',
     'listarea'                => 'Lista de áreas',
+    'createarea'              => 'Creación de áreas',
+    'editarea'                => 'Edición de áreas',
 
     // cargo
     'cargoname'               => 'Cargo',

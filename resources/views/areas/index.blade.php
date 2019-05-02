@@ -1,63 +1,57 @@
 @extends('layouts.app')
-
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.areaname') }}
+{{ trans('adminlte_lang::message.areatitle') }}
 @endsection
-
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.areaname') }}
+{{ trans('adminlte_lang::message.areatitle') }}
 @endsection
-
 @section('main-content')
-  <div class="container-fluid spark-screen">
-    <div class="row">
-      <div class="col-md-16 col-md-offset-0">
-        <!-- /.box -->
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
-            <a href="/areas/create" class="btn btn-primary" style="float: right;">Crear</a>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <table id="AreaTable" class="table table-compact table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Sede</th>
-                  <th>Editar</th>
-                </tr>
-              </thead>
-              <tbody  hidden onload="renderTable()" id="readyTable">
-                {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                <div class="fingerprint-spinner" id="loadingTable">
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                  <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                </div>
-                @foreach($Areas as $Area)
-                <tr @if($Area->AreaDelete === 1)
-                      style="color: red;" 
-                    @endif
-                >
-                  <td>{{$Area->AreaName}}</td>
-                  <td>{{$Area->SedeName}}</td>
-                  <td>{{$Area->ID_Area}}</td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid spark-screen">
+		<div class="row">
+			<div class="col-md-16 col-md-offset-0">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
+						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+							<a href="/areas/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+						@endif
+					</div>
+					<div class="box box-info">
+						<div class="box-body">
+							<table id="AreaTable" class="table table-compact table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>{{ trans('adminlte_lang::message.areaname') }}</th>
+										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
+										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
+										@endif
+										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+									</tr>
+								</thead>
+								<tbody  hidden onload="renderTable()" id="readyTable">
+									{{-- <h1 id="loadingTable">LOADING...</h1> --}}
+									@include('layouts.partials.spinner')
+									@foreach($Areas as $Area)
+									<tr @if($Area->AreaDelete === 1)
+										style="color: red;"
+										@endif
+										>
+										<td>{{$Area->AreaName}}</td>
+										<td>{{$Area->SedeName}}</td>
+										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										<td>{{$Area->CliShortname}}</td>
+										@endif
+										<td><a href='/areas/{{$Area->ID_Area}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection

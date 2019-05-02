@@ -20,7 +20,7 @@
         <div class="box">
           <div class="box-header">
             @if(Auth::user()->UsRol == trans('adminlte_lang::message.Cliente'))
-            	<a href="personal/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.Cliente') }}</a>
+            	<a href="personal/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
             @endif
           </div>
           <!-- /.box-header -->

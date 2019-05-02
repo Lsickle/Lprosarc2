@@ -1,70 +1,74 @@
 @extends('layouts.app')
-@section('htmlheader_title','Areas')
-@section('contentheader_title','Edicion de Areas')
+
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.areatitle') }}
+@endsection
+
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.areatitle') }}
+@endsection
+
 @section('main-content')
-<div class="container-fluid spark-screen">
-	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
-			<div class="box">
-				<div class="box-header">
-	                @component('layouts.partials.modal')
-	                    {{$Areas->ID_Area}}
-	                @endcomponent
-					<h3 class="box-title">Datos del área </h3>
-					@if($Areas->AreaDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->ID_Area}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-						<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input  type="submit" id="Eliminar{{$Areas->ID_Area}}" style="display: none;">
-						</form>
-					@else
-						<form action='/areas/{{$Areas->ID_Area}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success' value="Añadir">
-						</form>
-					@endif
-                </div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							<form role="form" action="/areas/{{$Areas->ID_Area}}" method="POST" enctype="multipart/form-data">
-								@method('PATCH')
+	<div class="container-fluid spark-screen">
+		<div class="row">
+			<div class="col-md-16 col-md-offset-0">
+				<div class="box">
+					<div class="box-header">
+						@component('layouts.partials.modal')
+							{{$Areas->ID_Area}}
+						@endcomponent
+						<h3 class="box-title">{{ trans('adminlte_lang::message.editarea') }}</h3>
+						@if($Areas->AreaDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->ID_Area}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+							<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
+								@method('DELETE')
 								@csrf
-								<div class="box-body">
-									<div class="col-xs-6">
-										<label for="NombreArea">Nombre del área</label>
-										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" value="{{$Areas->AreaName}}">
-									</div>
-									<div class="col-xs-6" style="padding-left: 0; ">
-										<label for="SedeSelect">Sede</label>
-										<select name="AreaSede" id="SedeSelect" class="form-control">
-											<option value="{{$Areas->FK_AreaSede || $Areas->FK_GenerSede}}">Seleccione...</option>
-											@foreach($Sedes as $Sede)
-												<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>	
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary pull-right">Actualizar</button>
-								</div>
+								<input  type="submit" id="Eliminar{{$Areas->ID_Area}}" style="display: none;">
 							</form>
-						</div>
-						<!-- /.box -->
+						@else
+							<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success pull-right' value="{{ trans('adminlte_lang::message.add') }}">
+							</form>
+						@endif
 					</div>
-					<!-- /.box-body -->
+					<div class="box box-info">
+						<form role="form" action="/areas/{{$Areas->ID_Area}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+							@method('PATCH')
+							@csrf
+							@if ($errors->any())
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<p>{{$error}}</p>
+										@endforeach
+									</ul>
+								</div>
+							@endif
+							<div class="box-body">
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="NombreArea">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
+									<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required="true" name="NomArea" autofocus="true" type="text" class="form-control inputText" id="NombreArea" value="{{$Areas->AreaName}}">
+								</div>
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="SedeSelect">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
+									<select name="AreaSede" id="SedeSelect" class="form-control select" required>
+										@foreach($Sedes as $Sede)
+											<option value="{{$Sede->ID_Sede}}" {{$Areas->FK_SedeCli == $Sede->ID_Sede ? 'select' : ''}}>{{$Sede->SedeName}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="box box-info">
+								<div class="box-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
-</div>
 @endsection
