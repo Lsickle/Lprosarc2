@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Areas')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.areaname') }}
+@endsection
 
-@section('contentheader_title', 'Areas Finales')
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.areaname') }}
+@endsection
 
 @section('main-content')
   <div class="container-fluid spark-screen">
@@ -11,7 +15,7 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Lista de áreas</h3>
+            <h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
             <a href="/areas/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->

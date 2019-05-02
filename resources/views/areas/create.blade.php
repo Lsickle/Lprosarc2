@@ -15,11 +15,11 @@
 							<form role="form" action="/areas" method="POST" enctype="multipart/form-data">
 								@csrf
 								<div class="box-body">
-									<div class="col-xs-6">
+									<div class="col-xs-12 col-md-12">
 										<label for="NombreArea">Nombre del área</label>
 										<input required="true" name="NomArea" autofocus="true" type="text" class="form-control" id="NombreArea" >
 									</div>
-									<div class="col-xs-6" style="padding-left: 0; ">
+									<div class="col-xs-12 col-md-12">
 										<label for="SedeSelect">Sede</label>
 										<select name="AreaSede" id="SedeSelect" class="form-control">
 											@foreach($Sedes as $Sede)
@@ -28,8 +28,8 @@
 										</select>
 									</div>
 								</div>	
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+								<div class="box-footer">
+									<button type="submit" class="btn btn-primary pull-right">Registrar</button>
 								</div>
 							</form>
 						</div>

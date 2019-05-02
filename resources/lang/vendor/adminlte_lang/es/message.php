@@ -281,6 +281,7 @@ return [
     'areaname'                => 'Area',
     'newarea'                 => 'Nueva Area',
     'namenewarea'             => '¿Cuál Area?',
+    'listarea'                => 'Lista de áreas',
 
     // cargo
     'cargoname'              => 'Cargo',

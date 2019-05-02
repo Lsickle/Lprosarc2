@@ -143,8 +143,8 @@
 											<input type="text" name="PersARL" hidden value="0">
 											<input type="text" name="PersIngreso" hidden value="0000-00-00">
 											<input type="text" name="PersSalida" hidden value="0000-00-00">
-											<div class="box-footer pull-right">
-												<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.update') }}</button>
+											<div class="box-footer">
+												<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 											</div>
 										</div>
 									</div>

@@ -50,8 +50,8 @@
 										</select>
 									</div>
 								</div>	
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
+								<div class="box-footer">
+									<button type="submit" class="btn btn-primary pull-right">Actualizar</button>
 								</div>
 							</form>
 						</div>
