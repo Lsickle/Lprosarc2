@@ -186,8 +186,8 @@
 													<input name="PersSalida" autofocus="true" type="text" class="form-control fechas" id="PersSalida" required value="{{$Persona->PersSalida}}">
 												</div>
 											</div>
-											<div class="box-footer" style="float:right; margin-right:5%;">
-												<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.update') }}</button>
+											<div class="box-footer">
+												<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 											</div>
 										</div>
 									</div>

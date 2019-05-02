@@ -175,8 +175,8 @@
 														<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required value="{{old('PersSalida')}}">
 													</div>
 												</div>
-												<div class="box-footer" style="float:right; margin-right:5%;">
-													<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+												<div class="box-footer">
+													<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 												</div>
 											</div>
 										</div>

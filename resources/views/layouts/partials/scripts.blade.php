@@ -646,14 +646,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-            "targets": 2,
-            "data": "ID_Area",
-            "render": function(data, type, row, meta) {
-                return "<a href='/areas/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
+        "responsive": true
     });
 });
 

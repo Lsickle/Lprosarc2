@@ -20,13 +20,13 @@
 						<h3 class="box-title">{{ trans('adminlte_lang::message.editarea') }}</h3>
 						@if($Areas->AreaDelete == 0)
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->ID_Area}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
-							<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
+							<form action='/areasInterno/{{$Areas->ID_Area}}' method='POST'>
 								@method('DELETE')
 								@csrf
 								<input  type="submit" id="Eliminar{{$Areas->ID_Area}}" style="display: none;">
 							</form>
 						@else
-							<form action='/areas/{{$Areas->ID_Area}}' method='POST'>
+							<form action='/areasInterno/{{$Areas->ID_Area}}' method='POST'>
 								@method('DELETE')
 								@csrf
 								<input type="submit" class='btn btn-success pull-right' value="{{ trans('adminlte_lang::message.add') }}">
@@ -34,7 +34,7 @@
 						@endif
 					</div>
 					<div class="box box-info">
-						<form role="form" action="/areas/{{$Areas->ID_Area}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						<form role="form" action="/areasInterno/{{$Areas->ID_Area}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@method('PATCH')
 							@csrf
 							@if ($errors->any())
