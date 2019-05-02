@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
-use App\Http\Requests\clienteStoreRequest;
+use App\Http\Requests\ClienteStoreRequest;
+use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;
 use App\Cliente;
@@ -37,7 +38,7 @@ class clientcontoller extends Controller
                 return redirect()->route('home');
                 break;
 
-            case Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'):
+            case trans('adminlte_lang::message.Administrador'):
                 $clientes = Cliente::where('CliDelete', 0)->get();
                 return view('clientes.index', compact('clientes'));
                 break;
@@ -45,12 +46,6 @@ class clientcontoller extends Controller
             default:
                 abort(403);
         }
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-        // }
-        // if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-        // }else{
-        // }
     }
 
     /**
@@ -61,7 +56,7 @@ class clientcontoller extends Controller
     public function create()
     {
         switch (Auth::user()->UsRol) {
-            case trans('adminlte_lang::message.Cliente'):
+            case trans('adminlte_lang::message.Cliente') :
                 if(Auth::user()->FK_UserPers === NULL){
                     $Departamentos = Departamento::all();
                     if (old('FK_SedeMun') !== null){
@@ -73,7 +68,7 @@ class clientcontoller extends Controller
                     return redirect()->route('home');
                     break;
                 }
-            case trans('adminlte_lang::message.Administrador'):
+            case trans('adminlte_lang::message.Administrador') || trans('adminlte_lang::message.Programador'):
                 $Departamentos = Departamento::all();
                 if (old('FK_SedeMun') !== null){
                         $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
@@ -91,7 +86,7 @@ class clientcontoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(clienteStoreRequest $request)
+    public function store(ClienteStoreRequest $request)
     {
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
@@ -190,15 +185,10 @@ class clientcontoller extends Controller
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            
-            $user = User::select('FK_UserPers')->where('UsSlug', $id)->first(); 
-            $personal = Personal::select('FK_PersCargo')->where('ID_Pers', $user->FK_UserPers)->first();
-            $cargo = Cargo::select('CargArea')->where('ID_Carg', $personal->FK_PersCargo)->first();
-            $area = Area::select('FK_AreaSede')->where('ID_Area', $cargo->CargArea)->first();
-            $sede = sede::select('FK_SedeCli')->where('ID_Sede', $area->FK_AreaSede)->first();
-            $cliente = cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
+            $id = userController::IDClienteSegunUsuario();
+            $cliente = cliente::where('ID_Cli', $id)->first();
 
-            return view('clientes.show', compact('cliente', 'personal', 'cargo', 'area', 'sede', 'user'));
+            return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
         }

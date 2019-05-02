@@ -3,7 +3,7 @@
 {{ trans('adminlte_lang::message.clientmenu') }}
 @endsection
 @section('contentheader_title')
-Contactos
+{{ trans('adminlte_lang::message.clientcontact') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,20 +12,20 @@ Contactos
 		<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Lista de Contactos</h3>
-					<a href="/clientes/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<h3 class="box-title">{{ trans('adminlte_lang::message.clientindexboxtitle') }}</h3>
+					<a href="/clientes/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<table id="clientesTable" class="table table-compact table-bordered table-striped">
 						<thead>
 						<tr>
-							<th>Categoría</th>
-							<th>Nombre</th>
-							<th>NIT</th>
-							<th>Creado el</th>
-							<th>Ver Más</th>
-							<th>Editar</th>
+							<th>{{ trans('adminlte_lang::message.clientcategoría') }}</th>
+							<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
+							<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
+							<th>{{ trans('adminlte_lang::message.createdthe') }}</th>
+							<th>{{ trans('adminlte_lang::message.seemore') }}</th>
+							<th>{{ trans('adminlte_lang::message.edit') }}</th>
 						</tr>
 						</thead>
 						<tbody onload="renderTable()" id="readyTable">

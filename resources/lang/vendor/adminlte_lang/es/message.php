@@ -64,8 +64,8 @@ return [
     'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquet landing page - Uso de Pratt',
     'description'             => 'Descripción',
     'showcase'                => 'Escaparate',
-    'contact'                 => 'Contacto',
-    'contacts'                 => 'Contactos',
+    // 'contact'                 => 'Contacto',
+    // 'contacts'                 => 'Contactos',
     'laravelpackage'          => '5 paquete que cambia por defecto laravel',
     'to'                      => 'a',
     'templatewith'            => 'plantilla con',
@@ -143,9 +143,6 @@ return [
     'serviceunavailable'      => 'Servicio no disponible',
     '503error'                => 'Página de error 503',
 
-    // 
-    'see'                     => 'Ver',
-
     // smart-wizzard
     'smartwizzardtitle'       => 'Añada la información necesaria completando los campos requeridos',
     'Paso 1'                  => 'Paso 1',
@@ -164,8 +161,10 @@ return [
     'EncargadoAlmacen'        => 'EncargadoAlmacen',
     'EncargadoHorno'          => 'EncargadoHorno',
     'Vigilante'               => 'Vigilante',
-
+    
     // form
+    'seemore'                 => 'Ver Más',
+    'see'                     => 'Ver',
     'emailaddress'            => 'Correo electrónico',
     'post'                    => 'enviar',
     'address'                 => 'Dirección',
@@ -191,6 +190,7 @@ return [
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
+    'createdthe'              => 'Creado el',
     'add'                     => 'Agregar',
     'newpassword'             => 'Nueva Contraseña',
     'oldpassword'             => 'Contraseña Antigua',
@@ -254,22 +254,24 @@ return [
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
     'clientsidebar'           => 'Mi Empresa',
+    'clientindexboxtitle'     => 'Lista de Contactos',
+    'clientcontact'           => 'Contactos',
 
     // sede
-    'csederegister'           => 'Registro de sede',
-    'namesede'                => 'Sede',
     'csedeindex'              => 'Lista de sedes',
     'csedeupdate'             => 'Actualizar sede',
-    'sclientregistertittle'   => 'Registro de sede del cliente',
     'sclientmenu'             => 'Sedes del cliente',  
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
+    'sclientsede'             => 'Sede',
+    'sclientsedes'             => 'Sedes',
+    'sclientregister'         => 'Nueva Sede',
+    'sclientnamesede'         => 'Nombre de la Sede',
+    'sclientlistsede'         => 'Lista de Sedes',
 
     // generador
     'genermenu'               => 'Generadores',
     'generindex'              => 'lista de Generadores',
-    'generregister'           => 'Registro',
-    'generupdate'             => 'Actualizacion',
     'Generregistertittle'     => 'Registro de Generador',
 
     // generador sede
@@ -284,33 +286,21 @@ return [
     'listarea'                => 'Lista de áreas',
 
     // cargo
-    'cargoname'              => 'Cargo',
-    'newcargo'               => 'Nuevo Cargo',
-    'namenewcargo'             => '¿Cuál Cargo?',
+    'cargoname'               => 'Cargo',
+    'newcargo'                => 'Nuevo Cargo',
+    'namenewcargo'            => '¿Cuál Cargo?',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
-    'declarregister'          => 'crear',
-    'declarread'              => 'consultar',
-    'decladelete'             => 'eliminar',
 
     // orden de compra
     'ordermenu'               => 'Ordenes',
-    'orderregister'           => 'Crear',
-    'orderread'               => 'Consultar',
-    'orderupdate'             => 'Actualizar',
 
     // certificado
     'certificatemenu'         => 'Certificados',
-    'certiregister'           => 'Crear',
-    'certiread'               => 'Consultar',
-    'certiupdate'             => 'Actualizar',
 
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
-    'manifregister'           => 'Crear',
-    'manifread'               => 'Consultar',
-    'manifupdate'             => 'Actualizar',
 
     // departamento
     'departamento'            =>'Departamento',
@@ -324,11 +314,13 @@ return [
     'Appname'                 => 'SiReS',
 
     //Data error menssage
-    'data-error-minlength4'   => 'Use minimo 4 caracteres',
-    'data-error-minlength5'   => 'Use minimo 5 caracteres',
-    'data-error-minlength6'   => 'Use minimo 6 caracteres',
-    'data-error-minlength10'  => 'Use minimo 10 caracteres',
-    'data-error-minlength16'  => 'Use minimo 16 caracteres',
+    'data-error-minlength2'   => 'Use mínimo 2 caracteres',
+    'data-error-minlength4'   => 'Use mínimo 4 caracteres',
+    'data-error-minlength5'   => 'Use mínimo 5 caracteres',
+    'data-error-minlength6'   => 'Use mínimo 6 caracteres',
+    'data-error-minlength8'   => 'Use mínimo 8 caracteres',
+    'data-error-minlength10'  => 'Use mínimo 10 caracteres',
+    'data-error-minlength16'  => 'Use mínimo 16 caracteres',
 
     // Menu
     'MenuClienPers'           => ' Personal',
