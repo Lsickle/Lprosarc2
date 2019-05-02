@@ -1073,6 +1073,7 @@ $(document).ready(function() {
     });
 });
 </script>
+@if(Route::currentRouteName() === 'sclientes.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?>";
 
@@ -1118,8 +1119,8 @@ $(document).ready(function() {
         body.highlight(table.search());
     });
 });
-
 </script>
+@endif
 <script>
 $(document).ready(function() {
     $('#MantVehicleTable').DataTable({

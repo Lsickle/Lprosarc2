@@ -143,7 +143,6 @@ class sclientcontroller extends Controller
      */
     public function edit($id)
     {
-        // return $id;
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')) {
             $Sede = Sede::where('SedeSlug',$id)->first();
             if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
