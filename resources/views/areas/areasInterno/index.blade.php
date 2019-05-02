@@ -12,9 +12,7 @@
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
-						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-							<a href="/areas/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
-						@endif
+						<a href="/areasInterno/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 					</div>
 					<div class="box box-info">
 						<div class="box-body">
@@ -23,12 +21,7 @@
 									<tr>
 										<th>{{ trans('adminlte_lang::message.areaname') }}</th>
 										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
-										@endif
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-											<th>{{ trans('adminlte_lang::message.edit') }}</th>
-										@endif
+										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									</tr>
 								</thead>
 								<tbody  hidden onload="renderTable()" id="readyTable">
@@ -42,11 +35,8 @@
 										<td>{{$Area->AreaName}}</td>
 										<td>{{$Area->SedeName}}</td>
 										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										<td>{{$Area->CliShortname}}</td>
 										@endif
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-											<td><a href='/areas/{{$Area->ID_Area}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
-										@endif
+										<td><a href='/areasInterno/{{$Area->ID_Area}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 									</tr>
 									@endforeach
 								</tbody>
