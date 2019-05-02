@@ -34,12 +34,16 @@ class sclientcontroller extends Controller
                         $query->where('sedes.SedeDelete',  '=', 0);
                     }
                     if(Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
-                        $query->where('FK_SedeCli', '=', $id, 'and', 'sedes.SedeDelete',  '=', 0);
+                        $query->where('FK_SedeCli', '=', $id);
+                        $query->where('sedes.SedeDelete',  '=', 0);
                     }
                 })
                 ->get();
+                return view('sclientes.index', compact('sedes'));
+        }else{
+            // abort(403);
+            return back();
         }
-        return view('sclientes.index', compact('sedes'));
     }
 
     /**
@@ -53,12 +57,14 @@ class sclientcontroller extends Controller
             if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                 $Clientes = cliente::all();
             }
-            $Departamentos = Departamento::all();
-            $Municipios = Municipio::all();
-    
+            if (old('FK_SedeMun') !== null){
+                $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
+            }
+            $Departamentos = Departamento::all();            
             return view('sclientes.create', compact('Clientes', 'Departamentos', 'Municipios'));
         }else{
-            abort(403);
+            // abort(403);
+            return back();
         }
     }
 
@@ -73,15 +79,35 @@ class sclientcontroller extends Controller
         $Sede = new Sede();
         $Sede->SedeName = $request->input('SedeName');
         $Sede->SedeAddress = $request->input('SedeAddress');
-        $Sede->SedePhone1 = $request->input('SedePhone1');
-        $Sede->SedeExt1 = $request->input('SedeExt1');
-        $Sede->SedePhone2 = $request->input('SedePhone2');
-        $Sede->SedeExt2 = $request->input('SedeExt2');
+
+        if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
+
+            $Sede->SedePhone1 = $request->input('SedePhone2');
+            $Sede->SedeExt1 = $request->input('SedeExt2');
+        }else{
+            if($request->input('SedePhone1') === null){
+                $Sede->SedeExt1 = null;
+            }else{
+                $Sede->SedePhone1 = $request->input('SedePhone1');
+                $Sede->SedeExt1 = $request->input('SedeExt1');
+            }
+            if($request->input('SedePhone2') === null){
+                $Sede->SedeExt2 = null;
+            }else{
+                $Sede->SedePhone2 = $request->input('SedePhone2');
+                $Sede->SedeExt2 = $request->input('SedeExt2');
+            }
+        }
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->SedeSlug = $request->input('SedeName');
-        $Sede->FK_SedeCli = $request->input('FK_SedeCli');
+        $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
         $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+            $id = userController::IDClienteSegunUsuario();
+            $Sede->FK_SedeCli = $id;
+        }else{
+            $Sede->FK_SedeCli = $request->input('FK_SedeCli');
+        }
         $Sede->SedeDelete = 0;
         $Sede->save();
 
@@ -117,15 +143,22 @@ class sclientcontroller extends Controller
      */
     public function edit($id)
     {
-        $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
-        
-        $Sede = Sede::where('SedeSlug',$id)->first();
+        // return $id;
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')) {
+            $Sede = Sede::where('SedeSlug',$id)->first();
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+                $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
+                $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+            }
+            $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
+            $Municipios = Municipio::where('FK_MunCity', $Municipio->FK_MunCity)->get();
+            $Departamentos = Departamento::all();
+            return view('sclientes.edit', compact('Sede', 'Clientes', 'Cliente', 'Departamentos', 'Municipios', 'Municipio'));
+        }else{
+            // abort(403);
+            return back();
+        }
 
-        $Departamentos = Departamento::all();
-
-        $Municipios = Municipio::all();
-
-        return view('sclientes.edit', compact('Sede', 'Clientes', 'Departamentos', 'Municipios'));
     }
 
     /**
@@ -135,10 +168,16 @@ class sclientcontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SedeStoreRequest $request, $id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
-        $Sede->fill($request->except('created_at'));
+        $Sede->fill($request->except('FK_SedeCli'));
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+            $ID_Cli = userController::IDClienteSegunUsuario();
+            $Sede->FK_SedeCli = $ID_Cli;
+        }else{
+            $Sede->FK_SedeCli = $request->input('FK_SedeCli');
+        }
         $Sede->save();
 
         $log = new audit();
@@ -170,7 +209,7 @@ class sclientcontroller extends Controller
         $Sede->save();
 
         $log = new audit();
-        $log->AuditTabla="gener_sedes";
+        $log->AuditTabla="sedes";
         $log->AuditType="Eliminado";
         $log->AuditRegistro=$Sede->ID_Sede;
         $log->AuditUser=Auth::user()->email;
@@ -179,16 +218,4 @@ class sclientcontroller extends Controller
 
         return redirect()->route('sclientes.index');
     }
-
-    public function getMunicipio(Request $request, $id) 
-    { //Llamado de los modelos para select dependientes de estado 
-        if($request->ajax())
-        { 
-            $municipios = Municipio::where('FK_MunCity',$id)->get();
-            return response()->json($municipios); 
-        }
-        return $municipios;
-    }
-
-
 }

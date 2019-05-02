@@ -113,7 +113,7 @@ class clientcontoller extends Controller
                 if($request->input('SedePhone1') === null){
                     $Sede->SedeExt1 = null;
                 }else{
-                    $Sede->SedePhone2 = $request->input('SedePhone1');
+                    $Sede->SedePhone1 = $request->input('SedePhone1');
                     $Sede->SedeExt1 = $request->input('SedeExt1');
                 }
                 if($request->input('SedePhone2') === null){
@@ -132,7 +132,7 @@ class clientcontoller extends Controller
             $Sede->SedeDelete = 0;
             $Sede->save();
 
-            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                 
             $Area = new Area();
             $Area->AreaName = $request->input("AreaName");
@@ -159,10 +159,11 @@ class clientcontoller extends Controller
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
 
-            
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
                 $user = User::where('ID_Cli', Auth::user()->ID_Cli)->first();
                 $user->FK_UserPers = $Personal->ID_Pers;
                 $user->save();
+                }
             }
             return redirect()->route('clientes.index');
     }

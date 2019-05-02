@@ -54,12 +54,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             )
             /*PESTAÑA DE SEDES*/
             ->addIf(Auth::user()->UsRol === "Cliente",
-            (Menu::new()
-            ->prepend('<a href="#"><i class="fa fa-building"></i> <span>Sedes</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-            ->addParentClass('treeview')
-            ->add(Link::toUrl('/sclientes', '<i class="fa fa-map"></i>'. trans('adminlte_lang::message.csedeindex')))
-            ->addClass('treeview-menu')
-            )
+            (Link::toUrl('/sclientes', '<i class="fa fa-building"></i><span> Sedes</span>'))
             )
             /*PESTAÑA DE GENERADORES*/
             ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'),

@@ -1370,7 +1370,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1410,6 +1410,20 @@ $(document).ready(function() {
             $('#sedeinputext2').prop('disabled', false);
         }
     });
+</script>
+<script>
+    function Tel(){
+        $(".tel2").change(function(){
+            if($(this).val().length>10){
+                $('.ext2').attr('disabled',false);
+            }else{
+                $('.ext2').attr('disabled',true);
+            };
+		});
+        document.getElementById('telefono2').style.display = 'block';
+        document.getElementById('extension2').style.display = 'block';
+        $('#tel').remove();
+    }
 </script>
 @endif
 

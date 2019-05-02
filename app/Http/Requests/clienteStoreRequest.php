@@ -24,7 +24,7 @@ class ClienteStoreRequest extends FormRequest
      */
     public function rules()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             return [
                 'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit',
                 'CliName'       => 'required|max:255|min:1',

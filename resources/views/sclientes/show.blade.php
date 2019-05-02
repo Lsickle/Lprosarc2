@@ -1,20 +1,30 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.home') }}
+	{{ trans('adminlte_lang::message.sclientsede') }}
 @endsection
-
-
 @section('main-content')
 	<div class="container-fluid spark-screen">
-		
-
-{{-- seccion de prueba --}}
+      @component('layouts.partials.modal')
+      {{$Sede->ID_Sede}}
+    @endcomponent
+      @if($Sede->SedeDelete == 0)
+      <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+      <form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
+        @method('DELETE')
+        @csrf
+        <input  type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
+      </form>
+    @else
+      <form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
+        @method('DELETE')
+        @csrf
+        <input type="submit" class='btn btn-success btn-block' value="Añadir">
+      </form>
+    @endif
 
       <div class="row">
         <div class="col-md-3">
-
-          <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">

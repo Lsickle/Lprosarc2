@@ -259,15 +259,15 @@ return [
 
     // sede
     'csedeindex'              => 'Lista de sedes',
-    'csedeupdate'             => 'Actualizar sede',
     'sclientmenu'             => 'Sedes del cliente',  
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
     'sclientsede'             => 'Sede',
     'sclientsedes'             => 'Sedes',
-    'sclientregister'         => 'Nueva Sede',
+    'sclientregister'         => 'Registrar Sede',
     'sclientnamesede'         => 'Nombre de la Sede',
     'sclientlistsede'         => 'Lista de Sedes',
+    'sclientdatasede'         => 'Datos de la Sede',
 
     // generador
     'genermenu'               => 'Generadores',

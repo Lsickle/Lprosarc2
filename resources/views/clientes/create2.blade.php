@@ -87,6 +87,7 @@
                                                         <div class="form-group col-md-6">
                                                             <label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
                                                             <select class="form-control select" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
+                                                                <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                                 @foreach ($Departamentos as $Departamento)
                                                                     <option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
                                                                 @endforeach
@@ -106,7 +107,7 @@
                                                             <label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">(+57)</span>
-                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="301 414 5321" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
+                                                                <input type="text" class="form-control mobile" id="sedeinputcelular" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
@@ -199,8 +200,6 @@
                                                 </div>
 											</div>
 										</div>
-                                        {{-- <div class="col-md-12"> --}}
-                                        {{-- </div> --}}
 									</div>
 								</div>
 							</form>
@@ -217,18 +216,4 @@
 	</div>
 	<!-- /.box -->
 </div>
-<script>
-    function Tel(){
-        $(".tel2").change(function(){
-            if($(this).val().length>10){
-                $('.ext2').attr('disabled',false);
-            }else{
-                $('.ext2').attr('disabled',true);
-            };
-		});
-        document.getElementById('telefono2').style.display = 'block';
-        document.getElementById('extension2').style.display = 'block';
-        $('#tel').remove();
-    }
-</script>
 @endsection
