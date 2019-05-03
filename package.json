@@ -55,7 +55,8 @@
     "pdfmake": "^0.1.53",
     "popper.js": "^1.15.0",
     "smartwizard": "^4.3.1",
-    "vue": "^2.6.6"
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {}
 }
