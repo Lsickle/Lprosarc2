@@ -36,7 +36,7 @@
 										<td>{{$Area->SedeName}}</td>
 										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										@endif
-										<td><a href='/areasInterno/{{$Area->ID_Area}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+										<td><a href='/areasInterno/{{$Area->AreaSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 									</tr>
 									@endforeach
 								</tbody>

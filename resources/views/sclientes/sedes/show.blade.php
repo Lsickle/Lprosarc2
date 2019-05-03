@@ -18,8 +18,9 @@
 					@endif
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
-                            <b>{{ trans('adminlte_lang::message.address') }}</b><button  class="btn btn-success SedeAddress">Copiar texto</button>
-                            <a href="#" id="SedeAddress" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.address') }}" value="{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}</p>">
+                            <b>{{ trans('adminlte_lang::message.address') }}</b>
+                            <button onclick="1()" class="btn btn-success">Copiar texto</button>
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}</p>">
                                 {{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}
                             </a>
 						</li>
@@ -33,10 +34,24 @@
 							<b>{{ trans('adminlte_lang::message.phone') }} 2</b> <a class="pull-right">{{$Sede->SedePhone2}} - {{$Sede->SedeExt2}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.emailaddress') }}</b><button onclick="SedeEmail()" class="btn btn-success">Copiar texto</button><a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeEmail}}</p>">{{$Sede->SedeEmail}}</a>
+                            <b>{{ trans('adminlte_lang::message.emailaddress') }}</b>
+                            <button onclick="SedeEmail()" class="btn btn-success">Copiar texto</button>
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeEmail}}</p>">{{$Sede->SedeEmail}}</a>
                         </li>
                     </ul>
+                    {{-- <input type="text"  id="SedeAddress" value="{{$Sede->SedeAddress.' - '.$Municipio->MunName.', '.$Departamento->DepartName}}">
+                    <input type="text" style="overflow: hidden;" id="SedeEmail" value="{{$Sede->SedeEmail}}">
+                    {{-- <input type="text" value="Hello World" id="copy"> --}}
+                    {{-- <button onclick="setClipboard('foo loves bar')">Set Clipboard</button>  --}}
+
+                    
+                            {{-- <input type="hidden" id="input-url" value="Copied!"> --}}
+                            {{-- <input type="hidden" id="input-url" value="Copied!">
+                            <button class="btn-copy">Copy</button> --}}
+                            {{-- <button class="copybtn">Copy</button> --}}
+{{-- 
                             <button class="copybtn">Copy</button>
+<a id="hola" value="hola">hola</a> --}}
 				</div>
 				<!-- /.box-body -->
 			</div>
@@ -46,45 +61,79 @@
 	</div>
 	<!-- /.col -->
 </div>
+          <!-- /.row -->
+{{-- <script>
+    // var clipboard = new Clipboard('.btn-copy', {
+    //     text: function() {
+    //         return document.querySelector('input[type=hidden]').value;
+    //     }
+    // });
+    clipboard.on('success', function(e) {
+    alert("Copied!");
+    e.clearSelection();
+    });
+    $("#input-url").val(location.href);
+</script> --}}
+
 <script>
-function copiarAlPortapapeles() {
+function copiarAlPortapapeles(id_elemento) {
 
-// Crea un campo de texto "oculto"
-var aux = document.createElement("input");
-
-// Asigna el contenido del elemento especificado al valor del campo
-aux.setAttribute("value", document.getElementById('SedeAddress').innerHTML);
-
-// Añade el campo a la página
-document.body.appendChild(aux);
-
-// Selecciona el contenido del campo
-aux.select();
-
-// Copia el texto seleccionado
-document.execCommand("copy");
-
-// Elimina el campo de la página
-document.body.removeChild(aux);
-
-}
+    // Crea un campo de texto "oculto"
+    var aux = document.createElement("input");
+  
+    // Asigna el contenido del elemento especificado al valor del campo
+    aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+  
+    // Añade el campo a la página
+    document.body.appendChild(aux);
+  
+    // Selecciona el contenido del campo
+    aux.select();
+  
+    // Copia el texto seleccionado
+    document.execCommand("copy");
+  
+    // Elimina el campo de la página
+    document.body.removeChild(aux);
+  
+  }
 </script>
-<script>
-    var copyTextareaBtn = document.querySelector('.SedeAddress');
+
+{{-- <script>
+    var copyTextareaBtn = document.querySelector('.copybtn');
     
     copyTextareaBtn.addEventListener('click', function(event) {
-        var copy_text = document.getElementById("SedeAddress");
+        var copy_text = document.getElementsByTagName("h4")[0];
         var range = document.createRange();
         range.selectNode(copy_text);
         window.getSelection().addRange(range);
     
-        // try {
-        // var successful = document.execCommand('copy');
-        // var msg = successful ? 'successful' : 'unsuccessful';
-        // console.log('Copying text command was ' + msg);
-        // } catch (err) {
-        // console.log('Oops, unable to copy');
-        // }
+        try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Copying text command was ' + msg);
+        } catch (err) {
+        console.log('Oops, unable to copy');
+        }
     });
-    </script>
+    </script> --}}
+    {{-- <script>
+            var copyTextareaBtn = document.querySelector('.copybtn');
+            
+            copyTextareaBtn.addEventListener('click', function(event) {
+              //var copy_text = document.getElementsByTagName("h4")[0];
+               var copy_text = document.getElementById("hola");
+              var range = document.createRange();
+              range.selectNode(copy_text);
+              window.getSelection().addRange(range);
+            
+              try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copying text command was ' + msg);
+              } catch (err) {
+                console.log('Oops, unable to copy');
+              }
+            });
+            </script> --}}
 @endsection

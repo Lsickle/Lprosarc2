@@ -42,6 +42,19 @@
                                         <input id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
+                                    <div class="col-md-12">
+                                      <div class="panel panel-default" style="margin-top: 2%;">
+                                        <div class="panel-heading">
+                                          <h3 class="panel-title">Pretratamientos</h3>
+                                        </div>
+                                        <div class="panel-body" id="pretratamientosPanel">
+                                          {{-- /*lista de pretratamientos*/ --}}
+                                          
+                                        </div>
+                                      </div>
+                                      <!-- /.box -->
+                                    </div>
+                                    <!-- /.col -->
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
@@ -64,15 +77,26 @@
 
 <script>
     var contador = 1;
+    function attachPopover(){
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                trigger: 'hover',
+                placement: 'auto',
+            });
+        });
+    };
     function AgregarPreTrat(){
         var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
-        $(".box-body").append(pretratamiento);
+        $("#pretratamientosPanel").append(pretratamiento);
         $("#createtratamientoForm").validator('update');
         contador= parseInt(contador)+1;
+        attachPopover();
     }
     function EliminarPreTrat(id){
         $("#pretratname"+id).remove();
         $("#pretratdescription"+id).remove();
+        $("#pretratsparator"+id).remove();
         $("#createtratamientoForm").validator('update');
         contador= parseInt(contador)-1;
     }

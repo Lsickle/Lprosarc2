@@ -1,85 +1,72 @@
 @extends('layouts.app')
-@section('htmlheader_title','Cargos')
-@section('contentheader_title','Edición de Cargos')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.cargotitle') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.cargotitle') }}
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
 					@component('layouts.partials.modal')
-						{{$Cargos->ID_Carg}}
+						{{$Cargos->CargSlug}}
 					@endcomponent
-					<h3 class="box-title">Datos del mantenimiento</h3>
+					<h3 class="box-title">{{trans('adminlte_lang::message.editcargo')}}</h3>
 					@if($Cargos->CargDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->ID_Carg}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-						<form action='/cargos/{{$Cargos->ID_Carg}}' method='POST'>
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+						<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
 							@method('DELETE')
 							@csrf
-							<input  type="submit" id="Eliminar{{$Cargos->ID_Carg}}" style="display: none;">
+							<input  type="submit" id="Eliminar{{$Cargos->CargSlug}}" style="display: none;">
 						</form>
 					@else
-						<form action='/cargos/{{$Cargos->ID_Carg}}' method='POST' style="float: right;">
+						<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
 							@method('DELETE')
 							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="Añadir">
+							<input type="submit" class='btn btn-success btn-block pull-right' value="{{ trans('adminlte_lang::message.add') }}">
 						</form>
 					@endif
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							<!-- form start -->
-							<form role="form" action="/cargos/{{$Cargos->ID_Carg}}" method="POST" enctype="multipart/form-data">
-								@method('PATCH')
-								@csrf
-								<div class="box-body">
-									<div class="col-xs-6">
-										<label for="NombreCargo">Nombre del Cargo</label>
-										<input required="true" name="NomCarg" autofocus="true" type="text" class="form-control" id="NombreCargo" value="{{$Cargos->CargName}}">
-									</div>
-									<div class="col-xs-6">
-										<label for="CargoSalary">Salario del Cargo ($)</label>
-										<input required="true" name="CargSalary" autofocus="true" type="number" class="form-control" id="CargoSalary" value="{{$Cargos->CargSalary}}">
-									</div>
-									<div class="col-xs-6">
-										<label for="CargoGrade">Grado del Cargo</label>
-										<select name="CargGrade" id="CargoGrade" class="form-control">
-											<option value="{{$Cargos->CargGrade}}">Seleccione...</option>
-											<option value="Bachiller">Bachiller</option>
-											<option value="Tecnico">Tecnico</option>
-											<option value="Tecnologo">Tecnologo</option>
-											<option value="Profesional">Profesional</option>
-										</select>
-									</div>
-									<div class="col-xs-6">
-										<label for="AreaSelect">Área</label>
-										<select name="SelectArea" id="AreaSelect" class="form-control">
-											<option value="{{$Cargos->CargArea}}">Seleccione...</option>
-											@foreach($Areas as $Area)
-												<option value="{{$Area->ID_Area}}">{{$Area->AreaName}}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>	
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
-								</div>
-							</form>
+				<div class="box box-info">
+					<form role="form" action="/cargos/{{$Cargos->CargSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						@method('PATCH')
+						@csrf
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
+						<div class="box-body">
+							<div class="form-group col-xs-12 col-md-12">
+								<label for="NombreCargo">{{trans('adminlte_lang::message.cargoname')}}</label><small class="help-block with-errors">*</small>
+								<input required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{$Cargos->CargName}}">
+							</div>
+							<div class="form-group col-xs-12 col-md-12">
+								<label for="AreaSelect">{{trans('adminlte_lang::message.areaname')}}</label><small class="help-block with-errors">*</small>
+								<select name="CargArea" required id="AreaSelect" class="form-control select">
+									<option value="">{{trans('adminlte_lang::message.select')}}</option>
+									@foreach($Areas as $Area)
+										<option value="{{$Area->ID_Area}}" {{$Cargos->CargArea == $Area->ID_Area ? 'selected' : ''}}>{{$Area->AreaName}}</option>
+									@endforeach
+								</select>
+							</div>
 						</div>
-						<!-- /.box -->
-					</div>
-					<!-- /.box-body -->
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.register')}}</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
 @endsection

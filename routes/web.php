@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/areasInterno','AreaInternoController');
 	Route::resource('/place/municipal','municipalityController');
 	Route::resource('/cargos','CargoController');
+	Route::resource('/cargosInterno','CargoInternoController');
 	Route::resource('/personal', 'PersonalController');
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');

@@ -117,7 +117,16 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 		        	)
 		        )
 		        /*PESTAÑA DE PERSONAL*/
-		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuPerslist'))))
+		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), 
+			        (Menu::new()
+				        ->prepend('<a href="#"><i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				        ->addParentClass('treeview')
+				        ->add(Link::toUrl('/personal', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuPerslist')))
+				        ->add(Link::toUrl('/cargos', '<i class="fas fa-tools"></i>'.trans('adminlte_lang::message.MenuPersCarg')))
+				        ->add(Link::toUrl('/areas', '<i class="fas fa-archive"></i>'.trans('adminlte_lang::message.MenuPersAreas')))
+				        ->addClass('treeview-menu')
+			        )
+		        )
 		        /*PESTAÑA DE COTIZACIONES*/
 			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 				    (Menu::new()
