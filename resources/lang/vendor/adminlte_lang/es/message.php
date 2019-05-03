@@ -204,7 +204,6 @@ return [
 
     'personalhtmlheader_title' => 'Personal',
     'personaltitleindex'      => 'Mi Personal',
-    'personaltitleindex2'     => 'Personal Cliente',
     'personaltitleregister'   => 'Registro de Personal',
     'personaltitleedit'       => 'Edición del Personal',
     'personaltitleshow'       => 'Perfil del Personal',
@@ -289,9 +288,19 @@ return [
     'editarea'                => 'Edición de áreas',
 
     // cargo
-    'cargoname'               => 'Cargo',
+    'cargotitle'              => 'Cargos',
+    'cargoname'               => 'Nombre del Cargo',
     'newcargo'                => 'Nuevo Cargo',
     'namenewcargo'            => '¿Cuál Cargo?',
+    'listcargo'               => 'Lista de Cargos',
+    'createcargo'             => 'Creación de cargos',
+    'cargograde'              => 'Grado del cargo',
+    'cargogradelist1'         => 'Bachiller',
+    'cargogradelist2'         => 'Tecnico',
+    'cargogradelist3'         => 'Tecnologo',
+    'cargogradelist4'         => 'Profesional',
+    'cargosalary'             => 'Salario del cargo',
+    'editcargo'                => 'Edición de cargos',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
@@ -347,6 +356,7 @@ return [
     'MenuCertificado'         => 'Certificados',
     'MenuManifiesto'          => 'Manifiestos',
     'MenuPersonal'            => 'Mi Personal',
+    'MenuPersonal2'           => 'Personal Cliente',
     'MenuPerslist'            => 'Lista de Personal',
     'MenuPersAsis'            => 'Asistencia',
     'MenuPersHorari'          => 'Horario',

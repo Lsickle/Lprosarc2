@@ -12,9 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{trans('adminlte_lang::message.listcargo')}}</h3>
-					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-						<a href="/cargos/create" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.create')}}</a>
-					@endif
+					<a href="/cargosInterno/create" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.create')}}</a>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -23,9 +21,9 @@
 								<tr>
 									<th>{{trans('adminlte_lang::message.cargoname')}}</th>
 									<th>{{trans('adminlte_lang::message.areaname')}}</th>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-										<th>{{trans('adminlte_lang::message.edit')}}</th>
-									@endif
+									<th>{{trans('adminlte_lang::message.cargograde')}}</th>
+									<th>{{trans('adminlte_lang::message.cargosalary')}}</th>
+									<th>{{trans('adminlte_lang::message.edit')}}</th>
 								</tr>
 							</thead>
 							<tbody  hidden onload="renderTable()" id="readyTable">
@@ -38,9 +36,9 @@
 									>
 										<td>{{$Cargo->CargName}}</td>
 										<td>{{$Cargo->AreaName}}</td>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-										<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
-									@endif
+										<td>{{$Cargo->CargGrade}}</td>
+										<td>{{$Cargo->CargSalary}}</td>
+										<td><a href='/cargosInterno/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 								</tr>
 								@endforeach
 							</tbody>
