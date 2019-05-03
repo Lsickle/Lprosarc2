@@ -16,7 +16,7 @@ class CreateCargosTable extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->increments('ID_Carg')->unique();
             $table->string('CargName',128);
-            $table->bigInteger('CargSalary');
+            $table->string('CargSalary');
             $table->string('CargGrade',128);
             $table->timestamps();
             $table->unsignedInteger('CargArea')->nullable();
