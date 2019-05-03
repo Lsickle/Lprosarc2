@@ -45,7 +45,7 @@
 										<td>{{$Area->CliShortname}}</td>
 										@endif
 										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-											<td><a href='/areas/{{$Area->ID_Area}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+											<td><a href='/areas/{{$Area->AreaSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 										@endif
 									</tr>
 									@endforeach

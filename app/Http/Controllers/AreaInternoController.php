@@ -21,7 +21,7 @@ class AreaInternoController extends Controller
             $Areas = DB::table('areas')
             ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
+            ->select('areas.AreaSlug', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
             ->where(function($query){
                 $id = userController::IDClienteSegunUsuario();
                 /*Validacion del personal de Prosarc autorizado para las areas solo los que no esten eliminados*/
@@ -38,7 +38,7 @@ class AreaInternoController extends Controller
             return view('areas.areasInterno.index', compact('Areas'));
         }
         else{
-            return back();
+            abort(403);
         }
     }
 
@@ -57,7 +57,7 @@ class AreaInternoController extends Controller
             return view('areas.areasInterno.create', compact('Sedes'));
         }
         else{
-            return back();
+            abort(403);
         }
     }
 
@@ -76,6 +76,7 @@ class AreaInternoController extends Controller
         $area->AreaName = $request->input('AreaName');
         $area->FK_AreaSede= $request->input('FK_AreaSede');
         $area->AreaDelete = 0;
+        $area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $area->save();
 
         return redirect()->route('areasInterno.index');
@@ -99,8 +100,8 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-            $Areas = Area::where('ID_Area', $id)->first();
+        $Areas = Area::where('AreaSlug', $id)->first();
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') && $Areas <> null){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('ID_Sede', 'SedeName')
@@ -109,7 +110,7 @@ class AreaInternoController extends Controller
             return view('areas.areasInterno.edit', compact('Sedes', 'Areas'));
         }
         else{
-            return back();
+            abort(403);
         }
     }
 
@@ -121,7 +122,7 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        $Area = Area::where('ID_Area', $id)->first();
+        $Area = Area::where('AreaSlug', $id)->first();
         $Area->AreaName = $request->input('NomArea');
         $Area->FK_AreaSede = $request->input('AreaSede');
         $Area->save();
@@ -144,7 +145,7 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        $Area = Area::where('ID_Area', $id)->first();
+        $Area = Area::where('AreaSlug', $id)->first();
             if ($Area->AreaDelete == 0) {
                 $Area->AreaDelete = 1;
             }

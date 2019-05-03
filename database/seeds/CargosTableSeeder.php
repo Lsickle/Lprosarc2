@@ -17,6 +17,7 @@ class CargosTableSeeder extends Seeder
     	$cargo->CargGrade = "Bachiller";
     	$cargo->CargArea = '2';
         $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
 
     	$cargo = new Cargo();
@@ -25,6 +26,7 @@ class CargosTableSeeder extends Seeder
     	$cargo->CargGrade = "Ingeniero(a)";
     	$cargo->CargArea = '1';
         $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
 
     	$cargo = new Cargo();
@@ -33,6 +35,7 @@ class CargosTableSeeder extends Seeder
     	$cargo->CargGrade = "Ingeniero(a)";
     	$cargo->CargArea = '4';
         $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
 
     	$cargo = new Cargo();
@@ -41,6 +44,7 @@ class CargosTableSeeder extends Seeder
     	$cargo->CargGrade = "Tecnico";
     	$cargo->CargArea = '3';
         $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
 
     	$cargo = new Cargo();
@@ -49,6 +53,7 @@ class CargosTableSeeder extends Seeder
     	$cargo->CargGrade = "Bachiller";
     	$cargo->CargArea = '5';
         $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
     }
 }

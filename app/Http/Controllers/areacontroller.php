@@ -22,7 +22,7 @@ class AreaController extends Controller{
 			$Areas = DB::table('areas')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
+			->select('areas.AreaSlug', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
 			->where(function($query){
 				$id = userController::IDClienteSegunUsuario();
 				/*Validacion del cliente que pueda ver solo las areas que tiene a cargo solo los que no esten eliminados*/
@@ -44,7 +44,7 @@ class AreaController extends Controller{
 			return view('areas.index', compact('Areas'));
 		}
 		else{
-			return back();
+			abort(403);
 		}
 	}
 
@@ -63,7 +63,7 @@ class AreaController extends Controller{
 			return view('areas.create', compact('Sedes'));
 		}
 		else{
-			return back();
+			abort(403);
 		}
 	}
 
@@ -82,6 +82,7 @@ class AreaController extends Controller{
 		$area->AreaName = $request->input('AreaName');
 		$area->FK_AreaSede= $request->input('FK_AreaSede');
 		$area->AreaDelete = 0;
+		$area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
 		$area->save();
 
 		return redirect()->route('areas.index');
@@ -104,8 +105,8 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function edit($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-			$Areas = Area::where('ID_Area', $id)->first();
+		$Areas = Area::where('AreaSlug', $id)->first();
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $Areas <> null){
 			$Sedes = DB::table('sedes')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Sede', 'SedeName')
@@ -114,7 +115,7 @@ class AreaController extends Controller{
 			return view('areas.edit', compact('Sedes', 'Areas'));
 		}
 		else{
-			return back();
+			abort(403);
 		}
 	}
 
@@ -126,7 +127,7 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function update(Request $request, $id){
-		$Area = Area::where('ID_Area', $id)->first();
+		$Area = Area::where('AreaSlug', $id)->first();
 		$Area->AreaName = $request->input('NomArea');
 		$Area->FK_AreaSede = $request->input('AreaSede');
 		$Area->save();
@@ -149,7 +150,7 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function destroy($id){
-		$Area = Area::where('ID_Area', $id)->first();
+		$Area = Area::where('AreaSlug', $id)->first();
 			if ($Area->AreaDelete == 0) {
 				$Area->AreaDelete = 1;
 			}
