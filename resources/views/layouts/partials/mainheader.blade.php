@@ -6,7 +6,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="/img/LogoProsarc.png" style="width: 60%; margin: 5px; border-radius: 50%;"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>{{ trans('adminlte_lang::message.Appname') }}</b><img src="/img/LogoProsarc.png" style="width: 14%; margin: 5px; border-radius: 50%;"></span>
+        <span class="logo-lg"><b>{{ trans('adminlte_lang::message.Appname') }}</b><img src="/img/LogoProsarc.png" style="width: 1.8em; margin: 5px; border-radius: 50%;"></span>
     </a>
 
     <!-- Header Navbar -->
