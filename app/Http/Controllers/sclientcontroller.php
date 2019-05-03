@@ -41,8 +41,7 @@ class sclientcontroller extends Controller
                 ->get();
                 return view('sclientes.index', compact('sedes'));
         }else{
-            // abort(403);
-            return back();
+            abort(403);
         }
     }
 
@@ -63,8 +62,7 @@ class sclientcontroller extends Controller
             $Departamentos = Departamento::all();            
             return view('sclientes.create', compact('Clientes', 'Departamentos', 'Municipios'));
         }else{
-            // abort(403);
-            return back();
+            abort(403);
         }
     }
 
@@ -131,8 +129,11 @@ class sclientcontroller extends Controller
     public function show($id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
+        $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
+        $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
 
-        return view('sclientes.show', compact('Sede'));
+        return view('sclientes.show', compact('Sede', 'Cliente','Municipio', 'Departamento'));
     }
 
     /**
@@ -154,10 +155,8 @@ class sclientcontroller extends Controller
             $Departamentos = Departamento::all();
             return view('sclientes.edit', compact('Sede', 'Clientes', 'Cliente', 'Departamentos', 'Municipios', 'Municipio'));
         }else{
-            // abort(403);
-            return back();
+            abort(403);
         }
-
     }
 
     /**
