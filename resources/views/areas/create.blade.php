@@ -38,7 +38,7 @@
 									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->ID_Sede}}" {{$Sede->ID_Sede == old('FK_AreaSede') ? 'select' : ''}}>{{$Sede->SedeName}}</option>
+											<option value="{{$Sede->ID_Sede}}" {{old('FK_AreaSede') == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
 										@endforeach
 									</select>
 								</div>

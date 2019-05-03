@@ -124,12 +124,14 @@ class clientcontoller extends Controller
             $Area->AreaName = $request->input("AreaName");
             $Area->FK_AreaSede = $Sede->ID_Sede;
             $Area->AreaDelete = 0;
+            $Area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
             $Area->save();
             
             $Cargo = new Cargo();
             $Cargo->CargName = $request->input("CargName");
             $Cargo->CargArea =  $Area->ID_Area;
             $Cargo->CargDelete =  0;
+            $Cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
             $Cargo->save();
             
             $Personal = new Personal();

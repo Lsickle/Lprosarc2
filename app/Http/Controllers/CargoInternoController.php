@@ -9,7 +9,7 @@ use App\Http\Controllers\userController;
 use App\audit;
 use App\Cargo;
 
-class CargoController extends Controller
+class CargoInternoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Cargos = DB::table('cargos')
                 ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
@@ -25,24 +25,19 @@ class CargoController extends Controller
                 ->select('cargos.CargSlug','cargos.CargDelete','cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName','clientes.ID_Cli', 'clientes.CliShortname')
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
-                        /*Validacion del cliente que pueda ver solo los cargos que tiene a cargo solo los que no esten eliminados*/
-                        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                        /*Validacion del personal de Prosarc autorizado para loscargos que no esten eliminados*/
+                        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
                             $query->where('clientes.ID_Cli', '=', $id);
                             $query->where('cargos.CargDelete', '=', 0);
                         }
-                        /*Validacion del personal de Prosarc autorizado para loscargos del cliente solo los que no esten eliminados*/
-                        else if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                            $query->where('clientes.ID_Cli', '<>', $id);
-                            $query->where('cargos.CargDelete', '=', 0);
-                        }
-                        /*Validacion del Programador para ver todas los cargos del cliente aun asi este eliminado*/
+                        /*Validacion del Programador para ver todas los cargos aun asi este eliminado*/
                         else{
-                            $query->where('clientes.ID_Cli', '<>', $id);
+                            $query->where('clientes.ID_Cli', '=', $id);
                         }
                     }
                 )
                 ->get();
-            return view('cargos.index', compact('Cargos'));
+            return view('cargos.cargosInterno.index', compact('Cargos'));
         }
         else{
             abort(403);
@@ -55,7 +50,7 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Areas = DB::table('areas')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -63,7 +58,7 @@ class CargoController extends Controller
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('areas.AreaDelete', 0)
                 ->get();
-            return view('cargos.create', compact('Areas'));
+            return view('cargos.cargosInterno.create', compact('Areas'));
         }
         else{
             abort(403);
@@ -78,17 +73,19 @@ class CargoController extends Controller
      */
     public function store(Request $request){
         $validate = $request->validate([
-            'CargName'       => 'required|min:8',
-            'CargArea'      => 'required',
+            'CargName'       => 'required|min:4',
+            'CargArea'       => 'required',
         ]);
         $cargo = new Cargo();
         $cargo->CargName = $request->input('CargName');
         $cargo->CargArea = $request->input('CargArea');
+        $cargo->CargGrade = $request->input('CargGrade');
+        $cargo->CargSalary = $request->input('CargSalary');
         $cargo->CargDelete = 0;
         $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $cargo->save();
 
-        return redirect()->route('cargos.index');
+        return redirect()->route('cargosInterno.index');
     }
 
     /**
@@ -109,7 +106,7 @@ class CargoController extends Controller
      */
     public function edit($id){
         $Cargos = Cargo::where('CargSlug', $id)->first();
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $Cargos <> null){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') && $Cargos <> null){
             $Areas = DB::table('areas')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -117,7 +114,7 @@ class CargoController extends Controller
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('areas.AreaDelete', 0)
                 ->get();
-            return view('cargos.edit', compact('Areas','Cargos'));
+            return view('cargos.cargosInterno.edit', compact('Areas','Cargos'));
         }
         else{
             abort(403);
@@ -144,7 +141,7 @@ class CargoController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
-        return redirect()->route('cargos.index');
+        return redirect()->route('cargosInterno.index');
     }
 
     /**
@@ -171,6 +168,6 @@ class CargoController extends Controller
         $log->Auditlog = $Cargo->CargDelete;
         $log->save();
 
-        return redirect()->route('cargos.index');
+        return redirect()->route('cargosInterno.index');
     }
 }
