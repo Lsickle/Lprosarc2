@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.sclientregistertittle') }}
+{{ trans('adminlte_lang::message.sclientsede') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.sclientregistertittle') }}
+{{ trans('adminlte_lang::message.sclientsede') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,116 +12,98 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
-					@component('layouts.partials.modal')
-						{{$Sede->ID_Sede}}
-					@endcomponent
-					<h3 class="box-title">Datos de la sede de la empresa</h3>
-					@if($Sede->SedeDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input  type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
-						</form>
-					@else
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="Añadir">
-						</form>
-					@endif
+					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientdatasede') }}</h3>
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">complete todos los campos a continuacion</h3>
+				<div class="box box-info">
+					<!-- form start -->
+					<form role="form" action="/sclientes/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						@csrf
+						@method('PUT')
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
 							</div>
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/sclientes/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data">
-								@csrf
-								@method('PUT')
-								<div class="box-body">
+						@endif
+						<div class="box-body">
+								@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
 
-									<div class="form-group">
-										<label for="sedeinputname">Nombre de Sede</label>
-										<input type="text" class="form-control" id="sedeinputname" placeholder="Prosarc" name="SedeName" required="true" value="{{$Sede->SedeName}}">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputcelular">N° Celular</label>
-										<input type="text" class="form-control" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" value="{{$Sede->SedeCelular}}">
-									</div>
-
-									<div class="col-md-6">
-											<label for="departamento">Departamento</label>
-											<select class="form-control" id="departamento" name="Departamento" required="true">
-												<option>Seleccione...</option>
-												@foreach ($Departamentos as $Departamento)
-													<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
-												@endforeach
-												
-											</select>
-										</div>
-										<div class="col-md-6">
-											<label for="GSedemunicipio">Municipio</label>
-											<select class="form-control" id="GSedemunicipio" name="FK_SedeMun" required="true">
-											<option value="{{$Sede->FK_SedeMun}}">Seleccione...</option>
-											@foreach ($Municipios as $Municipio)
-												<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
-											@endforeach
-											</select>
-										</div>
-									<div class="col-md-6">
-										<label for="clientname">Cliente</label>
-										<select class="form-control" id="clientname" placeholder="Funza" name="clientename" required="true">
-												<option value="{{$Sede->FK_SedeCli}}">Seleccione...</option>
-											@foreach($Clientes as $cliente)
-												<option value="{{$cliente->ID_Cli}}">{{$cliente->CliShortname}}</option>
-											@endforeach()
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputaddress">Dirección</label>
-										<input type="text" class="form-control" id="sedeinputaddress" placeholder="cll 23 #11c-03" name="SedeAddress" required="true" value="{{$Sede->SedeAddress}}">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputphone1">telf local 1</label>
-										<input type="tel" class="form-control" id="sedeinputphone1" placeholder="031-4123141" name="SedePhone1" maxlength="16" value="{{$Sede->SedePhone1}}">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputext1">Ext 1</label>
-										<input type="number" class="form-control" id="sedeinputext1" placeholder="1555" name="SedeExt1" maxlength="4" value="{{$Sede->SedeExt1}}">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputphone2">telf local 2</label>
-										<input type="tel" class="form-control" id="sedeinputphone2" placeholder="(031)-412 3141" name="SedePhone2" maxlength="16" value="{{$Sede->SedePhone2}}">
-									</div>
-									<div class="col-md-6">
-										<label for="sedeinputext2">Ext 2</label>
-										<input type="number" class="form-control" id="sedeinputext2" placeholder="1555" name="SedeExt2" maxlength="4" value="{{$Sede->SedeExt2}}">
-									</div>
-									{{-- <div class="form-group" style="margin-top: 10em"> --}}
-									<div class="col-md-6">
-										<label for="sedeinputemail">Email de la Sede</label>
-										<input type="email" class="form-control" id="sedeinputemail" placeholder="Sistemas@Prosarc.com" name="SedeEmail" required="true" value="{{$Sede->SedeEmail}}">
-									</div>
+							<div class="col-md-12 form-group">
+								<label for="clientname">{{ trans('adminlte_lang::message.clientcliente') }}</label><small class="help-block with-errors">*</small>
+								<select class="form-control select" id="clientname" name="FK_SedeCli" required>
+									@foreach($Clientes as $cliente)
+										<option value="{{$cliente->ID_Cli}}" {{ $Cliente->ID_Cli == $cliente->ID_Cli ? 'selected' : '' }}>{{$cliente->CliShortname}}</option>
+									@endforeach
+								</select>
+							</div>
+							@endif
+							<div class="col-md-6 form-group">
+								<label for="sedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label><small class="help-block with-errors">*</small>
+								<input type="text" class="form-control" id="sedeinputname" name="SedeName" value="{{$Sede->SedeName}}" required>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="sedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
+								<input type="email" class="form-control" id="sedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="SedeEmail" required="true" value="{{$Sede->SedeEmail}}">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
+								<select class="form-control select" id="departamento" name="departamento" required>
+									@foreach ($Departamentos as $Departamento)
+										<option value="{{$Departamento->ID_Depart}}" {{ $Municipio->FK_MunCity == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><small class="help-block with-errors">*</small>
+								<select class="form-control select" id="municipio" name="FK_SedeMun">
+									@foreach ($Municipios as $Municipio)
+										<option value="{{$Municipio->ID_Mun}}" {{ $Sede->FK_SedeMun == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
+								<input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" value="{{$Sede->SedeAddress}}" required>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
+								<div class="input-group">
+									<span class="input-group-addon">(+57)</span>
+									<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" value="{{$Sede->SedeCelular}}" required>
 								</div>
-								<!-- /.box-body -->
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
-								</div>
-							</form>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
+								<input type="text" class="form-control phone tel" id="sedeinputphone1" class="btn btn-outline-success my-2 my-sm-0" name="SedePhone1" data-minlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" value="{{$Sede->SedePhone1}}">
+							</div>
+							<div class="col-md-6 form-group">
+									<label for="sedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label><small class="help-block with-errors"></small>
+								<input type="text" class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" data-minlength="2" data-maxlength="5" value="{{$Sede->SedeExt1}}" disabled>
+							</div>
+							<div id="telefono2" class="col-md-6 form-group" style="display: none;">
+								<label for="sedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label><small class="help-block with-errors"></small>
+								<input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" value="{{$Sede->SedePhone2}}">
+							</div>
+							<div id="extension2" class="col-md-6 form-group" style="display: none;">
+								<label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
+								<input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}"  value="{{$Sede->SedeExt2}}" disabled>
+							</div>
+							<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
+								<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
+							</div>
+							
 						</div>
-						<!-- /.box -->
-					</div>
-					<!-- /.box-body -->
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
 		<!-- /.box-body -->
 	</div>

@@ -15,7 +15,7 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/personalInterno" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
 							<div class="alert alert-danger" role="alert">
@@ -34,6 +34,8 @@
 									<ul>
 										<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso1smart-wizzard') }}</small></a></li>
 										<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso2smart-wizzard') }}</small></a></li>
+										<li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso3smart-wizzard') }}</small></a></li>
+										<input name="PersType" id="PersType" type="text" hidden value="1">
 									</ul>
 									<div>
 										<div id="step-1" class="">
@@ -127,12 +129,54 @@
 														<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
 													</div>
 												</div>
-												<input type="text" name="PersEPS" hidden value="0">
-												<input type="text" name="PersARL" hidden value="0">
-												<input type="text" name="PersIngreso" hidden value="0000-00-00">
-												<input type="text" name="PersSalida" hidden value="0000-00-00">
-												<div class="box-footer pull-right">
-													<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+											</div>
+										</div>
+										<div id="step-3" class="">
+											<div class="col-md-12">
+												<div id="form-step-2" role="form" data-toggle="validator">
+													<div class="form-group col-md-6">
+														<label for="PersBirthday">{{ trans('adminlte_lang::message.persbirthday') }}</label>
+														<input name="PersBirthday" autofocus="true" type="date" class="form-control" id="PersBirthday" value="{{old('PersBirthday')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersPhoneNumber">{{ trans('adminlte_lang::message.persphone') }}</label><small class="help-block with-errors dir"></small>
+														<input data-minlength="11" name="PersPhoneNumber" autofocus="true" type="text" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control phone" id="PersPhoneNumber" value="{{old('PersPhoneNumber')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersEPS">{{ trans('adminlte_lang::message.perseps') }}</label><small class="help-block with-errors dir">*</small>
+														<input data-minlength="5" name="PersEPS"  autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersEPS" required value="{{old('PersEPS')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersARL">{{ trans('adminlte_lang::message.persarl') }}</label><small class="help-block with-errors dir">*</small>
+														<input data-minlength="5" name="PersARL" autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersARL" required value="{{old('PersARL')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersLibreta">{{ trans('adminlte_lang::message.perslibreta') }}</label>
+														<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta" value="{{old('PersLibreta')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersPase">{{ trans('adminlte_lang::message.perspase') }}</label>
+														<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{old('PersPase')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersBank">{{ trans('adminlte_lang::message.persbank') }}</label>
+														<input data-minlength="4" name="PersBank" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" autofocus="true" type="text" class="form-control" id="PersBank" value="{{old('PersBank')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersBankAccaunt">{{ trans('adminlte_lang::message.persbankaccaunt') }}</label><small class="help-block with-errors"></small>
+														<input data-minlength="19" name="PersBankAccaunt" data-error="{{ trans('adminlte_lang::message.data-error-minlength16') }}" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{old('PersBankAccaunt')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersIngreso">{{ trans('adminlte_lang::message.persingreso') }}</label><small class="help-block with-errors dir">*</small>
+														<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{old('PersIngreso')}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersSalida">{{ trans('adminlte_lang::message.perssalida') }}</label><small class="help-block with-errors dir">*</small>
+														<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required value="{{old('PersSalida')}}">
+													</div>
+												</div>
+												<div class="box-footer">
+													<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 												</div>
 											</div>
 										</div>
@@ -154,7 +198,7 @@
 		$(document).ready(function(){
 			var area = $('#CargArea').val();
 			var cargo = $('#FK_PersCargo').val();
-			if(area == 0){
+			if(area == "NewArea"){
 				$("#NewInputA").val("{{old('NewArea')}}");
 				$('#FK_PersCargo').val("NewCargo");
 				document.getElementById("NewArea").style.display = 'block';
@@ -162,7 +206,7 @@
 				document.getElementById("divFK_PersCargo").style.display = 'none';
 				document.getElementById("FK_PersCargo").required = false;
 			}
-			if(cargo == 0){
+			if(cargo == "NewCargo"){
 				$("#NewInputC").val("{{old('NewCargo')}}");
 				document.getElementById("NewCargo").style.display = 'block';
 				document.getElementById("NewInputC").required = true;

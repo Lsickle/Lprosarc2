@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Editar datos
+{{ trans('adminlte_lang::message.clientcliente') }}
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::message.edit') }}
@@ -17,14 +17,19 @@ Editar datos
 					<div class="col-md-12">
 						<!-- general form elements -->
 						<div class="box box-primary">
-							{{-- <div class="box-header with-border">
-								<h3 class="box-title">Formulario de edición</h3>
-							</div> --}}
-							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
 								@csrf
 								@method('PUT')
+								@if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 								<div class="box-body">
 									<div class="form-group col-md-12">
 										<label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
@@ -38,7 +43,7 @@ Editar datos
 										<label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
 										<input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" minlength="2"  maxlength="100" required value="{{$cliente->CliShortname}}">
 									</div>
-									@if(Auth::user()->UsRol === "Administrador")
+									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
 									<div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
 										<label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
 										<select class="form-control" id="categoria" name="CliCategoria" required>

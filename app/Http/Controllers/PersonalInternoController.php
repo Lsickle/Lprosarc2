@@ -12,51 +12,38 @@ use App\Area;
 use App\Cargo;
 use App\audit;
 
-class PersonalController extends Controller
+class PersonalInternoController extends Controller
 {
-    /**
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        /*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
+        /*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
-                ->where('clientes.ID_Cli', '<>', 1)
+                ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                ->where('clientes.ID_Cli', 1)
                 ->get();
-            return view('personal.index', compact('Personals'));
+            return view('personal.personalInterno.index', compact('Personals'));
         }
-        /*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
-        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica')){
+        /*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
+        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Personals = DB::table('personals')
                     ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                     ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                     ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
+                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
                     ->where('personals.PersDelete',0)
-                    ->where('clientes.ID_Cli', '<>', 1)
+                    ->where('clientes.ID_Cli', 1)
                     ->get();
-            return view('personal.index', compact('Personals'));
-        }
-        /*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
-        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            $Personals = DB::table('personals')
-                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
-                    ->where('personals.PersDelete',0)
-                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-                    ->get();
-            return view('personal.index', compact('Personals'));
+            return view('personal.personalInterno.index', compact('Personals'));
         }
         /*Validacion para usuarios no permitidos en esta vista*/
         else{
@@ -71,7 +58,7 @@ class PersonalController extends Controller
      */
     public function create(){
         /*Validacion para personas autorisadas a crear una persona*/
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Sedes = DB::table('sedes')
                 ->select('sedes.ID_Sede', 'sedes.SedeName')
                 ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
@@ -94,7 +81,7 @@ class PersonalController extends Controller
                     ->where('CargArea', old('CargArea'))
                     ->get();
             }
-            return view('personal.create', compact('Sedes', 'Areas', 'Cargos'));
+            return view('personal.personalInterno.create', compact('Sedes', 'Areas', 'Cargos'));
         }
         else{
             return route('home');
@@ -171,7 +158,7 @@ class PersonalController extends Controller
         $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);
         $Personal->save();
 
-        return redirect()->route('personal.index');
+        return redirect()->route('personalInterno.index');
     }
 
     /**
@@ -181,7 +168,7 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Personas = DB::table('personals')
                 ->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -191,7 +178,7 @@ class PersonalController extends Controller
                 ->where('PersSlug',$id)
                 ->get();
             $IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
-             return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
+             return view('personal.personalInterno.show', compact('Personas', 'IDClienteSegunUsuario'));
          }
         else{
             return route('home');
@@ -205,7 +192,7 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Persona = Personal::where('PersSlug', $id)->first();
             $Cargo = DB::table('cargos')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -230,7 +217,7 @@ class PersonalController extends Controller
                 ->where('cargos.CargArea', $Cargo[0]->ID_Area)
                 ->where('cargos.ID_Carg', '<>', $Cargo[0]->ID_Carg)
                 ->get();
-            return view('personal.edit', compact('Persona', 'Cargo', 'Cargos', 'Sedes', 'Areas'));
+            return view('personal.personalInterno.edit', compact('Persona', 'Cargo', 'Cargos', 'Sedes', 'Areas'));
         }
         else{
             return route('home');
@@ -316,7 +303,7 @@ class PersonalController extends Controller
         $log->Auditlog = $request->all();
         $log->save();
 
-        return redirect()->route('personal.index');
+        return redirect()->route('personalInterno.index');
     }
 
     /**
@@ -343,6 +330,6 @@ class PersonalController extends Controller
         $log->Auditlog = $Persona->PersDelete;
         $log->save();
 
-        return redirect()->route('personal.index');
+        return redirect()->route('personalInterno.index');
     }
 }

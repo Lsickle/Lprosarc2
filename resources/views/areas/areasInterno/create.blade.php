@@ -17,7 +17,7 @@
 						<h3 class="box-title">{{ trans('adminlte_lang::message.createarea') }}</h3>
 					</div>
 					<div class="box box-info">
-						<form role="form" action="/areas" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						<form role="form" action="/areasInterno/" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
 							@if ($errors->any())
 								<div class="alert alert-danger" role="alert">
