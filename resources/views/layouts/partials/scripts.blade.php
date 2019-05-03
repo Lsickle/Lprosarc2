@@ -1090,16 +1090,22 @@ $(document).ready(function() {
         autoWith: true,
         searchHighlight: true,
         columnDefs: [
+            if({{Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')}}){
+
             {"targets": 5,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
+                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
             }},
+        }else{
+
             {"targets": 4,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
             }},
+
+        }
         ]
     });
     /*funcion para resaltar las busquedas*/

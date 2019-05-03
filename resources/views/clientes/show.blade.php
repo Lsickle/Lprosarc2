@@ -17,7 +17,7 @@
 					@endif
 					@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 					@component('layouts.partials.modal')
-					{{$cliente->ID_Cli}}
+						{{$cliente->ID_Cli}}
 					@endcomponent
 						@if($cliente->CliDelete == 0)
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$cliente->ID_Cli}}'  class='btn btn-danger pull-left'>{{ trans('adminlte_lang::message.delete') }}</a>

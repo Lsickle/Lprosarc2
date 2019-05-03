@@ -263,7 +263,7 @@ return [
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
     'sclientsede'             => 'Sede',
-    'sclientsedes'             => 'Sedes',
+    'sclientsedes'            => 'Sedes',
     'sclientregister'         => 'Registrar Sede',
     'sclientnamesede'         => 'Nombre de la Sede',
     'sclientlistsede'         => 'Lista de Sedes',
