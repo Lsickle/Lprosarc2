@@ -127,9 +127,13 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function update(Request $request, $id){
+		$validate = $request->validate([
+			'AreaName'       => 'required|min:8',
+			'FK_AreaSede'    => 'required',
+		]);
 		$Area = Area::where('AreaSlug', $id)->first();
-		$Area->AreaName = $request->input('NomArea');
-		$Area->FK_AreaSede = $request->input('AreaSede');
+		$Area->AreaName = $request->input('AreaName');
+		$Area->FK_AreaSede = $request->input('FK_AreaSede');
 		$Area->save();
 
 		$log = new audit();

@@ -17,7 +17,7 @@
 						<h3 class="box-title">{{ trans('adminlte_lang::message.createarea') }}</h3>
 					</div>
 					<div class="box box-info">
-						<form role="form" action="/areasInterno/" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						<form role="form" action="/areasInterno" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
 							@if ($errors->any())
 								<div class="alert alert-danger" role="alert">
@@ -38,7 +38,7 @@
 									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->ID_Sede}}" {{$Sede->ID_Sede == old('FK_AreaSede') ? 'select' : ''}}>{{$Sede->SedeName}}</option>
+											<option value="{{$Sede->ID_Sede}}" {{ old('FK_AreaSede') == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
 										@endforeach
 									</select>
 								</div>

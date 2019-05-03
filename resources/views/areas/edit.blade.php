@@ -49,11 +49,11 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-12">
 									<label for="NombreArea">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
-									<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required="true" name="NomArea" autofocus="true" type="text" class="form-control inputText" id="NombreArea" value="{{$Areas->AreaName}}">
+									<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required="true" name="AreaName" autofocus="true" type="text" class="form-control inputText" id="NombreArea" value="{{$Areas->AreaName}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-12">
 									<label for="SedeSelect">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
-									<select name="AreaSede" id="SedeSelect" class="form-control select" required>
+									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
 										@foreach($Sedes as $Sede)
 											<option value="{{$Sede->ID_Sede}}" {{$Areas->FK_SedeCli == $Sede->ID_Sede ? 'select' : ''}}>{{$Sede->SedeName}}</option>
 										@endforeach

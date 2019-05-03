@@ -486,6 +486,12 @@ $(function() {
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.nombres').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}]"});
         $('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd"});
+        $('.money').inputmask({ 
+            alias: "currency",
+            rightAlign: false,
+            placeholder: "",
+            digits: 0
+        });
     });
     </script>
 <script>
@@ -657,14 +663,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-            "targets": 4,
-            "data": "ID_Carg",
-            "render": function(data, type, row, meta) {
-                return "<a href='/cargos/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
+        "responsive": true
     });
 });
 
