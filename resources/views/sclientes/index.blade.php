@@ -23,7 +23,6 @@
 						<table id="sedes" class="table table-bordered table-striped" width="100%">
 							<thead>
 								<tr>
-									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
 									<th>{{ trans('adminlte_lang::message.mobile') }}</th>
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
@@ -38,7 +37,6 @@
 											style="color: red;" 
 										@endif
 									>
-										<td>{{$Sede->CliShortname}}</td>
 										<td>{{$Sede->SedeName}}</td>
 										<td>{{$Sede->SedeCelular}}</td>
 										<td>{{$Sede->SedeEmail}}</td>
@@ -49,7 +47,6 @@
 							</tbody>
 							<tfoot>
 								<tr>
-									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
 									<th>{{ trans('adminlte_lang::message.mobile') }}</th>
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>

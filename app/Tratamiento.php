@@ -20,7 +20,7 @@ class Tratamiento extends Model
 
 	public function pretratamientos()
 	{
-	 return $this->hasMany('App\Pretratamiento', 'ID_PreTrat');
+	 return $this->hasMany('App\Pretratamiento', 'FK_Pre_Trat');
 	}
 
 }

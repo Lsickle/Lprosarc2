@@ -11,7 +11,7 @@ class Pretratamiento extends Model
 
 	protected $primaryKey = 'ID_PreTrat';
 
-	protected $fillable=['PreTratName', 'FK_Pre_Trat'];
+	protected $fillable=['PreTratName', 'PreTratDescription', 'FK_Pre_Trat'];
 
 
     public function tratamiento()
