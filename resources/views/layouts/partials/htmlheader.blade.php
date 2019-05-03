@@ -11,6 +11,10 @@
     
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
 
+    {{-- toastr --}}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css" />
+    
+
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
 

@@ -4,6 +4,9 @@
 <!-- Laravel App -->
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 
+<!-- toastr -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
 
