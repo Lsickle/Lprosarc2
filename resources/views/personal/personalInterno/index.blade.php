@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Personal')
-
-@section('contentheader_title', 'Personal')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.personaltitleindex') }}
+@endsection
 
 @section('main-content')
 	<div class="container-fluid spark-screen">
@@ -11,20 +14,20 @@
         <!-- /.box -->
         <div class="box">
           <div class="box-header">
-            <a href="personal/create" class="btn btn-primary" style="float: right;">Crear</a>
+            <a href="/personalInterno/create" class="btn btn-primary" style="float: right;">Crear</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="PersonalsInternoTable" class="table table-compact table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Documento</th>
-                  <th>Nombre</th>
-                  <th>Correo Electronico</th>
-                  <th>Celular</th>
-                  <th>Cargo</th>
-                  <th>Area</th>
-                  <th>Ver más</th>
+                  <th>{{ trans('adminlte_lang::message.persdocument') }}</th>
+                  <th>{{ trans('adminlte_lang::message.persname') }}</th>
+                  <th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
+                  <th>{{ trans('adminlte_lang::message.mobile') }}</th>
+                  <th>{{ trans('adminlte_lang::message.cargoname') }}</th>
+                  <th>{{ trans('adminlte_lang::message.areaname') }}</th>
+                  <th>{{ trans('adminlte_lang::message.see') }}</th>
                 </tr>
               </thead>
               <tbody  hidden onload="renderTable()" id="readyTable">

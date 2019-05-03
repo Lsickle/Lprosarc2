@@ -169,6 +169,17 @@ $(document).ready(function() {
 });
 
 </script>
+<script>
+$(document).ready(function() {
+    $('.select').select2({
+        placeholder: "Seleccione...",
+        allowClear: true,
+        width: 'resolve',
+        width: '100%',
+    });
+});
+
+</script>
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 $(document).ready(function() {
@@ -635,14 +646,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-            "targets": 2,
-            "data": "ID_Area",
-            "render": function(data, type, row, meta) {
-                return "<a href='/areas/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
+        "responsive": true
     });
 });
 
@@ -727,15 +731,7 @@ $(document).ready(function() {
         "scrollX": false,
         "autoWidth": true,
         "keys": true,
-        "responsive": true,
-        "columnDefs": [{
-                "targets": 7,
-                "data": "PersSlug",
-                "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
-                }
-            }
-        ]
+        "responsive": true
     });
 });
 $(document).ready(function() {
@@ -748,7 +744,7 @@ $(document).ready(function() {
                 "targets": 6,
                 "data": "PersSlug",
                 "render": function(data, type, row, meta) {
-                    return "<a method='get' href='/personal/" + data + "' class='btn btn-success btn-block'>Ver</a>";
+                    return "<a method='get' href='/personalInterno/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
                 }
             }
         ]
@@ -1070,6 +1066,7 @@ $(document).ready(function() {
     });
 });
 </script>
+@if(Route::currentRouteName() === 'sclientes.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?>";
 
@@ -1092,13 +1089,18 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        columnDefs: [{
-            "targets": 8,
+        columnDefs: [
+            {"targets": 5,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/sclientes/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }]
+            }},
+            {"targets": 4,
+            "data": "SedeSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
+            }},
+        ]
     });
     /*funcion para resaltar las busquedas*/
     var table = $('#sedes').DataTable();
@@ -1110,8 +1112,8 @@ $(document).ready(function() {
         body.highlight(table.search());
     });
 });
-
 </script>
+@endif
 <script>
 $(document).ready(function() {
     $('#MantVehicleTable').DataTable({
@@ -1367,7 +1369,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1379,7 +1381,51 @@ $(document).ready(function() {
         });
     });
 </script>
+<script>
+    $(document).ready(function(){    
+        if({{old('SedeExt2')}} !== null){
+            $('#sedeinputext2').prop('disabled', false);
+        };
+        
+    });
+</script>
+<script>
+    $(document).ready(function(){    
+    if({{old('SedeExt1')}} !== null){
+            $('#sedeinputext1').prop('disabled', false);
+        };
+    });
+</script>
+<script>
+    $(document).ready(function(){  
+        if($('#sedeinputphone1').val()){
+            $('#sedeinputext1').prop('disabled', false);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function(){  
+        if($('#sedeinputphone2').val()){
+            $('#sedeinputext2').prop('disabled', false);
+        }
+    });
+</script>
+<script>
+    function Tel(){
+        $(".tel2").change(function(){
+            if($(this).val().length>10){
+                $('.ext2').attr('disabled',false);
+            }else{
+                $('.ext2').attr('disabled',true);
+            };
+		});
+        document.getElementById('telefono2').style.display = 'block';
+        document.getElementById('extension2').style.display = 'block';
+        $('#tel').remove();
+    }
+</script>
 @endif
+
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();

@@ -142,6 +142,8 @@ return [
     */
 
     'attributes' => [
+        'UsAvatar'      => 'Foto de perfil',
+
         'CliNit'        => 'Nit',
         'CliName'       => 'Razón Social',
         'CliShortname'  => 'Nombre Corto',
@@ -153,8 +155,9 @@ return [
         'SedePhone1'    => 'Teléfono 1 de la Sede',
         'SedeExt1'      => 'Extensión 1 de la Sede',
         'SedePhone2'    => 'Teléfono 2 de la Sede',
-        'SedeExt2'      => 'Extensión 1 de la Sede',
+        'SedeExt2'      => 'Extensión 2 de la Sede',
         'SedeCelular'   => 'Celular de la Sede',
+        'FK_SedeCli'    => 'Cliente',
 
         'PersDocNumber' => 'Número de Documento',
         'PersEmail'     => 'Email del Personal',
@@ -162,10 +165,25 @@ return [
         'PersLastName'  => 'Apellidos de la Persona',
         'PersSecondName'=> 'Segundo Nombre de la Persona',
         'PersDocType'   => 'Tipo de Documento',
-        
+        'PersCellphone' => 'Número de celular',
+        'PersAddress'   => 'Dirección',
+        'PersPhoneNumber' => 'Teléfono local',
+        'PersEPS'       => 'EPS',
+        'PersARL'       => 'ARL',
+        'PersLibreta'   => 'Número de Libreta',
+        'PersPase'      => 'Número del Pase',
+        'PersBank'      => 'Banco',
+        'FK_PersCargo'  => 'Cargo del Personal',
+        'CargArea'      => 'Area',
+        'PersBankAccaunt' => 'Número de Cuenta',
+        'PersIngreso'   => 'Fecha de Entrada',
+        'PersSalida'    => 'Fecha de Salida',
+
         'AreaName'      => 'Nombre del Area',
-        
+        'NewArea'       => 'Nombre de la nueva Area',
+
         'CargName'      => 'Nombre del cargo',
+        'NewCargo'       => 'Nombre del nuevo Cargo',
     ],
 
 ];

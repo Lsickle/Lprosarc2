@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Language Lines
+    | Language Lines {{ trans('adminlte_lang::message.menssage') }}
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during authentication for various
@@ -59,13 +58,14 @@ return [
     'friends'                 => 'Amigos',
 
     'profile'                 => 'Perfil',
+    'profileedit'             => 'Edición de Perfil',
     'signout'                 => 'Salir',
     'landingdescription'      => 'Un laravel 5 paquete que cambia de forma predeterminada Laravel scaffolding/boilerplate a la plantilla AdminLTE con Bootstrap 3.0 y la página de destino Pratt',
     'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquet landing page - Uso de Pratt',
     'description'             => 'Descripción',
     'showcase'                => 'Escaparate',
-    'contact'                 => 'Contacto',
-    'contacts'                 => 'Contactos',
+    // 'contact'                 => 'Contacto',
+    // 'contacts'                 => 'Contactos',
     'laravelpackage'          => '5 paquete que cambia por defecto laravel',
     'to'                      => 'a',
     'templatewith'            => 'plantilla con',
@@ -120,12 +120,14 @@ return [
     'passwordreset'           => 'Restablecer la contraseña',
     'username'                => 'Nombre de usuario',
     'confirmpassword'         => 'Confirmar contraseña',
+    'confirmpasswordfalse'    => 'La contraseñas no coinciden',
     'retypepassword'          => 'Vuelva a escribir la contraseña',
     'registererror'           => 'Error de Registro!',
     'loginerror'              => 'Error de Login!',
     'loggedin'                => 'Login correcto!',
     'entering'                => 'Entrando...',
     'registered'              => 'Usuario registrado!',
+    'change'                  => 'Cambiar',
 
     // error
     '404error'                => 'Página de error 404',
@@ -141,16 +143,28 @@ return [
     'serviceunavailable'      => 'Servicio no disponible',
     '503error'                => 'Página de error 503',
 
-    // 
-    'see'                     => 'Ver',
-
     // smart-wizzard
     'smartwizzardtitle'       => 'Añada la información necesaria completando los campos requeridos',
     'Paso 1'                  => 'Paso 1',
     'Paso 2'                  => 'Paso 2',
     'Paso 3'                  => 'Paso 3',
     
+    // rol
+    'Administrador'           => 'Administrador',
+    'Programador'             => 'Programador',
+    'Cliente'                 => 'Cliente',
+    'JefeLogistica'           => 'JefeLogistica',
+    'JefeOperacion'           => 'JefeOperacion',
+    'AsistenteLogistica'      => 'AsistenteLogistica',
+    'AuxiliarLogistica'       => 'AuxiliarLogistica',
+    'SupervisorTurno'         => 'SupervisorTurno',
+    'EncargadoAlmacen'        => 'EncargadoAlmacen',
+    'EncargadoHorno'          => 'EncargadoHorno',
+    'Vigilante'               => 'Vigilante',
+    
     // form
+    'seemore'                 => 'Ver Más',
+    'see'                     => 'Ver',
     'emailaddress'            => 'Correo electrónico',
     'post'                    => 'enviar',
     'address'                 => 'Dirección',
@@ -165,8 +179,8 @@ return [
     'update'                  => 'Actualizar',
     'consult'                 => 'Consultar',
     'select'                  => 'Seleccione...',
-    'mobile'                  => 'Celular',
-    'phone'                   => 'Teléfono',
+    'mobile'                  => 'Número de celular',
+    'phone'                   => 'Teléfono local',
     'ext'                     => 'Extensión',
     'emailplaceholder'        => 'Example@gmail.com',
     'mobileplaceholder'       => '301 414 5321',
@@ -176,27 +190,54 @@ return [
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
+    'createdthe'              => 'Creado el',
+    'add'                     => 'Agregar',
+    'newpassword'             => 'Nueva Contraseña',
+    'oldpassword'             => 'Contraseña Antigua',
+    'changepassword'          => 'Cambio de Contraseña',
+
+    'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
+    'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
 
     // personal
     'fullname'                => 'Nombre completo',
 
+    'personalhtmlheader_title' => 'Personal',
+    'personaltitleindex'      => 'Mi Personal',
+    'personaltitleindex2'     => 'Personal Cliente',
+    'personaltitleregister'   => 'Registro de Personal',
+    'personaltitleedit'       => 'Edición del Personal',
+    'personaltitleshow'       => 'Perfil del Personal',
     'personaltitleh2'         => 'Persona de Contacto',
+    'personalpaso1smart-wizzard' => 'Area y cargo de la persona',
+    'personalpaso2smart-wizzard' => 'Datos basicos de contacto',
+    'personalpaso3smart-wizzard' => 'Complemento de datos de la personal',
+    'personalcarg'            => 'Cargo del Personal',
     'persdoctype'             => 'Tipo de Documento',
-    'persdocument'            => 'Documento',
+    'persdocument'            => 'Número del Documento',
+    'persname'                => 'Nombre Completo',
     'persfirstname'           => 'Primer Nombre',
     'perssecondtname'         => 'Segundo Nombre',
     'perslastname'            => 'Apellidos',
-    'persdoctypenit'           => 'Nit',
-    'persdoctyperut'           => 'Rut',
+    'persdataof'              => 'Datos de ',
+    'persdoctypenit'          => 'Nit',
+    'persdoctyperut'          => 'Rut',
     'persdoctypecc'           => 'Cedula de Ciudadania',
     'persdoctypece'           => 'Cedula Extranjera',
+    'persbirthday'            => 'Fecha de Nacimiento',
+    'persphone'               => 'Número de Telefono Local',
+    'perseps'                 => 'EPS',
+    'persarl'                 => 'ARL',
+    'perslibreta'             => 'Número de Libreta Militar',
+    'perspase'                => 'Número del Licencia de Conducir',
+    'persbank'                => 'Banco',
+    'persbankaccaunt'         => 'Número de Cuenta',
+    'persingreso'             => 'Fecha de Entrada',
+    'perssalida'              => 'Fecha de Salida',
 
     // cliente
     'clientmenu'              => 'Clientes',
     'clientindex'             => 'Listado',
-    'clientregister'          => 'Registro',
-    'clientupdate'            => 'Actualizacion',
-    'clientaudit'             => 'Auditable',
     'clientregistertittle'    => 'Registro del cliente',
     'clientboxtitle'          => 'Datos Básicos de la empresa',
     'client'                  => 'Datos de la Empresa',
@@ -212,21 +253,25 @@ return [
     'clientcliente'           => 'Cliente',
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
+    'clientsidebar'           => 'Mi Empresa',
+    'clientindexboxtitle'     => 'Lista de Contactos',
+    'clientcontact'           => 'Contactos',
 
     // sede
-    'csederegister'           => 'Registro de sede',
     'csedeindex'              => 'Lista de sedes',
-    'csedeupdate'             => 'Actualizar sede',
-    'sclientregistertittle'   => 'Registro de sede del cliente',
     'sclientmenu'             => 'Sedes del cliente',  
     'sclititleh2'             => 'Sede Principal',
     'scliotrotelefono'        => 'Otro teléfono',
+    'sclientsede'             => 'Sede',
+    'sclientsedes'             => 'Sedes',
+    'sclientregister'         => 'Registrar Sede',
+    'sclientnamesede'         => 'Nombre de la Sede',
+    'sclientlistsede'         => 'Lista de Sedes',
+    'sclientdatasede'         => 'Datos de la Sede',
 
     // generador
     'genermenu'               => 'Generadores',
     'generindex'              => 'lista de Generadores',
-    'generregister'           => 'Registro',
-    'generupdate'             => 'Actualizacion',
     'Generregistertittle'     => 'Registro de Generador',
 
     // generador sede
@@ -235,34 +280,30 @@ return [
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     
     // area
-    'areaname'                =>'Area',
+    'areatitle'               => 'Áreas',
+    'areaname'                => 'Nombre del Área',
+    'newarea'                 => 'Nueva Área',
+    'namenewarea'             => '¿Cuál Área?',
+    'listarea'                => 'Lista de áreas',
+    'createarea'              => 'Creación de áreas',
+    'editarea'                => 'Edición de áreas',
 
     // cargo
-    'cargoname'              =>'Cargo',
+    'cargoname'               => 'Cargo',
+    'newcargo'                => 'Nuevo Cargo',
+    'namenewcargo'            => '¿Cuál Cargo?',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
-    'declarregister'          => 'crear',
-    'declarread'              => 'consultar',
-    'decladelete'             => 'eliminar',
 
     // orden de compra
     'ordermenu'               => 'Ordenes',
-    'orderregister'           => 'Crear',
-    'orderread'               => 'Consultar',
-    'orderupdate'             => 'Actualizar',
 
     // certificado
     'certificatemenu'         => 'Certificados',
-    'certiregister'           => 'Crear',
-    'certiread'               => 'Consultar',
-    'certiupdate'             => 'Actualizar',
 
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
-    'manifregister'           => 'Crear',
-    'manifread'               => 'Consultar',
-    'manifupdate'             => 'Actualizar',
 
     // departamento
     'departamento'            =>'Departamento',
@@ -274,5 +315,66 @@ return [
     'prosarccorto'            => 'Prosarc S.A ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
     'Appname'                 => 'SiReS',
-    
+
+    //Data error menssage
+    'data-error-minlength2'   => 'Use mínimo 2 caracteres',
+    'data-error-minlength4'   => 'Use mínimo 4 caracteres',
+    'data-error-minlength5'   => 'Use mínimo 5 caracteres',
+    'data-error-minlength6'   => 'Use mínimo 6 caracteres',
+    'data-error-minlength8'   => 'Use mínimo 8 caracteres',
+    'data-error-minlength10'  => 'Use mínimo 10 caracteres',
+    'data-error-minlength16'  => 'Use mínimo 16 caracteres',
+
+    // Menu
+    'MenuProsarcCliTitle'     => 'CLIENTES',
+    'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
+    'MenuClienTitle'          => 'MENU SiReS',
+
+    'MenuClien'               => 'Lista de Contactos',
+    'MenuClien2'              => 'Mi Empresa',
+    'MenuSedes'               => 'Mis Sedes',
+    'MenuSedesClien'          => 'Lista de Sedes',
+    'MenuGener'               => 'Generadores',
+    'MenuGenerClientitle'     => 'Mis Generadores',
+    'MenuGenerClien'          => 'Lista de Generadores',
+    'MenuRespel'              => 'Residuos',
+    'MenuRespelClien'         => 'Mis Residuos',
+    'MenuRespelList'          => 'Lista de Residuos',
+    'MenuRequRespel'          => 'Requerimientos de Residuos',
+    'MenuTrataRespel'         => 'Tratamientos de Residuos',
+    'MenuDocumentsTitle'      => 'Documentos',
+    'MenuDocumentsClien'      => 'Mis Documentos',
+    'MenuCertificado'         => 'Certificados',
+    'MenuManifiesto'          => 'Manifiestos',
+    'MenuPersonal'            => 'Mi Personal',
+    'MenuPerslist'            => 'Lista de Personal',
+    'MenuPersAsis'            => 'Asistencia',
+    'MenuPersHorari'          => 'Horario',
+    'MenuPersCarg'            => 'Cargos',
+    'MenuPersAreas'           => 'Areas',
+    'MenuPersInven'           => 'Inventario Tecnologia',
+    'MenuTrainingTitle'       => 'Capacitaciones',
+    'MenuTrainingPers'        => 'Capacitaciones del Personal',
+    'MenuTraininglist'        => 'Lista de Capacitaciones',
+    'MenuVehicleTitle'        => 'Vehiculos',
+    'MenuVehiclelist'         => 'Lista de Vehiculos',
+    'MenuPrograVehic'         => 'Programación de Vehiculos',
+    'MenuMantVehic'           => 'Mantenimiento de Vehiculos',
+    'MenuShopTitle'           => 'Compra',
+    'MenuShopOrde'            => 'Orden de Compra',
+    'MenuShopCoti'            => 'Cotización de Compra',
+    'MenuCotiTitle'           => 'Cotizaciones',
+    'MenuCotiClien'           => 'Mis Cotizaciones',
+    'MenuCotiList'            => 'Lista de Cotizaciones',
+    'MenuCotiTarifas'         => 'Tarifas de Cotizaciones',
+    'MenuActivTitle'          => 'Activos',
+    'MenuActivClien'          => 'Mis Activos',
+    'MenuActivInven'          => 'Inventario de Activos',
+    'MenuActivMovi'           => 'Movimientos de Activos',
+    'MenuServTitle'           => 'Solicitudes de Servicio',
+    'MenuServClien'           => 'Mis Servicios',
+    'MenuServlist'            => 'Lista de Servicios',
+    'MenuServEviden'          => 'Evidencias de Servicios',
+    'MenuArticu'              => 'Articulos',
+    'MenuQr'                  => 'Código Qr',
 ];

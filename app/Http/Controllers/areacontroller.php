@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\userController;
 use App\Area;
 use App\audit;
 use Illuminate\Support\Facades\Auth;
@@ -16,33 +17,55 @@ class AreaController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        if(Auth::user()->UsRol === "Programador"){
-            $Areas = DB::table('areas')
-                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
-                ->get();
-        	return view('areas.index', compact('Areas'));
-        }
-        $Areas = DB::table('areas')
-                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName')
-                ->where('areas.AreaDelete',0)
-                ->get();
-        return view('areas.index', compact('Areas'));
-    }
+	public function index(){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+			$Areas = DB::table('areas')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('areas.ID_Area', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
+			->where(function($query){
+				$id = userController::IDClienteSegunUsuario();
+				/*Validacion del cliente que pueda ver solo las areas que tiene a cargo solo los que no esten eliminados*/
+				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+					$query->where('clientes.ID_Cli', '=', $id);
+					$query->where('areas.AreaDelete', '=', 0);
+				}
+				/*Validacion del personal de Prosarc autorizado para las areas del cliente solo los que no esten eliminados*/
+				else if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+					$query->where('clientes.ID_Cli', '<>', $id);
+					$query->where('areas.AreaDelete', '=', 0);
+				}
+				/*Validacion del Programador para ver todas las areas del cliente aun asi este eliminado*/
+				else{
+					$query->where('clientes.ID_Cli', '<>', $id);
+				}
+			})
+			->get();
+			return view('areas.index', compact('Areas'));
+		}
+		else{
+			return back();
+		}
+	}
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        $Sedes = DB::table('sedes')
-            ->select('ID_Sede', 'SedeName')
-            ->get();
-    	return view('areas.create', compact('Sedes'));
-    }
+	public function create(){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+			$Sedes = DB::table('sedes')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('ID_Sede', 'SedeName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('areas.create', compact('Sedes'));
+		}
+		else{
+			return back();
+		}
+	}
 
     /**
      * Store a newly created resource in storage.
@@ -50,23 +73,19 @@ class AreaController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        $area = new Area();
-        $area->AreaName = $request->input('NomArea');
-        $area->FK_AreaSede= $request->input('AreaSede');
-        $area->AreaDelete = 0;
-        $area->save();
+	public function store(Request $request){
+		$validate = $request->validate([
+			'AreaName'       => 'required|min:8',
+			'FK_AreaSede'    => 'required',
+		]);
+		$area = new Area();
+		$area->AreaName = $request->input('AreaName');
+		$area->FK_AreaSede= $request->input('FK_AreaSede');
+		$area->AreaDelete = 0;
+		$area->save();
 
-        $log = new audit();
-        $log->AuditTabla="areas";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$area->ID_Area;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-        
-        return redirect()->route('areas.index');
-    }
+		return redirect()->route('areas.index');
+	}
 
     /**
      * Display the specified resource.
@@ -84,13 +103,20 @@ class AreaController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
-        $Areas = Area::where('ID_Area', $id)->first();
-        $Sedes = DB::table('sedes')
-            ->select('ID_Sede', 'SedeName')
-            ->get();
-        return view('areas.edit', compact('Sedes', 'Areas'));
-    }
+	public function edit($id){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+			$Areas = Area::where('ID_Area', $id)->first();
+			$Sedes = DB::table('sedes')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('ID_Sede', 'SedeName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('areas.edit', compact('Sedes', 'Areas'));
+		}
+		else{
+			return back();
+		}
+	}
 
     /**
      * Update the specified resource in storage.
@@ -99,23 +125,22 @@ class AreaController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
-        /*return $request;*/
-        $Area = Area::where('ID_Area', $id)->first();
-        $Area->AreaName = $request->input('NomArea');
-        $Area->FK_AreaSede = $request->input('AreaSede');
-        $Area->save();
+	public function update(Request $request, $id){
+		$Area = Area::where('ID_Area', $id)->first();
+		$Area->AreaName = $request->input('NomArea');
+		$Area->FK_AreaSede = $request->input('AreaSede');
+		$Area->save();
 
-        $log = new audit();
-        $log->AuditTabla="areas";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro=$Area->ID_Area;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
+		$log = new audit();
+		$log->AuditTabla="areas";
+		$log->AuditType="Modificado";
+		$log->AuditRegistro=$Area->ID_Area;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$request->all();
+		$log->save();
 
-        return redirect()->route('areas.index');
-    }
+		return redirect()->route('areas.index');
+	}
 
     /**
      * Remove the specified resource from storage.
@@ -123,24 +148,24 @@ class AreaController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id){
-        $Area = Area::where('ID_Area', $id)->first();
-            if ($Area->AreaDelete == 0) {
-                $Area->AreaDelete = 1;
-            }
-            else{
-                $Area->AreaDelete = 0;
-            }
-        $Area->save();
+	public function destroy($id){
+		$Area = Area::where('ID_Area', $id)->first();
+			if ($Area->AreaDelete == 0) {
+				$Area->AreaDelete = 1;
+			}
+			else{
+				$Area->AreaDelete = 0;
+			}
+		$Area->save();
 
-        $log = new audit();
-        $log->AuditTabla = "areas";
-        $log->AuditType = "Eliminado";
-        $log->AuditRegistro = $Area->ID_Area;
-        $log->AuditUser = Auth::user()->email;
-        $log->Auditlog = $Area->AreaDelete;
-        $log->save();
+		$log = new audit();
+		$log->AuditTabla = "areas";
+		$log->AuditType = "Eliminado";
+		$log->AuditRegistro = $Area->ID_Area;
+		$log->AuditUser = Auth::user()->email;
+		$log->Auditlog = $Area->AreaDelete;
+		$log->save();
 
-        return redirect()->route('areas.index');
-    }
+		return redirect()->route('areas.index');
+	}
 }
