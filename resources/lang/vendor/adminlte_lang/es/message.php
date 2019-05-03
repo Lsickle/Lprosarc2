@@ -204,6 +204,7 @@ return [
 
     'personalhtmlheader_title' => 'Personal',
     'personaltitleindex'      => 'Mi Personal',
+    'personaltitlelist'       => 'Lista del Personal',
     'personaltitleregister'   => 'Registro de Personal',
     'personaltitleedit'       => 'Edición del Personal',
     'personaltitleshow'       => 'Perfil del Personal',
