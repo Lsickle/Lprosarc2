@@ -3,7 +3,7 @@
 {{ trans('adminlte_lang::message.clientcliente') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.clientregistertittle') }}
+{{ trans('adminlte_lang::message.clientcliente') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -11,11 +11,11 @@
 		<div class="col-md-16 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box">
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
+                <div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::message.smartwizzardtitle') }}</h3>
+				</div>
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box box-info">
                             @include('layouts.partials.spinner')
                             <!-- form start -->
 							<form role="form" id="formCliente " action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
@@ -31,7 +31,7 @@
                                 @endif
                                 <div class="box-body" hidden onload="renderTable()" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
-										<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>
+										
 										<div class="smartwizard">
 											<ul>
 												<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
@@ -130,19 +130,11 @@
                                                             <label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
                                                             <input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" disabled value="{{ old('SedeExt2') }}">
                                                         </div>
-                                                        <div class="col-md-12" id="tel">
-                                                            <div class="box-footer" style="display:flex; justify-content:center">
-                                                                <a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
-                                                            </div>
+                                                        <div class="col-md-12" id="tel" style="display:flex; justify-content:center">
+                                                            <a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
                                                         </div>
                                                     </div>
-                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
-                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
-                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
-                                                    </div>
-                                                    @endif
                                                 </div>
-                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                                 <div id="step-3" class="">
                                                     <div id="form-step-2" role="form" data-toggle="validator">
                                                         <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
@@ -193,10 +185,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="box-footer form-group " style="float:right; margin-right:5%;">
-                                                        <button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+                                                    <div class="box-footer">
+                                                        <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
                                                     </div>
-                                                    @endif
                                                 </div>
 											</div>
 										</div>

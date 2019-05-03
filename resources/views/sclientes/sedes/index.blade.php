@@ -15,12 +15,11 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientlistsede') }}</h3>
-					<a href="/sclientes/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
 				</div>
 				<div class="box box-info">
 				<!-- /.box-header -->
 					<div class="box-body">
-						<table id="sedes" class="table table-bordered table-striped" width="100%">
+						<table id="sclientes" class="table table-bordered table-striped" width="100%">
 							<thead>
 								<tr>
 									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
@@ -33,7 +32,7 @@
 							</thead>
 							<tbody hidden onload="renderTable()" id="readyTable">
 								@include('layouts.partials.spinner')
-								@foreach($sedes as $Sede)
+								@foreach($Sedes as $Sede)
 									<tr @if($Sede->SedeDelete === 1)
 											style="color: red;" 
 										@endif

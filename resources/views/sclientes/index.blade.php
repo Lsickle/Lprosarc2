@@ -32,7 +32,7 @@
 							</thead>
 							<tbody hidden onload="renderTable()" id="readyTable">
 								@include('layouts.partials.spinner')
-								@foreach($sedes as $Sede)
+								@foreach($Sedes as $Sede)
 									<tr @if($Sede->SedeDelete === 1)
 											style="color: red;" 
 										@endif
@@ -40,7 +40,7 @@
 										<td>{{$Sede->SedeName}}</td>
 										<td>{{$Sede->SedeCelular}}</td>
 										<td>{{$Sede->SedeEmail}}</td>
-										<td>{{$Sede->SedeAddress}} {{$Sede->MunName.' - '.$Sede->DepartName}}</td>
+										<td>{{$Sede->SedeAddress}} ({{$Sede->MunName.' - '.$Sede->DepartName}})</td>
 										<td>{{$Sede->SedeSlug}}</td>
 									</tr>
 									@endforeach

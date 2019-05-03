@@ -1089,22 +1089,17 @@ $(document).ready(function() {
         autoWith: true,
         searchHighlight: true,
         columnDefs: [
-            if({{Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')}}){
-
-            {"targets": 5,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
-            }},
-        }else{
-
             {"targets": 4,
             "data": "SedeSlug",
             "render": function(data, type, row, meta) {
                 return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
             }},
 
-        }
+            {"targets": 4,
+            "data": "SedeSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
+            }},
         ]
     });
     /*funcion para resaltar las busquedas*/
@@ -1119,6 +1114,50 @@ $(document).ready(function() {
 });
 </script>
 @endif
+@if(Route::currentRouteName() === 'sedes')
+<script>
+var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+$(document).ready(function() {
+    $('#sclientes').DataTable({
+        responsive: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+            botoncito,
+            {
+                extend: 'collection',
+                text: 'Selector',
+                buttons: ['selectRows', 'selectCells']
+            }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true,
+        columnDefs: [
+            {"targets": 5,
+            "data": "SedeSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/sedes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
+            }},
+        ]
+    });
+    /*funcion para resaltar las busquedas*/
+    var table = $('#sclientes').DataTable();
+
+    table.on('draw', function() {
+        var body = $(table.table().body());
+
+        body.unhighlight();
+        body.highlight(table.search());
+    });
+});
+</script>
+@endif
+
 <script>
 $(document).ready(function() {
     $('#MantVehicleTable').DataTable({
