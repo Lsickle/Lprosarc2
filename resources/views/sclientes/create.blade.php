@@ -28,17 +28,6 @@
 						</div>
 						@endif
 						<div class="box-body">
-						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
-							<div class="form-group col-md-12">
-								<label for="clientname">{{ trans('adminlte_lang::message.clientcliente') }}</label></label><small class="help-block with-errors">*</small>
-								<select class="form-control select" id="clientname" name="FK_SedeCli" required>
-									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-									@foreach($Clientes as $Cliente)
-										<option value="{{$Cliente->ID_Cli}}" {{ old('FK_SedeCli') == $Cliente->ID_Cli ? 'selected' : '' }}>{{$Cliente->CliShortname}}</option>
-									@endforeach()
-								</select>
-							</div>
-						@endif
 							<div class="form-group col-md-6">
 								<label for="sedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label></label><small class="help-block with-errors">*</small>
 								<input type="text" class="form-control" id="sedeinputname" name="SedeName" value="{{ old('SedeName') }}" required>
@@ -93,10 +82,8 @@
 								<label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
 								<input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" disabled value="{{ old('SedeExt2') }}">
 							</div>
-							<div class="col-md-12" id="tel">
-								<div class="box-footer" style="display:flex; justify-content:center">
-									<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
-								</div>
+							<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
+								<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
 							</div>
 						</div>
 						<div class="box box-info">

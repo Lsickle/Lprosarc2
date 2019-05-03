@@ -44,6 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/clientes', 'clientcontoller');
 	Route::get('/cliente/{id}', 'clientcontoller@viewClientShow')->name('cliente');
 	Route::resource('/sclientes', 'sclientcontroller');
+	Route::get('/sedes', 'SedesInternoController@index')->name('sedes');
+	Route::get('/sedes/{id}', 'SedesInternoController@show')->name('sede-show');
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');

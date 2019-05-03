@@ -12,9 +12,7 @@
 		<!-- About Me Box -->
 			<div class="box box-info">
 				<div class="box-body box-profile">
-					@if (Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente'))
-						<a href="/clientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-					@endif
+						<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
 					@component('layouts.partials.modal')
 						{{$Sede->ID_Sede}}
 					@endcomponent
