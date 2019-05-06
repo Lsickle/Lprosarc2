@@ -14,7 +14,7 @@ class AddNullableCargosTable extends Migration
     public function up()
     {
         Schema::table('cargos', function (Blueprint $table) {
-            $table->bigInteger('CargSalary')->nullable()->change();
+            $table->string('CargSalary')->nullable()->change();
             $table->string('CargGrade',128)->nullable()->change();
         });
     }
@@ -27,7 +27,7 @@ class AddNullableCargosTable extends Migration
     public function down()
     {
         Schema::table('cargos', function (Blueprint $table) {
-            $table->bigInteger('CargSalary');
+            $table->string('CargSalary');
             $table->string('CargGrade',128);
         });
     }
