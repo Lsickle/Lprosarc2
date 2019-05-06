@@ -42,7 +42,7 @@
 											<div class="col-md-12">
 												<div id="form-step-0" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
-														<label for="Sede">{{ trans('adminlte_lang::message.namesede') }}</label><small class="help-block with-errors">*</small>
+														<label for="Sede">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
 														<select name="Sede" id="Sede" class="form-control select" required>
 															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 															@foreach($Sedes as $Sede)
@@ -64,7 +64,7 @@
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
-														<label for="FK_PersCargo">{{ trans('adminlte_lang::message.personalcarg') }}</label><small class="help-block with-errors">*</small>
+														<label for="FK_PersCargo">{{ trans('adminlte_lang::message.cargoname') }}</label><small class="help-block with-errors">*</small>
 														<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
 															@if($Cargos == null)
 																<option value="" onclick="HiddenNewInputC()">{{ trans('adminlte_lang::message.select') }}</option>
