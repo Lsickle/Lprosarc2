@@ -37,7 +37,7 @@
 											<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso1smart-wizzard') }}</small></a></li>
 											<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso2smart-wizzard') }}</small></a></li>
 											<li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.personalpaso3smart-wizzard') }}</small></a></li>
-											<input name="PersType" id="PersType" type="text" hidden value="1">
+											<input name="PersType" id="PersType" type="text" hidden value="0">
 										</ul>
 										<div>
 											<div id="step-1" class="">
@@ -318,7 +318,7 @@
 
 		$(document).ready(function(){
 			var type = $("#PersType").val();
-			if(type == 1){
+			if(type == 0){
 				$("#PersAddress").prop('required', true);
 				$("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
 			}
