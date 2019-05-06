@@ -22,7 +22,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 
             /*TITULO DEL MENU1 PARA PROSARC*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Html::raw(trans('adminlte_lang::message.MenuProsarcTitle'))->addParentClass('header')))
-	            /*PESTAÑA DE LAS SEDES DE PROSARC*/
+				/*PESTAÑA DE MI EMPRESA*/
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> '. trans('adminlte_lang::message.MenuClien2'))))
+
+				/*PESTAÑA DE LAS SEDES DE PROSARC*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedes'))))
 	            /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),

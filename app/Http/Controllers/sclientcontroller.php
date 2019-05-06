@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\SedeStoreRequest;
+use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
 use App\Sede;
 use App\cliente;
@@ -68,7 +68,7 @@ class sclientcontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SedeStoreRequest $request)
+    public function store(SedeRequest $request)
     {
         $Sede = new Sede();
         $Sede->SedeName = $request->input('SedeName');
@@ -157,16 +157,12 @@ class sclientcontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SedeStoreRequest $request, $id)
+    public function update(SedeRequest $request, $id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
         $Sede->fill($request->except('FK_SedeCli'));
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            $ID_Cli = userController::IDClienteSegunUsuario();
-            $Sede->FK_SedeCli = $ID_Cli;
-        }else{
-            $Sede->FK_SedeCli = $request->input('FK_SedeCli');
-        }
+        $ID_Cli = userController::IDClienteSegunUsuario();
+        $Sede->FK_SedeCli = $ID_Cli;
         $Sede->save();
 
         $log = new audit();
@@ -176,8 +172,8 @@ class sclientcontroller extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-
-        return redirect()->route('sclientes.index');
+        
+        return redirect()->route('sclientes.show', compact('id'));
     }
 
     /**

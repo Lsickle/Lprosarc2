@@ -174,6 +174,7 @@ $(document).ready(function() {
         allowClear: true,
         width: 'resolve',
         width: '100%',
+        theme: "classic"
     });
 });
 

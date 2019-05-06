@@ -116,7 +116,6 @@ class clientcontoller extends Controller
             $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
-            $Sede->FK_SedeMun = 3;
             $Sede->SedeDelete = 0;
             $Sede->save();
 
@@ -141,6 +140,7 @@ class clientcontoller extends Controller
             $Personal->PersSecondName = $request->input("PersSecondName"); 
             $Personal->PersDocType = $request->input("PersDocType");
             $Personal->PersDocNumber = $request->input("PersDocNumber");
+            $Personal->PersCellphone = $request->input("PersCellphone");
             $Personal->PersType = 1;
             $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input("PersFirstName").substr(md5(rand()), 0,32);
             $Personal->PersDelete = 0; 
@@ -150,8 +150,10 @@ class clientcontoller extends Controller
             $user = User::where('id', Auth::user()->id)->first();
             $user->FK_UserPers = $Personal->ID_Pers;
             $user->save();
+
+            $id = Auth::user()->UsSlug;
                 
-            return redirect()->route('home');
+            return redirect()->route('cliente', compact('id'));
         }
     }
 
@@ -172,7 +174,7 @@ class clientcontoller extends Controller
     }
     public function viewClientShow($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $id = userController::IDClienteSegunUsuario();
             $cliente = cliente::where('ID_Cli', $id)->first();
 

@@ -196,6 +196,8 @@ return [
     'oldpassword'             => 'Contraseña Antigua',
     'changepassword'          => 'Cambio de Contraseña',
 
+    'copy'                    => 'Copiar',
+
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
     'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
 
