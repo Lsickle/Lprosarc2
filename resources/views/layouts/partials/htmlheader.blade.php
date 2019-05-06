@@ -13,6 +13,8 @@
 
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
 
     {{-- Full Calendar --}}
      <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
