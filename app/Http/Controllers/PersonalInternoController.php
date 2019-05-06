@@ -303,7 +303,7 @@ class PersonalInternoController extends Controller
         $log->Auditlog = $request->all();
         $log->save();
 
-        return redirect()->route('personalInterno.index');
+        return redirect()->route('personalInterno.show',['id' => $Persona->PersSlug]);
     }
 
     /**
