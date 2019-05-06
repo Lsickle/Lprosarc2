@@ -29,17 +29,6 @@
 							</div>
 						@endif
 						<div class="box-body">
-								@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')  || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
-
-							<div class="col-md-12 form-group">
-								<label for="clientname">{{ trans('adminlte_lang::message.clientcliente') }}</label><small class="help-block with-errors">*</small>
-								<select class="form-control select" id="clientname" name="FK_SedeCli" required>
-									@foreach($Clientes as $cliente)
-										<option value="{{$cliente->ID_Cli}}" {{ $Cliente->ID_Cli == $cliente->ID_Cli ? 'selected' : '' }}>{{$cliente->CliShortname}}</option>
-									@endforeach
-								</select>
-							</div>
-							@endif
 							<div class="col-md-6 form-group">
 								<label for="sedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label><small class="help-block with-errors">*</small>
 								<input type="text" class="form-control" id="sedeinputname" name="SedeName" value="{{$Sede->SedeName}}" required>

@@ -58,7 +58,7 @@
                                                             <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
                                                             <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" maxlength="100" required value="{{ old('CliShortname') }}">
                                                         </div>
-                                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                                                        {{-- @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                                         <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                             <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
                                                             <select class="form-control select" id="categoria" name="CliCategoria" required value="{{ old('CliCategoria') }}">
@@ -68,7 +68,7 @@
                                                                 <option {{ old('CliCategoria') == trans('adminlte_lang::message.clientproveedor') ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clientproveedor') }}</option>
                                                             </select>
                                                         </div>
-                                                        @endif
+                                                        @endif --}}
                                                     </div>
                                                 </div>
                                                 <div id="step-2" class="">

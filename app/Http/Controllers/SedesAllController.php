@@ -10,11 +10,11 @@ use App\cliente;
 use App\Departamento;
 use App\Municipio;
 
-class SedesInternoController extends Controller
+class SedesAllController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
@@ -25,10 +25,6 @@ class SedesInternoController extends Controller
                     if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
                         $query->where('sedes.SedeDelete',  '=', 0);
                         $query->where('sedes.FK_SedeCli',  '<>', $id);
-                    }
-                    if(Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
-                        $query->where('FK_SedeCli', '=', $id);
-                        $query->where('sedes.SedeDelete',  '=', 0);
                     }
                     if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                         $query->where('sedes.FK_SedeCli',  '<>', $id);

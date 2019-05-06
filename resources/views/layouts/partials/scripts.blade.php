@@ -167,6 +167,7 @@ $(document).ready(function() {
         allowClear: true,
         width: 'resolve',
         width: '100%',
+        theme: "classic"
     });
 });
 
@@ -1063,7 +1064,7 @@ var rol = "<?php echo Auth::user()->UsRol; ?>";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
 $(document).ready(function() {
-    $('#sedes').DataTable({
+    $('#sclientes').DataTable({
         responsive: true,
         select: true,
         dom: 'Bfrtip',
@@ -1079,19 +1080,6 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        columnDefs: [
-            {"targets": 4,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
-            }},
-
-            {"targets": 4,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sclientes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
-            }},
-        ]
     });
     /*funcion para resaltar las busquedas*/
     var table = $('#sedes').DataTable();
@@ -1112,7 +1100,7 @@ var rol = "<?php echo Auth::user()->UsRol; ?>";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 
 $(document).ready(function() {
-    $('#sclientes').DataTable({
+    $('#sedes').DataTable({
         responsive: true,
         select: true,
         dom: 'Bfrtip',
@@ -1128,13 +1116,6 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        columnDefs: [
-            {"targets": 5,
-            "data": "SedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sedes/" + data + "' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>";
-            }},
-        ]
     });
     /*funcion para resaltar las busquedas*/
     var table = $('#sclientes').DataTable();

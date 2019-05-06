@@ -13,7 +13,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.clientindexboxtitle') }}</h3>
-					<a href="/clientes/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
+					{{-- <a href="/clientes/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a> --}}
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
