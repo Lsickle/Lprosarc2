@@ -209,7 +209,6 @@ class clientcontoller extends Controller
             'CliName'       => 'required|max:255|unique:clientes,CliName,'.$cliente->ID_Cli.',ID_Cli',
             'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit,'.$cliente->ID_Cli.',ID_Cli',
             'CliShortname'  => 'required|max:255|unique:clientes,CliShortname,'.$cliente->ID_Cli.',ID_Cli',
-            'CliCategoria'  => 'max:32|alpha|nullable',
         ]);
         
         $cliente->fill($request->all());
