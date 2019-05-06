@@ -44,7 +44,7 @@
 											<div class="col-md-12">
 												<div id="form-step-0" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
-														<label for="Sede">{{ trans('adminlte_lang::message.namesede') }}</label><small class="help-block with-errors">*</small>
+														<label for="Sede">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
 														<select name="Sede" id="Sede" class="form-control select" required>
 															<option value="{{$Cargo[0]->ID_Sede}}">{{$Cargo[0]->SedeName}}</option>
 															@foreach($Sedes as $Sede)
@@ -59,17 +59,17 @@
 															@foreach($Areas as $Area)
 																<option value="{{$Area->ID_Area}}" onclick="HiddenNewInputA()">{{$Area->AreaName}}</option>
 															@endforeach
-															<option onclick="NewInputA()" value="0">{{ trans('adminlte_lang::message.newarea') }}
+															<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
-														<label for="FK_PersCargo">{{ trans('adminlte_lang::message.personalcarg') }}</label><small class="help-block with-errors">*</small>
+														<label for="FK_PersCargo">{{ trans('adminlte_lang::message.cargoname') }}</label><small class="help-block with-errors">*</small>
 														<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
 															<option onclick="HiddenNewInputC()" value="{{$Cargo[0]->ID_Carg}}">{{$Cargo[0]->CargName}}</option>
 															@foreach($Cargos as $Cargo)
 																<option value="{{$Cargo->ID_Carg}}" onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
 															@endforeach
-															<option onclick="NewInputC()" value="0">{{ trans('adminlte_lang::message.newcargo') }}
+															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">
@@ -168,15 +168,15 @@
 										areas.push(res[i].ID_Area);
 									}
 								}
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nuevo Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="NewArea">Nuevo Area</option>`);
 							}
 							else{
 								$("#CargArea").empty();
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nueva Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="NewArea">Nueva Area</option>`);
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
@@ -208,11 +208,11 @@
 										cargos.push(res[i].ID_Carg);
 									}
 								}
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 							}
 							else{
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}

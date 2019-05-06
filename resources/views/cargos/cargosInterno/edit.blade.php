@@ -15,19 +15,21 @@
 						{{$Cargos->CargSlug}}
 					@endcomponent
 					<h3 class="box-title">{{trans('adminlte_lang::message.editcargo')}}</h3>
-					@if($Cargos->CargDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
-						<form action='/cargosInterno/{{$Cargos->CargSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input  type="submit" id="Eliminar{{$Cargos->CargSlug}}" style="display: none;">
-						</form>
-					@else
-						<form action='/cargosInterno/{{$Cargos->CargSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block pull-right' value="{{ trans('adminlte_lang::message.add') }}">
-						</form>
+					@if($Cargos->ID_Carg <> $CargoOne[0]->ID_Carg)
+						@if($Cargos->CargDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input  type="submit" id="Eliminar{{$Cargos->CargSlug}}" style="display: none;">
+							</form>
+						@else
+							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST' class="pull-right">
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+							</form>
+						@endif
 					@endif
 				</div>
 				<div class="box box-info">

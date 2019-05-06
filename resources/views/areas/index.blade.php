@@ -26,7 +26,7 @@
 										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
 										@endif
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 											<th>{{ trans('adminlte_lang::message.edit') }}</th>
 										@endif
 									</tr>
@@ -44,7 +44,7 @@
 										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<td>{{$Area->CliShortname}}</td>
 										@endif
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 											<td><a href='/areas/{{$Area->AreaSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 										@endif
 									</tr>

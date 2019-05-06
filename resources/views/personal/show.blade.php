@@ -28,10 +28,10 @@
 									      <input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
 									  </form>
 									@else
-									  <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
+									  <form action='/personal/{{$Persona->PersSlug}}' method='POST' class="pull-left">
 									    @method('DELETE')
 									    @csrf
-									    <input type="submit" class='btn btn-success pull-left' value="{{ trans('adminlte_lang::message.add') }}">
+									    <input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
 									  </form>
 									@endif
 								@endif

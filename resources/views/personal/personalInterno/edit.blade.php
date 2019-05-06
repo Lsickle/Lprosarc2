@@ -60,7 +60,7 @@
 															@foreach($Areas as $Area)
 																<option value="{{$Area->ID_Area}}" onclick="HiddenNewInputA()">{{$Area->AreaName}}</option>
 															@endforeach
-															<option onclick="NewInputA()" value="0">{{ trans('adminlte_lang::message.newarea') }}
+															<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
@@ -70,7 +70,7 @@
 															@foreach($Cargos as $Cargo)
 																<option value="{{$Cargo->ID_Carg}}" onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
 															@endforeach
-															<option onclick="NewInputC()" value="0">{{ trans('adminlte_lang::message.newcargo') }}
+															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">
@@ -215,15 +215,15 @@
 										areas.push(res[i].ID_Area);
 									}
 								}
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nuevo Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="NewArea">Nuevo Area</option>`);
 							}
 							else{
 								$("#CargArea").empty();
-								$("#CargArea").append(`<option onclick="NewInputA()" value="0">Nueva Area</option>`);
+								$("#CargArea").append(`<option onclick="NewInputA()" value="NewArea">Nueva Area</option>`);
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
@@ -255,11 +255,11 @@
 										cargos.push(res[i].ID_Carg);
 									}
 								}
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 							}
 							else{
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="0">Nuevo Cargo</option>`);
+								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
