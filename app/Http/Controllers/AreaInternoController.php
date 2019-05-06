@@ -69,7 +69,7 @@ class AreaInternoController extends Controller
      */
     public function store(Request $request){
         $validate = $request->validate([
-            'AreaName'       => 'required|min:4',
+            'AreaName'       => 'required|min:4|max:128',
             'FK_AreaSede'    => 'required',
         ]);
         $area = new Area();
@@ -123,7 +123,7 @@ class AreaInternoController extends Controller
      */
     public function update(Request $request, $id){
         $validate = $request->validate([
-            'AreaName'       => 'required|min:4',
+            'AreaName'       => 'required|min:4|max:128',
             'FK_AreaSede'    => 'required',
         ]);
         $Area = Area::where('AreaSlug', $id)->first();

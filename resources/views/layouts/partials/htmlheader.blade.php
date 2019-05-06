@@ -6,13 +6,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-     <!-- Dependencias -->
-    <link href="{{ mix('/css/dependencias.css') }}" rel="stylesheet" type="text/css">
     
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
+     <!-- Dependencias -->
+    <link href="{{ mix('/css/dependencias.css') }}" rel="stylesheet" type="text/css">
 
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
+
 
     {{-- Full Calendar --}}
      <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">

@@ -34,7 +34,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
         'node_modules/inputmask/css/inputmask.css',
-        'node_modules/select2/dist/css/select2.css'
+        'node_modules/select2/dist/css/select2.css',
+        'node_modules/toastr/build/toastr.css'
     ], 'public/css/dependencias.css')
    .combine([
         'node_modules/@fullcalendar/core/main.css',
@@ -73,7 +74,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/inputmask/dist/jquery.inputmask.bundle.js',
         'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
         'node_modules/bootstrap-validator/dist/validator.js',
-        'node_modules/select2/dist/js/select2.full.js'
+        'node_modules/select2/dist/js/select2.full.js',
+        'node_modules/toastr/toastr.js'
     ], 'public/js/dependencias.js')
    .scripts([
    		'node_modules/@fullcalendar/core/main.js',
