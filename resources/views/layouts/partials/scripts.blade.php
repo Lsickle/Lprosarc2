@@ -16,9 +16,6 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
