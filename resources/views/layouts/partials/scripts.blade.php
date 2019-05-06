@@ -95,14 +95,7 @@ $(document).ready(function() {
         colReorder: true,
         ordering: true,
         autoWith: true,
-        searchHighlight: true,
-        columnDefs: [{
-            "targets": 6,
-            "data": "ID_Trat",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/tratamiento/" + data + "/' class='btn btn-primary btn-block'>Mas información</a>";
-            }
-        }]
+        searchHighlight: true
     });
 
     /*funcion para resaltar las busquedas*/
