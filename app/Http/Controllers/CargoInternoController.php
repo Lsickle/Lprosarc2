@@ -73,7 +73,7 @@ class CargoInternoController extends Controller
      */
     public function store(Request $request){
         $validate = $request->validate([
-            'CargName'       => 'required|min:4',
+            'CargName'       => 'required|min:4|max:128',
             'CargArea'       => 'required',
         ]);
         $cargo = new Cargo();
@@ -129,6 +129,10 @@ class CargoInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
+        $validate = $request->validate([
+            'CargName'       => 'required|min:4|max:128',
+            'CargArea'       => 'required',
+        ]);
         $Cargo = Cargo::where('CargSlug', $id)->first();
         $Cargo->fill($request->all());
         $Cargo->save();

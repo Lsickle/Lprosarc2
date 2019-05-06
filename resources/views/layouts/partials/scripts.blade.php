@@ -16,8 +16,6 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
@@ -1483,7 +1481,30 @@ $(document).ready(function(){
         aux.select();
         document.execCommand("copy");
         document.body.removeChild(aux);
-        alert('¡Copiado!');
+        var Mensaje = "¡Texto Copiado!";
+        CopyNotifi(Mensaje);
+    }
+</script>
+<script>
+    function CopyNotifi(Mensaje) {
+        toastr.options = {
+          "closeButton": true,
+          "debug": true,
+          "newestOnTop": false,
+          "progressBar": true,
+          "positionClass": "toast-bottom-right",
+          "preventDuplicates": false,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+        
+        toastr.success(Mensaje);
     }
 </script>
 @yield('NewScript')
