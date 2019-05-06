@@ -13,22 +13,24 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 						<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-					@component('layouts.partials.modal')
-						{{$Sede->ID_Sede}}
-					@endcomponent
-					@if($Sede->SedeDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
-						</form>
-					@else
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
-						</form>
+					@if(!isset($Verify))
+						@component('layouts.partials.modal')
+							{{$Sede->ID_Sede}}
+						@endcomponent
+						@if($Sede->SedeDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
+							</form>
+						@else
+							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+							</form>
+						@endif
 					@endif
 					<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
 					@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))

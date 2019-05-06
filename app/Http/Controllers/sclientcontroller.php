@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SedeStoreRequest;
 use App\Http\Controllers\userController;
 use App\Sede;
-use App\generador;
 use App\cliente;
 use App\audit;
 use App\Departamento;
@@ -22,7 +21,7 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
@@ -103,14 +102,6 @@ class sclientcontroller extends Controller
         $Sede->SedeDelete = 0;
         $Sede->save();
 
-        $log = new audit();
-        $log->AuditTabla="sedes";
-        $log->AuditType="Creado";
-        $log->AuditRegistro=$Sede->ID_Sede;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
-
         return redirect()->route('sclientes.index');
     }
 
@@ -123,11 +114,17 @@ class sclientcontroller extends Controller
     public function show($id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
+        $Sedes = Sede::where('FK_SedeCli', $Sede->FK_SedeCli)->get();
+
+        if($Sede->ID_Sede === $Sedes[0]->ID_Sede){
+           $Verify = 0;
+        }
+
         $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
         $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
         $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
 
-        return view('sclientes.show', compact('Sede', 'Cliente','Municipio', 'Departamento'));
+        return view('sclientes.show', compact('Sede', 'Cliente', 'Municipio', 'Departamento', 'Verify'));
     }
 
     /**
