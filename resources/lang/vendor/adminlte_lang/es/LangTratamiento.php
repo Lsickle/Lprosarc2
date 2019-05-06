@@ -29,6 +29,7 @@ return [
     'tratprovee'            => 'Proveedor',
     'sede'                  => 'Sede',
     'type'                  => 'Tipo',
+    'cancel'                => 'Cancelar',
 
 
 ];
