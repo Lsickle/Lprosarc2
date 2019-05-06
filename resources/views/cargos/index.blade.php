@@ -23,7 +23,7 @@
 								<tr>
 									<th>{{trans('adminlte_lang::message.cargoname')}}</th>
 									<th>{{trans('adminlte_lang::message.areaname')}}</th>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 										<th>{{trans('adminlte_lang::message.edit')}}</th>
 									@endif
 								</tr>
@@ -38,7 +38,7 @@
 									>
 										<td>{{$Cargo->CargName}}</td>
 										<td>{{$Cargo->AreaName}}</td>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 										<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 									@endif
 								</tr>
