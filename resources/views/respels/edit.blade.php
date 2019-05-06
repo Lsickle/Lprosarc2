@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{-- @if(Auth::user()->UsRol == "Cliente")
+@if(Auth::user()->UsRol == "Cliente")
 @section('htmlheader_title')
 Respel-Editar
 @endsection
@@ -50,7 +50,7 @@ Respel-Editar
 	<!-- /.box -->
 </div>
 @endsection
-@endif --}}
+@endif
 @if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
 @section('htmlheader_title')
 Respel-Tratamiento

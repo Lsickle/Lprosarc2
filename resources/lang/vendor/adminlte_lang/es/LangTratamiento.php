@@ -30,6 +30,8 @@ return [
     'sede'                  => 'Sede',
     'type'                  => 'Tipo',
     'cancel'                => 'Cancelar',
+    'tratdetaillong'        => 'Detalles del Tratamiento',
+    'tratdetailshort'       => 'Detalles',
 
 
 ];

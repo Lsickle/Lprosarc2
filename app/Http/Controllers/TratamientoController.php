@@ -135,7 +135,7 @@ class TratamientoController extends Controller
     {   
         $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
         
-        $residuos = DB::table('respels')
+        $respels = DB::table('respels')
                 ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
                 ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -145,7 +145,7 @@ class TratamientoController extends Controller
                 ->get();
 
         $sede = Sede::where('ID_Sede', $tratamiento->FK_TratProv)->first();
-        return view('tratamiento.show', compact('tratamiento', 'sede', 'residuos'));
+        return view('tratamiento.show', compact('tratamiento', 'sede', 'respels'));
     }
 
     /**
