@@ -301,7 +301,7 @@ return [
     'cargogradelist3'         => 'Tecnologo',
     'cargogradelist4'         => 'Profesional',
     'cargosalary'             => 'Salario del cargo',
-    'editcargo'                => 'Edición de cargos',
+    'editcargo'               => 'Edición de cargos',
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',

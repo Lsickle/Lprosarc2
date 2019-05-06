@@ -44,7 +44,8 @@
 									<b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right textpopover">{{$Persona->PersCellphone}}</a>
 								</li>
 								<li class="list-group-item">
-									<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> <a href="#" class="pull-right textpopover" title="Correo Electronico" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersEmail}}</p>">{{$Persona->PersEmail}}</a>
+									<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> <a title="Copiar" onclick="copiarAlPortapapeles('correocopy')"><i class="far fa-copy"></i></a>
+									<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersEmail}}</p>">{{$Persona->PersEmail}}</a>
 								</li>
 							</ul>
 						</div>
@@ -64,40 +65,41 @@
 									<!-- /.user-block -->
 									<div class="row">
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.persingreso') }}</label><h5>{{$Persona->PersIngreso <> null ? $Persona->PersIngreso : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.persingreso') }}</label><h5><a>{{$Persona->PersIngreso <> null ? $Persona->PersIngreso : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.perssalida') }}</label><h5>{{$Persona->PersSalida <> null ? $Persona->PersSalida : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.perssalida') }}</label><h5><a>{{$Persona->PersSalida <> null ? $Persona->PersSalida : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.address') }}</label><h5>{{$Persona->PersAddress <> null ? $Persona->PersAddress : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.address') }}</label> <a title="Copiar" onclick="copiarAlPortapapeles('addresscopy')"><i class="far fa-copy"></i></a>
+											<h5><a href="#" class="textpopover" title='{{ trans('adminlte_lang::message.address') }} ' data-toggle="popover" id="addresscopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersAddress}}</p>">{{$Persona->PersAddress <> null ? $Persona->PersAddress : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.personalcarg') }}</label><h5>{{$Persona->CargName}}</h5>
+											<label>{{ trans('adminlte_lang::message.personalcarg') }}</label><h5><a>{{$Persona->CargName}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.phone') }}</label><h5>{{$Persona->PersPhoneNumber <> null ? $Persona->PersPhoneNumber : 'N/A' }}</h5>
+											<label>{{ trans('adminlte_lang::message.phone') }}</label><h5><a>{{$Persona->PersPhoneNumber <> null ? $Persona->PersPhoneNumber : 'N/A' }}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.persbirthday') }}</label><h5>{{$Persona->PersBirthday <> null ? $Persona->PersBirthday : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.persbirthday') }}</label><h5><a>{{$Persona->PersBirthday <> null ? $Persona->PersBirthday : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.perseps') }}</label><h5>{{$Persona->PersEPS <> null ? $Persona->PersEPS : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.perseps') }}</label><h5><a>{{$Persona->PersEPS <> null ? $Persona->PersEPS : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.persarl') }}</label><h5>{{$Persona->PersARL <> null ? $Persona->PersARL : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.persarl') }}</label><h5><a>{{$Persona->PersARL <> null ? $Persona->PersARL : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.persbank') }}</label><h5>{{$Persona->PersBank <> null ? $Persona->PersBank : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.persbank') }}</label><h5><a>{{$Persona->PersBank <> null ? $Persona->PersBank : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.persbankaccaunt') }}</label><h5>{{$Persona->PersBankAccaunt <> null ? $Persona->PersBankAccaunt : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.persbankaccaunt') }}</label><h5><a>{{$Persona->PersBankAccaunt <> null ? $Persona->PersBankAccaunt : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.perslibreta') }}</label><h5>{{$Persona->PersLibreta <> null ? $Persona->PersLibreta : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.perslibreta') }}</label><h5><a>{{$Persona->PersLibreta <> null ? $Persona->PersLibreta : 'N/A'}}</a></h5>
 										</div>
 										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.perspase') }}</label><h5>{{$Persona->PersPase <> null ? $Persona->PersPase : 'N/A'}}</h5>
+											<label>{{ trans('adminlte_lang::message.perspase') }}</label><h5><a>{{$Persona->PersPase <> null ? $Persona->PersPase : 'N/A'}}</a></h5>
 										</div>
 									</div>
 								</div>
