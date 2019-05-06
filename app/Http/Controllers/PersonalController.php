@@ -20,42 +20,31 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        /*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            $Personals = DB::table('personals')
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica') || ){
+            $Personals = DB::table('personals' || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
-                ->where('clientes.ID_Cli', '<>', 1)
+                ->where(function($query){
+                    $id = userController::IDClienteSegunUsuario();
+                    /*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
+                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                    	$query->where('clientes.ID_Cli', '=', $id);
+                    	$query->where('personals.PersDelete', '=', 0);
+                    }
+                    /*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
+                    else if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica')){
+                    	$query->where('clientes.ID_Cli', '<>', $id);
+                    	$query->where('personals.PersDelete', '=', 0);
+                    }
+                    /*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
+                    else{
+                    	$query->where('clientes.ID_Cli', '<>', $id);
+                    }
+                })
                 ->get();
-            return view('personal.index', compact('Personals'));
-        }
-        /*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
-        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica')){
-            $Personals = DB::table('personals')
-                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
-                    ->where('personals.PersDelete',0)
-                    ->where('clientes.ID_Cli', '<>', 1)
-                    ->get();
-            return view('personal.index', compact('Personals'));
-        }
-        /*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
-        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            $Personals = DB::table('personals')
-                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
-                    ->where('personals.PersDelete',0)
-                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-                    ->get();
             return view('personal.index', compact('Personals'));
         }
         /*Validacion para usuarios no permitidos en esta vista*/

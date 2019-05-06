@@ -20,29 +20,27 @@ class PersonalInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        /*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+                ->where(function($query){
+                    $id = userController::IDClienteSegunUsuario();
+                    /*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
+                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                        $query->where('clientes.ID_Cli', '=', $id);
+                        $query->where('personals.PersDelete', '=', 0);
+                    }
+                    /*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
+                    else{
+                        $query->where('clientes.ID_Cli', '=', $id);
+                    }
+                })
                 ->where('clientes.ID_Cli', 1)
                 ->get();
-            return view('personal.personalInterno.index', compact('Personals'));
-        }
-        /*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
-        elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-            $Personals = DB::table('personals')
-                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
-                    ->where('personals.PersDelete',0)
-                    ->where('clientes.ID_Cli', 1)
-                    ->get();
             return view('personal.personalInterno.index', compact('Personals'));
         }
         /*Validacion para usuarios no permitidos en esta vista*/

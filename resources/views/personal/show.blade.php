@@ -15,7 +15,7 @@
 					<div class="box box-info">
 						<div class="box-body box-profile">
 							@if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador'))
-								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
 								@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
 									@component('layouts.partials.modal')
 									{{$Persona->ID_Pers}}

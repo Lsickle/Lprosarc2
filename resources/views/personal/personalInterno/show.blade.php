@@ -13,7 +13,7 @@
 					<div class="box box-primary">
 						<div class="box-body box-profile">
 							<div class="col-md-12 col-xs-12">
-								<a href="/personalInterno/{{$Persona->PersSlug}}/edit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+								<a href="/personalInterno/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
 								@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
 									@component('layouts.partials.modal')
 									{{$Persona->ID_Pers}}
