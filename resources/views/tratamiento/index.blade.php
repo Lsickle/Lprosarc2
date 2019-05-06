@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Lista de Tratamientos
+{{ trans('adminlte_lang::LangTratamiento.tratlist') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -8,7 +8,7 @@ Lista de Tratamientos
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Lista de Tratamientos</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratlist') }}</h3>
 					<a href="/tratamiento/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
 				<!-- /.box-header -->
@@ -17,12 +17,13 @@ Lista de Tratamientos
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Tipo</th>
-								<th>Proveedor</th>
-								<th>Nombre</th>
-								<th>Pretratamiento</th>
-								<th>Dirección</th>
-								<th>Ver Mas</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.type') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.tratprovee') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.sede') }}</th>
+								<th>{{ trans('adminlte_lang::message.address') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}</th>
+								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 							</tr>
 						</thead>
 						<tbody hidden onload="renderTable()" id="readyTable">
@@ -39,10 +40,17 @@ Lista de Tratamientos
 								<td>Externo</td>
 								@endif
 								<td>{{$tratamiento->CliShortname}}</td>
-								<td>{{$tratamiento->TratName}}</td>
-								<td>{{$tratamiento->TratPretratamiento}}</td>
+								<td>{{$tratamiento->SedeName}}</td>
 								<td>{{$tratamiento->SedeAddress}}</td>
-								<td>{{$tratamiento->ID_Trat}}</td>
+								<td>{{$tratamiento->TratName}}</td>
+								<td>
+									<ul>
+									    @foreach($tratamiento->pretratamientos as $pretratamiento)
+									    	    <li>{{$pretratamiento->PreTratName}}</li>
+									    @endforeach
+									</ul>
+								</td>
+								<td><a method='get' href='/tratamiento/{{$tratamiento->ID_Trat}}/' class='btn btn-primary btn-block'>Mas información</a></td>
 							</tr>
 							@endforeach
 						</tbody>
