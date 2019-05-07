@@ -41,8 +41,12 @@ class TratamientoController extends Controller
         //         ->where('tratamientos.TratDelete', 0)
         //         ->get();
         // }
-        $tratamientos = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
-        return $tratamientos;
+        // $proveedor = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
+        $tratamientos = Tratamiento::with(['pretratamientos'])
+        ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
+        ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        ->get();
+        // return $tratamientos;
         return view('tratamiento.index', compact('tratamientos'));
     }
 

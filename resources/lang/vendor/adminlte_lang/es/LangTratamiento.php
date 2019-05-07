@@ -25,6 +25,11 @@ return [
     'tratcreate'            => 'Crear Tratamiento',
     'pretratadd'            => 'Añadir Pretratamiento',
     'pretrat'               => 'Pretratamiento',
+    'tratlist'              => 'Lista de Tratamientos',
+    'tratprovee'            => 'Proveedor',
+    'sede'                  => 'Sede',
+    'type'                  => 'Tipo',
+    'cancel'                => 'Cancelar',
 
 
 ];

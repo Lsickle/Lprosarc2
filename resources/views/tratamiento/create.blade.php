@@ -14,7 +14,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</h3>
                     <div class="box-tools pull-right">
-                     <button onclick="AgregarPreTrat()" class="btn btn-success pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.pretratadd') }}</button>
+                     <button onclick="AgregarPreTrat()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.pretratadd') }}</button>
                     </div>
                 </div>
                 <div class="row">
@@ -58,7 +58,9 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.tratcreate') }}</button>
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.tratcreate') }}</button>
+
+                                    <button type="" class="btn btn-danger pull-right"><i class="fas fa-backspace"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</button>
                                 </div>
                             </form>
                         </div>
