@@ -23,10 +23,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             /*TITULO DEL MENU1 PARA PROSARC*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Html::raw(trans('adminlte_lang::message.MenuProsarcTitle'))->addParentClass('header')))
 				/*PESTAÑA DE MI EMPRESA*/
-				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> '. trans('adminlte_lang::message.MenuClien2'))))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 
 				/*PESTAÑA DE LAS SEDES DE PROSARC*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedes'))))
+	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
 	            /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 			        (Menu::new()
@@ -85,9 +85,9 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             /*TITULO DEL MENU2 PARA PROSARC*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Html::raw(trans('adminlte_lang::message.MenuProsarcCliTitle'))->addParentClass('header')))
 	            /*PESTAÑA DE CLIENTES*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/clientes', '<i class="fa fa-list-ul"></i> '. trans('adminlte_lang::message.MenuClien'))))
+	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/clientes', '<i class="fa fa-list-ul"></i> <span>'. trans('adminlte_lang::message.MenuClien').'</span>')))
 	            /*PESTAÑA DE LAS SEDES DEL CLIENTE*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sedes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedesClien'))))
+	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sedes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedesClien').'</span>')))
 	            /*PESTAÑA DE GENERADORES*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 	                  (Menu::new()
@@ -168,9 +168,9 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
             /*TITULO DEL MENU PARA CLIENTE*/
 	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), (Html::raw(trans('adminlte_lang::message.MenuClienTitle'))->addParentClass('header')))
 	            /*PESTAÑA DE MI CLIENTE*/
-	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> '. trans('adminlte_lang::message.MenuClien2'))))
+	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 	            /*PESTAÑA DE LAS SEDES DEL CLIENTE*/
-	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/sclientes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedes'))))
+	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
 	            /*PESTAÑA DE GENERADORES*/
 	            ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
 	                  (Menu::new()
