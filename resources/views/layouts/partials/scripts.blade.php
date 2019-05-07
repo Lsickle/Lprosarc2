@@ -1089,7 +1089,7 @@ $(document).ready(function() {
         searchHighlight: true,
     });
     /*funcion para resaltar las busquedas*/
-    var table = $('#sedes').DataTable();
+    var table = $('#sclientes').DataTable();
 
     table.on('draw', function() {
         var body = $(table.table().body());
@@ -1125,7 +1125,7 @@ $(document).ready(function() {
         searchHighlight: true,
     });
     /*funcion para resaltar las busquedas*/
-    var table = $('#sclientes').DataTable();
+    var table = $('#sedes').DataTable();
 
     table.on('draw', function() {
         var body = $(table.table().body());
@@ -1155,6 +1155,7 @@ $(document).ready(function() {
 });
 
 </script>
+@if(Route::currentRouteName() === 'generadores.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol ?>";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
@@ -1179,19 +1180,6 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        columnDefs: [{
-            "targets": 6,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "' class='btn btn-success btn-block'>Ver</a>";
-            }
-        }, {
-            "targets": 7,
-            "data": "GenerSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/generadores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }],
         fixedHeader: {
             header: true
         }
@@ -1206,8 +1194,8 @@ $(document).ready(function() {
         body.highlight(table.search());
     });
 });
-
 </script>
+@endif
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];

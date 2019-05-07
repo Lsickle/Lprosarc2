@@ -183,7 +183,12 @@ return [
         'NewArea'       => 'Nombre de la nueva Area',
 
         'CargName'      => 'Nombre del cargo',
-        'NewCargo'       => 'Nombre del nuevo Cargo',
+        'NewCargo'      => 'Nombre del nuevo Cargo',
+
+        'FK_GenerCli'   => 'Sede',
+        'GenerNit'      => 'NIT',
+        'GenerName' =>'Razón Social',    
+        'GenerShortname'=> 'Nombre Corto'
     ],
 
 ];

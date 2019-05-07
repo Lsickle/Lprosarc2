@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
+{{ trans('adminlte_lang::message.gener') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
+{{ trans('adminlte_lang::message.gener') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,73 +12,50 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
-					@component('layouts.partials.modal')
-						{{$generadors->ID_Gener}}
-					@endcomponent
-					<h3 class="box-title">Modificar datos</h3>
-					@if($generadors->GenerDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$generadors->ID_Gener}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-						<form action='/generadores/{{$generadors->GenerSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input  type="submit" id="Eliminar{{$generadors->ID_Gener}}" style="display: none;">
-						</form>
-					@else
-						<form action='/generadores/{{$generadors->GenerSlug}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="Añadir">
-						</form>
-					@endif
+					<h3 class="box-title">{{ trans('adminlte_lang::message.generupdate') }}</h3>
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
 						<!-- general form elements -->
-						<div class="box box-success">
-							<div class="box-header with-border">
-								<h3 class="box-title">{{ trans('adminlte_lang::LangGenerador.complete') }}</h3>
-							</div>
-							<!-- /.box-header -->
+						<div class="box box-info">
 							<!-- form start -->
-							<form role="form" action="/generadores/{{$generadors->GenerSlug}}" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/generadores/{{$Generador->GenerSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 								@csrf
 								@method('PUT')
+								@if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 								<div class="box-body">
-									<div class="col-xs-6">
-										<label for="GenerInputNit">NIT</label>
-										<input minlength="17" maxlength="17" required="true" name="GenerNit" autofocus="true" type="text" class="form-control" id="GenerInputNit" placeholder="XXX.XXX.XXX.XXX-X" value="{{$generadors->GenerNit}}">
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputRazon">Razón social</label>
-										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="Prosarc S.A. ESP." value="{{$generadors->GenerName}}">
-									</div>
-									<div class="col-xs-6">
-										<label for="">Nombre Corto</label>
-										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="Prosarc" value="{{$generadors->GenerShortname}}">
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputTipo">Tipo de empresa</label>
-										<select name="GenerType" class="form-control" id="GenerInputTipo" placeholder="biologico" value="{{$generadors->GenerType}}">
-											<option>Biologico</option>
-											<option>Industrial</option>
-											<option>Medicamentos</option>
-											<option>Otros</option>
-										</select>
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputTipo">Cliente</label>
-										<select name="FK_GenerCli" class="form-control" id="GenerInputTipo" placeholder="biologico">
-											<option value="{{$generadors->FK_GenerCli}}">Seleccione...</option>
-											@foreach($Sedes as $sede)
-											<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputTipo">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
+										<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
+											@foreach($Sedes as $Sede)
+												<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
-							</div>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
+										<input type="text" name="GenerNit" class="form-control" id="GenerInputNit" data-minlength="13" maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Generador->GenerNit}}" required>
+									</div>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
+										<input type="text" name="GenerName" class="form-control" id="GenerInputRazon" value="{{$Generador->GenerName}}" required>
+									</div>
+									<div class="col-xs-12 form-group">
+										<label for="">{{ trans('adminlte_lang::message.name') }}</label><small class="help-block with-errors">*</small>
+										<input type="text" name="GenerShortname" class="form-control" id="GenerInputNombre" value="{{$Generador->GenerShortname}}" required>
+									</div>
+								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
+								<div class="box box-info">
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+									</div>
 								</div>
 							</form>
 						</div>

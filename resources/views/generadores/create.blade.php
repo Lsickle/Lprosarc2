@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
+{{ trans('adminlte_lang::message.gener') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
+{{ trans('adminlte_lang::message.gener') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,61 +12,50 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangGenerador.basicinfo') }}</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						{{-- <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button> --}}
-					</div>
+					<h3 class="box-title">{{ trans('adminlte_lang::message.Generregistertittle') }}</h3>
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
 						<!-- general form elements -->
-						<div class="box box-success">
-							<div class="box-header with-border">
-								<h3 class="box-title">{{ trans('adminlte_lang::LangGenerador.complete') }}</h3>
-							</div>
-							<!-- /.box-header -->
+						<div class="box box-info">
 							<!-- form start -->
-							<form role="form" action="/generadores" method="POST" enctype="multipart/form-data">
+							<form role="form" action="/generadores" method="POST" enctype="multipart/form-data" data-toggle="validator">
 								@csrf
+								@if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 								<div class="box-body">
-									<div class="col-xs-6">
-										<label for="GenerInputNit">NIT</label>
-										<input minlength="17" maxlength="17" required="true" name="GenerNit" autofocus="true" type="text" class="form-control" id="GenerInputNit" placeholder="XXX.XXX.XXX.XXX-X">
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputRazon">Razón social</label>
-										<input required="true" name="GenerName" type="text" class="form-control" id="GenerInputRazon" placeholder="Prosarc S.A. ESP.">
-									</div>
-									<div class="col-xs-6">
-										<label for="">Nombre Corto</label>
-										<input required="true" name="GenerShortname" type="text" class="form-control" id="GenerInputNombre" placeholder="Prosarc">
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputTipo">Tipo de empresa</label>
-										<select name="GenerType" class="form-control" id="GenerInputTipo" placeholder="biologico">
-											<option>Biologico</option>
-											<option>Industrial</option>
-											<option>Medicamentos</option>
-											<option>Otros</option>
-										</select>
-									</div>
-									<div class="col-xs-6">
-										<label for="GenerInputTipo">Cliente</label>
-										<select name="GenerCli" class="form-control" id="GenerInputTipo" >
-											<option value="1">Seleccione...</option>
-											@foreach($Sedes as $sede)
-												<option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputTipo">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
+										<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											@foreach($Sedes as $Sede)
+												<option value="{{$Sede->ID_Sede}}" {{ old('FK_GenerCli') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 											@endforeach()
 										</select>
 									</div>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
+										<input class="form-control nit" data-minlength="13" maxlength="13"  name="GenerNit" autofocus="true" type="text" id="GenerInputNit" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('GenerNit') }}" required>
+									</div>
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
+										<input name="GenerName" type="text" class="form-control" id="GenerInputRazon" value="{{ old('GenerName') }}" required>
+									</div>
+									<div class="col-xs-12 form-group">
+										<label for="">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
+										<input name="GenerShortname" type="text" class="form-control" value="{{ old('GenerShortname') }}" id="GenerInputNombre" required>
+									</div>
 								</div>
 								<!-- /.box-body -->
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Registrar</button>
+								<div class="box box-info">
+									<div class="box-footer">
+										<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+									</div>
 								</div>
 							</form>
 						</div>
