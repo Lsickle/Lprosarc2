@@ -134,13 +134,19 @@ class genercontroller extends Controller
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
         $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
 
+        $GenerSedes = DB::table('gener_sedes')
+            ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
+            ->where('FK_GSede', $Generador->ID_Gener)
+            ->get();
         $Respels = DB::table('residuos_geners')
             ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
             ->where('FK_GSede', '=', $Generador->ID_Gener)
             ->get();
 
-            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels'));
+        // $Residuo->cotizacion->sede
+
+            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes'));
     }
 
     /**
