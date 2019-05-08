@@ -33,7 +33,7 @@ Respel-Tratamiento
             </p>
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
-                <b>Registrado el</b> <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->format('d M Y')}}</p>
+                <b>Registrado</b> <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->diffForHumans()}}</p>
               </li>
             </ul>
             <a method='get' href='/Tratamientos/{{$tratamiento->ID_Trat}}/edit' target='_blank' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
