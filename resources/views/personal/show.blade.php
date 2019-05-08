@@ -12,10 +12,10 @@
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 col-xs-12">
 					<!-- Profile Image -->
-					<div class="box box-primary">
+					<div class="box box-info">
 						<div class="box-body box-profile">
 							@if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador'))
-								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
 								@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
 									@component('layouts.partials.modal')
 									{{$Persona->ID_Pers}}
@@ -28,10 +28,10 @@
 									      <input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
 									  </form>
 									@else
-									  <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
+									  <form action='/personal/{{$Persona->PersSlug}}' method='POST' class="pull-left">
 									    @method('DELETE')
 									    @csrf
-									    <input type="submit" class='btn btn-success pull-left' value="{{ trans('adminlte_lang::message.add') }}">
+									    <input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
 									  </form>
 									@endif
 								@endif
@@ -43,7 +43,8 @@
 									<b>{{ trans('adminlte_lang::message.persdocument') }}</b> <a class="pull-right textpopover">{{$Persona->PersDocType." ".$Persona->PersDocNumber}}</a>
 								</li>
 								<li class="list-group-item">
-									<b>{{ trans('adminlte_lang::message.address') }}</b> <a href="#" class="pull-right textpopover" title="Dirección" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersAddress}}</p>">{{$Persona->PersAddress}}</a>
+									<b>{{ trans('adminlte_lang::message.address') }}</b> <a title="Copiar" onclick="copiarAlPortapapeles('addresscopy')"><i class="far fa-copy"></i></a>
+									<a href="#" class="pull-right textpopover" title='{{ trans('adminlte_lang::message.address') }} ' data-toggle="popover" id="addresscopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersAddress}}</p>">{{$Persona->PersAddress <> null ? $Persona->PersAddress : 'N/A'}}</a>
 								</li>
 								<li class="list-group-item">
 									<b>{{ trans('adminlte_lang::message.personalcarg') }}</b> <a class="pull-right textpopover">{{$Persona->CargName}}</a>
@@ -52,7 +53,8 @@
 									<b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right textpopover">{{$Persona->PersCellphone}}</a>
 								</li>
 								<li class="list-group-item">
-									<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> <a href="#" class="pull-right textpopover" title="Correo Electronico" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersEmail}}</p>">{{$Persona->PersEmail}}</a>
+									<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> <a title="Copiar" onclick="copiarAlPortapapeles('correocopy')"><i class="far fa-copy"></i></a>
+									<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Persona->PersEmail}}</p>">{{$Persona->PersEmail}}</a>
 								</li>
 							</ul>
 						</div>

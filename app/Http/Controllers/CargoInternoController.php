@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\audit;
+use App\Area;
 use App\Cargo;
+use App\Personal;
 
 class CargoInternoController extends Controller
 {
@@ -56,7 +58,7 @@ class CargoInternoController extends Controller
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('areas.ID_Area', 'areas.AreaName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-                ->where('areas.AreaDelete', 0)
+                ->where('areas.AreaDelete', '=', 0)
                 ->get();
             return view('cargos.cargosInterno.create', compact('Areas'));
         }
@@ -112,9 +114,14 @@ class CargoInternoController extends Controller
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('areas.ID_Area', 'areas.AreaName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-                ->where('areas.AreaDelete', 0)
+                ->where('areas.AreaDelete', '=', 0)
                 ->get();
-            return view('cargos.cargosInterno.edit', compact('Areas','Cargos'));
+            $CargoOne = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->select('ID_Carg')
+                ->where('personals.ID_Pers', '=', Auth::user()->FK_UserPers)
+                ->get();
+            return view('cargos.cargosInterno.edit', compact('Areas','Cargos', 'CargoOne'));
         }
         else{
             abort(403);
@@ -156,21 +163,41 @@ class CargoInternoController extends Controller
      */
     public function destroy($id){
         $Cargo = Cargo::where('CargSlug', $id)->first();
+        $Personal = Personal::where('FK_PersCargo', $Cargo->ID_Carg)->get();
             if ($Cargo->CargDelete == 0) {
                 $Cargo->CargDelete = 1;
+                for($Y=0; $Y<count($Personal); $Y++){
+                    $Personal[$Y]->PersDelete = 1;
+                    $Personal[$Y]->save();
+                }
+
+                $log = new audit();
+                $log->AuditTabla = "cargos";
+                $log->AuditType = "Eliminado";
+                $log->AuditRegistro = $Cargo->ID_Carg;
+                $log->AuditUser = Auth::user()->email;
+                $log->Auditlog = $Cargo->CargDelete;
+                $log->save();
             }
             else{
                 $Cargo->CargDelete = 0;
+                for($Y=0; $Y<count($Personal); $Y++){
+                    $Personal[$Y]->PersDelete = 0;
+                    $Personal[$Y]->save();
+                }
+                $Area = Area::where('ID_Area', $Cargo->CargArea)->first();
+                $Area->AreaDelete = 0;
+                $Area->save();
+
+                $log = new audit();
+                $log->AuditTabla = "cargos";
+                $log->AuditType = "Restaurado";
+                $log->AuditRegistro = $Cargo->ID_Carg;
+                $log->AuditUser = Auth::user()->email;
+                $log->Auditlog = $Cargo->CargDelete;
+                $log->save();
             }
         $Cargo->save();
-
-        $log = new audit();
-        $log->AuditTabla = "cargos";
-        $log->AuditType = "Eliminado";
-        $log->AuditRegistro = $Cargo->ID_Carg;
-        $log->AuditUser = Auth::user()->email;
-        $log->Auditlog = $Cargo->CargDelete;
-        $log->save();
 
         return redirect()->route('cargosInterno.index');
     }

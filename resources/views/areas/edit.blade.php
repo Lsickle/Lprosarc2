@@ -18,19 +18,21 @@
 							{{$Areas->AreaSlug}}
 						@endcomponent
 						<h3 class="box-title">{{ trans('adminlte_lang::message.editarea') }}</h3>
-						@if($Areas->AreaDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->AreaSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
-							<form action='/areas/{{$Areas->AreaSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input  type="submit" id="Eliminar{{$Areas->AreaSlug}}" style="display: none;">
-							</form>
-						@else
-							<form action='/areas/{{$Areas->AreaSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input type="submit" class='btn btn-success pull-right' value="{{ trans('adminlte_lang::message.add') }}">
-							</form>
+						@if($Areas->ID_Area <> $AreaOne[0]->ID_Area)
+							@if($Areas->AreaDelete == 0)
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->AreaSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+								<form action='/areas/{{$Areas->AreaSlug}}' method='POST'>
+									@method('DELETE')
+									@csrf
+									<input  type="submit" id="Eliminar{{$Areas->AreaSlug}}" style="display: none;">
+								</form>
+							@else
+								<form action='/areas/{{$Areas->AreaSlug}}' method='POST' class="pull-right">
+									@method('DELETE')
+									@csrf
+									<input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
+								</form>
+							@endif
 						@endif
 					</div>
 					<div class="box box-info">

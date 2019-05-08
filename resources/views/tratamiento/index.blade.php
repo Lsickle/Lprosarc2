@@ -22,7 +22,7 @@
 								<th>{{ trans('adminlte_lang::LangTratamiento.sede') }}</th>
 								<th>{{ trans('adminlte_lang::message.address') }}</th>
 								<th>{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</th>
-								<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</th>
 								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 							</tr>
 						</thead>

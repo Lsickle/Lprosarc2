@@ -27,6 +27,7 @@ class AjaxController extends Controller
 			$Areas = DB::table('areas')
 				->select('*')
 				->where('FK_AreaSede', $id)
+				->where('AreaDelete', '=', 0)
 				->get();
 			return response()->json($Areas);
 		}
@@ -39,6 +40,7 @@ class AjaxController extends Controller
 			$Cargos = DB::table('cargos')
 				->select('*')
 				->where('CargArea', $id)
+				->where('CargDelete', '=', 0)
 				->get();
 			return response()->json($Cargos);
 		}
