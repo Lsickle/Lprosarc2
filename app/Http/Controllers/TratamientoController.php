@@ -26,13 +26,13 @@ class TratamientoController extends Controller
     {
 
         // $proveedor = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
-        $depart = Departamento::with('municipios')->get();
+        // $depart = Departamento::with('municipios')->get();
         $tratamientos = Tratamiento::with(['pretratamientos'])
         ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
         ->get();
         // return $tratamientos;
-        return $depart;
+        // return $depart;
         return view('tratamiento.index', compact('tratamientos'));
     }
 
@@ -119,19 +119,26 @@ class TratamientoController extends Controller
      */
     public function show($id)
     {   
-        $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-        
-        $respels = DB::table('respels')
-                ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
-                ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
-                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
-                ->get();
+        // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
+        $tratamiento = Tratamiento::with(['pretratamientos'])
+            ->where('ID_Trat', $id)
+            ->first();
 
-        $sede = Sede::where('ID_Sede', $tratamiento->FK_TratProv)->first();
-        return view('tratamiento.show', compact('tratamiento', 'sede', 'respels'));
+        $respels = DB::table('respels')
+            ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
+            ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+            ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+            ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+            ->get();
+
+        $Sede = Sede::where('ID_Sede', $tratamiento->FK_TratProv)
+        ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+        ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+        ->first();
+        return view('tratamiento.show', compact('tratamiento', 'Sede', 'respels'));
     }
 
     /**

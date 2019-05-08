@@ -3,114 +3,144 @@
 @section('htmlheader_title')
 Respel-Tratamiento
 @endsection
-
 @section('contentheader_title')
-  Tratamiento
+Tratamiento
 @endsection
-
 @section('main-content')
-
 {{-- @component('layouts.partials.modal')
 {{$tratamiento->ID_Respel}}
 @endcomponent --}}
-
 <div class="container-fluid spark-screen">
     <!-- row -->
     <div class="row">
-      <!-- col md3 -->
-      <div class="col-md-3">
-        <!-- box -->
-        <div class="box box-primary">
-          <!-- box body -->
-          <div class="box-body box-profile">
-            {{-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
-            <h3 class="profile-username text-center">{{$tratamiento->TratName}}</h3>
-            <p class="text-muted text-center">@if($tratamiento->TratTipo=='1')
-                <td>Tratamiento Interno</td>
-                @else
-                <td>Tratamiento Externo</td>
-                @endif
-            </p>
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item">
-                <b>Registrado</b> <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->diffForHumans()}}</p>
-              </li>
-            </ul>
-            <a method='get' href='/Tratamientos/{{$tratamiento->ID_Trat}}/edit' target='_blank' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
-
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box body -->
-      </div>
-      <!-- /.col md3 -->
-      <!-- col md9 -->
-      <div class="col-md-9">
-        <!-- box -->
-        <div class="box">
-          <!-- box header -->
-          <div class="box-header with-border">
-            <h3 class="box-title">Detalles de Tratamiento</h3>
-          </div>
-          <!-- /.box header -->
-          <!-- box body -->
-          <div class="box-body">
-            <!-- nav-tabs-custom -->
-            <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link" href="#Proveedorpane" data-toggle="tab">Proveedor</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">Pretratamientos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#Requerimientospane" data-toggle="tab">Requerimientos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#Tarifaspane" data-toggle="tab">Tarifas</a>
-                </li>
-              </ul>
-              <!-- nav-content -->
-              <div class="tab-content" style="min-height:40vh;">
-                
-                <!-- tab-pane fade -->
-                <div class="tab-pane fade " id="Proveedorpane">
-
+        <!-- col md3 -->
+        <div class="col-md-3">
+            <!-- box -->
+            <div class="box box-primary">
+                <!-- box body -->
+                <div class="box-body box-profile">
+                    {{-- <img id="" class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
+                    <h3 class="profile-username text-center">{{$tratamiento->TratName}}</h3>
+                    <p class="text-muted text-center">@if($tratamiento->TratTipo=='1')
+                        <td>Tratamiento Interno</td>
+                        @else
+                        <td>Tratamiento Externo</td>
+                        @endif
+                    </p>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Registrado</b>
+                            <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->diffForHumans()}}</p>
+                        </li>
+                    </ul>
+                    <a method='get' href='/Tratamientos/{{$tratamiento->ID_Trat}}/edit' target='_blank' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
                 </div>
-                <!-- tab-pane fade -->
-                <!-- tab-pane fade -->
-                <div class="tab-pane fade in active" id="Pretratamientospane">
-                  <div class="form-horizontal">
-                    
-                  </div>
-                </div>
-                <!-- /.tab-pane fade -->
-                <!-- /.tab-pane fade -->
-                <div class="tab-pane fade" id="Requerimientospane">
-
-                </div>
-                <!-- /.tab-pane fade -->
-                <!-- tab-pane fade -->
-                <div class="tab-pane fade" id="tarifaspane">
-                  <div class="form-horizontal">
-
-                  </div>
-                </div>
-                <!-- /.tab-pane fade -->
-              </div>
-              <!-- /.tab-content -->
+                <!-- /.box-body -->
             </div>
-            <div class="row">
-               <input class="btn btn-success  pull-right" type="submit" value="Actualizar" style="margin-right:3em" />
-            </div>
-            <!-- /.nav-tabs-custom -->
-          </div>
-          <!-- /.box body -->
+            <!-- /.box body -->
         </div>
-        <!-- /.box -->
-      </div>
-      <!-- /.col md9 -->
+        <!-- /.col md3 -->
+        <!-- col md9 -->
+        <div class="col-md-9">
+            <!-- box -->
+            <div class="box">
+                <!-- box header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Detalles de Tratamiento</h3>
+                </div>
+                <!-- /.box header -->
+                <!-- box body -->
+                <div class="box-body">
+                    <!-- nav-tabs-custom -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">Proveedor</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">Pretratamientos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#Requerimientospane" data-toggle="tab">Requerimientos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#Tarifaspane" data-toggle="tab">Tarifas</a>
+                            </li>
+                        </ul>
+                        <!-- nav-content -->
+                        <div class="tab-content" style="min-height:40vh;">
+                            <!-- tab-pane fade -->
+                            <div class="tab-pane fade " id="Proveedorpane">
+                                <!-- About Me Box -->
+                                <div class="box box-info">
+                                    <div class="box-body box-profile">
+                                        <h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
+                                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
+                                        <p class="text-muted text-center">{{$Cliente->CliShortname}}</p>
+                                        @endif
+                                        <ul class="list-group list-group-unbordered">
+                                            <li class="list-group-item">
+                                                <b>{{ trans('adminlte_lang::message.address') }}</b>
+                                                <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.address') }}')"><i class="far fa-copy"></i></a>
+                                                <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right">{{$Sede->SedeCelular}}</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>{{ trans('adminlte_lang::message.phone') }}</b> <a class="pull-right">{{$Sede->SedePhone1}} - {{$Sede->SedeExt1}}</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>{{ trans('adminlte_lang::message.phone') }} 2</b> <a class="pull-right">{{$Sede->SedePhone2}} - {{$Sede->SedeExt2}}</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>{{ trans('adminlte_lang::message.emailaddress') }}</b>
+                                                <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
+                                                <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeEmail}}</p>">{{$Sede->SedeEmail}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- tab-pane fade -->
+                            <!-- tab-pane fade -->
+                            <div class="tab-pane fade in active" id="Pretratamientospane">
+                                <div class="form-horizontal">
+                                    <ul class="list-group list-group-unbordered">
+                                        @foreach($tratamiento->pretratamientos as $pretratamiento)
+                                        <li class="list-group-item">
+                                            <b>{{$pretratamiento->PreTratName}}</b> <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="Descripción del Pretratamiento" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="{{$pretratamiento->PreTratDescription}}">{{$pretratamiento->PreTratDescription}}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane fade -->
+                            <!-- /.tab-pane fade -->
+                            <div class="tab-pane fade" id="Requerimientospane">
+                            </div>
+                            <!-- /.tab-pane fade -->
+                            <!-- tab-pane fade -->
+                            <div class="tab-pane fade" id="tarifaspane">
+                                <div class="form-horizontal">
+                                </div>
+                            </div>
+                            <!-- /.tab-pane fade -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-success  pull-right" type="submit" value="Actualizar" style="margin-right:3em" />
+                    </div>
+                    <!-- /.nav-tabs-custom -->
+                </div>
+                <!-- /.box body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col md9 -->
     </div>
     <!-- /.row -->
 </div>
