@@ -64,7 +64,7 @@ class UserTableSeeder extends Seeder
         $user->email_verified_at = '2019-04-17 10:25:11';
         $user->password = bcrypt('secret');
         $user->UsSlug = 'Leider1';
-        $user->UsRol = 'admin';
+        $user->UsRol = 'Administrador';
         $user->UsRolDesc = 'Director de Planta';
         $user->UsRol2 = 'Usuario';
         $user->UsRolDesc2 = 'Usuario general';

@@ -38,14 +38,14 @@ class PersonalStoreRequest extends FormRequest
             'PersAddress'   => 'max:255|nullable',
 
             'PersPhoneNumber' => 'max:20||min:10|nullable',
-            'PersEPS'       => 'required|max:255|min:5',
-            'PersARL'       => 'required|max:255|min:5',
+            'PersEPS'       => 'max:255|min:5|nullable',
+            'PersARL'       => 'max:255|min:5|nullable',
             'PersLibreta'   => 'max:25',
             'PersPase'      => 'max:25',
             'PersBank'      => 'max:255',
             'PersBankAccaunt' => 'max:64',
-            'PersIngreso'   => 'required|date|before:PersSalida',
-            'PersSalida'    => 'required|date|after:PersIngreso',
+            'PersIngreso'   => 'date|before:PersSalida',
+            'PersSalida'    => 'date|after:PersIngreso',
         ];
     }
 }

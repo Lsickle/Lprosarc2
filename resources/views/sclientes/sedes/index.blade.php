@@ -19,7 +19,7 @@
 				<div class="box box-info">
 				<!-- /.box-header -->
 					<div class="box-body">
-						<table id="sclientes" class="table table-bordered table-striped" width="100%">
+						<table id="sedes" class="table table-bordered table-striped" width="100%">
 							<thead>
 								<tr>
 									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
@@ -42,7 +42,9 @@
 										<td>{{$Sede->SedeCelular}}</td>
 										<td>{{$Sede->SedeEmail}}</td>
 										<td>{{$Sede->SedeAddress}} {{$Sede->MunName.' - '.$Sede->DepartName}}</td>
-										<td>{{$Sede->SedeSlug}}</td>
+										<td>
+											<a method='get' href='/sedes/{{$Sede->SedeSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+										</td>
 									</tr>
 									@endforeach
 							</tbody>

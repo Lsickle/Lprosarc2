@@ -13,22 +13,24 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 						<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-					@component('layouts.partials.modal')
-						{{$Sede->ID_Sede}}
-					@endcomponent
-					@if($Sede->SedeDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
-						</form>
-					@else
-						<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
-							@method('DELETE')
-							@csrf
-							<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
-						</form>
+					@if(!isset($Verify))
+						@component('layouts.partials.modal')
+							{{$Sede->ID_Sede}}
+						@endcomponent
+						@if($Sede->SedeDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
+							</form>
+						@else
+							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+							</form>
+						@endif
 					@endif
 					<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
 					@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
@@ -36,7 +38,9 @@
 					@endif
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.address') }}</b> <a class="pull-right">{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}</a>
+							<b>{{ trans('adminlte_lang::message.address') }}</b>
+							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.address') }}')"><i class="far fa-copy"></i></a>
+							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Municipio->MunName}}, {{$Departamento->DepartName}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right">{{$Sede->SedeCelular}}</a>
@@ -48,7 +52,9 @@
 							<b>{{ trans('adminlte_lang::message.phone') }} 2</b> <a class="pull-right">{{$Sede->SedePhone2}} - {{$Sede->SedeExt2}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> <a class="pull-right">{{$Sede->SedeEmail}}</a>
+							<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> 
+							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
+							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeEmail}}</p>">{{$Sede->SedeEmail}}</a>
 						</li>
 					</ul>
 				</div>
