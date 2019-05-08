@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model{
     protected $table = 'cargos';
-    protected $fillable = ['CargName','CargSalary','CargGrade','CargDelete','SelectArea'];
+    protected $fillable = ['CargName','CargSalary','CargGrade','CargDelete','CargArea'];
     protected $primaryKey = 'ID_Carg';
 
     public function Areas(){

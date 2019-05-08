@@ -27,7 +27,9 @@
 									<th>{{ trans('adminlte_lang::message.mobile') }}</th>
 									<th>{{ trans('adminlte_lang::message.cargoname') }}</th>
 									<th>{{ trans('adminlte_lang::message.areaname') }}</th>
-									<th>{{ trans('adminlte_lang::message.clientmenu') }}</th>
+									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										<th>{{ trans('adminlte_lang::message.clientmenu') }}</th>
+									@endif
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AsistenteLogistica'))
 									<th>{{ trans('adminlte_lang::message.see') }}</th>
 									@endif
@@ -47,7 +49,9 @@
 									<td>{{$Personal->PersCellphone}}</td>
 									<td>{{$Personal->CargName}}</td>
 									<td>{{$Personal->AreaName}}</td>
-									<td>{{$Personal->CliShortname}}</td>
+									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										<td>{{$Personal->CliShortname}}</td>
+									@endif
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AsistenteLogistica'))
 									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
 									@endif
