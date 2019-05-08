@@ -66,45 +66,19 @@
         <!-- /.col -->
         <div class="col-md-6">
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs" id="navbar-example2">
-                    <li class="active box-info" ><a href="#activity" data-toggle="tab">Residuos</a></li>
+                <ul class="nav nav-tabs">
+                    <li class="active box-info" ><a href="#activity" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="activity">
-                        <!-- Post -->
-                        <div class="post">
-                            <div class="user-block">
-                                {{-- <ul class="list-group list-group-flush"> --}}
-                                <div class="list-group">
-                                        <div class="scrollbar scrollbar-primary">
-                                                <div class="force-overflow"></div>
-                                              </div>
-                                    @foreach ($Respels as $Respel)
-                                    {{-- <li class="list-group-item"> --}}
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
-                                    @endforeach
-                                {{-- </ul> --}}
-
-
-                                </div>
-                            </div>
+                        <div style='overflow-y:auto; max-height:358px;'>
+                            @foreach ($Respels as $Respel)
+                                <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light" style="display:flex; justify-content:center; align-items:center;">{{$Respel->RespelName}}</a></h4>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <!-- /.tab-content -->
             </div>
-            <!-- /.nav-tabs-custom -->
         </div>
-        <!-- /.col -->
     </div>
-    
-    <!-- /.row -->
     @endsection

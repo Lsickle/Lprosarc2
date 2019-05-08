@@ -1373,7 +1373,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1385,32 +1385,49 @@ $(document).ready(function() {
         });
     });
 </script>
-<script>
-    $(document).ready(function(){    
-        if({{old('SedeExt2')}} !== null){
-            $('#sedeinputext2').prop('disabled', false);
-        };
-        
-    });
-</script>
-<script>
-    $(document).ready(function(){    
-    if({{old('SedeExt1')}} !== null){
-            $('#sedeinputext1').prop('disabled', false);
-        };
-    });
-</script>
+    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
+        <script>
+            $(document).ready(function(){    
+                if({{old('SedeExt2')}} !== null){
+                    $('.ext').prop('disabled', false);
+                };
+            });
+        </script>
+        <script>
+            $(document).ready(function(){    
+            if({{old('SedeExt1')}} !== null){
+                    $('.ext2').prop('disabled', false);
+                };
+            });
+        </script>
+    @endif
+    @if(Route::currentRouteName() === 'generadores.create')
+        <script>
+            $(document).ready(function(){    
+                if({{old('GSedeExt1')}} !== null){
+                    $('.ext').prop('disabled', false);
+                };
+            });
+        </script>
+        <script>
+            $(document).ready(function(){    
+            if({{old('GSedeExt2')}} !== null){
+                    $('.ext2').prop('disabled', false);
+                };
+            });
+        </script>
+    @endif
 <script>
     $(document).ready(function(){  
-        if($('#sedeinputphone1').val()){
-            $('#sedeinputext1').prop('disabled', false);
+        if($('.tel').val()){
+            $('.ext').prop('disabled', false);
         }
     });
 </script>
 <script>
     $(document).ready(function(){  
-        if($('#sedeinputphone2').val()){
-            $('#sedeinputext2').prop('disabled', false);
+        if($('.tel2').val()){
+            $('.ext2').prop('disabled', false);
         }
     });
 </script>

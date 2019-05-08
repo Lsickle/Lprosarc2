@@ -61,7 +61,7 @@
 								<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
 								<div class="input-group">
 									<span class="input-group-addon">(+57)</span>
-									<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="3014145321" name="SedeCelular" value="{{$Sede->SedeCelular}}" required>
+									<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" value="{{$Sede->SedeCelular}}" required>
 								</div>
 							</div>
 							<div class="col-md-6 form-group">

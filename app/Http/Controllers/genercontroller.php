@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\userController;
+use App\Http\Requests\GeneradoresStoreRequest;
 use App\Cliente;
+use App\GenerSede;
 use App\generador;
 use App\audit;
 use App\Sede;
+use App\Departamento;
+use App\Municipio;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 
@@ -57,7 +61,12 @@ class genercontroller extends Controller
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $id = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
-            return view('generadores.create', compact('Sedes'));
+            $Departamentos = Departamento::all();            
+            
+            if (old('FK_GSedeMun') !== null){
+                $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
+            }
+            return view('generadores.create', compact('Sedes', 'Clientes', 'Departamentos', 'Municipios'));
         }else{
             abort(403);
         }
@@ -69,31 +78,8 @@ class genercontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GeneradoresStoreRequest $request)
     {
-        $Validate = $request->validate([
-            'GenerNit'      => ['required','min:13','max:13',Rule::unique('generadors')->where(function ($query) use ($request){
-            //    Validacion de que un generador puede estar en varios clientes 
-            //          pero un cliente no puede repetir de generador
-                $id = userController::IDClienteSegunUsuario();
-                $Sede = DB::table('sedes')
-                    ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                    ->join('generadors', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
-                    ->select('generadors.GenerNit')
-                    ->where('ID_Cli', $id)
-                    ->where('GenerNit', $request->input('GenerNit'))
-                    ->first();
-
-                if(isset($Sede->GenerNit)){
-                    $query->where('generadors.GenerNit','=', $Sede->GenerNit);
-                }else{
-                    $query->where('generadors.GenerNit','=', null);
-                }
-            })],
-            'GenerName'     => 'required|max:255',
-            'GenerShortname'=> 'required|max:64',
-            'FK_GenerCli'   => 'required',   
-        ]);
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
@@ -102,6 +88,36 @@ class genercontroller extends Controller
         $Gener->FK_GenerCli = $request->input('FK_GenerCli');
         $Gener->GenerDelete = 0;
         $Gener->save();
+
+        $SGener = new GenerSede();
+        $SGener->GSedeName = $request->input('GSedeName');
+        $SGener->GSedeAddress = $request->input('GSedeAddress');
+
+        if($request->input('GSedePhone1') === null && $request->input('GSedePhone2') !== null){
+            $SGener->GSedePhone1 = $request->input('GSedePhone2');
+            $SGener->GSedeExt1 =  $request->input('GSedeExt2');
+        }else{
+            if($request->input('GSedePhone1') === null){
+                $SGener->GSedeExt1 = null;
+            }else{
+                $SGener->GSedePhone1 = $request->input('GSedePhone1');
+                $SGener->GSedeExt1 = $request->input('GSedeExt1');
+            }
+            if($request->input('GSedePhone2') === null){
+                $SGener->GSedeExt2 = null;
+            }else{
+                $SGener->GSedePhone2 = $request->input('GSedePhone2');
+                $SGener->GSedeExt2 =  $request->input('GSedeExt2');
+            }
+        }
+
+        $SGener->GSedeEmail = $request->input('GSedeEmail');
+        $SGener->GSedeCelular = $request->input('GSedeCelular');
+        $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $SGener->FK_GSede = $Gener->ID_Gener;
+        $SGener->FK_GSedeMun = $request->input('GenerDelete');
+        $SGener->GSedeDelete = 0;
+        $SGener->save();
     
         return redirect()->route('generadores.index');
     }
@@ -118,13 +134,13 @@ class genercontroller extends Controller
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
         $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
 
-        $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->where('FK_CotiSede', '=', $Sede->ID_Sede)
+        $Respels = DB::table('residuos_geners')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->where('FK_GSede', '=', $Generador->ID_Gener)
             ->get();
 
-        return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels'));
+            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels'));
     }
 
     /**
@@ -155,32 +171,33 @@ class genercontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Generador = generador::where('GenerSlug',$id)->first();
         $Validate = $request->validate([
-            'GenerNit'      => [
-                // 'unique:generadors,GenerNit,'.$Generador->GenerNit.',GenerNit'
-                'required', 'min:13', 'max:13', Rule::unique('generadors')->where(function ($query) use ($request){
-                        $id = userController::IDClienteSegunUsuario();
-                        $Sede = DB::table('sedes')
-                            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                            ->join('generadors', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
-                            ->select('generadors.GenerNit')
-                            ->where('ID_Cli', $id)
-                            ->where('GenerNit', $request->input('GenerNit'))
-                            ->first();
-        
-                        if(isset($Sede->GenerNit)){
-                            $query->where('generadors.GenerNit','=', $Sede->GenerNit);
-                        }else{
+            'GenerNit'      => ['required', 'min:13', 'max:13', Rule::unique('generadors')->where(function ($query) use ($request, $id){
+                $ID_Cli = userController::IDClienteSegunUsuario();
+                $Sede = DB::table('sedes')
+                    ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                    ->join('generadors', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
+                    ->select('generadors.GenerNit', 'generadors.GenerSlug')
+                    ->where('ID_Cli', $ID_Cli)
+                    ->where('GenerNit', $request->input('GenerNit'))
+                    ->where('GenerDelete', 0)
+                    ->first();
+                    
+                    if(isset($Sede)){
+                        if($Sede->GenerSlug == $id){
                             $query->where('generadors.GenerNit','=', null);
+                        }else{
+                            $query->where('generadors.GenerNit','=', $Sede->GenerNit);
                         }
-                    })
-        ],
+                    }else{
+                        $query->where('generadors.GenerNit','=', null);
+                    }
+            })],
             'GenerName'     => 'required|max:255',
             'GenerShortname'=> 'required|max:64',
             'FK_GenerCli'   => 'required',   
         ]);
-
+        $Generador = generador::where('GenerSlug',$id)->first();
         $Generador->fill($request->all());
         $Generador->save();
 

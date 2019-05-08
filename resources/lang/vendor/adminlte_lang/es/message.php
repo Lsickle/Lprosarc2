@@ -325,9 +325,6 @@ return [
     // municipio
     'municipio'               =>'Municipio',
     
-    // respel
-    'respel'                  => 'Residuos',
-    
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',

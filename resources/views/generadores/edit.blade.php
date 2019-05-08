@@ -40,7 +40,7 @@
 									</div>
 									<div class="col-xs-12 form-group">
 										<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
-										<input type="text" name="GenerNit" class="form-control" id="GenerInputNit" data-minlength="13" maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Generador->GenerNit}}" required>
+										<input type="text" name="GenerNit" class="form-control nit" id="GenerInputNit" data-minlength="13" maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Generador->GenerNit}}" required>
 									</div>
 									<div class="col-xs-12 form-group">
 										<label for="GenerInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
@@ -48,7 +48,7 @@
 									</div>
 									<div class="col-xs-12 form-group">
 										<label for="">{{ trans('adminlte_lang::message.name') }}</label><small class="help-block with-errors">*</small>
-										<input type="text" name="GenerShortname" class="form-control" id="GenerInputNombre" value="{{$Generador->GenerShortname}}" required>
+										<input type="text" name="GenerShortname" class="form-control" id="GenerInputNombre" value="{{$Generador->GenerShortname}}">
 									</div>
 								</div>
 								<!-- /.box-body -->

@@ -185,10 +185,20 @@ return [
         'CargName'      => 'Nombre del cargo',
         'NewCargo'      => 'Nombre del nuevo Cargo',
 
-        'FK_GenerCli'   => 'Sede',
+        'FK_GenerCli'   => 'Mis Sedes',
         'GenerNit'      => 'NIT',
-        'GenerName' =>'Razón Social',    
-        'GenerShortname'=> 'Nombre Corto'
+        'GenerName'     =>'Razón Social',    
+        'GenerShortname'=> 'Nombre Corto',
+
+        'GSedeAddress'  => 'Dirección',
+        'GSedeCelular'  => 'Celular',
+        'GSedePhone1'   => 'Telefono 1',
+        'GSedeExt1'     => 'Extensión 1',
+        'GSedePhone2'   => 'Teléfono 2',
+        'GSedeExt2'     => 'Extensión 2',
+        'GSedeName'     => 'Nombre de la Sede',
+        'GSedeEmail'    => 'Email',
+        'FK_GSedeMun'   => 'Minicipio',
     ],
 
 ];
