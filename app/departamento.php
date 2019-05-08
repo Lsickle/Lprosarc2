@@ -14,6 +14,7 @@ class Departamento extends Model
 
     public function Municipios()
     {
-        return $this->hasMany('App\Municipio', 'ID_Mun');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Municipio', 'FK_MunCity');//como departamento tiene muchos municipios
     }
+    
 }

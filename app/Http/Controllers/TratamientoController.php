@@ -25,28 +25,14 @@ class TratamientoController extends Controller
     public function index()
     {
 
-        // if(Auth::user()->UsRol === "Programador"){
-        //     $tratamientos = Tratamiento::with(['pretratamientos'])
-        //         ->select(
-        //             'tratamientos.*',
-        //             'pretratamientos.*'
-        //         )->get();
-        // } else{
-        //     $tratamientos = DB::table('tratamientos')
-        //         ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-        //         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-        //         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-        //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-        //         ->select('tratamientos.*', 'sedes.SedeAddress', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
-        //         ->where('tratamientos.TratDelete', 0)
-        //         ->get();
-        // }
         // $proveedor = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
+        $depart = Departamento::with('municipios')->get();
         $tratamientos = Tratamiento::with(['pretratamientos'])
         ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
         ->get();
         // return $tratamientos;
+        return $depart;
         return view('tratamiento.index', compact('tratamientos'));
     }
 
