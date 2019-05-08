@@ -10,11 +10,12 @@
     "require": {
         "php": "^7.2.11",
         "acacha/admin-lte-template-laravel": "^6.0",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "spatie/laravel-menu": "^3.3",
-        "nesbot/carbon": "2.17.*"
+        "nesbot/carbon": "2.17.*",
+        "spatie/laravel-menu": "^3.3"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
