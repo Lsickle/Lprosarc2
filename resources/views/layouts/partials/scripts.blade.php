@@ -1448,29 +1448,31 @@ $(document).ready(function(){
         document.execCommand("copy");
         document.body.removeChild(aux);
         var Mensaje = "¡Texto Copiado!";
-        CopyNotifi(Mensaje);
+        NotifiTrue(Mensaje);
     }
 </script>
 <script>
-    function CopyNotifi(Mensaje) {
-        toastr.options = {
-          "closeButton": true,
-          "debug": true,
-          "newestOnTop": false,
-          "progressBar": true,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": false,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
-        
+    toastr.options = {
+      "closeButton": true,
+      "debug": true,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "6000",
+      "extendedTimeOut": "3000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    function NotifiTrue(Mensaje) {
         toastr.success(Mensaje);
+    }
+    function NotifiFalse(Mensaje) {
+        toastr.error(Mensaje);
     }
 </script>
 @yield('NewScript')

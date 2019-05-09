@@ -60,15 +60,15 @@ class DatabaseSeeder extends Seeder
         $this->call(InventarioTechTableSeeder::class);
         $this->call(VehicleTableSeeder::class);
         $this->call(MantenVehicTableSeeder::class);
-        $this->call(VehicProgTableSeeder::class);
-        $this->call(OrdenCompraTableSeeder::class);
-        $this->call(QuotationTableSeeder::class);
         $this->call(TarifasTableSeder::class);
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
         $this->call(ActivoTableSeeder::class);
         $this->call(SolicitudServicioTableSeeder::class);
+        $this->call(VehicProgTableSeeder::class);
+        $this->call(OrdenCompraTableSeeder::class);
+        $this->call(QuotationTableSeeder::class);
         $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(TratamientoTableSeeder::class);

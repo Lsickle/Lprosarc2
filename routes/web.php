@@ -97,6 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
+	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
 
 });
 

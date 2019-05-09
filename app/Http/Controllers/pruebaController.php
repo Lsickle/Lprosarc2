@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\ProgramacionVehiculo;
 use App\audit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class pruebaController extends Controller
 {
@@ -17,8 +18,12 @@ class pruebaController extends Controller
      */
     public function index()
     {
+        // $hora1 = 
+        // return $hora1;
         $eventos = DB::table('progvehiculos')
-            ->select('*')
+            ->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+            ->join('vehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'vehiculos.ID_Vehic')
+            ->select('progvehiculos.*', 'vehiculos.ID_Vehic', 'vehiculos.VehicPlaca', 'solicitud_servicios.ID_SolSer')
             ->get();
         $personal = DB::table('personals')
             ->select('ID_Pers', 'PersFirstName', 'PersLastName')
@@ -26,8 +31,27 @@ class pruebaController extends Controller
         $vehiculos = DB::table('vehiculos')
             ->select('*')
             ->get();
-        // return $eventos;
-        return view('PruebaFullCalendar.index', compact('eventos', 'personal', 'vehiculos'));
+        $servicios = DB::table('solicitud_servicios')
+            ->select('*')
+            ->get();
+        $array[] = null;
+        foreach ($eventos as $evento) {
+            foreach ($servicios as $servicio) {
+                if($evento->FK_ProgServi == $servicio->ID_SolSer){
+                    $array[] = $servicio->ID_SolSer;
+                }
+            }
+        }/**/
+        $serviciosnoprogramados = DB::table('solicitud_servicios')
+            ->select('ID_SolSer')
+            ->where('SolSerDelete', 0)
+            ->where(function($query) use ($array){
+                for ($i=0; $i < count($array); $i++) { 
+                    $query->where('ID_SolSer', '<>', $array[$i]);
+                }
+            })
+            ->get();
+        return view('PruebaFullCalendar.index', compact('eventos', 'personal', 'vehiculos', 'servicios', 'serviciosnoprogramados'));
     }
 
     /**
@@ -65,9 +89,11 @@ class pruebaController extends Controller
         else{
             $reguistro->ProgVehEntrada = null;
         }
-        $reguistro->ProgVehSalida = $request->input('textFecha').' '.$request->input('textHoraSali');
+        $reguistro->ProgVehSalida = $request->input('textFecha').' '.date('H:i:s', strtotime($request->input('textHoraSali')));
         $reguistro->FK_ProgVehiculo = $request->input('textVehiculo');
         $reguistro->FK_ProgMan = "1";
+        $reguistro->ProgVehColor = $request->input('ProgVehColor');
+        $reguistro->FK_ProgServi = $request->input('FK_ProgServi');
         $reguistro->FK_ProgConductor = $request->input('textConductor');
         $reguistro->FK_ProgAyudante = $request->input('textAyudante');
         $reguistro->ProgVehDelete = 0;

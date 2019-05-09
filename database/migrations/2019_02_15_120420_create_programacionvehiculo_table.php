@@ -21,6 +21,7 @@ class CreateProgramacionvehiculoTable extends Migration
             $table->boolean('ProgVehtipo');
             $table->dateTime('ProgVehEntrada')->nullable();
             $table->dateTime('ProgVehSalida');
+            $table->string('ProgVehColor')->nullable();
             $table->timestamps();
             $table->unsignedInteger('FK_ProgVehiculo')->nullable();
             $table->unsignedInteger('FK_ProgMan')->nullable();
