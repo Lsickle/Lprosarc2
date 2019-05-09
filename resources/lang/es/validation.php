@@ -199,6 +199,9 @@ return [
         'GSedeName'     => 'Nombre de la Sede',
         'GSedeEmail'    => 'Email',
         'FK_GSedeMun'   => 'Minicipio',
+
+        'FK_SGener'     => 'Sedes del Generador',
+        'FK_Respel'     => 'Residuos',
     ],
 
 ];

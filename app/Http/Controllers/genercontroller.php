@@ -14,6 +14,7 @@ use App\audit;
 use App\Sede;
 use App\Departamento;
 use App\Municipio;
+use App\ResiduosGener;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 
@@ -63,10 +64,17 @@ class genercontroller extends Controller
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
             $Departamentos = Departamento::all();            
             
+            $Respels = DB::table('respels')
+                ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+                ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->where('ID_Cli', $id)
+                ->get();
+            
             if (old('FK_GSedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
             }
-            return view('generadores.create', compact('Sedes', 'Clientes', 'Departamentos', 'Municipios'));
+            return view('generadores.create', compact('Sedes', 'Clientes', 'Departamentos', 'Municipios', 'Respels'));
         }else{
             abort(403);
         }
@@ -80,6 +88,7 @@ class genercontroller extends Controller
      */
     public function store(GeneradoresStoreRequest $request)
     {
+        // return $request;
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
@@ -110,7 +119,6 @@ class genercontroller extends Controller
                 $SGener->GSedeExt2 =  $request->input('GSedeExt2');
             }
         }
-
         $SGener->GSedeEmail = $request->input('GSedeEmail');
         $SGener->GSedeCelular = $request->input('GSedeCelular');
         $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
@@ -118,6 +126,16 @@ class genercontroller extends Controller
         $SGener->FK_GSedeMun = $request->input('GenerDelete');
         $SGener->GSedeDelete = 0;
         $SGener->save();
+
+        if($request->input('FK_Respel') !== null){
+            foreach($request->FK_Respel as $file){ 
+
+                $ResiduoSedeGener = new ResiduosGener();
+                $ResiduoSedeGener->FK_SGener = $SGener->ID_GSede;
+                $ResiduoSedeGener->FK_Respel = $file;
+                $ResiduoSedeGener->save();
+            }
+        }
     
         return redirect()->route('generadores.index');
     }
@@ -137,16 +155,29 @@ class genercontroller extends Controller
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
             ->where('FK_GSede', $Generador->ID_Gener)
+            ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
             ->get();
+            
         $Respels = DB::table('residuos_geners')
             ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
             ->where('FK_GSede', '=', $Generador->ID_Gener)
             ->get();
 
-        // $Residuo->cotizacion->sede
+        $Residuos = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            // ->join('generadors', 'generadors.FK_GenerCli', 'sedes.ID_Sede')
 
-            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes'));
+            // ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            // ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            // ->where('FK_GSede', '<>', $Generador->ID_Gener)
+
+            ->where('ID_Sede', $Sede->ID_Sede)
+            // ->where('ID_Gener', $Generador->ID_Gener)
+            ->get();
+
+            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos'));
     }
 
     /**

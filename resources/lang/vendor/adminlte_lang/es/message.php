@@ -277,11 +277,13 @@ return [
     'generindex'              => 'Lista de Generadores',
     'Generregistertittle'     => 'Registro de Generador',
     'generupdate'             => 'Actualizar Generador',
+    'genercode'               => 'Código del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualizar sede',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'SGenertitle'             => 'Sede del Generador',
     
     // area
     'areatitle'               => 'Áreas',

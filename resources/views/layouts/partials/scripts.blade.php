@@ -1478,4 +1478,14 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
+@if(Route::currentRouteName() === 'generadores.show')
+    @if ($errors->any())
+        <script>
+            $(document).ready(function()
+            {
+                $("#add").modal("show");
+            });
+        </script>
+    @endif
+@endif
 @yield('NewScript')

@@ -49,6 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/generadores', 'genercontroller');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	Route::post('/respelSedeGener', 'RespelSedeGenerController@store');
+	Route::delete('/respelSedeGener/{id}', 'RespelSedeGenerController@destroy');
 	Route::resource('/permisos', 'RolesController');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
