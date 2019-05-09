@@ -33,7 +33,7 @@ Tratamiento
                             <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->diffForHumans()}}</p>
                         </li>
                     </ul>
-                    <a method='get' href='/Tratamientos/{{$tratamiento->ID_Trat}}/edit' target='_blank' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
+                    <a href='/tratamiento/{{$tratamiento->ID_Trat}}/edit' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -59,12 +59,6 @@ Tratamiento
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">Pretratamientos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#Requerimientospane" data-toggle="tab">Requerimientos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#Tarifaspane" data-toggle="tab">Tarifas</a>
                             </li>
                         </ul>
                         <!-- nav-content -->
@@ -115,16 +109,6 @@ Tratamiento
                                         </li>
                                         @endforeach
                                     </ul>
-                                </div>
-                            </div>
-                            <!-- /.tab-pane fade -->
-                            <!-- /.tab-pane fade -->
-                            <div class="tab-pane fade" id="Requerimientospane">
-                            </div>
-                            <!-- /.tab-pane fade -->
-                            <!-- tab-pane fade -->
-                            <div class="tab-pane fade" id="tarifaspane">
-                                <div class="form-horizontal">
                                 </div>
                             </div>
                             <!-- /.tab-pane fade -->

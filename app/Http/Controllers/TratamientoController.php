@@ -14,6 +14,7 @@ use App\Municipio;
 use App\Tratamiento;
 use App\Pretratamiento;
 use App\Respel;
+use App\Requerimiento;
 
 class TratamientoController extends Controller
 {
@@ -138,6 +139,7 @@ class TratamientoController extends Controller
         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
         ->first();
+
         return view('tratamiento.show', compact('tratamiento', 'Sede', 'respels'));
     }
 
@@ -149,7 +151,9 @@ class TratamientoController extends Controller
      */
     public function edit($id)
     {
-        $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
+        $tratamiento = Tratamiento::with(['pretratamientos'])
+            ->where('ID_Trat', $id)
+            ->first();
         
         $sedes = Sede::All();  
         // return $sedes;
@@ -161,7 +165,8 @@ class TratamientoController extends Controller
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
                 ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
-                ->get();
+                ->get();  
+        // return $tratamiento;  
         return view('tratamiento.edit', compact('tratamiento', 'sedes', 'residuos'));
     }
 

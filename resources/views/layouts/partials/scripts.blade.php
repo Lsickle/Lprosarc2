@@ -1473,4 +1473,30 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
+{{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
+<script>
+    var contador = 1;
+    function attachPopover(){
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                trigger: 'hover',
+                placement: 'auto',
+            });
+            $("#edittratamientoForm").validator('update');
+    }
+    function AgregarPreTrat(){
+        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+        $("#pretratamientosPanel").append(pretratamiento);
+        $("#edittratamientoForm").validator('update');
+        contador= parseInt(contador)+1;
+        attachPopover();
+    }
+    function EliminarPreTrat(id){
+        $("#pretratname"+id).remove();
+        $("#pretratdescription"+id).remove();
+        $("#pretratsparator"+id).remove();
+        $("#edittratamientoForm").validator('update');
+        contador= parseInt(contador)-1;
+    }
+</script>
 @yield('NewScript')
