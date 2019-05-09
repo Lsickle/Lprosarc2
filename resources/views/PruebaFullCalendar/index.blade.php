@@ -75,7 +75,7 @@
 									<label for="textConductor">Conductor:</label>
 									<select name="textConductor" id="textConductor" class="form-control">
 										<option value="">Seleccione...</option>
-										@foreach($personal as $persona)
+										@foreach($conductors as $persona)
 											<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 										@endforeach
 									</select>
@@ -84,7 +84,7 @@
 									<label for="textAyudante">Ayudante:</label>
 									<select name="textAyudante" id="textAyudante" class="form-control">
 										<option value="">Seleccione...</option>
-										@foreach($personal as $persona)
+										@foreach($ayudantes as $persona)
 											<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 										@endforeach
 									</select>
@@ -151,41 +151,47 @@
 									</div>
 									<div class="col-xs-12 col-md-6">
 										<label for="textConductor1">Conductor:</label>
-										<select name="textConductor1" class="form-control">
-											<option value="1" id="textConductor1">Seleccione...</option>
-											@foreach($personal as $persona)
-												<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
+										<select name="textConductor1" class="form-control" id="textConductor1">
+											<option value="">Seleccione...</option>
+											@foreach($conductors as $conductor)
+												<option value="{{$conductor->ID_Pers}}">{{$conductor->PersFirstName." ".$conductor->PersLastName}}</option>
 											@endforeach
 										</select>
 									</div>
 									<div class="col-xs-12 col-md-6">
 										<label for="textAyudante1">Ayudante:</label>
-										<select name="textAyudante1" class="form-control">
-											<option value="1" id="textAyudante1">Seleccione...</option>
-											@foreach($personal as $persona)
-												<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
+										<select name="textAyudante1" class="form-control" id="textAyudante1">
+											<option value="">Seleccione...</option>
+											@foreach($ayudantes as $ayudante)
+												<option value="{{$ayudante->ID_Pers}}">{{$ayudante->PersFirstName." ".$ayudante->PersLastName}}</option>
 											@endforeach
 										</select>
 										<input type="submit" hidden="true" id="submit2" name="submit2">
 									</div>
+									<div class="col-xs-12 col-md-12">
+										<label for="ProgVehColor1">Color de la programación:</label>
+										<input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor1" value="">
+									</div>
 								</div>
 							</form>
-							<form action="" method="POST" id="formularioModal1">
+							<form action="" method="POST" id="formulario2Modal1">
 								@csrf
 								@method('DELETE')
-								<input type="submit" hidden="true" id="submit3" name="submit3">
+								
 							</form>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<label for="submit2" class="btn btn-warning">Modificar</label>
-						<label for="submit3" class="btn btn-danger">Borrar</label>
+						{{-- <label for="submit3" class="btn btn-danger">Borrar</label> --}}
+						<a href='#' data-toggle='modal' id="buttonDelete" data-target="#myModal" class="btn btn-danger">Borrar</a>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		{{-- END Modal --}}
+		<div id="ModalDelete"></div>
 @endsection
 
 @section('NewScript')
@@ -200,8 +206,6 @@
 				eventData: function(eventEl) {
 					return {
 						id: eventEl.innerText,
-						title: eventEl.innerText,
-						duration: '04:00'
 					};
 				}
 			});
@@ -211,25 +215,22 @@
 				timeZone: 'UTC',
 				droppable: true,
 				eventStartEditable: true,
-				// eventDurationEditable: false,
-				defaultView: 'timeGridWeek',
+				defaultView: 'dayGridMonth',
 				buttonText:{
 					today: 'Hoy',
 					month: 'Mes',
-					week: 'Semana',
-					day: 'Día',
-					list: 'Lista'
+					week: 'Semana'
 				},
 				allDaySlot : false,
 				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'timeGridWeek,dayGridMonth'
+					left: 'dayGridMonth,timeGridWeek',
+					center: '',
+					right: 'prev,today,next'
 				},
 				footer: {
-					left: 'prev,next,today',
+					left: '',
 					center: 'title',
-					right: 'timeGridWeek,dayGridMonth'
+					right: ''
 				},
 				eventLimit: true,
 				views: {
@@ -285,19 +286,54 @@
 					CambioDeFecha(eventDropInfo.event);
 				},
 				eventClick: function(info){
-					$('#ModalEventos').modal();
-					@foreach($eventos as $evento)
-						if(info.event.id === {{$evento->ID_ProgVeh}}){
-							document.getElementById('textFecha1').value = "{{$evento->ProgVehFecha}}";
-							$("#textVehiculo1").val("{{$evento->FK_ProgVehiculo}}");
-							// document.getElementById('').value() = ;
-							document.getElementById('textkm1').value = "{{$evento->progVehKm}}";
-							document.getElementById('textHoraSali1').value = "{{$evento->ProgVehSalida}}";
-							document.getElementById('textHoraLlega1').value = "{{$evento->ProgVehEntrada}}";
-							document.getElementById('textConductor1').value = "{{$evento->FK_ProgConductor}}";
-							document.getElementById('textAyudante1').value = "{{$evento->FK_ProgAyudante}}";
+					$.ajax({
+						url: "{{url('/ProgramacionDeUnVehiculo')}}/"+info.event.id,
+						type: "GET",
+						data: {},
+						success: function (msg) {
+							let salida = calendar.formatDate(msg.ProgVehSalida, {
+								hour: '2-digit',
+								minute: '2-digit'
+							});
+							let entrada = calendar.formatDate(msg.ProgVehEntrada, {
+								hour: '2-digit',
+								minute: '2-digit'
+							});
+							$('#ModalEventos').modal();
+							$("#titleModal").html(info.event.title);
+							$('#textFecha1').val(msg.ProgVehFecha);
+							$("#textVehiculo1").val(msg.FK_ProgVehiculo);
+							$('#textkm1').val(msg.progVehKm);
+							$('#textHoraSali1').val(salida);
+							$('#formulario2Modal1').attr('action', '/prueba/'+msg.ID_ProgVeh);
+							$('#formulario2Modal1').append(`<input type="submit" hidden="true" id="Eliminar`+msg.ID_ProgVeh+`" name="Eliminar`+msg.ID_ProgVeh+`">`);
+							$('#ModalDelete').empty();
+							$('#ModalDelete').append(`@component('layouts.partials.modal')`+msg.ID_ProgVeh+`@endcomponent`);
+							$('#buttonDelete').attr('data-target', "#myModal"+msg.ID_ProgVeh);
+							if(msg.ProgVehEntrada != null){
+								$('#textHoraLlega1').val(entrada);
+							}
+							$('#textConductor1').val(msg.FK_ProgConductor);
+							$('#textAyudante1').val(msg.FK_ProgAyudante);
+							$('#ProgVehColor1').val(msg.ProgVehColor);
+
+							$("#ModalEventos").on("hidden.bs.modal", function () {
+								$('#textFecha1').val('');
+								$("#textVehiculo1").val('');
+								$('#textkm1').val('');
+								$('#textHoraSali1').val('');
+								$('#textHoraLlega1').val('');
+								$('#textConductor1').val('');
+								$('#textAyudante1').val('');
+								$('#ProgVehColor').val('');
+								$('#Eliminar'+msg.ID_ProgVeh).remove();
+							});
+						},
+						error: function (jqXHR, textStatus, errorThrown) { 
+							var msg = "No se encontro la programación";
+							NotifiFalse(msg);
 						}
-					@endforeach
+					});
 				}
 			});
 			calendar.render();

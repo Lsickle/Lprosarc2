@@ -54,4 +54,16 @@ class AjaxController extends Controller
 			return $Mensaje;
 		}
 	}
+	/*Funcion para consultar una programacion*/
+	public function ProgramacionDeUnVehiculo(Request $request, $id){
+		if ($request->ajax()) {
+			$evento = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+			if($evento <> ''){
+				return response()->json($evento);
+			}
+			else{
+				return false;
+			}
+		}
+	}
 }

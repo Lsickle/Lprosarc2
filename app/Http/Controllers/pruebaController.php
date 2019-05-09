@@ -18,15 +18,21 @@ class pruebaController extends Controller
      */
     public function index()
     {
-        // $hora1 = 
-        // return $hora1;
         $eventos = DB::table('progvehiculos')
             ->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
             ->join('vehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'vehiculos.ID_Vehic')
             ->select('progvehiculos.*', 'vehiculos.ID_Vehic', 'vehiculos.VehicPlaca', 'solicitud_servicios.ID_SolSer')
+            ->where('ProgVehDelete', 0)
             ->get();
-        $personal = DB::table('personals')
+        $conductors = DB::table('personals')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
             ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->where('CargName', 'Conductor')
+            ->get();
+        $ayudantes = DB::table('personals')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->where('CargName', 'Operario')
             ->get();
         $vehiculos = DB::table('vehiculos')
             ->select('*')
@@ -51,7 +57,7 @@ class pruebaController extends Controller
                 }
             })
             ->get();
-        return view('PruebaFullCalendar.index', compact('eventos', 'personal', 'vehiculos', 'servicios', 'serviciosnoprogramados'));
+        return view('PruebaFullCalendar.index', compact('eventos', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados'));
     }
 
     /**

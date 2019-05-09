@@ -20,6 +20,15 @@ class CargosTableSeeder extends Seeder
         $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
     	$cargo->save();
 
+        $cargo = new Cargo();
+        $cargo->CargName = "Conductor";
+        $cargo->CargSalary = '$ 1,000,000';
+        $cargo->CargGrade = "Bachiller";
+        $cargo->CargArea = '1';
+        $cargo->CargDelete = 0;
+        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $cargo->save();
+
     	$cargo = new Cargo();
     	$cargo->CargName = "Jefe";
     	$cargo->CargSalary = '$ 1,300,000';
