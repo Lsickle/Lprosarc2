@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
 @section('htmlheader_title')
-Respel-Tratamiento
+{{ trans('adminlte_lang::LangTratamiento.tratdetaillong') }}
 @endsection
 @section('contentheader_title')
-Tratamiento
+{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}
 @endsection
 @section('main-content')
 {{-- @component('layouts.partials.modal')
@@ -22,18 +22,18 @@ Tratamiento
                     {{-- <img id="" class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
                     <h3 class="profile-username text-center">{{$tratamiento->TratName}}</h3>
                     <p class="text-muted text-center">@if($tratamiento->TratTipo=='1')
-                        <td>Tratamiento Interno</td>
+                        <td>{{ trans('adminlte_lang::LangTratamiento.tratInLong') }}</td>
                         @else
-                        <td>Tratamiento Externo</td>
+                        <td>{{ trans('adminlte_lang::LangTratamiento.tratOutLong') }}</td>
                         @endif
                     </p>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Registrado</b>
+                            <b>{{ trans('adminlte_lang::LangTratamiento.tratSince') }}</b>
                             <p class="pull-right" style="color:blue;">{{$tratamiento->created_at->diffForHumans()}}</p>
                         </li>
                     </ul>
-                    <a href='/tratamiento/{{$tratamiento->ID_Trat}}/edit' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> Editar</a>
+                    <a href='/tratamiento/{{$tratamiento->ID_Trat}}/edit' class='btn btn-warning btn-block'><i class='fas fa-edit'></i> {{ trans('adminlte_lang::message.edit') }} </a>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -46,7 +46,7 @@ Tratamiento
             <div class="box">
                 <!-- box header -->
                 <div class="box-header with-border">
-                    <h3 class="box-title">Detalles de Tratamiento</h3>
+                    <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratdetaillong') }}</h3>
                 </div>
                 <!-- /.box header -->
                 <!-- box body -->
@@ -55,10 +55,10 @@ Tratamiento
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">Proveedor</a>
+                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">{{ trans('adminlte_lang::message.clientproveedor') }}</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">Pretratamientos</a>
+                                <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</a>
                             </li>
                         </ul>
                         <!-- nav-content -->
@@ -103,11 +103,25 @@ Tratamiento
                             <div class="tab-pane fade in active" id="Pretratamientospane">
                                 <div class="form-horizontal">
                                     <ul class="list-group list-group-unbordered">
+                                        @php
+                                            $conteoDePretratamientos=0;
+                                        @endphp 
+                                                
                                         @foreach($tratamiento->pretratamientos as $pretratamiento)
-                                        <li class="list-group-item">
-                                            <b>{{$pretratamiento->PreTratName}}</b> <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="Descripción del Pretratamiento" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="{{$pretratamiento->PreTratDescription}}">{{$pretratamiento->PreTratDescription}}</a>
-                                        </li>
+                                            @if($pretratamiento->PreTratDelete == 0)
+                                                <li class="list-group-item">
+                                                    <b>{{$pretratamiento->PreTratName}}</b> <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="Descripción del Pretratamiento" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="{{$pretratamiento->PreTratDescription}}">{{$pretratamiento->PreTratDescription}}</a>
+                                                </li>
+                                                @php
+                                                $conteoDePretratamientos = $conteoDePretratamientos + 1;
+                                                @endphp
+                                            @endif
                                         @endforeach
+                                        @if($conteoDePretratamientos==0)
+                                            <li class="list-group-item">
+                                                <p class="text-center"><br><b>{{ trans('adminlte_lang::LangTratamiento.noPretrat') }}</b></p>
+                                            </li>
+                                        @endif 
                                     </ul>
                                 </div>
                             </div>
@@ -115,9 +129,9 @@ Tratamiento
                         </div>
                         <!-- /.tab-content -->
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <input class="btn btn-success  pull-right" type="submit" value="Actualizar" style="margin-right:3em" />
-                    </div>
+                    </div> --}}
                     <!-- /.nav-tabs-custom -->
                 </div>
                 <!-- /.box body -->

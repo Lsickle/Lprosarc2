@@ -154,8 +154,14 @@ class TratamientoController extends Controller
         $tratamiento = Tratamiento::with(['pretratamientos'])
             ->where('ID_Trat', $id)
             ->first();
-        
-        $sedes = Sede::All();  
+        if (!$tratamiento) {
+            abort(404);
+        }
+        $sedes = DB::table('sedes')
+                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->where('CliCategoria', '=', 'proveedor')
+                ->select('sedes.*', 'clientes.*')
+                ->get();  
         // return $sedes;
         
         $residuos = DB::table('respels')
@@ -165,9 +171,14 @@ class TratamientoController extends Controller
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
                 ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
-                ->get();  
+                ->get();
+        $SelectedSede = Sede::where('ID_Sede', $tratamiento->FK_TratProv)
+        ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+        ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+        ->first();  
         // return $tratamiento;  
-        return view('tratamiento.edit', compact('tratamiento', 'sedes', 'residuos'));
+        return view('tratamiento.edit', compact('tratamiento', 'sedes', 'residuos', 'SelectedSede'));
     }
 
     /**
@@ -179,13 +190,92 @@ class TratamientoController extends Controller
      */
     public function update(Request $request, $id)
     {   
-
+        // return $request;
         $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
         $tratamiento->TratName = $request->input('TratName');
-        $tratamiento->TratTipo = $request->input('TratTipo');
-        $tratamiento->TratPretratamiento = $request->input('TratPretratamiento');
+        /*determinar el tipo de tratamiento segun el gestor*/
+        if ($request->input('FK_TratProv') == 1) {
+            $tratamiento->TratTipo = 0; //interno
+        }else{
+            $tratamiento->TratTipo = 1; //Externo
+        }
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
-        $tratamiento->update();
+        $tratamiento->save();
+        // return $request['ID_Trat'];    
+
+        /*consulta los pretratamientos y se crea el array correspondiente */
+        $pretratamientos = Pretratamiento::where('FK_Pre_Trat', $tratamiento->ID_Trat)->get();
+
+        /*iterar sobre los pretratamientos de la base de datos*/
+        for ($num=0; $num < count($pretratamientos); $num++) { 
+                if ($request['ID_PreTrat']==null) {
+                    $pretratamiento = Pretratamiento::where('ID_PreTrat', $pretratamientos[$num]->ID_PreTrat)->first();
+                    $pretratamiento->PreTratDelete = 1;
+                    $pretratamiento->save();
+
+                    /*auditoria*/
+                    $log = new audit();
+                    $log->AuditTabla="pretratamiento";
+                    $log->AuditType="eliminado";
+                    $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                    $log->AuditUser=Auth::user()->email;
+                    $log->Auditlog=$request->all();
+                    $log->save();
+                }elseif(!in_array($pretratamientos[$num]->ID_PreTrat, $request['ID_PreTrat'])){
+                    $pretratamiento = Pretratamiento::where('ID_PreTrat', $pretratamientos[$num]->ID_PreTrat)->first();
+                    $pretratamiento->PreTratDelete = 1;
+                    $pretratamiento->save();
+
+                    /*auditoria*/
+                    $log = new audit();
+                    $log->AuditTabla="pretratamiento";
+                    $log->AuditType="eliminado";
+                    $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                    $log->AuditUser=Auth::user()->email;
+                    $log->Auditlog=$request->all();
+                    $log->save();
+                }
+        };
+
+
+        /*iteracion sobre los pretratamientos insertados en el formulario*/
+        if ($request['ID_PreTrat']!==null) {
+            for ($x=0; $x < count($request['PreTratName']); $x++) {
+                if (!$request['ID_PreTrat'][$x]) {
+                    $pretratamiento = new Pretratamiento();
+                    $pretratamiento->PreTratName = $request['PreTratName'][$x];
+                    $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
+                    $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
+                    $pretratamiento->PreTratDelete = 0;
+                    $pretratamiento->save();
+                    /*auditoria*/
+                    $log = new audit();
+                    $log->AuditTabla="pretratamiento";
+                    $log->AuditType="Creado";
+                    $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                    $log->AuditUser=Auth::user()->email;
+                    $log->Auditlog=$request->all();
+                    $log->save();
+                }
+                elseif ($request['ID_PreTrat'][$x]) {
+                    $pretratamiento = Pretratamiento::where('ID_PreTrat', $request['ID_PreTrat'][$x])->first();
+                    $pretratamiento->PreTratName = $request['PreTratName'][$x];
+                    $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
+                    $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
+                    $pretratamiento->PreTratDelete = 0;
+                    $pretratamiento->save();
+                    /*auditoria*/
+                    $log = new audit();
+                    $log->AuditTabla="pretratamiento";
+                    $log->AuditType="Modificado";
+                    $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                    $log->AuditUser=Auth::user()->email;
+                    $log->Auditlog=$request->all();
+                    $log->save();
+                }
+            }
+        }
+        
 
         /*codigo para incluir la actualizacion en la tabla de auditoria*/
         $log = new audit();

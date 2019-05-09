@@ -32,6 +32,12 @@ return [
     'cancel'                => 'Cancelar',
     'tratdetaillong'        => 'Detalles del Tratamiento',
     'tratdetailshort'       => 'Detalles',
+    'tratIN'                => 'Interno',
+    'tratOUT'               => 'Externo',
+    'tratInLong'            => 'Tratamiento Interno',
+    'tratOutLong'           => 'Tratamiento Externo',
+    'noPretrat'             => 'Sin pretratamientos asignados',
+    'tratSince'             => 'Registrado desde',
 
 
 ];
