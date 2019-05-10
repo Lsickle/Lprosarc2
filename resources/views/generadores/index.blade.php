@@ -15,6 +15,7 @@
 					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 						<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
+						<a href="Soy/{{Auth::user()->id}}" class="btn btn-succes pull-right" >Soy Generador</a>
 				</div>
 			<!-- /.box-header -->
 				<div class="box box-info">

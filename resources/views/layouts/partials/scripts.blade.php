@@ -172,6 +172,17 @@ $(document).ready(function() {
 });
 
 </script>
+<script>
+$(document).ready(function() {
+    $('.select-multiple').select2({
+        allowClear: true,
+        width: 'resolve',
+        width: '100%',
+        theme: "classic"
+    });
+});
+
+</script>
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 $(document).ready(function() {
@@ -1487,5 +1498,34 @@ $(document).ready(function(){
             });
         </script>
     @endif
+<script>
+    $(document).ready(function(){
+        $("#FK_SGener").change(function(e){
+            id=$("#FK_SGener").val();
+            e.preventDefault();
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+                url: "{{url('/sedegener-respel')}}/"+id,
+                method: 'GET',
+                data:{},
+                success: function(res){
+                    $("#FK_Respel").empty();
+                    var respel = new Array();
+                    for(var i = res.length -1; i >= 0; i--){
+                        if ($.inArray(res[i].ID_Respel, respel) < 0) {
+                            $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+                            respel.push(res[i].ID_Mun);
+                        }
+                    }
+                }
+            })
+        });
+    });
+</script>
 @endif
+
 @yield('NewScript')

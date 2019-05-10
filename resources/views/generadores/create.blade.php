@@ -164,7 +164,7 @@
 												</div>
 												<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 													<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.mobile') }} 2" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de Teléfono de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a>
+													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.phone') }} 2" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de Teléfono de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a>
 													<small class="help-block with-errors"></small>
 													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}">
 												</div>

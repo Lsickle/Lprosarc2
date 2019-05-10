@@ -12,18 +12,24 @@ class RespelSedeGenerController extends Controller
         
         $Validate = $request->validate([
             'FK_SGener' => 'required|numeric',
-            'FK_Respel' => 'required|numeric',
+            'FK_Respel' => 'required',
         ]);
-        $RespelSedeGener = new ResiduosGener;
-        $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
-        $RespelSedeGener->FK_Respel = $request->input('FK_Respel');
-        $RespelSedeGener->save();
+
+        if($request->input('FK_Respel') !== null){
+            foreach($request->FK_Respel as $file){ 
+                
+                $RespelSedeGener = new ResiduosGener;
+                $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
+                $RespelSedeGener->FK_Respel = $file;
+                $RespelSedeGener->save();
+            }
+        }
         
         $Gener = DB::table('generadors')
-        ->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-        ->select('generadors.GenerSlug')
-        ->where('gener_sedes.ID_GSede', '=', $RespelSedeGener->FK_SGener)
-        ->first();
+            ->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->select('generadors.GenerSlug')
+            ->where('gener_sedes.ID_GSede', '=', $RespelSedeGener->FK_SGener)
+            ->first();
         $id = $Gener->GenerSlug;
 
         return redirect()->route('generadores.show', compact('id'));

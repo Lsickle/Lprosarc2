@@ -15,7 +15,7 @@
                     @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                     <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
                         @component('layouts.partials.modal')
-                        {{$Generador->ID_Gener}}
+                            {{$Generador->ID_Gener}}
                         @endcomponent
                         @if($Generador->GenerDelete == 0)
                             <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
@@ -56,6 +56,10 @@
                             <b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
                             <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerShortname}}</p>">{{$Generador->GenerShortname}}</a>
                         </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.genercode') }}</b> 
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.box-body -->
@@ -89,8 +93,8 @@
                         @endif
                         <div class="modal-body">
                             <div class="col-md-12 form-group">
-                                <label for="SGener">Sedes del Generador</label><small class="help-block with-errors">*</small>
-                                <select class="form-control select" id="SGener" name="FK_SGener" required>
+                                <label for="FK_SGener">Sedes del Generador</label><small class="help-block with-errors">*</small>
+                                <select class="form-control select" id="FK_SGener" name="FK_SGener" >
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                     @foreach ($GenerSedes as $GenerSede)	
                                         <option value="{{$GenerSede->ID_GSede}}" {{ old('FK_SGener') == $GenerSede->ID_GSede ? 'selected' : '' }}>{{$GenerSede->GSedeName}}</option>
@@ -98,12 +102,17 @@
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
-                                <select class="form-control select" id="respel" name="FK_Respel" multiple required>
-                                    {{-- <option value="">{{ trans('adminlte_lang::message.select') }}</option> --}}
-                                    @foreach ($Residuos as $Residuo)
-                                        <option value="{{$Residuo->ID_Respel}}" {{ old('FK_Respel') == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
-                                    @endforeach
+                                <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
+                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple>
+                                    @if(isset($Residuos))
+                                        @foreach ($Residuos as $Residuo)
+                                            @foreach ($old as $ID_Res)
+                                        {{-- $old --}}
+                                                {{-- <option value="{{$Residuo->ID_Respel}}" {{ old('FK_Respel[]') == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option> --}}
+                                                <option value="{{$Residuo->ID_Respel}}" {{ $ID_Res == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+                                            @endforeach 
+                                        @endforeach 
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -130,7 +139,7 @@
                             @foreach ($Respels as $Respel)
                                 <ul class="list-group" style="list-style:none; margin-top:10px;">
                                     <li class="col-md-11 col-sm-11">
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo" style="display:flex; justify-content:center; align-items:center;">{{$Respel->RespelName}}</a></h4>
+                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo" style="display:flex; justify-content:center; align-items:center;">{{$Respel->GSedeName}} - {{$Respel->RespelName}}</a></h4>
                                     </li>
                                     <li class="col-md-1 col-sm-1">
                                         {{--  Modal Eliminar un Residuo de una SedeGener--}}
@@ -145,8 +154,8 @@
                                                             <div style="font-size: 5em; color: red; text-align: center; margin: auto;">
                                                                 <i class="fas fa-exclamation-triangle"></i>
                                                                 <span style="font-size: 0.3em; color: black;">
-                                                                    <p class="textolargo"><b><i>{{$Respel->GSedeName}} - {{$Respel->RespelName}}</i></b></p>
-                                                                    <p>¿Seguro quiere eliminarlo del generador?</p>
+                                                                    {{-- <p class="textolargo"><b><i>{{$Respel->GSedeName}} - {{$Respel->RespelName}}</i></b></p> --}}
+                                                                    <p>¿Seguro, quiere eliminar <b><i>{{$Respel->RespelName}}</i></b> del generador <b><i>{{$Respel->GSedeName}}</i></b> ?</p>
                                                                 </span>
                                                             </div> 
                                                         </div>
@@ -181,4 +190,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

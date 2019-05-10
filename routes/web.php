@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
 	Route::resource('/generadores', 'genercontroller');
+	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador')->name('Soy');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
 	Route::post('/respelSedeGener', 'RespelSedeGenerController@store');
@@ -99,6 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
+	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
 
 });
 

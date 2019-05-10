@@ -88,7 +88,7 @@ class genercontroller extends Controller
      */
     public function store(GeneradoresStoreRequest $request)
     {
-        // return $request;
+        return $request;
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
@@ -96,6 +96,7 @@ class genercontroller extends Controller
         $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $Gener->FK_GenerCli = $request->input('FK_GenerCli');
         $Gener->GenerDelete = 0;
+        $Gener->GenerCode = $request->input('GenerCode');
         $Gener->save();
 
         $SGener = new GenerSede();
@@ -120,7 +121,7 @@ class genercontroller extends Controller
             }
         }
         $SGener->GSedeEmail = $request->input('GSedeEmail');
-        $SGener->GSedeCelular = $request->input('GSedeCelular');
+        $SGener->GSedeCelular = $request->input('GenerCode');
         $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $SGener->FK_GSede = $Gener->ID_Gener;
         $SGener->FK_GSedeMun = $request->input('GenerDelete');
@@ -141,6 +142,55 @@ class genercontroller extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSoyGenerador($id)
+    {
+        return $id;
+        // $Gener = new generador();
+        // $Gener->GenerNit = $request->input('GenerNit');
+        // $Gener->GenerName = $request->input('GenerName');
+        // $Gener->GenerShortname = $request->input('GenerShortname');
+        // $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        // $Gener->FK_GenerCli = $request->input('FK_GenerCli');
+        // $Gener->GenerDelete = 0;
+        // $Gener->GenerCode = $request->input('GenerCode');
+        // $Gener->save();
+
+        // $SGener = new GenerSede();
+        // $SGener->GSedeName = $request->input('GSedeName');
+        // $SGener->GSedeAddress = $request->input('GSedeAddress');
+
+        // if($request->input('GSedePhone1') === null && $request->input('GSedePhone2') !== null){
+        //     $SGener->GSedePhone1 = $request->input('GSedePhone2');
+        //     $SGener->GSedeExt1 =  $request->input('GSedeExt2');
+        // }else{
+        //     if($request->input('GSedePhone1') === null){
+        //         $SGener->GSedeExt1 = null;
+        //     }else{
+        //         $SGener->GSedePhone1 = $request->input('GSedePhone1');
+        //         $SGener->GSedeExt1 = $request->input('GSedeExt1');
+        //     }
+        //     if($request->input('GSedePhone2') === null){
+        //         $SGener->GSedeExt2 = null;
+        //     }else{
+        //         $SGener->GSedePhone2 = $request->input('GSedePhone2');
+        //         $SGener->GSedeExt2 =  $request->input('GSedeExt2');
+        //     }
+        // }
+        // $SGener->GSedeEmail = $request->input('GSedeEmail');
+        // $SGener->GSedeCelular = $request->input('GenerCode');
+        // $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        // $SGener->FK_GSede = $Gener->ID_Gener;
+        // $SGener->FK_GSedeMun = $request->input('GenerDelete');
+        // $SGener->GSedeDelete = 0;
+        // $SGener->save();
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -157,27 +207,27 @@ class genercontroller extends Controller
             ->where('FK_GSede', $Generador->ID_Gener)
             ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
             ->get();
-            
+
         $Respels = DB::table('residuos_geners')
-            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
             ->where('FK_GSede', '=', $Generador->ID_Gener)
+            // ->groupBy('respels.ID_Respel')
             ->get();
 
-        $Residuos = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            // ->join('generadors', 'generadors.FK_GenerCli', 'sedes.ID_Sede')
-
-            // ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            // ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-            // ->where('FK_GSede', '<>', $Generador->ID_Gener)
-
-            ->where('ID_Sede', $Sede->ID_Sede)
-            // ->where('ID_Gener', $Generador->ID_Gener)
-            ->get();
-
-            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos'));
+        $old = old('FK_Respel');
+        if (is_array($old)) {
+            $Residuos = DB::table('respels')
+                ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+                ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+                ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+                ->select('respels.ID_Respel', 'respels.RespelName')
+                ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
+                ->groupBy('respels.ID_Respel')
+                ->get();
+        }
+            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos', 'old'));
     }
 
     /**
