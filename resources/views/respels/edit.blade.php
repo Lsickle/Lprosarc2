@@ -27,7 +27,7 @@ Respel-Editar
 							<form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
 								@method('PUT')
 								@csrf
-								@include('layouts.RespelPartials.Respelform1Edit')
+								@include('layouts.RespelPartials.respelform1Edit')
 								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 								<!-- /.box-body -->
 								<div class="col-md-12">
