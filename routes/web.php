@@ -84,20 +84,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/recurso', 'RecursoController');
 	Route::resource('/requerimientos', 'RequerimientoController');
 	Route::resource('/holidays', 'holidayController');
-	Route::resource('/prueba', 'pruebaController');
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
 	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
-	Route::get('/NA', function(){return view('Prueba.index');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
 	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
-	Route::get('/ProgramacionDeUnVehiculo/{id}', 'AjaxController@ProgramacionDeUnVehiculo');
+	// Route::get('/ProgramacionDeUnVehiculo/{id}', 'AjaxController@ProgramacionDeUnVehiculo');
 });
 

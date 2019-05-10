@@ -161,6 +161,7 @@ return [
     'EncargadoAlmacen'        => 'EncargadoAlmacen',
     'EncargadoHorno'          => 'EncargadoHorno',
     'Vigilante'               => 'Vigilante',
+    'Conductor'               => 'Conductor',
     
     // form
     'seemore'                 => 'Ver Más',
@@ -322,6 +323,20 @@ return [
 
     // municipio
     'municipio'               =>'Municipio',
+
+    // prgramacion de un vehiculo
+    'progvehictitle'          => 'Programación de Vehiculos',
+    'progvehiclist'           => 'Lista de Programaciones',
+    'progvehiccreatetext'     => 'Calendario',
+    'progvehicservi'          => 'N° del servicio',
+    'progvehicservi2'         => 'Ver servicio',
+    'progvehicfech'           => 'Fecha de la programación',
+    'progvehicsalida'         => 'Hora de salida de planta',
+    'progvehicvehic'          => 'Vehiculo Asignado',
+    'progvehicllegada'        => 'Hora de llegada a la planta',
+    'progvehicconduc'         => 'Conductor',
+    'progvehicayudan'         => 'Ayudante',
+    'progvehicclient'         => 'Cliente',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',

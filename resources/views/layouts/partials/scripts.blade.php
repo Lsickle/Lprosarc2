@@ -1138,7 +1138,6 @@ $(document).ready(function() {
         }]
     });
 });
-
 </script>
 <script>
 var rol = "<?php echo Auth::user()->UsRol ?>";
@@ -1474,5 +1473,15 @@ $(document).ready(function(){
     function NotifiFalse(Mensaje) {
         toastr.error(Mensaje);
     }
+</script>
+<script>
+$(document).ready(function() {
+    $('#ProgVehicleTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true
+    });
+});
 </script>
 @yield('NewScript')
