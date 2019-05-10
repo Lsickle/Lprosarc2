@@ -20,7 +20,7 @@ return [
     'pretratdescript'       => 'Descripción del PreTratamiento',
     'popovertittle1'        => 'Eliminar',
     'popovertittle2'        => 'Descripción del PreTratamiento',
-    'popoverdescript1'      => '<p style="width: 50%; white-space: nowrap;">en este campo debe escribir el nombre del Pretramiento<br><br>Tambien puede hacer click en el botton<br>para <b>eliminar</b> este PreTratamiento del formulario</p>',
+    'popoverdescript1'      => '<p>En este campo debe escribir el nombre del Pretramiento<br><br>Tambien puede hacer click en el botton para <b>eliminar</b> este PreTratamiento del formulario</p>',
     'popoverdescript2'      => 'este campo opcional sirve para ingresar informacion adicional acerca del pretratamiento',
     'tratcreate'            => 'Crear Tratamiento',
     'pretratadd'            => 'Añadir Pretratamiento',
@@ -32,6 +32,12 @@ return [
     'cancel'                => 'Cancelar',
     'tratdetaillong'        => 'Detalles del Tratamiento',
     'tratdetailshort'       => 'Detalles',
+    'tratIN'                => 'Interno',
+    'tratOUT'               => 'Externo',
+    'tratInLong'            => 'Tratamiento Interno',
+    'tratOutLong'           => 'Tratamiento Externo',
+    'noPretrat'             => 'Sin pretratamientos asignados',
+    'tratSince'             => 'Registrado desde',
 
 
 ];
