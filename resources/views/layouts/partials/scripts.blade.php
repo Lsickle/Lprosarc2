@@ -1473,4 +1473,35 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
+{{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
+@if(Route::currentRouteName()=='tratamiento.edit')
+<script>
+    var contador = `{{$contador}}`;
+    function attachPopover(){
+        $('[data-toggle="popover"]').popover({
+            html: true,
+            trigger: 'hover',
+            placement: 'auto',
+        });
+        $("#edittratamientoForm").validator('update');
+        // alert('popover actualizados');
+    }
+    function AgregarPreTrat(){
+        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+        $("#pretratamientosPanel").append(pretratamiento);
+        $("#edittratamientoForm").validator('update');
+        contador= parseInt(contador)+1;
+        attachPopover();
+    }
+    function EliminarPreTrat(id){
+        $("#pretratname"+id).remove();
+        $("#pretratdescription"+id).remove();
+        $("#pretratsparator"+id).remove();
+        $("#ID_Propo"+id).remove();
+        $("#edittratamientoForm").validator('update');
+        // alert('eliminado pretratamiento '+id);
+        contador= parseInt(contador)-1;
+    }
+</script>
+@endif
 @yield('NewScript')
