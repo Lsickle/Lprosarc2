@@ -1481,7 +1481,7 @@ $(document).ready(function(){
         $('[data-toggle="popover"]').popover({
             html: true,
             trigger: 'hover',
-            placement: 'auto',
+            placement: 'auto'
         });
         $("#edittratamientoForm").validator('update');
         // alert('popover actualizados');
