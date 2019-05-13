@@ -39,7 +39,7 @@ Programacion
 			</div>
 			<div class="modal-body">
 				<div style="text-align: center; margin: auto;" id="descripModalCreate">
-					<form action="/prueba" method="POST" id="formularioCreate">
+					<form action="/vehicle-programacion" method="POST" id="formularioCreate">
 						@csrf
 						<div class="box-body">
 							<div class="col-xs-12 col-md-6">
@@ -249,12 +249,12 @@ Programacion
 			aspectRatio: 2,
 			eventSources:[{
 				events: [
-					@foreach($eventos as $evento)
+					@foreach($programacions as $programacion)
 						{
-							id: '{{url('/vehicle-programacion/'.$evento->ID_ProgVeh)}}',
-							title: '{{$evento->ID_SolSer." - ".$evento->VehicPlaca}}',
-							color: '{{$evento->ProgVehColor}}',
-							start: '{{$evento->ProgVehSalida}}',
+							id: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
+							title: '{{$programacion->ID_SolSer." - ".$programacion->VehicPlaca}}',
+							color: '{{$programacion->ProgVehColor}}',
+							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
 						},
 					@endforeach

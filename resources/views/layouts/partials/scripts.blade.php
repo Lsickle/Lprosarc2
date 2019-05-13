@@ -484,6 +484,12 @@ $(function() {
             placeholder: "",
             digits: 0
         });
+        $('.horas').inputmask({ 
+            alias: "datetime",
+            inputFormat: "hh:MM TT",
+            placeholder: "00:00 TM"
+        });
+        $('.number').inputmask({mask: "[9{0,40}]"});
     });
     </script>
 <script>

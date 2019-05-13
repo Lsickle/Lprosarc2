@@ -327,6 +327,7 @@ return [
     // prgramacion de un vehiculo
     'progvehictitle'          => 'Programación de Vehiculos',
     'progvehiclist'           => 'Lista de Programaciones',
+    'progvehicedit'           => 'Edición de Programación',
     'progvehiccreatetext'     => 'Calendario',
     'progvehicservi'          => 'N° del servicio',
     'progvehicservi2'         => 'Ver servicio',
@@ -337,6 +338,8 @@ return [
     'progvehicconduc'         => 'Conductor',
     'progvehicayudan'         => 'Ayudante',
     'progvehicclient'         => 'Cliente',
+    'progvehickm'             => 'Kilometraje del vehiculo',
+    'progvehiccolor'          => 'Color de la programacion',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',

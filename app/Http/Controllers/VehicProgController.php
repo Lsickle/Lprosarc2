@@ -86,7 +86,7 @@ class VehicProgController extends Controller
                 }
             })
             ->get();
-        return $serviciosnoprogramados;
+        // return $serviciosnoprogramados;
         return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos'));
     }
 
@@ -98,7 +98,7 @@ class VehicProgController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->input('textHoraSali') >= 12){
+        if(date('H', strtotime($request->input('textHoraSali'))) >= 12){
             $turno = "0";
         }
         else{
@@ -124,7 +124,7 @@ class VehicProgController extends Controller
         $programacion->FK_ProgAyudante = $request->input('textAyudante');
         $programacion->ProgVehDelete = 0;
         $programacion->save();
-        return redirect()->route('prueba.index');
+        return redirect()->route('vehicle-programacion.create');
     }
 
     /**
@@ -146,7 +146,27 @@ class VehicProgController extends Controller
      */
     public function edit($id)
     {
-        //
+        $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+        $programaciones = DB::table('progvehiculos')
+            ->select('ID_ProgVeh', 'FK_ProgServi', 'ProgVehEntrada')
+            ->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)
+            ->where('progvehiculos.ProgVehEntrada', '<>', null)
+            ->get();
+        $vehiculos = DB::table('vehiculos')
+            ->select('ID_Vehic','VehicPlaca')
+            ->get();
+        $servicios = DB::table('solicitud_servicios')
+            ->select('ID_SolSer')
+            ->where(function($query) use ($programaciones){
+                foreach($programaciones as $existentes){
+                    $query->where('ID_SolSer', '<>', $existentes->FK_ProgServi);
+                }
+            })
+            ->get();
+        $personals = DB::table('personals')
+            ->select('ID_Pers','PersFirstName','PersLastName')
+            ->get();
+        return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'servicios', 'personals'));
     }
 
     /**
@@ -158,30 +178,35 @@ class VehicProgController extends Controller
      */
     public function update(Request $request, $id)
     {
-         // return $request;
-        if($request->input('textHoraSali1') >= 12){
+        $salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
+        $llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
+        if($salida >= 12){
             $turno = "0";
         }
         else{
             $turno = "1";
         }
         $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-        $programacion->ProgVehFecha = $request->input('textFecha1');
-        $programacion->progVehKm = $request->input('textkm1');
+        $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $programacion->ProgVehTurno = $turno;
         $programacion->ProgVehtipo = "1";
-        if($request->input('textHoraLlega1')){
-            $programacion->ProgVehEntrada = $request->input('textFecha1').' '.$request->input('textHoraLlega1');
+        if($request->input('ProgVehEntrada')){
+            $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+            $programacion->progVehKm = $request->input('progVehKm');
+            $vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
+            $vehiculo->VehicKmActual = $request->input('progVehKm');
+            $vehiculo->save();
         }
         else{
             $programacion->ProgVehEntrada = null;
+            $programacion->progVehKm = null;
         }
-        $programacion->ProgVehSalida = $request->input('textFecha1').' '.$request->input('textHoraSali1');
-        $programacion->FK_ProgVehiculo = $request->input('textVehiculo1');
+        $programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.$salida;
+        $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
         $programacion->FK_ProgMan = "1";
-        $programacion->FK_ProgConductor = $request->input('textConductor1');
-        $programacion->FK_ProgAyudante = $request->input('textAyudante1');
-        // return $programacion;
+        $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
+        $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+        $programacion->ProgVehColor = $request->input('ProgVehColor');
         $programacion->save();
 
         $log = new audit();
@@ -191,7 +216,8 @@ class VehicProgController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        return redirect()->route('prueba.index');
+        $mensaje = "Datos actualizados";
+        return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', $mensaje);
     }
 
     /**

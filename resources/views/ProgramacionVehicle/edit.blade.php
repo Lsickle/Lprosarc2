@@ -1,97 +1,136 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Programacion
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{-- {{ trans('adminlte_lang::message.sclientregistertittle') }} --}}
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Programacion</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
-					</div>
+				<div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
+					<a href="/vehicle-programacion/create" class="btn btn-primary pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
-								@csrf
-								<div class="box-body">
-									
-									<div class="col-md-6">
-										<label for="programnputext0">Km inicio del día</label>
-										<input type="number" class="form-control" id="programnputext0" placeholder="999999" name="km" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext1">Fecha Programación</label>
-										<input type="date" class="form-control" id="programnputext1" name="date">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputoption1">Turno</label>
-										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Turno" required="true">
-											<option>Seleccione...</option>
-											<option>Día</option>
-											<option>Tarde</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="program">Tipo</label>
-										<select class="form-control" id="program" placeholder="Funza" name="Tipo" required="true">											
-											<option>Seleccione...</option>
-											<option>En Mantenimiento</option>
-											<option>Usando</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="programnputoption2">Feriado</label>
-										<select class="form-control" id="programnputoption2" name="Feriado" required="true">
-											<option>Festivo</option>
-											<option>Domingos</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext3">Hora de llegada a planta</label>
-										<input type="text" class="form-control" id="programnputext3" name="Llegada">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext4">Hora de salida de planta</label>
-										<input type="text" class="form-control" id="programnputext4"  name="Salida">
-									</div>
-									
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>
-							</form>
+				<div class="box box-info">
+					<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						@csrf
+						@method('PUT')
+						<div class="box-body">
+							<div class="form-group col-md-6">
+								<label for="FK_ProgServi">{{ trans('adminlte_lang::message.progvehicservi') }}</label>
+								<select name="FK_ProgServi" id="FK_ProgServi" class="form-control select">
+									@foreach($servicios as $servicio)
+										<option value="{{$servicio->ID_SolSer}}" {{$servicio->ID_SolSer == $programacion->FK_ProgServi ? 'selected' : ''}}>{{$servicio->ID_SolSer}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
+								<input type="text" class="form-control fechas" id="ProgVehFecha" name="ProgVehFecha" value="{{$programacion->ProgVehFecha}}">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
+								<input type="text" class="form-control horas" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('h:i A', strtotime($programacion->ProgVehSalida))}}">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label>
+								<input type="text" class="form-control horas" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
+								<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control select">
+									@foreach($vehiculos as $vehiculo)
+										<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="progVehKm">{{ trans('adminlte_lang::message.progvehickm') }}</label>
+								<input type="text" class="form-control number" id="progVehKm" name="progVehKm" value="{{$programacion->progVehKm}}">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
+								<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control select">
+									@foreach($personals as $personal)
+										<option value="{{$personal->ID_Pers}}" {{$personal->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
+								<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select">
+									@foreach($personals as $personal)
+										<option value="{{$personal->ID_Pers}}" {{$personal->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group col-md-6 col-md-offset-5">
+								<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
+								<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%;" value="{{$programacion->ProgVehColor}}">
+							</div>
+							<div class="box-footer pull-right">
+								<button type="submit" class="btn btn-primary" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+							</div>
 						</div>
-						<!-- /.box -->
-					</div>
-					</div>
-					</div>
-					</div>
-					<!-- /.box-body -->
+						<!-- /.box-body -->
+					</form>
 				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
+@endsection
+@section('NewScript')
+	<script>
+		$(document).ready(function(){
+		@if(session('mensaje'))
+			NotifiTrue('{{session('mensaje')}}');
+		@endif
+		@if($programacion->ProgVehEntrada <> null)
+			$(".select2-selection").css("background-image", "none");
+			$("#FK_ProgServi").prop("disabled", true);
+			$("#ProgVehFecha").prop("disabled", true);
+			$("#ProgVehSalida").prop("disabled", true);
+			$("#FK_ProgVehiculo").prop("disabled", true);
+			$("#FK_ProgConductor").prop("disabled", true);
+			$("#FK_ProgAyudante").prop("disabled", true);
+			$("#ProgVehEntrada").prop("disabled", true);
+			$("#progVehKm").prop("disabled", true);
+			$("#ProgVehColor").prop("disabled", true);
+			$("#update").prop("disabled", true);
+		@elseif(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+			$("#FK_ProgServi").before(`<small class="help-block with-errors">*</small>`);
+			$("#FK_ProgServi").prop('required', true);
+			$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
+			$("#ProgVehFecha").prop('required', true);
+			$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);
+			$("#ProgVehSalida").prop('required', true);
+			$("#FK_ProgVehiculo").before(`<small class="help-block with-errors">*</small>`);
+			$("#FK_ProgVehiculo").prop('required', true);
+			$("#FK_ProgConductor").before(`<small class="help-block with-errors">*</small>`);
+			$("#FK_ProgConductor").prop('required', true);
+			$("#FK_ProgAyudante").before(`<small class="help-block with-errors">*</small>`);
+			$("#FK_ProgAyudante").prop('required', true);
+			$("#ProgVehEntrada").prop('readonly', true);
+			$("#progVehKm").prop('readonly', true);
+		@else
+			$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
+			$("#ProgVehEntrada").prop('required', true);
+			$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
+			$("#progVehKm").prop('required', true);
+			$(".select2-selection").css("background-image", "none");
+			$("#FK_ProgServi").prop("disabled", true);
+			$("#ProgVehFecha").prop('disabled', true);
+			$("#ProgVehSalida").prop('disabled', true);
+			$("#FK_ProgVehiculo").prop('disabled', true);
+			$("#FK_ProgConductor").prop('disabled', true);
+			$("#FK_ProgAyudante").prop('disabled', true);
+			$("#ProgVehColor").prop("disabled", true);
+		@endif
+		});
+	</script>
+
 @endsection
