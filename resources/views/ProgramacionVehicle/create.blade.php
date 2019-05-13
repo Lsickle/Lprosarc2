@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Programacion
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{-- {{ trans('adminlte_lang::message.sclientregistertittle') }} --}}
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('main-content')
 <div class="row">
@@ -29,13 +29,14 @@ Programacion
 		</div>
 	</div>
 </div>
+
 {{--  Modal --}}
 <div class="modal modal-default fade in" id="CrearEventos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="titleModalCreate"></h4>
+				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
 			</div>
 			<div class="modal-body">
 				<div style="text-align: center; margin: auto;" id="descripModalCreate">
@@ -44,38 +45,28 @@ Programacion
 						<div class="box-body">
 							<div class="col-xs-12 col-md-6">
 								<label for="textFecha">Fecha:</label>
-								<input required class="form-control" type="text" id="textFecha" name="textFecha" readonly value="2019-02-11">
+								<input required class="form-control fechas" type="text" id="textFecha" name="textFecha" readonly value="">
 							</div>
+							<input type="hidden" name="FK_ProgServi" id="FK_ProgServi">
 							<div class="col-xs-12 col-md-6">
-								<label for="textTipo">Tipo:</label>
-								<input required class="form-control" type="text" id="textTipo" value="Trabaja" name="textTipo" readonly>
+								<label for="textHoraSali">Hora Salida:</label>
+								<input required class="form-control horas" type="text" id="textHoraSali" name="textHoraSali">
 							</div>
 							<div class="col-xs-12 col-md-6">
 								<label for="textVehiculo">Vehiculo:</label>
-								<select name="textVehiculo" id="textVehiculo" class="form-control">
-									<option value="">Seleccione...</option>
+								<select name="textVehiculo" id="textVehiculo" class="form-control select-multiple" multiple="">
 									@foreach($vehiculos as $vehiculo)
 									<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
 									@endforeach
 								</select>
 							</div>
-							<input type="hidden" name="FK_ProgServi" id="FK_ProgServi">
 							<div class="col-xs-12 col-md-6">
-								<label for="textkm">Kilometraje:</label>
-								<input class="form-control" type="text" id="textkm" name="textkm">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textHoraSali">Hora Salida:</label>
-								<input required class="form-control" type="text" id="textHoraSali" name="textHoraSali">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textHoraLlega">Hora Llegada:</label>
-								<input class="form-control" type="text" id="textHoraLlega" name="textHoraLlega">
+								<label for="ProgVehColor">Color de la programación:</label>
+								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="">
 							</div>
 							<div class="col-xs-12 col-md-6">
 								<label for="textConductor">Conductor:</label>
-								<select name="textConductor" id="textConductor" class="form-control">
-									<option value="">Seleccione...</option>
+								<select name="textConductor" id="textConductor" class="form-control select-multiple" multiple="">
 									@foreach($conductors as $persona)
 									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 									@endforeach
@@ -83,17 +74,12 @@ Programacion
 							</div>
 							<div class="col-xs-12 col-md-6">
 								<label for="textAyudante">Ayudante:</label>
-								<select name="textAyudante" id="textAyudante" class="form-control">
-									<option value="">Seleccione...</option>
+								<select name="textAyudante" id="textAyudante" class="form-control select-multiple" multiple="">
 									@foreach($ayudantes as $persona)
 									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 									@endforeach
 								</select>
 								<input type="submit" hidden="true" id="submit1" name="submit1">
-							</div>
-							<div class="col-xs-12 col-md-12">
-								<label for="ProgVehColor">Color de la programación:</label>
-								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="">
 							</div>
 						</div>
 					</form>
@@ -153,7 +139,6 @@ Programacion
 							<div class="col-xs-12 col-md-6">
 								<label for="textConductor1">Conductor:</label>
 								<select name="textConductor1" class="form-control" id="textConductor1">
-									<option value="">Seleccione...</option>
 									@foreach($conductors as $conductor)
 									<option value="{{$conductor->ID_Pers}}">{{$conductor->PersFirstName." ".$conductor->PersLastName}}</option>
 									@endforeach
@@ -162,7 +147,6 @@ Programacion
 							<div class="col-xs-12 col-md-6">
 								<label for="textAyudante1">Ayudante:</label>
 								<select name="textAyudante1" class="form-control" id="textAyudante1">
-									<option value="">Seleccione...</option>
 									@foreach($ayudantes as $ayudante)
 									<option value="{{$ayudante->ID_Pers}}">{{$ayudante->PersFirstName." ".$ayudante->PersLastName}}</option>
 									@endforeach
@@ -250,6 +234,7 @@ Programacion
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
+						@if($programacion->ProgVehEntrada == null && $programacion->ProgVehDelete == 0)
 						{
 							id: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							title: '{{$programacion->ID_SolSer." - ".$programacion->VehicPlaca}}',
@@ -257,6 +242,7 @@ Programacion
 							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
 						},
+						@endif
 					@endforeach
 					@foreach($mantenimientos as $mantenimiento)
 						{
@@ -282,8 +268,8 @@ Programacion
 			eventReceive: function( info ) {
 				var id = info.event.id;
 				document.getElementById('FK_ProgServi').value = id;
+				info.event.remove();
 				$("#CrearEventos").on("hidden.bs.modal", function () {
-					info.event.remove();
 					document.getElementById('textVehiculo').value = "";
 					document.getElementById('textkm').value = "";
 					document.getElementById('textConductor').value = "";
@@ -292,6 +278,7 @@ Programacion
 				});
 			},
 			eventDrop: function( eventDropInfo ) {
+				alert(eventDropInfo.event.id);
 				CambioDeFecha(eventDropInfo.event);
 			},
 			eventClick: function(info){

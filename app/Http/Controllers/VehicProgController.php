@@ -57,7 +57,7 @@ class VehicProgController extends Controller
             ->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
             ->join('vehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'vehiculos.ID_Vehic')
             ->select('progvehiculos.*', 'vehiculos.ID_Vehic', 'vehiculos.VehicPlaca', 'solicitud_servicios.ID_SolSer')
-            ->where('ProgVehDelete', 0)
+            ->where('progvehiculos.ProgVehDelete', 0)
             ->get();
         $mantenimientos = DB::table('mantenvehics')
             ->join('vehiculos', 'mantenvehics.FK_VehMan', '=', 'vehiculos.ID_Vehic')
