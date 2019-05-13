@@ -12,27 +12,33 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                    <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-                        @component('layouts.partials.modal')
-                            {{$Generador->ID_Gener}}
-                        @endcomponent
-                        @if($Generador->GenerDelete == 0)
-                            <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
-                            <form action='/generadores/{{$Generador->GenerSlug}}' method='POST'  class="col-12 pull-right">
-                                @method('DELETE')
-                                @csrf
-                                <input type="submit" id="Eliminar{{$Generador->ID_Gener}}" style="display: none;">
-                            </form>
-                        @else
-                            <form action='/generadores/{{$Generador->GenerSlug}}' method='POST' class="pull-right">
-                                @method('DELETE')
-                                @csrf
-                                <input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
-                            </form>
+                    <div class="col-md-12 col-xs-12">
+                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                            <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+                            @component('layouts.partials.modal')
+                                {{$Generador->ID_Gener}}
+                            @endcomponent
+                            @if($Generador->GenerDelete == 0)
+                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+                                <form action='/generadores/{{$Generador->GenerSlug}}' method='POST'  class="col-12 pull-right">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="submit" id="Eliminar{{$Generador->ID_Gener}}" style="display: none;">
+                                </form>
+                            @else
+                                <form action='/generadores/{{$Generador->GenerSlug}}' method='POST' class="pull-right">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+                                </form>
+                            @endif
                         @endif
-                    @endif
-                    <h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
+                    </div>
+                {{-- </div>
+                <div class="box-body box-profile"> --}}
+                    <div class="">
+                        <h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
+                    </div>
                     <ul class="list-group list-group-unbordered">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                             <li class="list-group-item">
@@ -77,9 +83,8 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-                                {{-- <i class="fas fa-plus"></i> --}}
                                 <i class="fas fa-plus-circle"></i>
-                                <span style="font-size: 0.3em; color: black;"><p>Asignar Residuos a la Sede del Generador</p></span>
+                                <span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.assignrrespelssedegener') }}</p></span>
                             </div> 
                         </div>
                         @if ($errors->any())
@@ -93,8 +98,8 @@
                         @endif
                         <div class="modal-body">
                             <div class="col-md-12 form-group">
-                                <label for="FK_SGener">Sedes del Generador</label><small class="help-block with-errors">*</small>
-                                <select class="form-control select" id="FK_SGener" name="FK_SGener" >
+                                <label for="FK_SGener">{{ trans('adminlte_lang::message.sedesgener') }}</label><small class="help-block with-errors">*</small>
+                                <select class="form-control select" id="FK_SGener" name="FK_SGener" required>
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                     @foreach ($GenerSedes as $GenerSede)	
                                         <option value="{{$GenerSede->ID_GSede}}" {{ old('FK_SGener') == $GenerSede->ID_GSede ? 'selected' : '' }}>{{$GenerSede->GSedeName}}</option>
@@ -103,7 +108,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
-                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple>
+                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
                                     @if(isset($Residuos))
                                     
                                     {{-- @foreach ($Residuos as $Key => $Residuo) --}}
@@ -125,7 +130,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">No, salir</button>
+                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
                             <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
                         </div>
                     </div>
@@ -141,15 +146,16 @@
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="residuos">
-                        <a href="/respels/create" class="btn btn-primary mx-auto"><b>Crear Residuo</b></a>
-                        <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-primary mx-auto pull-right"><i class="fas fa-plus"></i><b> Asignar Residuos</b></a>
+                        <a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
+                        <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-primary mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
                         <div style='overflow-y:auto; max-height:324px;'>
                             @foreach ($Respels as $Respel)
                                 <ul class="list-group" style="list-style:none; margin-top:10px;">
-                                    <li class="col-md-11 col-sm-11">
-                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo" style="display:flex; justify-content:center; align-items:center;">{{$Respel->GSedeName}} - {{$Respel->RespelName}}</a></h4>
+                                    <li class="col-md-11 col-xs-12 col-12">
+                                        <a method='get' href='#' data-toggle='modal' data-target='#delete{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;">{{$Respel->RespelName}}</a></h4>
                                     </li>
-                                    <li class="col-md-1 col-sm-1">
+                                    <li class="col-md-12 col-xs-12 col-12">
                                         {{--  Modal Eliminar un Residuo de una SedeGener--}}
                                         <form action='/respelSedeGener/{{$Respel->ID_SGenerRes}}' method='POST' class="col-12 pull-right">
                                             @method('DELETE')
@@ -162,19 +168,18 @@
                                                             <div style="font-size: 5em; color: red; text-align: center; margin: auto;">
                                                                 <i class="fas fa-exclamation-triangle"></i>
                                                                 <span style="font-size: 0.3em; color: black;">
-                                                                    {{-- <p class="textolargo"><b><i>{{$Respel->GSedeName}} - {{$Respel->RespelName}}</i></b></p> --}}
-                                                                    <p>¿Seguro, quiere eliminar <b><i>{{$Respel->RespelName}}</i></b> del generador <b><i>{{$Respel->GSedeName}}</i></b> ?</p>
+                                                                    <p>{{ trans('adminlte_lang::message.modaldeletegener') }} <b><i>{{$Respel->RespelName}}</i></b> {{ trans('adminlte_lang::message.modalgener') }} <b><i> {{$Generador->GenerShortname}}</i></b>{{ trans('adminlte_lang::message.?') }} </p>
                                                                 </span>
                                                             </div> 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">No, salir</button>
-                                                            <label for="Eliminar{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>Si, eliminar</label>
+                                                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+                                                            <label for="Eliminar{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a method='get' href='#' data-toggle='modal' data-target='#delete{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; display:flex; justify-content:center;"><i class="fas fa-times-circle"></i></a>
+                                            
                                             <input type="submit" id="Eliminar{{$Respel->ID_SGenerRes}}" style="display: none;">
                                         </form>
                                         {{-- END Modal --}}
@@ -185,11 +190,15 @@
                     </div>
                     <div class="tab-pane" id="sedes">
                         <div style="display:flex; justify-content: center;">
-                            <a href="/sgeneradores/create" class="btn btn-primary"><b>Añadir Sedes</b></a>
+                            <a href="/sgeneradores/create" class="btn btn-primary"><b>{{ trans('adminlte_lang::message.addsedegener') }}</b></a>
                         </div>
                         <div style='overflow-y:auto; max-height:324px;'>
                             @foreach ($GenerSedes as $GenerSede)
-                                <h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo" style="display:flex; justify-content:center; align-items:center;">{{$GenerSede->GSedeName}}</a></h4>
+                            <ul class="list-group" style="list-style:none; margin-top:10px;">
+                                    <li class="col-md-11 col-xs-12 col-12">
+                                        <h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;">{{$GenerSede->GSedeName}}</a></h4>
+                                    </li>
+                                </ul>
                             @endforeach
                         </div>
                     </div>
@@ -198,6 +207,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

@@ -15,10 +15,10 @@
 					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 						<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
-					@if ()
+					@if (!isset($Gener))
 						
+					<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >Soy Generador</a>
 					@endif
-						<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >Soy Generador</a>
 				</div>
 			<!-- /.box-header -->
 				<div class="box box-info">

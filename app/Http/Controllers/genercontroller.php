@@ -29,12 +29,12 @@ class genercontroller extends Controller
     public function index()
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+            $id = userController::IDClienteSegunUsuario();
             $Generadors = DB::table('generadors')
             ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname', 'clientes.ID_Cli')
-            ->where(function($query){
-                $id = userController::IDClienteSegunUsuario();
+            ->where(function($query)use($id){
                 if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
                     $query->where('GenerDelete',0);
                     $query->where('ID_Cli', '<>', $id);
@@ -45,7 +45,10 @@ class genercontroller extends Controller
                 }
             })
             ->get();
-            return view('generadores.index', compact('Generadors'));
+            $Cliente = cliente::select('CliNit')->where('ID_Cli', $id)->first();
+            $Gener = generador::select('GenerNit')->where('GenerNit', $Cliente->CliNit)->where('GenerDelete', 0)->first();
+            
+            return view('generadores.index', compact('Generadors', 'Gener'));
 
         }else{
             abort(403);
@@ -59,16 +62,21 @@ class genercontroller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $id = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
+            $Cliente = Sede::where('SedeDelete', 0)->get();
             $Departamentos = Departamento::all();            
             
             $Respels = DB::table('respels')
                 ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->where('ID_Cli', $id)
+                ->where(function ($query) use ($id){
+                        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                            $query->where('clientes.ID_Cli', '=', $id);
+                        };
+                    })
                 ->get();
             
             if (old('FK_GSedeMun') !== null){
@@ -88,7 +96,6 @@ class genercontroller extends Controller
      */
     public function store(GeneradoresStoreRequest $request)
     {
-        return $request;
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
@@ -129,11 +136,11 @@ class genercontroller extends Controller
         $SGener->save();
 
         if($request->input('FK_Respel') !== null){
-            foreach($request->FK_Respel as $file){ 
+            foreach($request->FK_Respel as $Respel){ 
 
                 $ResiduoSedeGener = new ResiduosGener();
                 $ResiduoSedeGener->FK_SGener = $SGener->ID_GSede;
-                $ResiduoSedeGener->FK_Respel = $file;
+                $ResiduoSedeGener->FK_Respel = $Respel;
                 $ResiduoSedeGener->save();
             }
         }
@@ -165,7 +172,7 @@ class genercontroller extends Controller
         $Gener->GenerShortname = $Cliente->CliShortname;
         $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
-        $Gener->GenerDelete = 0;
+        $Gener->GenerDelete = $Cliente->CliDelete;
         $Gener->save();
 
         foreach($Sedes as $Sede){
@@ -185,8 +192,7 @@ class genercontroller extends Controller
             $SGener->save();
         }
 
-        $id = $Gener->GenerSlug;
-
+        // $id = $Gener->GenerSlug;
         // return redirect()->route('generadores.show', compact('id'));
         return redirect()->route('generadores.index');
     }
@@ -199,38 +205,43 @@ class genercontroller extends Controller
      */
     public function show($id)
     {
-        $Generador = generador::where('GenerSlug',$id)->first();
-        $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-        $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
 
-        $GenerSedes = DB::table('gener_sedes')
-            ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
-            ->where('FK_GSede', $Generador->ID_Gener)
-            ->where('GSedeDelete', 0)
-            ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
-            ->get();
+            $Generador = generador::where('GenerSlug',$id)->first();
+            $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
+            $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
 
-        $Respels = DB::table('residuos_geners')
-            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
-            ->where('FK_GSede', '=', $Generador->ID_Gener)
-            // ->groupBy('respels.ID_Respel')
-            ->get();
+            $GenerSedes = DB::table('gener_sedes')
+                ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
+                ->where('FK_GSede', $Generador->ID_Gener)
+                ->where('GSedeDelete', 0)
+                ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
+                ->get();
 
-        $old = old('FK_Respel');
-        if (is_array($old)) {
-            $Residuos = DB::table('respels')
-                ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-                ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-                ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-                ->select('respels.ID_Respel', 'respels.RespelName')
-                ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
-                ->where('RespelDelete', 0)
+            $Respels = DB::table('residuos_geners')
+                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+                ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+                ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
+                ->where('FK_GSede', '=', $Generador->ID_Gener)
                 ->groupBy('respels.ID_Respel')
                 ->get();
-        }
+
+            $old = old('FK_Respel');
+            if (is_array($old)) {
+                $Residuos = DB::table('respels')
+                    ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+                    ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+                    ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+                    ->select('respels.ID_Respel', 'respels.RespelName')
+                    ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
+                    ->where('RespelDelete', 0)
+                    ->groupBy('respels.ID_Respel')
+                    ->get();
+            }
             return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos', 'old'));
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -285,7 +296,8 @@ class genercontroller extends Controller
             })],
             'GenerName'     => 'required|max:255',
             'GenerShortname'=> 'required|max:64',
-            'FK_GenerCli'   => 'required',   
+            'GenerCode'     => 'max:32|nullable',  
+            'FK_GenerCli'   => 'required', 
         ]);
         $Generador = generador::where('GenerSlug',$id)->first();
         $Generador->fill($request->all());
@@ -311,21 +323,34 @@ class genercontroller extends Controller
      */
     public function destroy($id)
     {
-        $generador = generador::where('GenerSlug', $id)->first();
-            if ($generador->GenerDelete == 0) {
-                $generador->GenerDelete = 1;
+        $Generador = generador::where('GenerSlug', $id)->first();
+        $SedesGeners = GenerSede::where('FK_GSede', $Generador->ID_Gener)->get();
+            if ($Generador->GenerDelete == 0) {
+                $Generador->GenerDelete = 1;
+                foreach($SedesGeners as $SedeGener){
+                    $SedeGener->GSedeDelete = 1;
+                    $SedeGener->save();
+
+                    $log = new audit();
+                    $log->AuditTabla="gener_sedes";
+                    $log->AuditType="Eliminado";
+                    $log->AuditRegistro=$SedeGener->ID_GSede;
+                    $log->AuditUser=Auth::user()->email;
+                    $log->Auditlog = $SedeGener->SedeGener;
+                    $log->save();
+                }
             }
             else{
-                $generador->GenerDelete = 0;
+                $Generador->GenerDelete = 0;
             }
-        $generador->save();
+        $Generador->save();
 
         $log = new audit();
         $log->AuditTabla="generadors";
         $log->AuditType="Eliminado";
-        $log->AuditRegistro=$generador->ID_Gener;
+        $log->AuditRegistro=$Generador->ID_Gener;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog = $generador->GenerDelete;
+        $log->Auditlog = $Generador->GenerDelete;
         $log->save();
 
         return redirect()->route('generadores.index');

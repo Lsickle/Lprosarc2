@@ -201,6 +201,13 @@ return [
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
     'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
 
+    // modal
+    'modalexit'               => 'No, salir',
+    'modaldeletegener'             => '¿Seguro, quiere eliminar',
+    'modalgener'              => 'del generador',
+    'modaldelete'             => 'Si, eliminar',
+
+
     // personal
     'fullname'                => 'Nombre completo',
 
@@ -278,12 +285,16 @@ return [
     'Generregistertittle'     => 'Registro de Generador',
     'generupdate'             => 'Actualizar Generador',
     'genercode'               => 'Código del Generador',
+    '?'                       => '?',
+    'addsedegener'            => 'Añadir Sedes',
+    'assignrrespelssedegener'       => 'Asignar Residuos a la Sede del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualizar sede',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     'SGenertitle'             => 'Sede del Generador',
+    'sedesgener'              => 'Sedes del Generador',
     
     // area
     'areatitle'               => 'Áreas',
@@ -322,10 +333,14 @@ return [
     'manifiestmenu'           => 'Manifiestos',
 
     // departamento
-    'departamento'            =>'Departamento',
+    'departamento'            => 'Departamento',
 
     // municipio
-    'municipio'               =>'Municipio',
+    'municipio'               => 'Municipio',
+
+    // respel
+    'respelscreate'           => 'Crear Residuos',
+    'assignrespels'           => 'Asignar Residuos',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -394,4 +409,11 @@ return [
     'MenuServEviden'          => 'Evidencias de Servicios',
     'MenuArticu'              => 'Articulos',
     'MenuQr'                  => 'Código Qr',
+
+    // info-gener
+    'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador',
+    'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social',
+    'code-gener'              => 'Codigo con el que usted tiene registrado la este Generador',
+    'respels-gener'           => 'Residuos pertenecientes a este Generador',
+
 ];
