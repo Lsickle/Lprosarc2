@@ -149,45 +149,46 @@ class genercontroller extends Controller
      */
     public function storeSoyGenerador($id)
     {
-        return $id;
-        // $Gener = new generador();
-        // $Gener->GenerNit = $request->input('GenerNit');
-        // $Gener->GenerName = $request->input('GenerName');
-        // $Gener->GenerShortname = $request->input('GenerShortname');
-        // $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        // $Gener->FK_GenerCli = $request->input('FK_GenerCli');
-        // $Gener->GenerDelete = 0;
-        // $Gener->GenerCode = $request->input('GenerCode');
-        // $Gener->save();
+        $ID_Cli = userController::IDClienteSegunUsuario();
+        $Cliente = cliente::where('ID_Cli', $ID_Cli)->first();
 
-        // $SGener = new GenerSede();
-        // $SGener->GSedeName = $request->input('GSedeName');
-        // $SGener->GSedeAddress = $request->input('GSedeAddress');
+        $Sedes = DB::table('sedes')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*')
+            ->where('FK_SedeCli', '=', $ID_Cli)
+            ->where('SedeDelete', '=', 0)
+            ->get();
 
-        // if($request->input('GSedePhone1') === null && $request->input('GSedePhone2') !== null){
-        //     $SGener->GSedePhone1 = $request->input('GSedePhone2');
-        //     $SGener->GSedeExt1 =  $request->input('GSedeExt2');
-        // }else{
-        //     if($request->input('GSedePhone1') === null){
-        //         $SGener->GSedeExt1 = null;
-        //     }else{
-        //         $SGener->GSedePhone1 = $request->input('GSedePhone1');
-        //         $SGener->GSedeExt1 = $request->input('GSedeExt1');
-        //     }
-        //     if($request->input('GSedePhone2') === null){
-        //         $SGener->GSedeExt2 = null;
-        //     }else{
-        //         $SGener->GSedePhone2 = $request->input('GSedePhone2');
-        //         $SGener->GSedeExt2 =  $request->input('GSedeExt2');
-        //     }
-        // }
-        // $SGener->GSedeEmail = $request->input('GSedeEmail');
-        // $SGener->GSedeCelular = $request->input('GenerCode');
-        // $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        // $SGener->FK_GSede = $Gener->ID_Gener;
-        // $SGener->FK_GSedeMun = $request->input('GenerDelete');
-        // $SGener->GSedeDelete = 0;
-        // $SGener->save();
+        $Gener = new generador();
+        $Gener->GenerNit = $Cliente->CliNit;
+        $Gener->GenerName = $Cliente->CliName;
+        $Gener->GenerShortname = $Cliente->CliShortname;
+        $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
+        $Gener->GenerDelete = 0;
+        $Gener->save();
+
+        foreach($Sedes as $Sede){
+            $SGener = new GenerSede();
+            $SGener->GSedeName = $Sede->SedeName;
+            $SGener->GSedeAddress = $Sede->SedeAddress;
+            $SGener->GSedePhone1 = $Sede->SedePhone1;
+            $SGener->GSedeExt1 = $Sede->SedeExt1;
+            $SGener->GSedePhone2 = $Sede->SedePhone2;
+            $SGener->GSedeExt2 =  $Sede->SedeExt2;
+            $SGener->GSedeEmail = $Sede->SedeEmail;
+            $SGener->GSedeCelular = $Sede->SedeCelular;
+            $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+            $SGener->FK_GSede = $Gener->ID_Gener;
+            $SGener->FK_GSedeMun = $Sede->FK_SedeMun;
+            $SGener->GSedeDelete = $Sede->SedeDelete;
+            $SGener->save();
+        }
+
+        $id = $Gener->GenerSlug;
+
+        // return redirect()->route('generadores.show', compact('id'));
+        return redirect()->route('generadores.index');
     }
 
     /**
@@ -205,6 +206,7 @@ class genercontroller extends Controller
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
             ->where('FK_GSede', $Generador->ID_Gener)
+            ->where('GSedeDelete', 0)
             ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
             ->get();
 
@@ -224,6 +226,7 @@ class genercontroller extends Controller
                 ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
                 ->select('respels.ID_Respel', 'respels.RespelName')
                 ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
+                ->where('RespelDelete', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();
         }

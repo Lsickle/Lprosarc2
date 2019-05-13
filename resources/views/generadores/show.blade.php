@@ -105,14 +105,22 @@
                                 <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
                                 <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple>
                                     @if(isset($Residuos))
-                                        @foreach ($Residuos as $Residuo)
+                                    
+                                    {{-- @foreach ($Residuos as $Key => $Residuo) --}}
+                                    @foreach ($Residuos as $Residuo)
+                                       {{-- @foreach (array_combine($Residuos, $old) $Residuo => $ID_Res) --}}
                                             @foreach ($old as $ID_Res)
-                                        {{-- $old --}}
-                                                {{-- <option value="{{$Residuo->ID_Respel}}" {{ old('FK_Respel[]') == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option> --}}
-                                                <option value="{{$Residuo->ID_Respel}}" {{ $ID_Res == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+                                            
+                                            {{-- @if ($old[$Key] <> $Residuo[$key]) --}}
+                                                
+                                            <option value="{{$Residuo->ID_Respel}}" {{ $ID_Res == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+                                            {{-- <option value="{{$Residuo->ID_Respel}}" {{ $old[$Key] == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option> --}}
+                                            {{-- @endif --}}
+                                            @continue
                                             @endforeach 
+                                            {{-- @break --}}
                                         @endforeach 
-                                    @endif
+                                    @endif 
                                 </select>
                             </div>
                         </div>

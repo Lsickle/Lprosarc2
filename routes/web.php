@@ -47,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
 	Route::resource('/generadores', 'genercontroller');
-	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador')->name('Soy');
+	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
 	Route::post('/respelSedeGener', 'RespelSedeGenerController@store');
