@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ProgramacionVehiculo;
+use App\Sede;
+
+
 class AjaxController extends Controller
 {
 	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/
@@ -64,6 +67,43 @@ class AjaxController extends Controller
 			else{
 				return false;
 			}
+		}
+	}
+	/*Funcion para ver por medio de Ajax los Respels que le competen a una SGenerador*/
+	public function SGenerRespel(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$SGener = DB::table('gener_sedes')
+				->join('generadors', 'generadors.ID_Gener', '=', 'FK_GSede')
+				->select('generadors.ID_Gener')
+				->where('ID_GSede', '=', $id)
+				->first();
+
+			$ResSGeners = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->select('respels.ID_Respel')
+				->where('FK_SGener', '=', $id)
+				->groupBy('FK_Respel')
+				->where('RespelDelete', '=', 0)
+				->get();
+                
+			$Respels = DB::table('respels')
+				->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+				->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->select('respels.ID_Respel', 'respels.RespelName')
+				->where('generadors.ID_Gener', '=', $SGener->ID_Gener)
+				->where(function ($query) use ($ResSGeners){
+					foreach ($ResSGeners as $ResSGener) {
+						$query->where('respels.ID_Respel', '<>', $ResSGener->ID_Respel);
+					}
+				})
+				// ->whereIn('respels.ID_Respel', $ResSGeners)
+				// ->whereIn('respels.ID_Respel', [$ResSGeners->ID_Respel])
+				->get();
+				
+			return response()->json($Respels);
 		}
 	}
 }

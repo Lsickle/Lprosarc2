@@ -246,9 +246,6 @@ return [
     'client'                  => 'Datos de la Empresa',
     'clientsede'              => 'Datos de la sede',
     'clientpers'              => 'Datos de la persona de contacto',
-    'clientNIT'               => 'NIT',
-    'clirazonsoc'             => 'Razón Social',
-    'clientnombrecorto'       => 'Nombre Corto',
     'clientNITplacehoder'     => 'XXX.XXX.XXX-Y',
     'clirazonsocplacehoder'   => 'PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.',
     'clinombcortplacehoder'   => 'Prosarc',
@@ -259,6 +256,9 @@ return [
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Contactos',
     'clientcontact'           => 'Contactos',
+    'clientNIT'               => 'NIT',
+    'clirazonsoc'             => 'Razón Social',
+    'clientnombrecorto'       => 'Nombre Corto',
 
     // sede
     'csedeindex'              => 'Lista de sedes',
@@ -274,13 +274,17 @@ return [
 
     // generador
     'genermenu'               => 'Generadores',
-    'generindex'              => 'lista de Generadores',
+    'gener'                   => 'Generador',
+    'generindex'              => 'Lista de Generadores',
     'Generregistertittle'     => 'Registro de Generador',
+    'generupdate'             => 'Actualizar Generador',
+    'genercode'               => 'Código del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualizar sede',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'SGenertitle'             => 'Sede del Generador',
     
     // area
     'areatitle'               => 'Áreas',

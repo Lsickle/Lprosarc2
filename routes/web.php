@@ -47,8 +47,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
 	Route::resource('/generadores', 'genercontroller');
+	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	Route::post('/respelSedeGener', 'RespelSedeGenerController@store');
+	Route::delete('/respelSedeGener/{id}', 'RespelSedeGenerController@destroy');
 	Route::resource('/permisos', 'RolesController');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
@@ -97,5 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
 	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
 	// Route::get('/ProgramacionDeUnVehiculo/{id}', 'AjaxController@ProgramacionDeUnVehiculo');
+	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
+
 });
 

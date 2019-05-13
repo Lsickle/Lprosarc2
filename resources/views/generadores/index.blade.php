@@ -1,62 +1,66 @@
-  @extends('layouts.app')
-
-@section('htmlheader_title','Generadores')
-@section('contentheader_title','Lista de Generadores')
-
+@extends('layouts.app')
+@section('htmlheader_title')
+  {{ trans('adminlte_lang::message.genermenu') }}
+@endsection
+@section('contentheader_title')
+  {{ trans('adminlte_lang::message.genermenu') }}
+@endsection
 @section('main-content')
-	<div class="container-fluid spark-screen">
-		<div class="row">
-			<div class="col-md-16 col-md-offset-0">
-
-				<!-- /.box -->
-
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Lista de Generadores</h3>
-              <a href="/generadores/create" class="btn btn-primary" style="float: right;">Crear</a>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="generadores" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Categoría</th>
-                  <th>Nombre</th>
-                  <th>NIT</th>
-                  <th>Creado el</th>
-                  <th>Sede</th>
-                  <th>Cliente</th>
-                  <th>Ver Más</th>
-                  <th>Editar</th>
-                </tr>
-                </thead>
-                <tbody  hidden onload="renderTable()" id="readyTable">
-
-              {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                   @include('layouts.partials.spinner')
-                	@foreach($Generadors as $Gener)
-						        <tr @if($Gener->GenerDelete === 1)
-                          style="color: red;" 
-                        @endif
-                    >
-		                  <td>{{$Gener->GenerType}}</td>
-		                  <td>{{$Gener->GenerName}}</td>
-		                  <td>{{$Gener->GenerNit}}</td>
-		                  <td>{{$Gener->created_at}}</td>
-                      <td>{{$Gener->SedeName}}</td>
-                      <td>{{$Gener->CliShortname}}</td>
-                      <td>{{$Gener->GenerSlug}}</td>
-                      <td>{{$Gener->GenerSlug}}</td>
-		                </tr>
-                  @endforeach
-            	</tbody>
-              </table>
-            </div>
+<div class="container-fluid spark-screen">
+	<div class="row">
+		<div class="col-md-16 col-md-offset-0">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::message.generindex') }}</h3>
+					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+						<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+					@endif
+					@if ()
+						
+					@endif
+						<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >Soy Generador</a>
+				</div>
+			<!-- /.box-header -->
+				<div class="box box-info">
+				
+					<div class="box-body">
+						<table id="generadores" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+										<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
+									@endif
+									<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
+									<th>{{ trans('adminlte_lang::message.name') }}</th>
+									<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
+									<th>{{ trans('adminlte_lang::message.seemore') }}</th>
+								</tr>
+							</thead>
+							<tbody  hidden onload="renderTable()" id="readyTable">
+							@include('layouts.partials.spinner')
+							@foreach($Generadors as $Gener)
+								<tr @if($Gener->GenerDelete === 1)
+									style="color: red;" 
+								@endif
+								>
+									@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+										<td>{{$Gener->CliShortname}}</td>
+									@endif
+									<td>{{$Gener->SedeName}}</td>
+									<td>{{$Gener->GenerShortname}}</td>
+									<td>{{$Gener->GenerNit}}</td>
+									<td>
+										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
             <!-- /.box-body -->
-          </div>
+          	</div>
           <!-- /.box -->
-
-			</div>
 		</div>
 	</div>
+</div>
 @endsection

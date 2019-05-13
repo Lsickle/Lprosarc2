@@ -52,35 +52,35 @@
 								<label for="textHoraSali">Hora Salida:</label>
 								<input required class="form-control horas" type="text" id="textHoraSali" name="textHoraSali">
 							</div>
-							<div class="col-xs-12 col-md-6">
+							<div class="col-xs-12 col-md-12">
 								<label for="textVehiculo">Vehiculo:</label>
-								<select name="textVehiculo" id="textVehiculo" class="form-control select-multiple" multiple="">
+								<select name="textVehiculo[]" id="textVehiculo" class="form-control select-multiple" multiple="">
 									@foreach($vehiculos as $vehiculo)
 									<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="ProgVehColor">Color de la programación:</label>
-								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="">
-							</div>
-							<div class="col-xs-12 col-md-6">
+							<div class="col-xs-12 col-md-12">
 								<label for="textConductor">Conductor:</label>
-								<select name="textConductor" id="textConductor" class="form-control select-multiple" multiple="">
+								<select name="textConductor[]" id="textConductor" class="form-control select-multiple" multiple="">
 									@foreach($conductors as $persona)
 									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col-xs-12 col-md-6">
+							<div class="col-xs-12 col-md-12">
 								<label for="textAyudante">Ayudante:</label>
-								<select name="textAyudante" id="textAyudante" class="form-control select-multiple" multiple="">
+								<select name="textAyudante[]" id="textAyudante" class="form-control select-multiple" multiple="">
 									@foreach($ayudantes as $persona)
 									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
 									@endforeach
 								</select>
-								<input type="submit" hidden="true" id="submit1" name="submit1">
 							</div>
+							<div class="col-xs-12 col-md-12">
+								<label for="ProgVehColor">Color de la programación:</label>
+								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="">
+							</div>
+							<input type="submit" hidden="true" id="submit1" name="submit1">
 						</div>
 					</form>
 				</div>
@@ -270,7 +270,7 @@
 				document.getElementById('FK_ProgServi').value = id;
 				info.event.remove();
 				$("#CrearEventos").on("hidden.bs.modal", function () {
-					document.getElementById('textVehiculo').value = "";
+				document.getElementById('textVehiculo').value = "";
 					document.getElementById('textkm').value = "";
 					document.getElementById('textConductor').value = "";
 					document.getElementById('textAyudante').value = "";

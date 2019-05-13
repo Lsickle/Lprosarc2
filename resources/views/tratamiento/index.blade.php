@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('contentheader_title')
+{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}
+@endsection
 @section('htmlheader_title')
 {{ trans('adminlte_lang::LangTratamiento.tratlist') }}
 @endsection
@@ -9,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratlist') }}</h3>
-					<a href="/tratamiento/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<a href="/tratamiento/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -22,7 +25,7 @@
 								<th>{{ trans('adminlte_lang::LangTratamiento.sede') }}</th>
 								<th>{{ trans('adminlte_lang::message.address') }}</th>
 								<th>{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</th>
-								<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}</th>
+								<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</th>
 								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 							</tr>
 						</thead>
@@ -46,7 +49,9 @@
 								<td>
 									<ul>
 									    @foreach($tratamiento->pretratamientos as $pretratamiento)
+									    	@if($pretratamiento->PreTratDelete == 0)
 									    	    <li>{{$pretratamiento->PreTratName}}</li>
+									    	@endif
 									    @endforeach
 									</ul>
 								</td>

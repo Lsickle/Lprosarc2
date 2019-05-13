@@ -98,6 +98,7 @@ class VehicProgController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         if(date('H', strtotime($request->input('textHoraSali'))) >= 12){
             $turno = "0";
         }
