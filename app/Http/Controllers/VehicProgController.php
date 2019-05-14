@@ -58,6 +58,10 @@ class VehicProgController extends Controller
             ->join('vehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'vehiculos.ID_Vehic')
             ->select('progvehiculos.*', 'vehiculos.ID_Vehic', 'vehiculos.VehicPlaca', 'solicitud_servicios.ID_SolSer')
             ->where('progvehiculos.ProgVehDelete', 0)
+            ->orWhere(function($query){
+                $query->where('progvehiculos.ProgVehEntrada', '<>', null);
+                $query->where('progvehiculos.ProgVehDelete', 1);
+            })
             ->get();
         $mantenimientos = DB::table('mantenvehics')
             ->join('vehiculos', 'mantenvehics.FK_VehMan', '=', 'vehiculos.ID_Vehic')
@@ -75,10 +79,10 @@ class VehicProgController extends Controller
             ->where('CargName', 'Operario')
             ->get();
         $vehiculos = DB::table('vehiculos')
-            ->select('*')
+            ->select('ID_Vehic','VehicPlaca')
             ->get();
         $serviciosnoprogramados = DB::table('solicitud_servicios')
-            ->select('ID_SolSer')
+            ->select('ID_SolSer', 'SolSerSlug')
             ->where('SolSerDelete', 0)
             ->where(function($query) use ($programacions){
                 foreach($programacions as $programacion) { 
@@ -86,6 +90,7 @@ class VehicProgController extends Controller
                 }
             })
             ->get();
+            // return $programacions;
         // return $serviciosnoprogramados;
         return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos'));
     }
@@ -98,32 +103,25 @@ class VehicProgController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-        if(date('H', strtotime($request->input('textHoraSali'))) >= 12){
+        if(date('H', strtotime($request->input('ProgVehSalida'))) >= 12){
             $turno = "0";
         }
         else{
             $turno = "1";
         }
         $programacion = new ProgramacionVehiculo();
-        $programacion->ProgVehFecha = $request->input('textFecha');
-        $programacion->progVehKm = $request->input('textkm');
+        $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $programacion->ProgVehTurno = $turno;
         $programacion->ProgVehtipo = "1";
-        if($request->input('textHoraLlega')){
-            $programacion->ProgVehEntrada = $request->input('textFecha').' '.$request->input('textHoraLlega');
-        }
-        else{
-            $programacion->ProgVehEntrada = null;
-        }
-        $programacion->ProgVehSalida = $request->input('textFecha').' '.date('H:i:s', strtotime($request->input('textHoraSali')));
-        $programacion->FK_ProgVehiculo = $request->input('textVehiculo');
+        $programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
+        $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
         $programacion->FK_ProgMan = "1";
         $programacion->ProgVehColor = $request->input('ProgVehColor');
         $programacion->FK_ProgServi = $request->input('FK_ProgServi');
-        $programacion->FK_ProgConductor = $request->input('textConductor');
-        $programacion->FK_ProgAyudante = $request->input('textAyudante');
+        $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
+        $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
         $programacion->ProgVehDelete = 0;
+        // return $programacion;
         $programacion->save();
         return redirect()->route('vehicle-programacion.create');
     }
@@ -164,10 +162,17 @@ class VehicProgController extends Controller
                 }
             })
             ->get();
-        $personals = DB::table('personals')
-            ->select('ID_Pers','PersFirstName','PersLastName')
+        $conductors = DB::table('personals')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->where('CargName', 'Conductor')
             ->get();
-        return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'servicios', 'personals'));
+        $ayudantes = DB::table('personals')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+            ->where('CargName', 'Operario')
+            ->get();
+        return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'servicios', 'conductors', 'ayudantes'));
     }
 
     /**
@@ -179,6 +184,7 @@ class VehicProgController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
         $llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
         if($salida >= 12){
@@ -188,6 +194,7 @@ class VehicProgController extends Controller
             $turno = "1";
         }
         $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+        $programacion->FK_ProgServi = $request->input('FK_ProgServi');
         $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $programacion->ProgVehTurno = $turno;
         $programacion->ProgVehtipo = "1";
@@ -217,8 +224,7 @@ class VehicProgController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->all();
         $log->save();
-        $mensaje = "Datos actualizados";
-        return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', $mensaje);
+        return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehceditsuccess'));
     }
 
     /**
@@ -229,6 +235,32 @@ class VehicProgController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+        if ($programacion->ProgVehDelete == 0){
+            $programacion->ProgVehDelete = 1;
+
+            $log = new audit();
+            $log->AuditTabla = "progvehiculos";
+            $log->AuditType = "Eliminado";
+            $log->AuditRegistro = $programacion->ID_ProgVeh;
+            $log->AuditUser = Auth::user()->email;
+            $log->Auditlog = $programacion->ProgVehDelete;
+            $log->save();
+            $programacion->save();
+            return redirect()->route('vehicle-programacion.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
+        }
+        else{
+            $programacion->ProgVehDelete = 0;
+
+            $log = new audit();
+            $log->AuditTabla = "progvehiculos";
+            $log->AuditType = "Restaurado";
+            $log->AuditRegistro = $programacion->ID_ProgVeh;
+            $log->AuditUser = Auth::user()->email;
+            $log->Auditlog = $programacion->ProgVehDelete;
+            $log->save();
+            $programacion->save();
+            return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
+        }
     }
 }

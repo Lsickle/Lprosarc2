@@ -196,6 +196,7 @@ return [
     'newpassword'             => 'Nueva Contraseña',
     'oldpassword'             => 'Contraseña Antigua',
     'changepassword'          => 'Cambio de Contraseña',
+    'cancel'                  => 'Cancelar',
 
     'copy'                    => 'Copiar',
 
@@ -344,6 +345,15 @@ return [
     'progvehicclient'         => 'Cliente',
     'progvehickm'             => 'Kilometraje del vehiculo',
     'progvehiccolor'          => 'Color de la programacion',
+    'progvehceditsuccess'     => 'Se  ha actualizado la programación',
+    'progvehcediterror'       => 'No se pudo actulizar la programación',
+    'progvehcdeletesuccess'   => 'Programación Eliminada',
+    'progvehcdelete2success'  => 'Se restauro la programación',
+    'progvehicadd'            => 'Añadir Vehiculo',
+    'finishservice'           => 'Finzalizar Servicio',
+    'titleconducedit'         => 'Llegada',
+    'progvehicconducedit'     => 'Marcar',
+
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',

@@ -15,7 +15,10 @@
 			<div class="box-body">
 				<div id="external-events">
 					@foreach($serviciosnoprogramados as $servicionoprogramado)
-					<div class="external-event bg-light-blue">{{$servicionoprogramado->ID_SolSer}}</div>
+						<p style="background-color: #001f3f; border-color: #001f3f; text-align: center; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle col-md-12">
+							<span style="background-color: #001f3f; border-color: #001f3f; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12">{{$servicionoprogramado->ID_SolSer}}</span>
+							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='bg-aqua pull-right col-md-3 btn-block' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
+						</p>
 					@endforeach
 				</div>
 			</div>
@@ -31,7 +34,7 @@
 </div>
 
 {{--  Modal --}}
-<div class="modal modal-default fade in" id="CrearEventos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal modal-default fade in" id="CrearProgVehic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -42,43 +45,46 @@
 				<div style="text-align: center; margin: auto;" id="descripModalCreate">
 					<form action="/vehicle-programacion" method="POST" id="formularioCreate">
 						@csrf
+						<input type="hidden" name="FK_ProgServi" id="FK_ProgServi">
 						<div class="box-body">
 							<div class="col-xs-12 col-md-6">
-								<label for="textFecha">Fecha:</label>
-								<input required class="form-control fechas" type="text" id="textFecha" name="textFecha" readonly value="">
+								<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
+								<input  class="form-control fechas" readonly type="text" id="ProgVehFecha" name="ProgVehFecha">
 							</div>
-							<input type="hidden" name="FK_ProgServi" id="FK_ProgServi">
 							<div class="col-xs-12 col-md-6">
-								<label for="textHoraSali">Hora Salida:</label>
-								<input required class="form-control horas" type="text" id="textHoraSali" name="textHoraSali">
+								<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
+								<input class="form-control horas" type="text" id="ProgVehSalida" name="ProgVehSalida">
 							</div>
 							<div class="col-xs-12 col-md-12">
-								<label for="textVehiculo">Vehiculo:</label>
-								<select name="textVehiculo[]" id="textVehiculo" class="form-control select-multiple" multiple="">
+								<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
+								<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control">
+									<option value="">Seleccione...</option>
 									@foreach($vehiculos as $vehiculo)
-									<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
+										<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
 									@endforeach
 								</select>
 							</div>
 							<div class="col-xs-12 col-md-12">
-								<label for="textConductor">Conductor:</label>
-								<select name="textConductor[]" id="textConductor" class="form-control select-multiple" multiple="">
-									@foreach($conductors as $persona)
-									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
+								<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
+								<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control">
+									<option value="">Seleccione...</option>
+									@foreach($conductors as $conductor)
+										<option value="{{$conductor->ID_Pers}}" >{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
 							<div class="col-xs-12 col-md-12">
-								<label for="textAyudante">Ayudante:</label>
-								<select name="textAyudante[]" id="textAyudante" class="form-control select-multiple" multiple="">
-									@foreach($ayudantes as $persona)
-									<option value="{{$persona->ID_Pers}}">{{$persona->PersFirstName." ".$persona->PersLastName}}</option>
+								<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
+								<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control">
+									<option value="">Seleccione...</option>
+									@foreach($ayudantes as $ayudante)
+										<option value="{{$ayudante->ID_Pers}}" >{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
 							<div class="col-xs-12 col-md-12">
-								<label for="ProgVehColor">Color de la programación:</label>
-								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="">
+								<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
+								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="#0000f6">
 							</div>
 							<input type="submit" hidden="true" id="submit1" name="submit1">
 						</div>
@@ -86,13 +92,14 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<label for="submit1" class="btn btn-success">Agregar</label>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+				<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.cancel') }}</button>
 			</div>
 		</div>
 	</div>
 </div>
 {{-- END Modal --}}
+
 {{--  Modal --}}
 <div class="modal modal-default fade in" id="ModalEventos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -155,7 +162,7 @@
 							</div>
 							<div class="col-xs-12 col-md-12">
 								<label for="ProgVehColor1">Color de la programación:</label>
-								<input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor1" value="">
+								{{-- <input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor1" value=""> --}}
 							</div>
 						</div>
 					</form>
@@ -168,7 +175,6 @@
 			</div>
 			<div class="modal-footer">
 				<label for="submit2" class="btn btn-warning">Modificar</label>
-				{{-- <label for="submit3" class="btn btn-danger">Borrar</label> --}}
 				<a href='#' data-toggle='modal' id="buttonDelete" data-target="#myModal" class="btn btn-danger">Borrar</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 			</div>
@@ -181,12 +187,15 @@
 @section('NewScript')
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
+		@if(session('Delete'))
+			NotifiTrue('{{session('Delete')}}');
+		@endif
 		var calendarEl = document.getElementById('calendar');
 		var Draggable = FullCalendarInteraction.Draggable;
 		var containerEl = document.getElementById('external-events');
 		var checkbox = document.getElementById('drop-remove');
 		new Draggable(containerEl, {
-			itemSelector: '.external-event',
+			itemSelector: '.external-event .servicionoprogramado',
 			eventData: function(eventEl) {
 				return {
 					id: eventEl.innerText,
@@ -212,11 +221,17 @@
 					click: function() {
 						$('#ModalEventos').modal();
 					}
+				},
+				ListProg: {
+					text: 'Listar Programaciones',
+					click: function() {
+						window.location.href = "{{url('/vehicle-programacion')}}";
+					}
 				}
 			},
 			header: {
 				left: 'AddMantVehc',
-				center: '',
+				center: 'ListProg',
 				right: 'prev,today,next'
 			},
 			footer: {
@@ -236,7 +251,8 @@
 					@foreach($programacions as $programacion)
 						@if($programacion->ProgVehEntrada == null && $programacion->ProgVehDelete == 0)
 						{
-							id: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
+							id: '{{$programacion->ID_ProgVeh}}',
+							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							title: '{{$programacion->ID_SolSer." - ".$programacion->VehicPlaca}}',
 							color: '{{$programacion->ProgVehColor}}',
 							start: '{{$programacion->ProgVehSalida}}',
@@ -261,84 +277,36 @@
 					hour: '2-digit',
 					minute: '2-digit'
 				});
-				document.getElementById('textFecha').value = dropInfo.dateStr;
-				document.getElementById('textHoraSali').value = hora;
-				$('#CrearEventos').modal();
+				document.getElementById('ProgVehFecha').value = dropInfo.dateStr;
+				document.getElementById('ProgVehSalida').value = hora;
+				$('#CrearProgVehic').modal();
 			},
 			eventReceive: function( info ) {
 				var id = info.event.id;
-				document.getElementById('FK_ProgServi').value = id;
+				$('#FK_ProgServi').val(id);
 				info.event.remove();
-				$("#CrearEventos").on("hidden.bs.modal", function () {
-				document.getElementById('textVehiculo').value = "";
-					document.getElementById('textkm').value = "";
-					document.getElementById('textConductor').value = "";
-					document.getElementById('textAyudante').value = "";
-					document.getElementById('ProgVehColor').value = "";
+				$("#CrearProgVehic").on("hidden.bs.modal", function () {
+					$('#FK_ProgVehiculo').val("");
+					$('#FK_ProgConductor').val("");
+					$('#ProgVehSalida').val("");
+					$('#FK_ProgAyudante').val("");
+					$('#ProgVehColor').val("#0000f6");
 				});
 			},
 			eventDrop: function( eventDropInfo ) {
-				alert(eventDropInfo.event.id);
 				CambioDeFecha(eventDropInfo.event);
 			},
 			eventClick: function(info){
-				window.location.href = info.event.id;
-				/*$.ajax({
-					url: "{{url('/ProgramacionDeUnVehiculo')}}/"+info.event.id,
-					type: "GET",
-					data: {},
-					success: function (msg) {
-						let salida = calendar.formatDate(msg.ProgVehSalida, {
-							hour: '2-digit',
-							minute: '2-digit'
-						});
-						let entrada = calendar.formatDate(msg.ProgVehEntrada, {
-							hour: '2-digit',
-							minute: '2-digit'
-						});
-						
-						$("#titleModal").html(info.event.title);
-						$('#textFecha1').val(msg.ProgVehFecha);
-						$("#textVehiculo1").val(msg.FK_ProgVehiculo);
-						$('#textkm1').val(msg.progVehKm);
-						$('#textHoraSali1').val(salida);
-						$('#formulario2Modal1').attr('action', '/prueba/'+msg.ID_ProgVeh);
-						$('#formulario2Modal1').append(`<input type="submit" hidden="true" id="Eliminar`+msg.ID_ProgVeh+`" name="Eliminar`+msg.ID_ProgVeh+`">`);
-						$('#ModalDelete').empty();
-						$('#ModalDelete').append(`@component('layouts.partials.modal')`+msg.ID_ProgVeh+`@endcomponent`);
-						$('#buttonDelete').attr('data-target', "#myModal"+msg.ID_ProgVeh);
-						if(msg.ProgVehEntrada != null){
-							$('#textHoraLlega1').val(entrada);
-						}
-						$('#textConductor1').val(msg.FK_ProgConductor);
-						$('#textAyudante1').val(msg.FK_ProgAyudante);
-						$('#ProgVehColor1').val(msg.ProgVehColor);
-						$("#ModalEventos").on("hidden.bs.modal", function () {
-							$('#textFecha1').val('');
-							$("#textVehiculo1").val('');
-							$('#textkm1').val('');
-							$('#textHoraSali1').val('');
-							$('#textHoraLlega1').val('');
-							$('#textConductor1').val('');
-							$('#textAyudante1').val('');
-							$('#ProgVehColor').val('');
-							$('#Eliminar'+msg.ID_ProgVeh).remove();
-						});
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						var msg = "No se encontro la programación";
-						NotifiFalse(msg);
-					}
-				});*/
+				info.jsEvent.preventDefault();
+				window.open(info.event.url);
 			}
 		});
 		calendar.render();
 		function CambioDeFecha(event){
 			var id = event.id;
 			var fecha = event.start.toISOString();
-			var Event = fecha;
 			var token = '{{csrf_token()}}';
-			var data={Event:Event,_token:token};
+			var data={Event:fecha,_token:token};
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -352,8 +320,7 @@
 					NotifiTrue(msg);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					var msg = "No se pudo actulizar la programación";
-					NotifiFalse(msg);
+					NotifiFalse("{{trans('adminlte_lang::message.progvehcediterror')}}");
 				}
 			});
 		}

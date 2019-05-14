@@ -53,22 +53,10 @@ class AjaxController extends Controller
 			$eventos->ProgVehFecha = $fecha;
 			$eventos->ProgVehSalida = $fecha." ".$hora;
 			$eventos->save();
-			$Mensaje = "Se  ha actualizado la programación";
-			return $Mensaje;
+			return trans('adminlte_lang::message.progvehceditsuccess');
 		}
 	}
-	/*Funcion para consultar una programacion*/
-	public function ProgramacionDeUnVehiculo(Request $request, $id){
-		if ($request->ajax()) {
-			$evento = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-			if($evento <> ''){
-				return response()->json($evento);
-			}
-			else{
-				return false;
-			}
-		}
-	}
+	
 	/*Funcion para ver por medio de Ajax los Respels que le competen a una SGenerador*/
 	public function SGenerRespel(Request $request, $id)
 	{

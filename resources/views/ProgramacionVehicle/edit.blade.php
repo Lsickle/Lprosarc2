@@ -12,8 +12,94 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
-					<a href="/vehicle-programacion/create" class="btn btn-primary pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+						@component('layouts.partials.modal')
+						{{$programacion->ID_ProgVeh}}
+						@endcomponent
+						@if($programacion->ProgVehDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$programacion->ID_ProgVeh}}'  class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+							<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input  type="submit" id="Eliminar{{$programacion->ID_ProgVeh}}" style="display: none;">
+							</form>
+						@else
+							<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST' class="pull-right">
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
+							</form>
+						@endif
+					@endif
 				</div>
+				{{--  Modal --}}
+				<div class="modal modal-default fade in" id="CrearProgVehic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
+							</div>
+							<div class="modal-body">
+								<div style="text-align: center; margin: auto;" id="descripModalCreate">
+									<form action="/vehicle-programacion" method="POST" id="formularioCreate">
+										@csrf
+										<input type="hidden" name="FK_ProgServi" id="FK_ProgServi1" value="{{$programacion->FK_ProgServi}}">
+										<div class="box-body">
+											<div class="col-xs-12 col-md-6">
+												<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
+												<input  class="form-control fechas" type="date" id="ProgVehFecha1" name="ProgVehFecha">
+											</div>
+											<div class="col-xs-12 col-md-6">
+												<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
+												<input class="form-control horas" type="text" id="ProgVehSalida1" name="ProgVehSalida">
+											</div>
+											<div class="col-xs-12 col-md-12">
+												<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
+												<select name="FK_ProgVehiculo" id="FK_ProgVehiculo1" class="form-control select">
+													<option value="">Seleccione...</option>
+													@foreach($vehiculos as $vehiculo)
+													<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="col-xs-12 col-md-12">
+												<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
+												<select name="FK_ProgConductor" id="FK_ProgConductor1" class="form-control select">
+													<option value="">Seleccione...</option>
+													@foreach($conductors as $conductor)
+														<option value="{{$conductor->ID_Pers}}" >{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="col-xs-12 col-md-12">
+												<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
+												<select name="FK_ProgAyudante" id="FK_ProgAyudante1" class="form-control select">
+													<option value="">Seleccione...</option>
+													@foreach($ayudantes as $ayudante)
+														<option value="{{$ayudante->ID_Pers}}" >{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="col-xs-12 col-md-12">
+												<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
+												<input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor" value="{{$programacion->ProgVehColor}}">
+											</div>
+											<input type="submit" hidden="true" id="submit1" name="submit1">
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.cancel') }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{-- END Modal --}}
 				<div class="box box-info">
 					<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
@@ -54,16 +140,16 @@
 							<div class="form-group col-md-6">
 								<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
 								<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control select">
-									@foreach($personals as $personal)
-										<option value="{{$personal->ID_Pers}}" {{$personal->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
+									@foreach($conductors as $conductor)
+										<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 								<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select">
-									@foreach($personals as $personal)
-										<option value="{{$personal->ID_Pers}}" {{$personal->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
+									@foreach($ayudantes as $ayudante)
+										<option value="{{$ayudante->ID_Pers}}" {{$ayudante->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -71,8 +157,13 @@
 								<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 								<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%;" value="{{$programacion->ProgVehColor}}">
 							</div>
-							<div class="box-footer pull-right">
-								<button type="submit" class="btn btn-primary" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+							<div class="col-md-12 col-xs-12 box box-info"></div>
+							<div class="box-footer">
+								<a href="">{{date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days"))}}</a>
+								@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d'))
+								<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-success pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+								@endif
+								<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 							</div>
 						</div>
 						<!-- /.box-body -->
@@ -132,5 +223,4 @@
 		@endif
 		});
 	</script>
-
 @endsection

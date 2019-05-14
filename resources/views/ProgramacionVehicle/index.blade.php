@@ -12,7 +12,9 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
-					<a href="/vehicle-programacion/create" class="btn btn-primary pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+					@endif
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -28,9 +30,11 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
-										@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
-											<th>{{ trans('adminlte_lang::message.edit') }}</th>
-										@endif
+									@endif
+									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.Conductor'))
+										<td>{{ trans('adminlte_lang::message.titleconducedit') }}</td>
 									@endif
 								</tr>
 							</thead>
@@ -46,14 +50,16 @@
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$programacion->VehicPlaca}}</td>
 									<td>{{$programacion->ayudname." ".$programacion->ayudlastname}}</td>
-									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
 										<td>{{$programacion->ProgVehEntrada == null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->condname." ".$programacion->condlastname}}</td>
-										@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
-											<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
-										@endif
+									@endif
+									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.Conductor'))
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.progvehicconducedit') }}</a></td>
 									@endif
 								</tr>
 								@endforeach
