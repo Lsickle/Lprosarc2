@@ -30,18 +30,16 @@
                                     </div>
                                 @endif
 								<div class="box-body">
-									@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-										<div class="col-xs-12 form-group">
-											<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
-											<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
-											<small class="help-block with-errors">*</small>
-											<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
-												@foreach($Sedes as $Sede)
-													<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
-												@endforeach
-											</select>
-										</div>
-									@endif
+									<div class="col-xs-12 form-group">
+										<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
+										<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+										<small class="help-block with-errors">*</small>
+										<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
+											@foreach($Sedes as $Sede)
+												<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+											@endforeach
+										</select>
+									</div>
 									<div class="col-xs-12 form-group">
 										<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
 										<input type="text" name="GenerNit" class="form-control nit" id="GenerInputNit" data-minlength="13" maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Generador->GenerNit}}" required>

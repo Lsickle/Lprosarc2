@@ -203,8 +203,8 @@ return [
 
     // modal
     'modalexit'               => 'No, salir',
-    'modaldeletegener'             => '¿Seguro, quiere eliminar',
-    'modalgener'              => 'del generador',
+    'modaldeletegener'        => '¿Seguro, quiere eliminar',
+    'modalgener'              => 'de todas las sedes del generador',
     'modaldelete'             => 'Si, eliminar',
 
 
@@ -287,7 +287,8 @@ return [
     'genercode'               => 'Código del Generador',
     '?'                       => '?',
     'addsedegener'            => 'Añadir Sedes',
-    'assignrrespelssedegener'       => 'Asignar Residuos a la Sede del Generador',
+    'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
+    'soygener'                => 'Soy Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',

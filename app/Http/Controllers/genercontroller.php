@@ -62,7 +62,7 @@ class genercontroller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
             $id = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
             $Cliente = Sede::where('SedeDelete', 0)->get();
@@ -72,11 +72,7 @@ class genercontroller extends Controller
                 ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->where(function ($query) use ($id){
-                        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-                            $query->where('clientes.ID_Cli', '=', $id);
-                        };
-                    })
+                ->where('clientes.ID_Cli', '=', $id)
                 ->get();
             
             if (old('FK_GSedeMun') !== null){
@@ -215,7 +211,7 @@ class genercontroller extends Controller
                 ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
                 ->where('FK_GSede', $Generador->ID_Gener)
                 ->where('GSedeDelete', 0)
-                ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug')
+                ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
                 ->get();
 
             $Respels = DB::table('residuos_geners')
@@ -252,7 +248,7 @@ class genercontroller extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();

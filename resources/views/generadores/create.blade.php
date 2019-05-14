@@ -39,28 +39,17 @@
 									<div class="row">
 										<div id="step-1" class="tab-pane step-content">
 											<div id="form-step-0" role="form" data-toggle="validator">
-												@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-													<div class="col-md-12 form-group">
-														<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
-														<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
-														<small class="help-block with-errors">*</small>
-														<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
-															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-															@foreach($Sedes as $Sede)
-																<option value="{{$Sede->ID_Sede}}" {{ old('FK_GenerCli') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
-															@endforeach()
-														</select>
-													</div>
-												@endif
-												{{-- <div class="col-md-6 form-group">
-													<label for="clientname">Cliente</label>
-													<select class="form-control" id="clientname" name="FK_GSede" required="true">
-														<option>{{ trans('adminlte_lang::message.select') }}</option>
-														@foreach($Clientes as $Cliente)
-															<option value="{{$Cliente->ID_Gener}}">{{$generador->GenerShortname}}</option>
+												<div class="col-md-12 form-group">
+													<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
+													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+													<small class="help-block with-errors">*</small>
+													<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
+														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+														@foreach($Sedes as $Sede)
+															<option value="{{$Sede->ID_Sede}}" {{ old('FK_GenerCli') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 														@endforeach()
 													</select>
-												</div> --}}
+												</div>
 												<div class="col-md-12 form-group">
 													<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }} </label>
 													<small class="help-block with-errors">*</small>
