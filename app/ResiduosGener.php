@@ -16,7 +16,7 @@ class ResiduosGener extends Model
 	{
 	 return $this->belongsTo('App\GenerSede','FK_SGener', 'ID_GSede');
 	}
-    public function Respel()
+    public function respels()
 	{
 	 return $this->belongsTo('App\GenerSede','FK_Respel', 'ID_Respel');
 	}

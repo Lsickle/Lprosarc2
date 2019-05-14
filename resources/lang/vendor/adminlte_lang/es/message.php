@@ -201,6 +201,13 @@ return [
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
     'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
 
+    // modal
+    'modalexit'               => 'No, salir',
+    'modaldeletegener'        => '¿Seguro, quiere eliminar',
+    'modalgener'              => 'de todas las sedes del generador',
+    'modaldelete'             => 'Si, eliminar',
+
+
     // personal
     'fullname'                => 'Nombre completo',
 
@@ -245,9 +252,6 @@ return [
     'client'                  => 'Datos de la Empresa',
     'clientsede'              => 'Datos de la sede',
     'clientpers'              => 'Datos de la persona de contacto',
-    'clientNIT'               => 'NIT',
-    'clirazonsoc'             => 'Razón Social',
-    'clientnombrecorto'       => 'Nombre Corto',
     'clientNITplacehoder'     => 'XXX.XXX.XXX-Y',
     'clirazonsocplacehoder'   => 'PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.',
     'clinombcortplacehoder'   => 'Prosarc',
@@ -258,6 +262,9 @@ return [
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Contactos',
     'clientcontact'           => 'Contactos',
+    'clientNIT'               => 'NIT',
+    'clirazonsoc'             => 'Razón Social',
+    'clientnombrecorto'       => 'Nombre Corto',
 
     // sede
     'csedeindex'              => 'Lista de sedes',
@@ -273,13 +280,22 @@ return [
 
     // generador
     'genermenu'               => 'Generadores',
-    'generindex'              => 'lista de Generadores',
+    'gener'                   => 'Generador',
+    'generindex'              => 'Lista de Generadores',
     'Generregistertittle'     => 'Registro de Generador',
+    'generupdate'             => 'Actualizar Generador',
+    'genercode'               => 'Código del Generador',
+    '?'                       => '?',
+    'addsedegener'            => 'Añadir Sedes',
+    'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
+    'soygener'                => 'Soy Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualizar sede',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'SGenertitle'             => 'Sede del Generador',
+    'sedesgener'              => 'Sedes del Generador',
     
     // area
     'areatitle'               => 'Áreas',
@@ -318,10 +334,14 @@ return [
     'manifiestmenu'           => 'Manifiestos',
 
     // departamento
-    'departamento'            =>'Departamento',
+    'departamento'            => 'Departamento',
 
     // municipio
-    'municipio'               =>'Municipio',
+    'municipio'               => 'Municipio',
+
+    // respel
+    'respelscreate'           => 'Crear Residuos',
+    'assignrespels'           => 'Asignar Residuos',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -390,4 +410,11 @@ return [
     'MenuServEviden'          => 'Evidencias de Servicios',
     'MenuArticu'              => 'Articulos',
     'MenuQr'                  => 'Código Qr',
+
+    // info-gener
+    'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador',
+    'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social',
+    'code-gener'              => 'Codigo con el que usted tiene registrado la este Generador',
+    'respels-gener'           => 'Residuos pertenecientes a este Generador',
+
 ];
