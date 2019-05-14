@@ -83,7 +83,7 @@ class RespelController extends Controller
             'RespelName' => 'required',
             'RespelIgrosidad' => 'required',
             'RespelEstado' => 'required',
-            'RespelHojaSeguridad' => 'required',
+            // 'RespelHojaSeguridad' => 'required',
         ]);
         $Cotizacion = new Cotizacion;
         $Cotizacion->CotiNumero = 6;
@@ -96,7 +96,7 @@ class RespelController extends Controller
         for ($x=0; $x < count($request['RespelName']); $x++) {
             if ($request->hasfile('RespelHojaSeguridad')) {
                 $file = $request['RespelHojaSeguridad'][$x];
-                $name = time().$file->getClientOriginalName();
+                $hoja = time().$file->getClientOriginalName();
                 $file->move(public_path().'/img/HojaSeguridad/',$name);
             }
             if ($request->hasfile('RespelTarj')) {
@@ -105,6 +105,7 @@ class RespelController extends Controller
                 $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }
             else{
+                $hoja = 'hojadefault.png';
                 $tarj = 'default.png';
             }
             $respel = new Respel();
@@ -116,7 +117,7 @@ class RespelController extends Controller
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
             $respel->RespelStatus = 'Pendiente';
-            $respel->RespelHojaSeguridad = $name;
+            $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
             $respel->RespelSlug = "slug".$request['RespelName'][$x].date('YmdHis');
