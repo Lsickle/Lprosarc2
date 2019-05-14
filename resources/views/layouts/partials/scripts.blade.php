@@ -1192,6 +1192,7 @@ $(document).ready(function() {
 });
 </script>
 @endif
+@if(Route::currentRouteName() === 'sgeneradores.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
@@ -1239,6 +1240,8 @@ $(document).ready(function() {
 });
 
 </script>
+@endif
+
 <script>
 $(document).ready(function() {
     $('#selectconfiltro').select2({});
@@ -1376,7 +1379,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create'))
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1404,7 +1407,7 @@ $(document).ready(function() {
             });
         </script>
     @endif
-    @if(Route::currentRouteName() === 'generadores.create')
+    @if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create')
         <script>
             $(document).ready(function(){    
                 if({{old('GSedeExt1')}} !== null){
@@ -1489,7 +1492,7 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
-@if(Route::currentRouteName() === 'generadores.show')
+@if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
     @if ($errors->any())
         <script>
             $(document).ready(function()

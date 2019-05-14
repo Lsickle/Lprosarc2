@@ -1,376 +1,185 @@
 @extends('layouts.app')
-
 @section('htmlheader_title')
-	{{ trans('adminlte_lang::message.home') }}
+{{ trans('adminlte_lang::message.SGenertitle') }}
 @endsection
-
-
+@section('contentheader_title')
+	{{ trans('adminlte_lang::message.SGenertitle') }}
+@endsection	
 @section('main-content')
-	<div class="container-fluid spark-screen">
-		
-
-{{-- seccion de prueba --}}
-
-      <div class="row">
-        <div class="col-md-3">
-
-          <!-- Profile Image -->
-          <div class="box box-primary">
-            <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-
-              <h3 class="profile-username text-center">{{$GSede->GSedeName}}</h3>
-
-              <p class="text-muted text-center">{{$GSede->GSedeAddress}}</p>
-
-              <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <b>Gsedes</b> <a class="pull-right">1,322</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Following</b> <a class="pull-right">543</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Friends</b> <a class="pull-right">13,287</a>
-                </li>
-              </ul>
-
-          	<a href="/sgeneradores/{{$GSede->GSedeSlug}}/edit" class="btn btn-success btn-block"><b>Editar</b></a>
-						<br>
-			<form action="/sgeneradores/{{$GSede->GSedeSlug}}" class="form-group" method="POST">
-				@csrf
-				@method('DELETE')
-					<button type="submit" class="btn btn-danger btn-block">Borrar</button>
-			</form>
-</div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-          <!-- About Me Box -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">About Me</h3>
+<div class="container-fluid spark-screen">
+    {{-- seccion de prueba --}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <div class="col-md-12 col-xs-12">
+                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                            <a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+                            @component('layouts.partials.modal')
+                                {{$SedeGener->ID_GSede}}
+                            @endcomponent
+                            @if($SedeGener->GSedeDelete == 0)
+                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+                                <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="submit" id="Eliminar{{$SedeGener->ID_GSede}}" style="display: none;">
+                                </form>
+                            @else
+                                <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-right">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+                                </form>
+                            @endif
+                        @endif
+                    </div>
+                    <div>
+                        <h3 class="profile-username text-center textolargo col-12">{{$SedeGener->GSedeName}}</h3>
+                    </div>
+                    <ul class="list-group list-group-unbordered">
+                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                            <li class="list-group-item">
+                                <b>{{ trans('adminlte_lang::message.clientcliente') }}</b> 
+                                <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliShortname}}</p>">{{$Cliente->CliShortname}}</a>
+                            </li>
+                        @endif
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.gener') }}</b> 
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.gener') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.address') }}</b> 
+                            <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.adddress') }}')"><i class="far fa-copy"></i></a>
+                            <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.adddress') }}" title="{{ trans('adminlte_lang::message.adddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeAddress}} ({{$SedeGener->FK_GSedeMun}} - {{$SedeGener->FK_GSedeMun}})</p>">{{$SedeGener->GSedeAddress}} ({{$SedeGener->FK_GSedeMun}} - {{$SedeGener->FK_GSedeMun}})</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.mobile') }}</b> 
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeCelular}}</p>">{{$SedeGener->GSedeCelular}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.phone') }}</b> 
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone1}}{{' - '.$SedeGener->GSedeExt1}}</p>">{{$SedeGener->GSedePhone1}}{{" - ".$SedeGener->GSedeExt1}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.phone') }} 2</b> 
+                            <a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }} 2" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone2}}{{' - '.$SedeGener->GSedeExt2}}</p>">{{$SedeGener->GSedePhone2}}{{" - ".$SedeGener->GSedeExt2}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>{{ trans('adminlte_lang::message.emailaddress') }}</b>
+                            <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
+                            <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeEmail}}</p>">{{$SedeGener->GSedeEmail}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-              <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-
-              <p class="text-muted">Malibu, California</p>
-
-              <hr>
-
-              <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-              <p>
-                <span class="label label-danger">UI Design</span>
-                <span class="label label-success">Coding</span>
-                <span class="label label-info">Javascript</span>
-                <span class="label label-warning">PHP</span>
-                <span class="label label-primary">Node.js</span>
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+            <!-- /.box -->
         </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li><a href="#timeline" data-toggle="tab">Sedes</a></li>
-              <li class="active"><a href="#activity" data-toggle="tab">Generadores</a></li>
-              <li><a href="#timeline" data-toggle="tab">Declaraciones</a></li>
-              <li><a href="#settings" data-toggle="tab">Ordenes</a></li>
-              <li><a href="#settings" data-toggle="tab">Certificaciones</a></li>
-              <li><a href="#settings" data-toggle="tab">Manifiestos</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="active tab-pane" id="activity">
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <div class="row margin-bottom">
-                    <div class="col-sm-6">
-                      <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo2.png" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo3.jpg" alt="Photo">
+        {{--  Modal Agregar un Residuo a una SedeGener--}}
+        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+        <form role="form" action="/respelSedeGener" method="POST" enctype="multipart/form-data" data-toggle="validator">
+            @csrf
+            
+            <div class="modal modal-default fade in" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+                                <i class="fas fa-plus-circle"></i>
+                                <span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.assignrrespelssedegener') }}</p></span>
+                            </div> 
                         </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo4.jpg" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <p>{{$error}}</p>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div class="modal-body">
+                            <div class="col-md-12 form-group">
+                                <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
+                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple>
+                                    @if(isset($Residuos))
+                                        @foreach ($Residuos as $Residuo)
+                                            <option value="{{$Residuo->ID_Respel}}" {{ $old == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+                                        @endforeach     
+                                    @endif 
+                                </select>
+                            </div>
                         </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+                            <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+                        </div>
                     </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
                 </div>
-                <!-- /.post -->
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="timeline">
-                <!-- The timeline -->
-                <ul class="timeline timeline-inverse">
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-envelope bg-blue"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-primary btn-xs">Read more</a>
-                        <a class="btn btn-danger btn-xs">Delete</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-comments bg-yellow"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-camera bg-purple"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                      <div class="timeline-body">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <li>
-                    <i class="fa fa-clock-o bg-gray"></i>
-                  </li>
+            </div>
+        </form>
+        @endif
+      {{-- END Modal --}}
+        <div class="col-md-6">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active box-info" ><a href="#residuos" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
                 </ul>
-              </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="residuos">
+                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                            <a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
+                            <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-primary mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
+                        @endif
+                        <div style='overflow-y:auto; max-height:400px;'>
+                            @foreach ($Respels as $Respel)
+                                <ul class="list-group" style="list-style:none; margin-top:10px;">
+                                    <li class="col-md-11 col-xs-12 col-12">
+                                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                            <a method='get' href='#' data-toggle='modal' data-target='#delete{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+                                        @endif
+                                        <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
+                                    </li>
+                                    <li class="col-md-12 col-xs-12 col-12">
+                                        {{--  Modal Eliminar un Residuo de una SedeGener--}}
+                                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                        <form action='/respelSedeGener/{{$Respel->ID_SGenerRes}}' method='POST' class="col-12 pull-right">
+                                            @method('DELETE')
+                                            @csrf
+                                            <div class="modal modal-default fade in" id="delete{{$Respel->ID_SGenerRes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <div style="font-size: 5em; color: red; text-align: center; margin: auto;">
+                                                                <i class="fas fa-exclamation-triangle"></i>
+                                                                <span style="font-size: 0.3em; color: black;">
+                                                                    <p>{{ trans('adminlte_lang::message.modaldeletegener') }} <b><i>{{$Respel->RespelName}}</i></b> {{ trans('adminlte_lang::message.modalgener') }} <b><i> {{$Generador->GenerShortname}}</i></b>{{ trans('adminlte_lang::message.?') }} </p>
+                                                                </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+                                                            <label for="Eliminar{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <input type="submit" id="Eliminar{{$Respel->ID_SGenerRes}}" style="display: none;">
+                                        </form>
+                                        @endif
+                                        {{-- END Modal --}}
+                                    </li>
+                                </ul>
+                            @endforeach
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- /.tab-pane -->
+                </div>
             </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+    </div>
+</div>
 @endsection

@@ -21,9 +21,7 @@
 						@endif
 					@endif
 				</div>
-			<!-- /.box-header -->
 				<div class="box box-info">
-				
 					<div class="box-body">
 						<table id="generadores" class="table table-bordered table-striped">
 							<thead>
