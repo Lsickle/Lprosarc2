@@ -94,18 +94,20 @@ class RespelController extends Controller
         $Cotizacion->save();
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
-            if ($request->hasfile('RespelHojaSeguridad')) {
-                $file = $request['RespelHojaSeguridad'][$x];
-                $hoja = time().$file->getClientOriginalName();
-                $file->move(public_path().'/img/HojaSeguridad/',$name);
-            }
-            if ($request->hasfile('RespelTarj')) {
-                $file = $request['RespelTarj'][$x];
-                $tarj = time().$file->getClientOriginalName();
-                $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+            if (isset($request['RespelHojaSeguridad'][$x])) {
+                $file1 = $request['RespelHojaSeguridad'][$x];
+                $hoja = time().$file1->getClientOriginalName();
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = 'hojadefault.png';
+            }
+
+            if (isset($request['RespelTarj'][$x])) {
+                $file2 = $request['RespelTarj'][$x];
+                $tarj = time().$file2->getClientOriginalName();
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+            }else{
                 $tarj = 'default.png';
             }
             $respel = new Respel();
