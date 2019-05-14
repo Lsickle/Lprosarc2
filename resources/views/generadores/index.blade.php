@@ -12,13 +12,14 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.generindex') }}</h3>
-					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
 						<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
-					@if ()
-						
+					@if (!isset($Gener))
+						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+							<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >{{ trans('adminlte_lang::message.soygener') }}</a>
+						@endif
 					@endif
-						<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >Soy Generador</a>
 				</div>
 			<!-- /.box-header -->
 				<div class="box box-info">
@@ -28,10 +29,12 @@
 							<thead>
 								<tr>
 									@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-										<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
+										<th>{{ trans('adminlte_lang::message.clientcliente') }} - {{ trans('adminlte_lang::message.sclientsede') }}</th>
 									@endif
-									<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
-									<th>{{ trans('adminlte_lang::message.name') }}</th>
+									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
+									@endif
+									<th>{{ trans('adminlte_lang::message.gener') }}</th>
 									<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 									<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 								</tr>
@@ -44,9 +47,11 @@
 								@endif
 								>
 									@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-										<td>{{$Gener->CliShortname}}</td>
+										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
 									@endif
+									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
 									<td>{{$Gener->SedeName}}</td>
+									@endif
 									<td>{{$Gener->GenerShortname}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>

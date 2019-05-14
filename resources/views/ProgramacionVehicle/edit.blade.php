@@ -46,6 +46,15 @@
 								<div style="text-align: center; margin: auto;" id="descripModalCreate">
 									<form action="/vehicle-programacion" method="POST" id="formularioCreate">
 										@csrf
+										@if ($errors->create->any())
+											<div class="alert alert-danger" role="alert">
+												<ul>
+													@foreach ($errors->create->all() as $error)
+														<p>{{$error}}</p>
+													@endforeach
+												</ul>
+											</div>
+										@endif
 										<input type="hidden" name="FK_ProgServi" id="FK_ProgServi1" value="{{$programacion->FK_ProgServi}}">
 										<div class="box-body">
 											<div class="col-xs-12 col-md-6">
@@ -101,9 +110,18 @@
 				</div>
 				{{-- END Modal --}}
 				<div class="box box-info">
-					<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" {{-- data-toggle="validator" --}}>
 						@csrf
 						@method('PUT')
+						@if ($errors->edit->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->edit->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						<div class="box-body">
 							<div class="form-group col-md-6">
 								<label for="FK_ProgServi">{{ trans('adminlte_lang::message.progvehicservi') }}</label>
@@ -159,7 +177,6 @@
 							</div>
 							<div class="col-md-12 col-xs-12 box box-info"></div>
 							<div class="box-footer">
-								<a href="">{{date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days"))}}</a>
 								@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d'))
 								<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-success pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 								@endif
@@ -177,6 +194,9 @@
 @section('NewScript')
 	<script>
 		$(document).ready(function(){
+		@if ($errors->create->any())
+			$('#CrearProgVehic').modal("show");
+		@endif
 		@if(session('mensaje'))
 			NotifiTrue('{{session('mensaje')}}');
 		@endif
@@ -198,7 +218,7 @@
 			$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
 			$("#ProgVehFecha").prop('required', true);
 			$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);
-			$("#ProgVehSalida").prop('required', true);
+			// $("#ProgVehSalida").prop('required', true);
 			$("#FK_ProgVehiculo").before(`<small class="help-block with-errors">*</small>`);
 			$("#FK_ProgVehiculo").prop('required', true);
 			$("#FK_ProgConductor").before(`<small class="help-block with-errors">*</small>`);

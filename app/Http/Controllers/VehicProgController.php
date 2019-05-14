@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ProgramacionVehiculo;
+use Illuminate\Validation\Rule;
 use App\audit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -103,6 +106,16 @@ class VehicProgController extends Controller
      */
     public function store(Request $request)
     {
+        $validation = Validator::make($request->all(), [
+            'ProgVehFecha'        => 'required',
+            'ProgVehSalida'       => 'required',
+            'FK_ProgVehiculo'     => 'required',
+            'FK_ProgConductor'    => 'required',
+            'FK_ProgAyudante'     => 'required',
+        ]);
+        if ($validation->fails()) {
+            return back()->withErrors($validation, 'create')->withInput();
+        }
         if(date('H', strtotime($request->input('ProgVehSalida'))) >= 12){
             $turno = "0";
         }
@@ -184,7 +197,18 @@ class VehicProgController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
+        $validation = Validator::make($request->all(), [
+            'ProgVehFecha'        => 'required',
+            'ProgVehSalida'       => 'required',
+            'FK_ProgVehiculo'     => 'required',
+            'ProgVehEntrada'      => Rule::requiredIf($request->ProgVehEntrada),
+            'FK_ProgConductor'    => 'required',
+            'FK_ProgAyudante'     => 'required',
+            'progVehKm'           => Rule::requiredIf($request->ProgVehEntrada)
+        ]);
+        if ($validation->fails()) {
+            return back()->withErrors($validation, 'edit')->withInput();
+        }
         $salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
         $llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
         if($salida >= 12){
