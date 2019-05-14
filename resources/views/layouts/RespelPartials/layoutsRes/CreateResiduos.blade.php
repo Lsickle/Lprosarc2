@@ -7,11 +7,11 @@
 	</div>
 	<div class="col-md-6 form-group">
 					<label>Nombre</label>
-					<input name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
+					<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
 				</div> 
 				<div class="col-md-6 form-group">
 					<label>Descripcion</label>
-					<input name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
+					<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
 				</div> 
 				<div class="col-md-6 form-group">
 					<label>Peligrosidad</label>

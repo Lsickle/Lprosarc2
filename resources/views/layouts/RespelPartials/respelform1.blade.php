@@ -4,11 +4,11 @@
 			<div class="col-md-12"> <hr> </div>
 			<div class="col-md-6 form-group">
 				<label>Nombre</label>
-				<input name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
+				<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
 			</div> 
 			<div class="col-md-6 form-group">
-				<label>Descripcion</label>
-				<input name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Descripción del residuo</b>" data-content="<p style='width: 50%'> brinde una descripcion del residuo con base a sus caracteristicas, con el fin de facilitar la evaluacion del mismo, lo que permitira asignarle tratamientos viables adecuados</p>">Descripción <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
 			</div> 
 			<div class="col-md-6 form-group">
 				<label>Peligrosidad</label>
