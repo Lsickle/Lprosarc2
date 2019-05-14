@@ -94,6 +94,7 @@ class RespelController extends Controller
         $Cotizacion->save();
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
+            /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
                 $hoja = time().$file1->getClientOriginalName();
@@ -110,12 +111,21 @@ class RespelController extends Controller
             }else{
                 $tarj = 'default.png';
             }
+
+
             $respel = new Respel();
             $respel->RespelName = $request['RespelName'][$x];
             $respel->RespelDescrip = $request['RespelDescrip'][$x];
-            $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
-            $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
+            
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
+            /*validar la peligrosidad del residuo para insertar o no la clasificacion*/
+            if ($request['RespelIgrosidad'][$x]== 'No peligroso') {
+                $respel->YRespelClasf4741 = 'N/A';
+                $respel->ARespelClasf4741 = 'N/A';
+            }else{
+                $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
+                $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
+            }
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
             $respel->RespelStatus = 'Pendiente';

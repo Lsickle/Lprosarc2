@@ -53,11 +53,19 @@
 
 <script>
 	var contador = 1;
+	function attachPopover(){
+	    $('[data-toggle="popover"]').popover({
+	        html: true,
+	        trigger: 'hover',
+	        placement: 'auto'
+	    });
+	}
 	function setDanger(id){
 		var ifDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifDangerRespel')`;
 	    $("#danger"+id).empty();
 	    $("#danger"+id).append(ifDangerRespel);
 	    $("#hoja"+id).prop('required', true);
+	    attachPopover();
 	}
 	function setNoDanger(id){
 	    $("#danger"+id).empty();
@@ -71,11 +79,7 @@
 		$("#myform").validator('update');
 		$("#Clasif"+contador).append(ClasifY);
 		contador= parseInt(contador)+1;
-		$('[data-toggle="popover"]').popover({
-            html: true,
-            trigger: 'hover',
-            placement: 'auto'
-        });
+		attachPopover();
 	}
 	function AgregarY(id){
 		$("#ClasifY"+id).removeClass("btn-default");
@@ -85,6 +89,7 @@
 		$("#Clasif"+id).empty();
 		$("#Clasif"+id).append(ClasifY);
 		$("#myform").validator('update');
+		attachPopover();
 	}
 	function AgregarA(id){
 		$("#ClasifA"+id).removeClass("btn-default");
@@ -94,6 +99,7 @@
 		$("#Clasif"+id).empty();
 		$("#Clasif"+id).append(ClasifA);
 		$("#myform").validator('update');
+		attachPopover();
 	}
 	function EliminarRes(id){
 		$("#Residuo"+id).remove();
