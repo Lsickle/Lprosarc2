@@ -59,15 +59,15 @@
 										<div class="box-body">
 											<div class="col-xs-12 col-md-6">
 												<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-												<input  class="form-control fechas" type="date" id="ProgVehFecha1" name="ProgVehFecha">
+												<input  class="form-control" type="date" id="ProgVehFecha1" name="ProgVehFecha" value="{{date('Y-m-d')}}">
 											</div>
 											<div class="col-xs-12 col-md-6">
-												<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
-												<input class="form-control horas" type="text" id="ProgVehSalida1" name="ProgVehSalida">
+												<label for="ProgVehSalida1">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
+												<input class="form-control" type="time" id="ProgVehSalida1" name="ProgVehSalida" value="{{date('H:i')}}">
 											</div>
 											<div class="col-xs-12 col-md-12">
 												<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
-												<select name="FK_ProgVehiculo" id="FK_ProgVehiculo1" class="form-control select">
+												<select name="FK_ProgVehiculo" id="FK_ProgVehiculo1" class="form-control">
 													<option value="">Seleccione...</option>
 													@foreach($vehiculos as $vehiculo)
 													<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
@@ -75,8 +75,8 @@
 												</select>
 											</div>
 											<div class="col-xs-12 col-md-12">
-												<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
-												<select name="FK_ProgConductor" id="FK_ProgConductor1" class="form-control select">
+												<label for="FK_ProgConductor1">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
+												<select name="FK_ProgConductor" id="FK_ProgConductor1" class="form-control">
 													<option value="">Seleccione...</option>
 													@foreach($conductors as $conductor)
 														<option value="{{$conductor->ID_Pers}}" >{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
@@ -84,8 +84,8 @@
 												</select>
 											</div>
 											<div class="col-xs-12 col-md-12">
-												<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
-												<select name="FK_ProgAyudante" id="FK_ProgAyudante1" class="form-control select">
+												<label for="FK_ProgAyudante1">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
+												<select name="FK_ProgAyudante" id="FK_ProgAyudante1" class="form-control">
 													<option value="">Seleccione...</option>
 													@foreach($ayudantes as $ayudante)
 														<option value="{{$ayudante->ID_Pers}}" >{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
@@ -93,7 +93,7 @@
 												</select>
 											</div>
 											<div class="col-xs-12 col-md-12">
-												<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
+												<label for="ProgVehColor1">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 												<input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor" value="{{$programacion->ProgVehColor}}">
 											</div>
 											<input type="submit" hidden="true" id="submit1" name="submit1">
@@ -103,7 +103,6 @@
 							</div>
 							<div class="modal-footer">
 								<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
-								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.cancel') }}</button>
 							</div>
 						</div>
 					</div>
@@ -133,15 +132,15 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-								<input type="text" class="form-control fechas" id="ProgVehFecha" name="ProgVehFecha" value="{{$programacion->ProgVehFecha}}">
+								<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
 							</div>
 							<div class="form-group col-md-6">
 								<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
-								<input type="text" class="form-control horas" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('h:i A', strtotime($programacion->ProgVehSalida))}}">
+								<input type="time" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
 							</div>
 							<div class="form-group col-md-6">
 								<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label>
-								<input type="text" class="form-control horas" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}">
+								<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
 							</div>
 							<div class="form-group col-md-6">
 								<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
@@ -200,6 +199,14 @@
 		@if(session('mensaje'))
 			NotifiTrue('{{session('mensaje')}}');
 		@endif
+		$("#CrearProgVehic").on("hidden.bs.modal", function () {
+			$('#FK_ProgVehiculo1').val("");
+			$('#FK_ProgConductor1').val("");
+			$('#ProgVehSalida1').val("{{date('H:i')}}");
+			$('#FK_ProgAyudante1').val("");
+			$('#ProgVehFecha1').val("{{date('Y-m-d')}}");
+			$('#ProgVehColor1').val("#0000f6");
+		});
 		@if($programacion->ProgVehEntrada <> null)
 			$(".select2-selection").css("background-image", "none");
 			$("#FK_ProgServi").prop("disabled", true);
