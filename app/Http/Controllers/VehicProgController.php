@@ -93,8 +93,6 @@ class VehicProgController extends Controller
                 }
             })
             ->get();
-            // return $programacions;
-        // return $serviciosnoprogramados;
         return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos'));
     }
 
@@ -106,6 +104,7 @@ class VehicProgController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $validation = Validator::make($request->all(), [
             'ProgVehFecha'        => 'required',
             'ProgVehSalida'       => 'required',

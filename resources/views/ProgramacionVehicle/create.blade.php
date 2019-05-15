@@ -16,8 +16,8 @@
 				<div id="external-events">
 					@foreach($serviciosnoprogramados as $servicionoprogramado)
 						<p style="background-color: #001f3f; border-color: #001f3f; text-align: center; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle col-md-12">
-							<span style="background-color: #001f3f; border-color: #001f3f; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12">{{$servicionoprogramado->ID_SolSer}}</span>
-							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='bg-aqua pull-right col-md-3 btn-block' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
+							<span style="background-color: #001f3f; border-color: #001f3f; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">{{$servicionoprogramado->ID_SolSer}}</span>
+							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='bg-aqua pull-right col-md-12 form-group col-xs-12 btn-block' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
 						</p>
 					@endforeach
 				</div>
@@ -42,49 +42,62 @@
 				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
 			</div>
 			<div class="modal-body">
-				<div style="text-align: center; margin: auto;" id="descripModalCreate">
-					<form action="/vehicle-programacion" method="POST" id="formularioCreate">
+				<div style="margin: auto;" id="descripModalCreate">
+					<form action="/vehicle-programacion" method="POST" id="formularioCreate" data-toggle="validator">
 						@csrf
-						<input type="hidden" name="FK_ProgServi" id="FK_ProgServi">
+						@if ($errors->create->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->create->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
+						<input type="text" hidden name="FK_ProgServi" id="FK_ProgServi">
 						<div class="box-body">
-							<div class="col-xs-12 col-md-6">
+							<div class="form-group col-xs-12 col-md-6">
 								<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-								<input  class="form-control fechas" readonly type="text" id="ProgVehFecha" name="ProgVehFecha">
+								<input  class="form-control" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
 							</div>
-							<div class="col-xs-12 col-md-6">
+							<div class="form-group col-xs-12 col-md-6">
 								<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
-								<input class="form-control horas" type="text" id="ProgVehSalida" name="ProgVehSalida">
+								<input class="form-control" type="time" required id="ProgVehSalida" name="ProgVehSalida" value="{{old('ProgVehSalida')}}">
+								<small class="help-block with-errors"></small>
 							</div>
-							<div class="col-xs-12 col-md-12">
+							<div class="form-group col-xs-12 col-md-12">
 								<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
-								<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control">
+								<small class="help-block with-errors">*</small>
+								<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control" required>
 									<option value="">Seleccione...</option>
 									@foreach($vehiculos as $vehiculo)
-										<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
+										<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_ProgVehiculo') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col-xs-12 col-md-12">
+							<div class="form-group col-xs-12 col-md-12">
 								<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
-								<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control">
+								<small class="help-block with-errors">*</small>
+								<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control" required>
 									<option value="">Seleccione...</option>
 									@foreach($conductors as $conductor)
-										<option value="{{$conductor->ID_Pers}}" >{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
+										<option value="{{$conductor->ID_Pers}}" {{old('FK_ProgConductor') == $conductor->ID_Pers ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col-xs-12 col-md-12">
+							<div class="form-group col-xs-12 col-md-12">
 								<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
-								<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control">
+								<small class="help-block with-errors">*</small>
+								<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control" required>
 									<option value="">Seleccione...</option>
 									@foreach($ayudantes as $ayudante)
-										<option value="{{$ayudante->ID_Pers}}" >{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
+										<option value="{{$ayudante->ID_Pers}}" {{old('FK_ProgAyudante') == $ayudante->ID_Pers ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 									@endforeach
 								</select>
 							</div>
-							<div class="col-xs-12 col-md-12">
+							<div class="form-group col-xs-12 col-md-12">
 								<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="#0000f6">
+								<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
 							</div>
 							<input type="submit" hidden="true" id="submit1" name="submit1">
 						</div>
@@ -93,7 +106,6 @@
 			</div>
 			<div class="modal-footer">
 				<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
-				<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.cancel') }}</button>
 			</div>
 		</div>
 	</div>
@@ -101,82 +113,82 @@
 {{-- END Modal --}}
 
 {{--  Modal --}}
-<div class="modal modal-default fade in" id="ModalEventos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal modal-default fade in" id="CrearMantVehic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="titleModal"></h4>
+				<h4 class="modal-title" id="titleModal">Mantenimiento de Vehiculos</h4>
 			</div>
 			<div class="modal-body">
-				<div style="text-align: center; margin: auto;" id="descripModal">
-					<form action="" method="POST" id="formularioModal">
+				<div style="margin: auto;" id="descripModal">
+					<form action="/vehicle-mantenimiento" method="POST" id="formularioModal" data-toggle="validator">
 						@csrf
-						@method('PUT')
+						@if ($errors->createManVeh->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->createManVeh->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						<div class="box-body">
-							<div class="col-xs-12 col-md-6">
-								<label for="textFecha1">Fecha:</label>
-								<input required class="form-control" type="text" id="textFecha1" name="textFecha1">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textTipo">Tipo:</label>
-								<input required class="form-control" type="text" id="textTipo" value="Trabaja" name="textTipo" readonly>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textVehiculo1">Vehiculo:</label>
-								<select name="textVehiculo1" class="form-control" id="textVehiculo1">
-									<option value="" >Seleccione...</option>
-									@foreach($vehiculos as $vehiculo)
-									<option value="{{$vehiculo->ID_Vehic}}">{{$vehiculo->VehicPlaca}}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textkm1">Kilometraje:</label>
-								<input class="form-control" type="text" id="textkm1" name="textkm1">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textHoraSali1">Hora Salida:</label>
-								<input required class="form-control" type="text" id="textHoraSali1" name="textHoraSali1">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textHoraLlega1">Hora Llegada:</label>
-								<input class="form-control" type="text" id="textHoraLlega1" name="textHoraLlega1">
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textConductor1">Conductor:</label>
-								<select name="textConductor1" class="form-control" id="textConductor1">
-									@foreach($conductors as $conductor)
-									<option value="{{$conductor->ID_Pers}}">{{$conductor->PersFirstName." ".$conductor->PersLastName}}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<label for="textAyudante1">Ayudante:</label>
-								<select name="textAyudante1" class="form-control" id="textAyudante1">
-									@foreach($ayudantes as $ayudante)
-									<option value="{{$ayudante->ID_Pers}}">{{$ayudante->PersFirstName." ".$ayudante->PersLastName}}</option>
-									@endforeach
-								</select>
-								<input type="submit" hidden="true" id="submit2" name="submit2">
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="FK_VehMan">Vehiculo:</label>
+									<select name="FK_VehMan" class="form-control" required id="FK_VehMan">
+										<option value="" >Seleccione...</option>
+										@foreach($vehiculos as $vehiculo)
+										<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_VehMan') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
+										@endforeach
+									</select>
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="MvKm">Kilometraje:</label>
+									<input maxlength="11" class="form-control" required type="text" id="numeric" name="MvKm" value="{{old('MvKm')}}">
+									<small class="help-block with-errors"></small>
+								</div>
 							</div>
 							<div class="col-xs-12 col-md-12">
-								<label for="ProgVehColor1">Color de la programación:</label>
-								{{-- <input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor1" value=""> --}}
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavFin1">Fecha de Finalización:</label>
+									<input type="date" id="HoraMavFin1" required name="HoraMavFin1" class="form-control" value="{{old('HoraMavFin1') <> null ? old('HoraMavFin1') : date('Y-m-d')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavInicio1">Fecha de Inicio:</label>
+									<input type="date" required id="HoraMavInicio1" name="HoraMavInicio1" class="form-control" value="{{old('HoraMavInicio1') <> null ? old('HoraMavInicio1') : date('Y-m-d')}}">
+									<small class="help-block with-errors"></small>
+								</div>
 							</div>
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavInicio">Hora de Inicio:</label>
+									<input required class="form-control" type="time" id="HoraMavInicio" name="HoraMavInicio" value="{{old('HoraMavInicio') <> null ? old('HoraMavInicio') : date('H:i')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavFin">Hora de Finzalización:</label>
+									<input class="form-control horas" type="time" required id="HoraMavFin" name="HoraMavFin" value="{{old('HoraMavFin') <> null ? old('HoraMavFin') : date('H:i')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="MvType">Tipo de Mantenimiento:</label>
+									<input type="text" class="form-control" required maxlength="255" id="MvType" name="MvType" value="{{old('MvType')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+							</div>
+							<input type="submit" hidden="true" id="submit2" name="submit2">
 						</div>
-					</form>
-					<form action="" method="POST" id="formulario2Modal1">
-						@csrf
-						@method('DELETE')
-						
 					</form>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<label for="submit2" class="btn btn-warning">Modificar</label>
-				<a href='#' data-toggle='modal' id="buttonDelete" data-target="#myModal" class="btn btn-danger">Borrar</a>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<label for="submit2" class="btn btn-success">Añadir</label>
 			</div>
 		</div>
 	</div>
@@ -186,6 +198,16 @@
 @endsection
 @section('NewScript')
 <script>
+	@if ($errors->create->any())
+		$(document).ready(function(){
+			$('#CrearProgVehic').modal("show");
+		});
+	@endif
+	@if ($errors->createManVeh->any())
+		$(document).ready(function(){
+			$('#CrearMantVehic').modal("show");
+		});
+	@endif
 	document.addEventListener('DOMContentLoaded', function() {
 		@if(session('Delete'))
 			NotifiTrue('{{session('Delete')}}');
@@ -219,7 +241,7 @@
 				AddMantVehc: {
 					text: 'Añadir Mantenimiento',
 					click: function() {
-						$('#ModalEventos').modal();
+						$('#CrearMantVehic').modal();
 					}
 				},
 				ListProg: {
@@ -253,7 +275,7 @@
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
-							title: '{{$programacion->ID_SolSer." - ".$programacion->VehicPlaca}}',
+							title: '{{$programacion->VehicPlaca." - ".$programacion->ID_SolSer}}',
 							color: '{{$programacion->ProgVehColor}}',
 							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
@@ -263,7 +285,7 @@
 					@foreach($mantenimientos as $mantenimiento)
 						{
 							id: '{{url('/vehicle-mantenimiento/'.$mantenimiento->ID_Mv)}}',
-							title: '{{$mantenimiento->MvType." - ".$mantenimiento->VehicPlaca}}',
+							title: '{{$mantenimiento->VehicPlaca." - ".$mantenimiento->MvType}}',
 							color: 'brown',
 							start: '{{$mantenimiento->HoraMavInicio}}',
 							end: '{{$mantenimiento->HoraMavFin}}',
@@ -273,8 +295,9 @@
 				],
 			}],
 			drop : function( dropInfo ) {
-				let hora = calendar.formatDate(dropInfo.dateStr, {
+				let hora = FullCalendar.formatDate(dropInfo.date.toUTCString(), {
 					hour: '2-digit',
+					hour12: false,
 					minute: '2-digit'
 				});
 				document.getElementById('ProgVehFecha').value = dropInfo.dateStr;

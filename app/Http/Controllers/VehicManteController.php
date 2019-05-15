@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MantenimientoVehiculo;
 use Illuminate\Support\Facades\DB;
@@ -53,16 +55,37 @@ class VehicManteController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'after' => 'El campo :attribute debe ser una hora posterior a :date.',
+        ];
+        $validation = Validator::make($request->all(), [
+            'FK_VehMan'        => 'required',
+            'MvKm'             => 'required|numeric|max:11',
+            'HoraMavInicio1'   => 'required|date',
+            'HoraMavInicio'    => 'required',
+            'HoraMavFin1'      => 'required|date|after_or_equal:HoraMavInicio1',
+            'HoraMavFin'       => 'required',
+            'MvType'           => 'required|alpha|max:255',
+        ]);
+        if($request->input('HoraMavInicio1') == $request->input('HoraMavFin1')){
+            $validation = Validator::make($request->all(), [
+                'HoraMavInicio'    => 'required',
+                'HoraMavFin'       => 'required|after:HoraMavInicio',
+            ], $messages);
+        }
+        if ($validation->fails()) {
+            return back()->withErrors($validation, 'createManVeh')->withInput();
+        }
         $MantVehicles = new MantenimientoVehiculo();
         $MantVehicles->MvKm = $request->input('MvKm');
         $MantVehicles->MvType = $request->input('MvType');
-        $MantVehicles->HoraMavInicio = $request->input('HoraMavInicio');
-        $MantVehicles->HoraMavFin = $request->input('HoraMavFin');
+        $MantVehicles->HoraMavInicio = $request->input('HoraMavInicio1').' '.$request->input('HoraMavInicio');
+        $MantVehicles->HoraMavFin = $request->input('HoraMavFin1').' '.$request->input('HoraMavFin');
         $MantVehicles->FK_VehMan = $request->input('FK_VehMan');
         $MantVehicles->MvDelete = 0;
         $MantVehicles->save();
 
-        return redirect()->route('vehicle-mantenimiento.index');
+        return redirect()->route('vehicle-programacion.create');
     }
 
     /**
