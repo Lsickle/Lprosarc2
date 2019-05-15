@@ -97,7 +97,7 @@
         </div>
         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
          {{--  Modal Agregar un Residuo a una SedeGener--}}
-        <form role="form" action="/respelSedeGener" method="POST" enctype="multipart/form-data" data-toggle="validator">
+        <form role="form" action="/respelGener" method="POST" enctype="multipart/form-data" data-toggle="validator">
             @csrf
             
             <div class="modal modal-default fade in" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -131,7 +131,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
-                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple>
+                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
                                     @if(isset($Residuos))
                                     {{-- @foreach ($Residuos as $Key => $Residuo) --}}
                                         @foreach ($Residuos as $Residuo)
@@ -190,7 +190,7 @@
                                     <li class="col-md-12 col-xs-12 col-12">
                                         {{--  Modal Eliminar un Residuo de una SedeGener--}}
                                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                        <form action='/respelSedeGener/{{$Respel->ID_SGenerRes}}' method='POST' class="col-12 pull-right">
+                                        <form action='/respelGener/{{$Respel->ID_SGenerRes}}' method='POST' class="col-12 pull-right">
                                             @method('DELETE')
                                             @csrf
                                             <div class="modal modal-default fade in" id="delete{{$Respel->ID_SGenerRes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

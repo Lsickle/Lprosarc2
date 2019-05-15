@@ -50,8 +50,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
-	Route::post('/respelSedeGener', 'RespelSedeGenerController@store');
-	Route::delete('/respelSedeGener/{id}', 'RespelSedeGenerController@destroy');
+	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
+	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
+	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
+	Route::delete('/respelSGener/{id}', 'RespelSedeGenerController@destroySGener');
 	Route::resource('/permisos', 'RolesController');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');

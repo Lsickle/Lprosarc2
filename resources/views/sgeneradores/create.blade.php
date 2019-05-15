@@ -32,7 +32,7 @@
 								<div class="box-body">
 									<div class="col-md-6 form-group ">
 										<label for="FK_GSede">{{ trans('adminlte_lang::message.gener') }}</label><small class="help-block with-errors">*</small>
-										<select class="form-control select" id="FK_GSede" name="FK_GSede">
+										<select class="form-control select" id="FK_GSede" name="FK_GSede" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach ($Generadores as $Generador)
 												<option value="{{$Generador->ID_Gener}}" {{ old('FK_GSede') == $Generador->ID_Gener ? 'selected' : '' }}>{{$Generador->GenerName}}</option>
@@ -69,7 +69,7 @@
 									</div>
 									<div class="col-md-6 form-group ">
 										<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
-										<input type="email" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="GSedeEmail" value="{{old('GSedeEmail')}}" required="true">
+										<input type="email" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="GSedeEmail" value="{{old('GSedeEmail')}}" >
 									</div>
 									<div class="col-md-6 form-group">
 										<label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
@@ -82,10 +82,10 @@
 									</div>
 									
 									<div class="col-md-6 form-group ">
-										<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
+										<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors"></small>
 										<div class="input-group">
 											<span class="input-group-addon">(+57)</span>
-											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}">
+											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}">
 										</div>
 									</div>
 									<div class="col-md-6 form-group">
