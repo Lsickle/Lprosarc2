@@ -8,7 +8,7 @@
 @section('main-content')
 <div class="row">
 	<div class="col-md-3">
-		<div class="box box-info">
+		<div class="box box-info" style="overflow-y: auto; max-height: 560px;">
 			<div class="box-header with-border">
 				<h4 class="box-title">Servicios Por Programar</h4>
 			</div>
@@ -230,14 +230,14 @@
 				}
 			},
 			header: {
-				left: 'AddMantVehc',
-				center: 'ListProg',
+				left: 'dayGridMonth,timeGridWeek',
+				center: 'title',
 				right: 'prev,today,next'
 			},
 			footer: {
-				left: 'title',
+				left: 'AddMantVehc',
 				center: '',
-				right: 'dayGridMonth,timeGridWeek'
+				right: 'ListProg'
 			},
 			eventLimit: true,
 			views: {

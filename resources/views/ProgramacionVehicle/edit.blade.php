@@ -177,7 +177,7 @@
 							</div>
 							<div class="col-md-12 col-xs-12 box box-info"></div>
 							<div class="box-footer">
-								@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d'))
+								@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null)
 								<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-success pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 								@endif
 								<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
@@ -212,13 +212,13 @@
 			$("#progVehKm").prop("disabled", true);
 			$("#ProgVehColor").prop("disabled", true);
 			$("#update").prop("disabled", true);
-		@elseif(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+		@elseif(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno'))
 			$("#FK_ProgServi").before(`<small class="help-block with-errors">*</small>`);
 			$("#FK_ProgServi").prop('required', true);
 			$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
 			$("#ProgVehFecha").prop('required', true);
 			$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);
-			// $("#ProgVehSalida").prop('required', true);
+			$("#ProgVehSalida").prop('required', true);
 			$("#FK_ProgVehiculo").before(`<small class="help-block with-errors">*</small>`);
 			$("#FK_ProgVehiculo").prop('required', true);
 			$("#FK_ProgConductor").before(`<small class="help-block with-errors">*</small>`);
