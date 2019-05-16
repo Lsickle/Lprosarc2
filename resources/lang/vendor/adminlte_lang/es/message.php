@@ -208,6 +208,7 @@ return [
     'modaldeletegener'        => '¿Seguro, quiere eliminar',
     'modalgener'              => 'de todas las sedes del generador',
     'modaldelete'             => 'Si, eliminar',
+    'modalsgener'              => 'de la sedes',
 
 
     // personal
@@ -294,10 +295,13 @@ return [
 
     // generador sede
     'gsederegister'           => 'registro de sede',
-    'gsedeupdate'             => 'Actualizar sede',
+    'gsedeupdate'             => 'Actualización de la Sede del Generador',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
+    'sgenerlist'              => 'Lista de las Sedes del Generador',
+    'sgenernamesede'         => 'Nombre de la Sede',
+    
     
     // area
     'areatitle'               => 'Áreas',
@@ -456,7 +460,7 @@ return [
     // info-gener
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social',
-    'code-gener'              => 'Codigo con el que usted tiene registrado la este Generador',
+    'code-gener'              => 'Codigo con el que usted tiene registrado este Generador',
     'respels-gener'           => 'Residuos pertenecientes a este Generador',
 
 ];

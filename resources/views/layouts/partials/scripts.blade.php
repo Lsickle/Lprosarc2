@@ -1190,6 +1190,7 @@ $(document).ready(function() {
 });
 </script>
 @endif
+@if(Route::currentRouteName() === 'sgeneradores.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
@@ -1237,6 +1238,8 @@ $(document).ready(function() {
 });
 
 </script>
+@endif
+
 <script>
 $(document).ready(function() {
     $('#selectconfiltro').select2({});
@@ -1374,7 +1377,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1402,7 +1405,7 @@ $(document).ready(function() {
             });
         </script>
     @endif
-    @if(Route::currentRouteName() === 'generadores.create')
+    @if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
         <script>
             $(document).ready(function(){    
                 if({{old('GSedeExt1')}} !== null){
@@ -1499,7 +1502,7 @@ $(document).ready(function() {
     });
 });
 </script>
-@if(Route::currentRouteName() === 'generadores.show')
+@if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
     @if ($errors->any())
         <script>
             $(document).ready(function()
@@ -1508,34 +1511,36 @@ $(document).ready(function() {
             });
         </script>
     @endif
-<script>
-    $(document).ready(function(){
-        $("#FK_SGener").change(function(e){
-            id=$("#FK_SGener").val();
-            e.preventDefault();
-            $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-            });
-            $.ajax({
-                url: "{{url('/sedegener-respel')}}/"+id,
-                method: 'GET',
-                data:{},
-                success: function(res){
-                    $("#FK_Respel").empty();
-                    var respel = new Array();
-                    for(var i = res.length -1; i >= 0; i--){
-                        if ($.inArray(res[i].ID_Respel, respel) < 0) {
-                            $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
-                            respel.push(res[i].ID_Mun);
-                        }
+    @if (Route::currentRouteName() === 'generadores.show')
+        <script>
+            $(document).ready(function(){
+                $("#FK_SGener").change(function(e){
+                    id=$("#FK_SGener").val();
+                    e.preventDefault();
+                    $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
-                }
-            })
-        });
-    });
-</script>
+                    });
+                    $.ajax({
+                        url: "{{url('/sedegener-respel')}}/"+id,
+                        method: 'GET',
+                        data:{},
+                        success: function(res){
+                            $("#FK_Respel").empty();
+                            var respel = new Array();
+                            for(var i = res.length -1; i >= 0; i--){
+                                if ($.inArray(res[i].ID_Respel, respel) < 0) {
+                                    $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+                                    respel.push(res[i].ID_Mun);
+                                }
+                            }
+                        }
+                    })
+                });
+            });
+        </script>
+    @endif
 @endif
 
 {{-- script para agregar pretatamientos en el create y edit de tratamientos --}}

@@ -73,10 +73,12 @@ class genercontroller extends Controller
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $id)
+                ->where('respels.RespelDelete', '=', 0)
                 ->get();
             
             if (old('FK_GSedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
+                return old('FK_GSedeMun');
             }
             return view('generadores.create', compact('Sedes', 'Clientes', 'Departamentos', 'Municipios', 'Respels'));
         }else{
@@ -124,10 +126,10 @@ class genercontroller extends Controller
             }
         }
         $SGener->GSedeEmail = $request->input('GSedeEmail');
-        $SGener->GSedeCelular = $request->input('GenerCode');
+        $SGener->GSedeCelular = $request->input('GSedeCelular');
         $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
         $SGener->FK_GSede = $Gener->ID_Gener;
-        $SGener->FK_GSedeMun = $request->input('GenerDelete');
+        $SGener->FK_GSedeMun = $request->input('FK_GSedeMun');
         $SGener->GSedeDelete = 0;
         $SGener->save();
 
