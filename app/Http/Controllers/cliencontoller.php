@@ -223,7 +223,8 @@ class clientcontoller extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
         
-        return redirect()->route('clientes.index');
+        $id = $cliente->CliSlug;
+        return redirect()->route('clientes.edit', compact('id'));
     }
 
     /**

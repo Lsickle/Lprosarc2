@@ -1235,6 +1235,49 @@ $(document).ready(function() {
 
 </script>
 @endif
+@if(Route::currentRouteName() === 'contactos.index')
+<script>
+var rol = "<?php echo Auth::user()->UsRol; ?> ";
+botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+$(document).ready(function() {
+    $('#contactosTable').DataTable({
+        // pagingType: 'scrolling',
+        // scrollY: 300,
+        responsive: true,
+        // keys: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+            botoncito,
+            {
+                extend: 'collection',
+                text: 'Selector',
+                buttons: ['selectRows', 'selectCells']
+            }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true,
+        
+        fixedHeader: {
+            header: true
+        }
+    });
+
+    var table = $('#contactosTable').DataTable();
+
+    table.on('draw', function() {
+        var body = $(table.table().body());
+
+        body.unhighlight();
+        body.highlight(table.search());
+    });
+});
+
+</script>
+@endif
 
 <script>
 $(document).ready(function() {

@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	
 	Route::resource('/clientes', 'clientcontoller');
+	Route::resource('/contactos', 'ContactoController');
 	Route::get('/cliente/{id}', 'clientcontoller@viewClientShow')->name('cliente');
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
