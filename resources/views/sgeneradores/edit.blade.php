@@ -73,7 +73,7 @@
 										<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
 										<div class="input-group">
 											<span class="input-group-addon">(+57)</span>
-											<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" name="GSedeCelular" value="{{$GSede->GSedeCelular}}">
+											<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" name="GSedeCelular" value="{{$GSede->GSedeCelular}}" required>
 										</div>
 									</div>
 									<div class="col-md-6 form-group">
