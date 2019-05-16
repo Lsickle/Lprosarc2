@@ -6,47 +6,48 @@
 		</label>
 	</div>
 	<div class="col-md-6 form-group">
-		<label>Nombre</label>
-		<input name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
-	</div>
-	<div class="col-md-6 form-group">
-		<label>Descripcion</label>
-		<input name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
-	</div>
-	<div class="col-md-6 form-group" style="text-align: center;">
-		<label>Tipo de clasificación</label><br>
-		<a class="btn btn-success" id="ClasifY`+contador+`" onclick="AgregarY(`+contador+`)">Y</a>
-		<a class="btn btn-primary" id="ClasifA`+contador+`" onclick="AgregarA(`+contador+`)">A</a>
-	</div>
-	<div class="col-md-6 form-group" id="Clasif`+contador+`">
-	</div>
-	<div class="col-md-6 form-group">
-		<label>Peligrosidad del residuo</label>
-		<select name="RespelIgrosidad[]" class="form-control" required>
-			<option value="">Selecione...</option>
-			<option>Inflamable</option>
-			<option>Toxico</option>
-			<option>Biologico</option>
-			<option>Corrosivo</option>
-			<option>Reactivo</option>
-		</select>
-	</div>
-	<div class="col-md-6 form-group">
-		<label>Estado del residuo</label>
-		<select name="RespelEstado[]" class="form-control" required>
-			<option value="">Selecione...</option>
-			<option value="Liquido">Liquido</option>
-			<option value="Solido">Solido</option>
-			<option value="Gaseoso">Gaseoso</option>
-			<option value="Mezcla">Mezcla</option>
-		</select>
-	</div>
-	<div class="col-md-6 form-group">
-		<label>Hoja de seguridad</label>
-		<input name="RespelHojaSeguridad[]" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf" required>
-	</div>
-	<div class="col-md-6 form-group">
-		<label>Tarjeta De Emergencia</label>
-		<input name="RespelTarj[]" type="file" class="form-control" accept=".png, .jpg, .jpeg,.pdf">
-	</div>
+					<label>Nombre</label>
+					<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
+				</div> 
+				<div class="col-md-6 form-group">
+					<label>Descripcion</label>
+					<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
+				</div> 
+				<div class="col-md-6 form-group">
+					<label>Peligrosidad</label>
+					<select id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
+						<option value="">Selecione...</option>
+						<option onclick="setDanger(`+contador+`)">Corrosivo</option>
+						<option onclick="setDanger(`+contador+`)">Reactivo</option>
+						<option onclick="setDanger(`+contador+`)">Explosivo</option>
+						<option onclick="setDanger(`+contador+`)">Toxico</option>
+						<option onclick="setDanger(`+contador+`)">Inflamable</option>
+						<option onclick="setDanger(`+contador+`)">Patogeno - Infeccioso</option>
+						<option onclick="setDanger(`+contador+`)">Radiactivo</option> 
+						<option onclick="setNoDanger(`+contador+`)">No peligroso</option>
+					</select>
+				</div> 
+				<div class="col-md-6 form-group">
+					<label>Estado fisico</label>
+					<select name="RespelEstado[]" class="form-control" required>
+						<option value="">Selecione...</option>
+						<option value="Liquido">Liquido</option>
+						<option value="Solido">Solido</option>
+						<option value="Gaseoso">Gaseoso</option>
+						<option value="Mezcla">Mezcla</option> 
+					</select>
+				</div>
+				<div id="danger`+contador+`">
+					
+				</div>
+				<div class="col-md-6 form-group">
+				    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>">Hoja de seguridad <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				    <input required id="hoja`+contador+`" name="RespelHojaSeguridad[]" type="file" class="form-control" accept=".pdf">
+
+				</div> 
+				<div class="col-md-6 form-group">
+				    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio... sin embargo, podra postponer la carga de la <b>Tarjeta de Emergencia</b> hasta el momento en el que vaya a realizar un solicitud de servicio</p>">Tarjeta De Emergencia <i  style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				    <input name="RespelTarj[]" type="file" class="form-control" accept=".pdf">
+				</div> 
+				
 </div>

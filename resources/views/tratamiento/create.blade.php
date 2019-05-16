@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="input1">{{ trans('adminlte_lang::LangTratamiento.tratname') }}</label>
-                                        <input id="input1" class="form-control" type="text" name="TratName">
+                                        <input maxlength="60" id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
                                     <div class="col-md-12">
@@ -58,9 +58,9 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.tratcreate') }}</button>
+                                    <button type="submit" class="btn btn-success" style="margin-left: 1.5rem;"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.tratcreate') }}</button>
 
-                                    <button type="" class="btn btn-danger pull-right"><i class="fas fa-backspace"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</button>
+                                    <a class="btn btn-default btn-close pull-right" style="margin-right: 1.7rem;" href="{{ route('tratamiento.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
                                 </div>
                             </form>
                         </div>

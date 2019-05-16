@@ -38,7 +38,7 @@
                   </div>
                   <div class="col-md-6">
                     <label for="input1">{{ trans('adminlte_lang::LangTratamiento.tratname') }}</label>
-                    <input id="input1" class="form-control" type="text" name="TratName" value="{{$tratamiento->TratName}}">
+                    <input maxlength="60" id="input1" class="form-control" type="text" name="TratName" value="{{$tratamiento->TratName}}">
                   </div>
                   <div class="col-md-12">
                     <div class="panel panel-default" style="margin-top: 2%;">
@@ -59,14 +59,14 @@
                         <div class="col-md-6" id="pretratname{{$contador}}">
                           <label for="input[]">{{ trans('adminlte_lang::LangTratamiento.pretratname') }} </label>
                           <div class="input-group">
-                            <input id="input[]" class="form-control" type="text" name="PreTratName[]" value="{{$pretratamiento->PreTratName}}" required>
+                            <input maxlength="60" id="input[]" class="form-control" type="text" name="PreTratName[]" value="{{$pretratamiento->PreTratName}}" required>
                             <a data-placement="auto" data-trigger="hover" data-html="true" onclick="EliminarPreTrat({{$contador}})" class="input-group-addon" style=" color: red;" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.pretratname') }}" data-content="{{ trans('adminlte_lang::LangTratamiento.popoverdescript1') }}"><i class="fas fa-backspace"></i></a>
                           </div><br>
                         </div>
                         <div class="col-md-6" id="pretratdescription{{$contador}}">
                           <label for="inputdescript[]">{{ trans('adminlte_lang::LangTratamiento.pretratdescript') }} </label>
                           <div class="input-group">
-                            <input id="inputdescript[]" class="form-control" type="text" name="PreTratDescription[]" value="{{$pretratamiento->PreTratDescription}}">
+                            <input maxlength="250" id="inputdescript[]" class="form-control" type="text" name="PreTratDescription[]" value="{{$pretratamiento->PreTratDescription}}">
                             <a data-placement="auto" data-trigger="hover" data-html="true" class="input-group-addon" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.popovertittle2') }}" data-content="<p style='width: 50%'>{{ trans('adminlte_lang::LangTratamiento.popoverdescript2') }}</p>"><i class="fas fa-info-circle"></i></a>
                           </div>
                         </div>
