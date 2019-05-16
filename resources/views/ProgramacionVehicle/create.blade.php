@@ -70,7 +70,7 @@
 									<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control" required>
-										<option value="">Seleccione...</option>
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($vehiculos as $vehiculo)
 											<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_ProgVehiculo') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
@@ -80,7 +80,7 @@
 									<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control" required>
-										<option value="">Seleccione...</option>
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($conductors as $conductor)
 											<option value="{{$conductor->ID_Pers}}" {{old('FK_ProgConductor') == $conductor->ID_Pers ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
@@ -90,7 +90,7 @@
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control" required>
-										<option value="">Seleccione...</option>
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($ayudantes as $ayudante)
 											<option value="{{$ayudante->ID_Pers}}" {{old('FK_ProgAyudante') == $ayudante->ID_Pers ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 										@endforeach
@@ -120,7 +120,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="titleModal">Mantenimiento de Vehiculos</h4>
+				<h4 class="modal-title" id="titleModal">{{ trans('adminlte_lang::message.mantvehititle') }}</h4>
 			</div>
 			<div class="box box-info">
 				<div class="modal-body">
@@ -139,9 +139,9 @@
 							<div class="box-body">
 								<div class="col-xs-12 col-md-12">
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="FK_VehMan">Vehiculo:</label>
+										<label for="FK_VehMan">{{ trans('adminlte_lang::message.mantvehivehic') }}</label>
 										<select name="FK_VehMan" class="form-control" required id="FK_VehMan">
-											<option value="" >Seleccione...</option>
+											<option value="" >{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach($vehiculos as $vehiculo)
 											<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_VehMan') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 											@endforeach
@@ -149,38 +149,38 @@
 										<small class="help-block with-errors"></small>
 									</div>
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="MvKm">Kilometraje:</label>
+										<label for="MvKm">{{ trans('adminlte_lang::message.mantvehikm') }}</label>
 										<input maxlength="11" class="form-control number" required type="text" id="MvKm" name="MvKm" value="{{old('MvKm')}}">
 										<small class="help-block with-errors"></small>
 									</div>
 								</div>
 								<div class="col-xs-12 col-md-12">
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="HoraMavInicio1">Fecha de Inicio:</label>
+										<label for="HoraMavInicio1">{{ trans('adminlte_lang::message.mantvehiinicio1') }}</label>
 										<input type="date" required id="HoraMavInicio1" name="HoraMavInicio1" class="form-control" value="{{old('HoraMavInicio1') <> null ? old('HoraMavInicio1') : date('Y-m-d')}}">
 										<small class="help-block with-errors"></small>
 									</div>
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="HoraMavFin1">Fecha de Finalización:</label>
+										<label for="HoraMavFin1">{{ trans('adminlte_lang::message.mantvehifin1') }}</label>
 										<input type="date" id="HoraMavFin1" required name="HoraMavFin1" class="form-control" value="{{old('HoraMavFin1') <> null ? old('HoraMavFin1') : date('Y-m-d')}}">
 										<small class="help-block with-errors"></small>
 									</div>
 								</div>
 								<div class="col-xs-12 col-md-12">
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="HoraMavInicio">Hora de Inicio:</label>
+										<label for="HoraMavInicio">{{ trans('adminlte_lang::message.mantvehiinicio') }}</label>
 										<input required class="form-control" type="time" id="HoraMavInicio" name="HoraMavInicio" value="{{old('HoraMavInicio') <> null ? old('HoraMavInicio') : date('H:i')}}">
 										<small class="help-block with-errors"></small>
 									</div>
 									<div class="form-group col-xs-12 col-md-6">
-										<label for="HoraMavFin">Hora de Finzalización:</label>
+										<label for="HoraMavFin">{{ trans('adminlte_lang::message.mantvehifin') }}</label>
 										<input class="form-control horas" type="time" required id="HoraMavFin" name="HoraMavFin" value="{{old('HoraMavFin') <> null ? old('HoraMavFin') : date('H:i')}}">
 										<small class="help-block with-errors"></small>
 									</div>
 								</div>
 								<div class="col-xs-12 col-md-12">
 									<div class="form-group col-xs-12 col-md-12">
-										<label for="MvType">Tipo de Mantenimiento:</label>
+										<label for="MvType">{{ trans('adminlte_lang::message.mantvehitype') }}</label>
 										<input type="text" class="form-control" required maxlength="255" id="MvType" name="MvType" value="{{old('MvType')}}">
 										<small class="help-block with-errors"></small>
 									</div>

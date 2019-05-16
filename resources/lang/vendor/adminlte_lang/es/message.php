@@ -201,7 +201,7 @@ return [
     'copy'                    => 'Copiar',
 
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
-    'passwordchangetrue'      => '¡Se han realizado los cambios, correctamente!',
+    'updatetrue'              => '¡Se han realizado los cambios correctamente!',
 
     // modal
     'modalexit'               => 'No, salir',
@@ -365,6 +365,21 @@ return [
     'finishservice'           => 'Finzalizar Servicio',
     'titleconducedit'         => 'Llegada',
     'progvehicconducedit'     => 'Marcar',
+
+    // mantenimiento de un vehiculo
+    'mantvehititle'           => 'Mantenimiento de Vehiculos',
+    'mantvehititlelist'       => 'Lista de Mantenimientos',
+    'mantvehititleedit'       => 'Edicion de Mantenimientos',
+    'mantvehivehic'           => 'Vehiculo Asignado',
+    'mantvehikm'              => 'Kilometraje del vehiculo',
+    'mantvehistatus'          => 'Estado',
+    'mantvehistatustrue'      => 'Activo',
+    'mantvehistatusfalse'     => 'Finalizado',
+    'mantvehiinicio1'         => 'Fecha de Inicio',
+    'mantvehifin1'            => 'Fecha de Finalización',
+    'mantvehiinicio'          => 'Hora de Inicio',
+    'mantvehifin'             => 'Hora de Finzalización',
+    'mantvehitype'            => 'Tipo de Mantenimiento',
 
     // respel
     'respelscreate'           => 'Crear Residuos',

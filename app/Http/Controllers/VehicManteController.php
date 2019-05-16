@@ -19,17 +19,14 @@ class VehicManteController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === "Programador"){
-            $MantVehicles = DB::table('mantenvehics')
-                ->join('vehiculos', 'FK_VehMan', '=', 'ID_Vehic')
-                ->select('mantenvehics.*', 'vehiculos.VehicPlaca')
-                ->get();
-            return view('manteniVehicle.index', compact('MantVehicles'));
-        }
         $MantVehicles = DB::table('mantenvehics')
             ->join('vehiculos', 'FK_VehMan', '=', 'ID_Vehic')
             ->select('mantenvehics.*', 'vehiculos.VehicPlaca')
-            ->where('MvDelete', 0)
+            ->where(function($query){
+                if(Auth::user()->UsRol <> "Programador"){
+                    $query->where('MvDelete', 0);
+                }
+            })
             ->get();
         return view('manteniVehicle.index', compact('MantVehicles'));
     }
@@ -107,11 +104,11 @@ class VehicManteController extends Controller
     public function edit($id)
     {
         $MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
-        $Vehicles = DB::table('vehiculos')
+        $vehiculos = DB::table('vehiculos')
             ->select('ID_Vehic', 'VehicPlaca')
             ->get();
 
-        return view('manteniVehicle.edit', compact('Vehicles', 'MantVehicles'));
+        return view('manteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
     }
 
     /**
@@ -123,10 +120,34 @@ class VehicManteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $messages = [
+            'after' => 'El campo :attribute debe ser una hora posterior a :date.',
+        ];
+        $validation = Validator::make($request->all(), [
+            'FK_VehMan'        => 'required',
+            'MvKm'             => 'required|max:11',
+            'HoraMavInicio1'   => 'required|date',
+            'HoraMavInicio'    => 'required',
+            'HoraMavFin1'      => 'required|date|after_or_equal:HoraMavInicio1',
+            'HoraMavFin'       => 'required',
+            'MvType'           => 'required|alpha|max:255',
+        ]);
+        if($request->input('HoraMavInicio1') == $request->input('HoraMavFin1')){
+            $validation = Validator::make($request->all(), [
+                'HoraMavInicio'    => 'required',
+                'HoraMavFin'       => 'required|after:HoraMavInicio',
+            ], $messages);
+        }
+        if ($validation->fails()) {
+            return back()->withErrors($validation, 'createManVeh')->withInput();
+        }
         $MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
-        $MantVehicles->fill($request->all());
+        $MantVehicles->FK_VehMan = $request->input('FK_VehMan');
+        $MantVehicles->MvKm = $request->input('MvKm');
+        $MantVehicles->HoraMavInicio = $request->input('HoraMavInicio1').' '.$request->input('HoraMavInicio');
+        $MantVehicles->HoraMavFin = $request->input('HoraMavFin1').' '.$request->input('HoraMavFin');
+        $MantVehicles->MvType = $request->input('MvType');
         $MantVehicles->save();
-        /*return $MantVehicles;*/
 
         $log = new audit();
         $log->AuditTabla="mantenvehics";
@@ -136,7 +157,7 @@ class VehicManteController extends Controller
         $log->Auditlog=$request->all();
         $log->save();
 
-        return redirect()->route('vehicle-mantenimiento.index');
+        return redirect()->route('vehicle-mantenimiento.edit',['id' => $id])->with('Mensaje', trans('adminlte_lang::message.updatetrue'));
     }
 
     /**
@@ -150,19 +171,25 @@ class VehicManteController extends Controller
         $MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
         if ($MantVehicles->MvDelete == 0) {
                 $MantVehicles->MvDelete = 1;
+                $log = new audit();
+                $log->AuditTabla="mantenvehics";
+                $log->AuditType = "Eliminado";
+                $log->AuditRegistro=$MantVehicles->ID_Mv;
+                $log->AuditUser = Auth::user()->email;
+                $log->Auditlog = $MantVehicles->MvDelete;
+                $log->save();
         }
         else{
             $MantVehicles->MvDelete = 0;
+            $log = new audit();
+            $log->AuditTabla="mantenvehics";
+            $log->AuditType = "Restaurado";
+            $log->AuditRegistro=$MantVehicles->ID_Mv;
+            $log->AuditUser = Auth::user()->email;
+            $log->Auditlog = $MantVehicles->MvDelete;
+            $log->save();
         }
         $MantVehicles->save();
-
-        $log = new audit();
-        $log->AuditTabla="mantenvehics";
-        $log->AuditType = "Eliminado";
-        $log->AuditRegistro=$MantVehicles->ID_Mv;
-        $log->AuditUser = Auth::user()->email;
-        $log->Auditlog = $MantVehicles->MvDelete;
-        $log->save();
 
         return redirect()->route('vehicle-mantenimiento.index');
     }

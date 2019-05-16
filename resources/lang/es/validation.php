@@ -211,6 +211,14 @@ return [
         'progVehKm'       => '"Kilometraje del vehiculo"',
         'FK_ProgConductor' => '"Conductor Asignado"',
         'FK_ProgAyudante' => '"Ayudante Asignado"',
+
+        'FK_VehMan'       => '"Vehiculo Asignado"',
+        'MvKm'            => '"Kilometraje del vehiculo"',
+        'HoraMavInicio1'  => '"Fecha de Inicio"',
+        'HoraMavFin1'     => '"Fecha de Finalización"',
+        'HoraMavInicio'   => '"Hora de Inicio"',
+        'HoraMavFin'      => '"Hora de Finzalización"',
+        'MvType'          => '"Tipo de Mantenimiento"',
     ],
 
 ];
