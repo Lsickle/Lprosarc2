@@ -84,22 +84,25 @@ class TratamientoController extends Controller
         $tratamiento->save();
 
         /*iteracion sobre los pretratamientos insertados en el formulario*/
-        for ($x=0; $x < count($request['PreTratName']); $x++) {
-            $pretratamiento = new Pretratamiento();
-            $pretratamiento->PreTratName = $request['PreTratName'][$x];
-            $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
-            $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
-            $pretratamiento->PreTratDelete = 0;
-            $pretratamiento->save();
+        if ($request['ID_PreTrat']!==null) {
+            for ($x=0; $x < count($request['PreTratName']); $x++) {
+                $pretratamiento = new Pretratamiento();
+                $pretratamiento->PreTratName = $request['PreTratName'][$x];
+                $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
+                $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
+                $pretratamiento->PreTratDelete = 0;
+                $pretratamiento->save();
 
-            $log = new audit();
-            $log->AuditTabla="pretratamiento";
-            $log->AuditType="Creado";
-            $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog=$request->all();
-            $log->save();
+                $log = new audit();
+                $log->AuditTabla="pretratamiento";
+                $log->AuditType="Creado";
+                $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog=$request->all();
+                $log->save();
+            }
         }
+        
         /*registro de auditoria*/
         $log = new audit();
         $log->AuditTabla="tratamientos";

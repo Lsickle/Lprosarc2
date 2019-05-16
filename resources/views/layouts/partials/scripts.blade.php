@@ -1569,4 +1569,12 @@ $(document).ready(function() {
     }
 </script>
 @endif
+
+
+@if(Route::currentRouteName()=='respels.create')
+{{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
+<script>
+    
+</script>
+@endif
 @yield('NewScript')
