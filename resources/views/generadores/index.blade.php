@@ -17,7 +17,7 @@
 					@endif
 					@if (!isset($Gener))
 						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-							<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >{{ trans('adminlte_lang::message.soygener') }}</a>
+							<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-success" >{{ trans('adminlte_lang::message.soygener') }}</a>
 						@endif
 					@endif
 				</div>

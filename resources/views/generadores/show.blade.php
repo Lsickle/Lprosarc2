@@ -15,17 +15,21 @@
                     <div class="col-md-12 col-xs-12">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                             <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-                            @component('layouts.partials.modal')
-                                {{$Generador->ID_Gener}}
-                            @endcomponent
-                            @if($Generador->GenerDelete == 0)
+                        @endif
+                        @component('layouts.partials.modal')
+                            {{$Generador->ID_Gener}}
+                        @endcomponent
+                        @if($Generador->GenerDelete == 0)
+                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                 <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
                                 <form action='/generadores/{{$Generador->GenerSlug}}' method='POST'  class="col-12 pull-right">
                                     @method('DELETE')
                                     @csrf
                                     <input type="submit" id="Eliminar{{$Generador->ID_Gener}}" style="display: none;">
                                 </form>
-                            @else
+                            @endif
+                        @else
+                            @if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                 <form action='/generadores/{{$Generador->GenerSlug}}' method='POST' class="pull-right">
                                     @method('DELETE')
                                     @csrf
@@ -34,8 +38,6 @@
                             @endif
                         @endif
                     </div>
-                {{-- </div>
-                <div class="box-body box-profile"> --}}
                     <div class="">
                         <h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
                     </div>
@@ -232,7 +234,7 @@
                             @foreach ($GenerSedes as $GenerSede)
                             <ul class="list-group" style="list-style:none; margin-top:10px;">
                                 <li class="col-md-11 col-xs-12 col-12">
-                                    <h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1 text-center" target="_blank">{{$GenerSede->GSedeName}}</a></h4>
+                                    <h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$GenerSede->GSedeName}}</a></h4>
                                 </li>
                             </ul>
                             @endforeach

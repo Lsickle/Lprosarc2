@@ -1215,13 +1215,7 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        "columnDefs": [{
-            "targets": 8,
-            "data": "GSedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sgeneradores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }],
+        
         fixedHeader: {
             header: true
         }

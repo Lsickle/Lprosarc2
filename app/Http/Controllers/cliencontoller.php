@@ -90,7 +90,7 @@ class clientcontoller extends Controller
             $Cliente->save();
 
             $Sede = new Sede();
-            $Sede->SedeName = $request->input('SedeName')."(Principal)";
+            $Sede->SedeName = $request->input('SedeName');
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
             if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null || $request->input('SedeExt1') === null && $request->input('SedeExt2') !== null){

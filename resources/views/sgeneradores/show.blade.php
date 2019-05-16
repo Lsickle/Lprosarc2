@@ -26,7 +26,7 @@
                                 <input type="submit" id="Eliminar{{$SedeGener->ID_GSede}}" style="display: none;">
                             </form>
                         @else
-                            @if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                            @if ($SedeGener->GSedeDelete == 1 && Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                 <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-right">
                                     @method('DELETE')
                                     @csrf

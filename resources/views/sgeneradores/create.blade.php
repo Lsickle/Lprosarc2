@@ -82,10 +82,10 @@
 									</div>
 									
 									<div class="col-md-6 form-group ">
-										<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors"></small>
+										<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
 										<div class="input-group">
 											<span class="input-group-addon">(+57)</span>
-											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}">
+											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" required>
 										</div>
 									</div>
 									<div class="col-md-6 form-group">

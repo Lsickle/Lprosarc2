@@ -126,10 +126,10 @@
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
 													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de celular de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
-													<small class="help-block with-errors"></small>
+													<small class="help-block with-errors">*</small>
 													<div class="input-group">
 														<span class="input-group-addon">(+57)</span>
-														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}">
+														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
 													</div>
 												</div>
 												<div class="col-md-6 form-group">

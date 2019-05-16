@@ -323,34 +323,58 @@ class genercontroller extends Controller
     {
         $Generador = generador::where('GenerSlug', $id)->first();
         $SedesGeners = GenerSede::where('FK_GSede', $Generador->ID_Gener)->get();
-            if ($Generador->GenerDelete == 0) {
-                $Generador->GenerDelete = 1;
-                foreach($SedesGeners as $SedeGener){
-                    $SedeGener->GSedeDelete = 1;
-                    $SedeGener->save();
+        if ($Generador->GenerDelete == 0) {
+            $Generador->GenerDelete = 1;
+            foreach($SedesGeners as $SedeGener){
+                $SedeGener->GSedeDelete = 1;
+                $SedeGener->save();
 
-                    $log = new audit();
-                    $log->AuditTabla="gener_sedes";
-                    $log->AuditType="Eliminado";
-                    $log->AuditRegistro=$SedeGener->ID_GSede;
-                    $log->AuditUser=Auth::user()->email;
-                    $log->Auditlog = $SedeGener->SedeGener;
-                    $log->save();
-                }
+                $log = new audit();
+                $log->AuditTabla="gener_sedes";
+                $log->AuditType="Eliminado";
+                $log->AuditRegistro=$SedeGener->ID_GSede;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $SedeGener->GSedeDelete;
+                $log->save();
             }
-            else{
-                $Generador->GenerDelete = 0;
+            $Generador->save();
+
+            $log = new audit();
+                $log->AuditTabla="generadors";
+                $log->AuditType="Eliminado";
+                $log->AuditRegistro=$Generador->ID_Gener;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $Generador->GenerDelete;
+                $log->save();
+                
+                return redirect()->route('generadores.index');
+        }
+        else{
+            $Generador->GenerDelete = 0;
+            foreach($SedesGeners as $SedeGener){
+                $SedeGener->GSedeDelete = 0;
+                $SedeGener->save();
+
+                $log = new audit();
+                $log->AuditTabla="gener_sedes";
+                $log->AuditType="Restaurado";
+                $log->AuditRegistro=$SedeGener->ID_GSede;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $SedeGener->GSedeDelete;
+                $log->save();
             }
-        $Generador->save();
+            $Generador->save();
 
-        $log = new audit();
-        $log->AuditTabla="generadors";
-        $log->AuditType="Eliminado";
-        $log->AuditRegistro=$Generador->ID_Gener;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog = $Generador->GenerDelete;
-        $log->save();
+            $log = new audit();
+                $log->AuditTabla="generadors";
+                $log->AuditType="Restaurado";
+                $log->AuditRegistro=$Generador->ID_Gener;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $Generador->GenerDelete;
+                $log->save();
 
-        return redirect()->route('generadores.index');
+            $id = $Generador->GenerSlug;
+            return redirect()->route('generadores.show', compact('id'));
+        }
     }
 }
