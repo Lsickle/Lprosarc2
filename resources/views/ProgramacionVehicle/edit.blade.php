@@ -219,6 +219,19 @@
 			$("#progVehKm").prop("disabled", true);
 			$("#ProgVehColor").prop("disabled", true);
 			$("#update").prop("disabled", true);
+		@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador'))
+			$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
+			$("#ProgVehEntrada").prop('required', true);
+			$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
+			$("#progVehKm").prop('required', true);
+			$(".select2-selection").css("background-image", "none");
+			$("#FK_ProgServi").prop("disabled", true);
+			$("#ProgVehFecha").prop('disabled', true);
+			$("#ProgVehSalida").prop('disabled', true);
+			$("#FK_ProgVehiculo").prop('disabled', true);
+			$("#FK_ProgConductor").prop('disabled', true);
+			$("#FK_ProgAyudante").prop('disabled', true);
+			$("#ProgVehColor").prop("disabled", true);
 		@elseif(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno'))
 			$("#FK_ProgServi").before(`<small class="help-block with-errors">*</small>`);
 			$("#FK_ProgServi").prop('required', true);
@@ -234,19 +247,6 @@
 			$("#FK_ProgAyudante").prop('required', true);
 			$("#ProgVehEntrada").prop('readonly', true);
 			$("#progVehKm").prop('readonly', true);
-		@else
-			$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
-			$("#ProgVehEntrada").prop('required', true);
-			$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
-			$("#progVehKm").prop('required', true);
-			$(".select2-selection").css("background-image", "none");
-			$("#FK_ProgServi").prop("disabled", true);
-			$("#ProgVehFecha").prop('disabled', true);
-			$("#ProgVehSalida").prop('disabled', true);
-			$("#FK_ProgVehiculo").prop('disabled', true);
-			$("#FK_ProgConductor").prop('disabled', true);
-			$("#FK_ProgAyudante").prop('disabled', true);
-			$("#ProgVehColor").prop("disabled", true);
 		@endif
 		});
 	</script>
