@@ -20,7 +20,6 @@
 					</div>
 				</div>
 				<div class="box box-info">
-					
 					<div class="box-body">
 						<form role="form" action="/clientes" method="POST" enctype="multipart/form-data">
 							@csrf

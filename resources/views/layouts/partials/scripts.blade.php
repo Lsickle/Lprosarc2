@@ -436,21 +436,6 @@ $(function() {
             ordering: true,
             autoWith: true,
             searchHighlight: true,
-            columnDefs: [{
-                    targets: 4,
-                    data: "CliSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a method='get' href='/clientes/" + data + "' class='btn btn-success btn-block' />Ver</a>";
-                    }
-                },
-                {
-                    targets: 5,
-                    data: "CliSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a href='/clientes/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";
-                    }
-                }
-            ]
         });
 
         /*funcion para resaltar las busquedas*/

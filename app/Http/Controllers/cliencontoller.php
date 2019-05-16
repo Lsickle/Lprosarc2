@@ -30,7 +30,7 @@ class clientcontoller extends Controller
         switch (Auth::user()->UsRol) {
 
             case trans('adminlte_lang::message.Programador'):
-                $clientes = Cliente::all();
+                $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             
@@ -39,7 +39,7 @@ class clientcontoller extends Controller
                 break;
 
             case trans('adminlte_lang::message.Administrador'):
-                $clientes = Cliente::where('CliDelete', 0)->get();
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
 
@@ -93,7 +93,7 @@ class clientcontoller extends Controller
             $Sede->SedeName = $request->input('SedeName');
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
-            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null || $request->input('SedeExt1') === null && $request->input('SedeExt2') !== null){
+            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
 
                 $Sede->SedeExt1 = $request->input('SedeExt2');
                 $Sede->SedePhone1 = $request->input('SedePhone2');

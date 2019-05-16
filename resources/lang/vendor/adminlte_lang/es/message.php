@@ -263,6 +263,7 @@ return [
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Clientes',
     'clientcontact'           => 'Contactos',
+    'clientcontacto'           => 'Contacto',
     'clientNIT'               => 'NIT',
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
