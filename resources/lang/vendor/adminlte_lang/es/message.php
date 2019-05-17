@@ -187,6 +187,7 @@ return [
     'phoneplaceholder'        => '031 4123141',
     'extplaceholder'          => '155',
     'addressplaceholder'      => 'Cll 23 #11c-03',
+    'placaplaceholder'        => 'XXX-XXX',
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
@@ -263,10 +264,11 @@ return [
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Clientes',
     'clientcontact'           => 'Contactos',
-    'clientcontacto'           => 'Contacto',
+    'clientcontacto'          => 'Contacto',
     'clientNIT'               => 'NIT',
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
+    'clicontactedit'          => 'Editar el Contacto',
 
     // sede
     'csedeindex'              => 'Lista de sedes',
@@ -347,6 +349,14 @@ return [
     // respel
     'respelscreate'           => 'Crear Residuos',
     'assignrespels'           => 'Asignar Residuos',
+
+    // vehiculo
+    'vehicplaca'              => 'Placa',
+    'vehiccapacidad'          => 'Capacidad',
+    'vehictipo'               => 'Tipo',
+    'vehiculos'               => 'Vehiculos',
+    'vehicdata'               => 'Datos del Vehiculo',
+    'addvehiculo'             => 'Crear Vehiculo',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',

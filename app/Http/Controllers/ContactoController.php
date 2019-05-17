@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ContactosRequest;
+use App\Http\Requests\ContactosStoreRequest;
+use App\Http\Requests\ContactosUpdateRequest;
 use App\Cliente;
 use App\Sede;
 use App\Departamento;
 use App\Municipio;
+use App\Vehiculo;
 
 class ContactoController extends Controller
 {
@@ -35,7 +37,7 @@ class ContactoController extends Controller
             if (old('FK_SedeMun') !== null){
                 $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
             }
-            return view('contactos.create2', compact('Departamentos', 'Municipios'));
+            return view('contactos.create', compact('Departamentos', 'Municipios'));
         }else{
             abort(403);
         }
@@ -47,9 +49,9 @@ class ContactoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContactosRequest $request)
+    public function store(ContactosStoreRequest $request)
     {
-        return $request;
+        // return $request;
         $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
@@ -88,6 +90,17 @@ class ContactoController extends Controller
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->SedeDelete = 0;
             $Sede->save();
+
+            if($request->input('CliCategoria') === 'Transportador'){
+                $Vehiculo = new Vehiculo();
+                $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
+                $Vehiculo->VehicTipo = $request->input('VehicTipo');
+                $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
+                $Vehiculo->VehicInternExtern = 1;
+                $Vehiculo->VehicDelete = 0;
+                $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
+                $Vehiculo->save();
+            }
             
             return redirect()->route('contactos.index');
     }
@@ -101,8 +114,13 @@ class ContactoController extends Controller
     public function show($id)
     {
         $Cliente = Cliente::where('CliSlug', $id)->first();
-        $Sedes = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
-        return view('contactos.show', compact('Cliente', 'Sedes'));
+        $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+        if($Cliente->CliCategoria !== 'Proveedor'){
+            $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
+            return view('contactos.show', compact('Cliente', 'Sede', 'Vehiculos'));
+        }else{
+            return view('contactos.showProveedor', compact('Cliente', 'Sede'));
+        }
     }
 
     /**
@@ -113,7 +131,9 @@ class ContactoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Cliente = Cliente::where('CliSlug', $id)->first();
+        $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+        return view('contactos.edit', compact('Cliente', 'Sede'));
     }
 
     /**
@@ -123,9 +143,38 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactosUpdateRequest $request, $id)
     {
-        //
+        $Cliente = Cliente::where('CliSlug', $id)->first();
+        $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+
+        $Cliente->fill($request->all());
+        $Cliente->save();
+
+        $Sede->fill($request->all());
+        $Sede->save();
+
+        $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
+        
+        if($Cliente->CliCategoria === 'Proveedor' && isset($Vehiculos)){
+
+        }else{
+            if($Cliente->CliCategoria === 'Transportador' && !isset($Vehiculos)){
+
+            }
+        }
+
+        $log = new audit();
+        $log->AuditTabla="clientes-contacto";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$cliente->ID_Cli;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        $id = $Cliente->CliSlug;
+
+        return redirect()->route('contactos.show', compact('id'));
     }
 
     /**

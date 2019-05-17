@@ -8,7 +8,7 @@
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-8" style="margin-left: 15%;">
+		<div class="col-md-8 col-md-offset-2">
 		<!-- About Me Box -->
 			<div class="box box-info">
 				<div class="box-body box-profile">

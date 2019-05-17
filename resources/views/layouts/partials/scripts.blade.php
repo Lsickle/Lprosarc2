@@ -469,6 +469,7 @@ $(function() {
         $('.phone').inputmask({mask: "03[9 ][9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "3[9][9 ][9][9][9 ][9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
+        
         $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
         $('.bank').inputmask({mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]"});
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
@@ -479,6 +480,10 @@ $(function() {
             rightAlign: false,
             placeholder: "",
             digits: 0
+        });
+        $('.placa').inputmask({
+            mask: "999 - ***", 
+            placeholder: "",
         });
     });
     </script>
@@ -1401,7 +1406,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1413,7 +1418,7 @@ $(document).ready(function() {
         });
     });
 </script>
-    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
+    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
         <script>
             $(document).ready(function(){    
                 if({{old('SedeExt2')}} !== null){
@@ -1474,7 +1479,24 @@ $(document).ready(function() {
     }
 </script>
 @endif
-
+@if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
+<script>
+    function AddVehiculo(){
+        $('#Form').validator('update');
+        document.getElementById('AddVehiculo').style.display = 'block';
+        $('#VehicPlaca').prop('required', true);
+        $('#VehicTipo').prop('required', true);
+        $('#VehicCapacidad').prop('required', true);
+    };
+    function NoAddVehiculo(){
+        $('#Form').validator('update');
+        document.getElementById('AddVehiculo').style.display = 'none';
+        $('#VehicPlaca').prop('required', false);
+        $('#VehicTipo').prop('required', false);
+        $('#VehicCapacidad').prop('required', false);
+    };
+</script>
+@endif
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
@@ -1554,7 +1576,40 @@ $(document).ready(function(){
         </script>
     @endif
 @endif
-
+{{-- @if(Route::currentRouteName() === 'contactos.show') --}}
+<script>
+    $(document).ready(function(){
+        $("#editvehiculo").click(function(e){
+            id=$("#vehiculoid").val();
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{url('/contacto-vehiculos')}}/"+id,
+                method: 'GET',
+                data:{},
+                success: function(res){
+                    $('#VehicTipo').val('');
+                    $('#VehicPlaca').val('');
+                    $('#VehicCapacidad').val('');
+                    var Vehiculo = new Array();
+                    for(var i = res.length -1; i >= 0; i--){
+                        if ($.inArray(res[i].ID_Vehic, Vehiculo) < 0) {
+                            $('#VehicTipo').val(res[i].VehicTipo);
+                            $('#VehicPlaca').val(res[i].VehicPlaca);
+                            $('#VehicCapacidad').val(res[i].VehicCapacidad);
+                            Vehiculo.push(res[i].ID_Vehic);
+                        }
+                    }
+                }
+            })
+        });
+    });
+</script>
+{{-- @endif --}}
 {{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.edit')
 <script>

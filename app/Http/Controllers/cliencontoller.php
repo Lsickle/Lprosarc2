@@ -202,15 +202,9 @@ class clientcontoller extends Controller
      * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(ClienteUpdateRequest $request, Cliente $cliente)
     {   
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
-        $validate = $request->validate([
-            'CliName'       => 'required|max:255|unique:clientes,CliName,'.$cliente->ID_Cli.',ID_Cli',
-            'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit,'.$cliente->ID_Cli.',ID_Cli',
-            'CliShortname'  => 'required|max:255|unique:clientes,CliShortname,'.$cliente->ID_Cli.',ID_Cli',
-        ]);
-        
         $cliente->fill($request->all());
         $cliente->save();
 

@@ -104,6 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
+	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 
 });
 

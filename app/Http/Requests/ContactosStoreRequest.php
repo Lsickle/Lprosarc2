@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ContactosRequest extends FormRequest
+class ContactosStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class ContactosRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            // 'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit',
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
                     $Cliente = DB::table('clientes')
                         ->select('clientes.CliNit')
