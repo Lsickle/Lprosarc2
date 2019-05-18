@@ -290,7 +290,7 @@ return [
     'generupdate'             => 'Actualizar Generador',
     'genercode'               => 'Código del Generador',
     '?'                       => '?',
-    'addsedegener'            => 'Añadir Sedes',
+    'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
 

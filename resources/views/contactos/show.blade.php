@@ -70,10 +70,10 @@
 				</div>
             </div>
         </div>
-         {{-- modal de Crear un Vehiculo --}}
-         <form role="form" action="/contactos" method="POST" enctype="multipart/form-data" data-toggle="validator">
+         {{-- modal de Editar un Vehiculo --}}
+         <form role="form" action="/contacto-vehiculo-edit" method="POST" enctype="multipart/form-data" data-toggle="validator">
             @csrf
-            
+            @method('PUT')
             <div class="modal modal-default fade in" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -116,6 +116,51 @@
             </div>
         </form>
         {{-- final del modal --}}
+         {{-- modal de Crear un Vehiculo --}}
+         <form role="form" action="/contacto-vehiculo-create/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+            @csrf
+            <div class="modal modal-default fade in" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+                                <i class="fas fa-plus-circle"></i>
+                                <span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.assignrrespelssedegener') }}</p></span>
+                            </div> 
+                        </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <p>{{$error}}</p>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div class="modal-body">
+                            <div class="form-group col-md-12">
+                                <label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
+                                <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('VehicPlaca')}}">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="VehicTipo"> {{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
+                                <input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{old('VehicTipo')}}">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
+                            <input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{old('VehicCapacidad')}}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+                            <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {{-- final del modal --}}
         <div class="col-md-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -124,15 +169,19 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="vehiculo">
                         <div class="text-center">
-                            <a href="/contactos/create" class="btn btn-success mx-auto text-center"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.addvehiculo') }}</b></a>
+                            {{-- boton de crear un vehiculo --}}
+                            <a method='get' href='#' data-toggle='modal' data-target='#create' class="btn btn-success"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.addvehiculo') }}</b></a>                            
+                            {{-- <a href="/contactos/create" class="btn btn-success mx-auto text-center"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.addvehiculo') }}</b></a> --}}
                         </div>
                         <div style='overflow-y:auto; max-height:422px;'>
                             @foreach ($Vehiculos as $Vehiculo)
                                 <div class="box-body box-profile">
-                                    <a method='get' href='#' data-toggle='modal' data-target='#edit'  id="editvehiculo" class="btn btn-warning pull-right"><b><i class="fas fa-edit"></i></b></a>
-                                    <a method='get' href='#' data-toggle='modal' data-target='#delete'  id="deletevehiculo" class="btn btn-danger pull-left"><i class="fas fa-trash-alt"></i></a>
-                                    {{-- <a href="/contactos/{{$Vehiculo->ID_Vehic}}"  class="btn btn-danger pull-left" ><i class="fas fa-trash-alt"></i></a> --}}
-                                    <input type="hidden" value="{{$Vehiculo->ID_Vehic}}" id="vehiculoid">
+                                    {{-- BOTONES DE ELIMINAR Y EDITAR VEHICULO --}}
+                                    <a method='get' href='#' data-toggle='modal' data-target='#edit'  id="editvehiculo{{$Vehiculo->ID_Vehic}}" class="btn btn-warning pull-right" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <a method='get' href='#' data-toggle='modal' data-target='#delete'  id="deletevehiculo{{$Vehiculo->ID_Vehic}}" class="btn btn-danger pull-left" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+
+                                    <input type="hidden" value="{{$Vehiculo->ID_Vehic}}" id="vehiculoid{{$Vehiculo->ID_Vehic}}">
+
                                     <h3 class="profile-username text-center">{{$Vehiculo->VehicPlaca}}</h3>
                                 {{-- <ul class="list-group list-group-unbordered"> --}}
                                     <li class="list-group-item">
@@ -155,4 +204,5 @@
         </div>
     </div>
 </div>
+
 @endsection

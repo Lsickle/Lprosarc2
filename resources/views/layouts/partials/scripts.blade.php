@@ -1482,14 +1482,14 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script>
     function AddVehiculo(){
-        $('#Form').validator('update');
+        // $('#Form').validator('update');
         document.getElementById('AddVehiculo').style.display = 'block';
         $('#VehicPlaca').prop('required', true);
         $('#VehicTipo').prop('required', true);
         $('#VehicCapacidad').prop('required', true);
     };
     function NoAddVehiculo(){
-        $('#Form').validator('update');
+        // $('#Form').validator('update');
         document.getElementById('AddVehiculo').style.display = 'none';
         $('#VehicPlaca').prop('required', false);
         $('#VehicTipo').prop('required', false);
@@ -1576,11 +1576,11 @@ $(document).ready(function(){
         </script>
     @endif
 @endif
-{{-- @if(Route::currentRouteName() === 'contactos.show') --}}
+@if(Route::currentRouteName() === 'contactos.show')
 <script>
-    $(document).ready(function(){
-        $("#editvehiculo").click(function(e){
-            id=$("#vehiculoid").val();
+    // $(document).ready(function(){
+        $("#editvehiculo{{$Vehiculo->ID_Vehic}}").click(function(e){
+            id=$("#vehiculoid{{$Vehiculo->ID_Vehic}}").val();
             e.preventDefault();
             $.ajaxSetup({
                 headers: {
@@ -1591,10 +1591,12 @@ $(document).ready(function(){
                 url: "{{url('/contacto-vehiculos')}}/"+id,
                 method: 'GET',
                 data:{},
-                success: function(res){
+                beforeSend: function(){
                     $('#VehicTipo').val('');
                     $('#VehicPlaca').val('');
                     $('#VehicCapacidad').val('');
+                },
+                success: function(res){
                     var Vehiculo = new Array();
                     for(var i = res.length -1; i >= 0; i--){
                         if ($.inArray(res[i].ID_Vehic, Vehiculo) < 0) {
@@ -1607,9 +1609,9 @@ $(document).ready(function(){
                 }
             })
         });
-    });
+    // });
 </script>
-{{-- @endif --}}
+@endif
 {{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.edit')
 <script>

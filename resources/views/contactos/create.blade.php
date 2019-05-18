@@ -113,7 +113,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" minlength="5"  maxlength="128" required value="{{ old('SedeAddress') }}">
+                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress"  maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>

@@ -14,14 +14,14 @@
                 <div class="box-body box-profile">
                     <div class="col-md-12 col-xs-12">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                            <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+                            <a href="/generadores/{{$Generador->GenerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
                         @endif
                         @component('layouts.partials.modal')
                             {{$Generador->ID_Gener}}
                         @endcomponent
                         @if($Generador->GenerDelete == 0)
                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
                                 <form action='/generadores/{{$Generador->GenerSlug}}' method='POST'  class="col-12 pull-right">
                                     @method('DELETE')
                                     @csrf
@@ -177,7 +177,8 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="residuos">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                            <a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
+                            {{-- BOTONES DE CREAR Y AÑADIR RESIDUO --}}
+                            <a href="/respels/create" class="btn btn-success mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
                             <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-primary mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
                         @endif
                         <div style='overflow-y:auto; max-height:503px;'>
@@ -227,7 +228,7 @@
                     <div class="tab-pane" id="sedes">
                         <div class="text-center">
                             @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                <a href="/sgeneradores/create" class="btn btn-primary"><b>{{ trans('adminlte_lang::message.addsedegener') }}</b></a>
+                                <a href="/sgeneradores/create" class="btn btn-success"><b>{{ trans('adminlte_lang::message.addsedegener') }}</b></a>
                             @endif
                         </div>
                         <div style='overflow-y:auto; max-height:503px;'>
