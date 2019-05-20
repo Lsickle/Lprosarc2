@@ -22,7 +22,7 @@
 					<option value="">Seleccione...</option>
 				</select>
 				<br>
-				<div id="RespelData`+contadorRespel+`" class="collapse">
+				<div id="RespelData`+contadorRespel+`" class="collapse in">
 					<div class="col-md-6">
 						<label>Unidades de Medida</label>
 						<input type="text" class="form-control">
@@ -39,14 +39,57 @@
 						<label>Tratamiento</label>
 						<input type="text" class="form-control">
 					</div>
-					<div class="col-md-12">
-						<label>Requerimientos</label>
-						<input type="text" class="form-control">
+					<div class="col-md-12" style="text-align: center;">
+						<div class="col-md-12">
+							<label>Requerimientos</label>
+						</div>
+						<div class="col-md-6" style="border: 2px dashed #00c0ef">
+							<div class="col-md-12">
+								<label>Fotos</label>
+							</div>
+							<div class="col-md-6">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+									<label>Descargue/Pesaje</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Tratamiento</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+									<label>Tratamiento</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="fotoswitch" name="ReqFotoDestruccion"/>
+									</div>
+								</label>
+							</div>
+						</div>
+						<div class="col-md-6" style="border: 2px dashed #00c0ef">
+							<div class="col-md-12">
+								<label>Videos</label>
+							</div>
+							<div class="col-md-6">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p style='width: 50%'> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+									<label>Descargue/Pesaje</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="videoswitch" name="ReqVideoDescargue"/>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Tratamiento</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+									<label>Tratamiento</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="videoswitch" name="ReqVideoDestruccion"/>
+									</div>
+								</label>
+							</div>
+						</div>
 					</div>
 					<br>
 				</div>
 			</div>
-			<div id="AddRespel`+contadorRespel+`" class="col-md-16 col-md-offset-5">
+			<div id="AddRespel`+contadorRespel+`" class="col-md-16 col-md-offset-5 col-xs-offset-5">
 				<a onclick="AgregarRegistro(`+contadorRespel+`)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
 			</div>
 		</div>
