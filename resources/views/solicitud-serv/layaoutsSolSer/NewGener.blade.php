@@ -1,89 +1,54 @@
-<div id="GenerRes">
-	<div class="col-md-12">
-		<label for="">Seleccione el generador</label>
-		<select name="SGenerador[`+contador+`]" id="SGenerador" class="form-control">
-			<option value="1">Seleccione...</option> @foreach($SGeneradors as $SGenerador)
-			<option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option> @endforeach
-		</select>
-	</div>
-	<div class="divRes">
-		<div id="divResiduos" class="col-md-3">
-			<a onclick="AgregarRegistro(`+contador+`)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
-			<label>Residuos</label><hr>
-			<div id="divRespel`+contador+`"></div>
+<div id="Generador`+contadorGenerador+`" class="col-md-12">
+	<div class="box box-success col-md-16">
+		<div class="col-md-12">
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" onclick="RemoveGenerador(`+contadorGenerador+`)" title="Eliminar"><i class="fa fa-times"></i></button>
+			</div>
+			<label for="">Seleccione el generador</label>
+			<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#DivRepel`+contadorGenerador+`" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+			<select name="SGenerador[`+contadorGenerador+`]" id="SGenerador" class="form-control">
+				<option value="">Seleccione...</option>
+				@foreach($SGeneradors as $SGenerador)
+				<option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option>
+				@endforeach
+			</select>
+			<br>
 		</div>
-		<div class="col-md-9 smartwizard">
-			<ul>
-				<li><a href="#step-1"><b>Descripción</b><br/><small>Datos del residuo</small></a></li>
-				<li><a href="#step-2"><b>Requerimientos</b><br/><small>Requerimientos del residuo</small></a></li>
-			</ul>
-			<div>
-				<div id="step-1">
-					<div class="col-md-3">
-						<br><label>Unidades</label><hr>
-						<div id="divUnidades`+contador+`"></div>
+		<div id="DivRepel`+contadorGenerador+`" class="col-md-12 collapse in">
+			<div id="Repel`+contadorRespel+`" class="col-md-12 box box-warning">
+				<label>Residuo</label>
+				<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#RespelData`+contadorRespel+`" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+				<select name="SGenerador[`+contadorGenerador+`]" id="SGenerador" class="form-control">
+					<option value="">Seleccione...</option>
+				</select>
+				<br>
+				<div id="RespelData`+contadorRespel+`" class="collapse">
+					<div class="col-md-6">
+						<label>Unidades de Medida</label>
+						<input type="text" class="form-control">
 					</div>
-					<div class="col-md-3">
-						<br><label>Tipo</label><hr>
-						<div id="divTipoCate`+contador+`"></div>
+					<div class="col-md-6">
+						<label>Cantidad</label>
+						<input type="text" class="form-control">
 					</div>
-					<div class="col-md-3">
-						<br><label>Cantidad</label><hr>
-						<div id="divCateEnviado`+contador+`"></div>
+					<div class="col-md-6">
+						<label>Cantidad (Kg)</label>
+						<input type="text" class="form-control">
 					</div>
-					<div class="col-md-3">
-						<br><label>Tratamiento</label><hr>
-						<div id="divTratamiento`+contador+`"></div>
+					<div class="col-md-6">
+						<label>Tratamiento</label>
+						<input type="text" class="form-control">
 					</div>
+					<div class="col-md-12">
+						<label>Requerimientos</label>
+						<input type="text" class="form-control">
+					</div>
+					<br>
 				</div>
-				<div id="step-2">
-					<div class="divReq">
-						<label title="Foto Cargue">F.Ca</label>
-						<label title="Foto Descargue">F.De</label>
-						<label title="Foto Persaje">F.Pe</label>
-						<label title="Foto Reempacado">F.Re</label>
-						<label title="Foto Mezclaje">F.Me</label>
-						<label title="Foto Destrucción">F.Des</label>
-						<label title="Video Cargue">V.Ca</label>
-						<label title="Video Descargue">V.De</label>
-						<label title="Video Persaje">V.Pe</label>
-						<label title="Video Reempacado">V.Re</label>
-						<label title="Video Mezclaje">V.Me</label>
-						<label title="Video Destrucción">V.Des</label>
-						<label title="Devolucion">Dev</label>
-						<label title="Planillas">Pla</label>
-						<label title="Alistamiento">Ali</label>
-						<label title="Capacitación">Cap</label>
-						<label title="Bascula">Bas</label>
-						<label title="Vehiculo con Plataforma">Ve.P</label>
-						<label title="Certificación Especial">Cer</label>
-					</div>
-					<div class="divReq">
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<input class="inputcheck" type="checkbox"/>
-						<hr>
-					</div>
-					<div class="divReq" id="divRequerimientos`+contador+`"></div>
-				</div>
+			</div>
+			<div id="AddRespel`+contadorRespel+`" class="col-md-16 col-md-offset-5">
+				<a onclick="AgregarRegistro(`+contadorRespel+`)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="box box-info"></div>

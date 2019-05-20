@@ -15,7 +15,7 @@ Solicitudes de servicios
 				</div>
 				<div class="box box-info">
 					<form role="form" id="form1" action="/solicitud-servicio" method="POST">
-							@csrf
+						@csrf
 						<div class="box-body">
 							<div class="col-md-12 col-xs-12">
 								<div class="col-md-12">
@@ -28,7 +28,7 @@ Solicitudes de servicios
 									</select>
 								</div>
 								<div class="col-md-6">
-									<label for="FK_SolSerPersona">Persona</label>
+									<label for="FK_SolSerPersona">Persona de Contacto</label>
 									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required>
 										<option value="1">Seleccione...</option>
 										@foreach ($Personals as $Personal)
@@ -37,7 +37,7 @@ Solicitudes de servicios
 									</select>
 								</div>
 								<div class="col-md-6">
-									<label for="SolSerTipo">Tipo</label>
+									<label for="SolSerTipo">Tipo de transportador</label>
 									<select class="form-control" name="SolSerTipo" id ="SolSerTipo" required="true">
 										<option value="1">Seleccione...</option>
 										<option>Interno</option>
@@ -46,7 +46,7 @@ Solicitudes de servicios
 									</select>
 								</div>
 								<div class="col-md-6">
-									<label for="Fk_SolSerTransportador">Sede</label>
+									<label for="Fk_SolSerTransportador">Transportador</label>
 									<select class="form-control" id="Fk_SolSerTransportador" name="Fk_SolSerTransportador" required>
 										<option value="1">Seleccione...</option>
 										@foreach ($Sedes as $Sede)
@@ -84,105 +84,64 @@ Solicitudes de servicios
 								<div class="col-md-12" style="text-align: center;">
 									<b>RESIDUOS A ENTREGAR</b>
 								</div>
-								<div class="col-md-12" id="divGenerRes">
-									<div id="GenerRes">
-										<div class="col-md-12">
-											<label for="">Seleccione el generador</label>
+							</div>
+							<div class="col-md-12">
+								<div id="Generador0" class="box box-success col-md-16">
+									<div class="col-md-12">
+										<label for="">Seleccione el generador</label>
+										<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#DivRepel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+										<select name="SGenerador[0]" id="SGenerador" class="form-control">
+											<option value="">Seleccione...</option>
+											@foreach($SGeneradors as $SGenerador)
+											<option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option>
+											@endforeach
+										</select>
+										<br>
+									</div>
+									<div id="DivRepel0" class="col-md-12 collapse in">
+										<div id="Repel0" class="col-md-12 box box-warning">
+											<label>Residuo</label>
+											<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#RespelData0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 											<select name="SGenerador[0]" id="SGenerador" class="form-control">
-												<option value="1">Seleccione...</option> @foreach($SGeneradors as $SGenerador)
-												<option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option> @endforeach
+												<option value="">Seleccione...</option>
 											</select>
-										</div>
-										<div class="divRes">
-											<div id="divResiduos" class="col-md-3">
-												<a onclick="AgregarRegistro(0)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
-												<label>Residuos</label><hr>
-												<div id="divRespel0"></div>
-											</div>
-											<div class="col-md-9 smartwizard">
-												<ul>
-													<li><a href="#step-1"><b>Descripción</b><br/><small>Datos del residuo</small></a></li>
-													<li><a href="#step-2"><b>Requerimientos</b><br/><small>Requerimientos del residuo</small></a></li>
-												</ul>
-												<div>
-													<div id="step-1">
-														<div class="col-md-3">
-															<br><label>Unidades</label><hr>
-															<div id="divUnidades0"></div>
-														</div>
-														<div class="col-md-3">
-															<br><label>Tipo</label><hr>
-															<div id="divTipoCate0"></div>
-														</div>
-														<div class="col-md-3">
-															<br><label>Cantidad</label><hr>
-															<div id="divCateEnviado0"></div>
-														</div>
-														<div class="col-md-3">
-															<br><label>Tratamiento</label><hr>
-															<div id="divTratamiento0"></div>
-														</div>
-													</div>
-													<div id="step-2">
-														<div class="divReq">
-															<label title="Foto Cargue">F.Ca</label>
-															<label title="Foto Descargue">F.De</label>
-															<label title="Foto Persaje">F.Pe</label>
-															<label title="Foto Reempacado">F.Re</label>
-															<label title="Foto Mezclaje">F.Me</label>
-															<label title="Foto Destrucción">F.Des</label>
-															<label title="Video Cargue">V.Ca</label>
-															<label title="Video Descargue">V.De</label>
-															<label title="Video Persaje">V.Pe</label>
-															<label title="Video Reempacado">V.Re</label>
-															<label title="Video Mezclaje">V.Me</label>
-															<label title="Video Destrucción">V.Des</label>
-															<label title="Devolucion">Dev</label>
-															<label title="Planillas">Pla</label>
-															<label title="Alistamiento">Ali</label>
-															<label title="Capacitación">Cap</label>
-															<label title="Bascula">Bas</label>
-															<label title="Vehiculo con Plataforma">Ve.P</label>
-															<label title="Certificación Especial">Cer</label>
-														</div>
-														<div class="divReq">
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<input class="inputcheck" type="checkbox"/>
-															<hr>
-														</div>
-														<div class="divReq" id="divRequerimientos0"></div>
-													</div>
+											<br>
+											<div id="RespelData0" class="collapse">
+												<div class="col-md-6">
+													<label>Unidades de Medida</label>
+													<input type="text" class="form-control">
 												</div>
+												<div class="col-md-6">
+													<label>Cantidad</label>
+													<input type="text" class="form-control">
+												</div>
+												<div class="col-md-6">
+													<label>Cantidad (Kg)</label>
+													<input type="text" class="form-control">
+												</div>
+												<div class="col-md-6">
+													<label>Tratamiento</label>
+													<input type="text" class="form-control">
+												</div>
+												<div class="col-md-12">
+													<label>Requerimientos</label>
+													<input type="text" class="form-control">
+												</div>
+												<br>
 											</div>
+										</div>
+										<div id="AddRespel0" class="col-md-16 col-md-offset-5">
+											<a onclick="AgregarRegistro(0)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
 										</div>
 									</div>
-									<div class="box box-info"></div>
-								</div>
-								<div class="col-md-12">
-									<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-success" style="float: right;"><i class="fas fa-plus"></i> Añadir Generador</a>
-								</div>
-
-								<div class="box-footer">
-									<input type="submit" class="btn btn-primary" form="form1" value="Siguiente">
 								</div>
 							</div>
+							<div id="AddGenerador" class="col-md-16">
+								<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Añadir Generador</a>
+							</div>
+						</div>
+						<div class="box-footer">
+							<input type="submit" class="btn btn-success pull-right" form="form1" value="Solicitar">
 						</div>
 					</form>
 				</div>
@@ -192,47 +151,23 @@ Solicitudes de servicios
 </div>
 @endsection
 @section('NewScript')
-<script>
-	var contador = 1;
-	function AgregarGenerador(){
-		var GenerRes = `@include('solicitud-serv.layaoutsSolSer.NewGener')`;
-		$("#divGenerRes").append(GenerRes);
-		$(document).ready(function(){
-			$('.smartwizard').smartWizard({
-				theme: 'arrows',
-				keyNavigation:true
-			});
-		});
-		$(function () {
-			$('.inputcheck').iCheck({
-				checkboxClass: 'icheckbox_square-blue',
-				radioClass: 'iradio_square-blue',
-				increaseArea: '20%' // optional
-			});
-		});
-		contador= parseInt(contador)+1;
-	}
-	function AgregarRegistro(id) {
-		var Respel, Categoria, CateEnviado, Tratamiento, Requerimientos, GenerRes;
-		Respel = '<select name="Respel['+id+'][]" id="Respel"class="form-control"> <option value="1">Seleccione...</option> @foreach($Respels as $Respel) <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option> @endforeach </select><hr>';
-		Unidades = '<input type="text" class="form-control" id="Unidades" name="Unidades['+id+'][]"><hr>';
-		Categoria = '<select class="form-control" id="TipoCate" name="TipoCate['+id+'][]"> <option value="Kg">Seleccione...</option> <option value="Kilogramos">Kilogramos</option><option value="Litros">Litros</option></select><hr>';
-		CateEnviado = '<input type="text" class="form-control" id="CateEnviado" name="CateEnviado['+id+'][]"><hr>';
-		Tratamiento = '<select class="form-control" id="Tratamiento" name="Tratamiento['+id+'][]"> <option value="1">Seleccione...</option> @foreach($Tratamientos->get() as $Tratamiento) <option value="{{$Tratamiento->ID_Trat}}">{{$Tratamiento->TratName}}</option>  @endforeach</select><hr>';
-		Requerimientos = '<input name="FotoCargue['+id+'][]" id="FotoCargue" class="inputcheck" type="checkbox"/> <input name="FotoDescargue['+id+'][]" id="FotoDescargue" class="inputcheck" type="checkbox"/> <input name="FotoPesaje['+id+'][]" id="FotoPesaje" class="inputcheck" type="checkbox"/> <input name="FotoReempacado['+id+'][]" id="FotoReempacado" class="inputcheck" type="checkbox"/> <input name="FotoMezclado['+id+'][]" id="FotoMezclado" class="inputcheck" type="checkbox"/> <input name="FotoDestruccion['+id+'][]" id="FotoDestruccion" class="inputcheck" type="checkbox"/> <input name="VideoCargue['+id+'][]" id="VideoCargue" class="inputcheck" type="checkbox"/> <input name="VideoDescargue['+id+'][]" id="VideoDescargue" class="inputcheck" type="checkbox"/> <input name="VideoPesaje['+id+'][]" id="VideoPesaje" class="inputcheck" type="checkbox"/> <input name="VideoReempacado['+id+'][]" id="VideoReempacado" class="inputcheck" type="checkbox"/> <input name="VideoMezclado['+id+'][]" id="VideoMezclado" class="inputcheck" type="checkbox"/> <input name="VideoDestruccion['+id+'][]" id="VideoDestruccion" class="inputcheck" type="checkbox"/> <input name="Devolucion['+id+'][]" id="Devolucion" class="inputcheck" type="checkbox"/> <input name="Planillas['+id+'][]" id="Planillas" class="inputcheck" type="checkbox"/> <input name="Alistamiento['+id+'][]" id="Alistamiento" class="inputcheck" type="checkbox"/> <input name="Capacitacion['+id+'][]" id="Capacitacion" class="inputcheck" type="checkbox"/> <input name="Bascula['+id+'][]" id="Bascula" class="inputcheck" type="checkbox"/> <input name="Platform['+id+'][]" id="Platform" class="inputcheck" type="checkbox"/> <input name="CertiEspecial['+id+'][]" id="CertiEspecial" class="inputcheck" type="checkbox"/><hr>';
-		$("#divRespel"+id).append(Respel);
-		$("#divUnidades"+id).append(Unidades);
-		$("#divTipoCate"+id).append(Categoria);
-		$("#divCateEnviado"+id).append(CateEnviado);
-		$("#divTratamiento"+id).append(Tratamiento);
-		$("#divRequerimientos"+id).append(Requerimientos);
-		$(function () {
-		$('.inputcheck').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		radioClass: 'iradio_square-blue',
-		increaseArea: '20%' // optional
-		});
-		});
-	}
-</script>
+	<script>
+		var contadorRespel = 1;
+		var contadorGenerador = 1;
+		function AgregarGenerador(){
+			$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
+			contadorGenerador = contadorGenerador+1;
+			contadorRespel = contadorRespel+1;
+		}
+		function AgregarRegistro(id) {
+			$("#AddRespel"+id).before(`@include('solicitud-serv.layaoutsSolSer.NewRespel')`);
+			contadorRespel = contadorRespel+1;
+		}
+		function RemoveRespel(id){
+			$("#Repel"+id).remove();
+		}
+		function RemoveGenerador(id){
+			$("#Generador"+id).remove();
+		}
+	</script>
 @endsection
