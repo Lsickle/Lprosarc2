@@ -155,7 +155,9 @@ Solicitudes de servicios
 											<div id="RespelData0" class="collapse in">
 												<div class="col-md-6">
 													<label>Unidades de Medida</label>
-													<input type="text" class="form-control">
+													<select name="" id="" class="form-control">
+														<option value="">Seleccione...</option>
+													</select>
 												</div>
 												<div class="col-md-6">
 													<label>Cantidad</label>
@@ -166,8 +168,27 @@ Solicitudes de servicios
 													<input type="text" class="form-control">
 												</div>
 												<div class="col-md-6">
-													<label>Tratamiento</label>
-													<input type="text" class="form-control">
+													<label>Embalaje</label>
+													<select name="" id="" class="form-control">
+														<option value="">Seleccione...</option>
+													</select>
+												</div>
+												<div class="col-md-16" style="text-align: center;">
+													<div class="col-md-12">
+														<label>Dimensiones del Residuo</label>
+													</div>
+													<div class="col-md-4">
+														<label>Alto</label>
+														<input type="number" class="form-control">
+													</div>
+													<div class="col-md-4">
+														<label>Ancho</label>
+														<input type="number" class="form-control">
+													</div>
+													<div class="col-md-4">
+														<label>Profundo</label>
+														<input type="number" class="form-control">
+													</div>
 												</div>
 												<div class="col-md-12" style="text-align: center;">
 													<div class="col-md-12">
