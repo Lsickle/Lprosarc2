@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Registro
+Solicitudes de servicios
 @endsection
 @section('contentheader_title')
 Solicitudes de servicios
@@ -11,7 +11,7 @@ Solicitudes de servicios
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos</h3>
+					<h3 class="box-title">Creacion de Solicitudes</h3>
 				</div>
 				<div class="box box-info">
 					<form role="form" id="form1" action="/solicitud-servicio" method="POST">
@@ -68,11 +68,11 @@ Solicitudes de servicios
 									<input type="text" class="form-control">
 								</div>
 								<div id="typeaditable" class="col-md-6">
-									<label for="SolResAuditoriaTipo">Aditable</label>
+									<label for="SolResAuditoriaTipo">Auditable</label>
 									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required>
 										<option value="">Seleccione...</option>
-										<option value="Presencial">Aditable Presencial</option>
-										<option value="Virtual">Aditable Virtual</option>
+										<option value="Presencial">Auditable Presencial</option>
+										<option value="Virtual">Auditable Virtual</option>
 										<option value="No Auditable">No Auditable</option>
 									</select>
 								</div>
