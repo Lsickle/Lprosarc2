@@ -227,5 +227,18 @@ class UserTableSeeder extends Seeder
         $user->save();
         /*$user->roles()->attach($role_ehorno);*/
 
+        $user = new User();
+        $user->name = 'Lorena Urriago';
+        $user->email = 'comercial1@prosarc.com.co';
+        $user->email_verified_at = '2019-04-17 10:25:10';
+        $user->password = bcrypt('secret');
+        $user->UsSlug = 'Lorena1';
+        $user->UsRol = 'Comercial';
+        $user->UsRolDesc = 'Comercial Administrativo';
+        $user->UsRol2 = 'Usuario';
+        $user->UsRolDesc2 = 'Usuario general';
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->FK_UserPers = '1';
+        $user->save();
     }
 }
