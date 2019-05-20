@@ -19,15 +19,6 @@ Solicitudes de servicios
 						<div class="box-body">
 							<div class="col-md-12 col-xs-12">
 								<div class="col-md-12">
-									<label for="FK_SolSerCliente">Cliente</label>
-									<select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required>
-										<option value="1">Seleccione...</option>
-										@foreach ($Clientes as $Cliente)
-										<option value="{{$Cliente->ID_Cli}}">{{$Cliente->CliName}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="col-md-6">
 									<label for="FK_SolSerPersona">Persona de Contacto</label>
 									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required>
 										<option value="1">Seleccione...</option>
@@ -39,47 +30,51 @@ Solicitudes de servicios
 								<div class="col-md-6">
 									<label for="SolSerTipo">Tipo de transportador</label>
 									<select class="form-control" name="SolSerTipo" id ="SolSerTipo" required="true">
-										<option value="1">Seleccione...</option>
-										<option>Interno</option>
-										<option>Alquilado</option>
-										<option>Externo</option>
+										<option value="">Seleccione...</option>
+										<option onclick="TransportadorProsarc()" value="1">Prosarc S.A.</option>
+										<option onclick="TransportadorExtr()">Propio</option>
 									</select>
 								</div>
-								<div class="col-md-6">
+								<div id="transportador" class="col-md-6" hidden="true">
 									<label for="Fk_SolSerTransportador">Transportador</label>
 									<select class="form-control" id="Fk_SolSerTransportador" name="Fk_SolSerTransportador" required>
-										<option value="1">Seleccione...</option>
-										@foreach ($Sedes as $Sede)
-										<option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
-										@endforeach
+										<option value="">Seleccione...</option>
+										<option onclick="TransportadorCliente()" value="3">Nombre del cliente</option>
+										<option onclick="OtraTransportadora()">Otro</option>
 									</select>
 								</div>
-								<div class="col-md-6">
-									<label for="SolSerConducExter">Nombre del conductor externo</label>
+								<div id="nametransportadora" class="col-md-6" hidden="true">
+									<label for="SolSerConducExter">Nombre de la transaportadora</label>
 									<input type="text" class="form-control" id="SolSerConducExter" placeholder="Juan" name="SolSerConducExter">
 								</div>
-								<div class="col-md-6">
-									<label for="SolSerVehicExter">Placa del vehiculo externo</label>
+								<div id="nittransportadora" class="col-md-6" hidden="true">
+									<label for="SolSerVehicExter">Nit de la transportadora</label>
 									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter">
 								</div>
-								<div class="col-md-6" style="padding-top: 2%; text-align: center;">
-									<label for="SolSerAuditable">Auditable</label>
-									<input class="AllowUncheck" type="radio" name="SolSerAuditable"/>
+								<div id="addresstransportadora" class="col-md-6" hidden="true">
+									<label for="SolSerVehicExter">Dirección de la transportadora</label>
+									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter">
 								</div>
-								<div class="col-md-6">
-									<label for="SolResAuditoriaTipo">Aditable Tipo</label>
+								<div id="citytransportadora" class="col-md-6" hidden="true">
+									<label for="SolSerVehicExter">Ciudad de la transportadora</label>
+									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter">
+								</div>
+								<div id="Conductor" class="col-md-6" hidden="true">
+									<label>Conductor</label>
+									<input type="text" class="form-control">
+								</div>
+								<div id="Vehiculo" class="col-md-6" hidden="true">
+									<label>Placa del Vehiculo</label>
+									<input type="text" class="form-control">
+								</div>
+								<div id="typeaditable" class="col-md-6">
+									<label for="SolResAuditoriaTipo">Aditable</label>
 									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required>
-										<option value="Presencial">Presencial</option>
-										<option value="Virtual">Virtual</option>
+										<option value="">Seleccione...</option>
+										<option value="Presencial">Aditable Presencial</option>
+										<option value="Virtual">Aditable Virtual</option>
+										<option value="No Auditable">No Auditable</option>
 									</select>
-								</div>
-								<div class="col-md-6" style="padding-top: 2%; text-align: center;">
-									<label for="inputcheck">¿Usaria de nuevo la solicitud?</label>
-									<input class="CalendarSwitch" type="radio" name="ReqAuditoriaTipo"/>
-								</div>
-								<div class="col-md-6">
-									<label for="SolSerFrecuencia">Frecuencia de recolecta</label>
-									<input type="text" class="form-control" id="SolSerFrecuencia" placeholder="15 días" name="SolSerFrecuencia"><br><br>
 								</div>
 								<div class="col-md-12" style="text-align: center;">
 									<b>RESIDUOS A ENTREGAR</b>
@@ -89,7 +84,7 @@ Solicitudes de servicios
 								<div id="Generador0" class="box box-success col-md-16">
 									<div class="col-md-12">
 										<label for="">Seleccione el generador</label>
-										<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#DivRepel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+										<button type="button" class="btn btn-box-tool" style="color: #00a65a;" data-toggle="collapse" data-target="#DivRepel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 										<select name="SGenerador[0]" id="SGenerador" class="form-control">
 											<option value="">Seleccione...</option>
 											@foreach($SGeneradors as $SGenerador)
@@ -101,12 +96,12 @@ Solicitudes de servicios
 									<div id="DivRepel0" class="col-md-12 collapse in">
 										<div id="Repel0" class="col-md-12 box box-warning">
 											<label>Residuo</label>
-											<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#RespelData0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+											<button type="button" class="btn btn-box-tool" style="color: #f39c12;" data-toggle="collapse" data-target="#RespelData0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 											<select name="SGenerador[0]" id="SGenerador" class="form-control">
 												<option value="">Seleccione...</option>
 											</select>
 											<br>
-											<div id="RespelData0" class="collapse">
+											<div id="RespelData0" class="collapse in">
 												<div class="col-md-6">
 													<label>Unidades de Medida</label>
 													<input type="text" class="form-control">
@@ -152,6 +147,36 @@ Solicitudes de servicios
 @endsection
 @section('NewScript')
 	<script>
+		function TransportadorProsarc(){
+			$("#transportador").attr('hidden', true);
+			$("#nametransportadora").attr('hidden', true);
+			$("#nittransportadora").attr('hidden', true);
+			$("#addresstransportadora").attr('hidden', true);
+			$("#citytransportadora").attr('hidden', true);
+			$("#Conductor").attr('hidden', true);
+			$("#Vehiculo").attr('hidden', true);
+			$("#typeaditable").removeClass('col-md-12');
+			$("#typeaditable").addClass('col-md-6');
+		}
+		function TransportadorExtr() {
+			$("#transportador").attr('hidden', false);
+			$("#Conductor").attr('hidden', false);
+			$("#Vehiculo").attr('hidden', false);
+			$("#typeaditable").removeClass('col-md-6');
+			$("#typeaditable").addClass('col-md-12');
+		}
+		function TransportadorCliente(){
+			$("#nametransportadora").attr('hidden', true);
+			$("#nittransportadora").attr('hidden', true);
+			$("#addresstransportadora").attr('hidden', true);
+			$("#citytransportadora").attr('hidden', true);
+		}
+		function OtraTransportadora(){
+			$("#nametransportadora").attr('hidden', false);
+			$("#nittransportadora").attr('hidden', false);
+			$("#addresstransportadora").attr('hidden', false);
+			$("#citytransportadora").attr('hidden', false);
+		}
 		var contadorRespel = 1;
 		var contadorGenerador = 1;
 		function AgregarGenerador(){
