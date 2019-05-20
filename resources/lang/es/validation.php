@@ -202,6 +202,10 @@ return [
 
         'FK_SGener'     => 'Sedes del Generador',
         'FK_Respel'     => 'Residuos',
+
+        'VehicPlaca'    => 'Placa',
+        'VehicTipo'     => 'Tipo',
+        'VehicCapacidad'=> 'Capacidad',
     ],
 
 ];

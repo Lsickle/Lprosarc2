@@ -79,7 +79,7 @@
                                     <li class="list-group-item col-md-12 col-xs-12">
                                         <div class="col-md-6 col-xs-6">
                                             <b class="textolargo">{{$GenerSede->GSedeName}}</b> 
-                                        <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
+                                            <a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
                                         </div>
                                         <div>
                                             <a href="#" class="pull-right textpopover" id="SGeneraddress{{$i}}" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$GenerSede->GSedeAddress}}</p>">{{$GenerSede->GSedeAddress}}</a>

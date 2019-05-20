@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\userController;
 
 class ContactosUpdateRequest extends FormRequest
 {
@@ -28,11 +29,14 @@ class ContactosUpdateRequest extends FormRequest
     {
         return [
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
+                $id = userController::IDClienteSegunUsuario();
+
                 $Cliente = DB::table('clientes')
                     ->select('clientes.CliNit')
                     ->where('CliNit', $request->input('CliNit'))
                     ->where('CliCategoria', $request->input('CliCategoria'))
                     ->where('CliDelete', 0)
+                    ->where('ID_Cli', '<>', $id)
                     ->first();
 
                 if(isset($Cliente->CliNit)){

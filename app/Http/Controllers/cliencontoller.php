@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\ClienteStoreRequest;
+use App\Http\Requests\ClienteUpdateRequest;
 use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;

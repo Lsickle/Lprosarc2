@@ -482,7 +482,7 @@ $(function() {
             digits: 0
         });
         $('.placa').inputmask({
-            mask: "999 - ***", 
+            mask: "*** - 999", 
             placeholder: "",
         });
     });
@@ -1482,18 +1482,18 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script>
     function AddVehiculo(){
-        $('#Form').validator('update');
         document.getElementById('AddVehiculo').style.display = 'block';
         $('#VehicPlaca').prop('required', true);
         $('#VehicTipo').prop('required', true);
         $('#VehicCapacidad').prop('required', true);
+        $('.Formcontacto').validator('updated');
     };
     function NoAddVehiculo(){
-        $('#Form').validator('update');
         document.getElementById('AddVehiculo').style.display = 'none';
         $('#VehicPlaca').prop('required', false);
         $('#VehicTipo').prop('required', false);
         $('#VehicCapacidad').prop('required', false);
+        $('.Formcontacto').validator('updated');
     };
 </script>
 @endif
@@ -1536,6 +1536,7 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
+{{-- Aparicion del modal si existe la variable errors --}}
 @if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
     @if ($errors->any())
         <script>
@@ -1545,42 +1546,52 @@ $(document).ready(function(){
             });
         </script>
     @endif
-    @if (Route::currentRouteName() === 'generadores.show')
+@endif
+@if(Route::currentRouteName() === 'contactos.show')
+    @if ($errors->any())
         <script>
-            $(document).ready(function(){
-                $("#FK_SGener").change(function(e){
-                    id=$("#FK_SGener").val();
-                    e.preventDefault();
-                    $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                    });
-                    $.ajax({
-                        url: "{{url('/sedegener-respel')}}/"+id,
-                        method: 'GET',
-                        data:{},
-                        success: function(res){
-                            $("#FK_Respel").empty();
-                            var respel = new Array();
-                            for(var i = res.length -1; i >= 0; i--){
-                                if ($.inArray(res[i].ID_Respel, respel) < 0) {
-                                    $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
-                                    respel.push(res[i].ID_Mun);
-                                }
-                            }
-                        }
-                    })
-                });
+            $(document).ready(function()
+            {
+                $(".create").modal("show");
             });
         </script>
     @endif
 @endif
-{{-- @if(Route::currentRouteName() === 'contactos.show') --}}
+@if (Route::currentRouteName() === 'generadores.show')
+    <script>
+        $(document).ready(function(){
+            $("#FK_SGener").change(function(e){
+                id=$("#FK_SGener").val();
+                e.preventDefault();
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+                });
+                $.ajax({
+                    url: "{{url('/sedegener-respel')}}/"+id,
+                    method: 'GET',
+                    data:{},
+                    success: function(res){
+                        $("#FK_Respel").empty();
+                        var respel = new Array();
+                        for(var i = res.length -1; i >= 0; i--){
+                            if ($.inArray(res[i].ID_Respel, respel) < 0) {
+                                $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+                                respel.push(res[i].ID_Mun);
+                            }
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+@endif
+{{-- @if(Route::currentRouteName() === 'contactos.show')
 <script>
     $(document).ready(function(){
-        $("#editvehiculo").click(function(e){
-            id=$("#vehiculoid").val();
+        $("#editvehiculo{{$Vehiculo->ID_Vehic}}").click(function(e){
+            id=$("#vehiculoid{{$Vehiculo->ID_Vehic}}").val();
             e.preventDefault();
             $.ajaxSetup({
                 headers: {
@@ -1591,10 +1602,13 @@ $(document).ready(function(){
                 url: "{{url('/contacto-vehiculos')}}/"+id,
                 method: 'GET',
                 data:{},
-                success: function(res){
+                beforeSend: function(){
                     $('#VehicTipo').val('');
                     $('#VehicPlaca').val('');
                     $('#VehicCapacidad').val('');
+                },
+                success: function(res){
+                    
                     var Vehiculo = new Array();
                     for(var i = res.length -1; i >= 0; i--){
                         if ($.inArray(res[i].ID_Vehic, Vehiculo) < 0) {
@@ -1609,7 +1623,7 @@ $(document).ready(function(){
         });
     });
 </script>
-{{-- @endif --}}
+@endif --}}
 {{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.edit')
 <script>
