@@ -125,51 +125,6 @@
             </div>
         </form>
         {{-- final del modal --}}
-         {{-- modal de Crear un Vehiculo --}}
-         <form role="form" action="/contacto-vehiculo-create/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
-            @csrf
-            <div class="modal modal-default fade in" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-                                <i class="fas fa-plus-circle"></i>
-                                <span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.assignrrespelssedegener') }}</p></span>
-                            </div> 
-                        </div>
-                        @if ($errors->any())
-                            <div class="alert alert-danger" role="alert">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <p>{{$error}}</p>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <div class="modal-body">
-                            <div class="form-group col-md-12">
-                                <label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
-                                <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('VehicPlaca')}}">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="VehicTipo"> {{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
-                                <input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{old('VehicTipo')}}">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-                            <input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{old('VehicCapacidad')}}">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
-                            <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        {{-- final del modal --}}
         <div class="col-md-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">

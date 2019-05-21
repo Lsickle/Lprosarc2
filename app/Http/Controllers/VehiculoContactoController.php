@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Vehiculo;
 use App\audit;
-// use App\Sede;
 
 class VehiculoContactoController extends Controller
 {
