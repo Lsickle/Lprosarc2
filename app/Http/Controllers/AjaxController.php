@@ -63,6 +63,7 @@ class AjaxController extends Controller
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('respels.ID_Respel')
 				->where('FK_SGener', '=', $id)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->groupBy('FK_Respel')
 				->where('RespelDelete', '=', 0)
 				->get();

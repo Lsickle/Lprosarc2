@@ -125,6 +125,8 @@ class sgenercontroller extends Controller
                 $ResiduoSedeGener = new ResiduosGener();
                 $ResiduoSedeGener->FK_SGener = $GenerSede->ID_GSede;
                 $ResiduoSedeGener->FK_Respel = $Respel;
+                $ResiduoSedeGener->DeleteSGenerRes = 0;
+                $ResiduoSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
                 $ResiduoSedeGener->save();
             }
         }
@@ -158,6 +160,7 @@ class sgenercontroller extends Controller
                 ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
                 ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
                 ->where('RespelDelete', 0)
+                ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->get();
                     
             $Residuos = DB::table('respels')
@@ -228,7 +231,8 @@ class sgenercontroller extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         
-        return redirect()->route('sgeneradores.index');
+        $id = $GSede->GSedeSlug;
+        return redirect()->route('sgeneradores.show', compact('id'));
     }
 
     /**
@@ -240,26 +244,36 @@ class sgenercontroller extends Controller
     public function destroy($id)
     {
         $Gsede = GenerSede::where('GSedeSlug', $id)->first();
+
+        
         if ($Gsede->GSedeDelete == 0) {
             $Gsede->GSedeDelete = 1;
-            $Gsede->save(); 
-            // $ResiduosSGeners = DB::table('residuos_geners')
-            //     ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-            //     ->where('gener_sedes.FK_GSede', '=', $Gsede->ID_Gener)
-            //     ->select('residuos_geners.ID_SGenerRes')
-            //     ->get();
+            $Gsede->save();          
 
-            // foreach($ResiduosSGeners as $ResiduoSGener){
-            //     ResiduosGener::destroy($ResiduoSGener->ID_SGenerRes);
-            // $log = new audit();
-            // $log->AuditTabla="residuos_geners";
-            // $log->AuditType="Eliminado";
-            // $log->AuditRegistro=$ResiduoSGener->ID_SGenerRes;
-            // $log->AuditUser=Auth::user()->email;
-            // $log->Auditlog = $ResiduoSGener->all();
-            // $log->save();
+            $ResiduosSGeners = DB::table('residuos_geners')
+                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+                ->where('gener_sedes.ID_GSede', '=', $Gsede->ID_GSede)
+                ->select('residuos_geners.ID_SGenerRes', 'residuos_geners.DeleteSGenerRes')
+                ->update(['DeleteSGenerRes' => 1]);
+            
+            $ResiduosSGeners = DB::table('residuos_geners')
+                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+                ->where('gener_sedes.ID_GSede', '=', $Gsede->ID_GSede)
+                ->select('residuos_geners.ID_SGenerRes')
+                ->select('residuos_geners.ID_SGenerRes', 'residuos_geners.DeleteSGenerRes')
+                ->get();
 
-            // }
+            foreach($ResiduosSGeners as $ResiduoSGener){
+
+                $log = new audit();
+                $log->AuditTabla="residuos_geners";
+                $log->AuditType="Eliminado";
+                $log->AuditRegistro=$ResiduoSGener->ID_SGenerRes;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $ResiduoSGener->DeleteSGenerRes;
+                $log->save();
+            }
+
             $log = new audit();
             $log->AuditTabla="gener_sedes";
             $log->AuditType="Eliminado";
@@ -267,12 +281,13 @@ class sgenercontroller extends Controller
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog = $Gsede->GSedeDelete;
             $log->save();
-            return redirect()->route('generadores.index');
+
+            return redirect()->route('sgeneradores.index');
         }
         else{
             $Gsede->GSedeDelete = 0;
-            $Gsede->save();                
-
+            $Gsede->save();    
+            
             $log = new audit();
             $log->AuditTabla="gener_sedes";
             $log->AuditType="Restaurado";
@@ -280,6 +295,29 @@ class sgenercontroller extends Controller
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog = $Gsede->GSedeDelete;
             $log->save();
+            
+            $ResiduosSGeners = DB::table('residuos_geners')
+                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+                ->where('gener_sedes.ID_GSede', '=', $Gsede->ID_GSede)
+                ->select('residuos_geners.ID_SGenerRes', 'residuos_geners.DeleteSGenerRes')
+                ->update(['DeleteSGenerRes' => 0]);
+            
+            $ResiduosSGeners = DB::table('residuos_geners')
+                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+                ->where('gener_sedes.ID_GSede', '=', $Gsede->ID_GSede)
+                ->select('residuos_geners.ID_SGenerRes', 'residuos_geners.DeleteSGenerRes')
+                ->get();
+
+            foreach($ResiduosSGeners as $ResiduoSGener){
+
+                $log = new audit();
+                $log->AuditTabla="residuos_geners";
+                $log->AuditType="Eliminado";
+                $log->AuditRegistro=$ResiduoSGener->ID_SGenerRes;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog = $ResiduoSGener->DeleteSGenerRes;
+                $log->save();
+            }
 
             $id = $Gsede->GSedeSlug;
 

@@ -13,13 +13,13 @@
                 <div class="box-body box-profile">
                     <div class="col-md-12 col-xs-12">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                            <a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+                            <a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
                             @component('layouts.partials.modal')
                                 {{$SedeGener->ID_GSede}}
                             @endcomponent
                         @endif
                         @if($SedeGener->GSedeDelete == 0 && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                            <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+                            <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
                             <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
                                 @method('DELETE')
                                 @csrf
@@ -27,10 +27,13 @@
                             </form>
                         @else
                             @if ($SedeGener->GSedeDelete == 1 && Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-right">
+                                <form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-left">
                                     @method('DELETE')
                                     @csrf
-                                    <input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+                                    <button type="submit" class='btn btn-success btn-block'>
+                                        <i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.add') }}</b>
+                                    </button>
+                                    {{-- <input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}"> --}}
                                 </form>
                             @endif
                         @endif
@@ -103,7 +106,6 @@
                                     <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
                                     <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
                                         @foreach ($Residuos as $Residuo)
-                                            {{-- <option value="{{$Respel->ID_Respel}}" {{ 1 == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option> --}}
                                             <option value="{{$Residuo->ID_Respel}}">{{$Residuo->RespelName}}</option>
                                         @endforeach     
                                     </select>
@@ -111,7 +113,6 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
                                 <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
                             </div>
                         </div>
@@ -128,8 +129,9 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="residuos">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                            {{-- Barra de Navegacion --}}
                             <a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
-                            <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-primary mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
+                            <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-success mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
                         @endif
                         <div style='overflow-y:auto; max-height:400px;'>
                             @foreach ($Respels as $Respel)

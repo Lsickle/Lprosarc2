@@ -59,61 +59,61 @@ class ContactoController extends Controller
     public function store(ContactosStoreRequest $request)
     {
         $Cliente = new Cliente();
-            $Cliente->CliNit = $request->input('CliNit');
-            $Cliente->CliName = $request->input('CliName');
-            $Cliente->CliShortname = $request->input('CliShortname');
-            $Cliente->CliCategoria = $request->input('CliCategoria');
-            $Cliente->CliSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('CliShortname').substr(md5(rand()), 0,32);
-            $Cliente->CliDelete = 0;
-            $Cliente->save();
+        $Cliente->CliNit = $request->input('CliNit');
+        $Cliente->CliName = $request->input('CliName');
+        $Cliente->CliShortname = $request->input('CliShortname');
+        $Cliente->CliCategoria = $request->input('CliCategoria');
+        $Cliente->CliSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('CliShortname').substr(md5(rand()), 0,32);
+        $Cliente->CliDelete = 0;
+        $Cliente->save();
 
-            $Sede = new Sede();
-            $Sede->SedeName = $request->input('SedeName');
-            $Sede->SedeAddress = $request->input('SedeAddress');
-            $Sede->SedePhone1 = $request->input('SedePhone1');
-            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
-                $Sede->SedePhone1 = $request->input('SedePhone2');
-                $Sede->SedeExt1 = $request->input('SedeExt2');
+        $Sede = new Sede();
+        $Sede->SedeName = $request->input('SedeName');
+        $Sede->SedeAddress = $request->input('SedeAddress');
+        $Sede->SedePhone1 = $request->input('SedePhone1');
+        if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
+            $Sede->SedePhone1 = $request->input('SedePhone2');
+            $Sede->SedeExt1 = $request->input('SedeExt2');
+        }else{
+            if($request->input('SedePhone1') === null){
+                $Sede->SedeExt1 = null;
             }else{
-                if($request->input('SedePhone1') === null){
-                    $Sede->SedeExt1 = null;
-                }else{
-                    $Sede->SedePhone1 = $request->input('SedePhone1');
-                    $Sede->SedeExt1 = $request->input('SedeExt1');
-                }
-                if($request->input('SedePhone2') === null){
-                    $Sede->SedeExt2 = null;
-                }else{
-                    $Sede->SedePhone2 = $request->input('SedePhone2');
-                    $Sede->SedeExt2 = $request->input('SedeExt2');
-                }
+                $Sede->SedePhone1 = $request->input('SedePhone1');
+                $Sede->SedeExt1 = $request->input('SedeExt1');
             }
-            $Sede->SedeEmail = $request->input('SedeEmail');
-            $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
-            $Sede->FK_SedeCli = $Cliente->ID_Cli;
-            $Sede->FK_SedeMun = $request->input('FK_SedeMun');
-            $Sede->SedeDelete = 0;
-            $Sede->save();
-
-            if($request->input('CliCategoria') === 'Transportador'){
-                $Validate = $request->validate([
-                    'VehicPlaca' => 'required|max:9|min:9|unique:vehiculos,VehicPlaca',
-                    'VehicTipo' => 'required|max:64',
-                    'VehicCapacidad' => 'required|max:64',
-                ]);
-
-                $Vehiculo = new Vehiculo();
-                $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
-                $Vehiculo->VehicTipo = $request->input('VehicTipo');
-                $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-                $Vehiculo->VehicInternExtern = 1;
-                $Vehiculo->VehicDelete = 0;
-                $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
-                $Vehiculo->save();
+            if($request->input('SedePhone2') === null){
+                $Sede->SedeExt2 = null;
+            }else{
+                $Sede->SedePhone2 = $request->input('SedePhone2');
+                $Sede->SedeExt2 = $request->input('SedeExt2');
             }
+        }
+        $Sede->SedeEmail = $request->input('SedeEmail');
+        $Sede->SedeCelular = $request->input('SedeCelular');
+        $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
+        $Sede->FK_SedeCli = $Cliente->ID_Cli;
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+        $Sede->SedeDelete = 0;
+        $Sede->save();
+
+        if($request->input('CliCategoria') === 'Transportador'){
+            $Validate = $request->validate([
+                'VehicPlaca' => 'required|max:9|min:9|unique:vehiculos,VehicPlaca',
+                'VehicTipo' => 'required|max:64',
+                'VehicCapacidad' => 'required|max:64',
+            ]);
+
+            $Vehiculo = new Vehiculo();
+            $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
+            $Vehiculo->VehicTipo = $request->input('VehicTipo');
+            $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
+            $Vehiculo->VehicInternExtern = 1;
+            $Vehiculo->VehicDelete = 0;
+            $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
+            $Vehiculo->save();
+        }
             
-            return redirect()->route('contactos.index');
+        return redirect()->route('contactos.index');
     }
 
     /**
@@ -171,7 +171,7 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactosUpdateRequest $request, $id)
     {
         $validate = $request->validate([
 
@@ -191,21 +191,6 @@ class ContactoController extends Controller
                     $query->where('clientes.CliNit','=', null);
                 }
             })],
-            
-            'CliName'       => 'required|max:255|min:1',
-            'CliShortname'  => 'required|max:255|min:1',
-            'CliCategoria'  => 'required|max:32',
-
-            'SedeName'      => 'required|max:128|min:1',
-            'SedeAddress'   => 'required|max:255|min:1',
-            'SedePhone1'    => 'max:11|min:11|nullable',
-            'SedeExt1'      => 'min:2|max:5|nullable',
-            'SedePhone2'    => 'max:11|min:11|nullable',
-            'SedeExt2'      => 'min:2|max:5|nullable',
-            'SedeEmail'     => 'required|email|max:128',
-            'SedeCelular'   => 'required|min:12|max:12',
-            'FK_SedeMun'    => 'required',
-
         ]);
 
 
@@ -267,13 +252,11 @@ class ContactoController extends Controller
         $Cliente = Cliente::where('CliSlug', $id)->first();
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
         $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
-
+        // return $Vehiculos;
         if ($Cliente->CliDelete == 0){
-            if(isset($Vehiculos)){
-                foreach($Vehiculos as $Vehiculo){
-                    $Vehiculo->VehicDelete = 1;
-                    $Vehiculo->save();
-                }
+            foreach($Vehiculos as $Vehiculo){
+                $Vehiculo->VehicDelete = 1;
+                $Vehiculo->save();
             }
             $Cliente->CliDelete = 1;
             $Cliente->save();
@@ -284,11 +267,9 @@ class ContactoController extends Controller
             return redirect()->route('contactos.index');
         }
         else{
-            if(isset($Vehiculos)){
-                foreach($Vehiculos as $Vehiculo){
-                    $Vehiculo->VehicDelete = 0;
-                    $Vehiculo->save();
-                }
+            foreach($Vehiculos as $Vehiculo){
+                $Vehiculo->VehicDelete = 0;
+                $Vehiculo->save();
             }
             $Cliente->CliDelete = 0;
             $Cliente->save();

@@ -40,9 +40,7 @@
                             @endif
                         @endif
                     </div>
-                    <div class="">
-                        <h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
-                    </div>
+                    <h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
                     <ul class="list-group list-group-unbordered">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                             <li class="list-group-item">
@@ -176,7 +174,7 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="residuos">
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                        {{-- BOTONES DE CREAR RESIDUOS --}}
+                        {{-- BOTONES DE CREAR RESIDUOS Y ASIGNARLOS --}}
                             <a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
                             <a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-success mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
                         @endif
@@ -185,17 +183,18 @@
                                 <ul class="list-group" style="list-style:none; margin-top:10px;">
                                     <li class="col-md-11 col-xs-12 col-12">
                                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                            <a method='get' href='#' data-toggle='modal' data-target='#delete{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+                                            {{-- Boton de eliminar residuo del generador --}}
+                                            <a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
                                         @endif
                                         <h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
                                     </li>
                                     <li class="col-md-12 col-xs-12 col-12">
                                         {{--  Modal Eliminar un Residuo de una SedeGener--}}
-                                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                        <form action='/respelGener/{{$Respel->ID_SGenerRes}}' method='POST' class="col-12 pull-right">
+                                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $Generador->GenerDelete == 0)
+                                        <form action='/respelGener/{{$Respel->SlugSGenerRes}}' method='POST' role="form">
                                             @method('DELETE')
                                             @csrf
-                                            <div class="modal modal-default fade in" id="delete{{$Respel->ID_SGenerRes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal modal-default fade in" id="eliminar{{$Respel->ID_SGenerRes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
@@ -209,12 +208,12 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
-                                                            <label for="Eliminar{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
+                                                            <label for="delete{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="submit" id="Eliminar{{$Respel->ID_SGenerRes}}" style="display: none;">
+                                            <input type="submit" id="delete{{$Respel->ID_SGenerRes}}" style="display: none;">
                                         </form>
                                         @endif
                                         {{-- END Modal --}}

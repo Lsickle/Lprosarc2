@@ -174,6 +174,8 @@ class clientcontoller extends Controller
             abort(403);
         }
     }
+    
+    // show del menu donde dice mi Empresa
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
@@ -194,7 +196,11 @@ class clientcontoller extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        return view('clientes.edit', compact('cliente'));
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+            return view('clientes.edit', compact('cliente'));
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -239,9 +245,9 @@ class clientcontoller extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
         
-        $id = $cliente->CliSlug;
+        $id = Auth::user()->UsSlug;
 
-        return redirect()->route('clientes.show', compact('id'));
+        return redirect()->route('cliente', compact('id'));
     }
 
     /**

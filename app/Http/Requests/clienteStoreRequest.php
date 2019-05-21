@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ClienteStoreRequest extends FormRequest
 {
@@ -21,10 +24,9 @@ class ClienteStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
-            // 'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit',
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
                 $Cliente = DB::table('clientes')
                     ->select('clientes.CliNit')

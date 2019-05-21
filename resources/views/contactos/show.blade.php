@@ -118,7 +118,6 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
                             <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
                         </div>
                     </div>
@@ -192,12 +191,12 @@
                                     <a method='get' href='#' data-toggle='modal' data-target='#edit{{$Vehiculo->ID_Vehic}}'  id="editvehiculo"  title="Editar" class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
                                     @endif
                                     @if ($Vehiculo->VehicDelete === 0)
-                                        <a method='get' href='#' data-toggle='modal' data-target='#delete{{$Vehiculo->ID_Vehic}}'  id="deletevehiculo" title="Eliminar" class="btn btn-danger pull-left"><i class="fas fa-trash-alt"></i></a>
+                                        <a method='get' href='#' data-toggle='modal' data-target='#contactosdelete{{$Vehiculo->ID_Vehic}}'  id="deletevehiculo" title="Eliminar" class="btn btn-danger pull-left"><i class="fas fa-trash-alt"></i></a>
                                          {{-- modal de Eliminar un Vehiculo --}}
                                         <form action='/contacto-vehiculo-delete/{{$Vehiculo->ID_Vehic}}' method='POST' class="col-12 pull-right">
                                             @method('DELETE')
                                             @csrf
-                                            <div class="modal modal-default fade in" id="delete{{$Vehiculo->ID_Vehic}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal modal-default fade in" id="contactosdelete{{$Vehiculo->ID_Vehic}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
@@ -211,12 +210,12 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
-                                                            <label for="Eliminar{{$Vehiculo->ID_Vehic}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
+                                                            <label for="delete{{$Vehiculo->ID_Vehic}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="submit" id="Eliminar{{$Vehiculo->ID_Vehic}}" style="display: none;">
+                                            <input type="submit" id="delete{{$Vehiculo->ID_Vehic}}" style="display: none;">
                                         </form>
                                         {{-- final del modal --}}
                                     @else
