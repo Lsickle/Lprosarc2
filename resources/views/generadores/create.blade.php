@@ -9,12 +9,10 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.Generregistertittle') }}</h3>
 				</div>
-				<!-- general form elements -->
 				<div class="box box-info">
 					@include('layouts.partials.spinner')
 					<!-- form start -->

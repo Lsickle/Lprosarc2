@@ -15,7 +15,7 @@
 				</div>
 				<div class="box box-info">
                     @include('layouts.partials.spinner')
-					<form role="form" action="/clientes/{{$Cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="Form">
+					<form role="form" action="/contactos/{{$Cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="Form">
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -61,17 +61,16 @@
                                                     <div id="AddVehiculo" style="display:none;">
                                                         <div class="form-group col-md-6">
                                                             <label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{ old('VehicPlaca') }}" required="false">
+                                                            <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{ old('VehicPlaca') }}">
                                                         </div>
                                                         <div class="col-md-6 form-group">
-                                                            <label for="VehicTipo">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{ old('VehicTipo') }}"  
-                                                            -,>
+                                                            <label for="VehicTipo">{{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
+                                                            <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.vehictipo') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.vehicle-tipo') }}</p>"><i class="far fa-question-circle" ></i></a>
+                                                            <input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{ old('VehicTipo') }}">
                                                         </div>
                                                         <div class="col-md-6 form-group">
-                                                            <label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
-                                                            <input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{ old('CliShortname') }}"  
-                                                            -,>
+                                                            <label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
+                                                            <input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{ old('VehicCapacidad') }}">
                                                         </div>
                                                     </div>
                                                 @else
@@ -103,19 +102,17 @@
                                                     <label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
                                                     <select class="form-control select" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
                                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
-                                                        {{-- @foreach ($Departamentos as $Departamento)
-                                                            <option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
-                                                        @endforeach --}}
+                                                        @foreach ($Departamentos as $Departamento)
+                                                            <option value="{{$Departamento->ID_Depart}}" {{$Departament->ID_Depart == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label>
                                                     <select class="form-control select" id="municipio" name="FK_SedeMun">
-                                                        @if (isset($Municipios))
-                                                            @foreach ($Municipios as $Municipio)
-                                                                <option value="{{$Municipio->ID_Mun}}" {{ old('FK_SedeMun') == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
-                                                            @endforeach
-                                                        @endif
+                                                        @foreach ($Municipios as $Municipio)
+                                                            <option value="{{$Municipio->ID_Mun}}" {{$Municipality->ID_Mun == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
@@ -150,7 +147,7 @@
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                                                <button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
                                             </div>
                                         </div>
                                     </div>

@@ -24,7 +24,7 @@ class ClienteUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){

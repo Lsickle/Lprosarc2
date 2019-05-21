@@ -357,6 +357,9 @@ return [
     'vehiculos'               => 'Vehiculos',
     'vehicdata'               => 'Datos del Vehiculo',
     'addvehiculo'             => 'Crear Vehiculo',
+    'deletevehiculo'          => '¿Esta seguro, desea eliminar el vehiculo',
+    'vehiculocreate'          => 'Crear Vehiculo',
+    'vehiculoedit'          => 'Editar Vehiculo',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -434,4 +437,9 @@ return [
     'code-gener'              => 'Codigo con el que usted tiene registrado este Generador',
     'respels-gener'           => 'Residuos pertenecientes a este Generador',
 
+    // info-contacto
+    'nameCorto-contacto'      => 'Nombre corto del Contacto sino tiene coloque la Razón Social',
+
+    // info-vehiculo
+    'vehicle-tipo'            =>'Tipo de vehiculo que esta registrando Ejm: Volqueta,Furgon,Turbo, etc...',
 ];

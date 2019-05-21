@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\ClienteStoreRequest;
+use App\Http\Requests\ClienteUpdateRequest;
 use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;
@@ -202,8 +204,28 @@ class clientcontoller extends Controller
      * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
-    public function update(ClienteUpdateRequest $request, Cliente $cliente)
+    public function update(Request $request, Cliente $cliente)
     {   
+        $validate = $request->validate([
+
+        'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request, $cliente){
+        $Cliente = DB::table('clientes')
+            ->select('clientes.CliNit')
+            ->where('CliNit', $request->input('CliNit'))
+            ->where('CliCategoria', 'Cliente')
+            ->where('CliDelete', 0)
+            ->where('ID_Cli', '<>', $cliente->ID_Cli)
+            ->first();
+            if(isset($Cliente->CliNit)){
+                $query->where('clientes.CliNit','=', $Cliente->CliNit);
+            }else{
+                $query->where('clientes.CliNit','=', null);
+            }
+        })],
+        'CliName'       => 'required|max:255|min:1',
+        'CliShortname'  => 'required|max:255|min:1',
+        ]);
+            
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
         $cliente->fill($request->all());
         $cliente->save();
@@ -218,7 +240,8 @@ class clientcontoller extends Controller
         $log->save();
         
         $id = $cliente->CliSlug;
-        return redirect()->route('clientes.edit', compact('id'));
+
+        return redirect()->route('clientes.show', compact('id'));
     }
 
     /**

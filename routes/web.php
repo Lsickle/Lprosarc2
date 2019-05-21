@@ -44,9 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/clientes', 'clientcontoller');
 	Route::get('/cliente/{id}', 'clientcontoller@viewClientShow')->name('cliente');
 	Route::resource('/contactos', 'ContactoController');
-	Route::post('/contacto-vehiculo-create/{id}', 'ContactoVehiculoController@store');
-	Route::get('/contacto-vehiculo-edit/{id}', 'ContactoVehiculoController@update');
-	Route::get('/contacto-vehiculo-delete/{id}', 'ContactoVehiculoController@update');
+	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
+	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
+	Route::delete('/contacto-vehiculo-delete/{id}', 'VehiculoContactoController@destroy');
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');

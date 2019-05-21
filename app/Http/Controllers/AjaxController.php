@@ -86,15 +86,15 @@ class AjaxController extends Controller
 		}
 	}
 	/*Funcion para ver por medio de Ajax los Vehiculos que le competen a un Contacto*/
-	public function VehiculosContacto(Request $request, $id)
-	{
-		if ($request->ajax()) {
-			$Vehiculo = DB::table('vehiculos')
-				->select('*')
-				->where('ID_Vehic', $id)
-				->where('VehicDelete', '=', 0)
-				->get();
-			return response()->json($Vehiculo);
-		}
-	}
+	// public function VehiculosContacto(Request $request, $id)
+	// {
+	// 	if ($request->ajax()) {
+	// 		$Vehiculo = DB::table('vehiculos')
+	// 			->select('*')
+	// 			->where('ID_Vehic', $id)
+	// 			->where('VehicDelete', '=', 0)
+	// 			->get();
+	// 		return response()->json($Vehiculo);
+	// 	}
+	// }
 }
