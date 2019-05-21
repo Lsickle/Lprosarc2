@@ -38,18 +38,8 @@ requerimientos - Crear
 																<label>Fotos</label>
 															</div>
 															<div class="col-md-3">
-																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Cargue</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de cargue de los residuos en las instalaciones del Cliente/Generador</p>">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoCargue"/> Cargue
-																</label>
-															</div>
-															<div class="col-md-3">
 																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/> Descargue
-																</label>
-															</div>
-															<div class="col-md-3">
-																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Pesaje</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de Pesaje de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoPesaje"/> Pesaje
+																	<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/> Descargue/Pesaje
 																</label>
 															</div>
 															<div class="col-md-3">
@@ -63,18 +53,8 @@ requerimientos - Crear
 																<label>Videos</label>
 															</div>
 															<div class="col-md-3">
-																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Cargue</b>" data-content="<p style='width: 50%'> Se requiere video del proceso de cargue de los residuos en las instalaciones del Cliente/Generador</p>">
-																	<input type="checkbox" class="videoswitch" name="ReqVideoCargue"/> Cargue
-																</label>
-															</div>
-															<div class="col-md-3">
 																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p style='width: 50%'> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																	<input type="checkbox" class="videoswitch" name="ReqVideoDescargue"/> Descargue
-																</label>
-															</div>
-															<div class="col-md-3">
-																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Pesaje</b>" data-content="<p style='width: 50%'> Se requiere video del proceso de Pesaje de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																	<input type="checkbox" class="videoswitch" name="ReqVideoPesaje"/> Pesaje
+																	<input type="checkbox" class="videoswitch" name="ReqVideoDescargue"/> Descargue/Pesaje
 																</label>
 															</div>
 															<div class="col-md-3">
@@ -100,11 +80,6 @@ requerimientos - Crear
 															<div class="col-md-4">
 																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Ticket de Bascula Camionera</b>" data-content="<p style='width: 50%'> Se requiere pesaje en bascula camionera y la presentacion del ticket correspondiente</p>">
 																	<input type="checkbox" class="testswitch" name="ReqBascula"/> Ticket de Bascula
-																</label>
-															</div>														
-															<div class="col-md-4">
-																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Alistamiento de residuos</b>" data-content="<p style='width: 50%'> Se requiere preparación o alistamiento de los residuos previo al transporte</p>">
-																	<input type="checkbox" class="testswitch" name="ReqAlistamiento"/> Alistamiento de residuos
 																</label>
 															</div>
 															<div class="col-md-4">
