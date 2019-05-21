@@ -197,21 +197,23 @@ class ContactoController extends Controller
         $Cliente = Cliente::where('CliSlug', $id)->first();
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
 
-        $Cliente->fill($request->all());
-        $Cliente->save();
-
         $Sede->fill($request->all());
         $Sede->save();
 
-        $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->where('VehicDelete', 0)->get();
+        $Cliente->fill($request->all());
+        $Cliente->save();
 
-        if($Cliente->CliCategoria === 'Proveedor' && isset($Vehiculos)){
+        $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->where('VehicDelete', 0)->get();
+            // return $Vehiculos;
+        if($request->input('CliCategoria') === 'Proveedor' && isset($Vehiculos[0])){
+            // return 'Nooooooooo';
             foreach($Vehiculos as $Vehiculo){
                 $Vehiculo->VehicDelete = 1;
                 $Vehiculo->save();
             }
             
-        }elseif($Cliente->CliCategoria === 'Transportador' && !empty($Vehiculos)){
+        }elseif($request->input('CliCategoria') === 'Transportador' && !isset($Vehiculos[0])){
+            // return 'Hola';
             $Validate = $request->validate([
                 'VehicPlaca' => 'required|unique:vehiculos,VehicPlaca|max:9|min:9',
                 'VehicTipo' => 'required|max:64',
@@ -226,7 +228,7 @@ class ContactoController extends Controller
             $Vehiculo->VehicDelete = 0;
             $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
             $Vehiculo->save();
-        }
+        }   
 
         $log = new audit();
         $log->AuditTabla="clientes-contacto";

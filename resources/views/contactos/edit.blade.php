@@ -15,7 +15,7 @@
 				</div>
 				<div class="box box-info">
                     @include('layouts.partials.spinner')
-					<form role="form" action="/contactos/{{$Cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="Form">
+					<form role="form" action="/contactos/{{$Cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" id="Form">
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -147,7 +147,7 @@
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                <button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+                                                <button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
                                             </div>
                                         </div>
                                     </div>

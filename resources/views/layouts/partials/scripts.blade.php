@@ -1486,14 +1486,17 @@ $(document).ready(function() {
         $('#VehicPlaca').prop('required', true);
         $('#VehicTipo').prop('required', true);
         $('#VehicCapacidad').prop('required', true);
-        $('.Formcontacto').validator('updated');
+        $('#Form').validator('update');
     };
     function NoAddVehiculo(){
         document.getElementById('AddVehiculo').style.display = 'none';
         $('#VehicPlaca').prop('required', false);
         $('#VehicTipo').prop('required', false);
         $('#VehicCapacidad').prop('required', false);
-        $('.Formcontacto').validator('updated');
+        $('#VehicPlaca').val('');
+        $('#VehicTipo').val('');
+        $('#VehicCapacidad').val('');
+        $('#Form').validator('validate');
     };
 </script>
 @endif
