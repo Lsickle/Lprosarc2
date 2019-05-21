@@ -6,18 +6,15 @@
 @section('contentheader_title')
 {{ trans('adminlte_lang::message.sclientsedes') }}
 @endsection
-
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientlistsede') }}</h3>
 				</div>
 				<div class="box box-info">
-				<!-- /.box-header -->
 					<div class="box-body">
 						<table id="sedes" class="table table-bordered table-striped" width="100%">
 							<thead>

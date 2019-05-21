@@ -9,12 +9,10 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.edit') }}</h3>
 				</div>
-				<!-- general form elements -->
 				<div class="box box-info">
 					<!-- form start -->
 					<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
@@ -42,19 +40,11 @@
 								<label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
 								<input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" minlength="2"  maxlength="100" required value="{{$cliente->CliShortname}}">
 							</div>
-							{{-- @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
-							<div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
-								<label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
-								<select class="form-control" id="categoria" name="CliCategoria" required>
-									<option {{ $cliente->CliCategoria == 'Cliente' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clientcliente') }}</option>
-									<option {{ $cliente->CliCategoria == 'Transportador' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
-									<option {{ $cliente->CliCategoria == 'Proveedor' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clientproveedor') }}</option>
-								</select>
-							</div>
-							@endif --}}
 						</div>
-						<div class="box-footer">
-							<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+							</div>
 						</div>
 					</form>
 				</div>

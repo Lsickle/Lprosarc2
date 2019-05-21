@@ -187,6 +187,7 @@ return [
     'phoneplaceholder'        => '031 4123141',
     'extplaceholder'          => '155',
     'addressplaceholder'      => 'Cll 23 #11c-03',
+    'placaplaceholder'        => 'XXX-XXX',
     'create'                  => 'Crear',
     'edit'                    => 'Editar',
     'delete'                  => 'Eliminar',
@@ -206,6 +207,7 @@ return [
     'modaldeletegener'        => '¿Seguro, quiere eliminar',
     'modalgener'              => 'de todas las sedes del generador',
     'modaldelete'             => 'Si, eliminar',
+    'modalsgener'              => 'de la sedes',
 
 
     // personal
@@ -260,11 +262,13 @@ return [
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
     'clientsidebar'           => 'Mi Empresa',
-    'clientindexboxtitle'     => 'Lista de Contactos',
+    'clientindexboxtitle'     => 'Lista de Clientes',
     'clientcontact'           => 'Contactos',
+    'clientcontacto'          => 'Contacto',
     'clientNIT'               => 'NIT',
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
+    'clicontactedit'          => 'Editar el Contacto',
 
     // sede
     'csedeindex'              => 'Lista de sedes',
@@ -286,16 +290,19 @@ return [
     'generupdate'             => 'Actualizar Generador',
     'genercode'               => 'Código del Generador',
     '?'                       => '?',
-    'addsedegener'            => 'Añadir Sedes',
+    'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
-    'gsedeupdate'             => 'Actualizar sede',
+    'gsedeupdate'             => 'Actualización de la Sede del Generador',
     'SGenerregistertittle'    => 'Registro de sede del Generador',
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
+    'sgenerlist'              => 'Lista de las Sedes del Generador',
+    'sgenernamesede'         => 'Nombre de la Sede',
+    
     
     // area
     'areatitle'               => 'Áreas',
@@ -342,6 +349,17 @@ return [
     // respel
     'respelscreate'           => 'Crear Residuos',
     'assignrespels'           => 'Asignar Residuos',
+
+    // vehiculo
+    'vehicplaca'              => 'Placa',
+    'vehiccapacidad'          => 'Capacidad',
+    'vehictipo'               => 'Tipo',
+    'vehiculos'               => 'Vehiculos',
+    'vehicdata'               => 'Datos del Vehiculo',
+    'addvehiculo'             => 'Crear Vehiculo',
+    'deletevehiculo'          => '¿Esta seguro, desea eliminar el vehiculo',
+    'vehiculocreate'          => 'Crear Vehiculo',
+    'vehiculoedit'          => 'Editar Vehiculo',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -362,11 +380,13 @@ return [
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
     'MenuClienTitle'          => 'MENU SiReS',
 
-    'MenuClien'               => 'Lista de Contactos',
+    'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',
+    'MenuContactos'           => 'Lista de Contactos',
     'MenuSedes'               => 'Mis Sedes',
     'MenuSedesClien'          => 'Lista de Sedes',
     'MenuGener'               => 'Generadores',
+    'MenuSedesGener'          => 'Lista de Sedes del Generador',
     'MenuGenerClientitle'     => 'Mis Generadores',
     'MenuGenerClien'          => 'Lista de Generadores',
     'MenuRespel'              => 'Residuos',
@@ -414,7 +434,12 @@ return [
     // info-gener
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social',
-    'code-gener'              => 'Codigo con el que usted tiene registrado la este Generador',
+    'code-gener'              => 'Codigo con el que usted tiene registrado este Generador',
     'respels-gener'           => 'Residuos pertenecientes a este Generador',
 
+    // info-contacto
+    'nameCorto-contacto'      => 'Nombre corto del Contacto sino tiene coloque la Razón Social',
+
+    // info-vehiculo
+    'vehicle-tipo'            =>'Tipo de vehiculo que esta registrando Ejm: Volqueta,Furgon,Turbo, etc...',
 ];
