@@ -94,4 +94,17 @@ class AjaxController extends Controller
 			return response()->json($Respels);
 		}
 	}
+
+	/*Funcion para ver los residuos de un generador*/
+	public function RespelGener(Request $request, $id){
+		if ($request->ajax()){
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->select('residuos_geners.ID_SGenerRes', 'respels.RespelName', 'respels.ID_Respel')
+				->where('gener_sedes.ID_GSede', $id)
+				->get();
+			return $Respels;
+		}
+	}
 }

@@ -1,7 +1,4 @@
 <div id="Repel`+id_div+contadorRespel[id_div]+`" class="col-md-12 box box-warning">
-	<div class="box-tools pull-right">
-		<button type="button" class="btn btn-box-tool" style="color: red;" onclick="RemoveRespel(`+id_div+`,`+contadorRespel[id_div]+`)" title="Eliminar"><i class="fa fa-times"></i></button>
-	</div>
 	<label for="RespelGener`+id_div+contadorRespel[id_div]+`">Residuo</label>
 	<button type="button" class="btn btn-box-tool" style="color: #f39c12;" data-toggle="collapse" data-target="#RespelData`+id_div+contadorRespel[id_div]+`" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 	<select name="RespelGener[`+id_div+`][]" id="RespelGener`+id_div+contadorRespel[id_div]+`" class="form-control">
@@ -9,24 +6,24 @@
 	<br>
 	<div id="RespelData`+id_div+contadorRespel[id_div]+`" class="collapse in">
 		<div class="col-md-6">
-			<label for="SolResTypeUnidad">Unidades de Medida</label>
-			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad" class="form-control">
+			<label for="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`">Unidades de Medida</label>
+			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
 				<option value="">Seleccione...</option>
 				<option>Unidad</option>
 				<option>Litros</option>
 			</select>
 		</div>
 		<div class="col-md-6">
-			<label for="SolResCantiUnidad">Cantidad</label>
-			<input type="text" class="form-control" id="SolResCantiUnidad" name="SolResCantiUnidad[`+id_div+`][]">
+			<label for="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`">Cantidad</label>
+			<input type="text" class="form-control" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
 		</div>
 		<div class="col-md-6">
-			<label for="SolResKgEnviado">Cantidad (Kg)</label>
-			<input type="text" class="form-control" id="SolResKgEnviado" name="SolResKgEnviado[`+id_div+`][]">
+			<label for="SolResKgEnviado`+id_div+contadorRespel[id_div]+`">Cantidad (Kg)</label>
+			<input type="text" class="form-control" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]">
 		</div>
 		<div class="col-md-6">
-			<label for="SolResEmbalaje">Embalaje</label>
-			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje" class="form-control">
+			<label for="SolResEmbalaje`+id_div+contadorRespel[id_div]+`">Embalaje</label>
+			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje`+id_div+contadorRespel[id_div]+`" class="form-control">
 				<option value="">Seleccione...</option>
 				<option>Bolsas</option>
 				<option>Canecas</option>
@@ -40,16 +37,16 @@
 				<label>Dimensiones del Residuo</label>
 			</div>
 			<div class="col-md-4">
-				<label for="SolResAlto">Alto</label>
-				<input type="number" class="form-control" id="SolResAlto" name="SolResAlto[`+id_div+`][]">
+				<label for="SolResAlto`+id_div+contadorRespel[id_div]+`">Alto</label>
+				<input type="number" class="form-control" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
 			</div>
 			<div class="col-md-4">
-				<label for="SolResAncho">Ancho</label>
-				<input type="number" class="form-control" id="SolResAncho" name="SolResAncho[`+id_div+`][]">
+				<label for="SolResAncho`+id_div+contadorRespel[id_div]+`">Ancho</label>
+				<input type="number" class="form-control" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
 			</div>
 			<div class="col-md-4">
-				<label for="SolResProfundo">Profundo</label>
-				<input type="number" class="form-control" id="SolResProfundo" name="SolResProfundo[`+id_div+`][]">
+				<label for="SolResProfundo`+id_div+contadorRespel[id_div]+`">Profundo</label>
+				<input type="number" class="form-control" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
 			</div>
 		</div>
 		<div class="col-md-12" style="text-align: center;">
@@ -105,4 +102,7 @@
 		</div>
 		<br>
 	</div>
+</div>
+<div id="AddRespel`+id_div+`" class="col-md-16 col-md-offset-5 col-xs-offset-5">
+	<a onclick="AgregarResPel(`+id_div+`,`+contadorRespel[id_div]+`)" id="Agregar`+id_div+contadorRespel[id_div]+`" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
 </div>

@@ -101,7 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
 	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
-	// Route::get('/ProgramacionDeUnVehiculo/{id}', 'AjaxController@ProgramacionDeUnVehiculo');
+	Route::get('/RespelGener/{id}', 'AjaxController@RespelGener');
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
 
 });

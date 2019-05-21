@@ -20,7 +20,7 @@ Solicitudes de servicios
 							<div class="col-md-12 col-xs-12">
 								<div class="col-md-12">
 									<label for="FK_SolSerPersona">Persona de Contacto</label>
-									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required>
+									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control">
 										<option value="">Seleccione...</option>
 										@foreach ($Personals as $Personal)
 										<option value="{{$Personal->ID_Pers}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
@@ -29,47 +29,47 @@ Solicitudes de servicios
 								</div>
 								<div class="col-md-6">
 									<label for="SolSerTipo">Tipo de transportador</label>
-									<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="true">
+									<select class="form-control" name="SolSerTipo" id="SolSerTipo">
 										<option value="">Seleccione...</option>
-										<option onclick="TransportadorProsarc()" value="1">Prosarc S.A.</option>
-										<option onclick="TransportadorExtr()">Propio</option>
+										<option onclick="TransportadorProsarc()" value="1">Transporte Prosarc S.A.</option>
+										<option onclick="TransportadorExtr()">Transporte Propio</option>
 									</select>
 								</div>
 								<div id="transportador" class="col-md-6" hidden="true">
-									<label for="Fk_SolSerTransportador">Transportador</label>
-									<select class="form-control" id="Fk_SolSerTransportador" name="Fk_SolSerTransportador" required>
+									<label for="SolSerTransportador">Transportador</label>
+									<select class="form-control" id="SolSerTransportador">
 										<option value="">Seleccione...</option>
-										<option onclick="TransportadorCliente()" value="3">Nombre del cliente</option>
+										<option onclick="TransportadorCliente()" value="{{$Cliente->ID_Cli}}">{{$Cliente->CliShortname}}</option>
 										<option onclick="OtraTransportadora()">Otro</option>
 									</select>
 								</div>
 								<div id="nametransportadora" class="col-md-6" hidden="true">
-									<label for="SolSerConducExter">Nombre de la transaportadora</label>
-									<input type="text" class="form-control" id="SolSerConducExter" placeholder="Juan" name="SolSerConducExter">
+									<label for="SolSerNameTrans">Nombre de la transaportadora</label>
+									<input type="text" class="form-control" id="SolSerNameTrans" placeholder="Juan" name="SolSerNameTrans">
 								</div>
 								<div id="nittransportadora" class="col-md-6" hidden="true">
-									<label for="SolSerVehicExter">Nit de la transportadora</label>
-									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter" />
+									<label for="SolSerNitTrans">Nit de la transportadora</label>
+									<input type="text" class="form-control" id="SolSerNitTrans" placeholder="FDR-756" name="SolSerNitTrans">
 								</div>
 								<div id="addresstransportadora" class="col-md-6" hidden="true">
-									<label for="SolSerVehicExter">Dirección de la transportadora</label>
-									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter" />
+									<label for="SolSerAdressTrans">Dirección de la transportadora</label>
+									<input type="text" class="form-control" id="SolSerAdressTrans" placeholder="FDR-756" name="SolSerAdressTrans">
 								</div>
 								<div id="citytransportadora" class="col-md-6" hidden="true">
-									<label for="SolSerVehicExter">Ciudad de la transportadora</label>
-									<input type="text" class="form-control" id="SolSerVehicExter" placeholder="FDR-756" name="SolSerVehicExter" />
+									<label for="SolSerCityTrans">Ciudad de la transportadora</label>
+									<input type="text" class="form-control" id="SolSerCityTrans" placeholder="FDR-756" name="SolSerCityTrans">
 								</div>
 								<div id="Conductor" class="col-md-6" hidden="true">
-									<label>Conductor</label>
-									<input type="text" class="form-control">
+									<label for="SolSerConductor">Conductor</label>
+									<input type="text" class="form-control" id="SolSerConductor" name="SolSerConductor">
 								</div>
 								<div id="Vehiculo" class="col-md-6" hidden="true">
-									<label>Placa del Vehiculo</label>
-									<input type="text" class="form-control">
+									<label for="SolSerVehiculo">Placa del Vehiculo</label>
+									<input type="text" class="form-control" id="SolSerVehiculo" name="SolSerVehiculo">
 								</div>
 								<div id="typeaditable" class="col-md-6">
 									<label for="SolResAuditoriaTipo">Auditable</label>
-									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required>
+									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo">
 										<option value="">Seleccione...</option>
 										<option value="Presencial">Auditable Presencial</option>
 										<option value="Virtual">Auditable Virtual</option>
@@ -81,48 +81,48 @@ Solicitudes de servicios
 									<div class="col-md-12" style="border: 2px dashed #00c0ef">
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Ticket de Bascula Camionera</b>" data-content="<p style='width: 50%'> Se requiere pesaje en bascula camionera y la presentacion del ticket correspondiente</p>">
-												<label>Ticket de Bascula</label>
+												<label for="SolSerBascula">Ticket de Bascula</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" name="ReqBascula">
+													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula">
 												</div>
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Personal con Capacitacion</b>" data-content="<p style='width: 50%'> Se requiere que el Conductor y/o Ayudante de Prosarc S.A. ESP haya realizado capacitación especifica, la cual es dictada por el Cliente</p>">
-												<label>Personal con Capacitacion</label>
+												<label for="SolSerCapacitacion">Personal con Capacitacion</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" name="ReqCapacitacion" />
+													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion">
 												</div>
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Personal Adicional</b>" data-content="<p style='width: 50%'> Se requiere el envio de una persona adicional, aparte del conductor y el ayudante, para el cargue de vehiculos de Prosarc S.A.</p>">
-												<label>Personal Adicional</label>
+												<label for="SolSerMasPerson">Personal Adicional</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" name="ReqMasPerson" />
+													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson">
 												</div>
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Vehiculo con Plataforma</b>" data-content="<p style='width: 50%'> Se requiere que Prosarc S.A. ESP envie vehiculo con plataforma para el cargue de los residuos en las instalaciones del Cliente/Generador</p>">
-												<label>Vehiculo con Plataforma</label>
+												<label for="SolSerPlatform">Vehiculo con Plataforma</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" name="ReqPlatform" />
+													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform">
 												</div>
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de elementos</b>" data-content="<p style='width: 50%'> Se requiere devolucion de elementos que son enviados a planta con los residuos a Tratar... por ejemplo: Canecas</p>">
-												<label>Devolución de elementos</label>
+												<label for="SolSerDevolucion">Devolución de elementos</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" name="ReqDevolucion" />
+													<input type="checkbox" class="testswitch" id="SolSerDevolucion" name="SolSerDevolucion">
 												</div>
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre de elementos</b>" data-content="<p style='width: 50%'> Se debe especificar el nombre de los elementos que Se requiere sean devueltos al Cliente/Generador... solo aplica si se selecciono el requerimiento: <b><i>Devolución de elentos</i></b></p>">
-												<label>Nombre elementos</label>
-												<input type="text" maxlength="64" class="form-control" name="ReqDevolucionTipo" />
+												<label for="SolSerDevolucionTipo">Nombre elementos</label>
+												<input type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo">
 											</label>
 										</div>
 									</div>
@@ -137,112 +137,14 @@ Solicitudes de servicios
 										<label for="">Seleccione el generador</label>
 										<button type="button" class="btn btn-box-tool" style="color: #00a65a;" data-toggle="collapse" data-target="#DivRepel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 										<select name="SGenerador[0]" id="SGenerador" class="form-control">
-											<option value="">Seleccione...</option>
+											<option onclick="HiddenResiduosGener(0)" value="">Seleccione...</option>
 											@foreach($SGeneradors as $SGenerador)
-											<option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option>
+											<option onclick="ResiduosGener(0,{{$SGenerador->ID_GSede}})" value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
 											@endforeach
 										</select>
 										<br>
 									</div>
 									<div id="DivRepel0" class="col-md-12 collapse in">
-										<div id="Repel0" class="col-md-12 box box-warning">
-											<label>Residuo</label>
-											<button type="button" class="btn btn-box-tool" style="color: #f39c12;" data-toggle="collapse" data-target="#RespelData0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
-											<select name="SGenerador[0]" id="SGenerador" class="form-control">
-												<option value="">Seleccione...</option>
-											</select>
-											<br>
-											<div id="RespelData0" class="collapse in">
-												<div class="col-md-6">
-													<label>Unidades de Medida</label>
-													<select name="" id="" class="form-control">
-														<option value="">Seleccione...</option>
-													</select>
-												</div>
-												<div class="col-md-6">
-													<label>Cantidad</label>
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-6">
-													<label>Cantidad (Kg)</label>
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-6">
-													<label>Embalaje</label>
-													<select name="" id="" class="form-control">
-														<option value="">Seleccione...</option>
-													</select>
-												</div>
-												<div class="col-md-16" style="text-align: center;">
-													<div class="col-md-12">
-														<label>Dimensiones del Residuo</label>
-													</div>
-													<div class="col-md-4">
-														<label>Alto</label>
-														<input type="number" class="form-control">
-													</div>
-													<div class="col-md-4">
-														<label>Ancho</label>
-														<input type="number" class="form-control">
-													</div>
-													<div class="col-md-4">
-														<label>Profundo</label>
-														<input type="number" class="form-control">
-													</div>
-												</div>
-												<div class="col-md-12" style="text-align: center;">
-													<div class="col-md-12">
-														<label>Requerimientos</label>
-													</div>
-													<div class="col-md-6" style="border: 2px dashed #00c0ef">
-														<div class="col-md-12">
-															<label>Fotos</label>
-														</div>
-														<div class="col-md-6">
-															<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																<label>Descargue/Pesaje</label>
-																<div style="width: 100%; height: 34px;">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/>
-																</div>
-															</label>
-														</div>
-														<div class="col-md-6">
-															<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Tratamiento</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																<label>Tratamiento</label>
-																<div style="width: 100%; height: 34px;">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoDestruccion"/>
-																</div>
-															</label>
-														</div>
-													</div>
-													<div class="col-md-6" style="border: 2px dashed #00c0ef">
-														<div class="col-md-12">
-															<label>Videos</label>
-														</div>
-														<div class="col-md-6">
-															<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p style='width: 50%'> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																<label>Descargue/Pesaje</label>
-																<div style="width: 100%; height: 34px;">
-																	<input type="checkbox" class="videoswitch" name="ReqVideoDescargue"/>
-																</div>
-															</label>
-														</div>
-														<div class="col-md-6">
-															<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Video-Tratamiento</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																<label>Tratamiento</label>
-																<div style="width: 100%; height: 34px;">
-																	<input type="checkbox" class="videoswitch" name="ReqVideoDestruccion"/>
-																</div>
-															</label>
-														</div>
-													</div>
-												</div>
-												<br>
-											</div>
-										</div>
-										<div id="AddRespel0" class="col-md-16 col-md-offset-5 col-xs-offset-5">
-											<a onclick="AgregarRegistro(0)" id="Agregar" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a><br><br>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -272,6 +174,10 @@ function TransportadorProsarc() {
 	$("#Vehiculo").attr('hidden', true);
 	$("#typeaditable").removeClass('col-md-12');
 	$("#typeaditable").addClass('col-md-6');
+	$("#SolSerBascula").bootstrapSwitch('disabled',false);
+	$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
+	$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
+	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
 }
 
 function TransportadorExtr() {
@@ -280,6 +186,14 @@ function TransportadorExtr() {
 	$("#Vehiculo").attr('hidden', false);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
+	$("#SolSerBascula").bootstrapSwitch('state',false);
+	$("#SolSerBascula").bootstrapSwitch('disabled',true);
+	$("#SolSerCapacitacion").bootstrapSwitch('state',false);
+	$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
+	$("#SolSerMasPerson").bootstrapSwitch('state',false);
+	$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	$("#SolSerPlatform").bootstrapSwitch('state',false);
+	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 }
 
 function TransportadorCliente() {
@@ -295,26 +209,78 @@ function OtraTransportadora() {
 	$("#addresstransportadora").attr('hidden', false);
 	$("#citytransportadora").attr('hidden', false);
 }
-var contadorRespel = 1;
 var contadorGenerador = 1;
-
+var contadorRespel = [];
+function HiddenResiduosGener(id_div){
+	$("#DivRepel"+id_div).empty();
+}
+function Checkboxs(){
+	$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+		if(state == true){
+			$("#"+this.dataset.name).val(1);
+		}
+		else{
+			$("#"+this.dataset.name).val(0);
+		}
+	});
+}
+function ResiduosGener(id_div, ID_Gener){
+	contadorRespel[id_div] = 0;
+	$("#DivRepel"+id_div).empty();
+	$("#DivRepel"+id_div).append(`@include('solicitud-serv.layaoutsSolSer.OneRespel')`);
+	Switch2();
+	Switch3();
+	Checkboxs();
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RespelGener')}}/"+ID_Gener,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res != ''){
+				var residuos = new Array();
+				$("#RespelGener"+id_div+contadorRespel[id_div]).empty();
+				$("#RespelGener"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+				for(var i = res.length -1; i >= 0; i--){
+					if ($.inArray(res[i].ID_SGenerRes, residuos) < 0) {
+						$("#RespelGener"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].ID_SGenerRes}">${res[i].RespelName}</option>`);
+						residuos.push(res[i].ID_SGenerRes);
+					}
+				}
+			}
+			else{
+				$("#DivRepel"+id_div).empty();
+				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	})
+}
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
 	contadorGenerador = contadorGenerador + 1;
-	contadorRespel = contadorRespel + 1;
 }
 
-function AgregarRegistro(id) {
-	$("#AddRespel" + id).before(`@include('solicitud-serv.layaoutsSolSer.NewRespel')`);
-	contadorRespel = contadorRespel + 1;
+function AgregarResPel(id_div, contador) {
+	contadorRespel[id_div] = contadorRespel[id_div]+1;
+	$("#AddRespel"+id_div).before(`@include('solicitud-serv.layaoutsSolSer.NewRespel')`);
+	Switch2();
+	Switch3();
+	Checkboxs();
+	$('#RespelGener'+id_div+contadorRespel[id_div]).html($('#RespelGener'+id_div+'0').html());
 }
-
-function RemoveRespel(id) {
-	$("#Repel" + id).remove();
+function RemoveRespel(id_div, contador) {
+	$("#Repel"+id_div+contador).remove();
 }
 
 function RemoveGenerador(id) {
-	$("#Generador" + id).remove();
+	$("#Generador"+id).remove();
 }
 
 </script>

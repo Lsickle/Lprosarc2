@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\userController;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -58,17 +59,25 @@ class SolicitudServicioController extends Controller
      */
     public function create()
     {
-        $Sedes = Sede::all();
-        $Clientes = Cliente::all();
-        $Respels = DB::table('respels')
-            ->select('ID_Respel', 'RespelName')
-            ->get();
+        $Cliente = Cliente::select('ID_Cli','CliShortname')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
         $SGeneradors = DB::table('gener_sedes')
-            ->select('ID_GSede', 'GSedeName')
+            ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+            ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('gener_sedes.ID_GSede', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+            ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
             ->get();
-        $Personals = Personal::all();
-        $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
-        return view('solicitud-serv.create', compact( 'Respels','Sedes','Personals','Clientes', 'SGeneradors', 'Tratamientos'));
+        $Personals = DB::table('personals')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->select('personals.ID_Pers', 'personals.PersFirstName', 'personals.PersLastName')
+            ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+            ->get();
+        // return $Cliente;
+        // $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
+        return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors'));
     }
 
     /**
@@ -79,6 +88,7 @@ class SolicitudServicioController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $SolicitudServicio = new SolicitudServicio();
         $SolicitudServicio->SolSerStatus = 'Pendiente';
         $SolicitudServicio->SolSerTipo = $request->input('SolSerTipo');
