@@ -15,7 +15,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientlistsede') }}</h3>
-					<a href="/sclientes/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
+					<a href="/sclientes/create" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 				</div>
 				<div class="box box-info">
 				<!-- /.box-header -->
@@ -42,7 +42,7 @@
 										<td>{{$Sede->SedeEmail}}</td>
 										<td>{{$Sede->SedeAddress}} ({{$Sede->MunName.' - '.$Sede->DepartName}})</td>
 										<td>
-											<a method='get' href='/sclientes/{{$Sede->SedeSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+											<a method='get' href='/sclientes/{{$Sede->SedeSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
 										</td>
 									</tr>
 									@endforeach

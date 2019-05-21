@@ -20,7 +20,6 @@ class RespelSedeGenerController extends Controller
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
                 $RespelSedeGener->FK_Respel = $Respel;
-                $RespelSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
                 $RespelSedeGener->save();
             }
         }
@@ -77,7 +76,6 @@ class RespelSedeGenerController extends Controller
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $SGener->ID_GSede;
                 $RespelSedeGener->FK_Respel = $Respel;
-                $RespelSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
 
                 $RespelSedeGener->save();
             }

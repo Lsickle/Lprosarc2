@@ -98,15 +98,17 @@
                                     </ul>
                                 </div>
                             @endif
-                            <div class=" modal-body col-md-12 form-group">
-                                <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
-                                <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
-                                    @foreach ($Residuos as $Residuo)
-                                        {{-- <option value="{{$Respel->ID_Respel}}" {{ 1 == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option> --}}
-                                        <option value="{{$Residuo->ID_Respel}}">{{$Residuo->RespelName}}</option>
-                                    @endforeach     
-                                </select>
-                                <input type="text" hidden name="FK_SGener" value="{{$SedeGener->GSedeSlug}}">
+                            <div class="modal-header">
+                                <div class="col-md-12 form-group">
+                                    <label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
+                                    <select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
+                                        @foreach ($Residuos as $Residuo)
+                                            {{-- <option value="{{$Respel->ID_Respel}}" {{ 1 == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option> --}}
+                                            <option value="{{$Residuo->ID_Respel}}">{{$Residuo->RespelName}}</option>
+                                        @endforeach     
+                                    </select>
+                                    <input type="text" hidden name="FK_SGener" value="{{$SedeGener->GSedeSlug}}">
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>

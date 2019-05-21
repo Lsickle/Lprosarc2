@@ -78,7 +78,6 @@ class genercontroller extends Controller
             
             if (old('FK_GSedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
-                return old('FK_GSedeMun');
             }
             return view('generadores.create', compact('Sedes', 'Clientes', 'Departamentos', 'Municipios', 'Respels'));
         }else{

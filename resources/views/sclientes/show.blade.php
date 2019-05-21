@@ -12,30 +12,33 @@
 		<!-- About Me Box -->
 			<div class="box box-info">
 				<div class="box-body box-profile">
-						<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-					@if(!isset($Verify))
-						@component('layouts.partials.modal')
-							{{$Sede->ID_Sede}}
-						@endcomponent
+					<div class="col-md-12 col-xs-12">
 						@if($Sede->SedeDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><b>{{ trans('adminlte_lang::message.delete') }}</b></a>
-							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
-							</form>
-						@else
-							<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' style="float: right;">
-								@method('DELETE')
-								@csrf
-								<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
-							</form>
+							<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
-					@endif
+						@if(!isset($Verify))
+							@component('layouts.partials.modal')
+								{{$Sede->ID_Sede}}
+							@endcomponent
+							@if($Sede->SedeDelete == 0)
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+								<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST'>
+									@method('DELETE')
+									@csrf
+									<input type="submit" id="Eliminar{{$Sede->ID_Sede}}" style="display: none;">
+								</form>
+							@else
+								<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' class="pull-left">
+									@method('DELETE')
+									@csrf
+									<button type="submit" class='btn btn-success btn-block'>
+										<i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.add') }}</b>
+									</button>
+								</form>
+							@endif
+						@endif
+					</div>
 					<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
-					@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador'))
-						<p class="text-muted text-center">{{$Cliente->CliShortname}}</p>
-					@endif
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.address') }}</b>
