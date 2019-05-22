@@ -100,7 +100,6 @@
         $("#pretratdescription"+id).remove();
         $("#pretratsparator"+id).remove();
         $("#createtratamientoForm").validator('update');
-        contador= parseInt(contador)-1;
     }
 </script>
 @endsection
