@@ -18,7 +18,7 @@ class CreateVehiculoTable extends Migration
             $table->string('VehicPlaca',12)->unique();
             $table->string('VehicTipo',64);
             $table->string('VehicCapacidad',64);
-            $table->integer('VehicKmActual');
+            $table->integer('VehicKmActual')->nullable();
             $table->boolean('VehicInternExtern');  
             $table->timestamps();
             $table->engine = 'InnoDB';

@@ -72,6 +72,7 @@ class AjaxController extends Controller
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('respels.ID_Respel')
 				->where('FK_SGener', '=', $id)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->groupBy('FK_Respel')
 				->where('RespelDelete', '=', 0)
 				->get();
@@ -107,4 +108,17 @@ class AjaxController extends Controller
 			return $Respels;
 		}
 	}
+	
+	/*Funcion para ver por medio de Ajax los Vehiculos que le competen a un Contacto*/
+	// public function VehiculosContacto(Request $request, $id)
+	// {
+	// 	if ($request->ajax()) {
+	// 		$Vehiculo = DB::table('vehiculos')
+	// 			->select('*')
+	// 			->where('ID_Vehic', $id)
+	// 			->where('VehicDelete', '=', 0)
+	// 			->get();
+	// 		return response()->json($Vehiculo);
+	// 	}
+	// }
 }

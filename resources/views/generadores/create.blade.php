@@ -9,12 +9,10 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.Generregistertittle') }}</h3>
 				</div>
-				<!-- general form elements -->
 				<div class="box box-info">
 					@include('layouts.partials.spinner')
 					<!-- form start -->
@@ -76,7 +74,6 @@
 													<label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
 													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
 													<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
-														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach ($Respels as $Respel)
 															<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
 														@endforeach

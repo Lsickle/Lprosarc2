@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientcliente') }}
+    {{ trans('adminlte_lang::message.clientcontact') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.clientcliente') }}
+    {{ trans('adminlte_lang::message.clientcontact') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -15,7 +15,7 @@
 				</div>
                 <div class="box box-info">
                     @include('layouts.partials.spinner')
-                    <form role="form" id="formCliente " action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
+                    <form role="form" action="/contactos" method="POST" enctype="multipart/form-data" data-toggle="validator" class="Formcontacto">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger" role="alert">
@@ -28,36 +28,56 @@
                         @endif
                         <div class="box-body" hidden onload="renderTable()" id="readyTable">
                             <div class="tab-pane" id="addRowWizz">
-                                
                                 <div class="smartwizard">
                                     <ul>
                                         <li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
                                         <li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br /><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>
-                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                            <li><a href="#step-3"><b>{{ trans('adminlte_lang::message.Paso 3') }}</b><br /><small>{{ trans('adminlte_lang::message.clientpers') }}</small></a></li>
-                                        @endif
                                     </ul>
                                     <div class="row">
-                                        <div id="step-1" class="tab-pane step-content">
-                                            <div id="form-step-0" role="form" data-toggle="validator">
+                                        <div id="step-1" class="tab-pane step-content" class="Formcontacto">
+                                            <div id="form-step-0" role="form" data-toggle="validator" class="Formcontacto">
                                                 <div class="form-group col-md-12">
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
                                                 </div>
                                                 <div class="col-md-12 form-group">
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
+                                                    <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
                                                 <div class="col-md-12 form-group">
                                                     <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
+                                                    <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.nameCorto-contacto') }}</p>"><i class="far fa-question-circle" ></i></a>
                                                     <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" maxlength="100" required value="{{ old('CliShortname') }}">
+                                                </div>
+                                                <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
+                                                    <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
+                                                    <select class="form-control" id="categoria" name="CliCategoria" required>
+                                                        <option onclick="NoAddVehiculo()" value="">{{ trans('adminlte_lang::message.select') }}</option>
+                                                        <option onclick="AddVehiculo()" {{ old('CliCategoria') == trans('adminlte_lang::message.clienttransportador') ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
+                                                        <option onclick="NoAddVehiculo()" {{old('CliCategoria') == trans('adminlte_lang::message.clientproveedor') ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clientproveedor') }}</option>
+                                                    </select>
+                                                </div>
+                                                <div id="AddVehiculo" style="display:none;">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
+                                                        <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{ old('VehicPlaca') }}">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label for="VehicTipo VehicTipo">{{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
+                                                        <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.vehictipo') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.vehicle-tipo') }}</p>"><i class="far fa-question-circle" ></i></a>
+                                                        <input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{ old('VehicTipo') }}">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
+                                                        <input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{ old('VehicCapacidad') }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="step-2" class="">
+                                        <div id="step-2">
                                             <div id="form-step-1" role="form" data-toggle="validator">
                                                 <div class="col-md-9">
-                                                    <h2>{{ trans('adminlte_lang::message.sclititleh2') }}</h2>
+                                                    <h2>{{ trans('adminlte_lang::message.sclientsede') }}</h2>
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="sedeinputname">{{ trans('adminlte_lang::message.name') }}</label><small class="help-block with-errors">*</small>
@@ -95,7 +115,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" minlength="5"  maxlength="128" required value="{{ old('SedeAddress') }}">
+                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress"  maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
@@ -115,57 +135,6 @@
                                                 </div>
                                                 <div class="col-md-12" id="tel" style="display:flex; justify-content:center">
                                                     <a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="step-3" class="">
-                                            <div id="form-step-2" role="form" data-toggle="validator">
-                                                <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
-                                                <div class="form-group col-md-6">
-                                                    <label for="AreaName">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control inputText" id="AreaName" name="AreaName"  maxlength="128" required value="{{ old('AreaName') }}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="CargName">{{ trans('adminlte_lang::message.cargoname') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control inputText" id="CargName" name="CargName" maxlength="128" required value="{{ old('CargName') }}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersDocType">{{ trans('adminlte_lang::message.persdoctype') }}</label><small class="help-block with-errors">*</small>
-                                                    <select class="form-control select" id="PersDocType" name="PersDocType" required>
-                                                        <option value="">{{ trans('adminlte_lang::message.select') }}</option>
-                                                        <option value="CC" {{ old('PersDocType') == 'CC' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypecc') }}</option>      
-                                                        <option value="CE" {{ old('PersDocType') == 'CE' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypece') }}</option>
-                                                        <option value="RUT" {{ old('PersDocType') == 'RUT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctyperut') }}</option> 
-                                                        <option value="NIT" {{ old('PersDocType') == 'NIT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersDocNumber">{{ trans('adminlte_lang::message.persdocument') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control document" id="PersDocNumber" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" data-minlength="6" name="PersDocNumber" maxlength="15" required value="{{ old('PersDocNumber') }}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersFirstName">{{ trans('adminlte_lang::message.persfirstname') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required value="{{ old('PersFirstName') }}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label><small class="help-block with-errors"></small>
-                                                    <input type="text" class="form-control nombres" id="PersSecondName" name="PersSecondName" maxlength="25" value="{{ old('PersSecondName') }}">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label for="PersLastName">{{ trans('adminlte_lang::message.perslastname') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersEmail">{{ trans('adminlte_lang::message.email') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}">
-                                                    
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">(+57)</span>
-                                                        <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" data-minlength="12"  maxlength="12" data-error={{ trans('adminlte_lang::message.data-error-minlength10') }} value="{{ old('PersCellphone') }}" required>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="box-footer">

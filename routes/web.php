@@ -43,6 +43,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	
 	Route::resource('/clientes', 'clientcontoller');
 	Route::get('/cliente/{id}', 'clientcontoller@viewClientShow')->name('cliente');
+	Route::resource('/contactos', 'ContactoController');
+	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
+	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
+	Route::delete('/contacto-vehiculo-delete/{id}', 'VehiculoContactoController@destroy');
 	Route::resource('/sclientes', 'sclientcontroller');
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
@@ -103,6 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
 	Route::get('/RespelGener/{id}', 'AjaxController@RespelGener');
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
+	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 
 });
 

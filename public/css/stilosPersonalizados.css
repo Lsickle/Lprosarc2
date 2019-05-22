@@ -32,6 +32,7 @@ a.textpopover{
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis; 
+	text-align: right;
 }
 .textolargo{
 	word-break: break-all;

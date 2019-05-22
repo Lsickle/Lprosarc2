@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\ClienteStoreRequest;
+use App\Http\Requests\ClienteUpdateRequest;
 use App\Http\Controllers\userController;
 use App\Departamento;
 use App\Municipio;
@@ -30,7 +32,7 @@ class clientcontoller extends Controller
         switch (Auth::user()->UsRol) {
 
             case trans('adminlte_lang::message.Programador'):
-                $clientes = Cliente::all();
+                $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             
@@ -39,7 +41,7 @@ class clientcontoller extends Controller
                 break;
 
             case trans('adminlte_lang::message.Administrador'):
-                $clientes = Cliente::where('CliDelete', 0)->get();
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
 
@@ -93,7 +95,7 @@ class clientcontoller extends Controller
             $Sede->SedeName = $request->input('SedeName');
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
-            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null || $request->input('SedeExt1') === null && $request->input('SedeExt2') !== null){
+            if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
 
                 $Sede->SedeExt1 = $request->input('SedeExt2');
                 $Sede->SedePhone1 = $request->input('SedePhone2');
@@ -172,6 +174,8 @@ class clientcontoller extends Controller
             abort(403);
         }
     }
+    
+    // show del menu donde dice mi Empresa
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
@@ -192,7 +196,11 @@ class clientcontoller extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        return view('clientes.edit', compact('cliente'));
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+            return view('clientes.edit', compact('cliente'));
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -204,13 +212,27 @@ class clientcontoller extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {   
-        $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
         $validate = $request->validate([
-            'CliName'       => 'required|max:255|unique:clientes,CliName,'.$cliente->ID_Cli.',ID_Cli',
-            'CliNit'        => 'required|max:13|min:13|unique:clientes,CliNit,'.$cliente->ID_Cli.',ID_Cli',
-            'CliShortname'  => 'required|max:255|unique:clientes,CliShortname,'.$cliente->ID_Cli.',ID_Cli',
+
+        'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request, $cliente){
+        $Cliente = DB::table('clientes')
+            ->select('clientes.CliNit')
+            ->where('CliNit', $request->input('CliNit'))
+            ->where('CliCategoria', 'Cliente')
+            ->where('CliDelete', 0)
+            ->where('ID_Cli', '<>', $cliente->ID_Cli)
+            ->first();
+            if(isset($Cliente->CliNit)){
+                $query->where('clientes.CliNit','=', $Cliente->CliNit);
+            }else{
+                $query->where('clientes.CliNit','=', null);
+            }
+        })],
+        'CliName'       => 'required|max:255|min:1',
+        'CliShortname'  => 'required|max:255|min:1',
         ]);
-        
+            
+        $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
         $cliente->fill($request->all());
         $cliente->save();
 
@@ -223,7 +245,9 @@ class clientcontoller extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
         
-        return redirect()->route('clientes.index');
+        $id = Auth::user()->UsSlug;
+
+        return redirect()->route('cliente', compact('id'));
     }
 
     /**

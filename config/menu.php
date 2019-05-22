@@ -26,7 +26,11 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 
 				/*PESTAÑA DE LAS SEDES DE PROSARC*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedes'))))
+				
+				/*PESTAÑA DE LOS CONTACTOS DE PROSARC*/
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> '. trans('adminlte_lang::message.MenuContactos'))))
+				
 	            /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 			        (Menu::new()
@@ -94,7 +98,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 	                        ->prepend('<a href="#"><i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGener').' </span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
 	                        ->addParentClass('treeview')
 	                        ->add(Link::toUrl('/generadores', '<i class="fa fa-list-ul"></i> '. trans('adminlte_lang::message.MenuGenerClien')))
-	                        ->add(Link::toUrl('/sgeneradores', '<i class="fa fa-map"></i> '. trans('adminlte_lang::message.MenuSedesClien')))
+	                        ->add(Link::toUrl('/sgeneradores', '<i class="fa fa-map"></i> '. trans('adminlte_lang::message.MenuSedesGener')))
 	                        ->addClass('treeview-menu')
 	                  )
 	            )
@@ -177,7 +181,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 	                        ->prepend('<a href="#"><i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').' </span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
 	                        ->addParentClass('treeview')
 	                        ->add(Link::toUrl('/generadores', '<i class="fa fa-list-ul"></i> '. trans('adminlte_lang::message.MenuGenerClien')))
-	                        ->add(Link::toUrl('/sgeneradores', '<i class="fa fa-map"></i> '. trans('adminlte_lang::message.MenuSedesClien')))
+	                        ->add(Link::toUrl('/sgeneradores', '<i class="fa fa-map"></i> '. trans('adminlte_lang::message.MenuSedesGener')))
 	                        ->addClass('treeview-menu')
 	                  )
 	            )
