@@ -85,13 +85,23 @@ class RespelController extends Controller
             'RespelEstado' => 'required',
             // 'RespelHojaSeguridad' => 'required',
         ]);
-        $Cotizacion = new Cotizacion;
-        $Cotizacion->CotiNumero = 6;
-        $Cotizacion->CotiFechaSolicitud = now();
-        $Cotizacion->CotiDelete = 0;
-        $Cotizacion->CotiStatus = "Pendiente";
-        $Cotizacion->FK_CotiSede = $request->input("Sede");
-        $Cotizacion->save();
+
+        /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
+
+            $Sede = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->select('sedes.ID_Sede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->get();
+                // return $Sede;
+            $Cotizacion = new Cotizacion();
+            $Cotizacion->CotiNumero = 7;
+            $Cotizacion->CotiFechaSolicitud = now();
+            $Cotizacion->CotiDelete = 0;
+            $Cotizacion->CotiStatus = "Pendiente";
+            $Cotizacion->FK_CotiSede = $Sede;
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/

@@ -22,4 +22,7 @@ return [
     'boxregistertittle'     => 'Crear Declaración de Residuos',
     'box-title'             => 'Datos de la declaracion de residuos',
     'innerbox-title'        => 'complete todos los campos a continuacion',
+    'resolucion1descrip'    => "<p style='width: 50%'> puede consultar los detalles de la <b><i>RESOLUCIÓN 1 DE 2015 </i></b> emitida por el Consejo Nacional de estupefacientes, haciendo click en este enlace</p>",
+    'resolucion1tittle'     => '<b>Nombre de la sustancia</b>',
+
 ];

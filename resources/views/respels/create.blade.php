@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
-@endsection
+@endsection	
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
