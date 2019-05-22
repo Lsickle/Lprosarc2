@@ -301,7 +301,7 @@ return [
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
     'sgenerlist'              => 'Lista de las Sedes del Generador',
-    'sgenernamesede'         => 'Nombre de la Sede',
+    'sgenernamesede'          => 'Nombre de la Sede',
     
     
     // area
@@ -359,7 +359,23 @@ return [
     'addvehiculo'             => 'Crear Vehiculo',
     'deletevehiculo'          => '¿Esta seguro, desea eliminar el vehiculo',
     'vehiculocreate'          => 'Crear Vehiculo',
-    'vehiculoedit'          => 'Editar Vehiculo',
+    'vehiculoedit'            => 'Editar Vehiculo',
+
+    // user
+    'userperson'              => 'Nombre de la persona',
+    'userpersonadd'           => 'Asignar a una persona',
+    'userrol'                 => 'Rol',
+    'userrol2'                => 'Rol 2',
+    'useravatar'              => 'Avatar',
+    'usertype'                => 'Tipo de Usuario',
+    'userstatus'              => 'Status de Usuario',
+    'userdescriptionrol'      => 'Descripcion de Rol',
+    'userdescriptionrol2'     => 'Descripcion de Rol 2',
+    'users'                   => 'Usuarios',
+    'user'                    => 'Usuario',
+    'userlist'                => 'Lista de Usuarios',
+    'userregister'            => 'Registrar un Nuevo Usuario',
+    'useredit'                => 'Editar el Usuario',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',

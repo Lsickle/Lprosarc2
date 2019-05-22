@@ -108,6 +108,63 @@ $(document).ready(function() {
 
 </script>
 @endif
+@if(Route::currentRouteName()=='permisos.index')
+<script>
+$(document).ready(function() {
+
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+
+    /*var botoncito define los botones que se usaran si el usuario es programador*/
+    var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+    /*funcion para renderizar la tabla de cotizacion.index*/
+    $('#permisosTable').DataTable({
+        responsive: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+            botoncito, {
+                extend: 'collection',
+                text: 'Selector',
+                buttons: ['selectRows', 'selectCells']
+            }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true
+    });
+
+    /*funcion para resaltar las busquedas*/
+    table.on('draw', function() {
+        var body = $(table.table().body());
+        body.unhighlight();
+        body.highlight(table.search());
+    });
+});
+
+</script>
+{{-- <script>
+    $(document).ready(function() {
+        $('#click').click(function(){
+            $('.editarrol').removeAttr('disabled');
+            document.getElementById('click').style.display = 'none';
+            document.getElementById('save').style.display = 'block';
+            // slideUp();
+        })
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#save').click(function(){
+            $('.editarrol').prop('disabled', true);
+            document.getElementById('click').style.display = 'block';
+            document.getElementById('save').style.display = 'none';
+        })
+    });
+</script> --}}
+@endif
 {{-- <script>
 //Date range as a button
 $('#daterange-btn').daterangepicker({
