@@ -59,6 +59,5 @@
 		</select>
 	</div>
 	<div id="SustanciaControlada`+contador+`">
-		
 	</div>
 </div>

@@ -50,13 +50,12 @@
 				<label>¿Sustancia controlada?
 					<a href="{{route('ClasificacionA')}}" target="_blank"> Resolución Número 1 del 2015 <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
-				<select id="selectControl" name="SustanciaControlada[]" class="form-control" required>
+				<select id="selectDanger0" name="SustanciaControlada[]" class="form-control" required>
 					<option onclick="setNoControlada(0)">No</option>
 					<option onclick="setControlada(0)">Si</option>
 				</select>
 			</div>
 			<div id="SustanciaControlada0">
-				
 			</div>
 			{{--
 		</div> --}}
@@ -87,17 +86,17 @@ function setNoDanger(id) {
 }
 
 function setControlada(id) {
-	var ifDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifControladaRespel')`;
+	var ifControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifControladaRespel')`;
 	$("#SustanciaControlada" + id).empty();
-	$("#SustanciaControlada" + id).append(ifDangerRespel);
+	$("#SustanciaControlada" + id).append(ifControladaRespel);
 	attachPopover();
 }
 
 function setNoControlada(id) {
 	$("#SustanciaControlada" + id).empty();
 }
-var Controlada = `@include('layouts.RespelPartials.layoutsRes.ControladaCreate')`;
-var Masivo = `@include('layouts.RespelPartials.layoutsRes.MasivoCreate')`;
+var Controlada = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
+var Masivo = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
 var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
 var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
 
