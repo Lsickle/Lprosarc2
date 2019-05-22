@@ -37,10 +37,10 @@ Solicitudes de servicios
 								</div>
 								<div id="transportador" class="col-md-6" hidden="true">
 									<label for="SolSerTransportador">Transportador</label>
-									<select class="form-control" id="SolSerTransportador">
+									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">Seleccione...</option>
 										<option onclick="TransportadorCliente()" value="{{$Cliente->ID_Cli}}">{{$Cliente->CliShortname}}</option>
-										<option onclick="OtraTransportadora()">Otro</option>
+										<option onclick="OtraTransportadora()" value="0">Otro</option>
 									</select>
 								</div>
 								<div id="nametransportadora" class="col-md-6" hidden="true">
@@ -83,7 +83,7 @@ Solicitudes de servicios
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Ticket de Bascula Camionera</b>" data-content="<p style='width: 50%'> Se requiere pesaje en bascula camionera y la presentacion del ticket correspondiente</p>">
 												<label for="SolSerBascula">Ticket de Bascula</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula">
+													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" hidden="">
 												</div>
 											</label>
 										</div>
@@ -91,7 +91,7 @@ Solicitudes de servicios
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Personal con Capacitacion</b>" data-content="<p style='width: 50%'> Se requiere que el Conductor y/o Ayudante de Prosarc S.A. ESP haya realizado capacitación especifica, la cual es dictada por el Cliente</p>">
 												<label for="SolSerCapacitacion">Personal con Capacitacion</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion">
+													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" hidden="">
 												</div>
 											</label>
 										</div>
@@ -99,7 +99,7 @@ Solicitudes de servicios
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Personal Adicional</b>" data-content="<p style='width: 50%'> Se requiere el envio de una persona adicional, aparte del conductor y el ayudante, para el cargue de vehiculos de Prosarc S.A.</p>">
 												<label for="SolSerMasPerson">Personal Adicional</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson">
+													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" hidden="">
 												</div>
 											</label>
 										</div>
@@ -107,7 +107,7 @@ Solicitudes de servicios
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Vehiculo con Plataforma</b>" data-content="<p style='width: 50%'> Se requiere que Prosarc S.A. ESP envie vehiculo con plataforma para el cargue de los residuos en las instalaciones del Cliente/Generador</p>">
 												<label for="SolSerPlatform">Vehiculo con Plataforma</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform">
+													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" hidden="">
 												</div>
 											</label>
 										</div>
@@ -243,11 +243,11 @@ function ResiduosGener(id_div, ID_Gener){
 		success: function(res){
 			if(res != ''){
 				var residuos = new Array();
-				$("#RespelGener"+id_div+contadorRespel[id_div]).empty();
-				$("#RespelGener"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 				for(var i = res.length -1; i >= 0; i--){
 					if ($.inArray(res[i].ID_SGenerRes, residuos) < 0) {
-						$("#RespelGener"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].ID_SGenerRes}">${res[i].RespelName}</option>`);
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].ID_SGenerRes}">${res[i].RespelName}</option>`);
 						residuos.push(res[i].ID_SGenerRes);
 					}
 				}
@@ -273,7 +273,7 @@ function AgregarResPel(id_div, contador) {
 	Switch2();
 	Switch3();
 	Checkboxs();
-	$('#RespelGener'+id_div+contadorRespel[id_div]).html($('#RespelGener'+id_div+'0').html());
+	$('#FK_SolResRg'+id_div+contadorRespel[id_div]).html($('#FK_SolResRg'+id_div+'0').html());
 }
 function RemoveRespel(id_div, contador) {
 	$("#Repel"+id_div+contador).remove();

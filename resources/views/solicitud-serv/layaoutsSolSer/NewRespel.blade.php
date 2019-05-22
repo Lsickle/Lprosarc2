@@ -2,9 +2,9 @@
 	<div class="box-tools pull-right">
 		<button type="button" class="btn btn-box-tool" style="color: red;" onclick="RemoveRespel(`+id_div+`,`+contadorRespel[id_div]+`)" title="Eliminar"><i class="fa fa-times"></i></button>
 	</div>
-	<label for="RespelGener`+id_div+contadorRespel[id_div]+`">Residuo</label>
+	<label for="FK_SolResRg`+id_div+contadorRespel[id_div]+`">Residuo</label>
 	<button type="button" class="btn btn-box-tool" style="color: #f39c12;" data-toggle="collapse" data-target="#RespelData`+id_div+contadorRespel[id_div]+`" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
-	<select name="RespelGener[`+id_div+`][]" id="RespelGener`+id_div+contadorRespel[id_div]+`" class="form-control">
+	<select name="FK_SolResRg[`+id_div+`][]" id="FK_SolResRg`+id_div+contadorRespel[id_div]+`" class="form-control">
 	</select>
 	<br>
 	<div id="RespelData`+id_div+contadorRespel[id_div]+`" class="collapse in">
