@@ -134,7 +134,7 @@ class userController extends Controller
         }
         else{
         	$Menssage = trans('adminlte_lang::message.passwordchangefalse');
-        	return redirect()->route('profile.changepassword', ['id' => $user->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
+        	return redirect()->route('permisos-edit', ['id' => $user->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
         }
 
         $log = new audit();

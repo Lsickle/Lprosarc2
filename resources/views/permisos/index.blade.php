@@ -32,10 +32,10 @@
                             <tbody onload="renderTable()" id="readyTable">
                             @include('layouts.partials.spinner')
                             @foreach($Users as $User)
-                            {{-- <tr 	@if($User->CliDelete === 1)
+                            <tr 	@if($User->DeleteUser === 1)
                                         style="color: red;" 
                                     @endif
-                            > --}}
+                            >
                             <td>{{$User->name}}</td>
                                 <td>{{$User->PersFirstName}} {{$User->PersLastName}}</td>
                                 <td>{{$User->email}}</td>
@@ -53,10 +53,10 @@
                             </tr>
                             @endforeach
                             @foreach($UsersSinPersonal as $UserSinPersonal)
-                            {{-- <tr 	@if($User->CliDelete === 1)
+                            <tr 	@if($UserSinPersonal->DeleteUser === 1)
                                         style="color: red;" 
                                     @endif
-                            > --}}
+                            >
                                 <td>{{$UserSinPersonal->name}}</td>
                                 <td></td>
                                 <td>{{$UserSinPersonal->email}}</td>

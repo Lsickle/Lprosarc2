@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\PermisoUserRequest;
 use App\Personal;
 use App\User;
+use App\audit;
 
 class PermisoUsuarioController extends Controller
 {
@@ -19,27 +22,44 @@ class PermisoUsuarioController extends Controller
     public function index()
     {
         if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')) {
+            // usuarios sin personal
             $UsersSinPersonal = DB::table('users')
                 ->where('users.UsRol', '<>', 'Cliente')
                 ->where('FK_UserPers', null)
-                ->select('users.name', 'users.email', 'users.UsSlug', 'users.UsRol', 'users.UsRol2', 'users.id')
+                ->where(function ($query){
+                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
+                        $query->where('DeleteUser', 0);
+                    }
+                })
+                ->select('users.name', 'users.email', 'users.UsSlug', 'users.UsRol', 'users.UsRol2', 'users.id', 'users.DeleteUser')
                 ->get();
-    
+
+            // personal de una sede en concreto
             $Personal = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->where(function ($query){
+                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
+                        $query->where('personals.ID_Pers', Auth::user()->FK_UserPers);
+                    }
+                })
                 ->select('sedes.ID_Sede')
                 ->first();
-
+            // usuarios conpersonal de la sede
             $Users = DB::table('users')
                 ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->where('sedes.ID_Sede', $Personal->ID_Sede)
-                ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRol', 'users.UsRol2', 'users.id')
+                ->where(function ($query){
+                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
+                        $query->where('DeleteUser', 0);
+                        $query->where('personals.ID_Pers', Auth::user()->FK_UserPers);
+                    }
+                })
+                ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRol', 'users.UsRol2', 'users.id', 'users.DeleteUser')
                 ->get();
            
             return view('permisos.index', compact('Users', 'UsersSinPersonal'));
@@ -56,37 +76,44 @@ class PermisoUsuarioController extends Controller
      */
     public function create()
     {
-        $Personal = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-            ->select('sedes.ID_Sede')
-            ->first();
+        if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')) {
 
-        $Users = DB::table('users')
-            ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->where('sedes.ID_Sede', $Personal->ID_Sede)
-            ->select('users.FK_UserPers')
-            ->get();
-        
-        $Personals = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->where('sedes.ID_Sede', $Personal->ID_Sede)
-            ->where(function ($query) use($Users){
-                foreach($Users as $User){
-                    $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
-                }
-            })
-            ->select('personals.PersFirstName', 'personals.PersLastName', 'personals.PersSlug')
-            ->get();
+            // personal de una sede en concreto
+            $Personal = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->select('sedes.ID_Sede')
+                ->first();
+
+            $Users = DB::table('users')
+                ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->where('sedes.ID_Sede', $Personal->ID_Sede)
+                ->where('DeleteUser', 0)
+                ->select('users.FK_UserPers')
+                ->get();
             
-        return view('permisos.create', compact('Personals'));
+            $Personals = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->where('sedes.ID_Sede', $Personal->ID_Sede)
+                ->where(function ($query) use($Users){
+                    foreach($Users as $User){
+                        $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
+                    }
+                })
+                ->select('personals.PersFirstName', 'personals.PersLastName', 'personals.PersSlug')
+                ->get();
+                
+            return view('permisos.create', compact('Personals'));
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -95,19 +122,11 @@ class PermisoUsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermisoUserRequest $request)
     {
         $Validate = $request->validate([
-            'name'      => 'required|max:255',
             'email'     => 'required|max:255|unique:users,email',
             'password'  => 'required|max:255|min:6',
-            'UsAvatar'  => 'max:255|mimes:jpeg,bmp,svg,png|nullable',
-            'UsRol'     => 'required|max:255',
-            'UsRolDesc' => 'max:255|nullable',
-            'UsRol2'    => 'required|max:255|nullable',
-            'UsRolDesc2'=> 'max:255|nullable',
-            'UsType'    => 'max:64|nullable',
-            'UsStatus'  => 'max:32|nullable',
         ]);
 
         $User = new User();
@@ -120,8 +139,8 @@ class PermisoUsuarioController extends Controller
 
         if ($request->hasfile('UsAvatar')){
             $name = time().$request->UsAvatar->getClientOriginalName();
-            $request->UsAvatar->move(public_path('/img/'),$name);
-            $Src = '/img/'.$name;
+            $request->UsAvatar->move(public_path('/img/ImagesProfile/'),$name);
+            $Src = $name;
             $User->UsAvatar = $Src;
         }
 
@@ -151,8 +170,9 @@ class PermisoUsuarioController extends Controller
     public function show($id)
     {
         $User = User::where('UsSlug', $id)->first();
+        $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
 
-        return view('permisos.show', compact('User'));
+        return view('permisos.show', compact('User', 'Personal'));
     }
 
     /**
@@ -164,8 +184,9 @@ class PermisoUsuarioController extends Controller
     public function edit($id)
     {
         $User = User::where('UsSlug', $id)->first();
-// return $User; 
-        return view('permisos.edit', compact('User'));
+        $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
+        
+        return view('permisos.edit', compact('User', 'Personal'));
     }
 
     /**
@@ -175,11 +196,76 @@ class PermisoUsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermisoUserRequest $request, $id)
     {
-        //
+        $User = User::where('UsSlug', $id)->first();
+
+        $Validate = $request->validate([
+            'email'     => 'required|max:255|unique:users,email,'.$User->email.',email',
+        ]);
+
+        $image = public_path('/img/ImagesProfile/'.$User->UsAvatar);
+        if(@getimagesize($image)){
+            unlink(public_path()."/img/ImagesProfile/".$User->UsAvatar);
+        };
+
+        $User->fill($request->except('UsAvatar'));
+        if ($request->hasfile('UsAvatar')){
+            $file = $request->file('UsAvatar');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path('/img/ImagesProfile/'),$name);
+            $User->UsAvatar = $name;
+        }
+        $User->save();
+
+        $log = new audit();
+        $log->AuditTabla="users";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$User->id;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+        return redirect()->route('permisos.show', compact('id'));
     }
 
+    public function editpassword($id){
+        $User = User::where('UsSlug', $id)->first();
+        
+        return view('permisos.editpassword', compact('User'));
+    }
+
+    public function updatepassword(Request $request, $id){
+        $User = User::where('UsSlug', $id)->first();
+        // $hola = Hash::check($request->input('oldpassword'), $User->password);
+        // return $request->input('oldpassword');
+        // return $hola;
+
+        $validate = $request->validate([
+            'oldpassword'          => 'required|min:6',
+            'newpassword'          => 'required|confirmed:confirmnewpassword|min:6',
+            
+        ]);
+        // return $request;
+        if(Hash::check($request->input('oldpassword'), $User->password)){
+        	$Menssage = trans('adminlte_lang::message.passwordchangetrue');
+        	$User->password = bcrypt($request->input('newpassword'));
+        	// $User->save();
+            // return 'no';
+        }else{
+        	$Menssage = trans('adminlte_lang::message.passwordchangefalse');
+        	return redirect()->route('permiso.{{$User->UsSlug}}', ['id' => $User->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
+        }
+
+        $log = new audit();
+        $log->AuditTabla = "user";
+        $log->AuditType = "Modificado";
+        $log->AuditRegistro = $User->id;
+        $log->AuditUser = Auth::user()->email;
+        $log->Auditlog = json_encode($request->all());
+        // $log->save();
+
+        return redirect()->route('permisos.show', compact('id'));
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -188,6 +274,15 @@ class PermisoUsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $User = User::where('UsSlug', $id)->first();
+        if($User->DeleteUser == 0){
+            $User->DeleteUser = 1;
+            $User->save();
+            return redirect()->route('permisos.index');
+        }else{
+            $User->DeleteUser = 0;
+            $User->save();
+            return redirect()->route('permisos.show', compact('id'));
+        }
     }
 }
