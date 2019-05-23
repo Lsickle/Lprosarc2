@@ -9,8 +9,8 @@
 			<label for="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`">Unidades de Medida</label>
 			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
 				<option value="">Seleccione...</option>
-				<option>Unidad</option>
-				<option>Litros</option>
+				<option value="99">Unidad</option>
+				<option value="98">Litros</option>
 			</select>
 		</div>
 		<div class="col-md-6">
@@ -25,11 +25,11 @@
 			<label for="SolResEmbalaje`+id_div+contadorRespel[id_div]+`">Embalaje</label>
 			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje`+id_div+contadorRespel[id_div]+`" class="form-control">
 				<option value="">Seleccione...</option>
-				<option>Bolsas</option>
-				<option>Canecas</option>
-				<option>Estibas</option>
-				<option>Garrafones</option>
-				<option>Cajas</option>
+				<option value="99">Bolsas</option>
+				<option value="98">Canecas</option>
+				<option value="97">Estibas</option>
+				<option value="96">Garrafones</option>
+				<option value="95">Cajas</option>
 			</select>
 		</div>
 		<div class="col-md-16" style="text-align: center;">

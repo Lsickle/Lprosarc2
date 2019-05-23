@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
@@ -17,6 +18,7 @@ use App\Cliente;
 use App\Tratamiento;
 use App\Generador;
 use App\Personal;
+use App\Departamento;
 use App\Municipio;
 
 class SolicitudServicioController extends Controller
@@ -58,14 +60,28 @@ class SolicitudServicioController extends Controller
 	 */
 	public function create()
 	{
+		$Departamentos = Departamento::all();
 		$Cliente = Cliente::select('ID_Cli','CliShortname')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		$SGeneradors = DB::table('gener_sedes')
 			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.ID_GSede', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
 			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 			->get();
+			// $SGenerador = DB::table('gener_sedes')
+	  //           ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+	  //           ->join('clientes', 'generadors.FK_GenerCli', '=', 'clientes.ID_Cli')
+	  //           ->select('gener_sedes.GSedeSlug')
+	  //           ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+	  //           ->where('gener_sedes.GSedeSlug', 'norte-7505')
+	  //           ->first();
+	  //       if(isset($SGenerador->GSedeSlug)){
+   //         		var_dump($SGenerador);
+   //         	}
+   //         	else{
+   //         		return "mal";
+   //         	}
 		$Personals = DB::table('personals')
 			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -76,20 +92,21 @@ class SolicitudServicioController extends Controller
 			->get();
 		// return $Cliente;
 		// $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
-		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors'));
+		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos'));
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\  $request 
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(SolServStoreRequest $request)
 	{
+		return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Pendiente';
-		if ($request->input('SolResAuditoriaTipo') <> "No Auditable") {
+		if ($request->input('SolResAuditoriaTipo') <> 97) {
 			$SolicitudServicio->SolSerAuditable = 1;
 			$SolicitudServicio->SolResAuditoriaTipo = $request->input('SolResAuditoriaTipo');
 		}
@@ -97,12 +114,12 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio->SolSerAuditable = 0;
 			$SolicitudServicio->SolResAuditoriaTipo = null;
 		}
-		if($request->input('SolSerTipo') == 1){
+		if($request->input('SolSerTipo') == 99){
 			$cliente = DB::table('clientes')
 				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
 				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
-				->where('ID_Cli', $request->input('SolSerTipo'))
+				->where('ID_Cli', 1)
 				->first();
 			$tipo = "Interno";
 			$transportadorname = $cliente->CliName;
@@ -113,12 +130,12 @@ class SolicitudServicioController extends Controller
 			$vehiculo = null;
 		}
 		else{
-			if($request->input('SolSerTransportador') <> 0){
+			if($request->input('SolSerTransportador') <> 98){
 				$cliente = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
 					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
-					->where('ID_Cli', $request->input('SolSerTransportador'))
+					->where('ID_Cli', userController::IDClienteSegunUsuario())
 					->first();
 				$transportadorname = $cliente->CliName;
 				$transportadornit = $cliente->CliNit;
@@ -126,10 +143,11 @@ class SolicitudServicioController extends Controller
 				$transportadorcity = $cliente->MunName;
 			}
 			else{
+				$municipio = Municipio::select()->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
 				$transportadorname = $request->input('SolSerNameTrans');
 				$transportadornit = $request->input('SolSerNitTrans');
 				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $request->input('SolSerCityTrans');
+				$transportadorcity = $municipio;
 			}
 			$tipo = "Externo";
 			$conductor = $request->input('SolSerConductor');

@@ -222,7 +222,7 @@ class MunicipiosTableSeeder extends Seeder
     $municipio->FK_MunCity = '2';
     $municipio->save();
     $municipio = new Municipio();
-    $municipio->MunName = '12sia';
+    $municipio->MunName = 'Caucasia';
     $municipio->FK_MunCity = '2';
     $municipio->save();
 

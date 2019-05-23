@@ -9,7 +9,7 @@
 			<select name="SGenerador[`+contadorGenerador+`]" id="SGenerador" class="form-control">
 				<option onclick="HiddenResiduosGener(`+contadorGenerador+`)" value="">Seleccione...</option>
 				@foreach($SGeneradors as $SGenerador)
-				<option onclick="ResiduosGener(`+contadorGenerador+`,{{$SGenerador->ID_GSede}})" value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
+				<option onclick="ResiduosGener(`+contadorGenerador+`,{{$SGenerador->GSedeSlug}})" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
 				@endforeach
 			</select>
 			<br>

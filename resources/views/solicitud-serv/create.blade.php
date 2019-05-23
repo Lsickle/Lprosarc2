@@ -16,6 +16,15 @@ Solicitudes de servicios
 				<div class="box box-info">
 					<form role="form" id="form1" action="/solicitud-servicio" method="POST">
 						@csrf
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						<div class="box-body">
 							<div class="col-md-12 col-xs-12">
 								<div class="col-md-12">
@@ -31,16 +40,16 @@ Solicitudes de servicios
 									<label for="SolSerTipo">Tipo de transportador</label>
 									<select class="form-control" name="SolSerTipo" id="SolSerTipo">
 										<option value="">Seleccione...</option>
-										<option onclick="TransportadorProsarc()" value="1">Transporte Prosarc S.A.</option>
-										<option onclick="TransportadorExtr()">Transporte Propio</option>
+										<option onclick="TransportadorProsarc()" value="99">Transporte Prosarc S.A.</option>
+										<option onclick="TransportadorExtr()" value="98">Transporte Propio</option>
 									</select>
 								</div>
 								<div id="transportador" class="col-md-6" hidden="true">
 									<label for="SolSerTransportador">Transportador</label>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">Seleccione...</option>
-										<option onclick="TransportadorCliente()" value="{{$Cliente->ID_Cli}}">{{$Cliente->CliShortname}}</option>
-										<option onclick="OtraTransportadora()" value="0">Otro</option>
+										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliShortname}}</option>
+										<option onclick="OtraTransportadora()" value="98">Otro</option>
 									</select>
 								</div>
 								<div id="nametransportadora" class="col-md-6" hidden="true">
@@ -51,13 +60,24 @@ Solicitudes de servicios
 									<label for="SolSerNitTrans">Nit de la transportadora</label>
 									<input type="text" class="form-control" id="SolSerNitTrans" placeholder="FDR-756" name="SolSerNitTrans">
 								</div>
-								<div id="addresstransportadora" class="col-md-6" hidden="true">
+								<div id="addresstransportadora" class="col-md-12" hidden="true">
 									<label for="SolSerAdressTrans">Dirección de la transportadora</label>
 									<input type="text" class="form-control" id="SolSerAdressTrans" placeholder="FDR-756" name="SolSerAdressTrans">
 								</div>
-								<div id="citytransportadora" class="col-md-6" hidden="true">
-									<label for="SolSerCityTrans">Ciudad de la transportadora</label>
-									<input type="text" class="form-control" id="SolSerCityTrans" placeholder="FDR-756" name="SolSerCityTrans">
+								<div id="citytransportadora" class="col-md-12" style="margin: 0; padding: 0;" hidden="true">
+									<div class="col-md-6">
+										<label for="departamento">Departamento de la transportadora</label>
+										<select class="form-control select" id="departamento">
+											<option value="">Seleccione...</option>
+											@foreach ($Departamentos as $Departamento)
+												<option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="municipio">Municipio de la transportadora</label>
+										<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
+									</div>
 								</div>
 								<div id="Conductor" class="col-md-6" hidden="true">
 									<label for="SolSerConductor">Conductor</label>
@@ -71,9 +91,9 @@ Solicitudes de servicios
 									<label for="SolResAuditoriaTipo">Auditable</label>
 									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo">
 										<option value="">Seleccione...</option>
-										<option value="Presencial">Auditable Presencial</option>
-										<option value="Virtual">Auditable Virtual</option>
-										<option value="No Auditable">No Auditable</option>
+										<option value="99">Auditable Virtual</option>
+										<option value="98">Auditable Presencial</option>
+										<option value="97">No Auditable</option>
 									</select>
 								</div>
 								<div class="col-md-12" style="margin: 10px 0;">
@@ -139,7 +159,7 @@ Solicitudes de servicios
 										<select name="SGenerador[0]" id="SGenerador" class="form-control">
 											<option onclick="HiddenResiduosGener(0)" value="">Seleccione...</option>
 											@foreach($SGeneradors as $SGenerador)
-											<option onclick="ResiduosGener(0,{{$SGenerador->ID_GSede}})" value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
+											<option onclick="ResiduosGener(0,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
 											@endforeach
 										</select>
 										<br>
@@ -246,9 +266,9 @@ function ResiduosGener(id_div, ID_Gener){
 				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
 				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 				for(var i = res.length -1; i >= 0; i--){
-					if ($.inArray(res[i].ID_SGenerRes, residuos) < 0) {
-						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].ID_SGenerRes}">${res[i].RespelName}</option>`);
-						residuos.push(res[i].ID_SGenerRes);
+					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
+						residuos.push(res[i].SlugSGenerRes);
 					}
 				}
 			}

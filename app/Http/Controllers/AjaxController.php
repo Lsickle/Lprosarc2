@@ -16,6 +16,7 @@ class AjaxController extends Controller
 			$municipio = DB::table('municipios')
 				->select('*')
 				->where('FK_MunCity', $id)
+				->orderBy('MunName', 'desc')
 				->get();
 			return response()->json($municipio);
 		}
@@ -96,14 +97,14 @@ class AjaxController extends Controller
 		}
 	}
 
-	/*Funcion para ver los residuos de un generador*/
+	/*Funcion para ver los residuos de una sede de generador*/
 	public function RespelGener(Request $request, $id){
 		if ($request->ajax()){
 			$Respels = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-				->select('residuos_geners.ID_SGenerRes', 'respels.RespelName', 'respels.ID_Respel')
-				->where('gener_sedes.ID_GSede', $id)
+				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.ID_Respel')
+				->where('gener_sedes.GSedeSlug', $id)
 				->get();
 			return $Respels;
 		}
