@@ -39,6 +39,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
+
         $user->save();
         
         /*$user->roles()->attach($role_suser);*/
@@ -55,6 +57,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_user);*/
 
@@ -70,6 +73,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_admin);*/
 
@@ -84,6 +88,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_jlogistica);*/
 
@@ -98,6 +103,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_joperacion);*/
 
@@ -112,6 +118,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_asistlogistica);*/
 
@@ -126,6 +133,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_client);*/
 
@@ -140,6 +148,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_gener);*/
 
@@ -154,6 +163,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_auxlogistica);*/
 
@@ -168,6 +178,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -182,6 +193,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -196,6 +208,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_sturno);*/
 
@@ -210,6 +223,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_ealmacen);*/
 
@@ -224,6 +238,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
         /*$user->roles()->attach($role_ehorno);*/
 
@@ -239,6 +254,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Usuario general';
         $user->UsAvatar = 'robot400x400.gif';
         $user->FK_UserPers = '1';
+        $user->DeleteUser = 0;
         $user->save();
     }
 }

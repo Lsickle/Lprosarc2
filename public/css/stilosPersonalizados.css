@@ -45,3 +45,7 @@ a.textpopover{
 .fa-copy{
 	cursor: pointer;
 }
+.size-img{
+	width:120px; 
+	height:120px;
+}
