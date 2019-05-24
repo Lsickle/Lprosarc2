@@ -69,29 +69,14 @@ class SolicitudServicioController extends Controller
 			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
 			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 			->get();
-			// $SGenerador = DB::table('gener_sedes')
-	  //           ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-	  //           ->join('clientes', 'generadors.FK_GenerCli', '=', 'clientes.ID_Cli')
-	  //           ->select('gener_sedes.GSedeSlug')
-	  //           ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-	  //           ->where('gener_sedes.GSedeSlug', 'norte-7505')
-	  //           ->first();
-	  //       if(isset($SGenerador->GSedeSlug)){
-   //         		var_dump($SGenerador);
-   //         	}
-   //         	else{
-   //         		return "mal";
-   //         	}
 		$Personals = DB::table('personals')
 			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.ID_Pers', 'personals.PersFirstName', 'personals.PersLastName')
+			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 			->get();
-		// return $Cliente;
-		// $Tratamientos = Tratamiento::select('ID_Trat', 'TratName');
 		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos'));
 	}
 
@@ -103,16 +88,23 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
+		// var_dump();
 		return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Pendiente';
-		if ($request->input('SolResAuditoriaTipo') <> 97) {
-			$SolicitudServicio->SolSerAuditable = 1;
-			$SolicitudServicio->SolResAuditoriaTipo = $request->input('SolResAuditoriaTipo');
-		}
-		else{
-			$SolicitudServicio->SolSerAuditable = 0;
-			$SolicitudServicio->SolResAuditoriaTipo = null;
+		switch ($request->input('SolResAuditoriaTipo')) {
+			case 99:
+				$SolicitudServicio->SolSerAuditable = 1;
+				$SolicitudServicio->SolResAuditoriaTipo = "Virtual";
+				break;
+			case 98:
+				$SolicitudServicio->SolSerAuditable = 1;
+				$SolicitudServicio->SolResAuditoriaTipo = "Presencial";
+				break;
+			case 97:
+				$SolicitudServicio->SolSerAuditable = 0;
+				$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
+				break;
 		}
 		if($request->input('SolSerTipo') == 99){
 			$cliente = DB::table('clientes')
@@ -178,10 +170,9 @@ class SolicitudServicioController extends Controller
 		}
 		$SolicitudServicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
 		$SolicitudServicio->SolSerDelete = 0;
-		$SolicitudServicio->FK_SolSerPersona = $request->input('FK_SolSerPersona');
+		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
-		// return $request;
 
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
@@ -191,9 +182,30 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = now()."solicitud".$request['FK_SolResRg'][$Generador][$y].$y."residuo";
 				$SolicitudResiduo->FK_SolResSolSer = $SolicitudServicio->ID_SolSer;
-				$SolicitudResiduo->SolResTypeUnidad = $request['SolResTypeUnidad'][$Generador][$y];
+				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
+					$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+				}
+				else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
+					$SolicitudResiduo->SolResTypeUnidad = "Litros";
+				}
 				$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
-				$SolicitudResiduo->SolResEmbalaje = $request['SolResEmbalaje'][$Generador][$y];
+				switch ($request['SolResEmbalaje'][$Generador][$y]) {
+					case 99:
+						$SolicitudResiduo->SolResEmbalaje = "Bolsas";
+						break;
+					case 98:
+						$SolicitudResiduo->SolResEmbalaje = "Canecas";
+						break;
+					case 97:
+						$SolicitudResiduo->SolResEmbalaje = "Estibas";
+						break;
+					case 96:
+						$SolicitudResiduo->SolResEmbalaje = "Garrafones";
+						break;
+					case 95:
+						$SolicitudResiduo->SolResEmbalaje = "Cajas";
+						break;
+				}
 				$SolicitudResiduo->SolResAlto = $request['SolResAlto'][$Generador][$y];
 				$SolicitudResiduo->SolResAncho = $request['SolResAncho'][$Generador][$y];
 				$SolicitudResiduo->SolResProfundo = $request['SolResProfundo'][$Generador][$y];
@@ -201,9 +213,8 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResFotoTratamiento = $request['SolResFotoTratamiento'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoDescargue_Pesaje = $request['SolResVideoDescargue_Pesaje'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoTratamiento = $request['SolResVideoTratamiento'][$Generador][$y];
-				$SolicitudResiduo->FK_SolResRg = $request['FK_SolResRg'][$Generador][$y];
+				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
 				$SolicitudResiduo->save();
-				// return $SolicitudResiduo;
 			}
 		}
 		return redirect()->route('solicitud-servicio.index');

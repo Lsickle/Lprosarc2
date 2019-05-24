@@ -28,7 +28,23 @@ class SolServStoreRequest extends FormRequest
     public function rules(Request $request)
     {
         $rules = [
-            'FK_SolSerPersona'  => 'required',
+            'FK_SolSerPersona'  => ['required',Rule::exists('personals', 'PersSlug')->where(function ($query) use ($request){
+                $Personal = DB::table('personals')
+                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('cargos.ID_Carg')
+                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+                    ->where('personals.PersSlug', $request->input('FK_SolSerPersona'))
+                    ->first();
+                if(isset($Personal->ID_Carg)){
+                    $query->where('personals.FK_PersCargo', $Personal->ID_Carg);
+                }
+                else{
+                    $query->where('personals.FK_PersCargo', null);
+                }
+            })],
             'SolSerTipo'        => 'required|numeric|between:98,99',
             'SolResAuditoriaTipo' => 'required|numeric|between:97,99',
         ];
@@ -45,7 +61,7 @@ class SolServStoreRequest extends FormRequest
             ];
             if($request->input('SolSerTransportador') == 98){
                 $rules = [
-                    'SolSerNameTrans'    => 'required',
+                    'SolSerNameTrans'    => 'required|max:255',
                     'SolSerNitTrans'     => 'required|max:20',
                     'SolSerAdressTrans'  => 'required|max:255',
                     'SolSerCityTrans'    => ['required',Rule::exists('municipios', 'ID_Mun')],
@@ -70,7 +86,8 @@ class SolServStoreRequest extends FormRequest
                     $query->where('gener_sedes.FK_GSede', null);
                 }
             })];
-            if($request['FK_SolResRg'][$Generador][0]){
+            $rules['FK_SolResRg.'.$Generador.'.0'] = 'required';
+            if(isset($request['FK_SolResRg'][$Generador][0])){
                 for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
                     $rules['FK_SolResRg.'.$Generador.'.'.$y] = ['required',Rule::exists('residuos_geners', 'SlugSGenerRes')->where(function ($query) use ($request ,$Generador, $y){
                         $RespelGeneradors = DB::table('residuos_geners')
@@ -92,9 +109,9 @@ class SolServStoreRequest extends FormRequest
                     $rules['SolResCantiUnidad.'.$Generador.'.'.$y] = 'nullable|numeric';
                     $rules['SolResKgEnviado.'.$Generador.'.'.$y] = 'required|numeric';
                     $rules['SolResEmbalaje.'.$Generador.'.'.$y] = 'required|numeric|between:95,99';
-                    $rules['SolResAlto.'.$Generador.'.'.$y] = 'nullable|numeric|max:3';
-                    $rules['SolResAncho.'.$Generador.'.'.$y] = 'nullable|numeric|max:3';
-                    $rules['SolResProfundo.'.$Generador.'.'.$y] = 'nullable|numeric|max:3';
+                    $rules['SolResAlto.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
+                    $rules['SolResAncho.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
+                    $rules['SolResProfundo.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
                     $rules['SolResFotoDescargue_Pesaje.'.$Generador.'.'.$y] = 'nullable|boolean';
                     $rules['SolResFotoTratamiento.'.$Generador.'.'.$y] = 'nullable|boolean';
                     $rules['SolResVideoDescargue_Pesaje.'.$Generador.'.'.$y] = 'nullable|boolean';
@@ -106,13 +123,74 @@ class SolServStoreRequest extends FormRequest
     }
 
     /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        $attributes = [
+            'FK_SolSerPersona' => '"Persona de Contacto"',
+            'SolSerTipo'       => '"Tipo de transportador"',
+            'SolResAuditoriaTipo' => '"Auditable"',
+        ];
+        if($this->request->get('SolSerDevolucion') == 'on'){
+            $attributes = [
+                'SolSerDevolucionTipo' => '"Nombre elementos"',
+            ];
+        }
+        if($this->request->get('SolSerTipo') == 98){
+            $attributes = [
+                'SolSerTransportador' => '"Transportador"',
+                'SolSerConductor'     => '"Conductor"',
+                'SolSerVehiculo'      => '"Placa del Vehiculo"',
+            ];
+            if($this->request->get('SolSerTransportador') == 98){
+                $attributes = [
+                    'SolSerNameTrans'    => '"Nombre de la transaportadora"',
+                    'SolSerNitTrans'     => '"Nit de la transportadora"',
+                    'SolSerAdressTrans'  => '"Dirección de la transportadora"',
+                    'SolSerCityTrans'    => '"Municipio de la transportadora"',
+                    'SolSerConductor'     => '"Conductor"',
+                    'SolSerVehiculo'      => '"Placa del Vehiculo"',
+                ];
+            }
+        }
+        foreach ($this->request->get('SGenerador') as $Generador => $value) {
+            $attributes['SGenerador.'.$Generador] = '"Seleccione el generador (N° '.($Generador+1).')"';
+            $attributes['FK_SolResRg.'.$Generador.'.0'] = '"Residuo (N° 1)" del generador (N° '.($Generador+1).')';
+            if (isset($this->instance()->all()['FK_SolResRg'][$Generador])) {
+                for ($y=0; $y < count($this->instance()->all()['FK_SolResRg'][$Generador]); $y++) {
+                    $attributes['FK_SolResRg.'.$Generador.'.'.$y] = '"Residuo (N° '.($y+1).')" del generador (N° '.($Generador+1).')';
+                    $attributes['SolResCantiUnidad.'.$Generador.'.'.$y] = '"Cantidad" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                    $attributes['SolResKgEnviado.'.$Generador.'.'.$y] = '"Cantidad (Kg)" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                    $attributes['SolResEmbalaje.'.$Generador.'.'.$y] = '"Embalaje" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                    $attributes['SolResAlto.'.$Generador.'.'.$y] = '"Alto" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                    $attributes['SolResAncho.'.$Generador.'.'.$y] = '"Ancho" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                    $attributes['SolResProfundo.'.$Generador.'.'.$y] = '"Profundo" del residuo (N°'.($y+1).') del generador (N° '.($Generador+1).')';
+                }
+            }
+        }
+        return $attributes;
+    }
+
+
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array
      */
     public function messages()
     {
-        $messages = [];
+        $messages = [
+            'SolSerTipo.numeric' => 'Sorry! Lamer Jajaja',
+            'SolResAuditoriaTipo.numeric' => 'Sorry! Lamer Jajaja',
+            'SolSerTransportador.numeric' => 'Sorry! Lamer Jajaja',
+            'SolResTypeUnidad.numeric' => 'Sorry! Lamer Jajaja',
+            'SolResEmbalaje.numeric' => 'Sorry! Lamer Jajaja',
+            'between' => 'Sorry! Lamer Jajaja',
+            'boolean' => 'Sorry! Lamer Jajaja',
+        ];
         return $messages;
     }
 }
