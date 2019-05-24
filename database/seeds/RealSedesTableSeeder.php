@@ -23,6 +23,16 @@ class RealSedesTableSeeder extends Seeder
 		$sede->save();
 
 		$sede = new Sede();
+		$sede->SedeName = 'Prosarc S.A. ESP. (Comercial)';
+		$sede->SedeAddress = 'Bogotá';
+		$sede->SedeEmail = 'ProsarcS.A.ESP.comercial@gmail.com';
+		$sede->FK_SedeCli = '1';
+		$sede->FK_SedeMun = '169';
+		$sede->SedeSlug = 'sede-21211';
+		$sede->SedeDelete = 0;
+		$sede->save();
+
+		$sede = new Sede();
 		$sede->SedeName = 'ECOCAPITAL INTERNACIONAL S.A ESP. (principal)';
 		$sede->SedeAddress = 'Calle 14C No 123-52';
 		$sede->SedeEmail = 'ECOCAPITALINTERNACIONALS.AESP._ppal@gmail.com';

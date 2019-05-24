@@ -26,9 +26,7 @@ class PermisoUserRequest extends FormRequest
         return [
             'name'      => 'required|max:255',
             'UsAvatar'  => 'max:255|mimes:jpeg,bmp,svg,png,gif,jpg|nullable',
-            'UsRol'     => 'required|max:255',
-            'UsRolDesc' => 'max:255|nullable',
-            'UsRol2'    => 'required|max:255|nullable',
+            'UsRolDesc' => 'max:255|required',
             'UsRolDesc2'=> 'max:255|nullable',
             'UsType'    => 'max:64|nullable',
             'UsStatus'  => 'max:32|nullable',

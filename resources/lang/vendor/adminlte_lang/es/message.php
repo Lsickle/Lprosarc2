@@ -161,6 +161,7 @@ return [
     'EncargadoAlmacen'        => 'EncargadoAlmacen',
     'EncargadoHorno'          => 'EncargadoHorno',
     'Vigilante'               => 'Vigilante',
+    'Comercial'               => 'Comercial',
     
     // form
     'seemore'                 => 'Ver Más',
@@ -364,8 +365,8 @@ return [
     // user
     'userperson'              => 'Nombre de la persona',
     'userpersonadd'           => 'Asignar a una persona',
-    'userrol'                 => 'Rol',
-    'userrol2'                => 'Rol 2',
+    'userrol'                 => 'Rol Principal',
+    'userrol2'                => 'Rol Secundario',
     'useravatar'              => 'Avatar',
     'usertype'                => 'Tipo de Usuario',
     'userstatus'              => 'Status de Usuario',
@@ -376,6 +377,12 @@ return [
     'userlist'                => 'Lista de Usuarios',
     'userregister'            => 'Registrar un Nuevo Usuario',
     'useredit'                => 'Editar el Usuario',
+    'userpersonassigned'      => 'Persona asignada',
+    'userpersonassignedwithout'=> 'Sin Persona asignada',
+    'userstatus'              => 'Estado',
+    'userstatusinactive'      => 'Inactivo',
+    'userstatusactive'        => 'Activo',
+    'userchangepassword'      => 'Cambiar contraseña',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -391,7 +398,15 @@ return [
     'data-error-minlength10'  => 'Use mínimo 10 caracteres',
     'data-error-minlength16'  => 'Use mínimo 16 caracteres',
 
+    // Panel de administracion
+    'panel'                   => 'Panel de Administración',
+    'Menuuser'                => 'Usuarios',
+    'userdescription'         => 'Registro y permisos de usuarios',
+    'Menuaudit'               => 'Auditoria de cambios',
+    'auditdescription'        => 'Lista de cambios y actualizaciones de cada Usuario',
+
     // Menu
+
     'MenuProsarcCliTitle'     => 'CLIENTES',
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
     'MenuClienTitle'          => 'MENU SiReS',
