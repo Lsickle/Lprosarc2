@@ -143,6 +143,14 @@ return [
 
     'attributes' => [
         'UsAvatar'      => 'Foto de perfil',
+        'name'          => 'Nombre de Usuario',
+        'email'         => 'Correo electrónico',
+        'password'      => 'Contraseña',
+        'UsStatus'      => 'Status de Usuario',
+        'UsType'        => 'Tipo de Usuario',
+        'UsRolDesc'     => 'Rol Principal',
+        'UsRolDesc2'    => 'Rol Secundario',
+        
 
         'CliNit'        => 'Nit',
         'CliName'       => 'Razón Social',
@@ -197,7 +205,7 @@ return [
         'GSedePhone2'   => 'Teléfono 2',
         'GSedeExt2'     => 'Extensión 2',
         'GSedeName'     => 'Nombre de la Sede',
-        'GSedeEmail'    => 'Email',
+        'GSedeEmail'    => 'Correo electrónico',
         'FK_GSedeMun'   => 'Minicipio',
 
         'FK_SGener'     => 'Sedes del Generador',

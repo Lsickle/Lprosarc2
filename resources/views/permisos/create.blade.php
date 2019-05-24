@@ -35,48 +35,45 @@
 									@endforeach
 								</select>
 							</div>
-                            <div class="form-group col-md-6">
+							<div class="form-group col-md-6">
                                 <label for="name">{{ trans('adminlte_lang::message.username') }}</label></label><small class="help-block with-errors">*</small>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="email">{{ trans('adminlte_lang::message.emailaddress') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{ old('email') }}" required>
-                            </div>
-							<div class="form-group col-md-6">
-								<label for="UsAvatar">{{ trans('adminlte_lang::message.useravatar') }}</label></label><small class="help-block with-errors"></small>
-								<input type="file" class="form-control" id="UsAvatar" name="UsAvatar" value="{{ old('UsAvatar') }}">
-                            </div>
-
-							<div class="form-group col-md-6">
-								<label for="UsType">{{ trans('adminlte_lang::message.usertype') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="text" class="form-control" id="UsType" name="UsType" maxlength="64"  value="{{ old('UsType') }}">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="UsStatus">{{ trans('adminlte_lang::message.userstatus') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="text" class="form-control" id="UsStatus" name="UsStatus" maxlength="32"  value="{{ old('UsStatus') }}">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="password">{{ trans('adminlte_lang::message.password') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="password" class="form-control" id="password" name="password" maxlength="32"  value="{{ old('password') }}">
+                                <label for="UsRolDesc">{{ trans('adminlte_lang::message.userrol') }}</label></label><small class="help-block with-errors">*</small>
+								<select class="form-control select" id="UsRolDesc" name="UsRolDesc" required>
+                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+									@foreach ($Roles as $Rol)		
+                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+									@endforeach
+								</select>
 							</div>
                             <div class="form-group col-md-6">
-                                <label for="UsRol">{{ trans('adminlte_lang::message.userrol') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="UsRol" name="UsRol" maxlength=""  value="{{ old('UsRol') }}" required>
+                                <label for="UsRolDesc2">{{ trans('adminlte_lang::message.userrol2') }}</label></label><small class="help-block with-errors"></small>
+								<select class="form-control select" id="UsRolDesc2" name="UsRolDesc2">
+                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+									@foreach ($Roles as $Rol)		
+                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc2') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+									@endforeach
+								</select>
+							</div>
+                            <div class="form-group col-md-6">
+                                <label for="email">{{ trans('adminlte_lang::message.emailaddress') }}</label></label><small class="help-block with-errors">*</small>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{ old('email') }}" required>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="UsAvatar">{{ trans('adminlte_lang::message.useravatar') }}</label></label><small class="help-block with-errors"></small>
+								<input type="file" class="form-control" id="UsAvatar" name="UsAvatar" accept="image/*" value="{{ old('UsAvatar') }}">
                             </div>
 							<div class="form-group col-md-6">
-								<label for="UsRolDesc">{{ trans('adminlte_lang::message.userdescriptionrol') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="UsRolDesc" name="UsRolDesc" maxlength=""  value="{{ old('UsRolDesc') }}" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="UsRol2">{{ trans('adminlte_lang::message.userrol2') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="UsRol2" name="UsRol2" maxlength=""  value="{{ old('UsRol2') }}" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="UsRolDesc2">{{ trans('adminlte_lang::message.userdescriptionrol2') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="UsRolDesc2" name="UsRolDesc2" maxlength=""  value="{{ old('UsRolDesc2') }}" required>
+								<label for="password">{{ trans('adminlte_lang::message.password') }}</label></label><small class="help-block with-errors">*</small>
+                                <input type="password" class="form-control" id="password" name="password" data-minlength="6" maxlength="32"  value="{{ old('password') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" required>
 							</div>
 							
+							<div class="form-group col-md-6 col-xs-12">
+								<label for="newpassword_confirmation">{{ trans('adminlte_lang::message.confirmpassword') }}</label><small class="help-block with-errors">*</small>
+								<input required name="password_confirmation" data-minlength="6" data-match="#password" data-error="{{ trans('adminlte_lang::message.confirmpasswordfalse') }}" class="form-control" type="password" id="newpassword_confirmation">
+							</div>
 						</div>
 						<div class="box box-info">
 							<div class="box-footer">

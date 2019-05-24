@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
 	Route::delete('/respelSGener/{id}', 'RespelSedeGenerController@destroySGener');
 	Route::resource('/permisos', 'PermisoUsuarioController');
-	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword'); 
+	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
