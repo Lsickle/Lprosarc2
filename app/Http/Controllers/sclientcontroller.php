@@ -187,11 +187,17 @@ class sclientcontroller extends Controller
         $Sede = Sede::where('SedeSlug', $id)->first();
             if ($Sede->SedeDelete == 0) {
                 $Sede->SedeDelete = 1;
+                $Sede->save();
+                
+                return redirect()->route('sclientes.index');
             }
             else{
                 $Sede->SedeDelete = 0;
+                $Sede->save();
+
+                $id = $Sede->SedeSlug;
+                return redirect()->route('sclientes.show', compact('id'));
             }
-        $Sede->save();
 
         $log = new audit();
         $log->AuditTabla="sedes";
@@ -201,6 +207,5 @@ class sclientcontroller extends Controller
         $log->Auditlog = $Sede->SedeDelete;
         $log->save();
 
-        return redirect()->route('sclientes.index');
     }
 }

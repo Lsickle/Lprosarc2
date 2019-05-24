@@ -9,12 +9,10 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.Generregistertittle') }}</h3>
 				</div>
-				<!-- general form elements -->
 				<div class="box box-info">
 					@include('layouts.partials.spinner')
 					<!-- form start -->
@@ -75,8 +73,7 @@
 												<div class="col-md-6 form-group">
 													<label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
 													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
-													<select class="form-control select" id="Respels" name="FK_Respel[]" multiple>
-														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+													<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
 														@foreach ($Respels as $Respel)
 															<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
 														@endforeach
@@ -126,10 +123,10 @@
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
 													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de celular de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
-													<small class="help-block with-errors"></small>
+													<small class="help-block with-errors">*</small>
 													<div class="input-group">
 														<span class="input-group-addon">(+57)</span>
-														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}">
+														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
 													</div>
 												</div>
 												<div class="col-md-6 form-group">

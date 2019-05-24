@@ -12,18 +12,22 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.generindex') }}</h3>
-					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-						<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
-					@endif
 					@if (!isset($Gener))
+						<div class="col-xs-12">
+							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+									<a href="/generadores/create" class="btn btn-success pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+							@endif
+							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
+							@endif
+						</div>
+					@else
 						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-							<a href="/Soy-Gener/{{Auth::user()->id}}" class="btn btn-success" >{{ trans('adminlte_lang::message.soygener') }}</a>
+							<a href="/generadores/create" class="btn btn-success pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
 					@endif
 				</div>
-			<!-- /.box-header -->
 				<div class="box box-info">
-				
 					<div class="box-body">
 						<table id="generadores" class="table table-bordered table-striped">
 							<thead>
@@ -55,16 +59,14 @@
 									<td>{{$Gener->GenerShortname}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>
-										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
 									</td>
 								</tr>
 							@endforeach
 						</tbody>
 					</table>
 				</div>
-            <!-- /.box-body -->
           	</div>
-          <!-- /.box -->
 		</div>
 	</div>
 </div>

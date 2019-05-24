@@ -436,21 +436,6 @@ $(function() {
             ordering: true,
             autoWith: true,
             searchHighlight: true,
-            columnDefs: [{
-                    targets: 4,
-                    data: "CliSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a method='get' href='/clientes/" + data + "' class='btn btn-success btn-block' />Ver</a>";
-                    }
-                },
-                {
-                    targets: 5,
-                    data: "CliSlug",
-                    "render": function(data, type, row, meta) {
-                        return "<a href='/clientes/" + data + "/edit' class='btn btn-warning btn-block'>Edit</a>";
-                    }
-                }
-            ]
         });
 
         /*funcion para resaltar las busquedas*/
@@ -484,6 +469,7 @@ $(function() {
         $('.phone').inputmask({mask: "03[9 ][9][9][9][9][9][9][9]"});
         $('.mobile').inputmask({mask: "3[9][9 ][9][9][9 ][9][9][9][9]"});
         $('.extension').inputmask({mask: "[9][9][9][9][9]"});
+        
         $('.document').inputmask({mask: "[9][9][9][9][9][9][9][9][9][9][9]"});
         $('.bank').inputmask({mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]"});
         $('.inputText').inputmask({mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
@@ -494,6 +480,10 @@ $(function() {
             rightAlign: false,
             placeholder: "",
             digits: 0
+        });
+        $('.placa').inputmask({
+            mask: "*** - 999", 
+            placeholder: "",
         });
     });
     </script>
@@ -1192,6 +1182,7 @@ $(document).ready(function() {
 });
 </script>
 @endif
+@if(Route::currentRouteName() === 'sgeneradores.index')
 <script>
 var rol = "<?php echo Auth::user()->UsRol; ?> ";
 botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
@@ -1216,13 +1207,7 @@ $(document).ready(function() {
         ordering: true,
         autoWith: true,
         searchHighlight: true,
-        "columnDefs": [{
-            "targets": 8,
-            "data": "GSedeSlug",
-            "render": function(data, type, row, meta) {
-                return "<a method='get' href='/sgeneradores/" + data + "/edit' class='btn btn-warning btn-block'>Editar</a>";
-            }
-        }],
+        
         fixedHeader: {
             header: true
         }
@@ -1239,6 +1224,51 @@ $(document).ready(function() {
 });
 
 </script>
+@endif
+@if(Route::currentRouteName() === 'contactos.index')
+<script>
+var rol = "<?php echo Auth::user()->UsRol; ?> ";
+botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
+$(document).ready(function() {
+    $('#contactosTable').DataTable({
+        // pagingType: 'scrolling',
+        // scrollY: 300,
+        responsive: true,
+        // keys: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+            botoncito,
+            {
+                extend: 'collection',
+                text: 'Selector',
+                buttons: ['selectRows', 'selectCells']
+            }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true,
+        
+        fixedHeader: {
+            header: true
+        }
+    });
+
+    var table = $('#contactosTable').DataTable();
+
+    table.on('draw', function() {
+        var body = $(table.table().body());
+
+        body.unhighlight();
+        body.highlight(table.search());
+    });
+});
+
+</script>
+@endif
+
 <script>
 $(document).ready(function() {
     $('#selectconfiltro').select2({});
@@ -1376,7 +1406,7 @@ $(document).ready(function() {
     });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
 <script>
     $(document).ready(function() {
         $(".tel").change(function(){
@@ -1388,7 +1418,7 @@ $(document).ready(function() {
         });
     });
 </script>
-    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
+    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
         <script>
             $(document).ready(function(){    
                 if({{old('SedeExt2')}} !== null){
@@ -1404,7 +1434,7 @@ $(document).ready(function() {
             });
         </script>
     @endif
-    @if(Route::currentRouteName() === 'generadores.create')
+    @if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
         <script>
             $(document).ready(function(){    
                 if({{old('GSedeExt1')}} !== null){
@@ -1449,7 +1479,27 @@ $(document).ready(function() {
     }
 </script>
 @endif
-
+@if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
+<script>
+    function AddVehiculo(){
+        document.getElementById('AddVehiculo').style.display = 'block';
+        $('#VehicPlaca').prop('required', true);
+        $('#VehicTipo').prop('required', true);
+        $('#VehicCapacidad').prop('required', true);
+        $('#Form').validator('update');
+    };
+    function NoAddVehiculo(){
+        document.getElementById('AddVehiculo').style.display = 'none';
+        $('#VehicPlaca').prop('required', false);
+        $('#VehicTipo').prop('required', false);
+        $('#VehicCapacidad').prop('required', false);
+        $('#VehicPlaca').val('');
+        $('#VehicTipo').val('');
+        $('#VehicCapacidad').val('');
+        $('#Form').validator('validate');
+    };
+</script>
+@endif
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
@@ -1489,7 +1539,8 @@ $(document).ready(function(){
         toastr.success(Mensaje);
     }
 </script>
-@if(Route::currentRouteName() === 'generadores.show')
+{{-- Aparicion del modal si existe la variable errors --}}
+@if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
     @if ($errors->any())
         <script>
             $(document).ready(function()
@@ -1498,36 +1549,84 @@ $(document).ready(function(){
             });
         </script>
     @endif
+@endif
+@if(Route::currentRouteName() === 'contactos.show')
+    @if ($errors->any())
+        <script>
+            $(document).ready(function()
+            {
+                $(".create").modal("show");
+            });
+        </script>
+    @endif
+@endif
+@if (Route::currentRouteName() === 'generadores.show')
+    <script>
+        $(document).ready(function(){
+            $("#FK_SGener").change(function(e){
+                id=$("#FK_SGener").val();
+                e.preventDefault();
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+                });
+                $.ajax({
+                    url: "{{url('/sedegener-respel')}}/"+id,
+                    method: 'GET',
+                    data:{},
+                    success: function(res){
+                        $("#FK_Respel").empty();
+                        var respel = new Array();
+                        for(var i = res.length -1; i >= 0; i--){
+                            if ($.inArray(res[i].ID_Respel, respel) < 0) {
+                                $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+                                respel.push(res[i].ID_Mun);
+                            }
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+@endif
+{{-- @if(Route::currentRouteName() === 'contactos.show')
 <script>
     $(document).ready(function(){
-        $("#FK_SGener").change(function(e){
-            id=$("#FK_SGener").val();
+        $("#editvehiculo{{$Vehiculo->ID_Vehic}}").click(function(e){
+            id=$("#vehiculoid{{$Vehiculo->ID_Vehic}}").val();
             e.preventDefault();
             $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
             });
             $.ajax({
-                url: "{{url('/sedegener-respel')}}/"+id,
+                url: "{{url('/contacto-vehiculos')}}/"+id,
                 method: 'GET',
                 data:{},
+                beforeSend: function(){
+                    $('#VehicTipo').val('');
+                    $('#VehicPlaca').val('');
+                    $('#VehicCapacidad').val('');
+                },
                 success: function(res){
-                    $("#FK_Respel").empty();
-                    var respel = new Array();
+                    
+                    var Vehiculo = new Array();
                     for(var i = res.length -1; i >= 0; i--){
-                        if ($.inArray(res[i].ID_Respel, respel) < 0) {
-                            $("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
-                            respel.push(res[i].ID_Mun);
+                        if ($.inArray(res[i].ID_Vehic, Vehiculo) < 0) {
+                            $('#VehicTipo').val(res[i].VehicTipo);
+                            $('#VehicPlaca').val(res[i].VehicPlaca);
+                            $('#VehicCapacidad').val(res[i].VehicCapacidad);
+                            Vehiculo.push(res[i].ID_Vehic);
                         }
                     }
                 }
             })
         });
-    });
+    // });
 </script>
-@endif
-
+@endif --}}
 {{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.edit')
 <script>
