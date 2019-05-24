@@ -82,11 +82,15 @@
 					<option onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			<div class="col-md-6 form-group">
-				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-				<input id="foto0" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-max-size="2048" value="{{ old('RespelFoto.0') }}">
+			<div class="col-md-6 form-group has-feedback">
+				<label class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<small class="help-block with-errors">*</small>
+				<input id="foto0" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="1024" data-filetype="png" value="{{ old('RespelFoto.0') }}">
+				<span class="form-control-feedback fa fa-spinner fa-pulse" style="margin-right: 1.8em;" aria-hidden="true">
+				        <i class="fa fa-camera"></i>
+				</span>
+				{{-- <span class="far fa-building fa-fw form-control-feedback fa-pull-left" style="margin-right: 1.8em;" aria-hidden="true"></span> --}}
 			</div>
-				
 			{{--
 		</div> --}}
 	</div>
@@ -195,13 +199,19 @@ function EliminarRes(id) {
 	$("#myform").validator('update');
 }
 
-</script>
-<script>
-  $(document).ready(function() {
-    const genderOldValue = '{{ old('gender') }}';
-    
-    if(genderOldValue !== '') {
-      $('#gender').val(genderOldValue);
-    }
-  });
+// function validate() {
+// 	$("#file_error").html("");
+// 	$(".demoInputBox").css("border-color","#F0F0F0");
+// 	var file_size = $('#file')[0].files[0].size;
+// 	if(file_size>(1024*2)) {
+// 		$("#file_error").html("File size is greater than 2MB");
+// 		$(".demoInputBox").css("border-color","#FF0000");
+// 		return false;
+// 	} 
+// 	return true;
+// }
+
+	
+
+
 </script>

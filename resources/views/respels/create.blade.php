@@ -21,7 +21,7 @@
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
 								@csrf
 								@if ($errors->any())
 								    <div class="alert alert-danger" role="alert">

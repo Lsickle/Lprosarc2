@@ -3,13 +3,13 @@
 		<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
 	</div>
 	<div class="col-md-12">
-		<label onclick="EliminarRes(`+contador+`)" style="float: right; color: red; margin-top: 0; font-size: 1.5em;">
+		<label class="btn-box-tool" onclick="EliminarRes(`+contador+`)" style="float: right; color: red; margin-top: 0; font-size: 1.5em;">
 			<i class="fas fa-trash-alt"></i>
 		</label>
 	</div>
 	<div class="col-md-6 form-group">
 		<label>{{ trans('adminlte_lang::message.name') }}</label>
-		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName')}}">
+		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName.0')}}">
 	</div>
 	<div class="col-md-6 form-group">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
