@@ -5,58 +5,88 @@
 				<hr>
 			</div>
 			<div class="col-md-6 form-group">
-				<label>Nombre</label>
-				<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
+				<label>{{ trans('adminlte_lang::message.name') }}</label>
+				<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName.0') }}">
 			</div>
 			<div class="col-md-6 form-group">
-				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Descripción del residuo</b>" data-content="<p style='width: 50%'> brinde una descripcion del residuo según sus caracteristicas, con el fin de facilitar la evaluacion del mismo y la asignación de tratamientos viables adecuados</p>">Descripción <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-				<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{ old('RespelDescrip.0') }}">
 			</div>
 			<div class="col-md-6 form-group">
-				<label>Peligrosidad</label>
+				<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
 				<select id="selectDanger0" name="RespelIgrosidad[]" class="form-control" required>
-					<option value="">Selecione...</option>
-					<option onclick="setDanger(0)">Corrosivo</option>
-					<option onclick="setDanger(0)">Reactivo</option>
-					<option onclick="setDanger(0)">Explosivo</option>
-					<option onclick="setDanger(0)">Toxico</option>
-					<option onclick="setDanger(0)">Inflamable</option>
-					<option onclick="setDanger(0)">Patogeno - Infeccioso</option>
-					<option onclick="setDanger(0)">Radiactivo</option>
-					<option onclick="setNoDanger(0)">No peligroso</option>
+					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ (old('RespelIgrosidad.0') === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger1') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger2') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger3') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger4') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger5') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger6') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger7') }}
+					</option>
+
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
+						{{ trans('adminlte_lang::LangRespel.danger8') }}
+					</option>
+
 				</select>
 			</div>
 			<div class="col-md-6 form-group">
-				<label>Estado fisico</label>
+				<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
 				<select name="RespelEstado[]" class="form-control" required>
-					<option value="">Selecione...</option>
-					<option value="Liquido">Liquido</option>
-					<option value="Solido">Solido</option>
-					<option value="Gaseoso">Gaseoso</option>
-					<option value="Mezcla">Mezcla</option>
+					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
+					<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
+					<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico2') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
+					<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico3') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
+					<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico4') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
 				</select>
 			</div>
 			<div id="danger0">
 			</div>
 			<div class="col-md-6 form-group">
-				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>">Hoja de seguridad <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<input required id="hoja0" name="RespelHojaSeguridad[]" type="file" class="form-control" accept=".pdf">
 			</div>
 			<div class="col-md-6 form-group">
-				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio... sin embargo, podra postponer la carga de la <b>Tarjeta de Emergencia</b> hasta el momento en el que vaya a realizar un solicitud de servicio</p>">Tarjeta De Emergencia <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<input name="RespelTarj[]" type="file" class="form-control" accept=".pdf">
-			</div>
-			<div class="col-md-6 form-group">
-				<label>¿Sustancia controlada?
-					<a href="{{route('ClasificacionA')}}" target="_blank"> Resolución Número 1 del 2015 <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
-				</label>
-				<select id="selectDanger0" name="SustanciaControlada[]" class="form-control" required>
-					<option onclick="setNoControlada(0)">No</option>
-					<option onclick="setControlada(0)">Si</option>
-				</select>
 			</div>
 			<div id="SustanciaControlada0">
 			</div>
+			<div class="col-md-6 form-group">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">{{ trans('adminlte_lang::LangRespel.controlx') }}
+					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
+				</label>
+				<select id="selectDanger0" name="SustanciaControlada[]" class="form-control" required>
+					<option onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
+					<option onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+				</select>
+			</div>
+			<div class="col-md-6 form-group">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<input id="foto0" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-max-size="2048" value="{{ old('RespelFoto.0') }}">
+			</div>
+				
 			{{--
 		</div> --}}
 	</div>
@@ -95,8 +125,11 @@ function setControlada(id) {
 function setNoControlada(id) {
 	$("#SustanciaControlada" + id).empty();
 }
-var Controlada = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
-var Masivo = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
+
+var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
+var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
+var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
+var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateDoc')`;
 var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
 var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
 
@@ -136,8 +169,10 @@ function AgregarControlada(id) {
 	$("#Controlada" + id).addClass("btn-success");
 	$("#Masivo" + id).removeClass("btn-success");
 	$("#Masivo" + id).addClass("btn-default");
-	$("#sustanciaForm" + id).empty();
-	$("#sustanciaForm" + id).append(Controlada);
+	$("#sustanciaFormDoc" + id).empty();
+	$("#sustanciaFormDoc" + id).append(ControladaDoc);
+	$("#sustanciaFormName" + id).empty();
+	$("#sustanciaFormName" + id).append(ControladaName);
 	$("#myform").validator('update');
 	attachPopover();
 }
@@ -147,8 +182,10 @@ function AgregarMasivo(id) {
 	$("#Masivo" + id).addClass("btn-success");
 	$("#Controlada" + id).removeClass("btn-success");
 	$("#Controlada" + id).addClass("btn-default");
-	$("#sustanciaForm" + id).empty();
-	$("#sustanciaForm" + id).append(Masivo);
+	$("#sustanciaFormDoc" + id).empty();
+	$("#sustanciaFormDoc" + id).append(MasivoDoc);
+	$("#sustanciaFormName" + id).empty();
+	$("#sustanciaFormName" + id).append(MasivoName);
 	$("#myform").validator('update');
 	attachPopover();
 }
@@ -158,4 +195,13 @@ function EliminarRes(id) {
 	$("#myform").validator('update');
 }
 
+</script>
+<script>
+  $(document).ready(function() {
+    const genderOldValue = '{{ old('gender') }}';
+    
+    if(genderOldValue !== '') {
+      $('#gender').val(genderOldValue);
+    }
+  });
 </script>

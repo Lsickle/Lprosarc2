@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RespelStoreRequest;
 use App\audit;
 use App\Respel;
 use App\Sede;
@@ -76,9 +77,12 @@ class RespelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RespelStoreRequest $request)
     {   
-        // return $request;
+        // $validatedData = $request->validate([
+        //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
+        // ]);
+        return $request;
         $validaciones = $request->validate([
             'RespelName' => 'required',
             'RespelIgrosidad' => 'required',

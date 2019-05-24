@@ -8,56 +8,61 @@
 		</label>
 	</div>
 	<div class="col-md-6 form-group">
-		<label>Nombre</label>
-		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required>
+		<label>{{ trans('adminlte_lang::message.name') }}</label>
+		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName')}}">
 	</div>
 	<div class="col-md-6 form-group">
-		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Descripción del residuo</b>" data-content="<p style='width: 50%'> brinde una descripcion del residuo según sus caracteristicas, con el fin de facilitar la evaluacion del mismo y la asignación de tratamientos viables adecuados</p>">Descripción <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 		<input maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo">
 	</div>
 	<div class="col-md-6 form-group">
-		<label>Peligrosidad</label>
+		<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
 		<select id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
-			<option value="">Selecione...</option>
-			<option onclick="setDanger(`+contador+`)">Corrosivo</option>
-			<option onclick="setDanger(`+contador+`)">Reactivo</option>
-			<option onclick="setDanger(`+contador+`)">Explosivo</option>
-			<option onclick="setDanger(`+contador+`)">Toxico</option>
-			<option onclick="setDanger(`+contador+`)">Inflamable</option>
-			<option onclick="setDanger(`+contador+`)">Patogeno - Infeccioso</option>
-			<option onclick="setDanger(`+contador+`)">Radiactivo</option>
-			<option onclick="setNoDanger(`+contador+`)">No peligroso</option>
+			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
+			<option onclick="setNoDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger1') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger2') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger3') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger4') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger5') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger6') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger7') }}</option>
+			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger8') }}</option>
 		</select>
 	</div>
 	<div class="col-md-6 form-group">
-		<label>Estado fisico</label>
+		<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
 		<select name="RespelEstado[]" class="form-control" required>
-			<option value="">Selecione...</option>
-			<option value="Liquido">Liquido</option>
-			<option value="Solido">Solido</option>
-			<option value="Gaseoso">Gaseoso</option>
-			<option value="Mezcla">Mezcla</option>
+			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
+			<option value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
+			<option value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
+			<option value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
+			<option value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
 		</select>
 	</div>
 	<div id="danger`+contador+`">
 	</div>
 	<div class="col-md-6 form-group">
-		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>">Hoja de seguridad <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 		<input required id="hoja`+contador+`" name="RespelHojaSeguridad[]" type="file" class="form-control" accept=".pdf">
 	</div>
 	<div class="col-md-6 form-group">
-		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Hoja de seguridad</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio... sin embargo, podra postponer la carga de la <b>Tarjeta de Emergencia</b> hasta el momento en el que vaya a realizar un solicitud de servicio</p>">Tarjeta De Emergencia <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 		<input name="RespelTarj[]" type="file" class="form-control" accept=".pdf">
-	</div>
-	<div class="col-md-6 form-group">
-		<label>¿Sustancia controlada?
-			<a href="{{route('ClasificacionA')}}" target="_blank"> Resolución Número 1 del 2015 <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
-		</label>
-		<select id="selectControl`+contador+`" name="SustanciaControlada[]" class="form-control" required>
-			<option onclick="setNoControlada(`+contador+`)">No</option>
-			<option onclick="setControlada(`+contador+`)">Si</option>
-		</select>
 	</div>
 	<div id="SustanciaControlada`+contador+`">
 	</div>
+	<div class="col-md-6 form-group">
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">{{ trans('adminlte_lang::LangRespel.controlx') }}
+					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
+				</label>
+		<select id="selectControl`+contador+`" name="SustanciaControlada[]" class="form-control" required>
+			<option onclick="setNoControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
+			<option onclick="setControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+		</select>
+	</div>
+	<div class="col-md-6 form-group">
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<input id="foto`+contador+`" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-max-size="2048" >
+	</div>
+	
 </div>
