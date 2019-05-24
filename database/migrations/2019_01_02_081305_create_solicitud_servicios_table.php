@@ -19,7 +19,7 @@ class CreateSolicitudServiciosTable extends Migration
             $table->string('SolSerTipo', 32);
             $table->boolean('SolSerAuditable')->nullable();
             $table->string('SolSerConductor')->nullable();
-            $table->string('SolSerVehiculo')->nullable();
+            $table->string('SolSerVehiculo',12)->nullable();
             $table->string('SolSerSlug')->unique();
             $table->timestamps();
             $table->engine = 'InnoDB';

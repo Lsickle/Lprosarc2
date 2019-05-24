@@ -477,7 +477,7 @@ $(document).ready(function() {
 		digits: 0
 	});
 	$('.placa').inputmask({
-		mask: "*** - 999",
+		mask: "AAA-999",
 		placeholder: "",
 	});
 	$('.horas').inputmask({
@@ -487,7 +487,12 @@ $(document).ready(function() {
 	});
 	$('.number').inputmask({ mask: "[9{0,40}]" });
 });
-
+	function numeroDimension(){
+		$('.numberDimension').inputmask({ alias: 'numeric', max:20, rightAlign:false});
+	}
+	function numeroKg(){
+		$('.numberKg').inputmask({ alias: 'numeric', max:50000, rightAlign:false});
+	}
 </script>
 <script>
 $(function() {

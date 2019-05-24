@@ -11,26 +11,26 @@
 	</div>
 	<div id="RespelData`+id_div+contadorRespel[id_div]+`" class="collapse in">
 		<div class="form-group col-md-6">
-			<label for="SolResTypeUnidad">Unidades de Medida</label>
-			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad" class="form-control">
+			<label for="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`">Unidades de Medida</label>
+			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
 				<option value="">Seleccione...</option>
 				<option value="99">Unidad</option>
 				<option value="98">Litros</option>
 			</select>
 		</div>
 		<div class="form-group col-md-6">
-			<label for="SolResCantiUnidad">Cantidad</label>
-			<input type="text" class="form-control" id="SolResCantiUnidad" name="SolResCantiUnidad[`+id_div+`][]">
+			<label for="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`">Cantidad</label>
+			<input type="text" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
 		</div>
 		<div class="form-group col-md-6">
-			<label for="SolResKgEnviado">Cantidad (Kg)</label>
+			<label for="SolResKgEnviado`+id_div+contadorRespel[id_div]+`">Cantidad (Kg)</label>
 			<small class="help-block with-errors">*</small>
-			<input type="text" class="form-control" id="SolResKgEnviado" name="SolResKgEnviado[`+id_div+`][]" required="">
+			<input type="text" class="form-control numberKg" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]" required="">
 		</div>
 		<div class="form-group col-md-6">
-			<label for="SolResEmbalaje">Embalaje</label>
+			<label for="SolResEmbalaje`+id_div+contadorRespel[id_div]+`">Embalaje</label>
 			<small class="help-block with-errors">*</small>
-			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje" class="form-control" required="">
+			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje`+id_div+contadorRespel[id_div]+`" class="form-control" required="">
 				<option value="">Seleccione...</option>
 				<option value="99">Bolsas</option>
 				<option value="98">Canecas</option>
@@ -44,16 +44,16 @@
 				<label>Dimensiones del Residuo</label>
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResAlto">Alto</label>
-				<input type="number" class="form-control" id="SolResAlto" name="SolResAlto[`+id_div+`][]">
+				<label for="SolResAlto`+id_div+contadorRespel[id_div]+`">Alto (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResAncho">Ancho</label>
-				<input type="number" class="form-control" id="SolResAncho" name="SolResAncho[`+id_div+`][]">
+				<label for="SolResAncho`+id_div+contadorRespel[id_div]+`">Ancho (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResProfundo">Profundo</label>
-				<input type="number" class="form-control" id="SolResProfundo" name="SolResProfundo[`+id_div+`][]">
+				<label for="SolResProfundo`+id_div+contadorRespel[id_div]+`">Profundo (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
 			</div>
 		</div>
 		<div class="form-group col-md-12" style="text-align: center;">

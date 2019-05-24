@@ -89,7 +89,7 @@ class SolicitudServicioController extends Controller
 	public function store(SolServStoreRequest $request)
 	{
 		// var_dump();
-		return $request;
+		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Pendiente';
 		switch ($request->input('SolResAuditoriaTipo')) {
@@ -180,7 +180,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResKgEnviado = $request['SolResKgEnviado'][$Generador][$y];
 				$SolicitudResiduo->SolResKgRecibido = 0;
 				$SolicitudResiduo->SolResDelete = 0;
-				$SolicitudResiduo->SolResSlug = now()."solicitud".$request['FK_SolResRg'][$Generador][$y].$y."residuo";
+				$SolicitudResiduo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
 				$SolicitudResiduo->FK_SolResSolSer = $SolicitudServicio->ID_SolSer;
 				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 					$SolicitudResiduo->SolResTypeUnidad = "Unidad";

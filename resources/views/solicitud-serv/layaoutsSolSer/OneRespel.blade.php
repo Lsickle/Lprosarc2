@@ -17,12 +17,12 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label for="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`">Cantidad</label>
-			<input type="text" class="form-control" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
+			<input type="text" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
 		</div>
 		<div class="form-group col-md-6">
 			<label for="SolResKgEnviado`+id_div+contadorRespel[id_div]+`">Cantidad (Kg)</label>
 			<small class="help-block with-errors">*</small>
-			<input type="text" class="form-control" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]" required="">
+			<input type="text" class="form-control numberKg" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]" required="">
 		</div>
 		<div class="form-group col-md-6">
 			<label for="SolResEmbalaje`+id_div+contadorRespel[id_div]+`">Embalaje</label>
@@ -41,16 +41,16 @@
 				<label>Dimensiones del Residuo</label>
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResAlto`+id_div+contadorRespel[id_div]+`">Alto</label>
-				<input type="number" class="form-control" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
+				<label for="SolResAlto`+id_div+contadorRespel[id_div]+`">Alto (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResAncho`+id_div+contadorRespel[id_div]+`">Ancho</label>
-				<input type="number" class="form-control" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
+				<label for="SolResAncho`+id_div+contadorRespel[id_div]+`">Ancho (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
-				<label for="SolResProfundo`+id_div+contadorRespel[id_div]+`">Profundo</label>
-				<input type="number" class="form-control" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
+				<label for="SolResProfundo`+id_div+contadorRespel[id_div]+`">Profundo (Metros)</label>
+				<input type="text" class="form-control numberDimension" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
 			</div>
 		</div>
 		<div class="form-group col-md-12" style="text-align: center;">

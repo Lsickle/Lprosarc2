@@ -58,17 +58,17 @@ Solicitudes de servicios
 								<div id="nametransportadora" class="form-group col-md-6" hidden="true">
 									<label for="SolSerNameTrans">Nombre de la transaportadora</label>
 									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{old('SolSerNameTrans')}}">
+									<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{old('SolSerNameTrans')}}">
 								</div>
 								<div id="nittransportadora" class="form-group col-md-6" hidden="true">
 									<label for="SolSerNitTrans">Nit de la transportadora</label>
 									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control" id="SolSerNitTrans" name="SolSerNitTrans" value="{{old('SolSerNitTrans')}}">
+									<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="{{old('SolSerNitTrans')}}">
 								</div>
 								<div id="addresstransportadora" class="form-group col-md-12" hidden="true">
 									<label for="SolSerAdressTrans">Dirección de la transportadora</label>
 									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
+									<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
 								</div>
 								<div id="citytransportadora" class="form-group col-md-12" style="margin: 0; padding: 0;" hidden="true">
 									<div class="form-group col-md-6">
@@ -89,12 +89,12 @@ Solicitudes de servicios
 								<div id="Conductor" class="form-group col-md-6" hidden="true">
 									<label for="SolSerConductor">Conductor</label>
 									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
+									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
 								</div>
 								<div id="Vehiculo" class="form-group col-md-6" hidden="true">
 									<label for="SolSerVehiculo">Placa del Vehiculo</label>
 									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
+									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
 								</div>
 								<div id="typeaditable" class="form-group col-md-6">
 									<label for="SolResAuditoriaTipo">Auditable</label>
@@ -152,7 +152,7 @@ Solicitudes de servicios
 										<div class="form-group col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre de elementos</b>" data-content="<p style='width: 50%'> Se debe especificar el nombre de los elementos que Se requiere sean devueltos al Cliente/Generador... solo aplica si se selecciono el requerimiento: <b><i>Devolución de elentos</i></b></p>">
 												<label for="SolSerDevolucionTipo">Nombre elementos</label>
-												<input type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ old('SolSerDevolucionTipo')}}" disabled="">
+												<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ old('SolSerDevolucionTipo')}}" disabled="">
 												<small class="help-block with-errors"></small>
 											</label>
 										</div>
@@ -290,6 +290,8 @@ function ResiduosGener(id_div, ID_Gener){
 	Switch2();
 	Switch3();
 	Checkboxs();
+	numeroDimension();
+	numeroKg();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -333,6 +335,8 @@ function AgregarResPel(id_div) {
 	Switch2();
 	Switch3();
 	Checkboxs();
+	numeroDimension();
+	numeroKg();
 	$('#FK_SolResRg'+id_div+contadorRespel[id_div]).html($('#FK_SolResRg'+id_div+'0').html());
 	$('#SolicitudServicio').validator('update');
 }
