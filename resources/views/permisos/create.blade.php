@@ -47,18 +47,9 @@
 								<label for="UsAvatar">{{ trans('adminlte_lang::message.useravatar') }}</label></label><small class="help-block with-errors"></small>
 								<input type="file" class="form-control" id="UsAvatar" name="UsAvatar" value="{{ old('UsAvatar') }}">
                             </div>
-
-							<div class="form-group col-md-6">
-								<label for="UsType">{{ trans('adminlte_lang::message.usertype') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="text" class="form-control" id="UsType" name="UsType" maxlength="64"  value="{{ old('UsType') }}">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="UsStatus">{{ trans('adminlte_lang::message.userstatus') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="text" class="form-control" id="UsStatus" name="UsStatus" maxlength="32"  value="{{ old('UsStatus') }}">
-							</div>
 							<div class="form-group col-md-6">
 								<label for="password">{{ trans('adminlte_lang::message.password') }}</label></label><small class="help-block with-errors"></small>
-                                <input type="password" class="form-control" id="password" name="password" maxlength="32"  value="{{ old('password') }}">
+                                <input type="password" class="form-control" id="password" name="password" maxlength="255"  value="{{ old('password') }}">
 							</div>
                             <div class="form-group col-md-6">
                                 <label for="UsRol">{{ trans('adminlte_lang::message.userrol') }}</label></label><small class="help-block with-errors">*</small>
