@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Clasificacion A')
+@section('htmlheader_title', 'Clasificación A')
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
@@ -8,7 +8,7 @@
 				<div class="box">
 					<!-- box-header -->
 					<div class="box-header">
-					<h3 class="box-title">Clasificacion A, según Decreto Número 4741</h3>
+					<h3 class="box-title">Clasificación A, según Decreto Número 4741</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- box-body -->
@@ -110,7 +110,7 @@
 							</tr>
 							<tr>
 								<td>A1170</td>
-								<td>Acumuladores de desecho sin seleccionar excluidas mezclas de acumuladores sólo de la lista B. Los acumuladores de desecho no incluidos en la lista B que contengan constituyentes del anexo I en tal grado que losconviertan en peligrosos </td>
+								<td>Acumuladores de desecho sin seleccionar excluidas mezclas de acumuladores sólo de la lista B. Los acumuladores de desecho no incluidos en la lista B que contengan constituyentes del anexo I en tal grado que los conviertan en peligrosos </td>
 							</tr>
 							<tr>
 								<td>A1180</td>
@@ -122,7 +122,7 @@
 							</tr>
 							<tr>
 								<td>A2020</td>
-								<td>Desechos de compuestos inorgánicos de flúor en forma de líquidoso lodos, pero excluidos los desechos de ese tipo especificados en la lista B</td>
+								<td>Desechos de compuestos inorgánicos de flúor en forma de líquidos o lodos, pero excluidos los desechos de ese tipo especificados en la lista B</td>
 							</tr>
 							<tr>
 								<td>A2030</td>
@@ -166,7 +166,7 @@
 							</tr>
 							<tr>
 								<td>A3070</td>
-								<td>Desechos de fenoles, compuestos fenólicos, incluido el clorofenol enforma de líquido o de lodo</td>
+								<td>Desechos de fenoles, compuestos fenólicos, incluido el clorofenol en forma de líquido o de lodo</td>
 							</tr>
 							<tr>
 								<td>A3080</td>
@@ -178,7 +178,7 @@
 							</tr>
 							<tr>
 								<td>A3100</td>
-								<td>Raeduras y otros desechos del cuero o de cuero regenerado que no sirvan para la fabricación de artículos de cuero, que contengan compuestos de cromo hexavalente o biocidas (véase elapartado correspondiente en la lista B B3090)</td>
+								<td>Raeduras y otros desechos del cuero o de cuero regenerado que no sirvan para la fabricación de artículos de cuero, que contengan compuestos de cromo hexavalente o biocidas (véase el apartado correspondiente en la lista B B3090)</td>
 							</tr>
 							<tr>
 								<td>A3110</td>
@@ -218,7 +218,7 @@
 							</tr>
 							<tr>
 								<td>A3200</td>
-								<td>Material bituminoso (desechosde asfalto) con contenido de alquitrán resultantes de la construcción y e! mantenimiento de carreteras (obsérvese elartículo correspondiente B2130 de la lista B)</td>
+								<td>Material bituminoso (desechos de asfalto) con contenido de alquitrán resultantes de la construcción y e! mantenimiento de carreteras (obsérvese el artículo correspondiente B2130 de la lista B)</td>
 							</tr>
 							<tr>
 								<td>A4010</td>
