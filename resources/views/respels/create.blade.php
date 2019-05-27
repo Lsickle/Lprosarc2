@@ -34,7 +34,7 @@
 								@endif
 								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
 									<div class="col-md-12 form-group">
-										<label for="Sede">Cliente</label>
+										<label for="Sede">Sede del cliente</label>
 										<select name="Sede" id="Sede" class="form-control" required>
 											<option value="">Seleccione</option>
 											@foreach($Sedes as $Cliente)

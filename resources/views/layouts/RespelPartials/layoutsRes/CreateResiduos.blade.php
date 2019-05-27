@@ -9,7 +9,7 @@
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label>{{ trans('adminlte_lang::message.name') }}</label>
-		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName.0')}}">
+		<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
@@ -58,8 +58,8 @@
 					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
 		<select id="selectControl`+contador+`" name="SustanciaControlada[]" class="form-control" required>
-			<option onclick="setNoControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
-			<option onclick="setControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+			<option value="0" onclick="setNoControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
+			<option value="1" onclick="setControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>
 	<div class="col-md-6 form-group has-feedback">
@@ -74,7 +74,7 @@
 			<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 		</label>
 		<select id="selectDdeclaracion`+contador+`" name="RespelDeclaracion[]" class="form-control" required>
-			<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
+			<option value="0">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 			<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>

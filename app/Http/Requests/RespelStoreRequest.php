@@ -32,16 +32,16 @@ class RespelStoreRequest extends FormRequest
             $request = $this->instance()->all();
 
             $rules = [
-                'RespelName.*' => 'required|max:128|alpha_num',
-                'RespelDescrip.*' => 'required|max:512|alpha_num',
+                'RespelName.*' => 'required|max:128|string',
+                'RespelDescrip.*' => 'required|max:512|string',
                 'RespelIgrosidad.*' => 'required|max:30',
-                'RespelEstado.*' => 'required|max:12|alpha',
+                'RespelEstado.*' => 'required|max:12|string',
                 'RespelHojaSeguridad.*' => 'sometimes|max:2048|mimes:pdf',
                 'YRespelClasf4741.*' => 'sometimes|max:6',
                 'ARespelClasf4741.*' => 'sometimes|max:6',
                 'RespelTarj.*' => 'sometimes|max:2048|mimes:pdf',
-                'SustanciaControlada.*' => 'required|max:6|alpha',
-                'SustanciaControladaNombre.*' => 'sometimes|max:50|alpha_num',
+                'SustanciaControlada.*' => 'required|max:6|string',
+                'SustanciaControladaNombre.*' => 'sometimes|max:50|string',
                 'SustanciaControladaDocumento.*' => 'sometimes|max:2048|mimes:pdf',
                 'RespelFoto.*' => 'sometimes|max:2048|mimes:jpeg,png',
                 'RespelDeclaracion.*' => 'required|max:2',

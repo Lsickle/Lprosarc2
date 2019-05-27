@@ -50,7 +50,7 @@ return [
     'resolucion1descrip'    => "<p style='width: 50%'> puede consultar los detalles de la <b><i>RESOLUCIÓN 1 DE 2015 </i></b> emitida por el Consejo Nacional de Estupefacientes, haciendo click en este enlace</p>",
     'resolucion1tittle'     => '<b>Nombre de la sustancia</b>',
     'respeldescriptittle'   => '<b>Descripción del residuo</b>',
-    'respeldescriptinfo'    => "<p style='width: 50%'> Escriba la descripción del residuo según sus características, con el fin de facilitar la evaluación del mismo y la asignación de tratamientos viables adecuados</p>",
+    'respeldescriptinfo'    => "<p style='width: 50%'> Escriba la descripción del residuo según sus características, con el fin de facilitar la evaluación del mismo y la asignación de tratamientos viables adecuados.<br><br> <i>En este campo puede escribir hasta 512 caracteres</i></p>",
     'tarjetapopoverinfo'    => "<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio... sin embargo, podrá posponer la carga de la <b>Tarjeta de Emergencia</b> hasta el momento en el que vaya a realizar un solicitud de servicio",
     'hojapopoverinfo'    => "<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>",
 

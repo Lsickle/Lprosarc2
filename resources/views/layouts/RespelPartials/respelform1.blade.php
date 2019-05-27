@@ -81,7 +81,7 @@
 					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
 				<select id="selectDanger0" name="SustanciaControlada[]" class="form-control" required>
-					<option value="" onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
+					<option value="0" onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
 					<option value="1" onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
