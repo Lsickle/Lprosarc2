@@ -37,7 +37,7 @@
 							</div>
 							<div class="form-group col-md-6">
                                 <label for="name">{{ trans('adminlte_lang::message.username') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" maxlength="255" required>
+                                <input type="text" class="form-control inputText" id="name" name="name" value="{{ old('name') }}" maxlength="255" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="UsRolDesc">{{ trans('adminlte_lang::message.userrol') }}</label></label><small class="help-block with-errors">*</small>

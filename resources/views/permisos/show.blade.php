@@ -54,7 +54,8 @@
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> 
-							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$User->email}}</p>">{{$User->email}}</a>
+							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
+							<a href="#" id="{{ trans('adminlte_lang::message.emailaddress') }}" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$User->email}}</p>">{{$User->email}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.userrol') }}</b> 
