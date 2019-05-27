@@ -120,21 +120,19 @@ class userController extends Controller
     }
 
     public function changepassword(Request $request, $id){
-        // return $request;
         $user = User::where('UsSlug', $id)->first();
         $validate = $request->validate([
             'oldpassword'          => 'required|min:6',
             'newpassword'          => 'required|confirmed:confirmnewpassword|min:6',
         ]);
-        // return $request;
         if(Hash::check($request->input('oldpassword'), $user->password)){
-        	$Menssage = trans('adminlte_lang::message.passwordchangetrue');
+        	$Menssage = trans('adminlte_lang::message.updatetrue');
         	$user->password = bcrypt($request->input('newpassword'));
         	$user->save();
         }
         else{
         	$Menssage = trans('adminlte_lang::message.passwordchangefalse');
-        	return redirect()->route('profile.changepassword', ['id' => $user->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
+        	return redirect()->route('permisos-edit', ['id' => $user->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
         }
 
         $log = new audit();

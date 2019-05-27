@@ -39,7 +39,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
     ], 'public/css/dependencias.css')
    .combine([
         'node_modules/@fullcalendar/core/main.css',
-        'node_modules/@fullcalendar/daygrid/main.css'
+        'node_modules/@fullcalendar/daygrid/main.css',
+        'node_modules/@fullcalendar/timegrid/main.css'
    	], 'public/css/fullcalendar.css')
    .combine([
         'node_modules/datatables.net-dt/css/jquery.dataTables.css',
@@ -79,9 +80,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
     ], 'public/js/dependencias.js')
    .scripts([
    		'node_modules/@fullcalendar/core/main.js',
-   		'node_modules/@fullcalendar/core/locales/es.js',
    		'node_modules/@fullcalendar/daygrid/main.js',
-      'node_modules/@fullcalendar/interaction/main.min.js'
+      'node_modules/@fullcalendar/timegrid/main.js',
+      'node_modules/@fullcalendar/interaction/main.min.js',
+   		'node_modules/@fullcalendar/core/locales/es.js'
    	], 'public/js/fullcalendar.js')
    .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',

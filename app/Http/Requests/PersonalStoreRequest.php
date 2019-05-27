@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class PersonalStoreRequest extends FormRequest
 {
@@ -29,7 +30,6 @@ class PersonalStoreRequest extends FormRequest
             'FK_PersCargo'  => 'required',
 
             'PersDocType'   => 'required|max:3|min:2',
-            'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber',
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',

@@ -9,26 +9,26 @@
     <div class="tab-content">
         <!-- Home tab content -->
         <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::LangUsers.usermenu') }}</h3>
+            <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.panel') }}</h3>
             <ul class='control-sidebar-menu'>
-                @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin"||Auth::user()->UsRol == "JefeLogistica")
+                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.DirectorPlanta') || Auth::user()->UsRol === trans('adminlte_lang::message.Comercial'))
                     <li>
                         <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>
                             <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.userroles') }}</h4>
-                                <p>{{ trans('adminlte_lang::LangUsers.rolesdescrip') }}</p>
+                                <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.Menuuser') }}</h4>
+                                <p>{{ trans('adminlte_lang::message.userdescription') }}</p>
                             </div>
                         </a>
                     </li>
                 @endif
-                 @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "admin")
+                 @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "Administrador")
                     <li>
                         <a href='/audits'>
                             <i class="menu-icon fas fa-user-secret bg-green"></i>
                             <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::LangUsers.auditmenu') }}</h4>
-                                <p>{{ trans('adminlte_lang::LangUsers.auditmenudescription') }}</p>
+                                <h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.Menuaudit') }}</h4>
+                                <p>{{ trans('adminlte_lang::message.auditdescription') }}</p>
                             </div>
                         </a>
                     </li>

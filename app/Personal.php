@@ -27,7 +27,10 @@ class Personal extends Model{
     public function InventarioTecnologiy(){
         return $this->hasMany('App\InventarioTecnologiy','Id_Tecn','id');//como personal tiene muchos inverios de tecnologia
     }
-    public function ReciboMateria(){
-        return $this->hasMany('App\ReciboMateria','Id_Rm','id');//como personal tiene muchos recibos de material
+    public function ProgConductor(){
+        return $this->hasMany('App\ProgramacionVehiculo', 'FK_ProgConductor', 'ID_Pers');
+    }
+    public function ProgAyudante(){
+        return $this->hasMany('App\ProgramacionVehiculo', 'FK_ProgAyudante', 'ID_Pers');
     }
 }

@@ -78,31 +78,29 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 									<label>Email: </label>
 									<span>{{$Servicio->PersAddress}}</span>
 								</div>
-								@foreach($TransPor as $Transportador)
-									<div class="col-md-6">
-										<label>Empresa Transportadora: </label>
-										<span>{{$Transportador->CliName}}</span>
-									</div>
-									<div class="col-md-6">
-										<label>Dirreción: </label>
-										<span>{{$Transportador->SedeAddress}}</span>
-									</div>
-									<div class="col-md-6">
-										<label>Nit: </label>
-										<span>{{$Transportador->CliNit}}</span>
-									</div>
-									<div class="col-md-6">
-										<label>Ciudad: </label>
-										<span>{{$Transportador->MunName}}</span>
-									</div>
-								@endforeach
+								<div class="col-md-6">
+									<label>Empresa Transportadora: </label>
+									<span>{{$Servicio->SolSerNameTrans}}</span>
+								</div>
+								<div class="col-md-6">
+									<label>Dirreción: </label>
+									<span>{{$Servicio->SolSerAdressTrans}}</span>
+								</div>
+								<div class="col-md-6">
+									<label>Nit: </label>
+									<span>{{$Servicio->SolSerNitTrans}}</span>
+								</div>
+								<div class="col-md-6">
+									<label>Ciudad: </label>
+									<span>{{$Servicio->SolSerCityTrans}}</span>
+								</div>
 								<div class="col-md-6">
 									<label>Conductor: </label>
-									<span>{{$Servicio->SolSerConducExter}}</span>
+									<span>{{$Servicio->SolSerConductor}}</span>
 								</div>
 								<div class="col-md-6">
 									<label>Vehiculo: </label>
-									<span>{{$Servicio->SolSerVehicExter}}</span>
+									<span>{{$Servicio->SolSerVehiculo}}</span>
 								</div>
 								<table class="table table-compact table-bordered table-striped SolResTable">
 									@foreach($GenerResiduos as $GenerResiduo)

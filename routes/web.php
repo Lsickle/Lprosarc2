@@ -58,7 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
 	Route::delete('/respelSGener/{id}', 'RespelSedeGenerController@destroySGener');
-	Route::resource('/permisos', 'RolesController');
+	Route::resource('/permisos', 'PermisoUsuarioController');
+	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
+	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
 	Route::resource('/areas','AreaController');
@@ -93,19 +95,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/recurso', 'RecursoController');
 	Route::resource('/requerimientos', 'RequerimientoController');
 	Route::resource('/holidays', 'holidayController');
-	Route::resource('/prueba', 'pruebaController');
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
 	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
-	Route::get('/NA', function(){return view('Prueba.index');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
+	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
+	Route::get('/RespelGener/{id}', 'AjaxController@RespelGener');
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
 	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 

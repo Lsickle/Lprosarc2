@@ -15,8 +15,11 @@ class ProgramacionVehiculo extends Model
     public function Vehiculo(){
         return $this->belongsTo('App\Vehiculo', 'ID_Vehic');
     }
-    public function Personal(){
-        return $this->belongsTo('App\Personal', 'ID_Pers');
+    public function Conductor(){
+        return $this->belongsTo('App\Personal', 'ID_Pers', 'FK_ProgConductor');
+    }
+    public function Ayudante(){
+        return $this->belongsTo('App\Personal', 'ID_Pers', 'FK_ProgAyudante');
     }
     public function MantenVehics(){
         return $this->belongsTo('App\MantenimientoVehiculo', 'ID_Mv');

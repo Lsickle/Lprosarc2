@@ -1,97 +1,74 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Programacion
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{-- {{ trans('adminlte_lang::message.sclientregistertittle') }} --}}
+{{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">Programacion</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-						<i class="fa fa-times"></i></button>
+				<div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
+					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+					@endif
+				</div>
+				<div class="box box-info">
+					<div class="box-body">
+						<table id="ProgVehicleTable" class="table table-compact table-bordered table-striped" data-order='[[ 1, "desc"]]'>
+							<thead>
+								<tr>
+									<th>{{ trans('adminlte_lang::message.progvehicclient') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehicfech') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehicvehic') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
+									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
+										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
+									@endif
+									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
+										<td>{{ trans('adminlte_lang::message.titleconducedit') }}</td>
+									@endif
+								</tr>
+							</thead>
+							<tbody  hidden onload="renderTable()" id="readyTable">
+								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
+								@include('layouts.partials.spinner')
+								@foreach($programacions as $programacion)
+								<tr @if($programacion->ProgVehDelete === 1)
+									style="color: red;"
+									@endif
+									>
+									<td>{{$programacion->CliShortname}}</td>
+									<td>{{$programacion->ProgVehFecha}}</td>
+									<td>{{$programacion->VehicPlaca}}</td>
+									<td>{{$programacion->ayudname." ".$programacion->ayudlastname}}</td>
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
+									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
+									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
+										<td>{{$programacion->condname." ".$programacion->condlastname}}</td>
+									@endif
+									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.progvehicconducedit') }}</a></td>
+									@endif
+								</tr>
+								@endforeach
+							</tbody>
+						</table>
 					</div>
 				</div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/vehicle" method="POST" enctype="multipart/form-data">
-								@csrf
-								<div class="box-body">
-									
-									<div class="col-md-6">
-										<label for="programnputext0">Km inicio del día</label>
-										<input type="number" class="form-control" id="programnputext0" placeholder="999999" name="km" max="999999">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext1">Fecha Programación</label>
-										<input type="date" class="form-control" id="programnputext1" name="date">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputoption1">Turno</label>
-										<select class="form-control" id="programnputoption1" placeholder="Funza" name="Turno" required="true">
-											<option>Seleccione...</option>
-											<option>Día</option>
-											<option>Tarde</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="program">Tipo</label>
-										<select class="form-control" id="program" placeholder="Funza" name="Tipo" required="true">											
-											<option>Seleccione...</option>
-											<option>En Mantenimiento</option>
-											<option>Usando</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="programnputoption2">Feriado</label>
-										<select class="form-control" id="programnputoption2" name="Feriado" required="true">
-											<option>Festivo</option>
-											<option>Domingos</option>
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext3">Hora de llegada a planta</label>
-										<input type="text" class="form-control" id="programnputext3" name="Llegada">
-									</div>
-									<div class="col-md-6">
-										<label for="programnputext4">Hora de salida de planta</label>
-										<input type="text" class="form-control" id="programnputext4"  name="Salida">
-									</div>
-									
-								</div>
-								<!-- /.box-body -->
-								<div class="box-footer">
-									<button type="submit" class="btn btn-primary">Registrar</button>
-								</div>
-							</form>
-						</div>
-						<!-- /.box -->
-					</div>
-					</div>
-					</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
 @endsection

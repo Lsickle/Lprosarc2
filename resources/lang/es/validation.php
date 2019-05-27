@@ -143,6 +143,14 @@ return [
 
     'attributes' => [
         'UsAvatar'      => 'Foto de perfil',
+        'name'          => 'Nombre de Usuario',
+        'email'         => 'Correo electrónico',
+        'password'      => 'Contraseña',
+        'UsStatus'      => 'Status de Usuario',
+        'UsType'        => 'Tipo de Usuario',
+        'UsRolDesc'     => 'Rol Principal',
+        'UsRolDesc2'    => 'Rol Secundario',
+        
 
         'CliNit'        => 'Nit',
         'CliName'       => 'Razón Social',
@@ -197,7 +205,7 @@ return [
         'GSedePhone2'   => 'Teléfono 2',
         'GSedeExt2'     => 'Extensión 2',
         'GSedeName'     => 'Nombre de la Sede',
-        'GSedeEmail'    => 'Email',
+        'GSedeEmail'    => 'Correo electrónico',
         'FK_GSedeMun'   => 'Minicipio',
 
         'FK_SGener'     => 'Sedes del Generador',
@@ -206,6 +214,22 @@ return [
         'VehicPlaca'    => 'Placa',
         'VehicTipo'     => 'Tipo',
         'VehicCapacidad'=> 'Capacidad',
+        'FK_ProgServi'    => '"N° del servicio"',
+        'ProgVehFecha'    => '"Fecha de la programación"',
+        'ProgVehSalida'   => '"Hora de salida de planta"',
+        'ProgVehEntrada'  => '"Hora de llegada a la planta"',
+        'FK_ProgVehiculo' => '"Vehiculo Asignado"',
+        'progVehKm'       => '"Kilometraje del vehiculo"',
+        'FK_ProgConductor' => '"Conductor Asignado"',
+        'FK_ProgAyudante' => '"Ayudante Asignado"',
+
+        'FK_VehMan'       => '"Vehiculo Asignado"',
+        'MvKm'            => '"Kilometraje del vehiculo"',
+        'HoraMavInicio1'  => '"Fecha de Inicio"',
+        'HoraMavFin1'     => '"Fecha de Finalización"',
+        'HoraMavInicio'   => '"Hora de Inicio"',
+        'HoraMavFin'      => '"Hora de Finzalización"',
+        'MvType'          => '"Tipo de Mantenimiento"',
     ],
 
 ];

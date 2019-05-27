@@ -18,13 +18,10 @@ class CreateSolicitudServiciosTable extends Migration
             $table->string('SolSerStatus', 16);
             $table->string('SolSerTipo', 32);
             $table->boolean('SolSerAuditable')->nullable();
-            $table->unsignedTinyInteger('SolSerFrecuencia')->nullable();
-            $table->string('SolSerConducExter')->nullable();
-            $table->string('SolSerVehicExter')->nullable();
+            $table->string('SolSerConductor')->nullable();
+            $table->string('SolSerVehiculo',12)->nullable();
             $table->string('SolSerSlug')->unique();
             $table->timestamps();
-            $table->unsignedInteger('Fk_SolSerTransportador')->nullable();
-            $table->foreign('Fk_SolSerTransportador')->references('ID_Sede')->on('sedes')->onDelete('cascade');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

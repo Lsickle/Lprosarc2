@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\ProgramacionVehiculo;
 use App\Sede;
 
 
@@ -17,11 +16,11 @@ class AjaxController extends Controller
 			$municipio = DB::table('municipios')
 				->select('*')
 				->where('FK_MunCity', $id)
+				->orderBy('MunName', 'desc')
 				->get();
 			return response()->json($municipio);
 		}
 	}
-
 	/*Funcion para ver por medio de Ajax las Areas que le competen a una Sede*/
 	public function AreasSedes(Request $request, $id)
 	{
@@ -34,7 +33,6 @@ class AjaxController extends Controller
 			return response()->json($Areas);
 		}
 	}
-
 	/*Funcion para ver por medio de Ajax los Cargos que le competen a una Area*/
 	public function CargosAreas(Request $request, $id)
 	{
@@ -47,7 +45,19 @@ class AjaxController extends Controller
 			return response()->json($Cargos);
 		}
 	}
-
+	/*Funcion para cambiar el dia y hora de la programacion de un Vehiculo*/
+	public function CambioDeFecha(Request $request, $id){
+		if ($request->ajax()) {
+			$fecha = date('Y-m-d', strtotime(substr($request->Event, 0, -1)));
+			$hora = date('H:i:s', strtotime(substr($request->Event, 0, -1)));
+			$eventos = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+			$eventos->ProgVehFecha = $fecha;
+			$eventos->ProgVehSalida = $fecha." ".$hora;
+			$eventos->save();
+			return trans('adminlte_lang::message.progvehceditsuccess');
+		}
+	}
+	
 	/*Funcion para ver por medio de Ajax los Respels que le competen a una SGenerador*/
 	public function SGenerRespel(Request $request, $id)
 	{
@@ -86,16 +96,17 @@ class AjaxController extends Controller
 			return response()->json($Respels);
 		}
 	}
-	/*Funcion para ver por medio de Ajax los Vehiculos que le competen a un Contacto*/
-	// public function VehiculosContacto(Request $request, $id)
-	// {
-	// 	if ($request->ajax()) {
-	// 		$Vehiculo = DB::table('vehiculos')
-	// 			->select('*')
-	// 			->where('ID_Vehic', $id)
-	// 			->where('VehicDelete', '=', 0)
-	// 			->get();
-	// 		return response()->json($Vehiculo);
-	// 	}
-	// }
+
+	/*Funcion para ver los residuos de una sede de generador*/
+	public function RespelGener(Request $request, $id){
+		if ($request->ajax()){
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.ID_Respel')
+				->where('gener_sedes.GSedeSlug', $id)
+				->get();
+			return $Respels;
+		}
+	}
 }
