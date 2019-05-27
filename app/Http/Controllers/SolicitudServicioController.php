@@ -30,27 +30,36 @@ class SolicitudServicioController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol === "Programador"){
-		$Servicios = DB::table('solicitud_servicios')
-			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
-			->get();
-		$Residuos = SolicitudResiduo::all();
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos '));
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+			$Residuos = SolicitudResiduo::all();
+			
+			$Servicios = DB::table('solicitud_servicios')
+				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+				->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
+				->where(function($query){
+					if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+						$query->where('solicitud_servicios.SolSerDelete', 0);
+					}
+				})
+				->get();
+
+			return view('solicitud-serv.index', compact('Servicios', 'Residuos'));
+		}else{
+			abort(403);
 		}
-		$Servicios = DB::table('solicitud_servicios')
-			->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
-			->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
-			->where('solicitud_servicios.SolSerDelete', 0)
-			->get();
-		$Residuos = SolicitudResiduo::all();
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos '));
+		// $Servicios = DB::table('solicitud_servicios')
+		// 	->join('sedes', 'sedes.ID_Sede', '=', 'solicitud_servicios.Fk_SolSerTransportador')
+		// 	->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+		// 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+		// 	->select('solicitud_servicios.*', 'clientes.CliShortname','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
+		// 	->where()
+		// 	->get();
+		// $Residuos = SolicitudResiduo::all();
+		// return view('solicitud-serv.index', compact('Servicios', 'Residuos '));
 
 
-		return view('solicitud-serv.index', compact('Servicios'));
+		// return view('solicitud-serv.index', compact('Servicios'));
 	}
 
 	/**
@@ -236,6 +245,7 @@ class SolicitudServicioController extends Controller
 			->select('solicitud_servicios.*','clientes.CliNit','clientes.CliName','sedes.SedeAddress','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress'/*se remplaza por email*/,'municipios.MunName')
 			->where('solicitud_servicios.SolSerSlug', $id)
 			->get();
+			// return $SolicitudServicio;
 		$GenerResiduos = DB::table('solicitud_residuos')
 			->distinct()
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
@@ -245,6 +255,8 @@ class SolicitudServicioController extends Controller
 			->select('gener_sedes.GSedeAddress','residuos_geners.FK_SGener', 'generadors.GenerNit', 'generadors.GenerName', 'municipios.MunName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
 			->get();
+			// return $GenerResiduos;
+
 		$Residuos = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('tratamientos', 'tratamientos.ID_Trat', '=', 'solicitud_residuos.FK_SolResTratamiento')
@@ -252,6 +264,7 @@ class SolicitudServicioController extends Controller
 			->select('solicitud_residuos.*', 'residuos_geners.FK_SGener', 'tratamientos.TratName','respels.*')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
 			->get();
+			// return $Residuos;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos'));
 	}
 
