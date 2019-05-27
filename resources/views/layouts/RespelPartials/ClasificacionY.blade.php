@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Clasificacion Y')
+@section('htmlheader_title', 'Clasificación Y')
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
@@ -8,7 +8,7 @@
 				<div class="box">
 					<!-- box-header -->
 					<div class="box-header">
-					<h3 class="box-title">Clasificacion Y, según Decreto Número 4741</h3>
+					<h3 class="box-title">Clasificación Y, según Decreto Número 4741</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- box-body -->
