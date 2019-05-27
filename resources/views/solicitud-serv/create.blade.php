@@ -292,6 +292,7 @@ function ResiduosGener(id_div, ID_Gener){
 	Checkboxs();
 	numeroDimension();
 	numeroKg();
+	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -308,7 +309,7 @@ function ResiduosGener(id_div, ID_Gener){
 				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 				for(var i = res.length -1; i >= 0; i--){
 					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
-						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`,'`+res[i].RespelSlug+`')" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
 						residuos.push(res[i].SlugSGenerRes);
 					}
 				}
@@ -322,6 +323,74 @@ function ResiduosGener(id_div, ID_Gener){
 			NotifiFalse("No se pudo conectar a la base de datos");
 		}
 	})
+}
+function RequeRespel(id_div, contador, Id_Respel){
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RequeRespel')}}/"+Id_Respel,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res[0] != ''){
+				if(res[0].ReqFotoDescargue === 1){
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqFotoDestruccion === 1){
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqVideoDescargue === 1){
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqVideoDestruccion === 1){
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+			}
+			else{
+				HiddenRequeRespel(id_div, contador);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	});
+	
+	
+	
+	
+}
+function HiddenRequeRespel(id_div, contador){
+	$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 }
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);

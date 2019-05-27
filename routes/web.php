@@ -108,6 +108,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/RespelGener/{id}', 'AjaxController@RespelGener');
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
 	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
-
+	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
 });
 

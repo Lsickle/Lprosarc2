@@ -98,13 +98,13 @@ class AjaxController extends Controller
 	}
 
 	/*Funcion para ver los residuos de una sede de generador*/
-	public function RespelGener(Request $request, $id){
+	public function RespelGener(Request $request, $slug){
 		if ($request->ajax()){
 			$Respels = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.ID_Respel')
-				->where('gener_sedes.GSedeSlug', $id)
+				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug')
+				->where('gener_sedes.GSedeSlug', $slug)
 				->get();
 			return $Respels;
 		}
@@ -122,4 +122,16 @@ class AjaxController extends Controller
 	// 		return response()->json($Vehiculo);
 	// 	}
 	// }
+
+	/*Funcion para ver los requerimientos de un residuo sengun su tratamiento*/
+	public function RequeRespel(Request $request, $slug){
+		if($request->ajax()){
+			$Requerimientos = DB::table('requerimientos')
+				->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('requerimientos.ReqFotoDescargue', 'requerimientos.ReqFotoDestruccion', 'requerimientos.ReqVideoDescargue', 'requerimientos.ReqVideoDestruccion')
+				->where('respels.RespelSlug', $slug)
+				->get();
+			return $Requerimientos;
+		}
+	}
 }
