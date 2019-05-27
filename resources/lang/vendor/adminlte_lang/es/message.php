@@ -162,6 +162,7 @@ return [
     'EncargadoHorno'          => 'EncargadoHorno',
     'Vigilante'               => 'Vigilante',
     'Conductor'               => 'Conductor',
+    'Comercial'               => 'Comercial',
     
     // form
     'seemore'                 => 'Ver Más',
@@ -303,7 +304,7 @@ return [
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
     'sgenerlist'              => 'Lista de las Sedes del Generador',
-    'sgenernamesede'         => 'Nombre de la Sede',
+    'sgenernamesede'          => 'Nombre de la Sede',
     
     
     // area
@@ -401,7 +402,29 @@ return [
     'addvehiculo'             => 'Crear Vehículo',
     'deletevehiculo'          => '¿Esta seguro, desea eliminar el vehículo',
     'vehiculocreate'          => 'Crear Vehículo',
-    'vehiculoedit'          => 'Editar Vehículo',
+    'vehiculoedit'            => 'Editar Vehículo',
+
+    // user
+    'userperson'              => 'Nombre de la persona',
+    'userpersonadd'           => 'Asignar a una persona',
+    'userrol'                 => 'Rol Principal',
+    'userrol2'                => 'Rol Secundario',
+    'useravatar'              => 'Avatar',
+    'usertype'                => 'Tipo de Usuario',
+    'userstatus'              => 'Status de Usuario',
+    'userdescriptionrol'      => 'Descripción de Rol',
+    'userdescriptionrol2'     => 'Descripción de Rol 2',
+    'users'                   => 'Usuarios',
+    'user'                    => 'Usuario',
+    'userlist'                => 'Lista de Usuarios',
+    'userregister'            => 'Registrar un Nuevo Usuario',
+    'useredit'                => 'Editar el Usuario',
+    'userpersonassigned'      => 'Persona asignada',
+    'userpersonassignedwithout'=> 'Sin Persona asignada',
+    'userstatus'              => 'Estado',
+    'userstatusinactive'      => 'Inactivo',
+    'userstatusactive'        => 'Activo',
+    'userchangepassword'      => 'Cambiar contraseña',
     
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
@@ -417,7 +440,15 @@ return [
     'data-error-minlength10'  => 'Use mínimo 10 caracteres',
     'data-error-minlength16'  => 'Use mínimo 16 caracteres',
 
+    // Panel de administracion
+    'panel'                   => 'Panel de Administración',
+    'Menuuser'                => 'Usuarios',
+    'userdescription'         => 'Registro y permisos de usuarios',
+    'Menuaudit'               => 'Auditoria de cambios',
+    'auditdescription'        => 'Lista de cambios y actualizaciones de cada Usuario',
+
     // Menu
+
     'MenuProsarcCliTitle'     => 'CLIENTES',
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
     'MenuClienTitle'          => 'MENU SiReS',

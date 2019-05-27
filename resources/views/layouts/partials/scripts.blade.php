@@ -99,8 +99,10 @@ $(document).ready(function() {
 $(document).ready(function() {
     /*var rol defino el rol del usuario*/
     var rol = "<?php echo Auth::user()->UsRol; ?>";
+
     /*var botoncito define los botones que se usaran si el usuario es programador*/
     var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
     /*funcion para renderizar la tabla de cotizacion.index*/
     $('#permisosTable').DataTable({
         responsive: true,
@@ -442,10 +444,13 @@ $(function() {
 @if(Route::currentRouteName()=='clientes.index')
     <script>
     $(document).ready(function() {
+
         /*var rol defino el rol del usuario*/
         var rol = "<?php echo Auth::user()->UsRol; ?>";
+
         /*var botoncito define los botones que se usaran si el usuario es programador*/
         var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+
         /*funcion para renderizar la tabla de cotizacion.index*/
         $('#clientesTable').DataTable({
             responsive: true,
@@ -463,8 +468,10 @@ $(function() {
             autoWith: true,
             searchHighlight: true,
         });
+
         /*funcion para resaltar las busquedas*/
         var table = $('#cotizacionesTable').DataTable();
+
         table.on('draw', function redibujar() {
             var body = $(table.table().body());
             body.unhighlight();
@@ -1426,188 +1433,105 @@ $(document).ready(function() {
 
 </script>
 <script>
-$(document).ready(function() {
-	$("#departamento").change(function(e) {
-		id = $("#departamento").val();
-		e.preventDefault();
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			}
-		});
-		$.ajax({
-			url: "{{url('/muni-depart')}}/" + id,
-			method: 'GET',
-			data: {},
-			success: function(res) {
-				$("#municipio").empty();
-				var municipio = new Array();
-				for (var i = res.length - 1; i >= 0; i--) {
-					if ($.inArray(res[i].ID_Mun, municipio) < 0) {
-						$("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
-						municipio.push(res[i].ID_Mun);
-					}
-				}
-			}
-		})
-	});
-});
-
+    $(document).ready(function(){
+        $("#departamento").change(function(e){
+            id=$("#departamento").val();
+            e.preventDefault();
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+                url: "{{url('/muni-depart')}}/"+id,
+                method: 'GET',
+                data:{},
+                success: function(res){
+                    $("#municipio").empty();
+                    var municipio = new Array();
+                    for(var i = res.length -1; i >= 0; i--){
+                        if ($.inArray(res[i].ID_Mun, municipio) < 0) {
+                            $("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+                            municipio.push(res[i].ID_Mun);
+                        }
+                    }
+                }
+            })
+        });
+    });
 </script>
 {{-- extension de la sede --}}
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' || Route::currentRouteName() === 'sclientes.edit' || Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
+@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
 <script>
-<< << << < HEAD
-$(document).ready(function() {
-			$(".tel").change(function() {
-						if ($(this).val().length > 10) {
-							$('.ext').attr('disabled', false);
-						} else {
-							$('.ext').attr('disabled', true);
-						}; ===
-						=== =
-						$(document).ready(function() {
-							$(".tel").change(function() {
-								if ($(this).val().length > 10) {
-									$('.ext').attr('disabled', false);
-								} else {
-									$('.ext').attr('disabled', true);
-								};
-							});
-						});
-
+    $(document).ready(function() {
+        $(".tel").change(function(){
+            if($(this).val().length>10){
+                $('.ext').attr('disabled',false);
+            }else{
+                $('.ext').attr('disabled',true);
+            };
+        });
+    });
 </script>
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' || Route::currentRouteName() === 'sclientes.edit')
+    @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
+        <script>
+            $(document).ready(function(){    
+                if({{old('SedeExt2')}} !== null){
+                    $('.ext').prop('disabled', false);
+                };
+            });
+        </script>
+        <script>
+            $(document).ready(function(){    
+            if({{old('SedeExt1')}} !== null){
+                    $('.ext2').prop('disabled', false);
+                };
+            });
+        </script>
+    @endif
+    @if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
+        <script>
+            $(document).ready(function(){    
+                if({{old('GSedeExt1')}} !== null){
+                    $('.ext').prop('disabled', false);
+                };
+            });
+        </script>
+        <script>
+            $(document).ready(function(){    
+            if({{old('GSedeExt2')}} !== null){
+                    $('.ext2').prop('disabled', false);
+                };
+            });
+        </script>
+    @endif
 <script>
-$(document).ready(function() {
-	if ({ { old('SedeExt2') } } !== null) {
-		$('.ext').prop('disabled', false);
-	};
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	if ({ { old('SedeExt1') } } !== null) {
-		$('.ext2').prop('disabled', false);
-	};
-});
-
-</script>
-@endif
-@if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
-<script>
-$(document).ready(function() {
-	if ({ { old('GSedeExt1') } } !== null) {
-		$('.ext').prop('disabled', false);
-	};
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	if ({ { old('GSedeExt2') } } !== null) {
-		$('.ext2').prop('disabled', false);
-	};
-});
-
-</script>
-@endif
-<script>
-$(document).ready(function() {
-	if ($('.tel').val()) {
-		$('.ext').prop('disabled', false);
-	}
-});
-
+    $(document).ready(function(){  
+        if($('.tel').val()){
+            $('.ext').prop('disabled', false);
+        }
+    });
 </script>
 <script>
-$(document).ready(function() {
-	if ($('.tel2').val()) {
-		$('.ext2').prop('disabled', false);
-	}
-});
-
+    $(document).ready(function(){  
+        if($('.tel2').val()){
+            $('.ext2').prop('disabled', false);
+        }
+    });
 </script>
 <script>
-function Tel() {
-	$(".tel2").change(function() {
-		if ($(this).val().length > 10) {
-			$('.ext2').attr('disabled', false);
-		} else {
-			$('.ext2').attr('disabled', true);
-		}; >>>
-		>>> > 8844 bedb7aa5831a567df1caee6ca0a9f40e703c
-	});
-});
-
-</script>
-@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'sclientes.create' || Route::currentRouteName() === 'sclientes.edit')
-<script>
-$(document).ready(function() {
-	if ({ { old('SedeExt2') } } !== null) {
-		$('.ext').prop('disabled', false);
-	};
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	if ({ { old('SedeExt1') } } !== null) {
-		$('.ext2').prop('disabled', false);
-	};
-});
-
-</script>
-@endif
-@if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
-<script>
-$(document).ready(function() {
-	if ({ { old('GSedeExt1') } } !== null) {
-		$('.ext').prop('disabled', false);
-	};
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	if ({ { old('GSedeExt2') } } !== null) {
-		$('.ext2').prop('disabled', false);
-	};
-});
-
-</script>
-@endif
-<script>
-$(document).ready(function() {
-	if ($('.tel').val()) {
-		$('.ext').prop('disabled', false);
-	}
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	if ($('.tel2').val()) {
-		$('.ext2').prop('disabled', false);
-	}
-});
-
-</script>
-<script>
-function Tel() {
-	$(".tel2").change(function() {
-		if ($(this).val().length > 10) {
-			$('.ext2').attr('disabled', false);
-		} else {
-			$('.ext2').attr('disabled', true);
-		};
-	});
-	document.getElementById('telefono2').style.display = 'block';
-	document.getElementById('extension2').style.display = 'block';
-	$('#tel').remove();
-}
-
+    function Tel(){
+        $(".tel2").change(function(){
+            if($(this).val().length>10){
+                $('.ext2').attr('disabled',false);
+            }else{
+                $('.ext2').attr('disabled',true);
+            };
+		});
+        document.getElementById('telefono2').style.display = 'block';
+        document.getElementById('extension2').style.display = 'block';
+        $('#tel').remove();
+    }
 </script>
 @endif
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')

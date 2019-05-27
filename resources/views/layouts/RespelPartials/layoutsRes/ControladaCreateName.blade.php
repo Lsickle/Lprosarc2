@@ -1,7 +1,6 @@
-<input type="text" hidden="" name="SControlada[]" value="">
-<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre de la sustancia A</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>">Nombre de la sustancia, segun
-	<a href="{{route('ClasificacionA')}}" target="_blank"> Resolución Número 1 del 2015 (Consejo nacional de estupefacientes)<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
-</label>
+{{-- <input type="text" hidden="" name="SControlada[]" value="">
+ --}}
+<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">Nombre de la sustancia</label>
 <select name="SustanciaControladaNombre[]" class="form-control" required>
 	<option value="Acetato de butilo">Acetato de butilo</option>
 	<option value="Acetato de etilo">Acetato de etilo</option>
