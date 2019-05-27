@@ -14,13 +14,10 @@
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
 $(document).ready(function() {
-
 	/*var rol defino el rol del usuario*/
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
-
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
 	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#cotizacionesTable').DataTable({
 		responsive: true,
@@ -45,10 +42,8 @@ $(document).ready(function() {
 			}
 		}]
 	});
-
 	/*funcion para resaltar las busquedas*/
 	var table = $('#cotizacionesTable').DataTable();
-
 	table.on('draw', function redibujar() {
 		var body = $(table.table().body());
 		body.unhighlight();
@@ -61,20 +56,17 @@ $(document).ready(function() {
 	// }; 
 	// document.setTimeout(redibujar, 10000); // 5 seconds 
 });
-
 </script>
 @endif
+
 {{-- script para tabla de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.index')
 <script>
 $(document).ready(function() {
-
 	/*var rol defino el rol del usuario*/
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
-
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
 	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#tratamientosTable').DataTable({
 		responsive: true,
@@ -92,7 +84,6 @@ $(document).ready(function() {
 		autoWith: true,
 		searchHighlight: true
 	});
-
 	/*funcion para resaltar las busquedas*/
 	table.on('draw', function() {
 		var body = $(table.table().body());
@@ -102,6 +93,58 @@ $(document).ready(function() {
 });
 
 </script>
+@endif
+@if(Route::currentRouteName()=='permisos.index')
+<script>
+$(document).ready(function() {
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+    /*var botoncito define los botones que se usaran si el usuario es programador*/
+    var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+    /*funcion para renderizar la tabla de cotizacion.index*/
+    $('#permisosTable').DataTable({
+        responsive: true,
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [
+            botoncito, {
+                extend: 'collection',
+                text: 'Selector',
+                buttons: ['selectRows', 'selectCells']
+            }
+        ],
+        colReorder: true,
+        ordering: true,
+        autoWith: true,
+        searchHighlight: true
+    });
+    /*funcion para resaltar las busquedas*/
+    table.on('draw', function() {
+        var body = $(table.table().body());
+        body.unhighlight();
+        body.highlight(table.search());
+    });
+});
+</script>
+{{-- <script>
+    $(document).ready(function() {
+        $('#click').click(function(){
+            $('.editarrol').removeAttr('disabled');
+            document.getElementById('click').style.display = 'none';
+            document.getElementById('save').style.display = 'block';
+            // slideUp();
+        })
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#save').click(function(){
+            $('.editarrol').prop('disabled', true);
+            document.getElementById('click').style.display = 'block';
+            document.getElementById('save').style.display = 'none';
+        })
+    });
+</script> --}}
 @endif
 {{-- <script>
 //Date range as a button
@@ -120,342 +163,328 @@ $('#daterange-btn').daterangepicker({
 		$('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
 	}
 )
-
 </script> --}}
 {{-- select 2 --}}
 <script>
 $(document).ready(function() {
-	$('#SGenerRespel').select2({
-		placeholder: "Seleccione el residuo",
-		allowClear: true,
-		width: 'resolve'
-	});
+    $('#SGenerRespel').select2({
+        placeholder: "Seleccione el residuo",
+        allowClear: true,
+        width: 'resolve'
+    });
 });
-
 </script>
+
 <script>
 $(document).ready(function() {
-	$('#select2sedes').select2({
-		placeholder: "Seleccione el gestor",
-		allowClear: true,
-		width: 'resolve'
-	});
+    $('#select2sedes').select2({
+        placeholder: "Seleccione el gestor",
+        allowClear: true,
+        width: 'resolve'
+    });
 });
-
 </script>
+
 <script>
 $(document).ready(function() {
-	$('#SolicitudResiduo').select2({
-		placeholder: "Seleccione el residuo",
-		allowClear: true,
-		width: 'resolve'
-	});
+    $('#SolicitudResiduo').select2({
+        placeholder: "Seleccione el residuo",
+        allowClear: true,
+        width: 'resolve'
+    });
 });
-
 </script>
+
 <script>
 $(document).ready(function() {
-	$('.select').select2({
-		placeholder: "Seleccione...",
-		allowClear: true,
-		width: 'resolve',
-		width: '100%',
-		theme: "classic"
-	});
+    $('.select').select2({
+        placeholder: "Seleccione...",
+        allowClear: true,
+        width: 'resolve',
+        width: '100%',
+        theme: "classic"
+    });
 });
-
 </script>
+
 <script>
 $(document).ready(function() {
-	$('.select-multiple').select2({
-		allowClear: false,
-		width: 'resolve',
-		width: '100%'
-	});
+    $('.select-multiple').select2({
+        allowClear: true,
+        width: 'resolve',
+        width: '100%',
+        theme: "classic"
+    });
 });
-
 </script>
+
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#smartwizard').smartWizard({
-		theme: 'arrows',
-		keyNavigation: true
-	});
+    $('#smartwizard').smartWizard({
+        theme: 'arrows',
+        keyNavigation: true
+    });
 });
-
 </script>
+
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
-$(document).ready(function() {
-	$('.smartwizard').smartWizard({
-		selected: 0,
-		keyNavigation: false,
-		theme: 'arrows',
-		transitionEffect: 'fade',
-		toolbarSettings: {
-			toolbarPosition: 'bottom',
-		},
-		lang: {
-			next: 'Siguiente',
-			previous: 'Anterior'
-		},
-		anchorSettings: {
-			markDoneStep: true,
-			markAllPreviousStepsAsDone: true,
-			removeDoneStepOnNavigateBack: true,
-			enableAnchorOnDoneStep: true
-		}
-	});
-	$(".smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-		var elmForm = $("#form-step-" + stepNumber);
-		if (stepDirection === 'forward' && elmForm) {
-			elmForm.validator('validate');
-			var elmErr = elmForm.children('.has-error');
-			if (elmErr && elmErr.length > 0) {
-				// Form validation failed
-				return false;
-			}
-		}
-		return true;
-	});
-});
-
+    $(document).ready(function(){
+        $('.smartwizard').smartWizard({
+            selected: 0,
+            keyNavigation: false,
+            theme: 'arrows',
+            transitionEffect:'fade',
+            toolbarSettings: {
+                toolbarPosition: 'bottom',
+            },
+            lang: {  
+                next: 'Siguiente', 
+                previous: 'Anterior'
+            },
+            anchorSettings: {
+                markDoneStep: true, 
+                markAllPreviousStepsAsDone: true,
+                removeDoneStepOnNavigateBack: true,
+                enableAnchorOnDoneStep: true
+            }
+            });
+        $(".smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+            var elmForm = $("#form-step-" + stepNumber);
+            if(stepDirection === 'forward' && elmForm){
+                elmForm.validator('validate');
+                var elmErr = elmForm.children('.has-error');
+                if(elmErr && elmErr.length > 0){
+                    // Form validation failed
+                    return false;
+                }
+            }
+            return true;
+        });
+    });
 </script>
+
 <!-- funcion para tabla de residuos -->
 @if(Route::currentRouteName()=='respels.index')
 <script>
 $(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-
-	/*var define los botones que se usaran segun el rol de usuario*/
-	if (rol == 'JefeOperacion' || rol == 'admin' || rol == 'Programador') {
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true,
-			"columnDefs": [{
-					"targets": 8,
-					"data": "RespelSlug",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/respels/" + data + "/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a>";
-					}
-				},
-				{
-					"targets": 4,
-					"data": "RespelHojaSeguridad",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-					}
-				},
-				{
-					"targets": 5,
-					"data": "RespelTarj",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-					}
-				}
-			]
-		});
-	} else {
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true,
-			"columnDefs": [{
-					"targets": 8,
-					"data": "RespelSlug",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/respels/" + data + "' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a>";
-					}
-				},
-				{
-					"targets": 4,
-					"data": "RespelHojaSeguridad",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-					}
-				},
-				{
-					"targets": 5,
-					"data": "RespelTarj",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-					}
-				}
-			]
-		});
-	}
-
-
-	/*funcion para resaltar las busquedas*/
-	var bod = $(table.table().body());
-	table.on('draw', function redibujar() {
-		bod.unhighlight();
-		bod.highlight(table.search());
-		bod.parent().style("color: black; border-color:black;");
-	});
-	bod.parent().style("color: black; border-color:black;");
-});
-
+    /*var rol defino el rol del usuario*/
+    var rol = "<?php echo Auth::user()->UsRol; ?>";
+    /*var define los botones que se usaran segun el rol de usuario*/
+    if (rol == 'JefeOperacion'||rol == 'admin'||rol == 'Programador') {
+        $('#RespelTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": 8,
+                "data": "RespelSlug",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/respels/" + data + "/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a>";
+                }
+            },
+            {
+                "targets": 4,
+                "data": "RespelHojaSeguridad",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
+                }
+            },
+            {
+                "targets": 5,
+                "data": "RespelTarj",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
+                }
+            }]
+        });
+    }else{
+        $('#RespelTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": 8,
+                "data": "RespelSlug",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/respels/" + data + "' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a>";
+                }
+            },
+            {
+                "targets": 4,
+                "data": "RespelHojaSeguridad",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
+                }
+            },
+            {
+                "targets": 5,
+                "data": "RespelTarj",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
+                }
+            }]
+        });
+    }
+    
+        /*funcion para resaltar las busquedas*/
+        var bod = $(table.table().body());
+        table.on('draw', function redibujar() {
+            bod.unhighlight();
+            bod.highlight(table.search());
+            bod.parent().style("color: black; border-color:black;");
+        });
+        bod.parent().style("color: black; border-color:black;");
+    });
 </script>
 @endif
 <script>
 $(function() {
-
-	// $('#UsersTable').DataTable({
-	//   "scrollX": false,
-	//   "autoWidth": true,
-	//   "select": true,
-	//   "keys": true,
-	//   "responsive": true,
-	//   // "buttons": [
-	//   //     'copy', 'excel', 'pdf'
-	//   // ],
-	//   "columnDefs": [ {
-	//     "targets": 5,
-	//     "data": "UsSlug",
-	//     "render": function ( data, type, row, meta ) {
-	//       return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-	//     }  
-	//   }]
-	// });
-	var table = $('#UsersTable').DataTable({
-		// "processing": true,
-		"language": {
-			"processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
-		},
-		"scrollX": false,
-		"autoWidth": true,
-		"select": true,
-		"keys": true,
-		"responsive": true,
-		// "buttons": [
-		//     'copy', 'excel', 'pdf'
-		// ],
-		"columnDefs": [{
-				"targets": 7,
-				"data": "id",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-				}
-			},
-			{
-				"targets": 8,
-				"data": "id",
-				"render": function(data, type, row, meta) {
-					return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-				}
-			}
-		]
-	});
-
-	/*new $.fn.dataTable.Buttons( table, {
-		buttons: [
-			'copy', 'pdf'
-		]
-	} );*/
-	// $('#UsersTable').DataTable( {
-	//     dom: 'Bfrtip',
-	//     buttons: [
-	//         'copy', 'excel', 'pdf'
-	//     ]
-	// } );
-	table.buttons().container()
-		.appendTo($('.col-sm-6:eq(0)', table.table().container()));
+    // $('#UsersTable').DataTable({
+    //   "scrollX": false,
+    //   "autoWidth": true,
+    //   "select": true,
+    //   "keys": true,
+    //   "responsive": true,
+    //   // "buttons": [
+    //   //     'copy', 'excel', 'pdf'
+    //   // ],
+    //   "columnDefs": [ {
+    //     "targets": 5,
+    //     "data": "UsSlug",
+    //     "render": function ( data, type, row, meta ) {
+    //       return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+    //     }  
+    //   }]
+    // });
+    var table = $('#UsersTable').DataTable({
+        // "processing": true,
+        "language": {
+            "processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
+        },
+        "scrollX": false,
+        "autoWidth": true,
+        "select": true,
+        "keys": true,
+        "responsive": true,
+        // "buttons": [
+        //     'copy', 'excel', 'pdf'
+        // ],
+        "columnDefs": [{
+                "targets": 7,
+                "data": "id",
+                "render": function(data, type, row, meta) {
+                    return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+                }
+            },
+            {
+                "targets": 8,
+                "data": "id",
+                "render": function(data, type, row, meta) {
+                    return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
+                }
+            }
+        ]
+    });
+    /*new $.fn.dataTable.Buttons( table, {
+        buttons: [
+            'copy', 'pdf'
+        ]
+    } );*/
+    // $('#UsersTable').DataTable( {
+    //     dom: 'Bfrtip',
+    //     buttons: [
+    //         'copy', 'excel', 'pdf'
+    //     ]
+    // } );
+    table.buttons().container()
+        .appendTo($('.col-sm-6:eq(0)', table.table().container()));
 });
-
 </script>
 <script>
 $(function() {
-	$('#DeclarTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 11,
-			"data": "GSedeSlug",
-			"render": function(data, type, row, meta) {
-				return "<a method='get' href='/declaraciones/" + data + "' class='btn btn-primary'>Ver</a>";
-			}
-		}]
-	});
+    $('#DeclarTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "keys": true,
+        "responsive": true,
+        "columnDefs": [{
+            "targets": 11,
+            "data": "GSedeSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/declaraciones/" + data + "' class='btn btn-primary'>Ver</a>";
+            }
+        }]
+    });
 });
-
 </script>
 <script>
 $(function() {
-	$('#UserTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 7,
-			"data": "UsSlug",
-			"render": function(data, type, row, meta) {
-				return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-			}
-		}]
-	});
+    $('#UserTable').DataTable({
+        "scrollX": false,
+        "autoWidth": true,
+        "responsive": true,
+        "columnDefs": [{
+            "targets": 7,
+            "data": "UsSlug",
+            "render": function(data, type, row, meta) {
+                return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
+            }
+        }]
+    });
 });
-
 </script>
 @if(Route::currentRouteName()=='clientes.index')
-<script>
-$(document).ready(function() {
-
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-
-	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-
-	/*funcion para renderizar la tabla de cotizacion.index*/
-	$('#clientesTable').DataTable({
-		responsive: true,
-		select: true,
-		dom: 'Bfrtip',
-		buttons: [
-			botoncito, {
-				extend: 'collection',
-				text: 'Selector',
-				buttons: ['selectRows', 'selectCells']
-			}
-		],
-		colReorder: true,
-		ordering: true,
-		autoWith: true,
-		searchHighlight: true,
-	});
-
-	/*funcion para resaltar las busquedas*/
-	var table = $('#cotizacionesTable').DataTable();
-
-	table.on('draw', function redibujar() {
-		var body = $(table.table().body());
-		body.unhighlight();
-		body.highlight(table.search());
-	});
-	// alert('ready');
-	// function redibujar(){ 
-	//  alert('redibujar');
-	//  table.responsive.recalc(); 
-	// }; 
-	// document.setTimeout(redibujar, 10000); // 5 seconds 
-	// inputEventOnly: true
-});
-$(window).load(function() {
-	function show_popup() {
-		$("#clientesTable").slideUp();
-	};
-	window.setTimeout(show_popup, 5000); // 5 seconds 
-})
-
-</script>
+    <script>
+    $(document).ready(function() {
+        /*var rol defino el rol del usuario*/
+        var rol = "<?php echo Auth::user()->UsRol; ?>";
+        /*var botoncito define los botones que se usaran si el usuario es programador*/
+        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+        /*funcion para renderizar la tabla de cotizacion.index*/
+        $('#clientesTable').DataTable({
+            responsive: true,
+            select: true,
+            dom: 'Bfrtip',
+            buttons: [
+                botoncito, {
+                    extend: 'collection',
+                    text: 'Selector',
+                    buttons: ['selectRows', 'selectCells']
+                }
+            ],
+            colReorder: true,
+            ordering: true,
+            autoWith: true,
+            searchHighlight: true,
+        });
+        /*funcion para resaltar las busquedas*/
+        var table = $('#cotizacionesTable').DataTable();
+        table.on('draw', function redibujar() {
+            var body = $(table.table().body());
+            body.unhighlight();
+            body.highlight(table.search());
+        });
+        // alert('ready');
+        // function redibujar(){ 
+        //  alert('redibujar');
+        //  table.responsive.recalc(); 
+        // }; 
+        // document.setTimeout(redibujar, 10000); // 5 seconds 
+        // inputEventOnly: true
+    });
+    $(window).load(function() {
+        function show_popup() {
+            $("#clientesTable").slideUp();
+        };
+        window.setTimeout(show_popup, 5000); // 5 seconds 
+    })
+    </script>
 @endif
 {{-- Mascaras del cliente --}}
 <script>
