@@ -82,13 +82,8 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        return $request;
-        $validaciones = $request->validate([
-            'RespelName' => 'required',
-            'RespelIgrosidad' => 'required',
-            'RespelEstado' => 'required',
-            // 'RespelHojaSeguridad' => 'required',
-        ]);
+        // return $request;
+
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
 
@@ -115,7 +110,7 @@ class RespelController extends Controller
                 $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
-                $hoja = 'hojadefault.png';
+                $hoja = 'RespelHojadefault.png';
             }
 
             if (isset($request['RespelTarj'][$x])) {
@@ -123,8 +118,26 @@ class RespelController extends Controller
                 $tarj = time().$file2->getClientOriginalName();
                 $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
-                $tarj = 'default.png';
+                $tarj = 'RespelTarjetadefault.png';
             }
+
+            if (isset($request['RespelFoto'][$x])) {
+                $file3 = $request['RespelFoto'][$x];
+                $foto= time().$file3->getClientOriginalName();
+                $file3->move(public_path().'/img/fotoRespelCreate/',$tarj);
+            }else{
+                $foto = 'RespelFotoDefault.png';
+            }
+    
+            
+            if (isset($request['SustanciaControladaDocumento'][$x])) {
+                $file4 = $request['SustanciaControladaDocumento'][$x];
+                $ctrlDoc = time().$file4->getClientOriginalName();
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$tarj);
+            }else{
+                $ctrlDoc = 'SustanciaControlDocDefault.png';
+            }
+
 
 
             $respel = new Respel();
@@ -133,7 +146,7 @@ class RespelController extends Controller
             
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
             /*validar la peligrosidad del residuo para insertar o no la clasificacion*/
-            if ($request['RespelIgrosidad'][$x]== 'No peligroso') {
+            if (isset($request['RespelIgrosidad'][$x]) == 'No peligroso') {
                 $respel->YRespelClasf4741 = 'N/A';
                 $respel->ARespelClasf4741 = 'N/A';
             }else{
@@ -142,12 +155,18 @@ class RespelController extends Controller
             }
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
+            $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
+            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
+            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
             $respel->RespelStatus = 'Pendiente';
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
+            $respel->RespelFoto = $foto;
+            $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = "slug".$request['RespelName'][$x].date('YmdHis');
+            $respel->RespelSlug = "slug".$request['RespelName'][$x].now();
             $respel->RespelDelete = 0;
+            $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
         }
         return redirect()->route('respels.index');
@@ -202,6 +221,7 @@ class RespelController extends Controller
     {
         // return $request;
         $Respels = Respel::where('ID_Respel', $id)->first();
+
         if ($request->hasfile('RespelHojaSeguridad')) {
             if(file_exists(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
                 unlink(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad);
@@ -213,6 +233,7 @@ class RespelController extends Controller
         else{
             $name = $Respels->RespelHojaSeguridad;
         }
+
         if ($request->hasfile('RespelTarj')) {
             if(file_exists (public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj)){
                 unlink(public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj);
@@ -224,6 +245,7 @@ class RespelController extends Controller
         else{
             $tarj = $Respels->RespelTarj;
         }
+
         $Respels->RespelName = $request->input('RespelName');
         $Respels->RespelDescrip = $request->input('RespelDescrip');
         $Respels->YRespelClasf4741 = $request->input('YRespelClasf4741');
