@@ -44,8 +44,7 @@ class RespelStoreRequest extends FormRequest
                 'SustanciaControladaNombre.*' => 'sometimes|max:50|alpha_num',
                 'SustanciaControladaDocumento.*' => 'sometimes|max:2048|mimes:pdf',
                 'RespelFoto.*' => 'sometimes|max:2048|mimes:jpeg,png',
-                
-
+                'RespelDeclaracion.*' => 'required|max:2',
 
             ];
 

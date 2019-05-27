@@ -54,4 +54,9 @@ return [
     'tarjetapopoverinfo'    => "<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio... sin embargo, podrá posponer la carga de la <b>Tarjeta de Emergencia</b> hasta el momento en el que vaya a realizar un solicitud de servicio",
     'hojapopoverinfo'    => "<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>",
 
+    'aceptaciontittlepopover'    => "<p style='width: 50%'> Declaración de Validez de la información</p>",
+
+    'aceptacioninfopopover'    => "<p style='width: 50%'> Debe declarar si toda la información suministrada en el formulario del <b><i>Residuo</i></b> es completamente valida... en caso de que no sea valido algún dato, por favor, diligencie correctamente para continuar con el registro. <br><br> Recuerde que es responsabilidad del <b>cliente</b> mantener a <b><i>Prosarc S.A. ESP.</i></b> al tanto de los cambios sobre la información del residuo y así mismo mantener dicha información actualizada en el sistema <b><i>SiReS</i></b></p>",
+    'aceptacionlabel'    => "Declaracion de veracidad",
+
 ];

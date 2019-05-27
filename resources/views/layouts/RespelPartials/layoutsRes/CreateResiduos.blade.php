@@ -30,6 +30,13 @@
 		</select>
 	</div>
 	<div class="col-md-6 form-group has-feedback">
+		<label class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<small class="help-block with-errors">*</small>
+		<input id="foto`+contador+`" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+		<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
+		{{-- <span class="far fa-building fa-fw form-control-feedback fa-pull-left" style="margin-right: 1.8em;" aria-hidden="true"></span> --}}
+	</div>
+	<div class="col-md-6 form-group has-feedback">
 		<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
 		<select name="RespelEstado[]" class="form-control" required>
 			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
@@ -47,13 +54,6 @@
 		<input required id="hoja`+contador+`" name="RespelHojaSeguridad[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
-		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-		<small class="help-block with-errors">*</small>
-		<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
-	</div>
-	<div id="SustanciaControlada`+contador+`">
-	</div>
-	<div class="col-md-6 form-group has-feedback">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">{{ trans('adminlte_lang::LangRespel.controlx') }}
 					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
@@ -63,11 +63,22 @@
 		</select>
 	</div>
 	<div class="col-md-6 form-group has-feedback">
-		<label class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 		<small class="help-block with-errors">*</small>
-		<input id="foto`+contador+`" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
-		<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
-		{{-- <span class="far fa-building fa-fw form-control-feedback fa-pull-left" style="margin-right: 1.8em;" aria-hidden="true"></span> --}}
+		<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 	</div>
+	<div id="SustanciaControlada`+contador+`">
+	</div>
+	<div class="col-md-6 form-group has-feedback">
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
+			<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+		</label>
+		<select id="selectDdeclaracion`+contador+`" name="RespelDeclaracion[]" class="form-control" required>
+			<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
+			<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+		</select>
+	</div>
+	
+	
 	
 </div>
