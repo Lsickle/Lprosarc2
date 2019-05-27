@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
-@endsection
+@endsection	
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -21,8 +21,17 @@
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
 								@csrf
+								@if ($errors->any())
+								    <div class="alert alert-danger" role="alert">
+								        <ul>
+								            @foreach ($errors->all() as $error)
+								                <li>{{$error}}</li>
+								            @endforeach
+								        </ul>
+								    </div>
+								@endif
 								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
 									<div class="col-md-12 form-group">
 										<label for="Sede">Cliente</label>

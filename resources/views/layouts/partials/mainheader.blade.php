@@ -175,11 +175,13 @@
                         </ul>
                     </li>
                 @endif
-
+                
+                @if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador'))
                 <!-- Control Sidebar Toggle Button -->
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-cogs"></i></a>
-                </li>
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-cogs"></i></a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>

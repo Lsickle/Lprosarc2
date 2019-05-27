@@ -70,7 +70,7 @@ class TratamientoController extends Controller
      */
     public function store(Request $request)
     {   
-        // return $request;
+        return $request;
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = $request->input('TratName');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');

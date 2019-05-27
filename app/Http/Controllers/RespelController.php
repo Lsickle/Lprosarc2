@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RespelStoreRequest;
 use App\audit;
 use App\Respel;
 use App\Sede;
@@ -76,22 +77,35 @@ class RespelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RespelStoreRequest $request)
     {   
-        // return $request;
+        // $validatedData = $request->validate([
+        //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
+        // ]);
+        return $request;
         $validaciones = $request->validate([
             'RespelName' => 'required',
             'RespelIgrosidad' => 'required',
             'RespelEstado' => 'required',
             // 'RespelHojaSeguridad' => 'required',
         ]);
-        $Cotizacion = new Cotizacion;
-        $Cotizacion->CotiNumero = 6;
-        $Cotizacion->CotiFechaSolicitud = now();
-        $Cotizacion->CotiDelete = 0;
-        $Cotizacion->CotiStatus = "Pendiente";
-        $Cotizacion->FK_CotiSede = $request->input("Sede");
-        $Cotizacion->save();
+
+        /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
+
+            $Sede = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->select('sedes.ID_Sede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->get();
+                // return $Sede;
+            $Cotizacion = new Cotizacion();
+            $Cotizacion->CotiNumero = 7;
+            $Cotizacion->CotiFechaSolicitud = now();
+            $Cotizacion->CotiDelete = 0;
+            $Cotizacion->CotiStatus = "Pendiente";
+            $Cotizacion->FK_CotiSede = $Sede;
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/

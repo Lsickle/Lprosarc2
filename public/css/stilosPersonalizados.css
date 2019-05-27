@@ -68,3 +68,7 @@ select.form-control{
 	height: auto;
 	padding-top: 2px;
 }
+.size-img{
+	width:120px; 
+	height:120px;
+}

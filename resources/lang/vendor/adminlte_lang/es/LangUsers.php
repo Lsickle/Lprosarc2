@@ -16,9 +16,9 @@ return [
     'userlist'    => 'Lista de usuarios',
     'usercreate'    => 'Registro de usuarios',
     'userroles'    => 'Roles de usuarios',
-    'rolesdescrip'    => 'registro de roles y permisos de usuarios',
-    'rolestitle'    => 'registro de roles y permisos de usuarios',
-    'rolessubtitle'    => 'registro de roles y permisos de usuarios',
+    'rolesdescrip'    => 'registro y permisos de usuarios',
+    'rolestitle'    => 'registro y permisos de usuarios',
+    'rolessubtitle'    => 'registro y permisos de usuarios',
     'auditmenu'    => 'Auditoria de cambios',
     'auditmenudescription'    => 'lista de cambios y actualizaciones de cada Usuario',
 ];
