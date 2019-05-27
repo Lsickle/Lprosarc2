@@ -89,10 +89,10 @@
 													<div class="form-group col-md-6">
 														<label for="PersDocType">Tipo de Documento</label><small class="help-block with-errors">*</small>
 														<select name="PersDocType" id="PersDocType" class="form-control" required>
-															<option {{$Persona->PersDocType == 'CC' ? 'select' : ''}} value="CC">Cedula de Ciudadania</option>
-															<option {{$Persona->PersDocType == 'CE' ? 'select' : ''}} value="CE">Cedula Extranjera</option>
-															<option {{$Persona->PersDocType == 'NIT' ? 'select' : ''}} value="NIT">Nit</option>
-															<option {{$Persona->PersDocType == 'RUT' ? 'select' : ''}} value="RUT">Rut</option>
+															<option {{$Persona->PersDocType == 'CC' ? 'selected' : ''}} value="CC">Cedula de Ciudadania</option>
+															<option {{$Persona->PersDocType == 'CE' ? 'selected' : ''}} value="CE">Cedula Extranjera</option>
+															<option {{$Persona->PersDocType == 'NIT' ? 'selected' : ''}} value="NIT">Nit</option>
+															<option {{$Persona->PersDocType == 'RUT' ? 'selected' : ''}} value="RUT">Rut</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6">

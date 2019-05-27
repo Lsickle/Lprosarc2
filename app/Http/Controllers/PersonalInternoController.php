@@ -7,6 +7,7 @@ use App\Http\Requests\PersonalStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
+use Illuminate\Validation\Rule;
 use App\Area;
 use App\Cargo;
 use App\Personal;
@@ -96,6 +97,20 @@ class PersonalInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(PersonalStoreRequest $request){
+        $validate = $request->validate([
+            'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
+                $Personal = DB::table('personals')
+                    ->select('PersDocNumber', 'PersDelete')
+                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
+                    ->first();
+                if(isset($Personal)){
+                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
+                    $query->where('PersDelete', '=', 0);
+                }
+                else
+                    $query->where('PersDocNumber', '=', null);
+            })],
+        ]);
         $NuevaArea = $request->input('NewArea');
         $NuevoCargo =  $request->input('NewCargo');
         if($request->input('CargArea') <> "NewArea"){
@@ -245,7 +260,18 @@ class PersonalInternoController extends Controller
             'CargArea'      => 'required',
             'FK_PersCargo'  => 'required',
             'PersDocType'   => 'required|max:3|min:2',
-            'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$Persona->ID_Pers.',ID_Pers',
+            'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
+                $Personal = DB::table('personals')
+                    ->select('PersDocNumber', 'PersDelete')
+                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
+                    ->first();
+                if(isset($Personal)){
+                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
+                    $query->where('PersDelete', '=', 0);
+                }
+                else
+                    $query->where('PersDocNumber', '=', null);
+            })],
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',

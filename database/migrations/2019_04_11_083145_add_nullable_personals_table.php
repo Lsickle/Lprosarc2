@@ -28,7 +28,7 @@ class AddNullablePersonalsTable extends Migration
     {
         Schema::table('personals', function(Blueprint $table){
             $table->string('PersDocType',6);
-            $table->string('PersDocNumber',25)->unique();
+            $table->string('PersDocNumber',25);
         });
     }
 }

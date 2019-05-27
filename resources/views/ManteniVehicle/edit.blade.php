@@ -1,17 +1,20 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Mantenimiento')
-@section('contentheader_title', 'Edicion de Mantenimientos')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.mantvehititle') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.mantvehititle') }}
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
 					@component('layouts.partials.modal')
                     	{{$MantVehicles->ID_Mv}}
 					@endcomponent
-		          <h3 class="box-title">Datos del mantenimiento</h3>
+		          <h3 class="box-title">{{ trans('adminlte_lang::message.mantvehititleedit') }}</h3>
 		          @if($MantVehicles->MvDelete === 0)
                     <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$MantVehicles->ID_Mv}}' class='btn btn-danger' style="float: right;">Eliminar</a>
                     <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST'>
@@ -27,69 +30,86 @@
                     </form>
                   @endif
 		        </div>
-				<div class="row">
-					<!-- left column -->
-					<div class="col-md-12">
-						<!-- general form elements -->
-						<div class="box box-primary">
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}" method="POST" enctype="multipart/form-data">
-								@method('PUT')
-								@csrf
-								<div class="box-body">
-									<div class="col-md-6">
-										<label for="FK_VehMan">Vehiculo</label>
-										<select name="FK_VehMan" id="FK_VehMan" class="form-control">
-											<option value="{{$MantVehicles->FK_VehMan}}">Seleccione...</option>
-											@foreach($Vehicles as $Vehicle)
-												<option value="{{$Vehicle->ID_Vehic}}">{{$Vehicle->VehicPlaca}}</option>
-											@endforeach
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label for="MvKm">Kilometraje</label>
-										<input type="number" required="true" class="form-control" id="MvKm" name="MvKm" max="999999" value="{{$MantVehicles->MvKm}}">
-									</div>
-									<div class="col-md-6">
-										<label for="HoraMavInicio">Fecha Inicio</label>
-										<input type="text" required="true" class="form-control" id="HoraMavInicio" name="HoraMavInicio" value="{{$MantVehicles->HoraMavInicio}}">
-									</div>
-									<div class="col-md-6">
-										<label for="HoraMavFin">Fecha Fin</label>
-										<input type="text" required="true" class="form-control" id="HoraMavFin" name="HoraMavFin" value="{{$MantVehicles->HoraMavFin}}">
-									</div>
-									<div class="col-md-6">
-										<label for="MvType">Tipo de mantenimiento</label>
-										<select name="MvType" id="MvType" class="form-control">
-											<option value="{{$MantVehicles->MvType}}">Seleccione...</option>
-											<option value="Aceite">Aceite</option>
-											<option value="Tecnomecanica">Tecno-mecánica</option>
-											<option value="Tanqueo">Tanqueo</option>
-											<option value="Otro">Otro</option>
-										</select>
-									</div>
-									
+				<div class="box box-info">
+					<form role="form" action="/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						@method('PUT')
+						@csrf
+						@if ($errors->createManVeh->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->createManVeh->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
+						<div class="box-body">
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="FK_VehMan">{{ trans('adminlte_lang::message.mantvehivehic') }}</label>
+									<select name="FK_VehMan" class="form-control" required id="FK_VehMan">
+										<option value="" >{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach($vehiculos as $vehiculo)
+										<option value="{{$vehiculo->ID_Vehic}}" {{$MantVehicles->FK_VehMan == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
+										@endforeach
+									</select>
+									<small class="help-block with-errors"></small>
 								</div>
-								<!-- /.box-body -->
-								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="MvKm">{{ trans('adminlte_lang::message.mantvehikm') }}</label>
+									<input maxlength="11" class="form-control number" required type="text" id="MvKm" name="MvKm" value="{{$MantVehicles->MvKm}}">
+									<small class="help-block with-errors"></small>
 								</div>
-							</form>
+							</div>
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavInicio1">{{ trans('adminlte_lang::message.mantvehiinicio1') }}</label>
+									<input type="date" required id="HoraMavInicio1" name="HoraMavInicio1" class="form-control" value="{{date('Y-m-d', strtotime($MantVehicles->HoraMavInicio))}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavFin1">{{ trans('adminlte_lang::message.mantvehifin1') }}</label>
+									<input type="date" id="HoraMavFin1" required name="HoraMavFin1" class="form-control" value="{{date('Y-m-d', strtotime($MantVehicles->HoraMavFin))}}">
+									<small class="help-block with-errors"></small>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavInicio">{{ trans('adminlte_lang::message.mantvehiinicio') }}</label>
+									<input required class="form-control" type="time" id="HoraMavInicio" name="HoraMavInicio" value="{{date('H:i', strtotime($MantVehicles->HoraMavInicio))}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="HoraMavFin">{{ trans('adminlte_lang::message.mantvehifin') }}</label>
+									<input class="form-control horas" type="time" required id="HoraMavFin" name="HoraMavFin" value="{{date('H:i', strtotime($MantVehicles->HoraMavFin))}}">
+									<small class="help-block with-errors"></small>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="MvType">{{ trans('adminlte_lang::message.mantvehitype') }}</label>
+									<input type="text" class="form-control" required maxlength="255" id="MvType" name="MvType" value="{{$MantVehicles->MvType}}">
+									<small class="help-block with-errors"></small>
+								</div>
+							</div>
 						</div>
-						<!-- /.box -->
-					</div>
-					</div>
-					</div>
-					</div>
-					<!-- /.box-body -->
+						<div class="col-md-12 col-xs-12 box box-info"></div>
+						<div class="box-footer">
+							<button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+						</div>
+					</form>
 				</div>
-				<!-- /.box -->
 			</div>
-			<!--/.col (right) -->
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
+@endsection
+@section('NewScript')
+<script>
+	@if(session('Mensaje'))
+	$(document).ready(function(){
+		NotifiTrue('{{session('Mensaje')}}');
+	});
+	@endif
+</script>
 @endsection

@@ -325,6 +325,7 @@ class genercontroller extends Controller
      */
     public function destroy($id)
     {
+        return 'Generador';
         $Generador = generador::where('GenerSlug', $id)->first();
         $SedesGeners = GenerSede::where('FK_GSede', $Generador->ID_Gener)->get();
         if ($Generador->GenerDelete == 0) {

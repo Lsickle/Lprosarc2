@@ -214,6 +214,22 @@ return [
         'VehicPlaca'    => 'Placa',
         'VehicTipo'     => 'Tipo',
         'VehicCapacidad'=> 'Capacidad',
+        'FK_ProgServi'    => '"N° del servicio"',
+        'ProgVehFecha'    => '"Fecha de la programación"',
+        'ProgVehSalida'   => '"Hora de salida de planta"',
+        'ProgVehEntrada'  => '"Hora de llegada a la planta"',
+        'FK_ProgVehiculo' => '"Vehiculo Asignado"',
+        'progVehKm'       => '"Kilometraje del vehiculo"',
+        'FK_ProgConductor' => '"Conductor Asignado"',
+        'FK_ProgAyudante' => '"Ayudante Asignado"',
+
+        'FK_VehMan'       => '"Vehiculo Asignado"',
+        'MvKm'            => '"Kilometraje del vehiculo"',
+        'HoraMavInicio1'  => '"Fecha de Inicio"',
+        'HoraMavFin1'     => '"Fecha de Finalización"',
+        'HoraMavInicio'   => '"Hora de Inicio"',
+        'HoraMavFin'      => '"Hora de Finzalización"',
+        'MvType'          => '"Tipo de Mantenimiento"',
     ],
 
 ];

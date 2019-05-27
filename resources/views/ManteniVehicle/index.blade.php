@@ -1,67 +1,64 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Vehiculos')
-@section('contentheader_title', 'Lista de Vehiculos')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.mantvehititle') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.mantvehititle') }}
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
-  <div class="row">
-    <div class="col-md-16 col-md-offset-0">
-      <!-- /.box -->
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Datos de los vehiculos</h3>
-          <a href="/vehicle-mantenimiento/create" class="btn btn-primary" style="float: right;">Crear</a>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <table id="MantVehicleTable" class="table table-compact table-bordered table-striped">
-            <thead>
-                <tr>
-                  <th>Vehiculo</th>
-                  <th>Kilometraje</th>
-                  <th>Estado</th>
-                  <th>Tipo</th>
-                  <th>Hora Inicio</th>
-                  <th>Hora Final</th>
-                  <th>Editar</th>
-                </tr>
-            </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
-              <div class="fingerprint-spinner" id="loadingTable">
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-              </div>
-              
-              @foreach ($MantVehicles as $MantVehicle)
-                <tr @if($MantVehicle->MvDelete === 1)
-                      style="color: red;" 
-                    @endif
-                >
-                  <td>{{$MantVehicle->VehicPlaca}}</td>
-                  <td>{{$MantVehicle->MvKm}}</td> 
-                  @if($MantVehicle->HoraMavFin >= now())
-                    <td>Activo</td>
-                  @else
-                    <td>Finalizado</td>
-                  @endif
-                  <td>{{$MantVehicle->MvType}}</td>
-                  <td>{{$MantVehicle->HoraMavInicio}}</td>
-                  <td>{{$MantVehicle->HoraMavFin}}</td>
-                  <td>{{$MantVehicle->ID_Mv}}</td>
-                </tr> 
-              @endforeach
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-md-16 col-md-offset-0">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::message.mantvehititlelist') }}</h3>
+					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+					<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+					@endif
+				</div>
+				<div class="box-body">
+					<table id="MantVehicleTable" class="table table-compact table-bordered table-striped"  data-order='[[ 6, "desc"]]'>
+						<thead>
+							<tr>
+								<th>{{ trans('adminlte_lang::message.mantvehivehic') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehikm') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehistatus') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehitype') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehiinicio1') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehiinicio') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehifin1') }}</th>
+								<th>{{ trans('adminlte_lang::message.mantvehifin') }}</th>
+								<th>{{ trans('adminlte_lang::message.edit') }}</th>
+							</tr>
+						</thead>
+						<tbody  hidden onload="renderTable()" id="readyTable">
+							{{-- <h1 id="loadingTable">LOADING...</h1> --}}
+							@include('layouts.partials.spinner')
+							@foreach ($MantVehicles as $MantVehicle)
+							<tr @if($MantVehicle->MvDelete === 1)
+								style="color: red;"
+								@endif
+								>
+								<td>{{$MantVehicle->VehicPlaca}}</td>
+								<td>{{$MantVehicle->MvKm}}</td>
+								@if($MantVehicle->HoraMavFin >= now())
+								<td>{{ trans('adminlte_lang::message.mantvehistatustrue') }}</td>
+								@else
+								<td>{{ trans('adminlte_lang::message.mantvehistatusfalse') }}</td>
+								@endif
+								<td>{{$MantVehicle->MvType}}</td>
+								<td>{{date('Y/m/d', strtotime($MantVehicle->HoraMavInicio))}}</td>
+								<td>{{date('h:i A', strtotime($MantVehicle->HoraMavInicio))}}</td>
+								<td>{{date('Y/m/d', strtotime($MantVehicle->HoraMavFin))}}</td>
+								<td>{{date('h:i A', strtotime($MantVehicle->HoraMavFin))}}</td>
+								<td><a href='/vehicle-mantenimiento/{{$MantVehicle->ID_Mv}}/edit' class='btn btn-block btn-warning'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
