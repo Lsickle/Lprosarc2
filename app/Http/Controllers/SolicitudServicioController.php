@@ -135,11 +135,11 @@ class SolicitudServicioController extends Controller
 				$transportadorcity = $cliente->MunName;
 			}
 			else{
-				$municipio = Municipio::select()->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
+				$municipio = Municipio::select('MunName')->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
 				$transportadorname = $request->input('SolSerNameTrans');
 				$transportadornit = $request->input('SolSerNitTrans');
 				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $municipio;
+				$transportadorcity = $municipio->MunName;
 			}
 			$tipo = "Externo";
 			$conductor = $request->input('SolSerConductor');
@@ -230,27 +230,31 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-			->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->join('municipios', 'municipios.ID_Mun', 'sedes.FK_SedeMun')
-			->select('solicitud_servicios.*','clientes.CliNit','clientes.CliName','sedes.SedeAddress','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress'/*se remplaza por email*/,'municipios.MunName')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
 			->where('solicitud_servicios.SolSerSlug', $id)
-			->get();
+			->first();
+		$Cliente = DB::table('clientes')
+			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+			->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+			->select('clientes.CliNit', 'clientes.CliShortname', 'sedes.SedeAddress', 'municipios.MunName')
+			->where('clientes.ID_Cli', $SolicitudServicio->FK_SolSerCliente)
+			->first();
 		$GenerResiduos = DB::table('solicitud_residuos')
 			->distinct()
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
 			->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
-			->select('gener_sedes.GSedeAddress','residuos_geners.FK_SGener', 'generadors.GenerNit', 'generadors.GenerName', 'municipios.MunName')
-			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
+			->select('gener_sedes.GSedeAddress','generadors.GenerNit', 'generadors.GenerName', 'municipios.MunName')
+			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
+		return $GenerResiduos;
 		$Residuos = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('tratamientos', 'tratamientos.ID_Trat', '=', 'solicitud_residuos.FK_SolResTratamiento')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 			->select('solicitud_residuos.*', 'residuos_geners.FK_SGener', 'tratamientos.TratName','respels.*')
-			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
+			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos'));
 	}
