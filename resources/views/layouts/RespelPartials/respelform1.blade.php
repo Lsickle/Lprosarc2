@@ -65,11 +65,13 @@
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-				<input required id="hoja0" name="RespelHojaSeguridad[]" type="file" class="form-control" accept=".pdf">
+				<small class="help-block with-errors">*</small>
+				<input required id="hoja0" name="RespelHojaSeguridad[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-				<input name="RespelTarj[]" type="file" class="form-control" accept=".pdf">
+				<small class="help-block with-errors">*</small>
+				<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 			</div>
 			<div id="SustanciaControlada0">
 			</div>
@@ -85,7 +87,7 @@
 			<div class="col-md-6 form-group has-feedback">
 				<label class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<small class="help-block with-errors">*</small>
-				<input id="foto0" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="1024" data-filetype="png" value="{{ old('RespelFoto.0') }}">
+				<input id="foto0" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png" value="{{ old('RespelFoto.0') }}">
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
 				{{-- <span class="far fa-building fa-fw form-control-feedback fa-pull-left" style="margin-right: 1.8em;" aria-hidden="true"></span> --}}
 			</div>

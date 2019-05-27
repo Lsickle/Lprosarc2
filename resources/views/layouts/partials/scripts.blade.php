@@ -1761,7 +1761,28 @@ $(document).ready(function() {
 	@endif
 	@if(Route::currentRouteName()=='respels.create')
 	{{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
-	<script>
-	</script>
+	@if(Route::currentRouteName()=='respels.create')
+    {{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
+    <script>
+        $(document).ready(function() {
+            $('#myform').validator({
+              custom: {
+                'filesize': function ($el) {
+                  var maxBytes = $el.data('filesize') * 1024
+                  if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
+                    return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB."
+                  }
+                }
+                // 'filetype': function ($el) {
+                //   var allowtype = $el.data('filetype')
+                //   if ($el[0].files[0] && $el[0].files[0].type == allowtype) {
+                //     return "el archivo debe ser de tipo " + allowtype
+                //   }
+                // }
+              }
+            })
+        });
+    </script>
+    @endif
 	@endif
 	@yield('NewScript')
