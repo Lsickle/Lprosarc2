@@ -108,5 +108,5 @@
 	</div>
 </div>
 <div id="AddRespel`+id_div+`" class="form-group col-md-16 form-group col-md-offset-5 col-xs-offset-5">
-	<a onclick="AgregarResPel(`+id_div+`)" id="Agregar`+id_div+contadorRespel[id_div]+`" class="btn btn-success" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrespel') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrespeldescrit') }}"><i class="fas fa-plus"></i> {{ trans('adminlte_lang::message.solseraddrespel') }}</a><br><br>
+	<a onclick="AgregarResPel(`+id_div+`,'`+ID_Gener+`')" id="Agregar`+id_div+contadorRespel[id_div]+`" class="btn btn-success" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrespel') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrespeldescrit') }}"><i class="fas fa-plus"></i> {{ trans('adminlte_lang::message.solseraddrespel') }}</a><br><br>
 </div>

@@ -399,7 +399,7 @@ function AgregarGenerador() {
 	contadorGenerador = contadorGenerador + 1;
 }
 
-function AgregarResPel(id_div) {
+function AgregarResPel(id_div,ID_Gener) {
 	contadorRespel[id_div] = contadorRespel[id_div]+1;
 	$("#AddRespel"+id_div).before(`@include('solicitud-serv.layaoutsSolSer.NewRespel')`);
 	Switch2();
@@ -408,7 +408,37 @@ function AgregarResPel(id_div) {
 	numeroDimension();
 	numeroKg();
 	popover();
-	$('#FK_SolResRg'+id_div+contadorRespel[id_div]).html($('#FK_SolResRg'+id_div+'0').html());
+	HiddenRequeRespel(id_div, contadorRespel[id_div]);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RespelGener')}}/"+ID_Gener,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res != ''){
+				var residuos = new Array();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+				for(var i = res.length -1; i >= 0; i--){
+					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`,'`+res[i].RespelSlug+`')" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
+						residuos.push(res[i].SlugSGenerRes);
+					}
+				}
+			}
+			else{
+				$("#DivRepel"+id_div).empty();
+				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	})
 	$('#SolicitudServicio').validator('update');
 }
 function RemoveRespel(id_div, contador) {
