@@ -83,7 +83,7 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        return $request;
+        // return $request;
 
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
@@ -145,24 +145,6 @@ class RespelController extends Controller
                 $ctrlDoc = 'SustanciaControlDocDefault.png';
             }
 
-
-            /*validar si el residuo corresponde a una sustancia controlada para definir los campos que corresponden*/
-            if ($request['SustanciaControlada'][$x] == '0') {
-                // return "si cuple";
-                $respel->SustanciaControladaTipo = null;
-                $respel->SustanciaControladaNombre = null;
-            }else{
-                $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
-                $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
-            }
-            /*validar la peligrosidad del residuo para insertar o no la clasificacion*/
-            if ($request['RespelIgrosidad'][$x] == 'No peligroso') {
-                $respel->YRespelClasf4741 = 'N/A';
-                $respel->ARespelClasf4741 = 'N/A';
-            }else{
-                $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
-                $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
-            }
             /*se verifica el rol de usuario para asignar un status al residuo*/
             if (Auth::user()->UsRol=='Cliente'||Auth::user()->UsRol=='Programador') {
                 $statusinicial="Pendiente";
@@ -170,9 +152,13 @@ class RespelController extends Controller
             $respel->RespelName = $request['RespelName'][$x];
             $respel->RespelDescrip = $request['RespelDescrip'][$x];
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
             $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
+            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
+            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
             $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
