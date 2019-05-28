@@ -928,23 +928,6 @@ $(document).ready(function() {
 </script>
 <script>
 $(document).ready(function() {
-	$('#SolicitudservicioTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 6,
-			"data": "SolSerSlug",
-			"render": function(data, type, row, meta) {
-				return "<a href='/solicitud-servicio/" + data + "' class='btn btn-success'>Ver</a>";
-			}
-		}]
-	});
-});
-</script>
-<script>
-$(document).ready(function() {
 	$('#ManifiestoTable').DataTable({
 		"scrollX": false,
 		"autoWidth": true,
@@ -1750,7 +1733,6 @@ $(document).ready(function() {
 		$('.table').DataTable({
 			"scrollX": false,
 			"autoWidth": true,
-			"keys": true,
 			"responsive": true,
 			"language": {
 				"sProcessing":     "Procesando...",
