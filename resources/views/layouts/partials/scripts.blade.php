@@ -1041,26 +1041,6 @@ $(document).ready(function() {
 		"autoWidth": true,
 		"keys": true,
 		"responsive": true,
-		// "columnDefs": [ {
-		//   "targets": 5,
-		//   "data": "RecSrc",
-		//   "render": function ( data, type, row, meta ) {
-		//       return "<a href='" + data + "'  target='_blank' class='btn btn-block btn-success'>Ver</a>";}},
-		"columnDefs": [{
-				"targets": 2,
-				"data": "SolResSlug",
-				"render": function(data, type, row, meta) {
-					return "<a href='recurso/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-				}
-			},
-			{
-				"targets": 3,
-				"data": "SolResSlug",
-				"render": function(data, type, row, meta) {
-					return "<a href='recurso/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-				}
-			}
-		]
 	});
 });
 

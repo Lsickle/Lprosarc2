@@ -140,13 +140,14 @@ class SolicitudResiduoController extends Controller
     public function destroy($id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        if ($SolRes->SolResDelete == 0) {
-            $SolRes->SolResDelete = 1;
-        }
-        else{
-            $SolRes->SolResDelete = 0;
-        }
-        $SolRes->save();
+        SolicitudResiduo::destroy($SolRes->ID_SolRes);
+        // if ($SolRes->SolResDelete == 0) {
+        //     $SolRes->SolResDelete = 1;
+        // }
+        // else{
+        //     $SolRes->SolResDelete = 0;
+        // }
+        // $SolRes->save();
         
         $log = new audit();
         $log->AuditTabla="solicitud_residuos";
@@ -156,7 +157,7 @@ class SolicitudResiduoController extends Controller
         $log->Auditlog=$SolRes->SolResDelete;
         $log->save();
 
-        return redirect()->route('solicitud-residuo.index');
+        return redirect()->route('recurso.show', compact('id');
 
     }
 }

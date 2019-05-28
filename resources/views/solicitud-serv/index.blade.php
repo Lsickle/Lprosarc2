@@ -15,7 +15,6 @@ Servicios
 					<h3 class="box-title">Datos de las solicitudes de los servicios</h3>
 					<a href="solicitud-servicio/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
-				<!-- /.box-header -->
 				<div class="box-body">
 					<table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped">
 						<thead>
