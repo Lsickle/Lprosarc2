@@ -62,6 +62,12 @@
 				</select>
 			</div>
 			<div id="danger0">
+				<select name="YRespelClasf4741[]" hidden="">
+					<option value="" selected></option>
+				</select>
+				<select name="ARespelClasf4741[]" hidden="">
+					<option value="" selected></option>
+				</select>
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
@@ -86,6 +92,7 @@
 					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
 				<select id="selectControl0" name="SustanciaControlada[]" class="form-control" required>
+					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 					<option value="0" onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
 					<option value="1" onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
@@ -128,8 +135,11 @@ function setDanger(id) {
 }
 
 function setNoDanger(id) {
+	var ifNotDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifNotDangerRespel')`;
 	$("#danger" + id).empty();
+	$("#danger" + id).append(ifNotDangerRespel);
 	$("#hoja" + id).prop('required', false)
+	$("#myform").validator('update');
 }
 
 function setControlada(id) {
@@ -141,26 +151,24 @@ function setControlada(id) {
 }
 
 function setNoControlada(id) {
+	var ifNotControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifNotControladaRespel')`;
 	$("#SustanciaControlada" + id).empty();
+	$("#SustanciaControlada" + id).append(ifNotControladaRespel);
+	$("#myform").validator('update');
 }
 
-var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
-var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
-var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
-var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateDoc')`;
-var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
-var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
 
 function AgregarRes() {
 	var Residuo = `@include('layouts.RespelPartials.layoutsRes.CreateResiduos')`;
 	$("#Respels").append(Residuo);
+	// $("#Clasif" + contador).append(ClasifY);
 	$("#myform").validator('update');
-	$("#Clasif" + contador).append(ClasifY);
 	contador = parseInt(contador) + 1;
 	attachPopover();
 }
 
 function AgregarY(id) {
+	var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
 	$("#ClasifY" + id).removeClass("btn-default");
 	$("#ClasifY" + id).addClass("btn-success");
 	$("#ClasifA" + id).removeClass("btn-success");
@@ -172,6 +180,7 @@ function AgregarY(id) {
 }
 
 function AgregarA(id) {
+	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
 	$("#ClasifA" + id).removeClass("btn-default");
 	$("#ClasifA" + id).addClass("btn-success");
 	$("#ClasifY" + id).removeClass("btn-success");
@@ -183,6 +192,8 @@ function AgregarA(id) {
 }
 
 function AgregarControlada(id) {
+	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
+	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
 	$("#Controlada" + id).removeClass("btn-default");
 	$("#Controlada" + id).addClass("btn-success");
 	$("#Masivo" + id).removeClass("btn-success");
@@ -196,6 +207,8 @@ function AgregarControlada(id) {
 }
 
 function AgregarMasivo(id) {
+	var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
+	var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateDoc')`;
 	$("#Masivo" + id).removeClass("btn-default");
 	$("#Masivo" + id).addClass("btn-success");
 	$("#Controlada" + id).removeClass("btn-success");
@@ -212,20 +225,5 @@ function EliminarRes(id) {
 	$("#Residuo" + id).remove();
 	$("#myform").validator('update');
 }
-
-// function validate() {
-// 	$("#file_error").html("");
-// 	$(".demoInputBox").css("border-color","#F0F0F0");
-// 	var file_size = $('#file')[0].files[0].size;
-// 	if(file_size>(1024*2)) {
-// 		$("#file_error").html("File size is greater than 2MB");
-// 		$(".demoInputBox").css("border-color","#FF0000");
-// 		return false;
-// 	} 
-// 	return true;
-// }
-
-	
-
 
 </script>

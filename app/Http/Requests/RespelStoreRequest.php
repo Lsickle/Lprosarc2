@@ -70,8 +70,8 @@ class RespelStoreRequest extends FormRequest
                 'ARespelClasf4741.*' => 'Clasificacion A',
                 'RespelTarj.*' => 'Tarjeta De Emergencia',
                 'SustanciaControlada.*' => '¿Sustancia controlada?',
-                'SustanciaControladaNombre.*' => 'Certificado de Carencia/Certificado de Registro',
-                'SustanciaControladaDocumento.*' => 'max:2048|mimes:pdf',
+                'SustanciaControladaNombre.*' => 'Nombre de la sustancia',
+                'SustanciaControladaDocumento.*' => 'Certificado de Carencia/Certificado de Registro',
         ];
 
 

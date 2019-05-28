@@ -1,4 +1,4 @@
-{{-- <input type="text" hidden="" name="SControlada[]" value=""> --}}
+<input type="text" hidden="" name="SustanciaControladaTipo[]" value="1">
 
 <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">Nombre de la sustancia</label>
 <select name="SustanciaControladaNombre[]" class="form-control" required>

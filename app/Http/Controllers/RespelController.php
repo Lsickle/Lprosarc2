@@ -14,6 +14,7 @@ use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Hash;
 class RespelController extends Controller
 {
     /**
@@ -82,7 +83,7 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        // return $request;
+        return $request;
 
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
@@ -104,6 +105,10 @@ class RespelController extends Controller
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
+
+
+            $respel = new Respel();
+
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
                 $hoja = time().$file1->getClientOriginalName();
@@ -113,6 +118,7 @@ class RespelController extends Controller
                 $hoja = 'RespelHojadefault.png';
             }
 
+             /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
                 $tarj = time().$file2->getClientOriginalName();
@@ -121,6 +127,7 @@ class RespelController extends Controller
                 $tarj = 'RespelTarjetadefault.png';
             }
 
+             /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
                 $foto= time().$file3->getClientOriginalName();
@@ -129,7 +136,7 @@ class RespelController extends Controller
                 $foto = 'RespelFotoDefault.png';
             }
     
-            
+            /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
                 $ctrlDoc = time().$file4->getClientOriginalName();
@@ -139,32 +146,40 @@ class RespelController extends Controller
             }
 
 
-
-            $respel = new Respel();
-            $respel->RespelName = $request['RespelName'][$x];
-            $respel->RespelDescrip = $request['RespelDescrip'][$x];
-            
-            $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
+            /*validar si el residuo corresponde a una sustancia controlada para definir los campos que corresponden*/
+            if ($request['SustanciaControlada'][$x] == '0') {
+                // return "si cuple";
+                $respel->SustanciaControladaTipo = null;
+                $respel->SustanciaControladaNombre = null;
+            }else{
+                $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
+                $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
+            }
             /*validar la peligrosidad del residuo para insertar o no la clasificacion*/
-            if (isset($request['RespelIgrosidad'][$x]) == 'No peligroso') {
+            if ($request['RespelIgrosidad'][$x] == 'No peligroso') {
                 $respel->YRespelClasf4741 = 'N/A';
                 $respel->ARespelClasf4741 = 'N/A';
             }else{
                 $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
                 $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
             }
+            /*se verifica el rol de usuario para asignar un status al residuo*/
+            if (Auth::user()->UsRol=='Cliente'||Auth::user()->UsRol=='Programador') {
+                $statusinicial="Pendiente";
+            }
+            $respel->RespelName = $request['RespelName'][$x];
+            $respel->RespelDescrip = $request['RespelDescrip'][$x];
+            $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
             $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
-            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
-            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
-            $respel->RespelStatus = 'Pendiente';
+            $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = "slug".$request['RespelName'][$x].now();
+            $respel->RespelSlug = Hash::make(now().$request['RespelName'][$x]);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
