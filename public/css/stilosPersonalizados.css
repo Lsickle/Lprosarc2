@@ -28,7 +28,7 @@
 	
 }
 .popover-left{
-	float: left !important; 
+	/*float: left !important; */
 	width:100% !important;
 }
 a.textpopover{
