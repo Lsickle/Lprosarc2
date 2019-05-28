@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Solicitud de Servicios
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -112,6 +112,7 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 								</div>
 							</div>
 							<div class="col-md-12" style="border-top:#00c0ef solid 3px; padding-top: 20px; margin-top: 20px;">
+								<div id="ModalDeleteRespel"></div>
 								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
 									@php 
 										$Contador = 1;
@@ -128,6 +129,7 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 											<th>Cantidad <br> Recibida Kg</th>
 											<th>Cantidad <br> Conciliada Kg</th>
 											<th>Ver Detalles</th>
+											<th>Eliminar</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -147,8 +149,14 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 												<td>{{$Residuo->SolResKgEnviado}}</td>
 												<td>{{$Residuo->SolResKgRecibido}}</td>
 												<td>{{$Residuo->SolResKgConciliado}}</td>
-												<td><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-block btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel('{{$Residuo->SolResSlug}}')" class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i></a></td>
 											</tr>
+												<form action="/solicitud-residuo/{{$Residuo->SolResSlug}}" method="POST">
+													@method('DELETE')
+													@csrf
+													<input type="submit" id="Eliminar{{$Residuo->SolResSlug}}" style="display: none;">
+												</form>
 											@endif
 										@endforeach
 									@endforeach
@@ -159,7 +167,7 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 											<th style="text-align: right;">{{$TotalEnv}} Kg</th>
 											<th style="text-align: right;">{{$TotalRec}} Kg</th>
 											<th style="text-align: right;">{{$TotalCons}} Kg</th>
-											<th></th>
+											<th colspan="2"></th>
 										</tr>
 									</tfoot>
 								</table>
@@ -171,4 +179,16 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+	<script>
+		function ModalDeleteRespel(slug){
+			$('#ModalDeleteRespel').empty();
+			$('#ModalDeleteRespel').append(`
+			@component('layouts.partials.modal')
+				`+slug+`
+			@endcomponent`);
+			$('#myModal'+slug).modal();
+		}
+	</script>
 @endsection

@@ -409,7 +409,7 @@ class SolicitudServicioController extends Controller
 		if(!is_null($request->input('SGenerador'))){
 			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 		}
-		
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="Modificado";
@@ -429,33 +429,30 @@ class SolicitudServicioController extends Controller
 	 */
 	public function destroy($id)
 	{
-		$Servicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-		if ($Servicio->SolSerDelete == 0) {
-			$Servicio->SolSerDelete = 1;
-			$Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
-			foreach ($Residuos as $Residuo ) {
-				$Residuo->SolResDelete = 1;
-				$Residuo->save();
-			}
+		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if ($SolicitudServicio->SolSerDelete == 0) {
+			$SolicitudServicio->SolSerDelete = 1;
+			$log = new audit();
+			$log->AuditTabla="solicitud_servicios";
+			$log->AuditType="Eliminado";
+			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=$SolicitudServicio->SolSerDelete;
+			$log->save();
+			$SolicitudServicio->save();
+			return redirect()->route('solicitud-servicio.index');
 		}
 		else{
-			$Servicio->SolSerDelete = 0;
-			$Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
-			foreach ($Residuos as $Residuo ) {
-				$Residuo->SolResDelete = 0;
-				$Residuo->save();
-			}
+			$SolicitudServicio->SolSerDelete = 0;
+			$log = new audit();
+			$log->AuditTabla="solicitud_servicios";
+			$log->AuditType="Restaurado";
+			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=$SolicitudServicio->SolSerDelete;
+			$log->save();
+			$SolicitudServicio->save();
+			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 		}
-		$Servicio->save();
-
-		$log = new audit();
-		$log->AuditTabla="solicitud_servicios";
-		$log->AuditType="Eliminado";
-		$log->AuditRegistro=$Servicio->ID_SolSer;
-		$log->AuditUser=Auth::user()->email;
-		$log->Auditlog=$Servicio->SolSerDelete;
-		$log->save();
-		
-		return redirect()->route('solicitud-servicio.index');
 	}
 }
