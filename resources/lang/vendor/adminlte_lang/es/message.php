@@ -556,6 +556,7 @@ return [
     'solserselectgenerdescrit' => 'Seleccione el generador y su respectiva sede, la cual sera certificada al cumplimiento del servicio. <br> Tenga en cuenta que con el icono (<i class="fas fa-arrows-alt-v"></i>) puede minimizar y/o ampliar todo el contenedor del generador, y con el icono (<i class="fa fa-times"></i>) puede remover el contenedor del generador.',
     'solseraddgener'          => 'Añadir Generador',
     'solseraddgenerdescrit'   => 'Haga clic para añadir un nuevo generador a su solicitud.',
+    'solseraddgenerdescrit2'  => 'Haga clic para añadir un nuevo generador y/o residuo a su solicitud.',
     'solserrespel'            => 'Residuo',
     'solserrespeldescrit'     => 'Seleccione el residuo a entregar, el cual sera certificado al cumplimiento del servicio. <br> Tenga en cuenta que con el icono (<i class="fas fa-arrows-alt-v"></i>) puede minimizar y/o ampliar todo el contenedor del residuo, y con el icono (<i class="fa fa-times"></i>) puede remover el contenedor del residuo.',
     'solsertypeunidad'        => 'Unidades de Medida',
