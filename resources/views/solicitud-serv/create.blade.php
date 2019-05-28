@@ -286,7 +286,7 @@ function ResiduosGener(id_div, ID_Gener){
 	contadorRespel[id_div] = 0;
 	$("#DivRepel"+id_div).empty();
 	$("#DivRepel"+id_div).append(`@include('solicitud-serv.layaoutsSolSer.OneRespel')`);
-	$('#SolicitudServicio').validator('update');
+	$('#CreateSolSer').validator('update');
 	Switch2();
 	Switch3();
 	Checkboxs();
@@ -392,7 +392,7 @@ function HiddenRequeRespel(id_div, contador){
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
 	popover();
-	$('#SolicitudServicio').validator('update');
+	$('#CreateSolSer').validator('update');
 	contadorGenerador = contadorGenerador + 1;
 }
 
@@ -436,7 +436,7 @@ function AgregarResPel(id_div,ID_Gener) {
 			NotifiFalse("No se pudo conectar a la base de datos");
 		}
 	})
-	$('#SolicitudServicio').validator('update');
+	$('#CreateSolSer').validator('update');
 }
 function RemoveRespel(id_div, contador) {
 	$("#Repel"+id_div+contador).prev().remove();
