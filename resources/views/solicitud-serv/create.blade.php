@@ -441,11 +441,13 @@ function AgregarResPel(id_div,ID_Gener) {
 function RemoveRespel(id_div, contador) {
 	$("#Repel"+id_div+contador).prev().remove();
 	$("#Repel"+id_div+contador).remove();
+	$('#CreateSolSer').validator('update');
 }
 
 function RemoveGenerador(id) {
 	$("#Generador"+id).prev().remove();
 	$("#Generador"+id).remove();
+	$('#CreateSolSer').validator('update');
 }
 
 </script>
