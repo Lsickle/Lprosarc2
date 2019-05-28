@@ -113,8 +113,8 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = now().$file1->getClientOriginalName();
-                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
+                $hoja = Hash::make(now()).$file1->getClientOriginalName();
+                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = 'RespelHojaDefault.pdf';
@@ -123,8 +123,8 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = now().$file2->getClientOriginalName();
-                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+                $tarj = Hash::make(now()).$file2->getClientOriginalName();
+                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
             }
@@ -132,8 +132,8 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto= now().$file3->getClientOriginalName();
-                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
+                $foto= Hash::make(now()).$file3->getClientOriginalName();
+                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
             }
@@ -141,8 +141,8 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = now().$file4->getClientOriginalName();
-                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
+                $ctrlDoc = Hash::make(now()).$file4->getClientOriginalName();
+                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
             }
@@ -226,24 +226,24 @@ class RespelController extends Controller
         $Respels = Respel::where('ID_Respel', $id)->first();
 
         if ($request->hasfile('RespelHojaSeguridad')) {
-            if(file_exists(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
-                unlink(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad);
+            if(file_exists(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
+                unlink(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad);
             }
             $file = $request->file('RespelHojaSeguridad');
             $name = now().$file->getClientOriginalName();
-            $file->move(public_path().'/img/HojaSeguridad/',$name);
+            $file->move(public_path().'\img\HojaSeguridad/',$name);
         }
         else{
             $name = $Respels->RespelHojaSeguridad;
         }
 
         if ($request->hasfile('RespelTarj')) {
-            if(file_exists (public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj)){
-                unlink(public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj);
+            if(file_exists (public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj)){
+                unlink(public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj);
             }
             $file = $request->file('RespelTarj');
             $tarj = now().$file->getClientOriginalName();
-            $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+            $file->move(public_path().'\img\TarjetaEmergencia/',$tarj);
         }
         else{
             $tarj = $Respels->RespelTarj;

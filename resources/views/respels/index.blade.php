@@ -63,11 +63,34 @@
 								@else
 									<td><a disabled method='get' href='/img/{{$respel->RespelTarj}}' target='_blank' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
 								@endif
-								
 								<td>{{$respel->RespelStatus}}</td>
 								<td>{{$respel->CliName}}</td>
 								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
-									<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a></td>
+									@switch($respel->RespelStatus)
+									    {{-- evaluación pendiente --}}
+									    @case('pendiente')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class='fab fa-list'></i></a></td>
+									        @break
+									    {{-- residuo rechazado --}}
+									    @case('rechazado')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-danger'><i class='fab fa-ban'></i></a></td>
+									        @break
+									    {{-- residuo aprobado --}}
+									    @case('aprobado')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-success'><i class='fab fa-thumbs-up'></i></a></td>
+									        @break
+									    {{-- cotización vencida --}}
+									    @case('vencido')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-danger'><i class='fab fa-calendar-times'></i></a></td>
+									        @break
+									    {{-- cotización vencida --}}
+									    @case('incompleta')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class='fab fa-task'></i></a></td>
+									        @break
+									    {{-- cotización vencida --}}
+									    @default
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a></td>
+									@endswitch
 								@else
 									<td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a></td>
 								@endif
