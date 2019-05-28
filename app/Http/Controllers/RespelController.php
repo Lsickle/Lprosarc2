@@ -22,7 +22,14 @@ class RespelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){ 
+    public function index(){
+        /*se define la sede del usuario actual*/
+        $UserSedeID = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->value('sedes.ID_Sede');
 
         if(Auth::user()->UsRol === "Programador"){
             $Respels = DB::table('respels')
@@ -31,8 +38,16 @@ class RespelController extends Controller
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.*', 'clientes.CliName')
             ->get();
-
-            return view('respels.index', compact('Respels'));
+        }
+        elseif(Auth::user()->UsRol === "Cliente"){
+            $Respels = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.CliName')
+            ->where('respels.RespelDelete',0)
+            ->where('sedes.ID_Sede', $UserSedeID)
+            ->get();
         }
         else{
             $Respels = DB::table('respels')
@@ -113,7 +128,7 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = Hash::make(now()).$file1->getClientOriginalName();
+                $hoja = Hash::make(now().$file1->getClientOriginalName());
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
             else{
@@ -123,7 +138,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = Hash::make(now()).$file2->getClientOriginalName();
+                $tarj = Hash::make(now().$file2->getClientOriginalName());
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
@@ -132,7 +147,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto= Hash::make(now()).$file3->getClientOriginalName();
+                $foto= Hash::make(now().$file3->getClientOriginalName());
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
@@ -141,7 +156,7 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = Hash::make(now()).$file4->getClientOriginalName();
+                $ctrlDoc = Hash::make(now().$file4->getClientOriginalName());
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
