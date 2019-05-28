@@ -26,10 +26,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl(route('cliente', Auth::user()->UsSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 
 				/*PESTAÑA DE LAS SEDES DE PROSARC*/
-				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> '. trans('adminlte_lang::message.MenuSedes'))))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
 				
 				/*PESTAÑA DE LOS CONTACTOS DE PROSARC*/
-				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> '. trans('adminlte_lang::message.MenuContactos'))))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
 				
 	            /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
