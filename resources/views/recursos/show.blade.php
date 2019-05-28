@@ -146,31 +146,24 @@
                                                 @if ($Recurso->RecTipo == 'Pesaje' and $Recurso->RecCarte == 'Foto')
                                                 <div>
                                                     {{-- <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"> --}}
-                                                    <div style="background-image: url('../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}');  background-repeat: no-repeat; height: 500px; width:100%; max-width:1200;  background-size: cover;">
-                                                        <nav class="navbar navbar-inverse">
-                                                            <div class="container">
-                                                                        <ul class="nav nav-pills">
-                                                                            <li role="presentation"><a href="../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}" target="_blank">Home</a></li>
-                                                                            <li role="presentation"><a href="#">Profile</a></li>
-                                                                            <li role="presentation"><a href="#">Messages</a></li>
-                                                                        </ul>
-                                                                        {{-- hola --}}
-                                                                    </div>
-                                                                </nav>
-                                                        {{-- <div style="display:flex; justify-content:space-between;"> --}}
-                                                            {{-- <button type="submit" class="btn btn-danger" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button> --}}
-                                                        {{-- </div> --}}
-                                                    </div>
                                                     {{-- <img src="../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}" height="auto" width="100%" max-width="1200"> --}}
                                                     
-                                                    <form role="form" action="/recurso/{{$Recurso->ID_Rec}}" method="POST" enctype="multipart/form-data">
+                                                    <div style="background-image: url('../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:500px; max-width:1200;  background-size: cover;">
+                                                        <nav class="navbar navbar-inverse">
+                                                            {{-- <div class="container"> --}}
+                                                            <ul class="nav nav-pills">
+                                                                <li role="presentation"><a href="../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}" target="_blank" title="Ampliar Imagen"><label><i class="fas fa-expand-arrows-alt"></label></i></a></li>
+                                                                <li role="presentation"><a href="#" title="Eliminar Imagen"><label for="deleterec"><i class="fas fa-trash-alt"></i></label></a></li>
+                                                            </ul>
+                                                            {{-- </div> --}}
+                                                        </nav>
+                                                        {{-- <button type="submit" class="btn btn-danger" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button> --}}
+                                                    </div>
+                                                    <form role="form" action="/recurso/{{$Recurso->SlugRec}}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('DELETE')
-                                                        {{-- <div class="bx-caption"> --}}
-                                                            {{-- <input hidden name="number" value="1"> --}}
-                                                        {{-- </div> --}}
+                                                        <button type="submit" style="display: none;" value ="{{$Recurso->SlugRec}}" name="DeleteRec" id="deleterec"></button>
                                                     </form>
-                                                </div>
                                                 @endif
                                             @endforeach  
                                         </div>

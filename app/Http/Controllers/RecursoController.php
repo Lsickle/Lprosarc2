@@ -176,7 +176,7 @@ class RecursoController extends Controller
                 ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
                 ->join('sedes', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
                 ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
-                ->select('solicitud_residuos.ID_SolRes', 'clientes.CliName', 'generadors.GenerName', 'solicitud_residuos.FK_SolResSolSer')
+                ->select('solicitud_residuos.ID_SolRes', 'clientes.CliName', 'generadors.GenerName')
                 ->where('solicitud_residuos.SolResSlug', $id)
                 ->first();
             
@@ -185,8 +185,8 @@ class RecursoController extends Controller
                 
                 $name = time().$file->getClientOriginalName();
                 $Extension = $file->extension();
-                $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->FK_SolResSolSer,$name);
-                $Src = $SolRes->CliName.$SolRes->FK_SolResSolSer ;
+                $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->ID_SolRes,$name);
+                $Src = $SolRes->CliName.$SolRes->ID_SolRes;
                 
                 // $Recurso->RecName = $request->input("RecName");
                 $Recurso = new Recurso();
@@ -244,10 +244,11 @@ class RecursoController extends Controller
         // }
 
         // if($request->input("number") == 1){
-            $Recursos = Recurso::where('ID_Rec', $id)->first();
+            $Recursos = Recurso::where('SlugRec', $id)->first();
             $SolRes = SolicitudResiduo::select('SolResSlug')->where('ID_SolRes', $Recursos->FK_RecSolRes)->first();
-            unlink(public_path($Recursos->RecSrc)."/".$Recursos->RecRmSrc);
-            Recurso::destroy($id);
+
+            unlink(public_path("img/Recursos/$Recursos->RecSrc")."/$Recursos->RecRmSrc");
+            Recurso::destroy($Recursos->ID_Rec);
             // }
             $id = $SolRes->SolResSlug;
         return redirect()->route('recurso.show', compact('id'));
