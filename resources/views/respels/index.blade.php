@@ -22,7 +22,11 @@
 								<th>Hoja de Seguridad</th>
 								<th>Tarj de Emergencia</th>
 								<th>Estado de aprobación</th>
+								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
+								<th>Cliente</th>
+								@else
 								<th>Generado por</th>
+								@endif
 								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
 								<th>Evaluar</th>
 								@else
@@ -42,16 +46,31 @@
 								<td>{{$respel->RespelName}}</td>
 								@if($respel->YRespelClasf4741 <> null)
 									<td>{{$respel->YRespelClasf4741}}</td>
-								@else()
+								@elseif($respel->ARespelClasf4741 <> null)
 									<td>{{$respel->ARespelClasf4741}}</td>
+								@else()
+									<td>N/A</td>
 								@endif
 								<td>{{$respel->RespelIgrosidad}}</td>
 								<td>{{$respel->RespelEstado}}</td>
-								<td>{{$respel->RespelHojaSeguridad}}</td>
-								<td>{{$respel->RespelTarj}}</td>
+								@if($respel->RespelHojaSeguridad!=="RespelHojaDefault.pdf")
+									<td><a method='get' href='/img/HojaSeguridad/{{$respel->RespelHojaSeguridad}}' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a></td>
+								@else
+									<td><a disabled method='get' href='/img/{{$respel->RespelHojaSeguridad}}' target='_blank' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
+								@endif
+								@if($respel->RespelTarj!=="RespelTarjetaDefault.pdf")
+									<td><a method='get' href='/img/TarjetaEmergencia/{{$respel->RespelTarj}}' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a></td>
+								@else
+									<td><a disabled method='get' href='/img/{{$respel->RespelTarj}}' target='_blank' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
+								@endif
+								
 								<td>{{$respel->RespelStatus}}</td>
 								<td>{{$respel->CliName}}</td>
-								<td>{{$respel->RespelSlug}}</td>
+								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
+									<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a></td>
+								@else
+									<td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a></td>
+								@endif
 							</tr>
 							@endforeach
 						</tbody>

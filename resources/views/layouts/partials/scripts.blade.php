@@ -292,58 +292,14 @@ $(document).ready(function() {
 			"scrollX": false,
 			"autoWidth": true,
 			"keys": true,
-			"responsive": true,
-			"columnDefs": [{
-					"targets": 8,
-					"data": "RespelSlug",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/respels/" + data + "/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a>";
-					}
-				},
-				{
-					"targets": 4,
-					"data": "RespelHojaSeguridad",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-					}
-				},
-				{
-					"targets": 5,
-					"data": "RespelTarj",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-					}
-				}
-			]
+			"responsive": true
 		});
 	} else {
 		$('#RespelTable').DataTable({
 			"scrollX": false,
 			"autoWidth": true,
 			"keys": true,
-			"responsive": true,
-			"columnDefs": [{
-					"targets": 8,
-					"data": "RespelSlug",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/respels/" + data + "' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a>";
-					}
-				},
-				{
-					"targets": 4,
-					"data": "RespelHojaSeguridad",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-					}
-				},
-				{
-					"targets": 5,
-					"data": "RespelTarj",
-					"render": function(data, type, row, meta) {
-						return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-					}
-				}
-			]
+			"responsive": true
 		});
 	}
 

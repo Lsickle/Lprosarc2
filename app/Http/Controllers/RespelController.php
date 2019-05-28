@@ -88,20 +88,22 @@ class RespelController extends Controller
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
 
-            $Sede = DB::table('personals')
+            $UserSedeID = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
                 ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->get();
-                // return $Sede;
+                ->value('sedes.ID_Sede');
+            // return $UserSedeID;
+
             $Cotizacion = new Cotizacion();
             $Cotizacion->CotiNumero = 7;
             $Cotizacion->CotiFechaSolicitud = now();
             $Cotizacion->CotiDelete = 0;
             $Cotizacion->CotiStatus = "Pendiente";
-            $Cotizacion->FK_CotiSede = $Sede;
+            $Cotizacion->FK_CotiSede = $UserSedeID;
+            $Cotizacion->save();
+
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
@@ -111,27 +113,27 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = time().$file1->getClientOriginalName();
+                $hoja = now().$file1->getClientOriginalName();
                 $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
-                $hoja = 'RespelHojadefault.png';
+                $hoja = 'RespelHojaDefault.pdf';
             }
 
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = time().$file2->getClientOriginalName();
+                $tarj = now().$file2->getClientOriginalName();
                 $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
-                $tarj = 'RespelTarjetadefault.png';
+                $tarj = 'RespelTarjetaDefault.pdf';
             }
 
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto= time().$file3->getClientOriginalName();
-                $file3->move(public_path().'/img/fotoRespelCreate/',$tarj);
+                $foto= now().$file3->getClientOriginalName();
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
             }
@@ -139,10 +141,10 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = time().$file4->getClientOriginalName();
-                $file4->move(public_path().'/img/SustanciaControlDoc/',$tarj);
+                $ctrlDoc = now().$file4->getClientOriginalName();
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
             }else{
-                $ctrlDoc = 'SustanciaControlDocDefault.png';
+                $ctrlDoc = 'SustanciaControlDocDefault.pdf';
             }
 
             /*se verifica el rol de usuario para asignar un status al residuo*/
@@ -228,7 +230,7 @@ class RespelController extends Controller
                 unlink(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad);
             }
             $file = $request->file('RespelHojaSeguridad');
-            $name = time().$file->getClientOriginalName();
+            $name = now().$file->getClientOriginalName();
             $file->move(public_path().'/img/HojaSeguridad/',$name);
         }
         else{
@@ -240,7 +242,7 @@ class RespelController extends Controller
                 unlink(public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj);
             }
             $file = $request->file('RespelTarj');
-            $tarj = time().$file->getClientOriginalName();
+            $tarj = now().$file->getClientOriginalName();
             $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
         }
         else{
