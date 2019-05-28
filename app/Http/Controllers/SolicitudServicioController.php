@@ -265,6 +265,12 @@ class SolicitudServicioController extends Controller
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio[0]->ID_SolSer)
 			->get();
 			// return $Residuos;
+
+		// $Recursos = DB::table('solicitud_residuos')
+		// 	// ->join('solicitud_residuos', 'solicitud_residuos.FK_SolResSolSer', '=', 'solicitud_servicios.ID_SolSer')	
+		// 	->join('recursos', 'recursos.FK_RecSolRes', 'solicitud_residuos.ID_SolRes')
+		// 	->get();	
+		// 	return $Recursos;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos'));
 	}
 

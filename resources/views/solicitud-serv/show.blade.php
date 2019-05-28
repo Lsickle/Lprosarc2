@@ -161,7 +161,7 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 																<td>{{$Residuo->SolResKgEnviado}}</td>
 																<td>{{$Residuo->YRespelClasf4741.' - '.$Residuo->ARespelClasf4741}}</td>
 																<td><a href='/respels/{{$Residuo->RespelSlug}}' class='btn btn-block btn-primary'><i class="fas fa-biohazard"></i></a></td>
-																<td><a href='/respels/{{$Residuo->RespelSlug}}' class='btn btn-block btn-primary'><i class="fas fa-video"></i></a></td>
+																<td><a href='/recurso/{{$Residuo->SolResSlug}}' class='btn btn-block btn-primary'><i class="fas fa-video"></i></a></td>
 															</tr>
 														@endif
 													@endforeach
