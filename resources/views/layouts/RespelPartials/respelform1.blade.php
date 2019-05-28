@@ -104,7 +104,7 @@
 					<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 				</label>
 				<select id="selectDdeclaracion0" name="RespelDeclaracion[]" class="form-control" required>
-					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
+					<option value="" selected>{{ trans('adminlte_lang::LangRespel.select')}}</option>
 					<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>

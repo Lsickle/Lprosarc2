@@ -63,6 +63,7 @@
 					<a href="{{route('ClasificacionA')}}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
 		<select id="selectControl`+contador+`" name="SustanciaControlada[]" class="form-control" required>
+			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 			<option value="0" onclick="setNoControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
 			<option value="1" onclick="setControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
@@ -74,7 +75,7 @@
 			<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 		</label>
 		<select id="selectDdeclaracion`+contador+`" name="RespelDeclaracion[]" class="form-control" required>
-			<option value="0">{{ trans('adminlte_lang::LangRespel.select')}}</option>
+			<option value="" selected>{{ trans('adminlte_lang::LangRespel.select')}}</option>
 			<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>
