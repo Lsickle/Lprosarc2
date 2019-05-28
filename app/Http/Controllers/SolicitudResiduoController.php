@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\SolicitudResiduo;
 use App\audit;
 use App\Respel;
+use App\Recurso;
 use App\SolicitudServicio;
 
 
@@ -140,14 +141,8 @@ class SolicitudResiduoController extends Controller
     public function destroy($id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        SolicitudResiduo::destroy($SolRes->ID_SolRes);
-        // if ($SolRes->SolResDelete == 0) {
-        //     $SolRes->SolResDelete = 1;
-        // }
-        // else{
-        //     $SolRes->SolResDelete = 0;
-        // }
-        // $SolRes->save();
+        $Recursos = Recurso::where('FK_RecSolRes', $SolRes->ID_SolRes)->get();
+        $SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
         
         $log = new audit();
         $log->AuditTabla="solicitud_residuos";
@@ -157,7 +152,15 @@ class SolicitudResiduoController extends Controller
         $log->Auditlog=$SolRes->SolResDelete;
         $log->save();
 
-        return redirect()->route('recurso.show', compact('id');
+        foreach($Recursos as $Recurso){
+            unlink(public_path("img/Recursos/$Recurso->RecSrc")."/$Recurso->RecRmSrc");
+        }
+        rmdir(public_path("img/Recursos/").$Recursos[0]->RecSrc);
+
+        SolicitudResiduo::destroy($SolRes->ID_SolRes);
+        $id = $SolSer->SolSerSlug;
+
+        return redirect()->route('solicitud-servicio.show', compact('id'));
 
     }
 }
