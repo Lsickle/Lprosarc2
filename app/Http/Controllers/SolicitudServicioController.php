@@ -30,7 +30,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
 			$Residuos = SolicitudResiduo::all();
 			
 			$Servicios = DB::table('solicitud_servicios')
@@ -226,7 +226,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->save();
 			}
 		}
-		return redirect()->route('solicitud-servicio.index');
+		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
 
 	/**
@@ -245,7 +245,7 @@ class SolicitudServicioController extends Controller
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 			->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-			->select('clientes.CliNit', 'clientes.CliShortname', 'sedes.SedeAddress', 'municipios.MunName')
+			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
 			->where('clientes.ID_Cli', $SolicitudServicio->FK_SolSerCliente)
 			->first();
 		$GenerResiduos = DB::table('solicitud_residuos')
@@ -253,17 +253,15 @@ class SolicitudServicioController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
-			->select('gener_sedes.GSedeAddress','generadors.GenerNit', 'generadors.GenerName', 'municipios.MunName')
+			->select('gener_sedes.GSedeAddress', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','generadors.GenerSlug')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 			// return $GenerResiduos;
 
 		$Residuos = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-			->join('tratamientos', 'tratamientos.ID_Trat', '=', 'solicitud_residuos.FK_SolResTratamiento')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->select('solicitud_residuos.*', 'residuos_geners.FK_SGener', 'tratamientos.TratName','respels.*')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 			// return $Residuos;

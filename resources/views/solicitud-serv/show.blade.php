@@ -3,155 +3,168 @@
 Solicitud de Servicios
 @endsection
 @section('contentheader_title')
-Servicio {{-- {{$Servicio->ID_SolSer}} --}}
+Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
-@foreach($SolicitudServicio as $Servicio)
-@component('layouts.partials.modal')
-	{{$Servicio->SolSerSlug}}
-@endcomponent
+	@component('layouts.partials.modal')
+	{{$SolicitudServicio->SolSerSlug}}
+	@endcomponent
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="text-aline-center">
 					<div class="box-header with-border">
 						<div class="col-md-12">
-							@if($Servicio->SolSerDelete == 0)
-								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Servicio->SolSerSlug}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-								<form action='/solicitud-servicio/{{$Servicio->SolSerSlug}}' method='POST'>
-									@method('DELETE')
-									@csrf
-									<input  type="submit" id="Eliminar{{$Servicio->SolSerSlug}}" style="display: none;">
-								</form>
+							<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+							@if($SolicitudServicio->SolSerDelete == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
+							<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
+							</form>
 							@else
-								<form action='/solicitud-servicio/{{$Servicio->SolSerSlug}}' method='POST' style="float: right;">
-									@method('DELETE')
-									@csrf
-									<input type="submit" class='btn btn-success' value="Añadir">
-								</form>
+							<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST' style="float: left;">
+								@method('DELETE')
+								@csrf
+								<input type="submit" class='btn btn-success' value="Añadir">
+							</form>
 							@endif
-							<a href="/solicitud-servicio/{{$Servicio->SolSerSlug}}/edit" class="btn btn-warning">Editar</a>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
-							<div class="box box-primary">
-								<div class="col-md-12">
+						<div class="col-md-12 ">
+							<div class="box box-info">
+								<div class="col-md-12" style="margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
+									<div class="col-md-4">
+										<label>Fecha: </label>
+										<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
+									</div>
+									<div class="col-md-4">
+										<label>N° - {{$SolicitudServicio->ID_SolSer}}</label>
+									</div>
+									<div class="col-md-4">
+										<label>Auditable: </label>
+										<span>{{$SolicitudServicio->SolResAuditoriaTipo}}</span>
+									</div>
+									<hr>
 								</div>
-								<div class="col-md-5">
-									<label>Fecha: </label>
-									<span>{{date('Y-m-d',strtotime($Servicio->created_at))}}</span>
+								@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+									<div class="col-md-12 border-gray">
+										<div class="col-md-6">
+											<label>Empresa: </label><br>
+											<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliName}}</p>">{{$Cliente->CliName}}</a>
+										</div>
+										<div class="col-md-6">
+											<label>Nit: </label><br>
+											<a>{{$Cliente->CliNit}}</a>
+										</div>
+									</div>
+									<div class="col-md-12 border-gray">
+										<div class="col-md-6">
+											<label>Dirección: </label><br>
+											<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->SedeAddress}}</p>">{{$Cliente->SedeAddress}}</a>
+										</div>
+										<div class="col-md-6">
+											<label>Ciudad: </label><br>
+											<a>{{$Cliente->MunName}}</a>
+										</div>
+									</div>
+								@endif
+								<div class="col-md-12 border-gray">
+									<div class="col-md-6">
+										<label>Persona Acargo: </label><br>
+										<a>{{$SolicitudServicio->PersFirstName.' '.$SolicitudServicio->PersLastName}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Email: </label><br>
+										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->PersAddress}}</p>">{{$SolicitudServicio->PersAddress}}</a>
+									</div>
 								</div>
-								<div class="col-md-3">
-									<label>N° - {{$Servicio->ID_SolSer}}</label>
+								<div class="col-md-12 border-gray">
+									<div class="col-md-6">
+										<label>Empresa Transportadora: </label><br>
+										<a href="#" class="textpopover popover-left" style="text-align: left;" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerNameTrans}}</p>">{{$SolicitudServicio->SolSerNameTrans}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Nit Transportadora: </label><br>
+										<a>{{$SolicitudServicio->SolSerNitTrans}}</a>
+									</div>
 								</div>
-								<div class="col-md-4">
-									<label>Auditable: </label>
-									@if($Servicio->SolSerAuditable == 0)
-										<span>No</span>
-									@else
-										<span>Si</span>
-									@endif
+								<div class="col-md-12 border-gray">
+									<div class="col-md-6">
+										<label>Dirreción Transportadora:</label><br>
+										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerAdressTrans}}</p>">{{$SolicitudServicio->SolSerAdressTrans}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Ciudad Transportadora: </label><br>
+										<a>{{$SolicitudServicio->SolSerCityTrans}}</a>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<label>Empresa: </label>
-									<span>{{$Servicio->CliName}}</span>
+								<div class="col-md-12 border-gray">
+									<div class="col-md-6">
+										<label>Conductor: </label><br>
+										<a>{{$SolicitudServicio->SolSerConductor}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Vehiculo: </label><br>
+										<a>{{$SolicitudServicio->SolSerVehiculo}}</a>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<label>Dirección: </label>
-									<span>{{$Servicio->SedeAddress}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Nit: </label>
-									<span>{{$Servicio->CliNit}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Ciudad: </label>
-									<span>{{$Servicio->MunName}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Persona Acargo: </label>
-									<span>{{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Email: </label>
-									<span>{{$Servicio->PersAddress}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Empresa Transportadora: </label>
-									<span>{{$Servicio->SolSerNameTrans}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Dirreción: </label>
-									<span>{{$Servicio->SolSerAdressTrans}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Nit: </label>
-									<span>{{$Servicio->SolSerNitTrans}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Ciudad: </label>
-									<span>{{$Servicio->SolSerCityTrans}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Conductor: </label>
-									<span>{{$Servicio->SolSerConductor}}</span>
-								</div>
-								<div class="col-md-6">
-									<label>Vehiculo: </label>
-									<span>{{$Servicio->SolSerVehiculo}}</span>
-								</div>
-								<table class="table table-compact table-bordered table-striped SolResTable">
-									@foreach($GenerResiduos as $GenerResiduo)
-												<?php $Total = 0;?>
+								<div class="col-md-12" style="border-top:#00c0ef solid 3px; padding-top: 20px; margin-top: 20px;">
+									<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
+										@php 
+											$Contador = 1;
+											$TotalEnv = 0;
+											$TotalRec = 0;
+											$TotalCons = 0;
+										@endphp
 										<thead>
 											<tr>
-												<th colspan="6"></th>
-											</tr>
-											<tr>
-												<th colspan="3">Empresa: {{$GenerResiduo->GenerName}}</th>
-												<th colspan="3">Dirección: {{$GenerResiduo->GSedeAddress}}</th>
-											</tr>
-											<tr>
-												<th colspan="3">Nit: {{$GenerResiduo->GenerNit}}</th>
-												<th colspan="3">Ciudad: {{$GenerResiduo->MunName}}</th>
-											</tr>
-											<tr>
-												<th>Unidades</th>
+												<th>Generador</th>
 												<th>Residuo</th>
-												<th>Descripción</th>
-												<th>Tipo de Cantidad</th>
-												<th>Cantidad Enviada Kg</th>
-												<th>Clasificación</th>
-												<th>Ver Más</th>
+												<th>Embalaje</th>
+												<th>Cantidad <br> Enviada Kg</th>
+												<th>Cantidad <br> Recibida Kg</th>
+												<th>Cantidad <br> Conciliada Kg</th>
+												<th>Ver Detalles</th>
 											</tr>
 										</thead>
 										<tbody>
+										@foreach($GenerResiduos as $GenerResiduo)
 											@foreach($Residuos as $Residuo)
 												@if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
-													<?php $Total = $Residuo->SolResCateEnviado+$Total;?>
-													<tr>
-														<td>{{$Residuo->SolResUnidades}}</td>
-														<td>{{$Residuo->RespelName}}</td>
-														<td>{{$Residuo->RespelDescrip}}</td>
-														<td>{{$Residuo->SolResTipoCate}}</td>
-														<td>{{$Residuo->SolResCateEnviado}}</td>
-														<td>{{$Residuo->YRespelClasf4741.'-'.$Residuo->ARespelClasf4741}}</td>
-														<td><a href='/respels/{{$Residuo->RespelSlug}}' class='btn btn-block btn-success'>Ver Más</a></td>
-													</tr>
+													@php
+														$Contador++;
+														$TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
+														$TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
+														$TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
+													@endphp
+												<tr>
+													<td>{{$GenerResiduo->GenerShortname}} <a title="Ver Generador" href="/generadores/{{$GenerResiduo->GenerSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
+													<td>{{$Residuo->RespelName}} <a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
+													<td>{{$Residuo->SolResEmbalaje}}</td>
+													<td>{{$Residuo->SolResKgEnviado}}</td>
+													<td>{{$Residuo->SolResKgRecibido}}</td>
+													<td>{{$Residuo->SolResKgConciliado}}</td>
+													<td><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-block btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												</tr>
 												@endif
 											@endforeach
+										@endforeach
 										</tbody>
-										<thead>
+										<tfoot>
 											<tr>
-												<th colspan="4">Cantidad Total Enviada</th>
-												<th>{{$Total.' '}}Kg</th>
-												<th colspan="2"></th>
+												<th colspan="3">Cantidad Total</th>
+												<th class="text-center">{{$TotalEnv}} Kg</th>
+												<th class="text-center">{{$TotalRec}} Kg</th>
+												<th class="text-center">{{$TotalCons}} Kg</th>
+												<th></th>
 											</tr>
-										</thead>
-									@endforeach
-								</table>
+										</tfoot>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -159,5 +172,5 @@ Servicio {{-- {{$Servicio->ID_SolSer}} --}}
 			</div>
 		</div>
 	</div>
-@endforeach
+</div>
 @endsection

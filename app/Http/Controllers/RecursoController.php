@@ -25,6 +25,7 @@ class RecursoController extends Controller
             ->select('respels.RespelName', 'solicitud_residuos.FK_SolResSolSer', 'solicitud_residuos.SolResSlug')
             ->get();
 
+            // return redirect()->route('recursos.create');
         return view('recursos.index', compact('Recursos'));
     }
 
