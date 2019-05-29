@@ -30,7 +30,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
 			$Residuos = SolicitudResiduo::all();
 			
 			$Servicios = DB::table('solicitud_servicios')

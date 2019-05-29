@@ -10,6 +10,16 @@
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+
+
+	{{-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+	        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+	        crossorigin="anonymous">
+	</script> --}}
+<link rel="stylesheet" href="css/dnSlide.css">
+<script src="js/dnSlide.js"></script>
+
+
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
@@ -1742,4 +1752,23 @@ $(document).ready(function() {
 	});
 
 	</script>
+
+<script>
+	$(document).ready(function() {
+		$(".slider").dnSlide({
+			"isOddShow" : false , 
+			"width"     : 800, 
+			"height"    : 234, 
+			"dnSlideFirstWidth" : 600, 
+			"dnSlideFirstHeight" : 234, 
+			"autoPlay"  : false,
+			"delay"     : 5000,
+			"scale"     : 0.9,
+			"speed"     : 500,
+			"verticalAlign" : "middle", // or 'bottom', 'top'
+			"afterClickBtnFn" : null
+		});
+  	});
+</script>
+
 	@yield('NewScript')

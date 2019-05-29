@@ -102,7 +102,7 @@ class RecursoController extends Controller
             ->select('recursos.*', 'solicitud_residuos.SolResSlug')
             ->where('FK_RecSolRes', $SolRes->ID_SolRes)
             ->get();
-            // return $Recursos; 
+            // return $SolRes; 
 
         return view('recursos.show', compact('Recursos', 'SolRes'));
     }
@@ -185,8 +185,8 @@ class RecursoController extends Controller
                 
                 $name = time().$file->getClientOriginalName();
                 $Extension = $file->extension();
-                $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->ID_SolRes,$name);
-                $Src = $SolRes->CliName.$SolRes->ID_SolRes;
+                $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->ID_SolRes.date('Y-m-d'),$name);
+                $Src = $SolRes->CliName.$SolRes->ID_SolRes.date('Y-m-d');
                 
                 // $Recurso->RecName = $request->input("RecName");
                 $Recurso = new Recurso();
