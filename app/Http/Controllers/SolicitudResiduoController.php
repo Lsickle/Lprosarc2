@@ -141,10 +141,12 @@ class SolicitudResiduoController extends Controller
         $log->Auditlog=$SolRes->SolResDelete;
         $log->save();
 
-        foreach($Recursos as $Recurso){
-            unlink(public_path("img/Recursos/$Recurso->RecSrc")."/$Recurso->RecRmSrc");
+        if(is_null($Recursos)){
+            foreach($Recursos as $Recurso){
+                unlink(public_path("img/Recursos/$Recurso->RecSrc")."/$Recurso->RecRmSrc");
+            }
+            rmdir(public_path("img/Recursos/").$Recursos[0]->RecSrc);
         }
-        rmdir(public_path("img/Recursos/").$Recursos[0]->RecSrc);
 
         SolicitudResiduo::destroy($SolRes->ID_SolRes);
         $id = $SolSer->SolSerSlug;

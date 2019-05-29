@@ -165,7 +165,7 @@
 							<div id="Generador0" class="box box-success col-md-12">
 								<div class="form-group col-md-16">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserselectgener') }}</b>" data-content="{{ trans('adminlte_lang::message.solserselectgenerdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserselectgener') }}</label>
-									<button type="button" class="btn btn-box-tool" style="color: #00a65a;" data-toggle="collapse" data-target="#DivRepel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+									<button type="button" class="btn btn-box-tool collapsed" style="color: #00a65a;" data-toggle="collapse" data-target=".Respel0" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 									<small class="help-block with-errors">*</small>
 									<select name="SGenerador[0]" id="SGenerador" class="form-control" required="">
 										<option onclick="HiddenResiduosGener(0)" value="">{{ trans('adminlte_lang::message.select') }}</option>
@@ -175,7 +175,7 @@
 									</select>
 									<br>
 								</div>
-								<div id="DivRepel0" class="col-md-16 collapse in">
+								<div id="DivRepel0" class="col-md-16">
 								</div>
 							</div>
 							<div id="AddGenerador" class="col-md-16">
