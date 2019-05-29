@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'name'     => $data['name'],
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
-                'UsSlug'   => substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."ProsarcSAESP".substr(md5(rand()), 0,32).substr(md5(rand()), 0,32),
+                'UsSlug'   => md5(now().$data['email'].rand())."SiRes".md5(now().$data['name'].rand())."ProsarcSAESP"
                 'UsRol'    => "Cliente",
                 'UsRolDesc'    => "Cliente General",
                 'UsRol2'    => "Usuario",
