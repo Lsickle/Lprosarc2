@@ -19,7 +19,7 @@ class AddSomeColumnToRespelsTable extends Migration
             $table->boolean('SustanciaControladaTipo')->nullable(); /*sustancia controlada=1 o sustancia de uso masivo=0*/
             $table->string('SustanciaControladaNombre', 128)->nullable();
             $table->string('SustanciaControladaDocumento', 128)->nullable(); /*nombre de archivo para certificado de carencia o certificado de registro*/
-            $table->string('RespelDeclaracion', 128); /*el cliente declara que la informacion del residuo es real y valida*/
+            $table->boolean('RespelDeclaracion'); /*el cliente declara que la informacion del residuo es real y valida*/
         });
     }
 

@@ -1,14 +1,19 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Solicitud de Servicios
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	@component('layouts.partials.modal')
-	{{$SolicitudServicio->SolSerSlug}}
+		@slot('slug')
+			{{$SolicitudServicio->SolSerSlug}}
+		@endslot
+		@slot('textModal')
+			la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>
+		@endslot
 	@endcomponent
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
@@ -35,7 +40,7 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 				<div class="row">
 					<div class="col-md-12 ">
 						<div class="box box-info">
-							<div class="col-md-12" style="margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
+							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-4">
 									<label>Fecha: </label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
@@ -87,31 +92,86 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 									<a href="#" class="textpopover popover-left" style="text-align: left;" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerNameTrans}}</p>">{{$SolicitudServicio->SolSerNameTrans}}</a>
 								</div>
 								<div class="col-md-6">
+									<button type="button" class="btn btn-box-tool collapsed" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
 									<label>Nit Transportadora: </label><br>
 									<a>{{$SolicitudServicio->SolSerNitTrans}}</a>
 								</div>
 							</div>
-							<div class="col-md-12 border-gray">
-								<div class="col-md-6">
-									<label>Dirreción Transportadora:</label><br>
-									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerAdressTrans}}</p>">{{$SolicitudServicio->SolSerAdressTrans}}</a>
+							<div class="col-md-16">
+								<div class="col-md-12 border-gray collapse Transportadora">
+									<div class="col-md-6">
+										<label>Dirreción Transportadora:</label><br>
+										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerAdressTrans}}</p>">{{$SolicitudServicio->SolSerAdressTrans}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Ciudad Transportadora: </label><br>
+										<a>{{$SolicitudServicio->SolSerCityTrans}}</a>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<label>Ciudad Transportadora: </label><br>
-									<a>{{$SolicitudServicio->SolSerCityTrans}}</a>
+								<div class="col-md-12 border-gray collapse Transportadora">
+									<div class="col-md-6">
+										<label>Conductor: </label><br>
+										<a>{{$SolicitudServicio->SolSerConductor}}</a>
+									</div>
+									<div class="col-md-6">
+										<label>Vehiculo: </label><br>
+										<a>{{$SolicitudServicio->SolSerVehiculo}}</a>
+									</div>
 								</div>
 							</div>
-							<div class="col-md-12 border-gray">
-								<div class="col-md-6">
-									<label>Conductor: </label><br>
-									<a>{{$SolicitudServicio->SolSerConductor}}</a>
-								</div>
-								<div class="col-md-6">
-									<label>Vehiculo: </label><br>
-									<a>{{$SolicitudServicio->SolSerVehiculo}}</a>
+							<div class="col-md-12" style="margin: 10px 0;">
+								<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
+								<div class="col-md-12" style="border: 2px dashed #00c0ef">
+									<div class="col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+											<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" {{ $SolicitudServicio->SolSerBascula <> null ? 'checked' : '' }} disabled="">
+											</div>
+										</label>
+									</div>
+									<div class="col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+											<label for="SolSerCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{ $SolicitudServicio->SolSerCapacitacion <> null ? 'checked' : '' }} disabled="">
+											</div>
+										</label>
+									</div>
+									<div class="col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+											<label for="SolSerMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{ $SolicitudServicio->SolSerMasPerson <> null ? 'checked' : '' }} disabled="">
+											</div>
+										</label>
+									</div>
+									<div class="col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+											<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{ $SolicitudServicio->SolSerPlatform <> null ? 'checked' : '' }} disabled="">
+											</div>
+										</label>
+									</div>
+									<div class="col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
+											<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch" id="SolSerDevolucion" name="SolSerDevolucion" {{ $SolicitudServicio->SolSerDevolucion <> null ? 'checked' : '' }}disabled="">
+											</div>
+										</label>
+									</div>
+									<div class="form-group col-md-4" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>">
+											<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
+											<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ $SolicitudServicio->SolSerDevolucionTipo}}" disabled="">
+											<small class="help-block with-errors"></small>
+										</label>
+									</div>
 								</div>
 							</div>
-							<div class="col-md-12" style="border-top:#00c0ef solid 3px; padding-top: 20px; margin-top: 20px;">
+							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
 								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
 									@php 
 										$Contador = 1;
@@ -128,6 +188,7 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 											<th>Cantidad <br> Recibida Kg</th>
 											<th>Cantidad <br> Conciliada Kg</th>
 											<th>Ver Detalles</th>
+											<th>Eliminar</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -147,7 +208,8 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 												<td>{{$Residuo->SolResKgEnviado}}</td>
 												<td>{{$Residuo->SolResKgRecibido}}</td>
 												<td>{{$Residuo->SolResKgConciliado}}</td>
-												<td><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-block btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
 											</tr>
 											@endif
 										@endforeach
@@ -159,10 +221,11 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 											<th style="text-align: right;">{{$TotalEnv}} Kg</th>
 											<th style="text-align: right;">{{$TotalRec}} Kg</th>
 											<th style="text-align: right;">{{$TotalCons}} Kg</th>
-											<th></th>
+											<th colspan="2"></th>
 										</tr>
 									</tfoot>
 								</table>
+								<div id="ModalDeleteRespel"></div>
 							</div>
 						</div>
 					</div>
@@ -171,4 +234,26 @@ Servicio {{-- {{$SolicitudServicio->ID_SolSer}} --}}
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+	<script>
+		function ModalDeleteRespel(slug, respel, generador){
+			$('#ModalDeleteRespel').empty();
+			$('#ModalDeleteRespel').append(`
+			@component('layouts.partials.modal')
+				@slot('slug')
+					`+slug+`
+				@endslot
+				@slot('textModal')
+					el residuo <b>`+respel+`</b> del generador <b>`+generador+`</b> de esta solicitud
+				@endslot
+			@endcomponent
+			<form action="/solicitud-residuo/`+slug+`" method="POST">
+				@method('DELETE')
+				@csrf
+				<input type="submit" id="Eliminar`+slug+`" style="display: none;">
+			</form>`);
+			$('#myModal'+slug).modal();
+		}
+	</script>
 @endsection

@@ -34,7 +34,7 @@
 								@endif
 								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
 									<div class="col-md-12 form-group">
-										<label for="Sede">Cliente</label>
+										<label for="Sede">Sede del cliente</label>
 										<select name="Sede" id="Sede" class="form-control" required>
 											<option value="">Seleccione</option>
 											@foreach($Sedes as $Cliente)
@@ -49,8 +49,8 @@
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<a onclick="AgregarRes()" class="btn btn-success">Agregar Residuo</a>
-										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Registrar</button>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Registrar</button>
+										<a onclick="AgregarRes()" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Agregar Residuo</a>	
 									</div>
 								</div>
 							</form>

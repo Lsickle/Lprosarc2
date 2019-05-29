@@ -44,6 +44,11 @@ a.textpopover{
 .fa-copy{
 	cursor: pointer;
 }
+.form-control{
+	height: auto;
+	/*margin-bottom: 0;*/
+	max-height: 2.4em;
+}
 select.form-control{
 	background-color: #fff;
 	border: 1px solid #aaa;
@@ -66,4 +71,8 @@ select.form-control{
 	line-height: 28px;
 	height: auto;
 	padding-top: 2px;
+}
+.size-img{
+	width:120px; 
+	height:120px;
 }

@@ -1,6 +1,6 @@
-{{-- <input type="text" hidden="" name="SControlada[]" value="">
- --}}
-<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">Nombre de la sustancia</label>
+<input type="text" hidden="" name="SustanciaControladaTipo[]" value="0">
+
+<label>Nombre de la sustancia</label>
 <select name="SustanciaControladaNombre[]" class="form-control" required>
 	<option value="Acetato de butilo">Acetato de butilo</option>
 	<option value="Acetato de etilo">Acetato de etilo</option>

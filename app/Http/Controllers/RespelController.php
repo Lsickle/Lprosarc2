@@ -14,6 +14,7 @@ use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Hash;
 class RespelController extends Controller
 {
     /**
@@ -21,7 +22,14 @@ class RespelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){ 
+    public function index(){
+        /*se define la sede del usuario actual*/
+        $UserSedeID = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->value('sedes.ID_Sede');
 
         if(Auth::user()->UsRol === "Programador"){
             $Respels = DB::table('respels')
@@ -30,8 +38,16 @@ class RespelController extends Controller
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.*', 'clientes.CliName')
             ->get();
-
-            return view('respels.index', compact('Respels'));
+        }
+        elseif(Auth::user()->UsRol === "Cliente"){
+            $Respels = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.CliName')
+            ->where('respels.RespelDelete',0)
+            ->where('sedes.ID_Sede', $UserSedeID)
+            ->get();
         }
         else{
             $Respels = DB::table('respels')
@@ -82,72 +98,93 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        return $request;
-        $validaciones = $request->validate([
-            'RespelName' => 'required',
-            'RespelIgrosidad' => 'required',
-            'RespelEstado' => 'required',
-            // 'RespelHojaSeguridad' => 'required',
-        ]);
+        // return $request;
+
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
 
-            $Sede = DB::table('personals')
+            $UserSedeID = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
                 ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->get();
-                // return $Sede;
+                ->value('sedes.ID_Sede');
+            // return $UserSedeID;
+
             $Cotizacion = new Cotizacion();
             $Cotizacion->CotiNumero = 7;
             $Cotizacion->CotiFechaSolicitud = now();
             $Cotizacion->CotiDelete = 0;
             $Cotizacion->CotiStatus = "Pendiente";
-            $Cotizacion->FK_CotiSede = $Sede;
+            $Cotizacion->FK_CotiSede = $UserSedeID;
+            $Cotizacion->save();
+
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
-            if (isset($request['RespelHojaSeguridad'][$x])) {
-                $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = time().$file1->getClientOriginalName();
-                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
-            }
-            else{
-                $hoja = 'hojadefault.png';
-            }
-
-            if (isset($request['RespelTarj'][$x])) {
-                $file2 = $request['RespelTarj'][$x];
-                $tarj = time().$file2->getClientOriginalName();
-                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
-            }else{
-                $tarj = 'default.png';
-            }
 
 
             $respel = new Respel();
+
+            if (isset($request['RespelHojaSeguridad'][$x])) {
+                $file1 = $request['RespelHojaSeguridad'][$x];
+                $hoja = Hash::make(now().$file1->getClientOriginalName());
+                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+            }
+            else{
+                $hoja = 'RespelHojaDefault.pdf';
+            }
+
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelTarj'][$x])) {
+                $file2 = $request['RespelTarj'][$x];
+                $tarj = Hash::make(now().$file2->getClientOriginalName());
+                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+            }else{
+                $tarj = 'RespelTarjetaDefault.pdf';
+            }
+
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelFoto'][$x])) {
+                $file3 = $request['RespelFoto'][$x];
+                $foto= Hash::make(now().$file3->getClientOriginalName());
+                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+            }else{
+                $foto = 'RespelFotoDefault.png';
+            }
+    
+            /*verificar si se cargo un documento en este campo*/
+            if (isset($request['SustanciaControladaDocumento'][$x])) {
+                $file4 = $request['SustanciaControladaDocumento'][$x];
+                $ctrlDoc = Hash::make(now().$file4->getClientOriginalName());
+                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+            }else{
+                $ctrlDoc = 'SustanciaControlDocDefault.pdf';
+            }
+
+            /*se verifica el rol de usuario para asignar un status al residuo*/
+            if (Auth::user()->UsRol=='Cliente'||Auth::user()->UsRol=='Programador') {
+                $statusinicial="Pendiente";
+            }
             $respel->RespelName = $request['RespelName'][$x];
             $respel->RespelDescrip = $request['RespelDescrip'][$x];
-            
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
-            /*validar la peligrosidad del residuo para insertar o no la clasificacion*/
-            if ($request['RespelIgrosidad'][$x]== 'No peligroso') {
-                $respel->YRespelClasf4741 = 'N/A';
-                $respel->ARespelClasf4741 = 'N/A';
-            }else{
-                $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
-                $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
-            }
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
             $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
-            $respel->RespelStatus = 'Pendiente';
+            $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
+            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
+            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
+            $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
+            $respel->RespelFoto = $foto;
+            $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = "slug".$request['RespelName'][$x].date('YmdHis');
+            $respel->RespelSlug = Hash::make(now().$request['RespelName'][$x]);
             $respel->RespelDelete = 0;
+            $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
         }
         return redirect()->route('respels.index');
@@ -162,6 +199,9 @@ class RespelController extends Controller
     public function show($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+
+        $ResiduoConDependencia = Respel::where('RespelSlug', $id)->first();
+        return $ResiduoConDependencia;
 
         return view('respels.show', compact('Respels'));
     }
@@ -202,28 +242,31 @@ class RespelController extends Controller
     {
         // return $request;
         $Respels = Respel::where('ID_Respel', $id)->first();
+
         if ($request->hasfile('RespelHojaSeguridad')) {
-            if(file_exists(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
-                unlink(public_path().'/img/HojaSeguridad/'.$Respels->RespelHojaSeguridad);
+            if(file_exists(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
+                unlink(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad);
             }
             $file = $request->file('RespelHojaSeguridad');
-            $name = time().$file->getClientOriginalName();
-            $file->move(public_path().'/img/HojaSeguridad/',$name);
+            $name = now().$file->getClientOriginalName();
+            $file->move(public_path().'\img\HojaSeguridad/',$name);
         }
         else{
             $name = $Respels->RespelHojaSeguridad;
         }
+
         if ($request->hasfile('RespelTarj')) {
-            if(file_exists (public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj)){
-                unlink(public_path().'/img/TarjetaEmergencia/'.$Respels->RespelTarj);
+            if(file_exists (public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj)){
+                unlink(public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj);
             }
             $file = $request->file('RespelTarj');
-            $tarj = time().$file->getClientOriginalName();
-            $file->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+            $tarj = now().$file->getClientOriginalName();
+            $file->move(public_path().'\img\TarjetaEmergencia/',$tarj);
         }
         else{
             $tarj = $Respels->RespelTarj;
         }
+
         $Respels->RespelName = $request->input('RespelName');
         $Respels->RespelDescrip = $request->input('RespelDescrip');
         $Respels->YRespelClasf4741 = $request->input('YRespelClasf4741');
