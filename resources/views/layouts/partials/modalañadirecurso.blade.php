@@ -4,6 +4,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div style="font-size: 2em; text-align: center; margin: auto;">
+                        <i class="fas fa-plus-circle"></i>
                         <span style=" color: black;"><p>Añadir nuevo Recurso</p></span>
                     </div>
                 
@@ -35,10 +36,10 @@
                         <div class="col-md-12">
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary pull-right">Guardar</button>
-                                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+                                {{-- <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button> --}}
                             </div>
                         </div> 
-                        <input hidden value="1" name="number">
+                        {{-- <input hidden value="1" name="number"> --}}
                 </div>
             </div>
         </div>
