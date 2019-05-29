@@ -47,7 +47,6 @@ a.textpopover{
 }
 .form-control{
 	height: auto;
-	/*margin-bottom: 0;*/
 	max-height: 2.4em;
 }
 select.form-control{

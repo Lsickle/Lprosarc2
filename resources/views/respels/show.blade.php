@@ -43,8 +43,28 @@ Respel-Tratamiento
 									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
 								</select>
 							</li>
+							<li class="list-group-item">
+								{{-- hoja de seguridad --}}
+								@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
+									<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Hoja de Seguridad</a>
+								@else
+									<a href='#' target='_blank' class='btn btn-default btn-block'><i class='fas fa-ban fa-lg'></i>No Adjuntado</a>
+								@endif
+								{{-- tarjeta de emergencia --}}
+								@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
+									<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Tarjeta De Emergencia</a>
+								@else
+									<a href='#' target='_blank' class='btn btn-default btn-block'><i class='fas fa-ban fa-lg'></i>No Adjuntado</a>
+								@endif
+								{{-- fotografia del residuo --}}
+								@if($Respels->RespelFoto!=='RespelFotoDefault.png')
+									<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Fotografía del Residuo</a>
+								@else
+									<a href='#' target='_blank' class='btn btn-default btn-block'><i class='fas fa-ban fa-lg'></i>No Adjuntado</a>
+								@endif
+							</li>
 						</ul>
-						<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Hoja de Seguridad</a>
+						
 						{{-- <br>
 						<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-danger btn-block'><i class='fas fa-file-pdf fa-2x'></i> Tarj de Emergencia</a> --}}
 					</div>
@@ -81,37 +101,37 @@ Respel-Tratamiento
 								</li>
 							</ul>
 							<!-- nav-content -->
-							<div class="tab-content" style="min-height:40vh;">
+							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuopane">
-									<div class="form-horizontal">
-										@include('layouts.respel-comercial.respel-residuo')
+									<div class="">
+										@include('layouts.respel-cliente.respel-residuo')
 									</div>
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade " id="Tratamientospane">
-									@include('layouts.respel-comercial.respel-tratamiento')
+									@include('layouts.respel-cliente.respel-tratamiento')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
-									@include('layouts.respel-comercial.respel-requerimiento')
+									@include('layouts.respel-cliente.respel-requerimiento')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="tarifaspane">
 									<div class="form-horizontal">
-										@include('layouts.respel-comercial.respel-tarifas')
+										@include('layouts.respel-cliente.respel-tarifas')
 									</div>
 								</div>
 								<!-- /.tab-pane fade -->
 							</div>
 							<!-- /.tab-content -->
 						</div>
-						<div class="row">
+						{{-- <div class="row">
 							 <input class="btn btn-primary pull-right" type="submit" value="Actualizar" style="margin-right:5em" />
-						</div>
+						</div> --}}
 						<!-- /.nav-tabs-custom -->
 					</div>
 					<!-- /.box body -->
@@ -231,5 +251,5 @@ Respel-Tratamiento
 				</div>
 			</div>
 		</div>
-	@endsection
+	No Adjuntado@endsection
 @endif
