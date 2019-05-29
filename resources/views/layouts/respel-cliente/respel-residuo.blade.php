@@ -89,7 +89,7 @@
 @if($Respels->RespelFoto!=='RespelFotoDefault.png')
 	<div class="col-md-6 form-group">
 
-			<label>Fotografía del residuo</label>
+			<label>Fotografía del Residuo</label>
 			<div class="input-group">
 				<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 				<div class="input-group-btn">
