@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('htmlheader_title', 'Respel')
+@section('htmlheader_title', 'Información de Residuo')
 
 @section('main-content')
 	@component('layouts.partials.modal')

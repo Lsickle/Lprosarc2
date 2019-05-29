@@ -200,6 +200,9 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
 
+        $ResiduoConDependencia = Respel::where('RespelSlug', $id)->first();
+        return $ResiduoConDependencia;
+
         return view('respels.show', compact('Respels'));
     }
 
