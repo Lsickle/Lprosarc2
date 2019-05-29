@@ -92,7 +92,7 @@
 									<a href="#" class="textpopover popover-left" style="text-align: left;" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerNameTrans}}</p>">{{$SolicitudServicio->SolSerNameTrans}}</a>
 								</div>
 								<div class="col-md-6">
-									<button type="button" class="btn btn-box-tool collapsed" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+									<button type="button" class="btn btn-box-tool boton" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" onclick="AnimationMenusForm('.Transportadora')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 									<label>Nit Transportadora: </label><br>
 									<a>{{$SolicitudServicio->SolSerNitTrans}}</a>
 								</div>
@@ -120,8 +120,11 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="margin: 10px 0;">
-								<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
-								<div class="col-md-12" style="border: 2px dashed #00c0ef">
+								<center>
+									<label>{{ trans('adminlte_lang::message.requirements') }}</label>
+									<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
+								</center>
+								<div class="col-md-12 collapse Requerimientos" style="border: 2px dashed #00c0ef">
 									<div class="col-md-4" style="text-align: center;">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 											<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
@@ -202,7 +205,7 @@
 													$TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
 												@endphp
 											<tr>
-												<td>{{$GenerResiduo->GenerShortname}} <a title="Ver Generador" href="/generadores/{{$GenerResiduo->GenerSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
+												<td>{{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}} <a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
 												<td>{{$Residuo->RespelName}} <a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td>{{$Residuo->SolResKgEnviado}}</td>

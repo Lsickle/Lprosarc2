@@ -391,6 +391,9 @@ function OtraTransportadora() {
 var contadorGenerador = 1;
 var contadorRespel = [];
 function HiddenResiduosGener(id_div){
+	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
+	$(icon).removeClass('fa-minus');
+	$(icon).addClass('fa-plus');
 	$("#DivRepel"+id_div).empty();
 }
 function Checkboxs(){
@@ -425,6 +428,9 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
+	$(icon).removeClass('fa-plus');
+	$(icon).addClass('fa-minus');
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {

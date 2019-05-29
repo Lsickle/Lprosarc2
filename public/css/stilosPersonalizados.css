@@ -84,3 +84,10 @@ select.form-control{
 .border-gray{
 	border-bottom:#f4f4f4 solid 2px;
 }
+.boton{
+	font-size: 1.2em;
+	opacity: 0.5 !important;
+}
+.boton:hover{
+	opacity: 1 !important;
+}
