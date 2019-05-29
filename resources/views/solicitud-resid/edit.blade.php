@@ -14,8 +14,8 @@ Editar Solicitud de Residuo
                     <h3 class="box-title">Datos</h3>
 				</div>
                 <div class="box box-info">
-                    <form role="form" action="/solicitud-residuo/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
-                        @method('PUT')
+                    <form role="form" action="solicitud-residuo/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="form">
+                        @method('PATCH')
                         @csrf
                         <div class="box-body">
                             <div class="form-group col-md-12">
@@ -23,14 +23,14 @@ Editar Solicitud de Residuo
                                 {{-- <button type="button" class="btn btn-box-tool" style="color: #f39c12;" data-toggle="collapse" data-target="#RespelData" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button> --}}
                                 <small class="help-block with-errors">*</small>
                                 <select name="FK_SolResSolSer" id="FK_SolResSolSer" class="form-control" required>
-                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                                    {{-- @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) --}}
                                         <option value="{{$Respel->ID_Respel}}" {{ $SolRes->FK_SolResSolSer == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
-                                    @else
+                                    {{-- @else
                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                         @foreach ($Respels as $Respel)
                                             <option value="{{$Respel->ID_Respel}}" {{ $RespelSgener->FK_Respel == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
                                         @endforeach
-                                    @endif
+                                    @endif --}}
                                 </select>
                             </div>
                             <div class="collapse in">
@@ -46,9 +46,15 @@ Editar Solicitud de Residuo
                                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }} (Unidades)</label>
                                     <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResCantiUnidad}}">
                                 </div>
-                                <div id="cantidadresiduos">
-
+                                <div class="form-group col-md-6">
+                                    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
+                                    <small class="help-block with-errors">*</small>
+                                    <input type="text" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
                                 </div>
+
+                                <div id="cantidadresiduos">
+                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserembaja') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserembaja') }}</label>
                                     <small class="help-block with-errors">*</small>
@@ -148,38 +154,35 @@ Editar Solicitud de Residuo
 <script>
     $(document).ready(function (){
         $("#cantidadresiduos").append(`
+            
             <div class="form-group col-md-6">
-                <label>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
-                <small class="help-block with-errors">*</small>
-                <input type="text" disabled class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
+                <label>Tratado</label><small class="help-block with-errors">*</small>
+                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgTratado}}" required>
             </div>
             <div class="form-group col-md-6">
-                <label>Tratado</label>
-                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgTratado}}">
+                <label>Conciliado</label><small class="help-block with-errors">*</small>
+                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgConciliado}}" required>
             </div>
             <div class="form-group col-md-6">
-                <label>Conciliado</label>
-                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgConciliado}}">
-            </div>
-            <div class="form-group col-md-6">
-                <label>Resivido</label>
-                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgRecibido}}">
+                <label>Resivido</label><small class="help-block with-errors">*</small>
+                <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResKgRecibido}}" required>
             </div>
         `);
         $('#FK_SolResSolSer').prop('disabled', true);
         $('#SolResTypeUnidad').prop('disabled', true);
         $('#SolResCantiUnidad').prop('disabled', true);
         $('#SolResEmbalaje').prop('disabled', true);
+        $('#SolResKgEnviado').prop('disabled', true);
 
-        $('#SolResVideoTratamiento').boostrapSwitch('disabled', true);
-        // $('.SolResFotoTratamiento').prop('disabled', true);
-        // $('.SolResVideoDescargue_Pesaje').prop('disabled', true);
-        // $('.SolResVideoTratamiento').prop('disabled', true);
-        // $('.form').validate('updated');
+        $('#SolResFotoDescargue_Pesaje').bootstrapSwitch('disabled', true);
+        $('#SolResFotoTratamiento').bootstrapSwitch('disabled', true);
+        $('#SolResVideoDescargue_Pesaje').bootstrapSwitch('disabled', true);
+        $('#SolResVideoTratamiento').bootstrapSwitch('disabled', true);
+        // $('#form').validator('update');
 
     });
 </script>
-@else
+{{-- @else
 <script>
     $(document).ready(function(){
         $("#cantidadresiduos").append(`
@@ -190,7 +193,7 @@ Editar Solicitud de Residuo
             </div>
         `);
     });
-</script>
+</script> --}}
 
 @endif
 

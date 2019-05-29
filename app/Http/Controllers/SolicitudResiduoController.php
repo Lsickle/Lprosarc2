@@ -68,7 +68,7 @@ class SolicitudResiduoController extends Controller
      */
     public function show($id)
     {
-        //
+        //comparte show con recursos
     }
 
     /**
@@ -84,27 +84,27 @@ class SolicitudResiduoController extends Controller
             $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
             $RespelSgener = ResiduosGener::where('ID_SGenerRes', $SolRes->FK_SolResRg)->first();
 
-            if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+            // if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                 $Respel = DB::table('respels')
                     ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
                     ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
                     ->select('respels.ID_Respel', 'respels.RespelName')
                     ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
                     ->first();
-            }else{
+            // }else{
 
-                $Respels = DB::table('solicitud_residuos')
-                    ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-                    ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                    ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-                    ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-                    ->select('respels.ID_Respel', 'respels.RespelName', 'clientes.ID_Cli', 'residuos_geners.FK_SGener')
-                    ->where('solicitud_residuos.SolResSlug', $id)
-                    // ->where('respels.RespelStatus', '=', "Aprobado")
-                    ->where('respels.RespelDelete', '=', 0)
-                    ->get();
-            }
-            return view('solicitud-resid.edit', compact('SolRes', 'Respels', 'Respel', 'RespelSgener'));
+            //     $Respels = DB::table('solicitud_residuos')
+            //         ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
+            //         ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+            //         ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            //         ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            //         ->select('respels.ID_Respel', 'respels.RespelName', 'clientes.ID_Cli', 'residuos_geners.FK_SGener')
+            //         ->where('solicitud_residuos.SolResSlug', $id)
+            //         // ->where('respels.RespelStatus', '=', "Aprobado")
+            //         ->where('respels.RespelDelete', '=', 0)
+            //         ->get();
+            // }
+            return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener'));
         }
     }
 
