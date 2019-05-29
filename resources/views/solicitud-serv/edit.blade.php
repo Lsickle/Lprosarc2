@@ -1,278 +1,586 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Solicitud de servicio
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-Editar Solicitud de servicio
+{{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
-    <div class="row">
-        <div class="col-md-16 col-md-offset-0">
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Datos</h3>
-                </div>
-                <div class="row">
-                    <!-- left column -->
-                    <div class="col-md-12">
-                        <!-- general form elements -->
-                        <div class="box box-primary">
-                            <!-- form start -->
-                            <form role="form" id="form1" action="/solicitud-servicio/{{$id}}" method="POST">
-                                @method('PATCH')
-                                @csrf
-                                <div class="col-md-6">
-                                    <label for="FK_SolSerCliente">Cliente</label>
-                                    <select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required>
-                                        <option value="{{$Cliente->ID_Cli}}">{{$Cliente->CliName}}</option>
-                                        @foreach ($Clientes as $Cliente)
-                                            <option value="{{$Cliente->ID_Cli}}">{{$Cliente->CliName}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="FK_SolSerPersona">Persona</label>
-                                    <select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required>
-                                        <option value="{{$Persona->ID_Pers}}">{{$Persona->PersFirstName.' '.$Persona->PersLastName}}</option>
-                                        @foreach ($Personal as $Persona)
-                                            <option value="{{$Persona->ID_Pers}}">{{$Persona->PersFirstName.' '.$Persona->PersLastName}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="SolSerTipo">Tipo</label>
-                                    <select class="form-control" name="SolSerTipo" id ="SolSerTipo" required="true">
-                                        <option {{ $Solicitud->SolSerTipo == 'Interno' ? 'selected' : '' }}>Interno</option>
-                                        <option {{ $Solicitud->SolSerTipo == 'Alquilado' ? 'selected' : '' }}>Alquilado</option>
-                                        <option {{ $Solicitud->SolSerTipo == 'Externo' ? 'selected' : '' }}>Externo</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="Fk_SolSerTransportador">Sede</label>
-                                    <select class="form-control" id="Fk_SolSerTransportador" name="Fk_SolSerTransportador" required>
-                                        <option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
-                                        @foreach ($Sedes as $Sede)
-                                            <option value="{{$Sede->ID_Sede}}">{{$Sede->SedeName}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="SolSerConducExter">Nombre del conductor externo</label>
-                                    <input type="text" class="form-control" id="SolSerConducExter" value="{{$Solicitud->SolSerConducExter}}" name="SolSerConducExter">
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <label for="SolSerVehicExter">Placa del vehiculo externo</label>
-                                    <input type="text" class="form-control" id="SolSerVehicExter" value="{{$Solicitud->SolSerVehicExter}}" name="SolSerVehicExter">
-                                </div>
-                                <div class="col-md-6" style="padding-top: 2%; text-align: center;">
-                                    <label for="SolSerAuditable">Auditable</label>
-                                    @if($Solicitud->SolSerAuditable == 1)
-                                        <input class="AllowUncheck" type="radio" checked="" name="SolSerAuditable"/>
-                                    @else
-                                        <input class="AllowUncheck" type="radio" name="SolSerAuditable"/>
-                                    @endif
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="SolResAuditoriaTipo">Tipo de auditoria</label>
-                                    <select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Virtual">Virtual</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6" style="padding-top: 2%; text-align: center;">
-                                    <label for="inputcheck">¿Usara de nuevo la solicitud?</label>
-                                    @if($Solicitud->SolSerFrecuencia <> null)
-                                        <input class="CalendarSwitch" type="radio" checked="" name="ReqAuditoriaTipo"/>
-                                    @else
-                                        <input class="CalendarSwitch" type="radio" name="ReqAuditoriaTipo"/>
-                                    @endif
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="SolSerFrecuencia">Frecuencia de recolecta</label>
-                                    <input type="text" class="form-control" id="SolSerFrecuencia" placeholder="15 días" value="{{$Solicitud->SolSerFrecuencia}}" name="SolSerFrecuencia"><br><br>
-                                </div>
-                                <div class="col-md-12" style="text-align: center;">
-                                    <b>RESIDUOS A ENTREGAR</b>
-                                </div>
-                                @foreach($GenerResiduos as $GenerResiduo)
-                                    <div id="divGenerRes">
-                                        <div id="GenerRes">
-                                            <div class="col-md-12">
-                                                <label for="">Seleccione el generador</label>
-                                                <select name="SGenerador[]" id="SGenerador" class="form-control">
-                                                    <option value="{{$GenerResiduo->ID_GSede}}">{{$GenerResiduo->GSedeName}}</option>
-                                                    @foreach($SGeneradors->where('ID_GSede', '<>', $GenerResiduo->ID_GSede)->get() as $SGenerador)
-                                                        <option value="{{$SGenerador->ID_GSede}}">{{$SGenerador->GSedeName}}</option>
-                                                    @endforeach
-                                                </select><br>
-                                            </div>
-                                            <div class="divRes">
-                                                <div id="divResiduos">
-                                                    <div class="col-md-3">
-                                                        <br><br><br>
-                                                        <label>Residuos</label><hr>
-                                                        <div id="divRespel">
-                                                            @foreach($Residuos as $Residuo)
-                                                                @if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
-                                                                    <select name="Respel[][]" id="Respel"class="form-control">
-                                                                        <option value="{{$Residuo->ID_Respel}}">{{$Residuo->RespelName}}</option>
-                                                                        @foreach($Respels->get() as $Respel)
-                                                                            @if($Respel->ID_Respel <> $Residuo->ID_Respel)
-                                                                                <option value="{{$Respel->ID_Respel}}">{{$Respel->RespelName}}</option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select><hr>
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-9 smartwizard">
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#step-1"><b>Descripción</b><br/><small>Datos del residuo</small></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#step-2"><b>Requerimientos</b><br/><small>Requerimientos del residuo</small></a>
-                                                        </li>
-                                                    </ul>
-                                                    <div>
-                                                        <div id="step-1">
-                                                            <div class="col-md-3">
-                                                                <br><label>N°. Unidades</label><hr>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <br><label>Tipo de Unidad</label><hr>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <br><label>Cantidad</label><hr>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <br><label>Tratamiento</label><hr>
-                                                            </div>
-                                                            @foreach($Residuos as $Residuo)
-                                                                @if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
-                                                                    <input type="text" style="display: none;" name="SolResSlug[][]" value="{{$Residuo->SolResSlug}}">
-                                                                    <div class="col-md-3">
-                                                                        <input type="text" class="form-control" id="Unidades" value="{{$Residuo->SolResUnidades}}" name="Unidades[][]"><hr>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <select class="form-control" id="TipoCate" name="TipoCate[][]">
-                                                                            <option {{ $Residuo->SolResTipoCate == 'Kilogramos' ? 'selected' : '' }}>Kilogramos</option>
-                                                                            <option {{ $Residuo->SolResTipoCate == 'Litros' ? 'selected' : '' }}>Litros</option>
-                                                                        </select><hr>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <input type="text" class="form-control" id="CateEnviado" value="{{$Residuo->SolResCateEnviado}}" name="CateEnviado[][]"><hr>
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <select class="form-control" id="Tratamiento" name="Tratamiento[][]">
-                                                                            <option value="{{$Residuo->ID_Trat}}">{{$Residuo->TratName}}</option>
-                                                                            @foreach($Tratamientos->get() as $Tratamiento)
-                                                                                @if($Tratamiento->ID_Trat <> $Residuo->ID_Trat)
-                                                                                    <option value="{{$Tratamiento->ID_Trat}}">{{$Tratamiento->TratName}}</option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select><hr>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
-                                                        <div id="step-2">
-                                                            <div class="divReq">
-                                                                <label title="Foto Cargue">F.Ca</label>
-                                                                <label title="Foto Descargue">F.De</label>
-                                                                <label title="Foto Pesaje">F.Pe</label>
-                                                                <label title="Foto Reempacado">F.Re</label>
-                                                                <label title="Foto Mezclaje">F.Me</label>
-                                                                <label title="Foto Destrucción">F.Des</label>
-                                                                <label title="Video Cargue">V.Ca</label>
-                                                                <label title="Video Descargue">V.De</label>
-                                                                <label title="Video Pesaje">V.Pe</label>
-                                                                <label title="Video Reempacado">V.Re</label>
-                                                                <label title="Video Mezclaje">V.Me</label>
-                                                                <label title="Video Destrucción">V.Des</label>
-                                                                <label title="Devolucion">Dev</label>
-                                                                <label title="Planillas">Pla</label>
-                                                                <label title="Alistamiento">Ali</label>
-                                                                <label title="Capacitación">Cap</label>
-                                                                <label title="Bascula">Bas</label>
-                                                                <label title="Vehiculo con Plataforma">Ve.P</label>
-                                                                <label title="Certificación Especial">Cer</label>
-                                                            </div>
-                                                            <div class="divReq">
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/>
-                                                                <input class="inputcheck" type="checkbox"/><hr>
-                                                            </div>
-                                                            @foreach($Residuos as $Residuo)
-                                                                @if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
-                                                                    <div class="divReq">
-                                                                        <input name="FotoCargue[][]" id="FotoCargue" {{$Residuo->SolResFotoCargue == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="FotoDescargue[][]" id="FotoDescargue" {{$Residuo->SolResFotoDescargue == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="FotoPesaje[][]" id="FotoPesaje" {{$Residuo->SolResFotoPesaje == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="FotoReempacado[][]" id="FotoReempacado" {{$Residuo->SolResFotoReempacado == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="FotoMezclado[][]" id="FotoMezclado" {{$Residuo->SolResFotoMezclado == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="FotoDestruccion[][]" id="FotoDestruccion" {{$Residuo->SolResFotoDestruccion == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoCargue[][]" id="VideoCargue" {{$Residuo->SolResVideoCargue == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoDescargue[][]" id="VideoDescargue" {{$Residuo->SolResVideoDescargue == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoPesaje[][]" id="VideoPesaje" {{$Residuo->SolResVideoPesaje == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoReempacado[][]" id="VideoReempacado" {{$Residuo->SolResVideoReempacado == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoMezclado[][]" id="VideoMezclado" {{$Residuo->SolResVideoMezclado == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="VideoDestruccion[][]" id="VideoDestruccion" {{$Residuo->SolResVideoDestruccion == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Devolucion[][]" id="Devolucion" {{$Residuo->SolResDevolucion == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Planillas[][]" id="Planillas" {{$Residuo->SolResPlanillas == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Alistamiento[][]" id="Alistamiento" {{$Residuo->SolResAlistamiento == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Capacitacion[][]" id="Capacitacion" {{$Residuo->SolResCapacitacion == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Bascula[][]" id="Bascula" {{$Residuo->SolResBascula == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="Platform[][]" id="Platform" {{$Residuo->SolResPlatform == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/> 
-                                                                        <input name="CertiEspecial[][]" id="CertiEspecial" {{$Residuo->SolResCertiEspecial == "1" ? 'checked' : ''}} class="inputcheck" type="checkbox"/><hr>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="col-md-12">
-                                    <div class="box-footer">
-                                        <input type="submit" class="btn btn-primary" form="form1" value="Siguiente">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                            <!-- /.box -->
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-            <!--/.col (right) -->
-        </div>
-        <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
+	<div class="row">
+		<div class="col-md-16 col-md-offset-0">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">Datos</h3>
+				</div>
+				<div class="box box-info">
+					<form role="form" id="EditSolSer" action="/solicitud-servicio/{{$Solicitud->SolSerSlug}}" method="POST" data-toggle="validator">
+						@method('PATCH')
+						@csrf
+						<div class="box-body">
+							<div class="col-md-12 col-xs-12" style="margin-bottom: 1.5em;">
+								<div class="form-group col-md-12">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
+									<small class="help-block with-errors">*</small>
+									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach ($Personals as $Personal)
+										<option {{$Persona->PersSlug == $Personal->PersSlug ? 'selected' : ''}} value="{{$Personal->PersSlug}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
+									<small class="help-block with-errors">*</small>
+									<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@if(true)
+											<option onclick="TransportadorProsarc()" value="99" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
+											<option onclick="TransportadorExtr()" value="98" {{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertranspro') }}</option>
+										@else
+											<option onclick="TransportadorProsarc()" value="99" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
+											<option onclick="TransportadorExtr()" value="98" {{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertranspro') }}</option>
+										@endif
+									</select>
+								</div>
+								@if($Solicitud->SolSerTipo == 'Externo' || $Solicitud->SolSerTipo == 'Alquilado')
+									<div id="transportador" class="form-group col-md-6">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertranspro') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option onclick="TransportadorCliente()" value="99" {{$Cliente->CliName == $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{$Cliente->CliShortname}}</option>
+											<option onclick="OtraTransportadora()" value="98" {{$Cliente->CliName <> $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransother') }}</option>
+										</select>
+									</div>
+									@if($Cliente->CliName <> $Solicitud->SolSerNameTrans)
+										<div id="nametransportadora" class="form-group col-md-6">
+											<label for="SolSerNameTrans">{{ trans('adminlte_lang::message.solsertransname') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{$Solicitud->SolSerNameTrans}}">
+										</div>
+										<div id="nittransportadora" class="form-group col-md-6">
+											<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="{{$Solicitud->SolSerNitTrans}}">
+										</div>
+										<div id="addresstransportadora" class="form-group col-md-12">
+											<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{$Solicitud->SolSerAdressTrans}}">
+										</div>
+										<div id="citytransportadora" class="form-group col-md-12" style="margin: 0; padding: 0;">
+											<div class="form-group col-md-6">
+												<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
+												<select class="form-control select" id="departamento">
+													<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+													@foreach ($Departamentos as $Departament)
+														<option value="{{$Departament->ID_Depart}}" {{ $Departamento->ID_Depart == $Departament->ID_Depart ? 'selected' : '' }}>{{$Departament->DepartName}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="form-group col-md-6">
+												<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label>
+												<small class="help-block with-errors">*</small>
+												<select name="SolSerCityTrans" class="form-control select" id="municipio">
+													@foreach($Municipios as $Municipi)
+														<option value="{{$Municipi->ID_Mun}}" {{ $Solicitud->SolSerCityTrans == $Municipi->MunName ? 'selected' : '' }}>{{$Municipi->MunName}}</option>
+													@endforeach
+												</select>
+											</div>
+										</div>
+									@else
+										<div id="nametransportadora" class="form-group col-md-6" hidden="true">
+											<label for="SolSerNameTrans">{{ trans('adminlte_lang::message.solsertransname') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="">
+										</div>
+										<div id="nittransportadora" class="form-group col-md-6" hidden="true">
+											<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="">
+										</div>
+										<div id="addresstransportadora" class="form-group col-md-12" hidden="true">
+											<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
+											<small class="help-block with-errors">*</small>
+											<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="">
+										</div>
+										<div id="citytransportadora" class="form-group col-md-12" style="margin: 0; padding: 0;" hidden="true">
+											<div class="form-group col-md-6">
+												<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
+												<select class="form-control select" id="departamento">
+													<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+													@foreach ($Departamentos as $Departamento)
+														<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="form-group col-md-6">
+												<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label>
+												<small class="help-block with-errors">*</small>
+												<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
+											</div>
+										</div>
+									@endif
+									<div id="Conductor" class="form-group col-md-6">
+										<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{$Solicitud->SolSerConductor}}">
+									</div>
+									<div id="Vehiculo" class="form-group col-md-6">
+										<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{$Solicitud->SolSerVehiculo}}">
+									</div>
+									<div id="typeaditable" class="form-group col-md-12">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option value="99" {{ $Solicitud->SolResAuditoriaTipo == 'Presencial' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
+											<option value="98" {{ $Solicitud->SolResAuditoriaTipo == 'Virtual' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
+											<option value="97" {{ $Solicitud->SolResAuditoriaTipo == 'No Auditable' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
+										</select>
+									</div>
+									<div class="col-md-12" style="margin: 10px 0;">
+										<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
+										<div class="col-md-12" style="border: 2px dashed #00c0ef">
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+													<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" disabled="" class="testswitch" id="SolSerBascula" name="SolSerBascula">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+													<label for="SolSerCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" disabled="" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+													<label for="SolSerMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" disabled="" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+													<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" disabled="" class="testswitch" id="SolSerPlatform" name="SolSerPlatform">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
+													<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerDevolucion" name="SolSerDevolucion" {{$Solicitud->SolSerDevolucion <> null ? 'checked' : '' }}>
+													</div>
+												</label>
+											</div>
+											<div class="form-group col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>">
+													<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
+													<input maxlength="128" type="text" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{$Solicitud->SolSerDevolucionTipo}}" {{$Solicitud->SolSerDevolucion == null ? 'disabled' : '' }}>
+													<small class="help-block with-errors"></small>
+												</label>
+											</div>
+										</div>
+									</div>
+								@else
+									<div id="transportador" class="form-group col-md-6" hidden="true">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertranspro') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliShortname}}</option>
+											<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
+										</select>
+									</div>
+									<div id="nametransportadora" class="form-group col-md-6" hidden="true">
+										<label for="SolSerNameTrans">{{ trans('adminlte_lang::message.solsertransname') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="">
+									</div>
+									<div id="nittransportadora" class="form-group col-md-6" hidden="true">
+										<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="">
+									</div>
+									<div id="addresstransportadora" class="form-group col-md-12" hidden="true">
+										<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="">
+									</div>
+									<div id="citytransportadora" class="form-group col-md-12" style="margin: 0; padding: 0;" hidden="true">
+										<div class="form-group col-md-6">
+											<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
+											<select class="form-control select" id="departamento">
+												<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+												@foreach ($Departamentos as $Departamento)
+													<option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+												@endforeach
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label>
+											<small class="help-block with-errors">*</small>
+											<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
+										</div>
+									</div>
+									<div id="Conductor" class="form-group col-md-6" hidden="true">
+										<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="">
+									</div>
+									<div id="Vehiculo" class="form-group col-md-6" hidden="true">
+										<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="">
+									</div>
+									<div id="typeaditable" class="form-group col-md-6">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option value="99" {{ $Solicitud->SolResAuditoriaTipo == 'Presencial' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
+											<option value="98" {{ $Solicitud->SolResAuditoriaTipo == 'Virtual' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
+											<option value="97" {{ $Solicitud->SolResAuditoriaTipo == 'No Auditable' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
+										</select>
+									</div>
+									<div class="col-md-12" style="margin: 10px 0;">
+										<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
+										<div class="col-md-12" style="border: 2px dashed #00c0ef">
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+													<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" {{ $Solicitud->SolSerBascula <> null ? 'checked' : '' }} hidden="">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+													<label for="SolSerCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{ $Solicitud->SolSerCapacitacion <> null ? 'checked' : '' }} hidden="">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+													<label for="SolSerMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{ $Solicitud->SolSerMasPerson <> null ? 'checked' : '' }} hidden="">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+													<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{ $Solicitud->SolSerPlatform <> null ? 'checked' : '' }} hidden="">
+													</div>
+												</label>
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
+													<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
+													<div style="width: 100%; height: 34px;">
+														<input type="checkbox" class="testswitch" id="SolSerDevolucion" name="SolSerDevolucion" {{ $Solicitud->SolSerDevolucion <> null ? 'checked' : '' }}>
+													</div>
+												</label>
+											</div>
+											<div class="form-group col-md-4" style="text-align: center;">
+												<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>">
+													<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
+													<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ $Solicitud->SolSerDevolucionTipo}}" {{$Solicitud->SolSerDevolucion == null ? 'disabled' : '' }}>
+													<small class="help-block with-errors"></small>
+												</label>
+											</div>
+										</div>
+									</div>
+								@endif
+							</div>
+							<div id="AddGenerador" class="col-md-16">
+								<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-primary" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b> {{ trans('adminlte_lang::message.add') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddgenerdescrit2') }}"><i class="fas fa-plus-circle"></i> {{ trans('adminlte_lang::message.add') }}</a>
+							</div>
+						</div>
+						<div class="box-footer">
+							<input type="submit" class="btn btn-success pull-right" form="EditSolSer" value="{{ trans('adminlte_lang::message.applyfor') }}">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+@endsection
+@section('NewScript')
+<script>
+function TransportadorProsarc() {
+	$("#transportador").attr('hidden', true);
+	$("#nametransportadora").attr('hidden', true);
+	$("#nittransportadora").attr('hidden', true);
+	$("#addresstransportadora").attr('hidden', true);
+	$("#citytransportadora").attr('hidden', true);
+	$("#Conductor").attr('hidden', true);
+	$("#Vehiculo").attr('hidden', true);
+	$("#typeaditable").removeClass('col-md-12');
+	$("#typeaditable").addClass('col-md-6');
+	$("#SolSerBascula").bootstrapSwitch('disabled',false);
+	$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
+	$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
+	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
+	$("#SolSerTransportador").removeAttr('required');
+	$("#SolSerNameTrans").removeAttr('required');
+	$("#SolSerNitTrans").removeAttr('required');
+	$("#SolSerAdressTrans").removeAttr('required');
+	$("#municipio").removeAttr('required');
+	$("#SolSerConductor").removeAttr('required');
+	$("#SolSerVehiculo").removeAttr('required');
+}
+
+function TransportadorExtr() {
+	$("#transportador").attr('hidden', false);
+	$("#Conductor").attr('hidden', false);
+	$("#Vehiculo").attr('hidden', false);
+	$("#typeaditable").removeClass('col-md-6');
+	$("#typeaditable").addClass('col-md-12');
+	$("#SolSerBascula").bootstrapSwitch('state',false);
+	$("#SolSerBascula").bootstrapSwitch('disabled',true);
+	$("#SolSerCapacitacion").bootstrapSwitch('state',false);
+	$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
+	$("#SolSerMasPerson").bootstrapSwitch('state',false);
+	$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	$("#SolSerPlatform").bootstrapSwitch('state',false);
+	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
+	$("#SolSerTransportador").attr('required', true);
+	$("#SolSerConductor").attr('required', true);
+	$("#SolSerVehiculo").attr('required', true);
+}
+
+function TransportadorCliente() {
+	$("#nametransportadora").attr('hidden', true);
+	$("#nittransportadora").attr('hidden', true);
+	$("#addresstransportadora").attr('hidden', true);
+	$("#citytransportadora").attr('hidden', true);
+	$("#SolSerNameTrans").removeAttr('required');
+	$("#SolSerNitTrans").removeAttr('required');
+	$("#SolSerAdressTrans").removeAttr('required');
+	$("#municipio").removeAttr('required');
+}
+
+function OtraTransportadora() {
+	$("#nametransportadora").attr('hidden', false);
+	$("#nittransportadora").attr('hidden', false);
+	$("#addresstransportadora").attr('hidden', false);
+	$("#citytransportadora").attr('hidden', false);
+	$("#SolSerNameTrans").attr('required', true);
+	$("#SolSerNitTrans").attr('required', true);
+	$("#SolSerAdressTrans").attr('required', true);
+	$("#municipio").attr('required', true);
+}
+var contadorGenerador = 1;
+var contadorRespel = [];
+function HiddenResiduosGener(id_div){
+	$("#DivRepel"+id_div).empty();
+}
+function Checkboxs(){
+	$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+		if(state == true){
+			$("#"+this.dataset.name).val(1);
+		}
+		else{
+			$("#"+this.dataset.name).val(0);
+		}
+	});
+}
+$("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
+	if(state == true){
+		$("#SolSerDevolucionTipo").attr('disabled', false);
+		$("#SolSerDevolucionTipo").attr('required', true);
+	}
+	else{
+		$("#SolSerDevolucionTipo").attr('disabled', true);
+		$("#SolSerDevolucionTipo").attr('required', false);
+		$("#SolSerDevolucionTipo").val('');
+	}
+});
+function ResiduosGener(id_div, ID_Gener){
+	contadorRespel[id_div] = 0;
+	$("#DivRepel"+id_div).empty();
+	$("#DivRepel"+id_div).append(`@include('solicitud-serv.layaoutsSolSer.OneRespel')`);
+	$('#EditSolSer').validator('update');
+	Switch2();
+	Switch3();
+	Checkboxs();
+	numeroDimension();
+	numeroKg();
+	popover();
+	HiddenRequeRespel(id_div, contadorRespel[id_div]);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RespelGener')}}/"+ID_Gener,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res != ''){
+				var residuos = new Array();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+				for(var i = res.length -1; i >= 0; i--){
+					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`,'`+res[i].RespelSlug+`')" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
+						residuos.push(res[i].SlugSGenerRes);
+					}
+				}
+			}
+			else{
+				$("#DivRepel"+id_div).empty();
+				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	})
+}
+function RequeRespel(id_div, contador, Id_Respel){
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RequeRespel')}}/"+Id_Respel,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res[0] != ''){
+				if(res[0].ReqFotoDescargue === 1){
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqFotoDestruccion === 1){
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqVideoDescargue === 1){
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+				if(res[0].ReqVideoDestruccion === 1){
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
+			}
+			else{
+				HiddenRequeRespel(id_div, contador);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	});
+}
+function HiddenRequeRespel(id_div, contador){
+	$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+}
+function AgregarGenerador() {
+	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
+	$('#EditSolSer').validator('update');
+	popover();
+	contadorGenerador = contadorGenerador + 1;
+}
+
+function AgregarResPel(id_div,ID_Gener) {
+	contadorRespel[id_div] = contadorRespel[id_div]+1;
+	$("#AddRespel"+id_div).before(`@include('solicitud-serv.layaoutsSolSer.NewRespel')`);
+	Switch2();
+	Switch3();
+	Checkboxs();
+	numeroDimension();
+	numeroKg();
+	popover();
+	HiddenRequeRespel(id_div, contadorRespel[id_div]);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/RespelGener')}}/"+ID_Gener,
+		method: 'GET',
+		data:{},
+		success: function(res){
+			if(res != ''){
+				var residuos = new Array();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+				for(var i = res.length -1; i >= 0; i--){
+					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
+						$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`,'`+res[i].RespelSlug+`')" value="${res[i].SlugSGenerRes}">${res[i].RespelName}</option>`);
+						residuos.push(res[i].SlugSGenerRes);
+					}
+				}
+			}
+			else{
+				$("#DivRepel"+id_div).empty();
+				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse("No se pudo conectar a la base de datos");
+		}
+	})
+	$('#EditSolSer').validator('update');
+}
+function RemoveRespel(id_div, contador) {
+	$("#Repel"+id_div+contador).prev().remove();
+	$("#Repel"+id_div+contador).remove();
+	$('#EditSolSer').validator('update');
+}
+
+function RemoveGenerador(id) {
+	$("#Generador"+id).prev().remove();
+	$("#Generador"+id).remove();
+	$('#EditSolSer').validator('update');
+}
+
+</script>
 @endsection

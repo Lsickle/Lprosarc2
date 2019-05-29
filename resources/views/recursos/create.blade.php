@@ -19,11 +19,8 @@
 					</div>
 				</div>
 				<div class="row">
-					<!-- left column -->
 					<div class="col-md-12">
-						<!-- general form elements -->
 						<div class="box box-primary">
-							<!-- form start -->
 							<form role="form" action="/recurso" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{csrf_field()}}
@@ -32,7 +29,7 @@
                                     <select class="form-control" id="SolSer" name="FK_RecSolRes" required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($SolRes as $SolRe)
-                                            <option value="{{$SolRe->ID_SolRes}}">{{$SolRe->FK_SolResSolSer}}, {{$SolRe->RespelName}}</option>
+                                            <option value="{{$SolRe->ID_SolRes}}">{{$SolRe->FK_SolResSolSer}},</option>
                                         @endforeach
                                     </select>
                                 </div>
