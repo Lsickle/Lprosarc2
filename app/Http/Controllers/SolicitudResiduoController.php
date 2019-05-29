@@ -21,15 +21,15 @@ class SolicitudResiduoController extends Controller
      */
     public function index()
     {
-        $Residuos = DB::table('solicitud_residuos')
-            ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.FK_SolResRespel')
-            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-            ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
-            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-            ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*', 'solicitud_servicios.ID_SolSer')
-            ->get();
+        // $Residuos = DB::table('solicitud_residuos')
+        //     ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.FK_SolResRespel')
+        //     ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
+        //     ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
+        //     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        //     ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*', 'solicitud_servicios.ID_SolSer')
+        //     ->get();
 
-        return view('solicitud-resid.index', compact('Residuos'));
+        return "No funciona";
     }
 
     /**
@@ -58,18 +58,7 @@ class SolicitudResiduoController extends Controller
      */
     public function store(Request $request)
     {
-        $Residuo = new SolicitudResiduo();
-        $Residuo->SolResKgEnviado = $request->input('SolResKgEnviado');
-        $Residuo->SolResKgRecibido = $request->input('SolResKgRecibido');
-        $Residuo->SolResKgConciliado = $request->input('SolResKgConciliado');
-        $Residuo->SolResKgTratado = $request->input('SolResKgTratado');
-        $Residuo->FK_SolResRespel = $request->input('FK_SolResRespel');
-        $Residuo->FK_SolResSolSer = $request->input('FK_SolResSolSer');
-        $Residuo->SolResSlug = 'Slug'.date('YmdHis');
-        $Residuo->SolResDelete = 0;
-        $Residuo->save();
-
-        return redirect()->route('solicitud-residuo.index'); 
+        return "hola"; 
     }
 
     /**

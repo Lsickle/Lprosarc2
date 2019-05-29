@@ -7,6 +7,7 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -85,8 +86,6 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
-		// var_dump();
-		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Pendiente';
 		switch ($request->input('SolResAuditoriaTipo')) {
@@ -150,19 +149,19 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->SolSerConductor = $conductor;
 		$SolicitudServicio->SolSerVehiculo = $vehiculo;
 		if($request->input('SolSerBascula')){
-			$SolicitudServicio->SolSerBascula = $request->input('SolSerBascula');
+			$SolicitudServicio->SolSerBascula = 1;
 		}
 		if($request->input('SolSerCapacitacion')){
-			$SolicitudServicio->SolSerCapacitacion = $request->input('SolSerCapacitacion');
+			$SolicitudServicio->SolSerCapacitacion = 1;
 		}
 		if($request->input('SolSerMasPerson')){
-			$SolicitudServicio->SolSerMasPerson = $request->input('SolSerMasPerson');
+			$SolicitudServicio->SolSerMasPerson = 1;
 		}
 		if($request->input('SolSerPlatform')){
-			$SolicitudServicio->SolSerPlatform = $request->input('SolSerPlatform');
+			$SolicitudServicio->SolSerPlatform = 1;
 		}
 		if($request->input('SolSerDevolucion')){
-			$SolicitudServicio->SolSerDevolucion = $request->input('SolSerDevolucion');
+			$SolicitudServicio->SolSerDevolucion = 1;
 			$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
 		}
 		$SolicitudServicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
@@ -170,7 +169,17 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
+		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
+	}
 
+
+	/*
+	*
+	* Create from solicitud de residuo
+	*
+	*/
+	public function createSolRes($request, $ID_SolSer){
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
 				$SolicitudResiduo = new SolicitudResiduo();
@@ -178,7 +187,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResKgRecibido = 0;
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-				$SolicitudResiduo->FK_SolResSolSer = $SolicitudServicio->ID_SolSer;
+				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
 				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 					$SolicitudResiduo->SolResTypeUnidad = "Unidad";
 				}
@@ -214,8 +223,8 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->save();
 			}
 		}
-		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
+
 
 	/**
 	 * Display the specified resource.
@@ -362,31 +371,31 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->SolSerConductor = $conductor;
 		$SolicitudServicio->SolSerVehiculo = $vehiculo;
 		if($request->input('SolSerBascula')){
-			$SolicitudServicio->SolSerBascula = $request->input('SolSerBascula');
+			$SolicitudServicio->SolSerBascula = 1;
 		}
 		else{
 			$SolicitudServicio->SolSerBascula = null;
 		}
 		if($request->input('SolSerCapacitacion')){
-			$SolicitudServicio->SolSerCapacitacion = $request->input('SolSerCapacitacion');
+			$SolicitudServicio->SolSerCapacitacion = 1;
 		}
 		else{
 			$SolicitudServicio->SolSerCapacitacion = null;
 		}
 		if($request->input('SolSerMasPerson')){
-			$SolicitudServicio->SolSerMasPerson = $request->input('SolSerMasPerson');
+			$SolicitudServicio->SolSerMasPerson = 1;
 		}
 		else{
 			$SolicitudServicio->SolSerMasPerson = null;
 		}
 		if($request->input('SolSerPlatform')){
-			$SolicitudServicio->SolSerPlatform = $request->input('SolSerPlatform');
+			$SolicitudServicio->SolSerPlatform = 1;
 		}
 		else{
 			$SolicitudServicio->SolSerPlatform = null;
 		}
 		if($request->input('SolSerDevolucion')){
-			$SolicitudServicio->SolSerDevolucion = $request->input('SolSerDevolucion');
+			$SolicitudServicio->SolSerDevolucion = 1;
 			$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
 		}
 		else{
@@ -397,15 +406,10 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
 
-		return "Todo Bien";
-		// $log = new audit();
-		// $log->AuditTabla="residuos_geners";
-		// $log->AuditType="Modificado";
-		// $log->AuditRegistro=$SGenerRes->ID_SGenerRes;
-		// $log->AuditUser=Auth::user()->email;
-		// $log->Auditlog=json_encode($request->all());
-		// $log->save();*/
-		
+		if(!is_null($request->input('SGenerador'))){
+			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+		}
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="Modificado";
@@ -414,7 +418,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
-		return redirect()->route('solicitud-servicio.index');
+		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
 
 	/**
@@ -425,33 +429,30 @@ class SolicitudServicioController extends Controller
 	 */
 	public function destroy($id)
 	{
-		$Servicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-		if ($Servicio->SolSerDelete == 0) {
-			$Servicio->SolSerDelete = 1;
-			$Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
-			foreach ($Residuos as $Residuo ) {
-				$Residuo->SolResDelete = 1;
-				$Residuo->save();
-			}
+		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if ($SolicitudServicio->SolSerDelete == 0) {
+			$SolicitudServicio->SolSerDelete = 1;
+			$log = new audit();
+			$log->AuditTabla="solicitud_servicios";
+			$log->AuditType="Eliminado";
+			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=$SolicitudServicio->SolSerDelete;
+			$log->save();
+			$SolicitudServicio->save();
+			return redirect()->route('solicitud-servicio.index');
 		}
 		else{
-			$Servicio->SolSerDelete = 0;
-			$Residuos = SolicitudResiduo::where('FK_SolResSolSer', $Servicio->ID_SolSer)->get();
-			foreach ($Residuos as $Residuo ) {
-				$Residuo->SolResDelete = 0;
-				$Residuo->save();
-			}
+			$SolicitudServicio->SolSerDelete = 0;
+			$log = new audit();
+			$log->AuditTabla="solicitud_servicios";
+			$log->AuditType="Restaurado";
+			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=$SolicitudServicio->SolSerDelete;
+			$log->save();
+			$SolicitudServicio->save();
+			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 		}
-		$Servicio->save();
-
-		$log = new audit();
-		$log->AuditTabla="solicitud_servicios";
-		$log->AuditType="Eliminado";
-		$log->AuditRegistro=$Servicio->ID_SolSer;
-		$log->AuditUser=Auth::user()->email;
-		$log->Auditlog=$Servicio->SolSerDelete;
-		$log->save();
-		
-		return redirect()->route('solicitud-servicio.index');
 	}
 }
