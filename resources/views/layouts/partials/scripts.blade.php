@@ -276,61 +276,17 @@ $(document).ready(function() {
 	/*var define los botones que se usaran segun el rol de usuario*/
 	if (rol == 'JefeOperacion'||rol == 'admin'||rol == 'Programador') {
 		$('#RespelTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [
-			{
-				"targets": 8,
-				"data": "RespelSlug",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/respels/" + data + "/edit' target='_blank' class='btn btn-warning'><i class='fab fa-hotjar'></i></a>";
-				}
-			},
-			{
-				"targets": 4,
-				"data": "RespelHojaSeguridad",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-				}
-			},
-			{
-				"targets": 5,
-				"data": "RespelTarj",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></i></a>";
-				}
-			}]
+			"scrollX": false,
+			"autoWidth": true,
+			"keys": true,
+			"responsive": true
 		});
 	}else{
 		$('#RespelTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [
-			{
-				"targets": 8,
-				"data": "RespelSlug",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/respels/" + data + "' target='_blank' class='btn btn-primary'><i class='fab fa-search'></i></a>";
-				}
-			},
-			{
-				"targets": 4,
-				"data": "RespelHojaSeguridad",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-				}
-			},
-			{
-				"targets": 5,
-				"data": "RespelTarj",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-primary'><i class='fas fa-file-pdf fa-lg'></a>";
-				}
-			}]
+			"scrollX": false,
+			"autoWidth": true,
+			"keys": true,
+			"responsive": true
 		});
 	}
 	
@@ -1705,8 +1661,29 @@ $(document).ready(function() {
 	@endif
 	@if(Route::currentRouteName()=='respels.create')
 	{{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
-	<script>
-	</script>
+	@if(Route::currentRouteName()=='respels.create')
+    {{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
+    <script>
+        $(document).ready(function() {
+            $('#myform').validator({
+              custom: {
+                'filesize': function ($el) {
+                  var maxBytes = $el.data('filesize') * 1024
+                  if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
+                    return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB."
+                  }
+                }
+                // 'filetype': function ($el) {
+                //   var allowtype = $el.data('filetype')
+                //   if ($el[0].files[0] && $el[0].files[0].type == allowtype) {
+                //     return "el archivo debe ser de tipo " + allowtype
+                //   }
+                // }
+              }
+            })
+        });
+    </script>
+    @endif
 	@endif
 	<script>
 	$(document).ready(function() {

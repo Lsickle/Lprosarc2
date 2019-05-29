@@ -76,5 +76,18 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiDelete = '0';
         $cotizacion->CotiStatus = 'Rechazada';
         $cotizacion->save();
+
+        $cotizacion = new Cotizacion();
+        $cotizacion->CotiNumero = "006";
+        $cotizacion->CotiFechaSolicitud = "2019-05-20 07:00:00";
+        $cotizacion->CotiFechaRespuesta = "2019-05-21 07:00:00";
+        $cotizacion->CotiFechaVencimiento = "2020-05-20 07:00:00";
+        $cotizacion->CotiVencida = "0";
+        $cotizacion->CotiPrecioTotal = "1650000";
+        $cotizacion->CotiPrecioSubtotal = "1350000";
+        $cotizacion->FK_CotiSede = "1";
+        $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Aprobada';
+        $cotizacion->save();
     }
 }
