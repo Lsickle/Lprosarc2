@@ -11,7 +11,7 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<div class="col-md-12">
-						@if(Auth::user()->UsRol === "Cliente" && $Respels->RespelStatus <> "Aprobado")
+						@if(Auth::user()->UsRol === "Cliente" && $Respels->RespelStatus <> "Aprobado" && $deleteButton == 'borrable')
 							@if($Respels->RespelDelete == 0)
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger' style="float: right;">Eliminar</a>
 								<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>

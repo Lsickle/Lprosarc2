@@ -13,6 +13,7 @@ use App\Cotizacion;
 use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
+use App\ResiduosGener;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Hash;
 class RespelController extends Controller
@@ -200,10 +201,18 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
 
-        $ResiduoConDependencia = Respel::where('RespelSlug', $id)->first();
-        return $ResiduoConDependencia;
+        /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+        $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+        $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+        // return $ResiduoConDependencia1;
 
-        return view('respels.show', compact('Respels'));
+        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+            $deleteButton = 'No borrable';
+        }else{
+            $deleteButton = 'borrable';
+        }
+
+        return view('respels.show', compact('Respels', 'deleteButton'));
     }
 
     /**
