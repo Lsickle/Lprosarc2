@@ -112,7 +112,6 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="border-top:#00c0ef solid 3px; padding-top: 20px; margin-top: 20px;">
-								<div id="ModalDeleteRespel"></div>
 								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
 									@php 
 										$Contador = 1;
@@ -152,11 +151,6 @@
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
 												<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel('{{$Residuo->SolResSlug}}')" class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i></a></td>
 											</tr>
-												<form action="/solicitud-residuo/{{$Residuo->SolResSlug}}" method="POST">
-													@method('DELETE')
-													@csrf
-													<input type="submit" id="Eliminar{{$Residuo->SolResSlug}}" style="display: none;">
-												</form>
 											@endif
 										@endforeach
 									@endforeach
@@ -171,6 +165,7 @@
 										</tr>
 									</tfoot>
 								</table>
+								<div id="ModalDeleteRespel"></div>
 							</div>
 						</div>
 					</div>
@@ -187,7 +182,12 @@
 			$('#ModalDeleteRespel').append(`
 			@component('layouts.partials.modal')
 				`+slug+`
-			@endcomponent`);
+			@endcomponent
+			<form action="/solicitud-residuo/`+slug+`" method="POST">
+				@method('DELETE')
+				@csrf
+				<input type="submit" id="Eliminar`+slug+`" style="display: none;">
+			</form>`);
 			$('#myModal'+slug).modal();
 		}
 	</script>

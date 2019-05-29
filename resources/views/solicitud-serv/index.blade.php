@@ -44,7 +44,7 @@ Servicios
 										<td>{{$Servicio->SolSerStatus}}</td>
 										<td>{{$Servicio->PersFirstName.' '.$Servicio->PersLastName}} <a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
 										<td>{{$Servicio->SolSerNameTrans}}</td>
-										<td><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class='btn btn-info'><i class="fas fa-clipboard-list"></i></a></td>
+										<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class='btn btn-info'><i class="fas fa-clipboard-list"></i></a></td>
 									</tr>
 							@endforeach
 						</tbody>
