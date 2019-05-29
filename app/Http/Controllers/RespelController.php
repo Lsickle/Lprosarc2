@@ -129,7 +129,8 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = Hash::make(now().$file1->getClientOriginalName());
+                $hoja = md5(now().rand().$file1->getClientOriginalName());
+
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
             else{
@@ -139,7 +140,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = Hash::make(now().$file2->getClientOriginalName());
+                $tarj = md5(now().rand().$file2->getClientOriginalName());
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
@@ -148,7 +149,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto= Hash::make(now().$file3->getClientOriginalName());
+                $foto = md5(now().rand().$file3->getClientOriginalName());
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
@@ -157,7 +158,7 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = Hash::make(now().$file4->getClientOriginalName());
+                $ctrlDoc = md5(now().rand().$file4->getClientOriginalName());
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
@@ -183,7 +184,7 @@ class RespelController extends Controller
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = Hash::make(now().$request['RespelName'][$x]);
+            $respel->RespelSlug = md5(now().rand().$request['RespelName'][$x]);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
