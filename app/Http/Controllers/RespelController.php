@@ -212,7 +212,19 @@ class RespelController extends Controller
             $deleteButton = 'borrable';
         }
 
-        return view('respels.show', compact('Respels', 'deleteButton'));
+        $tratamientos = DB::table('tratamientos')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'tratamientos.*')
+            ->get();
+
+        $Sedes = DB::table('cotizacions')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
+            ->get();
+
+        return view('respels.show', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'deleteButton'));
     }
 
     /**
