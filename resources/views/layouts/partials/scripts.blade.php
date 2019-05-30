@@ -4,6 +4,8 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
+{{-- Dependencias Package.json --}}
+<script src="{{ url (mix('/js/dependencias2.js')) }}"></script>
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
@@ -1667,7 +1669,7 @@ $(document).ready(function() {
     </script>
     @endif
 
-{{-- 	<script>
+	<script>
 	$(document).ready(function() {
 		$('.table').DataTable({
 			"scrollX": false,
@@ -1707,5 +1709,5 @@ $(document).ready(function() {
 		});
 	});
 
-	</script> --}}
+	</script>
 	@yield('NewScript')
