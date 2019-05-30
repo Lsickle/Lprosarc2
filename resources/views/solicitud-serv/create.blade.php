@@ -97,7 +97,7 @@
 									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
 								</div>
 								<div id="typeaditable" class="form-group col-md-6">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraudi') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraudidescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
@@ -105,6 +105,31 @@
 										<option value="98" {{ old('SolResAuditoriaTipo') == 98 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
 										<option value="97" {{ old('SolResAuditoriaTipo') == 97 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
 									</select>
+								</div>
+								<div id="typecollect" class="form-group col-md-12" hidden="">
+									<label>{{ trans('adminlte_lang::message.solsertypecollect') }}</label>
+									<small class="help-block with-errors">*</small>
+									<select class="form-control" id="SolSerTypeCollect" name="SolSerTypeCollect" required="">
+										<option onclick="HiddenTypeCollect()" value="">{{ trans('adminlte_lang::message.select') }}</option>
+										<option onclick="HiddenTypeCollect()" value="99" >{{ trans('adminlte_lang::message.solsertypecollect1') }}</option>
+										<option onclick="TypeCollectSede()" value="98" >{{ trans('adminlte_lang::message.solsertypecollect2') }}</option>
+										<option onclick="TypeCollectOther()" value="97" >{{ trans('adminlte_lang::message.solsertypecollect3') }}</option>
+									</select>
+								</div>
+								<div id="sedecollect" class="form-group col-md-6" hidden="">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersedecollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersedecollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsersedecollect') }}</label>
+									<small class="help-block with-errors">*</small>
+									<select class="form-control select" id="SedeCollect" name="SedeCollect">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach($Sedes as $Sede)
+											<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div id="addresscollect" class="form-group col-md-6" hidden="">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrescollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrescollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraddrescollect') }}</label>
+									<small class="help-block with-errors">*</small>
+									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
 								</div>
 								<div class="col-md-12" style="margin: 10px 0;">
 									<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
@@ -134,6 +159,14 @@
 											</label>
 										</div>
 										<div class="col-md-4" style="text-align: center;">
+											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
+												<label for="SolSerVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
+												<div style="width: 100%; height: 34px;">
+													<input type="checkbox" disabled="" class="testswitch" id="SolSerVehicExclusive" name="SolSerVehicExclusive" hidden="">
+												</div>
+											</label>
+										</div>
+										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
 												<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
 												<div style="width: 100%; height: 34px;">
@@ -149,8 +182,8 @@
 												</div>
 											</label>
 										</div>
-										<div class="form-group col-md-4" style="text-align: center;">
-											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>">
+										<div class="form-group col-md-6 col-md-offset-3" style="text-align: center;">
+											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" hidden="" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>" class="col-md-12" >
 												<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
 												<input maxlength="128" type="text" disabled="" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ old('SolSerDevolucionTipo')}}">
 												<small class="help-block with-errors"></small>
@@ -196,31 +229,67 @@
 <script>
 function TransportadorProsarc() {
 	$("#transportador").attr('hidden', true);
-	$("#nametransportadora").attr('hidden', true);
-	$("#nittransportadora").attr('hidden', true);
-	$("#addresstransportadora").attr('hidden', true);
-	$("#citytransportadora").attr('hidden', true);
+	$("#transportador option:selected").prop("selected", false);
 	$("#Conductor").attr('hidden', true);
+	$("#SolSerConductor").val(null);
 	$("#Vehiculo").attr('hidden', true);
+	$("#SolSerVehiculo").val(null);
 	$("#typeaditable").removeClass('col-md-12');
 	$("#typeaditable").addClass('col-md-6');
 	$("#SolSerBascula").bootstrapSwitch('disabled',false);
 	$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
 	$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
+	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',false);
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
+	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
-	$("#SolSerNameTrans").removeAttr('required');
-	$("#SolSerNitTrans").removeAttr('required');
-	$("#SolSerAdressTrans").removeAttr('required');
-	$("#municipio").removeAttr('required');
 	$("#SolSerConductor").removeAttr('required');
 	$("#SolSerVehiculo").removeAttr('required');
+	$("#typecollect").attr('hidden', false);
+	$("#typecollect").attr('required', true);
+	$("#typecollect").removeClass('col-md-6');
+	$("#typecollect").addClass('col-md-12');
+	$("#typecollect option:selected").prop("selected", false);
+	HiddenTypeCollect();
+	TransportadorCliente();
 }
-
+function HiddenTypeCollect(){
+	$("#sedecollect").attr('hidden', true);
+	$("#SedeCollect").attr('required', false);
+	$("#SedeCollect").val(null).trigger('change');
+	$("#addresscollect").attr('hidden', true);
+	$("#AddressCollect").attr('required', false);
+	$("#AddressCollect").val(null);
+	$("#typecollect").removeClass('col-md-6');
+	$("#typecollect").addClass('col-md-12');
+}
+function TypeCollectSede(){
+	$("#sedecollect").attr('hidden', false);
+	$("#SedeCollect").attr('required', true);
+	$("#SedeCollect").val(null).trigger('change');
+	$("#addresscollect").attr('hidden', true);
+	$("#AddressCollect").attr('required', false);
+	$("#AddressCollect").val(null);
+	$("#typecollect").removeClass('col-md-12');
+	$("#typecollect").addClass('col-md-6');
+}
+function TypeCollectOther(){
+	$("#sedecollect").attr('hidden', true);
+	$("#SedeCollect").attr('required', false);
+	$("#SedeCollect").val(null).trigger('change');
+	$("#addresscollect").attr('hidden', false);
+	$("#AddressCollect").attr('required', true);
+	$("#AddressCollect").val(null);
+	$("#typecollect").removeClass('col-md-12');
+	$("#typecollect").addClass('col-md-6');
+}
 function TransportadorExtr() {
 	$("#transportador").attr('hidden', false);
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
+	$("#SolSerTransportador").attr('required', true);
+	$("#SolSerConductor").attr('required', true);
+	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
 	$("#SolSerBascula").bootstrapSwitch('state',false);
@@ -229,11 +298,15 @@ function TransportadorExtr() {
 	$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
 	$("#SolSerMasPerson").bootstrapSwitch('state',false);
 	$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	$("#SolSerVehicExclusive").bootstrapSwitch('state',false);
+	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
 	$("#SolSerPlatform").bootstrapSwitch('state',false);
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
-	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerConductor").attr('required', true);
-	$("#SolSerVehiculo").attr('required', true);
+	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
+	$("#typecollect").attr('hidden', true);
+	$("#typecollect option:selected").prop("selected", false);
+	HiddenTypeCollect();
+	TransportadorCliente();
 }
 
 function TransportadorCliente() {
@@ -245,6 +318,11 @@ function TransportadorCliente() {
 	$("#SolSerNitTrans").removeAttr('required');
 	$("#SolSerAdressTrans").removeAttr('required');
 	$("#municipio").removeAttr('required');
+	$("#SolSerNameTrans").val(null);
+	$("#SolSerNitTrans").val(null);
+	$("#SolSerAdressTrans").val(null);
+	$("#municipio").empty();
+	$("#departamento").val(null).trigger('change');
 }
 
 function OtraTransportadora() {
@@ -278,12 +356,15 @@ function Checkboxs(){
 }
 $("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
 	if(state == true){
+		$("#SolSerDevolucionTipo").parent().attr('hidden', false);
 		$("#SolSerDevolucionTipo").attr('disabled', false);
 		$("#SolSerDevolucionTipo").attr('required', true);
 	}
 	else{
+		$("#SolSerDevolucionTipo").parent().attr('hidden', true);
 		$("#SolSerDevolucionTipo").attr('disabled', true);
 		$("#SolSerDevolucionTipo").attr('required', false);
+		$("#SolSerDevolucionTipo").val(null);
 	}
 });
 function ResiduosGener(id_div, ID_Gener){
