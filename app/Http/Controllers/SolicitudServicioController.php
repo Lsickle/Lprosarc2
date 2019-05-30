@@ -144,6 +144,7 @@ class SolicitudServicioController extends Controller
 			$conductor = $request->input('SolSerConductor');
 			$vehiculo = $request->input('SolSerVehiculo');
 		}
+		$direccioncollect = null;
 		switch ($request->input('SolSerTypeCollect')) {
 			case 99:
 				$direccioncollect = "Recolección en la sede de cada generador";
@@ -314,6 +315,9 @@ class SolicitudServicioController extends Controller
 	public function edit($id)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
+			abort(403);
+		}
 		$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
 		$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
 		$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
@@ -352,7 +356,47 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-		$SolicitudServicio->SolSerStatus = 'Pendiente';
+
+		if($SolicitudServicio->SolSerStatus === 'Programado'){
+			if($request->input('SolSerTransportador') <> 98){
+				$cliente = DB::table('clientes')
+					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->where('ID_Cli', userController::IDClienteSegunUsuario())
+					->first();
+				$transportadorname = $cliente->CliName;
+				$transportadornit = $cliente->CliNit;
+				$transportadoradress = $cliente->SedeAddress;
+				$transportadorcity = $cliente->MunName;
+			}
+			else{
+				$municipio = Municipio::select('MunName')->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
+				$transportadorname = $request->input('SolSerNameTrans');
+				$transportadornit = $request->input('SolSerNitTrans');
+				$transportadoradress = $request->input('SolSerAdressTrans');
+				$transportadorcity = $municipio->MunName;
+			}
+			$SolicitudServicio->SolSerTipo = "Externo";
+			$SolicitudServicio->SolSerNameTrans = $transportadorname;
+			$SolicitudServicio->SolSerNitTrans = $transportadornit;
+			$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
+			$SolicitudServicio->SolSerCityTrans = $transportadorcity;
+			$SolicitudServicio->SolSerConductor =  $request->input('SolSerConductor');
+			$SolicitudServicio->SolSerVehiculo = $request->input('SolSerVehiculo');
+			$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
+			$SolicitudServicio->save();
+
+			$log = new audit();
+			$log->AuditTabla="solicitud_servicios";
+			$log->AuditType="Modificado";
+			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($request->all());
+			$log->save();
+
+			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
+		}
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
 				$SolicitudServicio->SolSerAuditable = 1;
@@ -367,6 +411,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
 				break;
 		}
+		$collect = null;
 		if($request->input('SolSerTipo') == 99){
 			$cliente = DB::table('clientes')
 				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -381,6 +426,7 @@ class SolicitudServicioController extends Controller
 			$transportadorcity = $cliente->MunName;
 			$conductor = null;
 			$vehiculo = null;
+			$collect = $request->input('SolSerTypeCollect');
 		}
 		else{
 			if($request->input('SolSerTransportador') <> 98){
@@ -406,6 +452,7 @@ class SolicitudServicioController extends Controller
 			$conductor = $request->input('SolSerConductor');
 			$vehiculo = $request->input('SolSerVehiculo');
 		}
+		$direccioncollect = null;
 		switch ($request->input('SolSerTypeCollect')) {
 			case 99:
 				$direccioncollect = "Recolección en la sede de cada generador";
@@ -425,7 +472,7 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->SolSerCityTrans = $transportadorcity;
 		$SolicitudServicio->SolSerConductor = $conductor;
 		$SolicitudServicio->SolSerVehiculo = $vehiculo;
-		$SolicitudServicio->SolSerTypeCollect = $request->input('SolSerTypeCollect');
+		$SolicitudServicio->SolSerTypeCollect = $collect;
 		$SolicitudServicio->SolSerCollectAddress = $direccioncollect;
 		if($request->input('SolSerBascula')){
 			$SolicitudServicio->SolSerBascula = 1;

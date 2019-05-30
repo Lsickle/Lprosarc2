@@ -167,7 +167,7 @@
 										<small class="help-block with-errors">*</small>
 										<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
 									</div>
-									<div class="col-md-12" style="margin: 10px 0;">
+									<div id="requirimientos" class="col-md-12" style="margin: 10px 0;">
 										<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
 										<div class="col-md-12" style="border: 2px dashed #00c0ef">
 											<div class="col-md-4" style="text-align: center;">
@@ -313,7 +313,7 @@
 										<small class="help-block with-errors">*</small>
 										<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect" {{$Solicitud->SolSerTypeCollect == 97 ? 'required' : ''}} value="{{$Solicitud->SolSerTypeCollect}}">
 									</div>
-									<div class="col-md-12" style="margin: 10px 0;">
+									<div id="requirimientos" class="col-md-12" style="margin: 10px 0;">
 										<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
 										<div class="col-md-12" style="border: 2px dashed #00c0ef">
 											<div class="col-md-4" style="text-align: center;">
@@ -391,6 +391,17 @@
 @endsection
 @section('NewScript')
 <script>
+@if($Solicitud->SolSerStatus === 'Programado')
+	$("#SolSerTipo").parent().remove();
+	$("#transportador").removeClass('col-md-6');
+	$("#transportador").addClass('col-md-12');
+	$("#typeaditable").remove();
+	$("#typecollect").remove();
+	$("#sedecollect").remove();
+	$("#addresscollect").remove();
+	$("#requirimientos").remove();
+	$("#AddGenerador").remove();
+@endif
 function TransportadorProsarc() {
 	$("#transportador").attr('hidden', true);
 	$("#transportador option:selected").prop("selected", false);
@@ -467,6 +478,7 @@ function TransportadorExtr() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
+	$("#typecollect").attr('required', false);
 	$("#typecollect option:selected").prop("selected", false);
 	HiddenTypeCollect();
 	TransportadorCliente();

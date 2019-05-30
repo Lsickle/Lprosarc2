@@ -18,32 +18,38 @@
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
-				<div class="box-header with-border">
-					<div class="col-md-12">
-						<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-						@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
-							@if($SolicitudServicio->SolSerDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
-							<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
-							</form>
-							@else
-							<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST' style="float: left;">
-								@method('DELETE')
-								@csrf
-								<input type="submit" class='btn btn-success' value="Añadir">
-							</form>
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					<div class="box-header with-border">
+						<div class="col-md-12">
+							@if($SolicitudServicio->SolSerStatus <> 'Tratado' && $SolicitudServicio->SolSerStatus <> 'Certificacion' && $SolicitudServicio->SolSerStatus <> 'Completado')
+								<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 							@endif
-						@elseif($SolicitudServicio->SolSerStatus == 'Programada')
-							<label>Su Solicitud ha sido programada para:</label>
-							<small>{{$TextProgramacion}}</small>
-						@else
-							<label>Su Solicitud ha sido completada</label>
-						@endif
+							@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
+								@if($SolicitudServicio->SolSerDelete == 0)
+								<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+									@method('DELETE')
+									@csrf
+									<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
+								</form>
+								@else
+								<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST' style="float: left;">
+									@method('DELETE')
+									@csrf
+									<input type="submit" class='btn btn-success' value="Añadir">
+								</form>
+								@endif
+							@elseif($SolicitudServicio->SolSerStatus == 'Completado')
+								<h4><b>Su Solicitud ha sido recibida</b></h4>
+							@elseif($SolicitudServicio->SolSerStatus == 'Programada')
+								<h4><b>Su Solicitud ha sido programada para:</b></h4>
+								<h5>{{$TextProgramacion}}</h5>
+							@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
+								<h4><b>Su Solicitud ha sido completada</b></h4>
+							@endif
+						</div>
 					</div>
-				</div>
+				@endif
 				<div class="row">
 					<div class="col-md-12 ">
 						<div class="box box-info">
@@ -134,7 +140,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12 border-gray">
+							<div class="col-md-12 border-gray" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 								<div class="col-md-12">
 									<label>Dirreción de Recolección:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
@@ -210,17 +216,25 @@
 										$TotalEnv = 0;
 										$TotalRec = 0;
 										$TotalCons = 0;
+										$TotalTrat = 0;
 									@endphp
 									<thead>
 										<tr>
-											<th>Generador</th>
-											<th>Residuo</th>
-											<th>Embalaje</th>
-											<th>Cantidad <br> Enviada Kg</th>
-											<th>Cantidad <br> Recibida Kg</th>
-											<th>Cantidad <br> Conciliada Kg</th>
+											<th>{{trans('adminlte_lang::message.gener')}}</th>
+											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
+											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
+											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
+											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+												<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
+											@endif
 											<th>Ver Detalles</th>
-											<th>Eliminar</th>
+											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
+												<th>Eliminar</th>
+											@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
+												<th>Certificado</th>
+											@endif
 										</tr>
 									</thead>
 									<tbody>
@@ -232,6 +246,7 @@
 													$TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
 													$TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
 													$TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
+													$TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
 												@endphp
 											<tr>
 												<td>{{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}} <a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
@@ -240,8 +255,15 @@
 												<td>{{$Residuo->SolResKgEnviado}}</td>
 												<td>{{$Residuo->SolResKgRecibido}}</td>
 												<td>{{$Residuo->SolResKgConciliado}}</td>
+												@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+													<th>{{$Residuo->SolResKgTratado}}</th>
+												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
-												<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
+												@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
+													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
+												@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
+													<td style="text-align: center;"><a href="#" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i></a></td>
+												@endif
 											</tr>
 											@endif
 										@endforeach
@@ -253,7 +275,14 @@
 											<th style="text-align: right;">{{$TotalEnv}} Kg</th>
 											<th style="text-align: right;">{{$TotalRec}} Kg</th>
 											<th style="text-align: right;">{{$TotalCons}} Kg</th>
-											<th colspan="2"></th>
+											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+												<th style="text-align: right;">{{$TotalTrat}} Kg</th>
+											@endif
+											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
+												<th colspan="2"></th>
+											@else
+												<th></th>
+											@endif
 										</tr>
 									</tfoot>
 								</table>
