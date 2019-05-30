@@ -4,8 +4,10 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
-{{-- Dependencias Package.json --}}
+{{-- Dependencias pdfmake --}}
+@if(Auth::user()->UsRol == 'Programador')
 <script src="{{ url (mix('/js/dependencias2.js')) }}"></script>
+@endif
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
