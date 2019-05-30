@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SolResUpdateRequest;
 use App\SolicitudResiduo;
 use App\audit;
 use App\Respel;
@@ -30,7 +31,7 @@ class SolicitudResiduoController extends Controller
         //     ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*', 'solicitud_servicios.ID_SolSer')
         //     ->get();
 
-        return "No funciona";
+        return "index";
     }
 
     /**
@@ -79,32 +80,21 @@ class SolicitudResiduoController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
         
             $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
             $RespelSgener = ResiduosGener::where('ID_SGenerRes', $SolRes->FK_SolResRg)->first();
 
-            // if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-                $Respel = DB::table('respels')
-                    ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-                    ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-                    ->select('respels.ID_Respel', 'respels.RespelName')
-                    ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
-                    ->first();
-            // }else{
-
-            //     $Respels = DB::table('solicitud_residuos')
-            //         ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-            //         ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-            //         ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-            //         ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            //         ->select('respels.ID_Respel', 'respels.RespelName', 'clientes.ID_Cli', 'residuos_geners.FK_SGener')
-            //         ->where('solicitud_residuos.SolResSlug', $id)
-            //         // ->where('respels.RespelStatus', '=', "Aprobado")
-            //         ->where('respels.RespelDelete', '=', 0)
-            //         ->get();
-            // }
+            $Respel = DB::table('respels')
+                ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+                ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+                ->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
+                ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
+                ->first();
+        
             return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener'));
+        }else{
+            abort(403);
         }
     }
 
@@ -115,10 +105,47 @@ class SolicitudResiduoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SolResUpdateRequest $request, $id)
     {
+        // return $request;
+        // $Validate = $request->validate([
+            
+        // ]);
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        $SolRes->fill($request->all());
+        $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
+        
+        $SolRes->fill($request->except('FK_SolResSolSer', 'SolResTypeUnidad', 'SolResEmbalaje'));
+
+        $SolRes->FK_SolResSolSer = $Respel->ID_Respel;
+
+        switch($request->input('SolResTypeUnidad')){
+            case 99: 
+                $SolRes->SolResTypeUnidad = 'Unidad';
+                break;
+            case 98: 
+                $SolRes->SolResTypeUnidad = 'Peso';
+                break;
+        }
+
+        switch($request->input('SolResEmbalaje')){
+            case 99: 
+                $SolRes->SolResEmbalaje = 'Bolsas';
+                break;
+            case 98: 
+                $SolRes->SolResEmbalaje = 'Canecas';
+                break;
+            case 97: 
+                $SolRes->SolResEmbalaje = 'Estibas';
+                break;
+            case 96: 
+                $SolRes->SolResEmbalaje = 'Garrafones';
+                break;
+            case 95: 
+                $SolRes->SolResEmbalaje = 'Cajas';
+                break;
+            default: 
+                abort(500);
+        }
         $SolRes->save();
 
         $log = new audit();
@@ -129,7 +156,7 @@ class SolicitudResiduoController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        return redirect()->route('solicitud-residuo.index');
+        return redirect()->route('recurso.show', compact('id'));
     }
 
     /**
@@ -163,6 +190,5 @@ class SolicitudResiduoController extends Controller
         $id = $SolSer->SolSerSlug;
 
         return redirect()->route('solicitud-servicio.show', compact('id'));
-
     }
 }

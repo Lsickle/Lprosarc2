@@ -96,15 +96,38 @@ class RecursoController extends Controller
      */
     public function show(Request $request, $id)
     {
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
+
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        $Recursos = DB::table('recursos')
+
+        $SolSer = DB::table('solicitud_residuos')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
+            ->join('progvehiculos', 'progvehiculos.FK_ProgServi', 'solicitud_servicios.ID_SolSer')
+            ->select('solicitud_servicios.ID_SolSer')
+            ->where('solicitud_servicios.ID_SolSer', $SolRes->FK_SolResSolSer)
+            ->get();
+
+        // return $SolSer;
+
+        $Fotos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
             ->select('recursos.*', 'solicitud_residuos.SolResSlug')
             ->where('FK_RecSolRes', $SolRes->ID_SolRes)
+            ->where('RecCarte', 'Foto')
             ->get();
-            // return $SolRes; 
 
-        return view('recursos.show', compact('Recursos', 'SolRes'));
+        $Videos = DB::table('recursos')
+            ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
+            ->select('recursos.*', 'solicitud_residuos.SolResSlug')
+            ->where('FK_RecSolRes', $SolRes->ID_SolRes)
+            ->where('RecCarte', 'Video')
+            ->get();
+
+        return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer'));
+        }else{
+            abort(403);
+        }
+
     }
     
     /**
