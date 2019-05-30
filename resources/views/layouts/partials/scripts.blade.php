@@ -269,39 +269,6 @@ $(document).ready(function() {
 	});
 </script>
 
-<!-- funcion para tabla de residuos -->
-@if(Route::currentRouteName()=='respel.index')
-<script>
-$(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-	/*var define los botones que se usaran segun el rol de usuario*/
-	if (rol == 'JefeOperacion'||rol == 'admin'||rol == 'Programador') {
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true
-		});
-	}else{
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true
-		});
-	}
-	
-		/*funcion para resaltar las busquedas*/
-        var table = $('#RespelTable').DataTable();
-		table.on('draw', function () {
-		var body = $(table.table().body());
-			body.unhighlight();
-			body.highlight(table.search());
-		});
-	});
-</script>
-@endif
 <script>
 $(function() {
 	// $('#UsersTable').DataTable({
@@ -398,42 +365,7 @@ $(function() {
 	});
 });
 </script>
-@if(Route::currentRouteName()=='clientes.index')
-	<script>
-	$(document).ready(function() {
 
-		/*var rol defino el rol del usuario*/
-		var rol = "<?php echo Auth::user()->UsRol; ?>";
-
-		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-
-		/*funcion para renderizar la tabla de cotizacion.index*/
-		$('#clientesTable').DataTable({
-			responsive: true,
-			ordering: true,
-			autoWith: true,
-			searchHighlight: true
-		});
-
-		/*funcion para resaltar las busquedas*/
-		var table = $('#clientesTable').DataTable();
-
-		table.on('draw', function () {
-			var body = $(table.table().body());
-			body.unhighlight();
-			body.highlight(table.search());
-		});
-		// alert('ready');
-		// function redibujar(){ 
-		//  alert('redibujar');
-		//  table.responsive.recalc(); 
-		// }; 
-		// document.setTimeout(redibujar, 10000); // 5 seconds 
-		// inputEventOnly: true
-	});
-	</script>
-@endif
 {{-- Mascaras del cliente --}}
 <script>
 $(document).ready(function() {
@@ -1671,10 +1603,31 @@ $(document).ready(function() {
 
 	<script>
 	$(document).ready(function() {
+        /*var rol defino el rol del usuario*/
+        var rol = "<?php echo Auth::user()->UsRol; ?>";
+        /*var botoncito define los botones que se usaran si el usuario es programador*/
+        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
 		$('.table').DataTable({
+            "dom": "<'row'<'col-md-6'l>>" +
+                "<'row'<'col-md-6'B><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
 			"scrollX": false,
 			"autoWidth": true,
+            "select": true,
+            "colReorder": true,
+            "searchHighlight": true,
 			"responsive": true,
+            "keys": true,
+            "lengthChange": true,
+            "buttons": [
+                botoncito,
+                {
+                    extend: 'collection',
+                    text: 'Selector',
+                    buttons: ['selectRows', 'selectCells']
+                }
+            ],
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -1699,13 +1652,6 @@ $(document).ready(function() {
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				}
 			}
-		});
-		/*funcion para resaltar las busquedas*/
-        var table = $('.table').DataTable();
-		table.on('draw', function () {
-		var body = $(table.table().body());
-			body.unhighlight();
-			body.highlight(table.search());
 		});
 	});
 
