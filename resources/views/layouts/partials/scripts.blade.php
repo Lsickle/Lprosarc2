@@ -4,10 +4,10 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
-{{-- plugins de datatables --}}
-<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
+{{-- plugins de datatables --}}
+<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 {{-- script de tabla de cotizaciones --}}
@@ -268,7 +268,7 @@ $(document).ready(function() {
 </script>
 
 <!-- funcion para tabla de residuos -->
-@if(Route::currentRouteName()=='respels.index')
+@if(Route::currentRouteName()=='respel.index')
 <script>
 $(document).ready(function() {
 	/*var rol defino el rol del usuario*/
@@ -291,13 +291,12 @@ $(document).ready(function() {
 	}
 	
 		/*funcion para resaltar las busquedas*/
-		var bod = $(table.table().body());
-		table.on('draw', function redibujar() {
-			bod.unhighlight();
-			bod.highlight(table.search());
-			bod.parent().style("color: black; border-color:black;");
+        var table = $('#RespelTable').DataTable();
+		table.on('draw', function () {
+		var body = $(table.table().body());
+			body.unhighlight();
+			body.highlight(table.search());
 		});
-		bod.parent().style("color: black; border-color:black;");
 	});
 </script>
 @endif
@@ -410,25 +409,15 @@ $(function() {
 		/*funcion para renderizar la tabla de cotizacion.index*/
 		$('#clientesTable').DataTable({
 			responsive: true,
-			select: true,
-			dom: 'Bfrtip',
-			buttons: [
-				botoncito, {
-					extend: 'collection',
-					text: 'Selector',
-					buttons: ['selectRows', 'selectCells']
-				}
-			],
-			colReorder: true,
 			ordering: true,
 			autoWith: true,
-			searchHighlight: true,
+			searchHighlight: true
 		});
 
 		/*funcion para resaltar las busquedas*/
-		var table = $('#cotizacionesTable').DataTable();
+		var table = $('#clientesTable').DataTable();
 
-		table.on('draw', function redibujar() {
+		table.on('draw', function () {
 			var body = $(table.table().body());
 			body.unhighlight();
 			body.highlight(table.search());
@@ -441,12 +430,6 @@ $(function() {
 		// document.setTimeout(redibujar, 10000); // 5 seconds 
 		// inputEventOnly: true
 	});
-	$(window).load(function() {
-		function show_popup() {
-			$("#clientesTable").slideUp();
-		};
-		window.setTimeout(show_popup, 5000); // 5 seconds 
-	})
 	</script>
 @endif
 {{-- Mascaras del cliente --}}
@@ -510,14 +493,14 @@ $(function() {
 	  Both of these plugins are recommended to enhance the
 	  user experience. Slimscroll is required when using the
 	  fixed layout. -->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 $(Selector.sidebar).slimScroll({
 	height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
 	color: 'rgba(0,0,0,0.2)',
 	size: '3px'
 })
 
-</script>
+</script> --}}
 {{-- bootstrap-switch --}}
 <script>
 function Switch1() {
@@ -1659,8 +1642,7 @@ $(document).ready(function() {
 
 	</script>
 	@endif
-	@if(Route::currentRouteName()=='respels.create')
-	{{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
+
 	@if(Route::currentRouteName()=='respels.create')
     {{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
     <script>
@@ -1684,8 +1666,8 @@ $(document).ready(function() {
         });
     </script>
     @endif
-	@endif
-	<script>
+
+{{-- 	<script>
 	$(document).ready(function() {
 		$('.table').DataTable({
 			"scrollX": false,
@@ -1716,7 +1698,14 @@ $(document).ready(function() {
 				}
 			}
 		});
+		/*funcion para resaltar las busquedas*/
+        var table = $('.table').DataTable();
+		table.on('draw', function () {
+		var body = $(table.table().body());
+			body.unhighlight();
+			body.highlight(table.search());
+		});
 	});
 
-	</script>
+	</script> --}}
 	@yield('NewScript')
