@@ -8,7 +8,12 @@ Respel-Editar
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
-{{$Respels->ID_Respel}}
+	@slot('slug')
+		{{$Respels->ID_Respel}}
+	@endslot
+	@slot('textModal')
+		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -60,7 +65,12 @@ Respel-Tratamiento
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
-{{$Respels->ID_Respel}}
+	@slot('slug')
+		{{$Respels->ID_Respel}}
+	@endslot
+	@slot('textModal')
+		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
 	<!-- form start -->

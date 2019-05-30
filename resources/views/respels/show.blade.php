@@ -9,7 +9,12 @@ Respel-Tratamiento
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
-{{$Respels->ID_Respel}}
+		@slot('slug')
+			{{$Respels->ID_Respel}}
+		@endslot
+		@slot('textModal')
+			la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+		@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
 		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
@@ -151,7 +156,12 @@ Respel-Tratamiento
 
 	@section('main-content')
 		@component('layouts.partials.modal')
-			{{$Respels->RespelSlug}}
+			@slot('slug')
+				{{$Respels->RespelSlug}}
+			@endslot
+			@slot('textModal')
+				la solicitud <b>N° {{$Respels->RespelSlug}}</b>
+			@endslot
 		@endcomponent
 		<div class="row">
 			<div class="col-md-12 col-md-offset-0">
