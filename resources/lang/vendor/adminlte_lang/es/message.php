@@ -621,13 +621,13 @@ return [
     //Requerimientos
     'requirements'            => 'Requerimientos',
     'requirephotos'           =>'Fotos',
-    'requiredescarguephoto'   =>'Foto Descargue/Pesaje',
+    'requiredescarguephoto'   =>'Descargue/Pesaje',
     'requiredescarguephotodescrit' => 'Se requiere registro fotográfico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP.',
-    'requiretratamientophoto' =>'Foto Tratamiento',
+    'requiretratamientophoto' =>'Tratamiento',
     'requiretratamientophotodescrit' => 'Se requiere registro fotográfico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
     'requirevideos'           =>'Vídeos',
-    'requiredescarguevideo'   =>'Vídeo Descargue/Pesaje',
+    'requiredescarguevideo'   =>'VDescargue/Pesaje',
     'requiredescarguevideodescrit' => 'Se requiere vídeo del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP.',
-    'requiretratamientovideo' =>'Vídeo Tratamiento',
+    'requiretratamientovideo' =>'VTratamiento',
     'requiretratamientovideodescrit' => 'Se requiere vídeo del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
 ];

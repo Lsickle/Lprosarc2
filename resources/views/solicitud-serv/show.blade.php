@@ -202,11 +202,12 @@
 								<div class="col-md-12">
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
+									<a href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
 								</div>
 							</div>
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
-									<label>{{ trans('adminlte_lang::message.requirements') }}</label>
+									<label>Requerimientos de la solicitud</label>
 									<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 								</center>
 								<div class="col-md-12 collapse Requerimientos" style="border: 2px dashed #00c0ef">
@@ -345,6 +346,44 @@
 									</tfoot>
 								</table>
 								<div id="ModalDeleteRespel"></div>
+								 {{--  Modal --}}
+									<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-body">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<span style="font-size: 1.5em;"><p>Requerimientos de los residuos</p></span>
+													<div class="box box-info col-md-16" style="text-align: center;">
+														@foreach($Residuos as $Residuo)
+															<div class="col-md-12 col-xs-12" style="margin-top: 5px;">
+																<label>{{$Residuo->RespelName}}</label>
+															</div>
+															<div class="col-md-12 col-xs-12">
+																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black;">
+																	<label>Desc/Pesa</label>
+																	<div style="width: 100%;">
+																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }} disabled="" />
+																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }} disabled="" />
+																	</div>
+																</div>
+																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black;">
+																	<label style="text-align: center;">Tratamiento</label>
+																	<div style="width: 100%;">
+																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }} disabled="" />
+																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }} disabled="" />
+																	</div>
+																</div>
+															</div>
+														@endforeach 
+													</div><br><br><br>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-primary" data-dismiss="modal">salir</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
