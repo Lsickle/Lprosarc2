@@ -80,3 +80,6 @@ select.form-control{
 	position: relative !important;
 	width: 100% !important;
 }
+.fixed_widthbtn{
+	width:3em;
+}
