@@ -77,6 +77,6 @@ select.form-control{
 	height:120px;
 }
 .table{
-	position: relative;
-	width: 100%;
+	position: relative !important;
+	width: 100% !important;
 }
