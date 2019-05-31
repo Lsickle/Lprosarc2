@@ -13,6 +13,10 @@ const mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
+   .js([
+        'node_modules/pdfmake/build/pdfmake.js',
+        'node_modules/pdfmake/build/vfs_fonts.js'
+    ], 'public/js/dependencias2.js')
    .sourceMaps()
    .combine([
        'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -76,7 +80,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
         'node_modules/bootstrap-validator/dist/validator.js',
         'node_modules/select2/dist/js/select2.full.js',
-        'node_modules/toastr/toastr.js'
+        'node_modules/jszip/dist/jszip.js',
+        'node_modules/toastr/toastr.js',
+        'resources/js/jquery.highlight.js'
     ], 'public/js/dependencias.js')
    .scripts([
    		'node_modules/@fullcalendar/core/main.js',
@@ -87,30 +93,27 @@ mix.js('resources/assets/js/app.js', 'public/js')
    	], 'public/js/fullcalendar.js')
    .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',
+        'node_modules/datatables.net-dt/js/dataTables.dataTables.js',
         'node_modules/datatables.net-autofill/js/dataTables.autoFill.js',
-        'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
         'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
         'node_modules/datatables.net-buttons/js/buttons.html5.js',
         'node_modules/datatables.net-buttons/js/buttons.flash.js',
         'node_modules/datatables.net-buttons/js/buttons.colVis.js',
-        'node_modules/datatables.net-dt/js/dataTables.dataTables.js',
+        'node_modules/datatables.net-buttons/js/buttons.print.js',
+        'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
         'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
         'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.js',
         'node_modules/datatables.net-keytable/js/dataTables.keyTable.js',
         'node_modules/datatables.net-responsive/js/dataTables.responsive.js',
         'node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.js',
         'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
-        'node_modules/datatables.net-select/js/dataTables.select.js'
+        'node_modules/datatables.net-select/js/dataTables.select.js',
     ], 'public/js/datatable-depen.js')
    .scripts([
-        'node_modules/jszip/dist/jszip.js',
-        'node_modules/pdfmake/build/pdfmake.js',
-        'resources/js/jquery.highlight.js',
-        'node_modules/datatables.net-plugins/pagination/input.js',
-        'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.js',
-        'node_modules/datatables.net-plugins/pagination/input.js',
-        'node_modules/datatables.net-plugins/filtering/row-based/range_dates.js',
-        'node_modules/datatables.net-plugins/filtering/row-based/range_numbers.js'
+        // 'node_modules/datatables.net-plugins/pagination/input.js',
+        // 'node_modules/datatables.net-plugins/filtering/row-based/range_dates.js',
+        // 'node_modules/datatables.net-plugins/filtering/row-based/range_numbers.js',
+        'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.js'
     ], 'public/js/datatable-plugins.js')
 
    /*// PACKAGE (ADMINLTE-LARAVEL) RESOURCES

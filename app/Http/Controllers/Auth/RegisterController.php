@@ -68,15 +68,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'password' => bcrypt($data['password']),
-                'UsSlug'   => substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."ProsarcSAESP".substr(md5(rand()), 0,32).substr(md5(rand()), 0,32),
-                'UsRol'    => "Cliente",
-                'UsRolDesc'    => "Cliente General",
-                'UsRol2'    => "Usuario",
+                'name'          => $data['name'],
+                'email'         => $data['email'],
+                'password'      => bcrypt($data['password']),
+                'UsSlug'        => md5(now().$data['email'].rand())."SiRes".md5(now().$data['name'].rand())."ProsarcSAESP"
+                'UsRol'         => "Cliente",
+                'UsRolDesc'     => "Cliente General",
+                'UsRol2'        => "Usuario",
                 'UsRolDesc2'    => "Usuario General",
-                'UsAvatar'    => "1553803178git bot icon.png",
+                'UsAvatar'      => "robot400x400.gif",
                 // 'FK_UserPers'    => "1",
                 // 'confirmation_code' => $data['name'].mt_rand(1,999),
                 // 'confirmed' => "0",

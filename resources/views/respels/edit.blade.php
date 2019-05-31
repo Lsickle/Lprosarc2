@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@if(Auth::user()->UsRol == "Cliente")
+@if(Auth::user()->UsRol !== "Cliente")
 @section('htmlheader_title')
 Respel-Editar
 @endsection
@@ -8,7 +8,12 @@ Respel-Editar
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
-{{$Respels->ID_Respel}}
+	@slot('slug')
+		{{$Respels->ID_Respel}}
+	@endslot
+	@slot('textModal')
+		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -51,7 +56,7 @@ Respel-Editar
 </div>
 @endsection
 @endif
-@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
+@if(Auth::user()->UsRol == "Cliente")
 @section('htmlheader_title')
 Respel-Tratamiento
 @endsection
@@ -60,7 +65,12 @@ Respel-Tratamiento
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
-{{$Respels->ID_Respel}}
+	@slot('slug')
+		{{$Respels->ID_Respel}}
+	@endslot
+	@slot('textModal')
+		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
 	<!-- form start -->

@@ -22,8 +22,8 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
-        $Respel->RespelStatus = 'Aprobada';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelStatus = 'Aprobado';
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '2';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -44,7 +44,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Rechazado';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '4';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -65,7 +65,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Pendiente';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '3';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -86,7 +86,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Incompleta';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '1';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -107,7 +107,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Aprobado';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '5';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -128,7 +128,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Vencido';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -148,8 +148,8 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
-        $Respel->RespelStatus = 'Aprobada';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelStatus = 'Aprobado';
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -170,7 +170,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Rechazado';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -191,7 +191,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Pendiente';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -212,7 +212,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Incompleta';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -233,7 +233,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Aprobado';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
@@ -254,7 +254,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
         $Respel->RespelStatus = 'Vencido';
-        $Respel->RespelSlug = Hash::make(now().$Respel->RespelName);
+        $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
         $Respel->RespelFoto= 'RespelFotoDefault.png';
