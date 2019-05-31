@@ -1616,7 +1616,7 @@ $(document).ready(function() {
                 "<'row'<'col-md-6'i><'col-md-6'p>>",
 			"scrollX": false,
 			"autoWidth": true,
-            "select": true,
+            // "select": true,
             "colReorder": true,
             "searchHighlight": true,
 			"responsive": true,
