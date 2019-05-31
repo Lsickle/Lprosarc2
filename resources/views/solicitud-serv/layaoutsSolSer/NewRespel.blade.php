@@ -1,10 +1,10 @@
 <div class="box-tools col-md-12 collapse in Respel`+id_div+`">
-	<button type="button" class="btn btn-box-tool pull-right" style="color: red; font-size: 1.3em;" onclick="RemoveRespel(`+id_div+`,`+contadorRespel[id_div]+`)" title="Eliminar"><i class="fa fa-times"></i></button>
+	<button type="button" class="btn btn-box-tool boton pull-right" style="color: red; font-size: 1.3em;" onclick="RemoveRespel(`+id_div+`,`+contadorRespel[id_div]+`)" title="Eliminar"><i class="fa fa-times"></i></button>
 </div>
 <div id="Repel`+id_div+contadorRespel[id_div]+`" class="col-md-12 box box-warning collapse in Respel`+id_div+`">
 	<div class="form-group col-md-16">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserrespel') }}</b>" data-content="{{ trans('adminlte_lang::message.solserrespeldescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserrespel') }}</label>
-		<button type="button" class="btn btn-box-tool collapsed" style="color: #f39c12;" data-toggle="collapse" data-target=".ContentRespel`+id_div+contadorRespel[id_div]+`" title="Reducir/Ampliar"><i class="fas fa-arrows-alt-v"></i></button>
+		<button type="button" class="btn btn-box-tool boton" style="color: #f39c12;" data-toggle="collapse" data-target=".ContentRespel`+id_div+contadorRespel[id_div]+`" onclick="AnimationMenusForm('.ContentRespel`+id_div+contadorRespel[id_div]+`')" title="Reducir/Ampliar"> <i class="fa fa-minus"></i></button>
 		<small class="help-block with-errors">*</small>
 		<select name="FK_SolResRg[`+id_div+`][]" id="FK_SolResRg`+id_div+contadorRespel[id_div]+`" class="form-control" required="">
 		</select>

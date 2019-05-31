@@ -1668,23 +1668,16 @@ $(document).ready(function() {
 	});
 
 	</script>
-
-<script>
-	$(document).ready(function() {
-		$(".slider").dnSlide({
-			"isOddShow" : false , 
-			"width"     : 800, 
-			"height"    : 234, 
-			"dnSlideFirstWidth" : 600, 
-			"dnSlideFirstHeight" : 234, 
-			"autoPlay"  : false,
-			"delay"     : 5000,
-			"scale"     : 0.9,
-			"speed"     : 500,
-			"verticalAlign" : "middle", // or 'bottom', 'top'
-			"afterClickBtnFn" : null
-		});
-  	});
-</script>
-
+	<script>
+		function AnimationMenusForm(target){
+			var icon = $("button[data-target='"+target+"']").find('svg');
+			if ($(icon).hasClass('fa-plus')){
+				$(icon).removeClass('fa-plus');
+				$(icon).addClass('fa-minus');
+			}else if($(icon).hasClass('fa-minus')){
+				$(icon).removeClass('fa-minus');
+				$(icon).addClass('fa-plus');
+			}
+		}
+	</script>
 	@yield('NewScript')
