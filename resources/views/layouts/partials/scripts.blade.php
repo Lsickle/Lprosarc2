@@ -1608,10 +1608,15 @@ $(document).ready(function() {
         /*var rol defino el rol del usuario*/
         var rol = "<?php echo Auth::user()->UsRol; ?>";
         /*var botoncito define los botones que se usaran si el usuario es programador*/
-        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
+                    extend: 'collection',
+                    text: 'Selector',
+                    buttons: ['selectRows', 'selectCells']
+                }] : ['colvis', 'excel'];
+
+        /*inicializacion de datatable general*/        
 		$('.table').DataTable({
-            "dom": "<'row'<'col-md-6'l>>" +
-                "<'row'<'col-md-6'B><'col-md-6'f>>" +
+            "dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
                 "<'row'<'col-md-12'tr>>" +
                 "<'row'<'col-md-6'i><'col-md-6'p>>",
 			"scrollX": false,
@@ -1623,12 +1628,7 @@ $(document).ready(function() {
             "keys": true,
             "lengthChange": true,
             "buttons": [
-                botoncito,
-                {
-                    extend: 'collection',
-                    text: 'Selector',
-                    buttons: ['selectRows', 'selectCells']
-                }
+                botoncito
             ],
 			"language": {
 				"sProcessing":     "Procesando...",
