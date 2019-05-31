@@ -52,14 +52,10 @@ Editar Solicitud de Residuo
                                 <input type="text" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
                             </div>
 
-                                {{-- <div id="cantidadresiduos">
-                                </div> --}}
-
                             @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
 
                                 @switch(Auth::user()->UsRol)
                                     @case(trans('adminlte_lang::message.SupervisorTurno'))
-                                    {{-- falta que el vehiculo llega se aviliten lo resivido --}}
                                         @if ($SolRes->SolResKgRecibido >= 0)
                                             <div id="divSolResKgRecibido">
                                             </div>
@@ -119,7 +115,6 @@ Editar Solicitud de Residuo
                                     <input type="text" class="form-control numberDimension" id="SolResProfundo" name="SolResProfundo" value="{{$SolRes->SolResProfundo}}">
                                 </div>
                             </div>
-                            {{-- </div> --}}
                             <div class="form-group col-md-12" style="text-align: center;">
                                 <div class="form-group col-md-12">
                                     <label>{{ trans('adminlte_lang::message.requirements') }}</label>
@@ -220,7 +215,6 @@ Editar Solicitud de Residuo
             $('#SolResFotoTratamiento').bootstrapSwitch('disabled', true);
             $('#SolResVideoDescargue_Pesaje').bootstrapSwitch('disabled', true);
             $('#SolResVideoTratamiento').bootstrapSwitch('disabled', true);
-            // $('#form').validator('update');
         });
     </script>
 
@@ -231,8 +225,6 @@ Editar Solicitud de Residuo
                 SolResKgRecibido();
                 break;  
             case '{{trans("adminlte_lang::message.Administrador")}}':
-                // if('{{$SolRes->SolResKgConciliado}}' > 0){
-
                 $(document).ready(function (){
                     SolResKgRecibido();
                     $('#embalaje').removeClass('col-md-6').addClass('col-md-12');
@@ -290,7 +282,7 @@ Editar Solicitud de Residuo
         }
 
     </script>
-    <script>
+    {{-- <script>
         function Checkboxs(){
         $('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
             if(state == true){
@@ -301,6 +293,6 @@ Editar Solicitud de Residuo
             }
         });
     }
-    </script>
+    </script> --}}
 @endsection
 @endsection

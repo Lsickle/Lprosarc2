@@ -107,45 +107,45 @@ class SolicitudResiduoController extends Controller
      */
     public function update(SolResUpdateRequest $request, $id)
     {
-        // return $request;
-        // $Validate = $request->validate([
-            
-        // ]);
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
+        // $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
         
-        $SolRes->fill($request->except('FK_SolResSolSer', 'SolResTypeUnidad', 'SolResEmbalaje'));
+        // $SolRes->fill($request->except('FK_SolResSolSer', 'SolResTypeUnidad', 'SolResEmbalaje'));
 
-        $SolRes->FK_SolResSolSer = $Respel->ID_Respel;
+        // $SolRes->FK_SolResSolSer = $Respel->ID_Respel;
 
-        switch($request->input('SolResTypeUnidad')){
-            case 99: 
-                $SolRes->SolResTypeUnidad = 'Unidad';
-                break;
-            case 98: 
-                $SolRes->SolResTypeUnidad = 'Peso';
-                break;
-        }
+        // switch($request->input('SolResTypeUnidad')){
+        //     case 99: 
+        //         $SolRes->SolResTypeUnidad = 'Unidad';
+        //         break;
+        //     case 98: 
+        //         $SolRes->SolResTypeUnidad = 'Peso';
+        //         break;
+        // }
 
-        switch($request->input('SolResEmbalaje')){
-            case 99: 
-                $SolRes->SolResEmbalaje = 'Bolsas';
-                break;
-            case 98: 
-                $SolRes->SolResEmbalaje = 'Canecas';
-                break;
-            case 97: 
-                $SolRes->SolResEmbalaje = 'Estibas';
-                break;
-            case 96: 
-                $SolRes->SolResEmbalaje = 'Garrafones';
-                break;
-            case 95: 
-                $SolRes->SolResEmbalaje = 'Cajas';
-                break;
-            default: 
-                abort(500);
-        }
+        // switch($request->input('SolResEmbalaje')){
+        //     case 99: 
+        //         $SolRes->SolResEmbalaje = 'Bolsas';
+        //         break;
+        //     case 98: 
+        //         $SolRes->SolResEmbalaje = 'Canecas';
+        //         break;
+        //     case 97: 
+        //         $SolRes->SolResEmbalaje = 'Estibas';
+        //         break;
+        //     case 96: 
+        //         $SolRes->SolResEmbalaje = 'Garrafones';
+        //         break;
+        //     case 95: 
+        //         $SolRes->SolResEmbalaje = 'Cajas';
+        //         break;
+        //     default: 
+        //         abort(500);
+        // }
+
+        $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+        $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+        $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
         $SolRes->save();
 
         $log = new audit();

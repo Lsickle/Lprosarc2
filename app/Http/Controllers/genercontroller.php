@@ -74,6 +74,7 @@ class genercontroller extends Controller
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $id)
                 ->where('respels.RespelDelete', '=', 0)
+                ->where('respels.RespelStatus', '=', 'Aprobada')
                 ->get();
             
             if (old('FK_GSedeMun') !== null){
@@ -224,6 +225,7 @@ class genercontroller extends Controller
                 ->where('FK_GSede', '=', $Generador->ID_Gener)
                 ->where('gener_sedes.GSedeDelete', '=', 0)
                 ->where('respels.RespelDelete', '=', 0)
+                ->where('respels.RespelStatus', '=', 'Aprobada')
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();
@@ -237,6 +239,7 @@ class genercontroller extends Controller
                     ->select('respels.ID_Respel', 'respels.RespelName')
                     ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
                     ->where('RespelDelete', 0)
+                    ->where('respels.RespelStatus', '=', 'Aprobada')
                     ->groupBy('respels.ID_Respel')
                     ->get();
             }
