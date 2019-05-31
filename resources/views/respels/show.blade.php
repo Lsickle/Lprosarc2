@@ -133,6 +133,9 @@
 					<!-- box header -->
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelinfotag') }}</h3>
+						@if($editButton == 'Editable')
+							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning" style="float: right;">Editar</a>
+						@endif
 					</div>
 					<!-- /.box header -->
 					<!-- box body -->

@@ -207,10 +207,10 @@ class RespelController extends Controller
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
         // return $ResiduoConDependencia1;
 
-        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
-            $deleteButton = 'No borrable';
+        if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
+            $editButton = 'No editable';
         }else{
-            $deleteButton = 'borrable';
+            $editButton = 'Editable';
         }
 
         $tratamientos = DB::table('tratamientos')
@@ -225,7 +225,7 @@ class RespelController extends Controller
             ->select('sedes.*', 'clientes.*', 'cotizacions.*')
             ->get();
 
-        return view('respels.show', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'deleteButton'));
+        return view('respels.show', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'editButton'));
     }
 
     /**
@@ -237,6 +237,17 @@ class RespelController extends Controller
     public function edit($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+
+        /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+        $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+        $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+        // return $ResiduoConDependencia1;
+
+        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+            $deleteButton = 'No borrable';
+        }else{
+            $deleteButton = 'borrable';
+        }   
 
         $tratamientos = DB::table('tratamientos')
             ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
