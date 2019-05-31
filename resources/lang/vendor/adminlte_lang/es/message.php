@@ -163,9 +163,11 @@ return [
     'Vigilante'               => 'Vigilante',
     'Conductor'               => 'Conductor',
     'Comercial'               => 'Comercial',
+    'Tesoreria'               => 'Tesorería',
     
     // form
     'seemore'                 => 'Ver Más',
+    'seedetails'              => 'Ver Detalles',
     'see'                     => 'Ver',
     'emailaddress'            => 'Correo electrónico',
     'post'                    => 'enviar',
@@ -519,7 +521,9 @@ return [
 
     //Solicitud residuos
     'solsertitle'             => 'Solicitudes de servicios',
-    'solsertitlecreate'       => 'Creación de Solicitudes',
+    'solsertitleindex'        => 'Lista de Solicitudes',
+    'solsertitlecreate'       => 'Creación de Solicitud',
+    'solsertitleedit'         => 'Edición de Solicitud',
     'solserpersonal'          => 'Persona de Contacto',
     'solserpersonaldescript'  => 'Es la persona que va a estar en comunicación con los empleados competentes de Prosarc S.A. ESP. sobre todo lo relacionado con la solicitud de servicio',
     'solsertypetrans'         => 'Tipo de transportador',
@@ -597,6 +601,21 @@ return [
     'solseraddrespel'         => 'Añadir Residuo',
     'solseraddrespeldescrit'  => 'Haga clic para añadir un nuevo residuo al generador.',
     'solsernullprogram'       => 'En proceso de programación',
+    'solserindexnumber'       => 'N° de Solicitud',
+    'solserindextrans'        => 'Transportador',
+    'solsershowprograma'      => 'La solicitud ha sido programada para:',
+    'solsershowcomple'        => 'La solicitud ha sido recibida, los residuos están en proceso de tratamiento.',
+    'solsershowtrata'         => 'Los residuos han sido tratados, están en proceso de certificación.',
+    'solsershowcertifica'     => 'Se han emitido los certificados correspondientes de la solicitud',
+    'solsershowdate'          => 'Fecha:',
+    'solsershowaudita'        => 'Auditable:',
+    'solsershowempre'         => 'Empresa:',
+    'solsershowemprenit'      => 'Nit:',
+    'solsershowempreaddress'  => 'Dirección:',
+    'solsershowemprecity'     => 'Ciudad:',
+    'solsershowtransempre'    => 'Empresa Transportadora:',
+    'solsershowtranscity'     => 'Ciudad Transportadora:',
+    'solsershowcantitotal'    => 'Cantidad Total:',
 
 
     //Requerimientos

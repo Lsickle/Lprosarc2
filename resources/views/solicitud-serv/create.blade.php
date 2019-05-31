@@ -266,7 +266,6 @@ function HiddenTypeCollect(){
 function TypeCollectSede(){
 	$("#sedecollect").attr('hidden', false);
 	$("#SedeCollect").attr('required', true);
-	$("#SedeCollect").val(null).trigger('change');
 	$("#addresscollect").attr('hidden', true);
 	$("#AddressCollect").attr('required', false);
 	$("#AddressCollect").val(null);
@@ -304,6 +303,7 @@ function TransportadorExtr() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
+	$("#typecollect").attr('required', false);
 	$("#typecollect option:selected").prop("selected", false);
 	HiddenTypeCollect();
 	TransportadorCliente();
@@ -463,7 +463,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			NotifiFalse("No se pudo conectar a la base de datos");
+			HiddenRequeRespel(id_div, contador);
 		}
 	});
 }

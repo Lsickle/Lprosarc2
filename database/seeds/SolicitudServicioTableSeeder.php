@@ -13,7 +13,7 @@ class SolicitudServicioTableSeeder extends Seeder
     public function run()
     {
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Aprobado';
+        $Servicio->SolSerStatus = 'Pendiente';
         $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = '1';
         $Servicio->SolSerConductor = '3';
@@ -25,7 +25,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->save();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Negada';
+        $Servicio->SolSerStatus = 'Aprobado';
         $Servicio->SolSerTipo = 'Externo';
         $Servicio->SolSerAuditable = '1';
         $Servicio->SolSerConductor = 'Juan';
@@ -37,7 +37,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->save();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Pendiente';
+        $Servicio->SolSerStatus = 'Programado';
         $Servicio->SolSerTipo = 'Alquilado';
         $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerConductor = 'Cristian';
@@ -49,7 +49,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->save();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Incompleta';
+        $Servicio->SolSerStatus = 'Completado';
         $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = '1';
         $Servicio->SolSerConductor = '';
@@ -61,7 +61,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->save();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Incompleta';
+        $Servicio->SolSerStatus = 'Tratado';
         $Servicio->SolSerTipo = 'Interno';
         $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerConductor = '';

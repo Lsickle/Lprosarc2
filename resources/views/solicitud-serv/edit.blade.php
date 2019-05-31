@@ -11,7 +11,7 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Datos</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitleedit') }}</h3>
 				</div>
 				<div class="box box-info">
 					<form role="form" id="EditSolSer" action="/solicitud-servicio/{{$Solicitud->SolSerSlug}}" method="POST" data-toggle="validator">
@@ -380,7 +380,7 @@
 							</div>
 						</div>
 						<div class="box-footer">
-							<input type="submit" class="btn btn-success pull-right" form="EditSolSer" value="{{ trans('adminlte_lang::message.applyfor') }}">
+							<input type="submit" class="btn btn-success pull-right" form="EditSolSer" value="{{ trans('adminlte_lang::message.update') }}">
 						</div>
 					</form>
 				</div>
@@ -637,7 +637,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			NotifiFalse("No se pudo conectar a la base de datos");
+			HiddenRequeRespel(id_div, contador);
 		}
 	});
 }
