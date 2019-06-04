@@ -2,10 +2,10 @@
 {{-- vista de edición para el cliente --}}
 @if(Auth::user()->UsRol == "Cliente")
 @section('htmlheader_title')
-Respel-Tratamiento
+{{ trans('adminlte_lang::LangRespel.Respeledittag') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelasig') }}
+{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -22,7 +22,7 @@ Respel-Tratamiento
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
 				</div>
 				<div class="row">
 					<!-- left column -->
@@ -31,7 +31,8 @@ Respel-Tratamiento
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
+							<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
+								@method('PUT')
 								@csrf
 								@if ($errors->any())
 								    <div class="alert alert-danger" role="alert">
@@ -43,11 +44,12 @@ Respel-Tratamiento
 								    </div>
 								@endif
 								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-								@include('')
+								@include('layouts.RespelPartials.Respelform1Edit')
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Actualizar</button>	
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Actualizar</button>
+										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('tratamiento.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 									</div>
 								</div>
 							</form>

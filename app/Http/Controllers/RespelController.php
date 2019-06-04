@@ -263,7 +263,7 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->get();
-            return view('respels.create', compact('Sede'));
+            return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
         }
         else{
             $Sedes = DB::table('clientes')
@@ -271,10 +271,10 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede', 'clientes.CliName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
-            return view('respels.create', compact('Sedes'));
+            return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
         }
 
-        return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+        
     }
 
     /**
@@ -284,10 +284,10 @@ class RespelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RespelStoreRequest $request, $id)
     {
         // return $request;
-        $Respels = Respel::where('ID_Respel', $id)->first();
+        $Respels = Respel::where('RespelSlug', $id)->first();
 
         if ($request->hasfile('RespelHojaSeguridad')) {
             if(file_exists(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
