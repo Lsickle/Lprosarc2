@@ -15,13 +15,18 @@
 					<div class="box box-info">
 						<div class="box-body box-profile">
 							@if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador'))
-								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+								<a href="/personal/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 								@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
 									@component('layouts.partials.modal')
-									{{$Persona->ID_Pers}}
+										@slot('slug')
+											{{$Persona->ID_Pers}}
+										@endslot
+										@slot('textModal')
+											a <b>{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</b>
+										@endslot
 									@endcomponent
 									@if($Persona->PersDelete == 0)
-									  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'>{{ trans('adminlte_lang::message.delete') }}</a>
+									  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 									  <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
 									      @method('DELETE')
 									      @csrf

@@ -12,5 +12,22 @@
     "/js/dependencias.js": "/js/dependencias.js",
     "/js/fullcalendar.js": "/js/fullcalendar.js",
     "/js/datatable-depen.js": "/js/datatable-depen.js",
-    "/js/datatable-plugins.js": "/js/datatable-plugins.js"
+    "/js/datatable-plugins.js": "/js/datatable-plugins.js",
+    "/img/default.pdf": "/img/default.pdf",
+    "/img/default.png": "/img/default.png",
+    "/img/defaultuser.png": "/img/defaultuser.png",
+    "/img/LogoProsarc.png": "/img/LogoProsarc.png",
+    "/img/luisAvatar.png": "/img/luisAvatar.png",
+    "/img/noimagedefault.png": "/img/noimagedefault.png",
+    "/img/RespelFotoDefault.png": "/img/RespelFotoDefault.png",
+    "/img/RespelHojadefault.pdf": "/img/RespelHojadefault.pdf",
+    "/img/RespelTarjetadefault.pdf": "/img/RespelTarjetadefault.pdf",
+    "/img/robot400x400.gif": "/img/robot400x400.gif",
+    "/img/robot600x600.gif": "/img/robot600x600.gif",
+    "/img/sort_asc_disabled.png": "/img/sort_asc_disabled.png",
+    "/img/sort_asc.png": "/img/sort_asc.png",
+    "/img/sort_both.png": "/img/sort_both.png",
+    "/img/sort_desc_disabled.png": "/img/sort_desc_disabled.png",
+    "/img/sort_desc.png": "/img/sort_desc.png",
+    "/img/SustanciaControlDocDefault.pdf": "/img/SustanciaControlDocDefault.pdf"
 }
