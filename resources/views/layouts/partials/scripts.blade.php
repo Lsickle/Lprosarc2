@@ -4,10 +4,14 @@
 <script src="{{ url (mix('/js/app.js')) }}"></script>
 {{-- Dependencias Package.json --}}
 <script src="{{ url (mix('/js/dependencias.js')) }}"></script>
-{{-- plugins de datatables --}}
-<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
+{{-- Dependencias pdfmake --}}
+@if(Auth::user()->UsRol == 'Programador')
+<script src="{{ url (mix('/js/dependencias2.js')) }}"></script>
+@endif
 <!-- DataTables -->
 <script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
+{{-- plugins de datatables --}}
+<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
@@ -219,40 +223,6 @@ $(document).ready(function() {
 	});
 </script>
 
-<!-- funcion para tabla de residuos -->
-@if(Route::currentRouteName()=='respels.index')
-<script>
-$(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-	/*var define los botones que se usaran segun el rol de usuario*/
-	if (rol == 'JefeOperacion'||rol == 'admin'||rol == 'Programador') {
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true
-		});
-	}else{
-		$('#RespelTable').DataTable({
-			"scrollX": false,
-			"autoWidth": true,
-			"keys": true,
-			"responsive": true
-		});
-	}
-	
-		/*funcion para resaltar las busquedas*/
-		var bod = $(table.table().body());
-		table.on('draw', function redibujar() {
-			bod.unhighlight();
-			bod.highlight(table.search());
-			bod.parent().style("color: black; border-color:black;");
-		});
-		bod.parent().style("color: black; border-color:black;");
-	});
-</script>
-@endif
 <script>
 $(function() {
 	// $('#UsersTable').DataTable({
@@ -410,14 +380,14 @@ $(function() {
 	  Both of these plugins are recommended to enhance the
 	  user experience. Slimscroll is required when using the
 	  fixed layout. -->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 $(Selector.sidebar).slimScroll({
 	height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
 	color: 'rgba(0,0,0,0.2)',
 	size: '3px'
 })
 
-</script>
+</script> --}}
 {{-- bootstrap-switch --}}
 <script>
 function Switch1() {
@@ -1015,35 +985,58 @@ function NotifiFalse(Mensaje) {
 
 	</script>
 	@endif
+
 	@if(Route::currentRouteName()=='respels.create')
-	{{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
-	<script>
-		$(document).ready(function() {
-			$('#myform').validator({
-			  custom: {
-				'filesize': function ($el) {
-				  var maxBytes = $el.data('filesize') * 1024
-				  if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
-					return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB."
-				  }
-				}
-				// 'filetype': function ($el) {
-				//   var allowtype = $el.data('filetype')
-				//   if ($el[0].files[0] && $el[0].files[0].type == allowtype) {
-				//     return "el archivo debe ser de tipo " + allowtype
-				//   }
-				// }
-			  }
-			})
-		});
-	</script>
-	@endif
+    {{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
+    <script>
+        $(document).ready(function() {
+            $('#myform').validator({
+              custom: {
+                'filesize': function ($el) {
+                  var maxBytes = $el.data('filesize') * 1024
+                  if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
+                    return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB."
+                  }
+                }
+                // 'filetype': function ($el) {
+                //   var allowtype = $el.data('filetype')
+                //   if ($el[0].files[0] && $el[0].files[0].type == allowtype) {
+                //     return "el archivo debe ser de tipo " + allowtype
+                //   }
+                // }
+              }
+            })
+        });
+    </script>
+    @endif
+
 	<script>
 	$(document).ready(function() {
+        /*var rol defino el rol del usuario*/
+        var rol = "<?php echo Auth::user()->UsRol; ?>";
+        /*var botoncito define los botones que se usaran si el usuario es programador*/
+        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
+                    extend: 'collection',
+                    text: 'Selector',
+                    buttons: ['selectRows', 'selectCells']
+                }] : ['colvis', 'excel'];
+
+        /*inicializacion de datatable general*/        
 		$('.table').DataTable({
+            "dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
 			"scrollX": false,
 			"autoWidth": true,
+            // "select": true,
+            "colReorder": true,
+            "searchHighlight": true,
 			"responsive": true,
+            "keys": true,
+            "lengthChange": true,
+            "buttons": [
+                botoncito
+            ],
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",

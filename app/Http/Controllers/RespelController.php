@@ -13,6 +13,7 @@ use App\Cotizacion;
 use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
+use App\ResiduosGener;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Hash;
 class RespelController extends Controller
@@ -128,7 +129,8 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = Hash::make(now().$file1->getClientOriginalName());
+                $hoja = md5(now().rand().$file1->getClientOriginalName());
+
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
             else{
@@ -138,7 +140,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = Hash::make(now().$file2->getClientOriginalName());
+                $tarj = md5(now().rand().$file2->getClientOriginalName());
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
@@ -147,7 +149,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto= Hash::make(now().$file3->getClientOriginalName());
+                $foto = md5(now().rand().$file3->getClientOriginalName());
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
@@ -156,7 +158,7 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = Hash::make(now().$file4->getClientOriginalName());
+                $ctrlDoc = md5(now().rand().$file4->getClientOriginalName());
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
@@ -182,7 +184,7 @@ class RespelController extends Controller
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = Hash::make(now().$request['RespelName'][$x]);
+            $respel->RespelSlug = md5(now().rand().$request['RespelName'][$x]);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
@@ -200,10 +202,30 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
 
-        $ResiduoConDependencia = Respel::where('RespelSlug', $id)->first();
-        return $ResiduoConDependencia;
+        /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+        $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+        $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+        // return $ResiduoConDependencia1;
 
-        return view('respels.show', compact('Respels'));
+        if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
+            $editButton = 'No editable';
+        }else{
+            $editButton = 'Editable';
+        }
+
+        $tratamientos = DB::table('tratamientos')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'tratamientos.*')
+            ->get();
+
+        $Sedes = DB::table('cotizacions')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
+            ->get();
+
+        return view('respels.show', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'editButton'));
     }
 
     /**
@@ -215,6 +237,17 @@ class RespelController extends Controller
     public function edit($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+
+        /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+        $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+        $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+        // return $ResiduoConDependencia1;
+
+        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+            $deleteButton = 'No borrable';
+        }else{
+            $deleteButton = 'borrable';
+        }   
 
         $tratamientos = DB::table('tratamientos')
             ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')

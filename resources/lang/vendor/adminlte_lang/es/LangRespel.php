@@ -15,6 +15,7 @@ return [
     'respelmenu'            => 'Residuos',
     'Respellist'            => 'Lista de Residuos',
     'Respelcreate'          => 'Registro de Residuos',
+    'Respelinfotag'         => 'Información del Residuo',
     'Respelasig'            => 'Asignación de tratamientos para Residuos',
     'basicinfo'             => 'Datos Básicos',
     'complete'              => 'Complete los siguientes campos',

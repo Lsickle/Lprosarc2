@@ -4,7 +4,7 @@
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
+		<div class="col-md-12 col-md-offset-0">
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
@@ -12,7 +12,7 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<table id="RespelTable" class="table table-bordered table-striped">
+					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>Nombre</th>
@@ -21,14 +21,13 @@
 								<th>Estado del residuo</th>
 								<th>Hoja de Seguridad</th>
 								<th>Tarj. de Emergencia</th>
-								<th>Estado de aprobación</th>
 								@if(Auth::user()->UsRol !== "Cliente")
 									<th>Cliente</th>
 								@endif
 								@if(Auth::user()->UsRol !== "Cliente")
 									<th>Evaluar</th>
 								@else
-									<th>Ver Más...</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-info'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Ver Más...</th>
 								@endif
 							</tr>
 						</thead>
@@ -66,8 +65,6 @@
 									<td><a disabled method='get' href='/img/{{$respel->RespelTarj}}' target='_blank' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
 								@endif
 
-								<td>{{$respel->RespelStatus}}</td>
-
 								@if(Auth::user()->UsRol !== "Cliente")
 									<td>{{$respel->CliName}}</td>
 								@endif
@@ -88,7 +85,7 @@
 									        @break
 									    {{-- cotización vencida --}}
 									    @case('Vencido')
-									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-danger'><i class='fas fa-calendar-times'></i></a></td>
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-info'><i class='fas fa-calendar-times'></i></a></td>
 									        @break
 									    {{-- cotización vencida --}}
 									    @case('Incompleta')
@@ -114,7 +111,7 @@
 									        @break
 									    {{-- cotización vencida --}}
 									    @case('Vencido')
-									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-danger'><i class='fas fa-calendar-times'></i></a></td>
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-info'><i class='fas fa-calendar-times'></i></a></td>
 									        @break
 									    {{-- información del residuo incompleta --}}
 									    @case('Incompleta')
