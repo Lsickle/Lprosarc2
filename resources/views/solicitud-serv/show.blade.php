@@ -11,7 +11,7 @@
 		@slot('slug')
 			{{$SolicitudServicio->SolSerSlug}}
 		@endslot
-		@slot('textModal')solserindexnumber
+		@slot('textModal')
 			la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>
 		@endslot
 	@endcomponent

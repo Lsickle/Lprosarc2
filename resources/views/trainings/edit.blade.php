@@ -8,12 +8,17 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
-	                @component('layouts.partials.modal')
-	                    {{$training->ID_Capa}}
-	                @endcomponent
+					@component('layouts.partials.modal')
+						@slot('slug')
+							{{$training->ID_Capa}}
+						@endslot
+						@slot('textModal')
+							la capacitacion de <b>{{$training->CapaName}}</b>
+						@endslot
+					@endcomponent
 					<h3 class="box-title">Datos del mantenimiento</h3>
 					@if($training->CapaDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$training->ID_Capa}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$training->ID_Capa}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 						<form action='/capacitacion/{{$training->ID_Capa}}' method='POST'>
 							@method('DELETE')
 							@csrf

@@ -10,25 +10,30 @@ Edición de vehiculos
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
-	              @component('layouts.partials.modal')
-	                    {{$Vehicle->VehicPlaca}}
-	              @endcomponent
-		          <h3 class="box-title">Datos del vehiculo</h3>
-		          @if($Vehicle->VehicDelete === 0)
-                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
-                    <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
-                      @method('DELETE')
-                      @csrf
-                      <input  type="submit" id="Eliminar{{$Vehicle->VehicPlaca}}" style="display: none;">
-                    </form>
-                  @else
-                    <form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST' style="float: right;">
-                      @method('DELETE')
-                      @csrf
-                      <input type="submit" class='btn btn-success btn-block' value="Añadir">
-                    </form>
-                  @endif
-		        </div>
+					@component('layouts.partials.modal')
+						@slot('slug')
+							{{$Vehicle->VehicPlaca}}
+						@endslot
+						@slot('textModal')
+							el vehiculo con placa <b>{{$Vehicle->VehicPlaca}}</b>
+						@endslot
+					@endcomponent
+					<h3 class="box-title">Datos del vehiculo</h3>
+					@if($Vehicle->VehicDelete === 0)
+					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}'  class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+					<form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
+						@method('DELETE')
+						@csrf
+						<input  type="submit" id="Eliminar{{$Vehicle->VehicPlaca}}" style="display: none;">
+					</form>
+					@else
+					<form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST' style="float: right;">
+						@method('DELETE')
+						@csrf
+						<input type="submit" class='btn btn-success btn-block' value="Añadir">
+					</form>
+					@endif
+				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
