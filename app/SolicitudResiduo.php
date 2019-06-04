@@ -8,7 +8,7 @@ class SolicitudResiduo extends Model{
 
     protected $table = 'solicitud_residuos';
 
-    protected $fillable = ['SolResCateEnviado', 'SolResCateRecibido', 'SolResCateConciliado', 'SolResCateTratado', 'SolResUnidades', 'SolResDelete', 'SolResSlug', 'SolResFotoCargue', 'SolResFotoDescargue', 'SolResFotoPesaje', 'SolResFotoReempacado', 'SolResFotoMezclado', 'SolResFotoDestruccion', 'SolResVideoCargue', 'SolResVideoDescargue', 'SolResVideoPesaje', 'SolResVideoReempacado', 'SolResVideoMezclado', 'SolResVideoDestruccion', 'SolResAuditoria', 'SolResAuditoriaTipo', 'SolResDevolucion', 'SolResDevolucionTipo', 'SolResDatosPersonal', 'SolResPlanillas', 'SolResAlistamiento', 'SolResCapacitacion', 'SolResBascula', 'SolResMasPerson', 'SolResPlatform', 'SolResCertiEspecial', 'SolResTipoCate', 'FK_SolResTratamiento', 'FK_SolResRg', 'FK_SolResSolSer'];
+    protected $fillable = ['SolResKgEnviado', 'SolResKgRecibido', 'SolResKgConciliado', 'SolResKgTratado', 'SolResDelete', 'SolResSlug', 'FK_SolResSolSer', 'SolResTypeUnidad', 'SolResCantiUnidad', 'SolResEmbalaje', 'SolResAlto', 'SolResAncho', 'SolResProfundo', 'SolResFotoDescargue_Pesaje', 'SolResFotoTratamiento', 'SolResVideoDescargue_Pesaje', 'SolResVideoTratamiento', 'FK_SolResTratamiento', 'FK_SolResRg'];
    
     protected $primaryKey = 'ID_SolRes';
 

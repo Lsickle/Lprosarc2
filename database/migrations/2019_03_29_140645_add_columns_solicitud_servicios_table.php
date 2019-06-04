@@ -14,14 +14,17 @@ class AddColumnsSolicitudServiciosTable extends Migration
     public function up()
     {
         Schema::table('solicitud_servicios', function (Blueprint $table) {
+            $table->string('SolResAuditoriaTipo', 16)->nullable();
             $table->string('SolSerNameTrans')->nullable();
             $table->string('SolSerNitTrans')->nullable();
             $table->string('SolSerAdressTrans')->nullable();
             $table->string('SolSerCityTrans')->nullable();
-            $table->string('SolResAuditoriaTipo', 16)->nullable();
+            $table->string('SolSerTypeCollect',32)->nullable();
+            $table->string('SolSerCollectAddress')->nullable();
             $table->boolean('SolSerBascula')->nullable();
             $table->boolean('SolSerCapacitacion')->nullable();
             $table->boolean('SolSerMasPerson')->nullable();
+            $table->boolean('SolSerVehicExclusive')->nullable();
             $table->boolean('SolSerPlatform')->nullable();
             $table->boolean('SolSerDevolucion')->nullable();
             $table->string('SolSerDevolucionTipo', 128)->nullable();
@@ -29,6 +32,9 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->unsignedInteger('FK_SolSerCliente');
             $table->foreign('FK_SolSerPersona')->references('ID_Pers')->on('personals');
             $table->foreign('FK_SolSerCliente')->references('ID_Cli')->on('clientes');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 
@@ -46,6 +52,9 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->dropColumn('SolSerCityTrans');
             $table->dropColumn('SolResAuditoriaTipo');
             $table->dropColumn('SolSerBascula');
+            $table->dropColumn('SolSerTypeCollect');
+            $table->dropColumn('SolSerCollectAddress');
+            $table->dropColumn('SolSerVehicExclusive');
             $table->dropColumn('SolSerCapacitacion');
             $table->dropColumn('SolSerMasPerson');
             $table->dropColumn('SolSerPlatform');

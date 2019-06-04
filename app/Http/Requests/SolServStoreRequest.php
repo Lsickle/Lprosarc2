@@ -70,6 +70,23 @@ class SolServStoreRequest extends FormRequest
                 ];
             }
         }
+        else{
+            $rules = [
+                'SolSerTypeCollect'     => 'required|numeric|between:97,99',
+            ];
+            if($request->input('SolSerTypeCollect') <> 99){
+                if($request->input('SolSerTypeCollect') == 98){
+                    $rules = [
+                        'SedeCollect'     => 'required',
+                    ];
+                }
+                if($request->input('SolSerTypeCollect') == 97){
+                    $rule = [
+                        'AddressCollect'           => 'required|max:255',
+                    ];
+                }
+            }
+        }
         foreach ($request->input('SGenerador') as $Generador => $value) {
             $rules['SGenerador.'.$Generador] = ['required', Rule::exists('gener_sedes', 'GSedeSlug')->where(function ($query) use ($request ,$Generador){
                 $SGeneradors = DB::table('gener_sedes')

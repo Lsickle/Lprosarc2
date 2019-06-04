@@ -14,6 +14,16 @@
 <script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+
+
+	{{-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+	        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+	        crossorigin="anonymous">
+	</script> --}}
+<link rel="stylesheet" href="css/dnSlide.css">
+<script src="js/dnSlide.js"></script>
+
+
 {{-- script de tabla de cotizaciones --}}
 @if(Route::currentRouteName()=='cotizacion.index')
 <script>
@@ -1657,5 +1667,17 @@ $(document).ready(function() {
 		});
 	});
 
+	</script>
+	<script>
+		function AnimationMenusForm(target){
+			var icon = $("button[data-target='"+target+"']").find('svg');
+			if ($(icon).hasClass('fa-plus')){
+				$(icon).removeClass('fa-plus');
+				$(icon).addClass('fa-minus');
+			}else if($(icon).hasClass('fa-minus')){
+				$(icon).removeClass('fa-minus');
+				$(icon).addClass('fa-plus');
+			}
+		}
 	</script>
 	@yield('NewScript')

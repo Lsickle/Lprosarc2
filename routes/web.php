@@ -86,6 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	// Route::resource('/respel-envios', 'RespelEnviosController');
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
+	Route::get('/solicitud-servicio/{id}/changestatus', 'SolicitudServicioController@changestatus');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
