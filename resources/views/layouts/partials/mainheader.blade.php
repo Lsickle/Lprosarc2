@@ -123,7 +123,7 @@
                             @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
                                 <img class="user-image" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
                             @else
-                                <img class="user-image" src="../../../img/default.png" alt="User Image">
+                                <img class="user-image" src="../../../img/defaultuser.png" alt="User Image">
                             @endif
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
@@ -134,7 +134,7 @@
                                 @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
                                     <img class="img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
                                 @else
-                                    <img class="img-circle" src="../../../img/default.png" alt="User Image">
+                                    <img class="img-circle" src="../../../img/defaultuser.png" alt="User Image">
                                 @endif
                                 <p>
                                     <span data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>

@@ -9,11 +9,16 @@
 			<div class="box">
 				<div class="box-header">
 					@component('layouts.partials.modal')
-	                    {{$CapaPer->ID_CapPers}}
-	                @endcomponent
+						@slot('slug')
+							{{$CapaPer->ID_CapPers}}
+						@endslot
+						@slot('textModal')
+							la capacitacion <b>{{$CapaPer->ID_CapPers}}</b> a la persona <b>{{$CapaPer->FK_Pers}}</b>
+						@endslot
+					@endcomponent
 					<h3 class="box-title">Datos de la capacitación de una persona</h3>
 					@if($CapaPer->CapaPersDelete === 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$CapaPer->ID_CapPers}}' class='btn btn-danger' style="float: right;">Eliminar</a>
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$CapaPer->ID_CapPers}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 						<form action='/capacitacion-personal/{{$CapaPer->ID_CapPers}}' method='POST'>
 							@method('DELETE')
 							@csrf
@@ -27,7 +32,6 @@
 						</form>
 					@endif
 				</div>
-               
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">

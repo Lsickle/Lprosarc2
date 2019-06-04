@@ -10,7 +10,7 @@
                         @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
                             <img class="img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
                         @else
-                            <img class="img-circle" src="../../../img/default.png" alt="User Image">
+                            <img class="img-circle" src="../../../img/defaultuser.png" alt="User Image">
                         @endif
                     </div>
                     <div class="pull-left info">

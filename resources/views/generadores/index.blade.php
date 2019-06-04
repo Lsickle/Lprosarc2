@@ -15,7 +15,7 @@
 					@if (!isset($Gener))
 						<div class="col-xs-12">
 							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-									<a href="/generadores/create" class="btn btn-success pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+									<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 							@endif
 							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
 								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
@@ -23,7 +23,7 @@
 						</div>
 					@else
 						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-							<a href="/generadores/create" class="btn btn-success pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+							<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
 					@endif
 				</div>
@@ -59,7 +59,7 @@
 									<td>{{$Gener->GenerShortname}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>
-										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
 									</td>
 								</tr>
 							@endforeach

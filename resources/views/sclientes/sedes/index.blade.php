@@ -21,9 +21,9 @@
 								<tr>
 									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
+									<th>{{ trans('adminlte_lang::message.address') }}</th>
 									<th>{{ trans('adminlte_lang::message.mobile') }}</th>
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
-									<th>{{ trans('adminlte_lang::message.address') }}</th>
 									<th>{{ trans('adminlte_lang::message.seemore')}}</th>
 								</tr>
 							</thead>
@@ -36,9 +36,9 @@
 									>
 										<td>{{$Sede->CliShortname}}</td>
 										<td>{{$Sede->SedeName}}</td>
+										<td>{{$Sede->SedeAddress}} {{$Sede->MunName.' - '.$Sede->DepartName}}</td>
 										<td>{{$Sede->SedeCelular}}</td>
 										<td>{{$Sede->SedeEmail}}</td>
-										<td>{{$Sede->SedeAddress}} {{$Sede->MunName.' - '.$Sede->DepartName}}</td>
 										<td>
 											<a method='get' href='/sedes/{{$Sede->SedeSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
 										</td>
@@ -49,9 +49,9 @@
 								<tr>
 									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
+									<th>{{ trans('adminlte_lang::message.address') }}</th>
 									<th>{{ trans('adminlte_lang::message.mobile') }}</th>
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
-									<th>{{ trans('adminlte_lang::message.address') }}</th>
 									<th>{{ trans('adminlte_lang::message.seemore')}}</th>
 								</tr>
 							</tfoot>

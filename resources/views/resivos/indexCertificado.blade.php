@@ -48,7 +48,7 @@ Certificados
                 <td>{{$Certificado->CertAnexo}}</td>
                 <td>{{$Certificado->created_at}}</td>
                 {{-- <tr>{{$Certificado->updated_at}}</tr> --}}
-                <td></td>
+                <td><a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a></td>
               </tr>
               @endforeach
               

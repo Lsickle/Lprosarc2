@@ -58,7 +58,7 @@ Artículos por Proveedor
                 <td>{{$ArtProv->ArtiPrecio}}</td>
                 <td>{{$ArtProv->ArtiCostoUnid}}</td>
                 <td>{{$ArtProv->ArtiMinimo}}</td>
-                <td>{{$ArtProv->ID_ArtiProve}}</td>
+                <td><a href='articulos-proveedor/{{$ArtProv->ID_ArtiProve}}/edit' class='btn btn-warning'>Edit</a></td>
               </tr>
               @endforeach
             {{-- <tfoot>

@@ -18,7 +18,12 @@
 						@endif
 						@if(!isset($Verify))
 							@component('layouts.partials.modal')
-								{{$Sede->ID_Sede}}
+								@slot('slug')
+									{{$Sede->ID_Sede}}
+								@endslot
+								@slot('textModal')
+									la sede <b>{{$Sede->SedeName}}</b>
+								@endslot
 							@endcomponent
 							@if($Sede->SedeDelete == 0)
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->ID_Sede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b> {{ trans('adminlte_lang::message.delete') }}</b></a>

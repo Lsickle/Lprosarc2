@@ -57,7 +57,7 @@ Cotizaciones
 								{{-- <td>{{$cotizacion->CotiDelete}}</td> --}}
 								<td>{{$cotizacion->SedeEmail}}</td>
 								<td>{{$cotizacion->SedePhone1.' - '.$cotizacion->SedeExt1}}</td>
-								<td>{{$cotizacion->ID_Coti}}</td>
+								<td><a method='get' href='/cotizacion/{{$cotizacion->ID_Coti}}/' class='btn btn-primary btn-block'>Mas información</a></td>
 							</tr>
 							@endforeach
 						</tbody>

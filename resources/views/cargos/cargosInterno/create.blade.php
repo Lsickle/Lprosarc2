@@ -32,7 +32,7 @@
 							</div>
 							<div class="form-group col-xs-6 col-md-6">
 								<label for="CargoGrade">{{trans('adminlte_lang::message.cargograde')}}</label>
-								<select name="CargGrade" id="CargoGrade" class="form-control select">
+								<select name="CargGrade" id="CargoGrade" class="form-control">
 									<option value="">{{trans('adminlte_lang::message.select')}}</option>
 									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist1') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist1')}}</option>
 									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist2') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist2')}}</option>
