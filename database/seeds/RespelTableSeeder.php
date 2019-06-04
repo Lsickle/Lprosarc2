@@ -190,7 +190,7 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Cascos';
         $Respel->RespelDescrip = 'N\A';
-        $Respel->RespelIgrosidad = 'No Peligroso';
+        $Respel->RespelIgrosidad = 'No peligroso';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';

@@ -66,11 +66,11 @@
 				<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;">
 				    <label>Tipo de clasificación</label><br>
 				    @if(is_null($Respels->ARespelClasf4741))
-				    <a class="btn btn-success"  id="ClasifY`+id+`" onclick="AgregarY(`+id+`)">Y</a>
-				    <a class="btn btn-default"  id="ClasifA`+id+`" onclick="AgregarA(`+id+`)">A</a>
+				    <a class="btn btn-success" onclick="AgregarY(`+id+`)">Y</a>
+				    <a class="btn btn-default" onclick="AgregarA(`+id+`)">A</a>
 				    @else
-				    <a class="btn btn-default"  id="ClasifY`+id+`" onclick="AgregarY(`+id+`)">Y</a>
-				    <a class="btn btn-success"  id="ClasifA`+id+`" onclick="AgregarA(`+id+`)">A</a>
+				    <a class="btn btn-default" onclick="AgregarY(`+id+`)">Y</a>
+				    <a class="btn btn-success" onclick="AgregarA(`+id+`)">A</a>
 				    @endif
 				</div>
 				<div class="col-md-6 form-group has-feedback" id="Clasif`+id+`">
@@ -113,11 +113,42 @@
 				</label>
 				<select id="selectControl0" name="SustanciaControlada" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
-					<option value="0" onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
-					<option value="1" onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+					<option value="0" onclick="setNoControlada(0)" {{ ($Respels->SustanciaControlada === 0 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.no') }}</option>
+					<option value="1" onclick="setControlada(0)" {{ ($Respels->SustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
 			<div id="SustanciaControlada0">
+				@if(!is_null($Respels->SustanciaControladaNombre))
+					<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype`+id+`" style="text-align: center;">
+					    <label style="margin-bottom: 0">Tipo de sustancia</label><br>
+					    @if($Respels->SustanciaControladaTipo == 0)
+					    <a class="btn btn-success" {{-- style="padding-top: 0; padding-bottom: 0;" --}} id="Controlada`+id+`" onclick="AgregarControlada(`+id+`)"> Controlada</a>
+					    <a class="btn btn-default" {{-- style="padding-top: 0; padding-bottom: 0;" --}} id="Masivo`+id+`" onclick="AgregarMasivo(`+id+`)">Uso masivo</a>
+					    @else
+					    <a class="btn btn-default" {{-- style="padding-top: 0; padding-bottom: 0;" --}} id="Controlada`+id+`" onclick="AgregarControlada(`+id+`)"> Controlada</a>
+					    <a class="btn btn-success" {{-- style="padding-top: 0; padding-bottom: 0;" --}} id="Masivo`+id+`" onclick="AgregarMasivo(`+id+`)">Uso masivo</a>
+					    @endif
+					</div>
+					@if($Respels->SustanciaControladaTipo == 0)
+						<div class="col-md-6 form-group has-feedback" id="sustanciaFormName`+id+`">
+						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateName')
+						</div>
+						<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+id+`">
+						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')
+						</div>
+					@else
+						<div class="col-md-6 form-group has-feedback" id="sustanciaFormName`+id+`">
+						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateName')
+						</div>
+						<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+id+`">
+						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')
+						</div>
+					@endif
+				@else
+					<input type="text" hidden="" style="display:none" name="SustanciaControladaTipo" value="">
+					<input type="text" hidden="" style="display:none" name="SustanciaControladaNombre" value="">
+					<input type="file" hidden="" style="display:none" name="SustanciaControladaDocumento">
+				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
@@ -162,7 +193,7 @@ function setNoDanger(id) {
 }
 
 function setControlada(id) {
-	var ifControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifControladaRespel')`;
+	var ifControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifControladaRespeledit')`;
 	$("#SustanciaControlada" + id).empty();
 	$("#SustanciaControlada" + id).append(ifControladaRespel);
 	$("#myform").validator('update');
@@ -202,8 +233,8 @@ function AgregarA(id) {
 }
 
 function AgregarControlada(id) {
-	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
-	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
+	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaEditName')`;
+	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaEditDoc')`;
 	$("#Controlada" + id).removeClass("btn-default");
 	$("#Controlada" + id).addClass("btn-success");
 	$("#Masivo" + id).removeClass("btn-success");
@@ -217,8 +248,8 @@ function AgregarControlada(id) {
 }
 
 function AgregarMasivo(id) {
-	var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
-	var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateDoc')`;
+	var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoEditName')`;
+	var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')`;
 	$("#Masivo" + id).removeClass("btn-default");
 	$("#Masivo" + id).addClass("btn-success");
 	$("#Controlada" + id).removeClass("btn-success");
