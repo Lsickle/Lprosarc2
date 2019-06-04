@@ -14,10 +14,15 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
 					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
 						@component('layouts.partials.modal')
-						{{$programacion->ID_ProgVeh}}
+							@slot('slug')
+								{{$programacion->ID_ProgVeh}}
+							@endslot
+							@slot('textModal')
+								la programación del servicio <b>N° - {{$programacion->FK_ProgServi}}</b>
+							@endslot
 						@endcomponent
 						@if($programacion->ProgVehDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$programacion->ID_ProgVeh}}'  class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$programacion->ID_ProgVeh}}'  class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 							<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST'>
 								@method('DELETE')

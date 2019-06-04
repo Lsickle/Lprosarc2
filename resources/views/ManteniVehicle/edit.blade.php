@@ -12,24 +12,29 @@
 			<div class="box">
 				<div class="box-header">
 					@component('layouts.partials.modal')
-                    	{{$MantVehicles->ID_Mv}}
+						@slot('slug')
+							{{$MantVehicles->ID_Mv}}
+						@endslot
+						@slot('textModal')
+							el mantenimiento <b>{{$MantVehicles->MvType}}</b> del vehiculo <b>{{$MantVehicles->FK_VehMan}}</b>
+						@endslot
 					@endcomponent
-		          <h3 class="box-title">{{ trans('adminlte_lang::message.mantvehititleedit') }}</h3>
-		          @if($MantVehicles->MvDelete === 0)
-                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$MantVehicles->ID_Mv}}' class='btn btn-danger' style="float: right;">Eliminar</a>
-                    <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST'>
-                      @method('DELETE')
-                      @csrf
-                      <input  type="submit" id="Eliminar{{$MantVehicles->ID_Mv}}" style="display: none;">
-                    </form>
-                  @else
-                    <form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST' style="float: right;">
-                      @method('DELETE')
-                      @csrf
-                      <input type="submit" class='btn btn-success ' value="Añadir">
-                    </form>
-                  @endif
-		        </div>
+					<h3 class="box-title">{{ trans('adminlte_lang::message.mantvehititleedit') }}</h3>
+					@if($MantVehicles->MvDelete === 0)
+					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$MantVehicles->ID_Mv}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+					<form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST'>
+						@method('DELETE')
+						@csrf
+						<input  type="submit" id="Eliminar{{$MantVehicles->ID_Mv}}" style="display: none;">
+					</form>
+					@else
+					<form action='/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}' method='POST' style="float: right;">
+						@method('DELETE')
+						@csrf
+						<input type="submit" class='btn btn-success ' value="Añadir">
+					</form>
+					@endif
+				</div>
 				<div class="box box-info">
 					<form role="form" action="/vehicle-mantenimiento/{{$MantVehicles->ID_Mv}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')

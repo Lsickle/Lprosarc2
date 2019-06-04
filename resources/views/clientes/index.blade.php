@@ -21,7 +21,6 @@
 							<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
 							<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 							<th>{{ trans('adminlte_lang::message.seemore') }}</th>
-							<th>{{ trans('adminlte_lang::message.edit') }}</th>
 						</tr>
 						</thead>
 						<tbody onload="renderTable()" id="readyTable">
@@ -36,9 +35,6 @@
 							<td>{{$cliente->CliNit}}</td>
 							<td>
 								<a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
-							</td>
-							<td>
-								<a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a>
 							</td>
 						</tr>
 						@endforeach
