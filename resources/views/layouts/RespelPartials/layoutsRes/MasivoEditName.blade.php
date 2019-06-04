@@ -2,9 +2,9 @@
 
 <label>Nombre de la sustancia</label>
 <select name="SustanciaControladaNombre" class="form-control" required>
-	<option value="Aceite combustible para motor- ACPM">Aceite combustible para motor- ACPM</option>
-	<option value="Hidróxido de sodio">Hidróxido de sodio</option>
-	<option value="Cemento">Cemento</option>
-	<option value="Gasolina para motor">Gasolina para motor</option>
+	<option {{ ($Respels->SustanciaControladaNombre === 'Aceite combustible para motor- ACPM' ? 'selected' : '') }} value="Aceite combustible para motor- ACPM">Aceite combustible para motor- ACPM</option>
+	<option {{ ($Respels->SustanciaControladaNombre === 'Hidróxido de sodio' ? 'selected' : '') }} value="Hidróxido de sodio">Hidróxido de sodio</option>
+	<option {{ ($Respels->SustanciaControladaNombre === 'Cemento' ? 'selected' : '') }} value="Cemento">Cemento</option>
+	<option {{ ($Respels->SustanciaControladaNombre === 'Gasolina para motor' ? 'selected' : '') }} value="Gasolina para motor">Gasolina para motor</option>
 </select>
 

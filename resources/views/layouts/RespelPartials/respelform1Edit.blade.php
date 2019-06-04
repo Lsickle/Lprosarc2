@@ -131,17 +131,17 @@
 					</div>
 					@if($Respels->SustanciaControladaTipo == 0)
 						<div class="col-md-6 form-group has-feedback" id="sustanciaFormName`+id+`">
-						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateName')
+						    @include('layouts.RespelPartials.layoutsRes.ControladaEditName')
 						</div>
 						<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+id+`">
-						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')
+						    @include('layouts.RespelPartials.layoutsRes.ControladaEditDoc')
 						</div>
 					@else
 						<div class="col-md-6 form-group has-feedback" id="sustanciaFormName`+id+`">
-						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateName')
+						    @include('layouts.RespelPartials.layoutsRes.MasivoEditName')
 						</div>
 						<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+id+`">
-						    @include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')
+						    @include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')
 						</div>
 					@endif
 				@else
