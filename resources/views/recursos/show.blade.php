@@ -12,7 +12,22 @@
                     <div class="col-md-12" >
                         @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                <center><h4>No puede <b>Modificar</b> o <b>Eliminar</b> los residuos de esta solicitud</h4></center>
+                                <center><h4>No puede <b>Modificar</b> o <b>Eliminar</b> este residuo porque
+                                    @switch($SolSer->SolSerStatus)
+                                        @case('Programado')
+                                            ha sido programado
+                                            @break
+                                        @case('Completado')
+                                            ha llegado a la planta de Prosarc S.A ESP 
+                                            @break
+                                        @case('Tratado')
+                                            ha sido tratado
+                                            @break
+                                        @case('Certificacion')
+                                            esta listo para realizar la certificación
+                                            @break
+                                    @endswitch
+                                    </h4></center>
                             @else
                                 <h3 class="box-title">Residuo de la Solicitud de Servicio</h3>
                                 @if($SolSer->SolSerStatus !== 'Programado')
@@ -20,7 +35,7 @@
                                 @endif
                             @endif
                         @else
-                            <div style="display: flex; justify-content:space-between">
+                            {{-- <div style="display: flex; justify-content:space-between"> --}}
                                 @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
                                     <h3 class="box-title">Residuo de la Solicitud de Servicio</h3>
                                     {{-- <a method='get' href='#' data-toggle='modal' data-target='#addRecurso'  class="btn btn-success"><i class="fas fa-plus-circle"></i><b> {{trans('adminlte_lang::message.add')}}</b></a> --}}
@@ -42,7 +57,7 @@
                                         <input type="submit" id="Eliminar{{$SolRes->SolResSlug}}" style="display: none;">
                                     </form>
                                 @endif
-                            </div>
+                            {{-- </div> --}}
                         @endif
                     </div>
                 </div>
@@ -64,20 +79,20 @@
                                         <a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolRes->SolResEmbalaje}}</p>">{{$SolRes->SolResEmbalaje}}</a>
                                     </div>
                                 </div>
-                                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                    <div class="col-md-3 border-gray" style="margin-top: 20px;">
+                                @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+                                    <div class="col-md-3 border-gray">
                                         <label>Kilogramos enviados: </label><br>
                                         <a>{{$SolRes->SolResKgEnviado}}0</a>
                                     </div>
-                                    <div class="col-md-3 border-gray" style="margin-top: 20px;">
+                                    <div class="col-md-3 border-gray">
                                         <label>Kilogramos Recibidos: </label><br>
                                         <a>{{$SolRes->SolResKgRecibido}}0</a>
                                     </div>
-                                    <div class="col-md-3 border-gray" style="margin-top: 20px;">
+                                    <div class="col-md-3 border-gray">
                                         <label>Kilogramos conciliados: </label><br>
                                         <a>{{$SolRes->SolResKgConciliado}}0</a>
                                     </div>
-                                    <div class="col-md-3 border-gray" style="margin-top: 20px;">
+                                    <div class="col-md-3 border-gray">
                                         <label>Kilogramos tratados: </label><br>
                                         <a>{{$SolRes->SolResKgTratado}}0</a>
                                     </div>
@@ -109,25 +124,25 @@
                                 <div class="col-md-3" style="text-align: center; margin-top: 20px;">
                                     <label for="SolResFotoDescargue_Pesaje">Foto Pesaje/Descargue</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje  == 1 ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje  === '1' ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                                 <div class="col-md-3" style="text-align: center; margin-top: 20px;">
                                     <label for="SolResFotoDescargue_Pesaje">Foto Tratamineto</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoTratamiento  == 1 ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                                 <div class="col-md-3" style="text-align: center; margin-top: 20px;">
                                     <label for="SolResFotoDescargue_Pesaje">Video Pesaje/Descargue</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  == 1 ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                                 <div class="col-md-3" style="text-align: center; margin: 20px 0px 20px 0px; ">
                                     <label for="SolResFotoDescargue_Pesaje">Video Tratamiento</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  == 1 ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  === '1' ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +193,7 @@
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $SolSer->SolSerStatus === 'Completado')
                             <div class="col-md-12">
                                 <center><h3>
-                                    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Recursos</label>
+                                    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recursos</b>" data-content="En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Recursos</label>
                                 </h3></center>
                             </div>
                         @else
@@ -296,7 +311,7 @@
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                             <div class="col-md-12">
                                 <center><h3>
-                                    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Recursos</label>
+                                    <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recursos</b>" data-content="En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Recursos</label>
                                 </h3></center>
                             </div>
                         @endif
@@ -352,6 +367,11 @@
         }
         $('#recursoinputext').attr('accept', '.mp4')
 
+    });
+</script>
+<script>
+    $(document).ready(function (){
+        $('#SolResFotoDescargue_Pesaje').bootstrapSwitch('checked', true);
     });
 </script>
 {{-- <script>

@@ -155,15 +155,17 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				     )
 			    )
 			    /*PESTAÑA DE SOLICITUD*/
-			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-				    (Menu::new()
-					    ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-					    ->addParentClass('treeview')
-					    ->add(Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-signature"></i> '.trans('adminlte_lang::message.MenuServlist')))
-					    ->add(Link::toUrl('/recurso', '<i class="fas fa-video"></i> '.trans('adminlte_lang::message.MenuServEviden')))
-					    ->addClass('treeview-menu')
-				    )
-			    )
+			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+				//     (Menu::new()
+				// 	    ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				// 	    ->addParentClass('treeview')
+				// 	    ->add(Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-signature"></i> '.trans('adminlte_lang::message.MenuServlist')))
+				// 	    ->add(Link::toUrl('/recurso', '<i class="fas fa-video"></i> '.trans('adminlte_lang::message.MenuServEviden')))
+				// 	    ->addClass('treeview-menu')
+				//     )
+				// )
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+
 
 	        /*FIN DEL MENU2 PARA PROSARC*/
 
@@ -238,15 +240,21 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				     )
 			    )
 			    /*PESTAÑA DE SOLICITUD*/
-			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
-				    (Menu::new()
-					    ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-					    ->addParentClass('treeview')
-					    ->add(Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-signature"></i> '.trans('adminlte_lang::message.MenuServlist')))
-					    ->add(Link::toUrl('/recurso', '<i class="fas fa-video"></i> '.trans('adminlte_lang::message.MenuServEviden')))
-					    ->addClass('treeview-menu')
-				    )
-			    )
+			    // ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
+				//     (Menu::new()
+				// 	    ->prepend('<a href="#"><i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				// 	    ->addParentClass('treeview')
+				// 	    ->add(Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-signature"></i> '.trans('adminlte_lang::message.MenuServlist')))
+				// 	    ->add(Link::toUrl('/recurso', '<i class="fas fa-video"></i> '.trans('adminlte_lang::message.MenuServEviden')))
+				// 	    ->addClass('treeview-menu')
+				//     )
+				// )
+				
+				// ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), 
+				// (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
+
+
+			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
 	        /*FIN DEL MENU PARA EL CLIENTE*/
 

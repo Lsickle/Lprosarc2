@@ -83,3 +83,6 @@ select.form-control{
 .fixed_widthbtn{
 	width:3em;
 }
+.border-gray{
+	border-bottom:#f4f4f4 solid 2px;
+}

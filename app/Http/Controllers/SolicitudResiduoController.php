@@ -83,15 +83,21 @@ class SolicitudResiduoController extends Controller
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
         
             $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+            $SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
             $RespelSgener = ResiduosGener::where('ID_SGenerRes', $SolRes->FK_SolResRg)->first();
-
+            
             $Respel = DB::table('respels')
-                ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-                ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-                ->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
-                ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
-                ->first();
-        
+            ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+            ->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
+            ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
+            ->first();
+            
+            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
+                    abort(403);
+                }
+            }
             return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener'));
         }else{
             abort(403);
@@ -108,44 +114,79 @@ class SolicitudResiduoController extends Controller
     public function update(SolResUpdateRequest $request, $id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-        // $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
-        
-        // $SolRes->fill($request->except('FK_SolResSolSer', 'SolResTypeUnidad', 'SolResEmbalaje'));
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
 
-        // $SolRes->FK_SolResSolSer = $Respel->ID_Respel;
+            $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
 
-        // switch($request->input('SolResTypeUnidad')){
-        //     case 99: 
-        //         $SolRes->SolResTypeUnidad = 'Unidad';
-        //         break;
-        //     case 98: 
-        //         $SolRes->SolResTypeUnidad = 'Peso';
-        //         break;
-        // }
+            $Validate = $request->validate([
+                'SolResTypeUnidad' => 'nullable',
+                'SolResEmbalaje' => 'required',
+                'SolResKgEnviado' => 'max:11|required',
+                'SolResCantiUnidad' => 'max:20|nullable',
+                'SolResAlto' => 'max:20|nullable',
+                'SolResAncho' => 'max:20|nullable',
+                'SolResProfundo' => 'max:20|nullable',
+                'SolResFotoDescargue_Pesaje' => 'max:1|nullable',
+                'SolResFotoTratamiento' => 'max:1|nullable',
+                'SolResVideoDescargue_Pesaje' => 'max:1|nullable',
+                'SolResVideoTratamiento' => 'max:1|nullable',
+            ]);
 
-        // switch($request->input('SolResEmbalaje')){
-        //     case 99: 
-        //         $SolRes->SolResEmbalaje = 'Bolsas';
-        //         break;
-        //     case 98: 
-        //         $SolRes->SolResEmbalaje = 'Canecas';
-        //         break;
-        //     case 97: 
-        //         $SolRes->SolResEmbalaje = 'Estibas';
-        //         break;
-        //     case 96: 
-        //         $SolRes->SolResEmbalaje = 'Garrafones';
-        //         break;
-        //     case 95: 
-        //         $SolRes->SolResEmbalaje = 'Cajas';
-        //         break;
-        //     default: 
-        //         abort(500);
-        // }
+            $SolRes->SolResKgEnviado = $request->input('SolResKgEnviado');
+            $SolRes->SolResCantiUnidad = $request->input('SolResCantiUnidad');
+            $SolRes->SolResAlto = $request->input('SolResAlto');
+            $SolRes->SolResAncho = $request->input('SolResAncho');
+            $SolRes->SolResProfundo = $request->input('SolResProfundo');
+            $SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+            $SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+            $SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+            $SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+    
+            switch($request->input('SolResTypeUnidad')){
+                case 99: 
+                    $SolRes->SolResTypeUnidad = 'Unidad';
+                    break;
+                case 98: 
+                    $SolRes->SolResTypeUnidad = 'Peso';
+                    break;
+            }
+    
+            switch($request->input('SolResEmbalaje')){
+                case 99: 
+                    $SolRes->SolResEmbalaje = 'Bolsas';
+                    break;
+                case 98: 
+                    $SolRes->SolResEmbalaje = 'Canecas';
+                    break;
+                case 97: 
+                    $SolRes->SolResEmbalaje = 'Estibas';
+                    break;
+                case 96: 
+                    $SolRes->SolResEmbalaje = 'Garrafones';
+                    break;
+                case 95: 
+                    $SolRes->SolResEmbalaje = 'Cajas';
+                    break;
+                default: 
+                    abort(500);
+            }
+        }
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica')){
+            $Validate = $request->validate([
+                'SolResKgConciliado' => 'numeric',
+            ]);
+            $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+        }
 
-        $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
-        $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
-        $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
+            $Validate = $request->validate([
+                'SolResKgRecibido' => 'numeric',
+                'SolResKgTratado' => 'numeric',
+            ]);
+            $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+            $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+        }
+
         $SolRes->save();
 
         $log = new audit();

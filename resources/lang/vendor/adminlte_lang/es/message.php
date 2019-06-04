@@ -595,4 +595,8 @@ return [
     'requiredescarguevideodescrit' => 'Se requiere vídeo del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP.',
     'requiretratamientovideo' =>'Vídeo Tratamiento',
     'requiretratamientovideodescrit' => 'Se requiere vídeo del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
+
+    // Recursos
+    'solser' => 'Solicitud de Servicio',
+    'solresedit' => 'Editar Residuo de la Solcitud de Servicio',
 ];

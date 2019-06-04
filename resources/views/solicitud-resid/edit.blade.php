@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Solicitude de Residuo
+{{ trans('adminlte_lang::message.solser') }}
 @endsection
 @section('contentheader_title')
-Editar Solicitud de Residuo
+{{ trans('adminlte_lang::message.solser') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -11,7 +11,7 @@ Editar Solicitud de Residuo
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-                    <h3 class="box-title">Datos</h3>
+                    <h3 class="box-title">{{ trans('adminlte_lang::message.solresedit') }}</h3>
 				</div>
                 <div class="box box-info">
                     <form role="form" action="/solicitud-residuo/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
@@ -46,46 +46,6 @@ Editar Solicitud de Residuo
                                 <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }} (Unidades)</label>
                                 <input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResCantiUnidad}}">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
-                                <small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
-                            </div>
-
-                            @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-
-                                @switch(Auth::user()->UsRol)
-                                    @case(trans('adminlte_lang::message.SupervisorTurno'))
-                                        @if ($SolRes->SolResKgRecibido >= 0)
-                                            <div id="divSolResKgRecibido">
-                                            </div>
-                                        @endif
-                                        @if ($SolRes->SolResKgConciliado > 0)
-                                            <div id="divSolResKgRecibido">
-                                            </div>
-                                            <div id="divSolResKgConciliado">
-                                            </div>
-                                            <div id="divSolResKgTratado">
-                                            </div>
-                                        @endif
-                                        @break
-                                    @case(trans('adminlte_lang::message.JefeLogistica'))
-                                        @if ($SolRes->SolResKgRecibido > 0)
-                                            <div id="divSolResKgRecibido">
-                                            </div>
-                                            <div id="divSolResKgConciliado">
-                                            </div>
-                                        @endif
-                                        @break
-                                    @default
-                                        <div id="divSolResKgRecibido">
-                                        </div>
-                                        <div id="divSolResKgConciliado">
-                                        </div>
-                                        <div id="divSolResKgTratado">
-                                        </div>
-                                @endswitch
-                            @endif
                             <div id="embalaje" class="form-group col-md-6">
                                 <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserembaja') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserembaja') }}</label>
                                 <small class="help-block with-errors">*</small>
@@ -98,6 +58,22 @@ Editar Solicitud de Residuo
                                     <option value="95" {{$SolRes->SolResEmbalaje  === "Cajas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja5') }}</option>
                                 </select>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
+                                <small class="help-block with-errors">*</small>
+                                <input type="text" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
+                            </div>
+
+                            @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+                                <div id="divSolResKgRecibido">
+                                </div>
+                                <div id="divSolResKgConciliado">
+                                </div>
+                                @if (Auth::user()->UsRol !== trans('adminlte_lang::message.JefeLogistica'))
+                                    <div id="divSolResKgTratado">
+                                    </div>
+                                @endif 
+                            @endif
                             <div class="form-group col-md-16" style="text-align: center;">
                                 <div class="form-group col-md-12">
                                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdimension') }}</b>" data-content="{{ trans('adminlte_lang::message.solserdimensiondescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserdimension') }}</label>
@@ -159,7 +135,7 @@ Editar Solicitud de Residuo
                                         <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientovideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientovideodescrit') }}</p>">
                                             <label for="SolResVideoTratamiento">{{ trans('adminlte_lang::message.requiretratamientovideo') }}</label>
                                             <div style="width: 100%; height: 34px;">
-                                                <input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }}>
+                                                <input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  === '1' ? 'checked' : '' }}>
                                                 {{-- falta modificar los valores de los checkbox --}}
                                                 <input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="0">
                                             </div>
@@ -186,19 +162,19 @@ Editar Solicitud de Residuo
             $("#divSolResKgRecibido").append(`
                 <div class="form-group col-md-6">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.edit') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Resivido</label><small class="help-block with-errors">*</small>
-                    <input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
+                    <input type="number" class="form-control numberKg" id="SolResKgRecibido" min="0" maxlength="11" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
                 </div>
             `);
             $("#divSolResKgConciliado").append(`
                 <div class="form-group col-md-6">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.delete') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Conciliado</label><small class="help-block with-errors">*</small>
-                    <input type="text" class="form-control numberKg" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                    <input type="number" class="form-control numberKg" id="SolResKgConciliado" max="{{$SolRes->SolResKgRecibido}}" min="0" maxlength="11" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
                 </div>
             `);
             $("#divSolResKgTratado").append(`
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.update') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Tratado</label><small class="help-block with-errors">*</small>
-                    <input type="text" class="form-control numberKg" id="SolResKgTratado" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
+                    <input type="number" class="form-control numberKg" id="SolResKgTratado" max="{{$SolRes->SolResKgConciliado}}" min="0" maxlength="11" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
                 </div>
             `);
 
@@ -217,58 +193,42 @@ Editar Solicitud de Residuo
             $('#SolResVideoTratamiento').bootstrapSwitch('disabled', true);
         });
     </script>
-
-@endif
     <script>
         switch('{{Auth::user()->UsRol}}'){
-            case '{{trans("adminlte_lang::message.Programador")}}':
-                SolResKgRecibido();
-                break;  
-            case '{{trans("adminlte_lang::message.Administrador")}}':
-                $(document).ready(function (){
-                    SolResKgRecibido();
-                    $('#embalaje').removeClass('col-md-6').addClass('col-md-12');
-
-                });
-                if('{{$SolRes->SolResKgTratado}}' > 0){
-                    $(document).ready(function (){
-                        SolResKgRecibido();
-                        SolResKgConciliado();
-                        SolResKgTratado();
-                    });
-                }
-                break;  
             case '{{trans("adminlte_lang::message.JefeLogistica")}}':
                 $(document).ready(function (){
                     SolResKgRecibido();
                 });
-                if('{{$SolRes->SolResKgTratado}}' > 0){
+                if('{{$SolRes->SolResKgRecibido === Null}}'){
                     $(document).ready(function (){
-                        // SolResKgRecibido();
                         SolResKgConciliado();
-                        SolResKgTratado();
                     });
                 }
                 break;  
-            case '{{trans("adminlte_lang::message.SupervisorTurno")}}':
-                if('{{$SolRes->SolResKgConciliado}}' > 0){
 
+            case '{{trans("adminlte_lang::message.SupervisorTurno")}}':
+                $(document).ready(function (){
+                    SolResKgConciliado();
+                });
+                if('{{$SolRes->SolResKgConciliado === Null}}' ){
+                    $(document).ready(function (){
+                        SolResKgTratado();
+                    });
+                }else{
                     $(document).ready(function (){
                         SolResKgRecibido();
-                        SolResKgConciliado();
-                    });
-                }
-
-                if('{{$SolRes->SolResKgTratado}}' === '{{$SolRes->SolResKgConciliado}}'){
-
-                    $(document).ready(function (){
-                        // SolResKgRecibido();
-                        // SolResKgConciliado();
-                        SolResKgTratado();
                     });
                 }
                 break;  
-            }
+
+            default:
+                $(document).ready(function (){
+                    SolResKgRecibido();
+                    SolResKgConciliado();
+                    SolResKgTratado();
+                });
+        }
+
         function SolResKgRecibido(){
             $('#SolResKgRecibido').prop('disabled', true);
         }
@@ -282,6 +242,8 @@ Editar Solicitud de Residuo
         }
 
     </script>
+@endif
+
     {{-- <script>
         function Checkboxs(){
         $('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
