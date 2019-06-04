@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
+    <link rel="shortcut icon" href="/img/LogoProsarc.ico">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,6 +19,22 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        body {
+           background-image: url("/img/Fondo.png");
+           background-size: 100%;
+        }
+        .navbar {
+            background-color: #3c8dbc;
+        }
+        .nav-link, .logo-lg{
+            color: #fff !important;
+            font-size: 1.3em !important;
+        }
+        .justify-content-center{
+            margin-top: 8%;
+        }
+    </style>
 
     {{-- script de idioma --}}
     <script>
@@ -44,9 +61,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name') }}
-                </a>
+                <span class="logo-lg"><b>{{ config('app.name') }}</b><img src="/img/LogoProsarc.png" style="width: 1.8em; margin: 5px; border-radius: 50%;"></span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
