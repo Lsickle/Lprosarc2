@@ -12,12 +12,17 @@
 			<div class="box">
 				<div class="box-header">
 					@component('layouts.partials.modal')
-						{{$Cargos->CargSlug}}
+						@slot('slug')
+							{{$Cargos->CargSlug}}
+						@endslot
+						@slot('textModal')
+							el cargo de <b>{{$Cargos->CargName}}</b>
+						@endslot
 					@endcomponent
 					<h3 class="box-title">{{trans('adminlte_lang::message.editcargo')}}</h3>
 					@if($Cargos->ID_Carg <> $CargoOne[0]->ID_Carg)
 						@if($Cargos->CargDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
 								@method('DELETE')
 								@csrf
@@ -52,7 +57,7 @@
 							</div>
 							<div class="form-group col-xs-6 col-md-6">
 								<label for="CargoGrade">{{trans('adminlte_lang::message.cargograde')}}</label>
-								<select name="CargGrade" id="CargoGrade" class="form-control select">
+								<select name="CargGrade" id="CargoGrade" class="form-control">
 									<option value="">{{trans('adminlte_lang::message.select')}}</option>
 									<option {{$Cargos->CargGrade == trans('adminlte_lang::message.cargogradelist1') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist1')}}</option>
 									<option {{$Cargos->CargGrade == trans('adminlte_lang::message.cargogradelist2') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist2')}}</option>

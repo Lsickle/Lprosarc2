@@ -15,12 +15,17 @@
 				<div class="box">
 					<div class="box-header">
 						@component('layouts.partials.modal')
-							{{$Areas->AreaSlug}}
+							@slot('slug')
+								{{$Areas->AreaSlug}}
+							@endslot
+							@slot('textModal')
+								el área de <b>{{$Areas->AreaName}}</b>
+							@endslot
 						@endcomponent
 						<h3 class="box-title">{{ trans('adminlte_lang::message.editarea') }}</h3>
 						@if($Areas->ID_Area <> $AreaOne[0]->ID_Area)
 							@if($Areas->AreaDelete == 0)
-								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->AreaSlug}}' class='btn btn-danger pull-right'>{{ trans('adminlte_lang::message.delete') }}</a>
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->AreaSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 								<form action='/areas/{{$Areas->AreaSlug}}' method='POST'>
 									@method('DELETE')
 									@csrf

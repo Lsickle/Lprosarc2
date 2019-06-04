@@ -49,7 +49,7 @@ Activos
                     <td>{{$QrCode->created_at}}</td>
                     <td>{{$QrCode->updated_at}}</td>
                     {{-- <td>{{$QrCode->FK_QrCodeSolSer}}</td> --}}
-                    <td></td>
+                    <td><a href='#" + data + "/edit' class='btn btn-warning'>Edit</a></td>
                   </tr>
                 
               @endforeach

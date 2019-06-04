@@ -57,7 +57,7 @@ Manifiesto
                 @endif --}}
                 <td>{{$Manifiesto->CertAnexo}}</td>
                 <td>{{$Manifiesto->created_at}}</td>
-                <td></td>
+                <td><a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a></td>
               </tr>
               @endforeach
             </tbody>

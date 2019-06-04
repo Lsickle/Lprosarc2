@@ -14,10 +14,15 @@ Artículos por Proveedor
 				<div class="box-header with-border">
 					<h3 class="box-title">Datos</h3>
 					@component('layouts.partials.modal')
-						{{$ArtProvs->ID_ArtiProve}}
+						@slot('slug')
+							{{$ArtProvs->ID_ArtiProve}}
+						@endslot
+						@slot('textModal')
+							el artivo <b>{{$ArtProvs->FK_ArtiActiv}}</b>
+						@endslot
 					@endcomponent
 					@if($ArtProvs->ArtDelete == 0)
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ArtProvs->ID_ArtiProve}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$ArtProvs->ID_ArtiProve}}'  class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 						<form action='/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}' method='POST'>
 							@method('DELETE')
 							@csrf
