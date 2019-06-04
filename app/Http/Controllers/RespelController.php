@@ -255,11 +255,24 @@ class RespelController extends Controller
             ->select('sedes.*', 'clientes.*', 'tratamientos.*')
             ->get();
 
-        $Sedes = DB::table('cotizacions')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
-            ->get();
+        if(Auth::user()->UsRol=='Cliente'){
+            $Sede = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->select('sedes.ID_Sede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->get();
+            return view('respels.create', compact('Sede'));
+        }
+        else{
+            $Sedes = DB::table('clientes')
+                ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->select('sedes.ID_Sede', 'clientes.CliName')
+                ->where('clientes.ID_Cli', '<>', 1) 
+                ->get();
+            return view('respels.create', compact('Sedes'));
+        }
 
         return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
     }

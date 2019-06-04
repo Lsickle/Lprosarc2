@@ -1,10 +1,11 @@
 @extends('layouts.app')
-@if(Auth::user()->UsRol !== "Cliente")
+{{-- vista de edición para el cliente --}}
+@if(Auth::user()->UsRol == "Cliente")
 @section('htmlheader_title')
-Respel-Editar
+Respel-Tratamiento
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+{{ trans('adminlte_lang::LangRespel.Respelasig') }}
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -21,28 +22,37 @@ Respel-Editar
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Edición de Residuos</h3>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
 				</div>
 				<div class="row">
 					<!-- left column -->
 					<div class="col-md-12">
+						<!-- general form elements -->
 						<div class="box box-primary">
 							<!-- /.box-header -->
 							<!-- form start -->
-							<form role="form" action="/respels/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
-								@method('PUT')
+							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
 								@csrf
-								@include('layouts.RespelPartials.respelform1Edit')
-								<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+								@if ($errors->any())
+								    <div class="alert alert-danger" role="alert">
+								        <ul>
+								            @foreach ($errors->all() as $error)
+								                <li>{{$error}}</li>
+								            @endforeach
+								        </ul>
+								    </div>
+								@endif
+								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+								@include('')
 								<!-- /.box-body -->
-								<div class="col-md-12">
+								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Actualizar</button>	
 									</div>
 								</div>
 							</form>
-							<!-- /.box -->
 						</div>
+						<!-- /.box -->
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -55,13 +65,12 @@ Respel-Editar
 	<!-- /.box -->
 </div>
 @endsection
-@endif
-@if(Auth::user()->UsRol == "Cliente")
+@else
 @section('htmlheader_title')
-Respel-Tratamiento
+Respel-Editar
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelasig') }}
+{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
