@@ -16,7 +16,7 @@ return [
     'Respellist'            => 'Lista de Residuos',
     'Respelcreate'          => 'Registro de Residuos',
     'Respelinfotag'         => 'Información del Residuo',
-    'Respeleditmenu'        => 'edición del Residuo',
+    'Respeleditmenu'        => 'Edición del Residuo',
     'Respeledittag'         => 'Respel-Edición',
     'Respelasig'            => 'Asignación de tratamientos para Residuos',
     'basicinfo'             => 'Datos Básicos',

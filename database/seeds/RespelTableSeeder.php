@@ -17,7 +17,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'Trapos';
         $Respel->RespelDescrip = 'Precaución con el producto';
         $Respel->YRespelClasf4741 = 'Y10';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Inflamable';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -38,7 +37,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'Gasolina';
         $Respel->RespelDescrip = 'Precaución';
         $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Toxico';
         $Respel->RespelEstado = 'Liquido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -50,7 +48,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -58,7 +55,6 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Tecnología';
         $Respel->RespelDescrip = 'residuos de procesos tecnológicos';
-        $Respel->YRespelClasf4741 = 'null';
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Patógeno - Infeccioso';
         $Respel->RespelEstado = 'Solido';
@@ -71,7 +67,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -80,7 +75,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'Cascos';
         $Respel->RespelDescrip = 'N\A';
         $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Corrosivo';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -100,7 +94,6 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Relleno';
         $Respel->RespelDescrip = 'Olores nauseabundos';
-        $Respel->YRespelClasf4741 = 'null';
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Reactivo';
         $Respel->RespelEstado = 'Gaseoso';
@@ -113,7 +106,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -122,7 +114,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'desechos radiactivos';
         $Respel->RespelDescrip = 'desechos de la producción de energía usando isotopos radiactivos';
         $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Radiactivo';
         $Respel->RespelEstado = 'Mezcla';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -134,7 +125,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -143,7 +133,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'Trapos';
         $Respel->RespelDescrip = 'Precaución con el producto';
         $Respel->YRespelClasf4741 = 'Y10';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Inflamable';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -164,7 +153,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'Gasolina';
         $Respel->RespelDescrip = 'Precaución';
         $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Toxico';
         $Respel->RespelEstado = 'Liquido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -176,7 +164,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -184,7 +171,6 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Tecnología';
         $Respel->RespelDescrip = 'residuos de procesos tecnológicos';
-        $Respel->YRespelClasf4741 = 'null';
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Patógeno - Infeccioso';
         $Respel->RespelEstado = 'Solido';
@@ -197,7 +183,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -205,9 +190,7 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Cascos';
         $Respel->RespelDescrip = 'N\A';
-        $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
-        $Respel->RespelIgrosidad = 'Corrosivo';
+        $Respel->RespelIgrosidad = 'No Peligroso';
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
@@ -226,7 +209,6 @@ class RespelTableSeeder extends Seeder
         $Respel = new Respel();
         $Respel->RespelName = 'Relleno';
         $Respel->RespelDescrip = 'Olores nauseabundos';
-        $Respel->YRespelClasf4741 = 'null';
         $Respel->ARespelClasf4741 = 'A1010';
         $Respel->RespelIgrosidad = 'Reactivo';
         $Respel->RespelEstado = 'Gaseoso';
@@ -239,7 +221,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();
@@ -248,7 +229,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelName = 'desechos radiactivos';
         $Respel->RespelDescrip = 'desechos de la producción de energía usando isotopos radiactivos';
         $Respel->YRespelClasf4741 = 'Y14';
-        $Respel->ARespelClasf4741 = 'null';
         $Respel->RespelIgrosidad = 'Radiactivo';
         $Respel->RespelEstado = 'Mezcla';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
@@ -260,7 +240,6 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelFoto= 'RespelFotoDefault.png';
         $Respel->SustanciaControlada = '0';
         $Respel->SustanciaControladaTipo = '0';
-        $Respel->SustanciaControladaNombre = '';
         $Respel->SustanciaControladaDocumento = 'SustanciaControlDocDefault.pdf';
         $Respel->RespelDeclaracion = '1';
         $Respel->save();

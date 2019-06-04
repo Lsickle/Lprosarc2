@@ -27,47 +27,67 @@
 				<select id="selectDanger0" name="RespelIgrosidad" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->RespelDescrip === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->RespelIgrosidad === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger1') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger2') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger3') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger4') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger5') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger6') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger7') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->RespelDescrip === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger8') }}
 					</option>
 
 				</select>
 			</div>
 			<div id="danger0">
+				@if($Respels->RespelIgrosidad !== 'No peligroso')
+				<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;">
+				    <label>Tipo de clasificación</label><br>
+				    @if(is_null($Respels->ARespelClasf4741))
+				    <a class="btn btn-success"  id="ClasifY`+id+`" onclick="AgregarY(`+id+`)">Y</a>
+				    <a class="btn btn-default"  id="ClasifA`+id+`" onclick="AgregarA(`+id+`)">A</a>
+				    @else
+				    <a class="btn btn-default"  id="ClasifY`+id+`" onclick="AgregarY(`+id+`)">Y</a>
+				    <a class="btn btn-success"  id="ClasifA`+id+`" onclick="AgregarA(`+id+`)">A</a>
+				    @endif
+				</div>
+				<div class="col-md-6 form-group has-feedback" id="Clasif`+id+`">
+					@if(is_null($Respels->ARespelClasf4741))
+				    	@include('layouts.RespelPartials.layoutsRes.ClasificacionYEdit')
+				    @else
+				    	@include('layouts.RespelPartials.layoutsRes.ClasificacionAEdit')
+				    @endif
+				</div>
+				@else
 				<select name="YRespelClasf4741" hidden="">
 					<option value="" selected></option>
 				</select>
 				<select name="ARespelClasf4741" hidden="">
 					<option value="" selected></option>
 				</select>
+				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
@@ -125,9 +145,9 @@ function attachPopover() {
 	});
 }
 function setDanger(id) {
-	var ifDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifDangerRespel')`;
+	var ifDangerRespeledit = `@include('layouts.RespelPartials.layoutsRes.ifDangerRespeledit')`;
 	$("#danger" + id).empty();
-	$("#danger" + id).append(ifDangerRespel);
+	$("#danger" + id).append(ifDangerRespeledit);
 	$("#hoja" + id).prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
@@ -158,7 +178,7 @@ function setNoControlada(id) {
 
 
 function AgregarY(id) {
-	var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
+	var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYEdit')`;
 	$("#ClasifY" + id).removeClass("btn-default");
 	$("#ClasifY" + id).addClass("btn-success");
 	$("#ClasifA" + id).removeClass("btn-success");
@@ -170,7 +190,7 @@ function AgregarY(id) {
 }
 
 function AgregarA(id) {
-	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
+	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionAEdit')`;
 	$("#ClasifA" + id).removeClass("btn-default");
 	$("#ClasifA" + id).addClass("btn-success");
 	$("#ClasifY" + id).removeClass("btn-success");

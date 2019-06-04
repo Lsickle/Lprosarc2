@@ -4,5 +4,5 @@
     <a class="btn btn-default"  id="ClasifA`+id+`" onclick="AgregarA(`+id+`)">A</a>
 </div>
 <div class="col-md-6 form-group has-feedback" id="Clasif`+id+`">
-    @include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')
+    @include('layouts.RespelPartials.layoutsRes.ClasificacionYEdit')
 </div>
