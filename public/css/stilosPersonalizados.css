@@ -119,6 +119,7 @@ select.form-control{
   *background-color:#fff;
   filter:progid:DXImageTransform.Microsoft.gradient(enabled = false)
 }
+
 .bootstrap-switch .bootstrap-switch-label {
   text-align: center;
   margin-top: -1px;
@@ -138,4 +139,25 @@ select.form-control{
   border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
   *background-color:#e6e6e6;
   filter:progid:DXImageTransform.Microsoft.gradient(enabled = false)
+}
+
+.border-gray{
+	border-bottom:#f4f4f4 solid 2px;
+}
+.boton{
+	font-size: 1.2em;
+	opacity: 0.5 !important;
+}
+.boton:hover{
+	opacity: 1 !important;
+}
+.select2-container--classic, .select2-selection--single{
+	height: 2.3em !important;
+}
+.select2-selection__rendered{
+	padding: 6px 12px !important;
+}
+.select2-selection__arrow{
+	height: 2.2em !important;
+	margin-bottom: 0.1em;
 }
