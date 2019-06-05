@@ -66,7 +66,7 @@
 										@else
 											<div class="col-md-12">
 										@endif
-											<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b>
+											<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><br>
 											<spam>{{$TextProgramacion}}</spam>
 										</div>
 									</h4>
