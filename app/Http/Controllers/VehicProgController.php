@@ -12,6 +12,7 @@ use App\audit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Vehiculo;
+use App\SolicitudServicio;
 
 class VehicProgController extends Controller
 {
@@ -87,11 +88,7 @@ class VehicProgController extends Controller
         $serviciosnoprogramados = DB::table('solicitud_servicios')
             ->select('ID_SolSer', 'SolSerSlug')
             ->where('SolSerDelete', 0)
-            ->where(function($query) use ($programacions){
-                foreach($programacions as $programacion) { 
-                    $query->where('ID_SolSer', '<>', $programacion->FK_ProgServi);
-                }
-            })
+            ->where('SolSerStatus', 'Aprobado')
             ->get();
         return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos'));
     }
@@ -106,7 +103,7 @@ class VehicProgController extends Controller
     {
         // return $request;
         $validation = Validator::make($request->all(), [
-            'ProgVehFecha'        => 'required',
+            'ProgVehFecha'        => 'required|date',
             'ProgVehSalida'       => 'required',
             'FK_ProgVehiculo'     => 'required',
             'FK_ProgConductor'    => 'required',
@@ -133,8 +130,12 @@ class VehicProgController extends Controller
         $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
         $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
         $programacion->ProgVehDelete = 0;
-        // return $programacion;
         $programacion->save();
+
+        $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+        $SolicitudServicio->SolSerStatus = 'Programado';
+        $SolicitudServicio->save();
+        
         return redirect()->route('vehicle-programacion.create');
     }
 

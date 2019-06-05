@@ -21,11 +21,13 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style type="text/css">
         body {
-           background-image: url("/img/Fondo.png");
-           background-size: 100%;
+           background-image: linear-gradient(#ffffff, #0091e0, #70be50, #07588d);
+           /*background-size: 100%;
+           #3c8dbc #173059*/
         }
         .navbar {
             background-color: #3c8dbc;
+            /*border-bottom: 2px solid #ffffff;*/
         }
         .nav-link, .logo-lg{
             color: #fff !important;
