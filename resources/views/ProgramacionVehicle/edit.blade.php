@@ -133,11 +133,11 @@
 									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
 								</div>
 								<div class="form-group col-md-6">
-									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
+									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
 									<input type="time" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
 								</div>
 								<div class="form-group col-md-6">
-									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label>
+									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label>
 									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
 								</div>
 								<div class="form-group col-md-6">
@@ -194,11 +194,11 @@
 									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
 								</div>
 								<div class="form-group col-md-6">
-									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label><small class="help-block with-errors">*</small>
+									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
 									<input type="time" required="" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
 								</div>
 								<div class="form-group col-md-6">
-									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label><small class="help-block with-errors">*</small>
+									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label><small class="help-block with-errors">*</small>
 									<input type="time" required="" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{date('H:i', strtotime($programacion->ProgVehEntrada))}}">
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>

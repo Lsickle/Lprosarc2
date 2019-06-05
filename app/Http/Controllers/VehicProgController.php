@@ -197,7 +197,6 @@ class VehicProgController extends Controller
     public function update(Request $request, $id)
     {
         $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-        $programacion->FK_ProgServi = $request->input('FK_ProgServi');
         $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
         $llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
