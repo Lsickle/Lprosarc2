@@ -421,7 +421,7 @@ function TransportadorProsarc() {
 	$("#SolSerConductor").removeAttr('required');
 	$("#SolSerVehiculo").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
-	$("#typecollect").attr('required', true);
+	$("#SolSerTypeCollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
 	$("#typecollect").addClass('col-md-12');
 	$("#typecollect option:selected").prop("selected", false);
@@ -478,7 +478,7 @@ function TransportadorExtr() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
-	$("#typecollect").attr('required', false);
+	$("#SolSerTypeCollect").attr('required', false);
 	$("#typecollect option:selected").prop("selected", false);
 	HiddenTypeCollect();
 	TransportadorCliente();

@@ -58,7 +58,7 @@
 								@break
 								@case('Programado')
 									<h4>
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Externo')
 											<div class="col-md-1 " style="float: right;">
 												<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 											</div>

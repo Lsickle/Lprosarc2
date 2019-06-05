@@ -144,7 +144,7 @@ class SolicitudServicioController extends Controller
 			$conductor = $request->input('SolSerConductor');
 			$vehiculo = $request->input('SolSerVehiculo');
 		}
-		$direccioncollect = null;
+		$direccioncollect = 'No aplica';
 		switch ($request->input('SolSerTypeCollect')) {
 			case 99:
 				$direccioncollect = "Recolección en la sede de cada generador";
@@ -272,16 +272,21 @@ class SolicitudServicioController extends Controller
 			$SolSerCollectAddress = $Address->SedeAddress;
 		}
 		$TextProgramacion = null;
-		if($SolicitudServicio->SolSerStatus == 'Programada'){
+		if($SolicitudServicio->SolSerStatus == 'Programado'){
 			setlocale(LC_TIME, "Spanish_Colombia");
 			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->first();
-			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
-				$horas = "tarde";
+			if($Programacion->ProgVehtipo == 1){
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
 			}
 			else{
-				$horas = "mañana";
+				$horas = ' en el transcurso del día';
 			}
-			$TextProgramacion = strftime("El día %d del mes de %B ")."en las horas de la ".$horas;
+			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
