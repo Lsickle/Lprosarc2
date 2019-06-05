@@ -129,8 +129,10 @@ class VehicProgController extends Controller
 
         $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
         $SolicitudServicio->SolSerStatus = 'Programado';
-        $SolicitudServicio->SolSerConductor = $nomConduct;
-        $SolicitudServicio->SolSerVehiculo = $vehiculo;
+        if($nomConduct <> null){
+            $SolicitudServicio->SolSerConductor = $nomConduct;
+            $SolicitudServicio->SolSerVehiculo = $vehiculo;
+        }
         $SolicitudServicio->save();
         
         return redirect()->route('vehicle-programacion.create');
