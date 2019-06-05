@@ -38,13 +38,16 @@ class VehicProgController extends Controller
             $personals = DB::table('personals')
                 ->select('ID_Pers', 'PersFirstName', 'PersLastName')
                 ->get();
+            $vehiculos = DB::table('vehiculos')
+                ->select('ID_Vehic','VehicPlaca')
+                ->get();
         }
          /*Validacion para usuarios no permitidos en esta vista*/
         else{
             abort(403);
         }
             // return $programacions;
-        return view('ProgramacionVehicle.index', compact('programacions', 'personals'));
+        return view('ProgramacionVehicle.index', compact('programacions', 'personals', 'vehiculos'));
     }
 
     /**

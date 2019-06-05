@@ -44,7 +44,28 @@
 								@include('layouts.partials.spinner')
 								@foreach($programacions as $programacion)
 								@php
-
+									if($programacion->ProgVehtipo == 1){
+										foreach($personals as $personal){
+											if($programacion->FK_ProgAyudante == $personal->ID_Pers){
+												$ayudante = $personal->PersFirstName.' '.$personal->PersLastName;
+											}
+										}
+										foreach($personals as $personal){
+											if($programacion->FK_ProgConductor == $personal->ID_Pers){
+												$conductor = $personal->PersFirstName.' '.$personal->PersLastName;
+											}
+										}
+										foreach ($vehiculos as $vehiculo) {
+											if($programacion->FK_ProgVehiculo == $vehiculo->ID_Vehic){
+												$vehiculoPlaca = $vehiculo->VehicPlaca;
+											}
+										}
+									}
+									else{
+										$ayudante = 'No aplica';
+										$conductor = $programacion->SolSerConductor;
+										$vehiculoPlaca = $programacion->SolSerVehiculo;
+									}
 								@endphp
 								<tr @if($programacion->ProgVehDelete === 1)
 									style="color: red;"
@@ -52,23 +73,12 @@
 									>
 									<td>{{$programacion->CliShortname}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
-									<td>{{$programacion->SolSerVehiculo}}</td>
+									<td>{{$vehiculoPlaca}}</td>
 									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
-									@if($programacion->ProgVehtipo == 1)
-										@php
-											foreach($personals as $personal){
-												if($programacion->FK_ProgAyudante == $personal->ID_Pers){
-													$ayudante = $personal->PersFirstName.' '.$personal->PersLastName;
-												}
-											}
-										@endphp
-										<td>{{$ayudante}}</td>
-									@else
-										<td>No Aplica</td>
-									@endif
+									<td>{{$ayudante}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
-										<td>{{$programacion->SolSerConductor}}</td>
+										<td>{{$conductor}}</td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : 'Externo'}}</td>
 									@endif
