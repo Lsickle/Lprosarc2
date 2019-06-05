@@ -99,7 +99,7 @@
 											</div>
 											<div class="col-xs-12 col-md-12">
 												<label for="ProgVehColor1">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-												<input class="form-control" type="color" id="ProgVehColor1" name="ProgVehColor" value="{{$programacion->ProgVehColor}}">
+												<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor1" name="ProgVehColor" value="{{$programacion->ProgVehColor}}">
 											</div>
 											<input type="submit" hidden="true" id="submit1" name="submit1">
 										</div>
@@ -177,7 +177,7 @@
 							</div>
 							<div class="form-group col-md-6 col-md-offset-5">
 								<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-								<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%;" value="{{$programacion->ProgVehColor}}">
+								<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}">
 							</div>
 							<div class="col-md-12 col-xs-12 box box-info"></div>
 							<div class="box-footer">

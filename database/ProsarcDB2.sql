@@ -298,7 +298,7 @@ create table ProgVehiculo(
 	ProgVehFecha date, /*fecha de la progamacion*/
 	progVehKm int, /*km del vehiculo al inicio del dia*/
 	ProgVehTurno varchar, /*tarde o mañana*/
-	ProgVehtipo varchar, /*Trabaja o Mantenimiento*/
+	ProgVehtipo varchar, /*Interno o Externo*/
 	ProgVehEntrada datetime, /*hora de llegada a planta*/
 	ProgVehSalida datetime, /*hora de salida de planta*/
 	FK_ProgVehiculo int, /*foranea de la tabla de vehiculo*/

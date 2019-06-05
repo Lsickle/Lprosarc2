@@ -15,9 +15,17 @@
 			<div class="box-body">
 				<div id="external-events">
 					@foreach($serviciosnoprogramados as $servicionoprogramado)
-						<p style="background-color: #001f3f; border-color: #001f3f; text-align: center; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle col-md-12">
-							<span style="background-color: #001f3f; border-color: #001f3f; color: rgb(255, 255, 255); position: relative;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">{{$servicionoprogramado->ID_SolSer}}</span>
-							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='bg-aqua pull-right col-md-12 form-group col-xs-12 btn-block' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
+						@php
+							if($servicionoprogramado->SolSerTipo == 'Interno'){
+								$color = 'bg-aqua';
+							}
+							else{
+								$color = 'bg-green';
+							}
+						@endphp
+						<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12" data-tipo="{{$servicionoprogramado->SolSerTipo}}" data-id="{{$servicionoprogramado->ID_SolSer}}">
+							<span class="col-md-8 form-group col-xs-8">N° {{$servicionoprogramado->ID_SolSer}}</span>
+							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='{{$color}} col-md-4 form-group col-xs-4' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
 						</p>
 					@endforeach
 				</div>
@@ -46,20 +54,11 @@
 					<div style="margin: auto;" id="descripModalCreate">
 						<form action="/vehicle-programacion" method="POST" id="formularioCreate" data-toggle="validator">
 							@csrf
-							@if ($errors->create->any())
-								<div class="alert alert-danger" role="alert">
-									<ul>
-										@foreach ($errors->create->all() as $error)
-											<p>{{$error}}</p>
-										@endforeach
-									</ul>
-								</div>
-							@endif
-							<input type="text" hidden name="FK_ProgServi" id="FK_ProgServi">
+							<input type="text" hidden name="FK_ProgServi" class="FK_ProgServi" id="FK_ProgServi">
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="form-control" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
+									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -98,7 +97,7 @@
 								</div>
 								<div class="form-group col-xs-12 col-md-12">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-									<input class="form-control" type="color" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
+									<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
 								</div>
 								<input type="submit" hidden="true" id="submit1" name="submit1">
 							</div>
@@ -108,6 +107,49 @@
 			</div>
 			<div class="modal-footer">
 				<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+			</div>
+		</div>
+	</div>
+</div>
+{{-- END Modal --}}
+
+{{--  Modal --}}
+<div class="modal modal-default fade in" id="CrearProgVehic2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
+			</div>
+			<div class="box box-info">
+				<div class="modal-body">
+					<div style="margin: auto;" id="descripModalCreate">
+						<form action="/vehicle-programacion" method="POST" id="formularioCreate" data-toggle="validator">
+							@csrf
+							<input type="text" hidden name="FK_ProgServi" class="FK_ProgServi" id="FK_ProgServi">
+							<div class="box-body">
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="ProgVehFecha2">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
+									<input  class="ProgVehFecha form-control" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" value="{{old('ProgVehFecha2')}}">
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
+									<input class="form-control" type="time" required id="ProgVehSalida2" name="ProgVehSalida" value="{{old('ProgVehSalida2')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<div class="form-group col-xs-12 col-md-6">
+									<label for="ProgVehEntrada2">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label>
+									<input class="form-control" type="time" required id="ProgVehEntrada2" name="ProgVehEntrada" value="{{old('ProgVehEntrada2')}}">
+									<small class="help-block with-errors"></small>
+								</div>
+								<input type="submit" hidden="true" id="submit2" name="submit2">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<label for="submit2" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
 			</div>
 		</div>
 	</div>
@@ -185,14 +227,14 @@
 										<small class="help-block with-errors"></small>
 									</div>
 								</div>
-								<input type="submit" hidden="true" id="submit2" name="submit2">
+								<input type="submit" hidden="true" id="submit3" name="submit3">
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<label for="submit2" class="btn btn-success">Añadir</label>
+				<label for="submit3" class="btn btn-success">Añadir</label>
 			</div>
 		</div>
 	</div>
@@ -225,10 +267,11 @@
 		var containerEl = document.getElementById('external-events');
 		var checkbox = document.getElementById('drop-remove');
 		new Draggable(containerEl, {
-			itemSelector: '.external-event .servicionoprogramado',
+			itemSelector: '.external-event',
 			eventData: function(eventEl) {
 				return {
-					id: eventEl.innerText,
+					id: eventEl.dataset.id,
+					title: eventEl.dataset.tipo,
 				};
 			}
 		});
@@ -244,6 +287,7 @@
 				month: 'Mes',
 				week: 'Semana'
 			},
+			defaultRangeSeparator: ' - ',
 			allDaySlot : false,
 			customButtons: {
 				AddMantVehc: {
@@ -288,13 +332,24 @@
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
-						@if($programacion->ProgVehEntrada == null && $programacion->ProgVehDelete == 0)
+						@if($programacion->ProgVehtipo == 1 && $programacion->ProgVehEntrada == null)
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
-							title: '{{$programacion->VehicPlaca." - ".$programacion->ID_SolSer}}',
 							color: '{{$programacion->ProgVehColor}}',
+							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
 							start: '{{$programacion->ProgVehSalida}}',
+							textColor: 'black'
+						},
+						@endif
+						@if($programacion->ProgVehtipo == 0)
+						{
+							id: '{{$programacion->ID_ProgVeh}}',
+							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
+							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
+							color: '#00ff40',
+							start: '{{$programacion->ProgVehSalida}}',
+							end: '{{$programacion->ProgVehEntrada}}',
 							textColor: 'black'
 						},
 						@endif
@@ -303,7 +358,7 @@
 						{
 							id: '{{$mantenimiento->ID_Mv}}',
 							title: '{{$mantenimiento->VehicPlaca." - ".$mantenimiento->MvType}}',
-							url:'{{url('/vehicle-mantenimiento/'.$mantenimiento->ID_Mv)}}',
+							url:'{{url('/vehicle-mantenimiento/'.$mantenimiento->ID_Mv.'/edit')}}',
 							color: 'brown',
 							start: '{{$mantenimiento->HoraMavInicio}}',
 							end: '{{$mantenimiento->HoraMavFin}}',
@@ -318,21 +373,35 @@
 					hour12: false,
 					minute: '2-digit'
 				});
-				document.getElementById('ProgVehFecha').value = dropInfo.dateStr;
-				document.getElementById('ProgVehSalida').value = hora;
-				$('#CrearProgVehic').modal();
+				$('.ProgVehFecha').val(dropInfo.dateStr);
+				$('#ProgVehSalida').val(hora);
 			},
+			timeZoneName: 'short',
 			eventReceive: function( info ) {
 				var id = info.event.id;
-				$('#FK_ProgServi').val(id);
+				var tipo = info.event.title;
+				$('.FK_ProgServi').val(id);
 				info.event.remove();
-				$("#CrearProgVehic").on("hidden.bs.modal", function () {
-					$('#FK_ProgVehiculo').val("");
-					$('#FK_ProgConductor').val("");
-					$('#ProgVehSalida').val("");
-					$('#FK_ProgAyudante').val("");
-					$('#ProgVehColor').val("#0000f6");
-				});
+				if(tipo == 'Interno'){
+					$('#CrearProgVehic').modal();
+					$("#CrearProgVehic").on("hidden.bs.modal", function () {
+						$('#FK_ProgVehiculo').val("");
+						$('#FK_ProgConductor').val("");
+						$('#ProgVehSalida').val("");
+						$('#FK_ProgAyudante').val("");
+						$('#ProgVehColor').val("#0000f6");
+					});
+				}
+				else{
+					$('#CrearProgVehic2').modal();
+					$("#CrearProgVehic2").on("hidden.bs.modal", function () {
+						$('#FK_ProgVehiculo').val("");
+						$('#FK_ProgConductor').val("");
+						$('.ProgVehSalida').val("");
+						$('#FK_ProgAyudante').val("");
+						$('#ProgVehColor').val("#0000f6");
+					});
+				}
 			},
 			eventDrop: function( eventDropInfo ) {
 				CambioDeFecha(eventDropInfo.event);
