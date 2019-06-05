@@ -347,7 +347,7 @@
 							id: '{{$programacion->ID_ProgVeh}}',
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
-							color: '#00ff40',
+							color: '#00a65a',
 							start: '{{$programacion->ProgVehSalida}}',
 							end: '{{$programacion->ProgVehEntrada}}',
 							textColor: 'black'

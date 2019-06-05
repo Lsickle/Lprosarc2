@@ -162,7 +162,7 @@ class VehicProgController extends Controller
             ->select('ID_Vehic','VehicPlaca')
             ->get();
         $servicios = DB::table('solicitud_servicios')
-            ->select('ID_SolSer')
+            ->select('ID_SolSer', 'SolSerTipo')
             ->where(function($query) use ($programaciones){
                 foreach($programaciones as $existentes){
                     $query->where('ID_SolSer', '<>', $existentes->FK_ProgServi);
@@ -191,18 +191,9 @@ class VehicProgController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validation = Validator::make($request->all(), [
-            'ProgVehFecha'        => 'required',
-            'ProgVehSalida'       => 'required',
-            'FK_ProgVehiculo'     => 'required',
-            'ProgVehEntrada'      => Rule::requiredIf($request->ProgVehEntrada),
-            'FK_ProgConductor'    => 'required',
-            'FK_ProgAyudante'     => 'required',
-            'progVehKm'           => Rule::requiredIf($request->ProgVehEntrada)
-        ]);
-        if ($validation->fails()) {
-            return back()->withErrors($validation, 'edit')->withInput();
-        }
+        $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+        $programacion->FK_ProgServi = $request->input('FK_ProgServi');
+        $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
         $llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
         if($salida >= 12){
@@ -211,28 +202,28 @@ class VehicProgController extends Controller
         else{
             $turno = "1";
         }
-        $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-        $programacion->FK_ProgServi = $request->input('FK_ProgServi');
-        $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $programacion->ProgVehTurno = $turno;
-        $programacion->ProgVehtipo = "1";
-        if($request->input('ProgVehEntrada')){
-            $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
-            $programacion->progVehKm = $request->input('progVehKm');
-            $vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
-            $vehiculo->VehicKmActual = $request->input('progVehKm');
-            $vehiculo->save();
+        $programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.$salida;
+        if($programacion->ProgVehtipo == 1){
+            if($request->input('ProgVehEntrada')){
+                $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+                $programacion->progVehKm = $request->input('progVehKm');
+                $vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
+                $vehiculo->VehicKmActual = $request->input('progVehKm');
+                $vehiculo->save();
+            }
+            else{
+                $programacion->ProgVehEntrada = null;
+                $programacion->progVehKm = null;
+            }
+            $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
+            $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
+            $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+            $programacion->ProgVehColor = $request->input('ProgVehColor');
         }
         else{
-            $programacion->ProgVehEntrada = null;
-            $programacion->progVehKm = null;
+            $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
         }
-        $programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.$salida;
-        $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
-        $programacion->FK_ProgMan = "1";
-        $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
-        $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
-        $programacion->ProgVehColor = $request->input('ProgVehColor');
         $programacion->save();
 
         $log = new audit();
@@ -259,7 +250,7 @@ class VehicProgController extends Controller
         if ($programacion->ProgVehDelete == 0){
             $programacion->ProgVehDelete = 1;
             $programacion->save();
-            if(is_null($programaciones)){
+            if(is_null($programaciones) && $SolicitudServicio->SolSerStatus == 'Programado'){
                 $SolicitudServicio->SolSerStatus = 'Aprobado';
                 if($SolicitudServicio->SolSerTipo == 'Interno'){
                     $SolicitudServicio->SolSerConductor = null;
