@@ -89,23 +89,69 @@
 				</select>
 				@endif
 			</div>
+			{{-- input de la hoja de seguridad --}}
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<small class="help-block with-errors">*</small>
-				<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+				@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
+				<div class="input-group">
+					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<div class="input-group-btn">
+						<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+					</div>
+				</div>
+				@else
+				<div class="input-group">
+					<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<div class="input-group-btn">
+						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+					</div>
+				</div>	
+				@endif
 			</div>
-			
+			{{-- input de la tarjeta de emergencia --}}
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<small class="help-block with-errors">*</small>
-				<input name="RespelTarj" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+				@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
+				<div class="input-group">
+					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<div class="input-group-btn">
+						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+					</div>
+				</div>
+				@else
+				<div class="input-group">
+					<input required id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<div class="input-group-btn">
+						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+					</div>
+				</div>	
+				@endif
 			</div>
+			{{-- input de la foto del residuo --}}
 			<div class="col-md-6 form-group has-feedback">
 				<label style="margin-bottom: 0" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 				<small class="help-block with-errors">*</small>
-				<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png" value="{{ old('RespelFoto.0') }}">
+				<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
-				{{-- <span class="far fa-building fa-fw form-control-feedback fa-pull-left" style="margin-right: 1.8em;" aria-hidden="true"></span> --}}
+				@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
+				<div class="input-group">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+					<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
+					<div class="input-group-btn">
+						<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
+					</div>
+				</div>
+				@else
+				<div class="input-group">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+					<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
+					<div class="input-group-btn">
+						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+					</div>
+				</div>	
+				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">{{ trans('adminlte_lang::LangRespel.controlx') }}

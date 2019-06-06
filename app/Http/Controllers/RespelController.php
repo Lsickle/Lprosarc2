@@ -287,52 +287,71 @@ class RespelController extends Controller
     public function update(RespelStoreRequest $request, $id)
     {
         // return $request;
-        $Respels = Respel::where('RespelSlug', $id)->first();
+        $respel = Respel::where('RespelSlug', $id)->first();
 
-        if ($request->hasfile('RespelHojaSeguridad')) {
-            if(file_exists(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad)){
-                unlink(public_path().'\img\HojaSeguridad/'.$Respels->RespelHojaSeguridad);
-            }
-            $file = $request->file('RespelHojaSeguridad');
-            $name = now().$file->getClientOriginalName();
-            $file->move(public_path().'\img\HojaSeguridad/',$name);
+        if (isset($request['RespelHojaSeguridad'])) {
+            $file1 = $request['RespelHojaSeguridad'];
+            $hoja = md5(now().rand().$file1->getClientOriginalName());
+
+            $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
         }
         else{
-            $name = $Respels->RespelHojaSeguridad;
+            $hoja = $respel->RespelHojaSeguridad;
         }
 
-        if ($request->hasfile('RespelTarj')) {
-            if(file_exists (public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj)){
-                unlink(public_path().'\img\TarjetaEmergencia/'.$Respels->RespelTarj);
-            }
-            $file = $request->file('RespelTarj');
-            $tarj = now().$file->getClientOriginalName();
-            $file->move(public_path().'\img\TarjetaEmergencia/',$tarj);
-        }
-        else{
-            $tarj = $Respels->RespelTarj;
+         /*verificar si se cargo un documento en este campo*/
+        if (isset($request['RespelTarj'])) {
+            $file2 = $request['RespelTarj'];
+            $tarj = md5(now().rand().$file2->getClientOriginalName());
+            $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+        }else{
+            $tarj = $respel->RespelTarj;
         }
 
-        $Respels->RespelName = $request->input('RespelName');
-        $Respels->RespelDescrip = $request->input('RespelDescrip');
-        $Respels->YRespelClasf4741 = $request->input('YRespelClasf4741');
-        $Respels->ARespelClasf4741 =$request->input('ARespelClasf4741');
-        $Respels->RespelIgrosidad = $request->input('RespelIgrosidad');
-        $Respels->RespelEstado = $request->input('RespelEstado');
-        $Respels->RespelStatus = $request->input('RespelStatus');
-        $Respels->RespelHojaSeguridad = $name;
-        $Respels->RespelTarj = $tarj;
-        $Respels->save();
+         /*verificar si se cargo un documento en este campo*/
+        if (isset($request['RespelFoto'])) {
+            $file3 = $request['RespelFoto'];
+            $foto = md5(now().rand().$file3->getClientOriginalName());
+            $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+        }else{
+            $foto = $respel->RespelFoto;
+        }
+        
+        /*verificar si se cargo un documento en este campo*/
+        if (isset($request['SustanciaControladaDocumento'])) {
+            $file4 = $request['SustanciaControladaDocumento'];
+            $ctrlDoc = md5(now().rand().$file4->getClientOriginalName());
+            $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+        }else{
+            $ctrlDoc = $respel->SustanciaControladaDocumento;
+        }
+
+        $respel->RespelName = $request['RespelName'];
+        $respel->RespelDescrip = $request['RespelDescrip'];
+        $respel->RespelIgrosidad = $request['RespelIgrosidad'];
+        $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
+        $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+        $respel->RespelStatus = $request['RespelStatus'];
+        $respel->RespelEstado = $request['RespelEstado'];
+        $respel->SustanciaControlada = $request['SustanciaControlada'];
+        $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
+        $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'];
+        $respel->RespelHojaSeguridad = $hoja;
+        $respel->RespelTarj = $tarj;
+        $respel->RespelFoto = $foto;
+        $respel->SustanciaControladaDocumento = $ctrlDoc;
+        $respel->RespelDeclaracion = $request['RespelDeclaracion'];
+        $respel->update();
 
         $log = new audit();
         $log->AuditTabla="respels";
         $log->AuditType="Modificado";
-        $log->AuditRegistro=$Respels->ID_Respel;
+        $log->AuditRegistro=$respel->ID_Respel;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        return redirect()->route('respels.show', [$Respels->RespelSlug]);
+        return redirect()->route('respels.show', [$respel->RespelSlug]);
     }
 
     /**
