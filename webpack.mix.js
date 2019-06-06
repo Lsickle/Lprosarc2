@@ -32,7 +32,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    ], 'public/css/all-landing.css')
    .combine([
         'node_modules/@fortawesome/fontawesome-free/css/all.css',
-        'node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css',
+        'node_modules/bootstrap-switch/dist/css/bootstrap2/bootstrap-switch.css',
         'node_modules/smartwizard/dist/css/smart_wizard.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
         'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',

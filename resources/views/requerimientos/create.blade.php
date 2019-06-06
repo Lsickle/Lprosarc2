@@ -39,7 +39,7 @@ requerimientos - Crear
 															</div>
 															<div class="col-md-3">
 																<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p style='width: 50%'> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
-																	<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/> Descargue/Pesaje
+																	<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue" disabled/> Descargue/Pesaje
 																</label>
 															</div>
 															<div class="col-md-3">
