@@ -25,13 +25,17 @@
 }
 .list-group a{
 	text-align: right;
-
+}
+.popover-left{
+	/*float: left !important; */
+	width:100% !important;
 }
 a.textpopover{
 	width: 45%; 
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis; 
+	text-align: right;
 }
 .textolargo{
 	word-break: break-all;
@@ -69,8 +73,8 @@ select.form-control{
 	white-space: nowrap;
 	color: #444;
 	line-height: 28px;
-	height: auto;
-	padding-top: 2px;
+	/*height: 2.1em;*/
+	/*padding-top: 2px;*/
 }
 .size-img{
 	width:120px; 
@@ -152,7 +156,7 @@ select.form-control{
 	opacity: 1 !important;
 }
 .select2-container--classic, .select2-selection--single{
-	height: 2.4em !important;
+	height: 2.3em !important;
 }
 .select2-selection__rendered{
 	padding: 6px 12px !important;
