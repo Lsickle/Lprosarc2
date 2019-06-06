@@ -238,6 +238,7 @@ function TransportadorProsarc() {
 	$("#typeaditable").addClass('col-md-6');
 	$("#SolSerBascula").bootstrapSwitch('disabled',false);
 	$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
+	$("#SolSerMasPerson").attr('disabled', false);
 	$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
 	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',false);
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
@@ -250,6 +251,7 @@ function TransportadorProsarc() {
 	$("#typecollect").removeClass('col-md-6');
 	$("#typecollect").addClass('col-md-12');
 	$("#typecollect option:selected").prop("selected", false);
+	Switch1()
 	HiddenTypeCollect();
 	TransportadorCliente();
 }
