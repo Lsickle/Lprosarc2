@@ -125,7 +125,7 @@ class SolServStoreRequest extends FormRequest
                     $rules['SolResTypeUnidad.'.$Generador.'.'.$y] = 'nullable|numeric|between:98,99';
                     $rules['SolResCantiUnidad.'.$Generador.'.'.$y] = 'nullable|numeric';
                     $rules['SolResKgEnviado.'.$Generador.'.'.$y] = 'required|numeric';
-                    $rules['SolResEmbalaje.'.$Generador.'.'.$y] = 'required|numeric|between:95,99';
+                    $rules['SolResEmbalaje.'.$Generador.'.'.$y] = 'required|numeric|between:88,99';
                     $rules['SolResAlto.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
                     $rules['SolResAncho.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
                     $rules['SolResProfundo.'.$Generador.'.'.$y] = 'nullable|numeric|max:20|min:0';
