@@ -34,6 +34,13 @@
 				<option value="97">{{ trans('adminlte_lang::message.solserembaja3') }}</option>
 				<option value="96">{{ trans('adminlte_lang::message.solserembaja4') }}</option>
 				<option value="95">{{ trans('adminlte_lang::message.solserembaja5') }}</option>
+				<option value="94">{{ trans('adminlte_lang::message.solserembaja6') }}</option>
+				<option value="93">{{ trans('adminlte_lang::message.solserembaja7') }}</option>
+				<option value="92">{{ trans('adminlte_lang::message.solserembaja8') }}</option>
+				<option value="91">{{ trans('adminlte_lang::message.solserembaja9') }}</option>
+				<option value="90">{{ trans('adminlte_lang::message.solserembaja10') }}</option>
+				<option value="89">{{ trans('adminlte_lang::message.solserembaja11') }}</option>
+				<option value="88">{{ trans('adminlte_lang::message.solserembaja12') }}</option>
 			</select>
 		</div>
 		<div class="form-group col-md-16 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`" style="text-align: center;">

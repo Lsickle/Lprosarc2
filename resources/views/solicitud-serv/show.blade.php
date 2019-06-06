@@ -331,11 +331,11 @@
 									<tfoot>
 										<tr>
 											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-											<th style="text-align: right;">{{$TotalEnv}} Kg</th>
-											<th style="text-align: right;">{{$TotalRec}} Kg</th>
-											<th style="text-align: right;">{{$TotalCons}} Kg</th>
+											<th style="text-align: right;">{{$TotalEnv}} kg</th>
+											<th style="text-align: right;">{{$TotalRec}} kg</th>
+											<th style="text-align: right;">{{$TotalCons}} kg</th>
 											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th style="text-align: right;">{{$TotalTrat}} Kg</th>
+												<th style="text-align: right;">{{$TotalTrat}} kg</th>
 											@endif
 											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
 												<th colspan="2"></th>

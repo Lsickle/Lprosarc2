@@ -220,19 +220,40 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
-						$SolicitudResiduo->SolResEmbalaje = "Bolsas";
+						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
 						break;
 					case 98:
-						$SolicitudResiduo->SolResEmbalaje = "Canecas";
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Pequeños";
 						break;
 					case 97:
-						$SolicitudResiduo->SolResEmbalaje = "Estibas";
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Grandes";
 						break;
 					case 96:
-						$SolicitudResiduo->SolResEmbalaje = "Garrafones";
+						$SolicitudResiduo->SolResEmbalaje = "Estibas";
 						break;
 					case 95:
+						$SolicitudResiduo->SolResEmbalaje = "Garrafones/Jerricanes";
+						break;
+					case 94:
 						$SolicitudResiduo->SolResEmbalaje = "Cajas";
+						break;
+					case 93:
+						$SolicitudResiduo->SolResEmbalaje = "Cuñetes";
+						break;
+					case 92:
+						$SolicitudResiduo->SolResEmbalaje = "Big Bags";
+						break;
+					case 91:
+						$SolicitudResiduo->SolResEmbalaje = "Isotanques";
+						break;
+					case 90:
+						$SolicitudResiduo->SolResEmbalaje = "Tachos";
+						break;
+					case 89:
+						$SolicitudResiduo->SolResEmbalaje = "Embalajes Compuestos";
+						break;
+					case 88:
+						$SolicitudResiduo->SolResEmbalaje = "Granel";
 						break;
 				}
 				$SolicitudResiduo->SolResAlto = $request['SolResAlto'][$Generador][$y];
