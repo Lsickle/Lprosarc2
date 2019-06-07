@@ -365,12 +365,12 @@ function Checkboxs(){
 }
 $("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
 	if(state == true){
-		$("#SolSerDevolucionTipo").parent().attr('hidden', false);
+		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', false);
 		$("#SolSerDevolucionTipo").attr('disabled', false);
 		$("#SolSerDevolucionTipo").attr('required', true);
 	}
 	else{
-		$("#SolSerDevolucionTipo").parent().attr('hidden', true);
+		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', true);
 		$("#SolSerDevolucionTipo").attr('disabled', true);
 		$("#SolSerDevolucionTipo").attr('required', false);
 		$("#SolSerDevolucionTipo").val(null);
