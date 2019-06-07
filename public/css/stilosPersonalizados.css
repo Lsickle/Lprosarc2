@@ -80,13 +80,6 @@ select.form-control{
 	width:120px; 
 	height:120px;
 }
-.table{
-	position: relative !important;
-	width: 100% !important;
-}
-.fixed_widthbtn{
-	width:3em;
-}
 .border-gray{
 	border-bottom:#f4f4f4 solid 2px;
 }
@@ -106,4 +99,10 @@ select.form-control{
 .select2-selection__arrow{
 	height: 2.2em !important;
 	margin-bottom: 0.1em;
+.table{
+	position: relative !important;
+	width: 100% !important;
+}
+.fixed_widthbtn{
+	width:3em;
 }
