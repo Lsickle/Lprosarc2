@@ -68,7 +68,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     ], 'public/css/stilosPersonalizados.css')
    .scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
-        'node_modules/bootstrap-switch/dist/js/bootstrap-switch.js',
+        'resources/assets/js/bootstrap-switch.js',
         'node_modules/jquery-slimscroll/jquery.slimscroll.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.js',
         'node_modules/inputmask/dist/inputmask/inputmask.js',
