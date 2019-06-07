@@ -68,9 +68,6 @@
 				<label>{{ trans('adminlte_lang::message.requirements') }}</label>
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-				<div class="form-group col-md-12">
-					<label>{{ trans('adminlte_lang::message.requirephotos') }}</label>
-				</div>
 				<div class="form-group col-md-6">
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguephoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguephotodescrit') }}</p>">
 						<label for="SolResFotoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguephoto') }}</label>
@@ -91,9 +88,6 @@
 				</div>
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-				<div class="form-group col-md-12">
-					<label>{{ trans('adminlte_lang::message.requirevideos') }}</label>
-				</div>
 				<div class="form-group col-md-6">
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguevideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
 						<label for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguevideo') }}</label>
