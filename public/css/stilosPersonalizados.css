@@ -99,6 +99,7 @@ select.form-control{
 .select2-selection__arrow{
 	height: 2.2em !important;
 	margin-bottom: 0.1em;
+}
 .table{
 	position: relative !important;
 	width: 100% !important;

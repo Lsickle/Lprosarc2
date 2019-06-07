@@ -534,14 +534,26 @@ class SolicitudServicioController extends Controller
 		if($request->input('SolSerBascula')){
 			$SolicitudServicio->SolSerBascula = 1;
 		}
+		else{
+			$SolicitudServicio->SolSerBascula = null;
+		}
 		if($request->input('SolSerCapacitacion')){
 			$SolicitudServicio->SolSerCapacitacion = 1;
+		}
+		else{
+			$SolicitudServicio->SolSerCapacitacion = null;
 		}
 		if($request->input('SolSerMasPerson')){
 			$SolicitudServicio->SolSerMasPerson = 1;
 		}
+		else{
+			$SolicitudServicio->SolSerMasPerson = null;
+		}
 		if($request->input('SolSerVehicExclusive')){
 			$SolicitudServicio->SolSerVehicExclusive = 1;
+		}
+		else{
+			$SolicitudServicio->SolSerVehicExclusive = null;
 		}
 		if($request->input('SolSerPlatform')){
 			$SolicitudServicio->SolSerPlatform = 1;
