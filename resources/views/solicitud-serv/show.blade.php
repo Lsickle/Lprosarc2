@@ -19,93 +19,12 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 					<div class="box-header with-border">
-						<div class="col-md-12">
-							@switch($SolicitudServicio->SolSerStatus)
-								@case('Pendiente')
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-										<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
-										<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
-											@method('DELETE')
-											@csrf
-											<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
-										</form>
-									@endif
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-											<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> Aprobar</a>
-										@endif
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
-											<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>
-										@endif
-									@endif
-								@break
-								@case('Aprobado')
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-										<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
-										<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
-											@method('DELETE')
-											@csrf
-											<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
-										</form>
-									@endif
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
-											<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>
-										@endif
-									@endif
-								@break
-								@case('Programado')
-									<h4>
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Externo')
-											<div class="col-md-1 " style="float: right;">
-												<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-											</div>
-											<div class="col-md-11 ">
-										@else
-											<div class="col-md-12">
-										@endif
-											<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b>
-											<spam>{{$TextProgramacion}}</spam>
-										</div>
-									</h4>
-								@break
-								@case('Completado')
-									<h4>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										@if($SolicitudServicio->SolSerStatus == 'Completado')
-											<div class="col-md-1 " style="float: right;">
-												<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> Tratado</a>
-											</div>
-											<div class="col-md-11 ">
-										@else
-											<div class="col-md-12">
-										@endif
-									@endif
-											<b>{{trans('adminlte_lang::message.solsershowcomple')}}</b>
-										</div>
-									</h4>
-								@break
-								@case('Tratado')
-									<h4>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										@if($SolicitudServicio->SolSerStatus == 'Tratado')
-											<div class="col-md-1 " style="float: right;">
-												<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> Certificación</a></div>
-											<div class="col-md-11 ">
-										@else
-											<div class="col-md-12">
-										@endif
-												<b>{{trans('adminlte_lang::message.solsershowtrata')}}</b>
-											</div>
-									@endif
-									</h4>
-								@break
-								@case('Certificacion')
-									<h4><b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b></h4>
-								@break
-							@endswitch
+						<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
+						</form>
+						<div class="col-md-12" id="titulo" style="font-size: 1.2em;">
 						</div>
 					</div>
 				<div class="row">
@@ -416,5 +335,85 @@
 		$('.testswitch').bootstrapSwitch('disabled',true);
 		$('.fotoswitch').bootstrapSwitch('disabled',true);
 		$('.videoswitch').bootstrapSwitch('disabled',true);
+
+		var title = `<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>`;
+		var edit = `<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>`;
+		var deletesolser = `<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>`;
+		var aprobar = `<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>`;
+		var programado = `<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><spam>{{$TextProgramacion}}</spam>`;
+		var recibir = `<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>`;
+		var recibido = `<b>{{trans('adminlte_lang::message.solsershowcomple')}}</b>`;
+		var conciliar = `<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>`;
+		var conciliado = `<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>`;
+		var tratar = `<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatustratado')}}</a>`;
+		var certificar = `<a href='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/changestatus' style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a></div>`;
+		var certificado = `<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>`;
+		@switch($SolicitudServicio->SolSerStatus)
+			@case('Pendiente')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(edit);
+					$('#titulo').append(deletesolser);
+				@endif
+				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+					@if(Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+						$('#titulo').append(aprobar);
+					@endif
+					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
+						$('#titulo').append(title);
+					@endif
+				@endif
+			@break
+			@case('Aprobado')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(edit);
+					$('#titulo').append(deletesolser);
+				@endif
+				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
+						$('#titulo').append(title);
+					@endif
+				@endif
+			@break
+			@case('Programado')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Externo')
+					$('#titulo').append(edit);
+				@endif
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $ProgramacionesActivas <= 0)
+					$('#titulo').append(recibir);
+				@endif
+				$('#titulo').append(programado);
+			@break
+			@case('Completado')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(conciliar);
+				@endif
+				$('#titulo').append(recibido);
+			@break
+			@case('Conciliado')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(tratar);
+				@endif
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(certificar);
+				@endif
+				$('#titulo').append(conciliado);
+			@break
+			@case('Tratado')
+				$('#titulo').empty();
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(certificar);
+				@endif
+				$('#titulo').append(conciliado);
+			@break
+			@case('Certificacion')
+				$('#titulo').empty();
+				$('#titulo').append(certificado);
+			@break
+		@endswitch
 	</script>
 @endsection

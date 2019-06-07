@@ -296,18 +296,15 @@ class SolicitudServicioController extends Controller
 		if($SolicitudServicio->SolSerStatus == 'Programado'){
 			setlocale(LC_TIME, "Spanish_Colombia");
 			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->first();
-			if($Programacion->ProgVehtipo == 1){
-				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
-					$horas = " en las horas de la tarde";
-				}
-				else{
-					$horas = " en las horas de la mañana";
-				}
+			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+				$horas = " en las horas de la tarde";
 			}
 			else{
-				$horas = ' en el transcurso del día';
+				$horas = " en las horas de la mañana";
 			}
 			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehEntrada', null)->get();
+			$ProgramacionesActivas = count($Programaciones);
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -329,7 +326,7 @@ class SolicitudServicioController extends Controller
 			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion'));
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas'));
 	}
 
 
@@ -340,8 +337,19 @@ class SolicitudServicioController extends Controller
 			case 'Pendiente':
 				$Solicitud->SolSerStatus = 'Aprobado';
 				break;
+			case 'Programado':
+				$Solicitud->SolSerStatus = 'Completado';
+				break;
 			case 'Completado':
-				$Solicitud->SolSerStatus = 'Tratado';
+				$Solicitud->SolSerStatus = 'Conciliado';
+				break;
+			case 'Conciliado':
+				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+					$Solicitud->SolSerStatus = 'Tratado';
+				}
+				else{
+					$Solicitud->SolSerStatus = 'Certificacion';
+				}
 				break;
 			case 'Tratado':
 				$Solicitud->SolSerStatus = 'Certificacion';

@@ -199,7 +199,7 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label><small class="help-block with-errors">*</small>
-									<input type="time" required="" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{date('H:i', strtotime($programacion->ProgVehEntrada))}}">
+									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
@@ -216,14 +216,14 @@
 </div>
 @endsection
 @section('NewScript')
+	@if(session('mensaje'))
+		NotifiTrue('{{session('mensaje')}}');
+	@endif
 	@if($programacion->ProgVehtipo == 1)
 		<script>
 			$(document).ready(function(){
 			@if ($errors->create->any())
 				$('#CrearProgVehic').modal("show");
-			@endif
-			@if(session('mensaje'))
-				NotifiTrue('{{session('mensaje')}}');
 			@endif
 			$("#CrearProgVehic").on("hidden.bs.modal", function () {
 				$('#FK_ProgVehiculo1').val("");
@@ -244,7 +244,8 @@
 				$("#progVehKm").prop("disabled", true);
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
-			@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador'))
+			@endif
+			@if(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
 				$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
 				$("#ProgVehEntrada").prop('required', true);
 				$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
@@ -256,7 +257,8 @@
 				$("#FK_ProgConductor").prop('disabled', true);
 				$("#FK_ProgAyudante").prop('disabled', true);
 				$("#ProgVehColor").prop("disabled", true);
-			@elseif(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno'))
+			@endif
+			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
 				$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
 				$("#ProgVehFecha").prop('required', true);
 				$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);

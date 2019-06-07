@@ -121,7 +121,6 @@ class VehicProgController extends Controller
             $nomConduct = null;
             $vehiculo = null;
             $programacion->ProgVehtipo = 0;
-            $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehEntrada')));
         }
         $programacion->FK_ProgServi = $request->input('FK_ProgServi');
         $programacion->ProgVehDelete = 0;
@@ -274,6 +273,14 @@ class VehicProgController extends Controller
         }
         else{
             $programacion->ProgVehDelete = 0;
+            if($SolicitudServicio->SolSerStatus == 'Aprobado'){
+                $SolicitudServicio->SolSerStatus = 'Programado';
+                if($SolicitudServicio->SolSerTipo == 'Interno'){
+                    $SolicitudServicio->SolSerConductor = $programacion->FK_ProgConductor;
+                    $SolicitudServicio->SolSerVehiculo = $programacion->FK_ProgVehiculo;
+                }
+                $SolicitudServicio->save();
+            }
 
             $log = new audit();
             $log->AuditTabla = "progvehiculos";
