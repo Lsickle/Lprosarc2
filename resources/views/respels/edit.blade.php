@@ -49,7 +49,7 @@
 								<div class="col-md-12">	
 									<div class="box-footer">
 										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Actualizar</button>
-										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('tratamiento.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 									</div>
 								</div>
 							</form>
