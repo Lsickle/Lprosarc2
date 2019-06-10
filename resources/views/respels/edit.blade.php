@@ -68,6 +68,7 @@
 </div>
 @endsection
 @else
+{{-- VISTA PARA PROSARC --}}
 @section('htmlheader_title')
 Respel-Editar
 @endsection
@@ -114,9 +115,10 @@ Respel-Editar
 								<b>Estado de aprobación</b>
 								<select name="RespelStatus" class="form-control">
 									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-									<option {{$Respels->RespelStatus == 'Negado' ? 'selected' : '' }}>Negado</option>
+									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>Rechazado</option>
 									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
 									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
+									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 								</select>
 							</li>
 						</ul>
