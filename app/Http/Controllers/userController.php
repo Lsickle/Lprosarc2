@@ -122,8 +122,8 @@ class userController extends Controller
     public function changepassword(Request $request, $id){
         $user = User::where('UsSlug', $id)->first();
         $validate = $request->validate([
-            'oldpassword'          => 'required|min:6',
-            'newpassword'          => 'required|confirmed:confirmnewpassword|min:6',
+            'oldpassword'          => 'required',
+            'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
         ]);
         if(Hash::check($request->input('oldpassword'), $user->password)){
         	$Menssage = trans('adminlte_lang::message.updatetrue');

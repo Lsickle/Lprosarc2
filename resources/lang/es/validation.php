@@ -150,6 +150,8 @@ return [
         'UsType'        => 'Tipo de Usuario',
         'UsRolDesc'     => 'Rol Principal',
         'UsRolDesc2'    => 'Rol Secundario',
+        'oldpassword'   => 'Contraseña Antigua',
+        'newpassword'   => 'Nueva Contraseña',
         
 
         'CliNit'        => 'Nit',

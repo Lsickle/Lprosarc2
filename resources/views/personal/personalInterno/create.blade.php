@@ -172,8 +172,7 @@
 															<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{old('PersIngreso')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersSalida">{{ trans('adminlte_lang::message.perssalida') }}</label><small class="help-block with-errors dir">*</small>
-															<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" required value="{{old('PersSalida')}}">
+															<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" value="{{old('PersSalida')}}">
 														</div>
 													</div>
 													<div class="box-footer">
@@ -244,7 +243,8 @@
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
+								document.getElementById("divFK_PersCargo").style.display = 'none';
+								document.getElementById("FK_PersCargo").required = false;
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}

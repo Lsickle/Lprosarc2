@@ -18,7 +18,7 @@
 	top: 7%;
 	left: -8%;
 	margin: auto;
-	animation: superior 1.5s infinite;
+	animation: superior 2s infinite;
 }
 #Derecho{
 	background-image: url("/img/LoadingProsarc/Derecho.png");
@@ -31,7 +31,7 @@
 	top: -17.5%;
 	left: -2%;
 	margin: auto;
-	animation: derecho 1.5s infinite;
+	animation: derecho 2s infinite;
 }
 #Izquierdo{
 	background-image: url("/img/LoadingProsarc/Izquierdo.png");
@@ -44,7 +44,7 @@
 	top: -45%;
 	left: -10%;
 	margin: auto;
-	animation: izquierdo 1.5s infinite;
+	animation: izquierdo 2s infinite;
 }
 #Inferior1{
 	background-image: url("/img/LoadingProsarc/Inferior1.png");
@@ -57,49 +57,84 @@
 	top: -67.5%;
 	left: -7.5%;
 	margin: auto;
-	animation: inferior 1.5s infinite;
+	animation: inferior1 2s infinite;
 }
 #Inferior2 {
-    background-image: url("/img/LoadingProsarc/Inferior2.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    height: 200px;
-    width: 300px;
-    position: relative;
-    top: -96%;
-    left: -8.2%;
-    margin: auto;
-    animation: inferior 1.5s infinite;
+	background-image: url("/img/LoadingProsarc/Inferior2.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 300px;
+	position: relative;
+	top: -96%;
+	left: -8.2%;
+	margin: auto;
+	animation: inferior2 2s infinite;
 }
 @keyframes superior {
-  from {
-    transform: translate(0,-100px);
-  }
-  to {
-    transform: translate(0,0);
-  }
+	0%{
+		opacity: 0;
+		top: -7%;
+	}
+	75%{
+		top: 7%;
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+	}
 }
 @keyframes derecho {
-  from {
-    transform: translate(100px,0);
-  }
-  to {
-    transform: translate(0,0);
-  }
+	0%{
+		opacity: 0;
+		left: 3%;
+	}
+	75%{
+		left: -2%;
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+	}
 }
 @keyframes izquierdo {
-  from {
-    transform: translate(-100px,0);
-  }
-  to {
-    transform: translate(0,0);
-  }
+	0%{
+		opacity: 0;
+		left: -15%;
+	}
+	75%{
+		left: -10%;
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+	}
 }
-@keyframes inferior {
-  from {
-    transform: translate(0,100px);
-  }
-  to {
-    transform: translate(0,0);
-  }
+@keyframes inferior1 {
+	0% {
+		transform: rotateY(180deg);
+		opacity: 0;
+		top: -60%;
+	}
+	75% {
+		transform: rotateY(0deg);
+		opacity: 1;
+		top: -67.5%;
+	}
+	100%{
+		opacity: 0;
+	}
+}
+@keyframes inferior2 {
+	0%{
+		opacity: 0;
+		top: -80%;
+	}
+	75%{
+		top: -96%;
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+	}
 }

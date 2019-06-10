@@ -260,18 +260,7 @@ class PersonalInternoController extends Controller
             'CargArea'      => 'required',
             'FK_PersCargo'  => 'required',
             'PersDocType'   => 'required|max:3|min:2',
-            'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
-                $Personal = DB::table('personals')
-                    ->select('PersDocNumber', 'PersDelete')
-                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
-                    ->first();
-                if(isset($Personal)){
-                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
-                    $query->where('PersDelete', '=', 0);
-                }
-                else
-                    $query->where('PersDocNumber', '=', null);
-            })],
+            'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',
@@ -285,8 +274,8 @@ class PersonalInternoController extends Controller
             'PersPase'      => 'max:25',
             'PersBank'      => 'max:255',
             'PersBankAccaunt' => 'max:64',
-            'PersIngreso'   => 'date|before:PersSalida',
-            'PersSalida'    => 'date|after:PersIngreso',
+            'PersIngreso'   => 'date',
+            'PersSalida'    => 'date|after:PersIngreso|nullable',
         ]);
         $NuevaArea = $request->input('NewArea');
         $NuevoCargo =  $request->input('NewCargo');

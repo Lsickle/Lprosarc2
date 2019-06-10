@@ -216,11 +216,11 @@
 </div>
 @endsection
 @section('NewScript')
+	<script>
 	@if(session('mensaje'))
 		NotifiTrue('{{session('mensaje')}}');
 	@endif
 	@if($programacion->ProgVehtipo == 1)
-		<script>
 			$(document).ready(function(){
 			@if ($errors->create->any())
 				$('#CrearProgVehic').modal("show");
@@ -273,6 +273,6 @@
 				$("#progVehKm").prop('readonly', true);
 			@endif
 			});
-		</script>
 	@endif
+	</script>
 @endsection

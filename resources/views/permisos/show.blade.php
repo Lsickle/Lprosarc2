@@ -15,7 +15,12 @@
 					<div class="col-md-12 col-xs-12">
 						<a href="/permisos/{{$User->UsSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@component('layouts.partials.modal')
-							{{$User->id}}
+							@slot('slug')
+								{{$User->id}}
+							@endslot
+							@slot('textModal')
+								al usuario <b>{{$User->id}}</b>
+							@endslot
 						@endcomponent
 						@if ( $User->FK_UserPers === null)
 							@if($User->DeleteUser === 0)
