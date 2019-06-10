@@ -300,6 +300,12 @@
 		$('#AddressCollect').val('{{$Solicitud->AddressCollect}}');
 		$('#AddressCollect').attr('required', true);
 		$('#addresscollect').attr('hidden',false);
+	@else
+		$('#SedeCollect').attr('required', false);
+		$('#sedecollect').attr('hidden',true);
+		$('#AddressCollect').val('');
+		$('#AddressCollect').attr('required', false);
+		$('#addresscollect').attr('hidden',true);
 	@endif
 	$('#SolSerBascula').bootstrapSwitch('disabled',false);
 	$('#SolSerCapacitacion').bootstrapSwitch('disabled',false);

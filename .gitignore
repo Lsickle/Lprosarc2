@@ -1,7 +1,13 @@
 /node_modules
-/public/css
-/public/img
-/public/js
+/public/mix-*.json
+/public/css/*.css
+/public/img/*.png
+/public/img/*.pdf
+/public/img/*.jpg
+/public/img/**/*.png
+/public/img/**/*.pdf
+/public/img/**/*.jpg
+/public/js/*.js
 /storage/*.key
 /vendor
 /.idea
