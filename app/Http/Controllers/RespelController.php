@@ -99,7 +99,7 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        return $request;
+        // return $request;
 
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
@@ -287,6 +287,7 @@ class RespelController extends Controller
     public function update(RespelStoreRequest $request, $id)
     {
         // return $request;
+
         $respel = Respel::where('RespelSlug', $id)->first();
 
         if (isset($request['RespelHojaSeguridad'])) {
@@ -325,13 +326,16 @@ class RespelController extends Controller
         }else{
             $ctrlDoc = $respel->SustanciaControladaDocumento;
         }
-
+        if (Auth::user()->UsRol !== "Cliente") {
+            $respel->RespelStatus = $request['RespelStatus'];
+        }else{
+            $respel->RespelStatus = "Pendiente";
+        }
         $respel->RespelName = $request['RespelName'];
         $respel->RespelDescrip = $request['RespelDescrip'];
         $respel->RespelIgrosidad = $request['RespelIgrosidad'];
         $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
         $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
-        $respel->RespelStatus = $request['RespelStatus'];
         $respel->RespelEstado = $request['RespelEstado'];
         $respel->SustanciaControlada = $request['SustanciaControlada'];
         $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];

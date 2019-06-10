@@ -42,9 +42,10 @@
 								<b>Estado de aprobación</b>
 								<select disabled name="RespelStatus" class="form-control">
 									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-									<option {{$Respels->RespelStatus == 'Negado' ? 'selected' : '' }}>Negado</option>
+									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>Negado</option>
 									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
 									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
+									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 								</select>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
@@ -244,9 +245,10 @@
 									<b>Estado de aprobación</b>
 									<select disabled name="RespelStatus" class="form-control">
 										<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-										<option {{$Respels->RespelStatus == 'Negado' ? 'selected' : '' }}>Negado</option>
+										<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>Negado</option>
 										<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
 										<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
+										<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 									</select>
 								</li>
 								<li class="list-group-item" style="display: block; overflow: auto";>
