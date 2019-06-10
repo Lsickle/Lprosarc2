@@ -33,18 +33,7 @@ Activos
                     <th>Editar</th>
                 </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
-              <div class="fingerprint-spinner" id="loadingTable">
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-              </div>
+            <tbody id="readyTable">
               @foreach ($Activos as $Activo)
                   <tr>
                     <td>{{$Activo->CatName}}</td>
@@ -55,8 +44,8 @@ Activos
                     <td>{{$Activo->ActModel}}</td>
                     <td>{{$Activo->ActSerialProsarc}}</td>
                     <td>{{$Activo->ActSerialProveed}}</td>
-                    <td></td>
-                    <td>{{$Activo->ID_Act}}</td>
+                    <td><a method='get' href='/activos/{{$Activo->ID_Act}}' class='btn btn-success'/>Ver</a></td>
+                    <td><a href='/activos/{{$Activo->ID_Act}}/edit' class='btn btn-warning'>Edit</a></td>
                   </tr>
                 
               @endforeach

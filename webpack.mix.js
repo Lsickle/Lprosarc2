@@ -27,6 +27,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/css/loader-dt.css'
    ], 'public/css/all.css')
    .combine([
+      'resources/assets/css/app.css'
+    ], 'public/css/app.css')
+   .combine([
        'node_modules/bootstrap/dist/css/bootstrap.min.css',
        'resources/assets/css/pratt_landing.min.css'
    ], 'public/css/all-landing.css')
@@ -64,7 +67,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.css'
     ], 'public/css/datatable-plugins.css')
    .combine([
-        'resources/assets/css/stilosPersonalizados.css'
+        'resources/assets/css/stilosPersonalizados.css',
+        'resources/assets/css/stilosloading.css'
     ], 'public/css/stilosPersonalizados.css')
    .scripts([
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
@@ -117,7 +121,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     ], 'public/js/datatable-plugins.js')
 
    // PACKAGE (ADMINLTE-LARAVEL) RESOURCES
-   .copy('resources/assets/img/*','public/img/')
+   .copy('resources/assets/img/','public/img/')
    // //VENDOR RESOURCES
    // .copy('node_modules/font-awesome/fonts/*.*','public/fonts/')
    // .copy('node_modules/ionicons/dist/fonts/*.*','public/fonts/')

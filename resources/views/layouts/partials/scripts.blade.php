@@ -15,144 +15,13 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-{{-- script para tabla de tratamientos --}}
-@if(Route::currentRouteName()=='tratamiento.index')
 <script>
-$(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-	/*funcion para renderizar la tabla de cotizacion.index*/
-	$('#tratamientosTable').DataTable({
-		responsive: true,
-		select: true,
-		dom: 'Bfrtip',
-		buttons: [
-			botoncito, {
-				extend: 'collection',
-				text: 'Selector',
-				buttons: ['selectRows', 'selectCells']
-			}
-		],
-		colReorder: true,
-		ordering: true,
-		autoWith: true,
-		searchHighlight: true
-	});
-	/*funcion para resaltar las busquedas*/
-	table.on('draw', function() {
-		var body = $(table.table().body());
-		body.unhighlight();
-		body.highlight(table.search());
-	});
-});
-
+	window.onload = function(){
+		var contenedor = document.getElementById('contenedor_carga');
+		contenedor.style.visibility = 'hidden';
+		contenedor.style.opacity = '0';
+	} 
 </script>
-@endif
-@if(Route::currentRouteName()=='permisos.index')
-<script>
-$(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-
-	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
-
-	/*funcion para renderizar la tabla de cotizacion.index*/
-	$('#permisosTable').DataTable({
-		responsive: true,
-		select: true,
-		dom: 'Bfrtip',
-		buttons: [
-			botoncito, {
-				extend: 'collection',
-				text: 'Selector',
-				buttons: ['selectRows', 'selectCells']
-			}
-		],
-		colReorder: true,
-		ordering: true,
-		autoWith: true,
-		searchHighlight: true
-	});
-	/*funcion para resaltar las busquedas*/
-	table.on('draw', function() {
-		var body = $(table.table().body());
-		body.unhighlight();
-		body.highlight(table.search());
-	});
-});
-</script>
-{{-- <script>
-	$(document).ready(function() {
-		$('#click').click(function(){
-			$('.editarrol').removeAttr('disabled');
-			document.getElementById('click').style.display = 'none';
-			document.getElementById('save').style.display = 'block';
-			// slideUp();
-		})
-	});
-</script>
-<script>
-	$(document).ready(function() {
-		$('#save').click(function(){
-			$('.editarrol').prop('disabled', true);
-			document.getElementById('click').style.display = 'block';
-			document.getElementById('save').style.display = 'none';
-		})
-	});
-</script> --}}
-@endif
-{{-- <script>
-//Date range as a button
-$('#daterange-btn').daterangepicker({
-		ranges: {
-			'1 Meses': [moment(), moment().add(1, 'month')],
-			'2 Meses': [moment(), moment().add(2, 'months')],
-			'3 Meses': [moment(), moment().add(3, 'months')],
-			'6 Meses': [moment(), moment().add(6, 'months')],
-			'1 Año': [moment(), moment().add(1, 'year')]
-		},
-		startDate: moment(),
-		endDate: moment().moment()
-	},
-	function(start, end) {
-		$('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-	}
-)
-</script> --}}
-{{-- select 2 --}}
-<script>
-$(document).ready(function() {
-	$('#SGenerRespel').select2({
-		placeholder: "Seleccione el residuo",
-		allowClear: true,
-		width: 'resolve'
-	});
-});
-</script>
-
-<script>
-$(document).ready(function() {
-	$('#select2sedes').select2({
-		placeholder: "Seleccione el gestor",
-		allowClear: true,
-		width: 'resolve'
-	});
-});
-</script>
-
-<script>
-$(document).ready(function() {
-	$('#SolicitudResiduo').select2({
-		placeholder: "Seleccione el residuo",
-		allowClear: true,
-		width: 'resolve'
-	});
-});
-</script>
-
 <script>
 $(document).ready(function() {
 	$('.select').select2({
@@ -175,17 +44,6 @@ $(document).ready(function() {
 	});
 });
 </script>
-
-{{-- script para formulario en smart-wizzard --}}
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#smartwizard').smartWizard({
-		theme: 'arrows',
-		keyNavigation: true
-	});
-});
-</script>
-
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -197,12 +55,12 @@ $(document).ready(function() {
 			toolbarSettings: {
 				toolbarPosition: 'bottom',
 			},
-			lang: {  
+			lang: {
 				next: 'Siguiente', 
 				previous: 'Anterior'
 			},
 			anchorSettings: {
-				markDoneStep: true, 
+				markDoneStep: true,
 				markAllPreviousStepsAsDone: true,
 				removeDoneStepOnNavigateBack: true,
 				enableAnchorOnDoneStep: true
@@ -214,7 +72,6 @@ $(document).ready(function() {
 				elmForm.validator('validate');
 				var elmErr = elmForm.children('.has-error');
 				if(elmErr && elmErr.length > 0){
-					// Form validation failed
 					return false;
 				}
 			}
@@ -223,102 +80,6 @@ $(document).ready(function() {
 	});
 </script>
 
-<script>
-$(function() {
-	// $('#UsersTable').DataTable({
-	//   "scrollX": false,
-	//   "autoWidth": true,
-	//   "select": true,
-	//   "keys": true,
-	//   "responsive": true,
-	//   // "buttons": [
-	//   //     'copy', 'excel', 'pdf'
-	//   // ],
-	//   "columnDefs": [ {
-	//     "targets": 5,
-	//     "data": "UsSlug",
-	//     "render": function ( data, type, row, meta ) {
-	//       return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-	//     }  
-	//   }]
-	// });
-	var table = $('#UsersTable').DataTable({
-		// "processing": true,
-		"language": {
-			"processing": "Hang on. Waiting for response..." //add a loading image,simply putting <img src="loader.gif" /> tag.
-		},
-		"scrollX": false,
-		"autoWidth": true,
-		"select": true,
-		"keys": true,
-		"responsive": true,
-		// "buttons": [
-		//     'copy', 'excel', 'pdf'
-		// ],
-		"columnDefs": [{
-				"targets": 7,
-				"data": "id",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-				}
-			},
-			{
-				"targets": 8,
-				"data": "id",
-				"render": function(data, type, row, meta) {
-					return "<a href='/permisos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-				}
-			}
-		]
-	});
-	/*new $.fn.dataTable.Buttons( table, {
-		buttons: [
-			'copy', 'pdf'
-		]
-	} );*/
-	// $('#UsersTable').DataTable( {
-	//     dom: 'Bfrtip',
-	//     buttons: [
-	//         'copy', 'excel', 'pdf'
-	//     ]
-	// } );
-	table.buttons().container()
-		.appendTo($('.col-sm-6:eq(0)', table.table().container()));
-});
-</script>
-<script>
-$(function() {
-	$('#DeclarTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 11,
-			"data": "GSedeSlug",
-			"render": function(data, type, row, meta) {
-				return "<a method='get' href='/declaraciones/" + data + "' class='btn btn-primary'>Ver</a>";
-			}
-		}]
-	});
-});
-</script>
-<script>
-$(function() {
-	$('#UserTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 7,
-			"data": "UsSlug",
-			"render": function(data, type, row, meta) {
-				return "<a method='get' href='/permisos/" + data + "' class='btn btn-primary'>Ver</a>";
-			}
-		}]
-	});
-});
-</script>
 {{-- Mascaras del cliente --}}
 <script>
 $(document).ready(function() {
@@ -356,39 +117,6 @@ $(document).ready(function() {
 		$('.numberKg').inputmask({ alias: 'numeric', max:50000, rightAlign:false});
 	}
 </script>
-<script>
-$(function() {
-	$('.inputcheck').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		radioClass: 'iradio_square-blue',
-		increaseArea: '20%' // optional
-	});
-});
-
-</script>
-<script>
-$(function() {
-	$('#inputcheck').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		radioClass: 'iradio_square-blue',
-		increaseArea: '20%' // optional
-	});
-});
-
-</script>
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-	  Both of these plugins are recommended to enhance the
-	  user experience. Slimscroll is required when using the
-	  fixed layout. -->
-{{-- <script type="text/javascript">
-$(Selector.sidebar).slimScroll({
-	height: ($(window).height() - $(Selector.mainHeader).height()) + 'px',
-	color: 'rgba(0,0,0,0.2)',
-	size: '3px'
-})
-
-</script> --}}
-{{-- bootstrap-switch --}}
 <script>
 function Switch1() {
 	$(".testswitch").bootstrapSwitch({
@@ -460,99 +188,6 @@ $(document).ready(function Switch6() {
 });
 
 </script>
-<!-- script para botones del listado de usuarios -->
-{{-- <script type="text/javascript">
-$('.radio1').on('switch-change', function() {
-	$('.radio1').bootstrapSwitch('toggleRadioState');
-});
-
-</script>
---}}
-{{-- funcion para renderizar la tabla antes de que se muestren los datos --}}
-<script>
-$(document).ready(function renderTable() {
-	var a = document.querySelector("#loadingTable");
-	var b = document.querySelector("#readyTable");
-	// b.setAttribute("name", "helloButton");  
-	// alert('page loaded');  // alert to confirm the page is loaded    
-	a.setAttribute("hidden", "true");
-	b.removeAttribute("hidden"); //enter the class or id of the particular html element which you wish to hide. 
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	$('#auditstable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true
-		// "columnDefs": [ {
-		//   "targets": 5,
-		//   "data": "id",
-		//   "render": function ( data, type, row, meta ) {
-		//     return "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target="+ data +"Modal>Ver</button>";
-		//   }
-		// }]
-	});
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	$('#ActivoTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-				"targets": 8,
-				"data": "PersSlug",
-				"render": function(data, type, row, meta) {
-					return "<a method='get' href='#" + data + "' class='btn btn-success'/>Ver</a>";
-				}
-			},
-			{
-				"targets": 9,
-				"data": "ID_Act",
-				"render": function(data, type, row, meta) {
-					return "<a href='/activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-				}
-			}
-		]
-	});
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	$('#MovimientoActivoTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-			"targets": 6,
-			"data": "ID_MovAct",
-			"render": function(data, type, row, meta) {
-				return "<a href='movimiento-activos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-			}
-		}]
-	});
-});
-
-</script>
-<script>
-$(document).ready(function() {
-	$('#RecursosTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-	});
-});
-
-</script>
 <script>
 $(document).ready(function() {
 	$('#RequerimientosTable').DataTable({
@@ -578,22 +213,6 @@ $(document).ready(function() {
 	});
 });
 </script>
-<script>
-$(document).ready(function() {
-	$('#selectconfiltro').select2({});
-});
-$(window).resize(function() {
-	$('.select2').css('width', '100%');
-});
-
-</script>
-{{-- script para evitar el envio multiple de formularios --}}
-{{-- <script>
-$(':submit').click(function() {
-	$(this).attr('disabled', 'disabled');
-});
-
-</script> --}}
 @if(
 Route::currentRouteName()=='tarifas.index'
 )
@@ -643,51 +262,6 @@ $(document).ready(function() {
 
 </script>
 @endif
-<script>
-$(document).ready(function() {
-	$('.SolResTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true
-	});
-});
-
-</script>
-{{-- <script>
-$('#departamento').on('change', function() {
-	var id = $('#departamento').val();
-	// var id = $(this).children("option:selected").val();
-	// alert(id);
-	$.ajax({
-		url: "sclientes/" + id,
-		type: "GET",
-		dataType: "json",
-		error: function(element) {
-			console.log(element);
-		},
-		success: function(response) {
-			$('#GSedemunicipio').html('<option value="" selected="true"> Seleccione una opción </option>');
-			response.forEach(element => {
-				$("#GSedemunicipio").append('<option value="' + element.ID_Mun + '"> ' + element.MunName + ' </option>')
-			});
-		}
-	});
-
-});
-
-</script> --}}
-<script>
-$(document).ready(function() {
-	$('#Clasificacion').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"responsive": true,
-		"ordering": false
-	});
-});
-
-</script>
 <script>
 	$(document).ready(function(){
 		$("#departamento").change(function(e){
@@ -912,45 +486,6 @@ function NotifiFalse(Mensaje) {
 
 	</script>
 	@endif
-	{{-- @if(Route::currentRouteName() === 'contactos.show')
-	<script>
-	$(document).ready(function() {
-				$("#editvehiculo{{$Vehiculo->ID_Vehic}}").click(function(e) {
-					id = $("#vehiculoid{{$Vehiculo->ID_Vehic}}").val();
-					e.preventDefault();
-					$.ajaxSetup({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-						}
-					});
-					$.ajax({
-						url: "{{url('/contacto-vehiculos')}}/" + id,
-						method: 'GET',
-						data: {},
-						beforeSend: function() {
-							$('#VehicTipo').val('');
-							$('#VehicPlaca').val('');
-							$('#VehicCapacidad').val('');
-						},
-						success: function(res) {
-
-							var Vehiculo = new Array();
-							for (var i = res.length - 1; i >= 0; i--) {
-								if ($.inArray(res[i].ID_Vehic, Vehiculo) < 0) {
-									$('#VehicTipo').val(res[i].VehicTipo);
-									$('#VehicPlaca').val(res[i].VehicPlaca);
-									$('#VehicCapacidad').val(res[i].VehicCapacidad);
-									Vehiculo.push(res[i].ID_Vehic);
-								}
-							}
-						}
-					})
-				});
-				// });
-
-	</script>
-	@endif --}}
-	{{-- script para agregar pretatamientos en el create y edit de tratamientos --}}
 	@if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
 	var contador = `{{$contador}}`;

@@ -47,7 +47,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
+				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }} Interno</h4>
 			</div>
 			<div class="box box-info">
 				<div class="modal-body">
@@ -119,7 +119,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }}</h4>
+				<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }} Externos</h4>
 			</div>
 			<div class="box box-info">
 				<div class="modal-body">
@@ -128,18 +128,13 @@
 							@csrf
 							<input type="text" hidden name="FK_ProgServi" class="FK_ProgServi" id="FK_ProgServi">
 							<div class="box-body">
-								<div class="form-group col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha2">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
 									<input  class="ProgVehFecha form-control" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" value="{{old('ProgVehFecha2')}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
 									<input class="form-control" type="time" required id="ProgVehSalida2" name="ProgVehSalida" value="{{old('ProgVehSalida2')}}">
-									<small class="help-block with-errors"></small>
-								</div>
-								<div class="form-group col-xs-12 col-md-6">
-									<label for="ProgVehEntrada2">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label>
-									<input class="form-control" type="time" required id="ProgVehEntrada2" name="ProgVehEntrada" value="{{old('ProgVehEntrada2')}}">
 									<small class="help-block with-errors"></small>
 								</div>
 								<input type="submit" hidden="true" id="submit2" name="submit2">

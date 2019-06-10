@@ -14,7 +14,6 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.smartwizzardtitle') }}</h3>
 				</div>
                 <div class="box box-info">
-                    @include('layouts.partials.spinner')
                     <form role="form" id="formCliente " action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
                         @csrf
                         @if ($errors->any())
@@ -26,7 +25,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="box-body" hidden onload="renderTable()" id="readyTable">
+                        <div class="box-body" id="readyTable">
                             <div class="tab-pane" id="addRowWizz">
                                 
                                 <div class="smartwizard">

@@ -33,8 +33,7 @@ Solicitud de Residuos
                 </tr>
               </thead>
                 
-            <tbody  hidden onload="renderTable()" id="readyTable">
-               @include('layouts.partials.spinner')
+            <tbody id="readyTable">
               @foreach ($Residuos as $Residuo)
                 <tr>
                   <td>{{$Residuo->ID_SolSer}}</td>

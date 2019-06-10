@@ -32,7 +32,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								@include('layouts.partials.spinner')
 								@foreach ($Servicios as $Servicio)
 										@if($Servicio->SolSerDelete == 1)
 											<tr style="color: red;">

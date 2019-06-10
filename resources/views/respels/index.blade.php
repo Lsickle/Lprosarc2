@@ -31,9 +31,7 @@
 								@endif
 							</tr>
 						</thead>
-						<tbody hidden onload="renderTable()" id="readyTable">
-							{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-							@include('layouts.partials.spinner')
+						<tbody id="readyTable">
 							@foreach($Respels as $respel)
 							@if($respel->RespelDelete == 1)
 								<tr style="color: red;">

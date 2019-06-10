@@ -36,9 +36,7 @@
                   <th>Kg Tratado</th>
                   <td>5</td>
                 </tr>
-              <tbody  hidden onload="renderTable()" id="readyTable">
-                {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                @include('layouts.partials.spinner')
+              <tbody id="readyTable">
               </tbody>
             </table>
           </div>
