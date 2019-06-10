@@ -22,8 +22,6 @@ Departamentos
               </tr>
             </thead>
             <tbody  hidden onload="renderTable()" id="readyTable">
-              {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-              @include('layouts.partials.spinner')
               @foreach($departament as $departament)
               <tr>
                 <td>{{$departament->DepartName}}</td>

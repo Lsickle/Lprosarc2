@@ -18,7 +18,6 @@ requerimientos - Crear
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
-							@include('layouts.partials.spinner')
 							<form role="form" action="/requerimientos/" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}

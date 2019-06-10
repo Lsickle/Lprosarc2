@@ -23,7 +23,6 @@
 							</tr>
 						</thead>
 						<tbody  hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
 							@foreach($Recursos as $Recurso)
 							<tr>
 								<td>{{$Recurso->FK_RecSolRes}}</td>

@@ -28,8 +28,6 @@
 								</tr>
 							</thead>
 							<tbody  hidden onload="renderTable()" id="readyTable">
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									 @include('layouts.partials.spinner')
 								@foreach($CapaPers as $CapaPer)
 								<tr @if($CapaPer->CapaPersDelete === 1)
 											style="color: red;" 

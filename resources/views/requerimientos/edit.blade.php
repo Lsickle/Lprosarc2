@@ -32,7 +32,6 @@ Respel-Editar
 							<!-- /.box-header -->
                             <!-- form start -->
                             
-							@include('layouts.partials.spinner')
 							<form role="form" action="/requerimientos/{{$Requerimientos->ReqSlug}}" method="POST" enctype="multipart/form-data" name="edit">
 								@method('PUT')
 								@csrf

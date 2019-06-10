@@ -31,7 +31,6 @@
 								</tr>
 							</thead>
 							<tbody hidden onload="renderTable()" id="readyTable">
-								@include('layouts.partials.spinner')
 								@foreach($Sedes as $Sede)
 									<tr @if($Sede->SedeDelete === 1)
 											style="color: red;" 

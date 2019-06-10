@@ -30,7 +30,6 @@ Lista de Tarifas
 							</tr>
 						</thead>
 						<tbody hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
 							@foreach($tarifas as $tarifa)
 							<tr @if($tarifa->TarifaDelete === 1) style="color: red;" @endif>
 								<th>{{$tarifa->ID_Tarifa}}</th>

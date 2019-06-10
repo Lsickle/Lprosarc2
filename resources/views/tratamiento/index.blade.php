@@ -30,7 +30,6 @@
 							</tr>
 						</thead>
 						<tbody hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
 							@foreach($tratamientos as $tratamiento)
 							<tr @if($tratamiento->TratDelete === 1)
 								style="color: red;"

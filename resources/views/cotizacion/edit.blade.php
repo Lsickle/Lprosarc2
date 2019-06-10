@@ -120,7 +120,6 @@ Edición de cotización
                                     </tr>
                                 </thead>
                                 <tbody hidden onload="renderTable()" id="readyTable">
-                                    @include('layouts.partials.spinner')
                                     @foreach($residuos as $residuo)
                                     <tr>
                                         <td>{{$residuo->ID_Respel}}</td>

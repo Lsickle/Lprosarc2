@@ -14,7 +14,6 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.clicontactedit') }}</h3>
 				</div>
 				<div class="box box-info">
-                    @include('layouts.partials.spinner')
 					<form role="form" action="/contactos/{{$Cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" id="Form">
 						@csrf
 						@method('PUT')

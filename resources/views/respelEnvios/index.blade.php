@@ -37,8 +37,6 @@
                   <td>5</td>
                 </tr>
               <tbody  hidden onload="renderTable()" id="readyTable">
-                {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-                @include('layouts.partials.spinner')
               </tbody>
             </table>
           </div>

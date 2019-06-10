@@ -33,7 +33,6 @@
 									</tr>
 								</thead>
 								<tbody hidden onload="renderTable()" id="readyTable">
-									@include('layouts.partials.spinner')
 									@foreach($Gsedes as $GSede)
 										<tr @if($GSede->GSedeDelete === 1)
 												style="color: red;" 

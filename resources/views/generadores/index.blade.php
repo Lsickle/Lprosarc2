@@ -44,7 +44,6 @@
 								</tr>
 							</thead>
 							<tbody  hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
 							@foreach($Generadors as $Gener)
 								<tr @if($Gener->GenerDelete === 1)
 									style="color: red;" 

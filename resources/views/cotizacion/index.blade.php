@@ -33,7 +33,6 @@ Cotizaciones
 							</tr>
 						</thead>
 						<tbody hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
 							@foreach($cotizaciones as $cotizacion)
 							<tr @if($cotizacion->CotiDelete === 1)
 								style="color: red;"
