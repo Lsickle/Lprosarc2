@@ -30,7 +30,7 @@ Activos
               
             {{-- </thead> --}}
           {{-- </tbody> --}}
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($QrCodes as $QrCode)
                   <tr>
                     <td>{{$QrCode->QrCodeEstiba}}</td>

@@ -31,7 +31,7 @@ Artículos por Proveedor
                 </tr>
             </thead>
           {{-- </tbody> --}}
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($ArtProvs as $ArtProv)
               <tr>
                 <td>{{$ArtProv->ActName}}</td>

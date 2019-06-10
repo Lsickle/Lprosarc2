@@ -43,7 +43,7 @@
 									<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 							@foreach($Generadors as $Gener)
 								<tr @if($Gener->GenerDelete === 1)
 									style="color: red;" 

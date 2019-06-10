@@ -31,7 +31,7 @@
 										@endif
 									</tr>
 								</thead>
-								<tbody  hidden onload="renderTable()" id="readyTable">
+								<tbody id="readyTable">
 									{{-- <h1 id="loadingTable">LOADING...</h1> --}}
 									@foreach($Areas as $Area)
 									<tr @if($Area->AreaDelete === 1)

@@ -30,7 +30,7 @@ Movimiento de Activos
                 </tr>
             </thead>
           {{-- </tbody> --}}
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($Movimientos as $Movimiento)
                   <tr>
                     <td>{{$Movimiento->CliShortname}}</td>

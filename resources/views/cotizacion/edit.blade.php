@@ -119,7 +119,7 @@ Edición de cotización
                                         <th>Editar</th>
                                     </tr>
                                 </thead>
-                                <tbody hidden onload="renderTable()" id="readyTable">
+                                <tbody id="readyTable">
                                     @foreach($residuos as $residuo)
                                     <tr>
                                         <td>{{$residuo->ID_Respel}}</td>

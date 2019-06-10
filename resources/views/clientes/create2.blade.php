@@ -25,7 +25,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="box-body" hidden onload="renderTable()" id="readyTable">
+                        <div class="box-body" id="readyTable">
                             <div class="tab-pane" id="addRowWizz">
                                 
                                 <div class="smartwizard">

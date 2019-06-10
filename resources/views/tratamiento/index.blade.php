@@ -29,7 +29,7 @@
 								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 							</tr>
 						</thead>
-						<tbody hidden onload="renderTable()" id="readyTable">
+						<tbody id="readyTable">
 							@foreach($tratamientos as $tratamiento)
 							<tr @if($tratamiento->TratDelete === 1)
 								style="color: red;"

@@ -22,7 +22,7 @@
 								<th>Editar</th>
 							</tr>
 						</thead>
-						<tbody  hidden onload="renderTable()" id="readyTable">
+						<tbody id="readyTable">
 							@foreach($Recursos as $Recurso)
 							<tr>
 								<td>{{$Recurso->FK_RecSolRes}}</td>

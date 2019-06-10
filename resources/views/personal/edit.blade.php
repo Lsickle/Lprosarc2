@@ -29,7 +29,7 @@
 						</div>
 					@endif
 					<div class="box box-info">
-						<div class="box-body" hidden onload="renderTable()" id="readyTable">
+						<div class="box-body" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
 								<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>
 								<div class="smartwizard">

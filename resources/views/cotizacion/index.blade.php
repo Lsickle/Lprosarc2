@@ -32,7 +32,7 @@ Cotizaciones
 								<th>Ver Mas</th>
 							</tr>
 						</thead>
-						<tbody hidden onload="renderTable()" id="readyTable">
+						<tbody id="readyTable">
 							@foreach($cotizaciones as $cotizacion)
 							<tr @if($cotizacion->CotiDelete === 1)
 								style="color: red;"

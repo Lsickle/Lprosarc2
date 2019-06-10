@@ -28,7 +28,7 @@
 									@endif
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 								@foreach($Cargos as $Cargo)
 								<tr @if($Cargo->CargDelete === 1)
 									style="color: red;"

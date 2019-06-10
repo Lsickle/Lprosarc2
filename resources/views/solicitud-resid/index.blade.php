@@ -33,7 +33,7 @@ Solicitud de Residuos
                 </tr>
               </thead>
                 
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($Residuos as $Residuo)
                 <tr>
                   <td>{{$Residuo->ID_SolSer}}</td>
