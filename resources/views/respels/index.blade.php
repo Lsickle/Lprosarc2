@@ -25,7 +25,7 @@
 									<th>Cliente</th>
 								@endif
 								@if(Auth::user()->UsRol !== "Cliente")
-									<th>Evaluar</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Evaluar</th>
 								@else
 									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Ver Más...</th>
 								@endif
@@ -33,11 +33,11 @@
 						</thead>
 						<tbody id="readyTable">
 							@foreach($Respels as $respel)
-							@if($respel->RespelDelete == 1)
-								<tr style="color: red;">
-							@else
-								<tr>
-							@endif
+								@if($respel->RespelDelete == 1)
+									<tr style="color: red;">
+								@else
+									<tr>
+								@endif
 								<td>{{$respel->RespelName}}</td>
 
 								@if($respel->YRespelClasf4741 <> null)
