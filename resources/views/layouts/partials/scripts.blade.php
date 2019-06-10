@@ -15,6 +15,13 @@
 {{-- fullcalendar --}}
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
+<script>
+	window.onload = function(){
+		var contenedor = document.getElementById('contenedor_carga');
+		contenedor.style.visibility = 'hidden';
+		contenedor.style.opacity = '0';
+	} 
+</script>
 {{-- script para tabla de tratamientos --}}
 @if(Route::currentRouteName()=='tratamiento.index')
 <script>

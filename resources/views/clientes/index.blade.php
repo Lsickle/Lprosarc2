@@ -24,7 +24,7 @@
 						</tr>
 						</thead>
 						<tbody onload="renderTable()" id="readyTable">
-						@include('layouts.partials.spinner')
+						@include('layouts.partials.loading')
 						@foreach($clientes as $cliente)
 						<tr 	@if($cliente->CliDelete === 1)
 									style="color: red;" 

@@ -1,0 +1,102 @@
+#contenedor_carga{
+	background-color: rgba(250,240,245,0.9);
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	transition: all 1s ease;
+	z-index: 10000;
+}
+#Superior{
+	background-image: url("Prueba Icono/Superior.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 300px;
+
+	position: relative;
+	top: 18%;
+	margin: auto;
+	animation: superior 1.5s infinite;
+}
+#Derecho{
+	background-image: url("Prueba Icono/Derecho.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 300px;
+
+	position: relative;
+	top: -6%;
+	left: 6%;
+	margin: auto;
+	animation: derecho 1.5s infinite;
+}
+#Izquierdo{
+	background-image: url("Prueba Icono/Izquierdo.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 300px;
+
+	position: relative;
+	top: -33%;
+	left: -2%;
+	margin: auto;
+	animation: izquierdo 1.5s infinite;
+}
+#Inferior1{
+	background-image: url("Prueba Icono/Inferior1.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 290px;
+
+	position: relative;
+	top: -55.5%;
+	left: 0.5%;
+	margin: auto;
+	animation: inferior 1.5s infinite;
+}
+#Inferior2 {
+    background-image: url("Prueba Icono/Inferior2.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 300px;
+    position: relative;
+    top: -84%;
+    margin: auto;
+    animation: inferior 1.5s infinite;
+}
+@keyframes superior {
+  from {
+    transform: translate(0,-100px);
+  }
+  to {
+    transform: translate(0,0);
+  }
+}
+@keyframes derecho {
+  from {
+    transform: translate(100px,0);
+  }
+  to {
+    transform: translate(0,0);
+  }
+}
+@keyframes izquierdo {
+  from {
+    transform: translate(-100px,0);
+  }
+  to {
+    transform: translate(0,0);
+  }
+}
+@keyframes inferior {
+  from {
+    transform: translate(0,100px);
+  }
+  to {
+    transform: translate(0,0);
+  }
+}
