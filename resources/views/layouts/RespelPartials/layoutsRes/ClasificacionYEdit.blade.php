@@ -1,8 +1,10 @@
-<label >Clasificacion Y, segun
-	<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741
-	</a>
+<select name="ARespelClasf4741" value="" hidden="">
+	<option value="" selected></option>
+</select>
+<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Clasificacion Y</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio</p>">Clasificacion Y, segun
+	<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741  <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 </label>
-<select name="YRespelClasf4741" class="form-control">
+<select name="YRespelClasf4741" class="form-control" required>
 	<option {{$Respels->YRespelClasf4741 == '' ? 'selected' : '' }}>Seleccione...</option>
 	<option {{$Respels->YRespelClasf4741 == 'Y1' ? 'selected' : '' }}>Y1</option>
 	<option {{$Respels->YRespelClasf4741 == 'Y2' ? 'selected' : '' }}>Y2</option>

@@ -17,7 +17,7 @@
 									@if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
 										<img class="profile-user-img img-responsive img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar}}" alt="User profile picture">
 									@else
-										<img class="profile-user-img img-responsive img-circle" src="../../../img/default.png" alt="User profile picture">
+										<img class="profile-user-img img-responsive img-circle" src="../../../img/defaultuser.png" alt="User profile picture">
 									@endif
 									<h3 class="profile-username text-center">{{$user->name}}</h3>
 									<p class="text-muted text-center">{{$user->email}}</p>

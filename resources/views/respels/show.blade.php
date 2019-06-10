@@ -26,7 +26,6 @@
 				<div class="box box-primary">
 					<!-- box body -->
 					<div class="box-body box-profile">
-						{{-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
 						<h3 class="profile-username text-center">{{$Respels->RespelName}}</h3>
 						<p class="text-muted text-center">{{$Respels->RespelDescrip}}</p>
 						<ul class="list-group list-group-unbordered">
@@ -302,7 +301,7 @@
 											<div class="input-group">
 												<input type="text" class="form-control" value="Ver Documento" disabled>
 												<div class="input-group-btn">
-													<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+													<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 												</div>
 											</div>	
 										</div>

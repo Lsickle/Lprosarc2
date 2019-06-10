@@ -144,7 +144,7 @@ class SolicitudServicioController extends Controller
 			$conductor = $request->input('SolSerConductor');
 			$vehiculo = $request->input('SolSerVehiculo');
 		}
-		$direccioncollect = null;
+		$direccioncollect = 'No aplica';
 		switch ($request->input('SolSerTypeCollect')) {
 			case 99:
 				$direccioncollect = "Recolección en la sede de cada generador";
@@ -220,19 +220,40 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
-						$SolicitudResiduo->SolResEmbalaje = "Bolsas";
+						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
 						break;
 					case 98:
-						$SolicitudResiduo->SolResEmbalaje = "Canecas";
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Pequeños";
 						break;
 					case 97:
-						$SolicitudResiduo->SolResEmbalaje = "Estibas";
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Grandes";
 						break;
 					case 96:
-						$SolicitudResiduo->SolResEmbalaje = "Garrafones";
+						$SolicitudResiduo->SolResEmbalaje = "Estibas";
 						break;
 					case 95:
+						$SolicitudResiduo->SolResEmbalaje = "Garrafones/Jerricanes";
+						break;
+					case 94:
 						$SolicitudResiduo->SolResEmbalaje = "Cajas";
+						break;
+					case 93:
+						$SolicitudResiduo->SolResEmbalaje = "Cuñetes";
+						break;
+					case 92:
+						$SolicitudResiduo->SolResEmbalaje = "Big Bags";
+						break;
+					case 91:
+						$SolicitudResiduo->SolResEmbalaje = "Isotanques";
+						break;
+					case 90:
+						$SolicitudResiduo->SolResEmbalaje = "Tachos";
+						break;
+					case 89:
+						$SolicitudResiduo->SolResEmbalaje = "Embalajes Compuestos";
+						break;
+					case 88:
+						$SolicitudResiduo->SolResEmbalaje = "Granel";
 						break;
 				}
 				$SolicitudResiduo->SolResAlto = $request['SolResAlto'][$Generador][$y];
@@ -272,16 +293,21 @@ class SolicitudServicioController extends Controller
 			$SolSerCollectAddress = $Address->SedeAddress;
 		}
 		$TextProgramacion = null;
-		if($SolicitudServicio->SolSerStatus == 'Programada'){
+		if($SolicitudServicio->SolSerStatus == 'Programado'){
 			setlocale(LC_TIME, "Spanish_Colombia");
 			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->first();
-			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
-				$horas = "tarde";
+			if($Programacion->ProgVehtipo == 1){
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
 			}
 			else{
-				$horas = "mañana";
+				$horas = ' en el transcurso del día';
 			}
-			$TextProgramacion = strftime("El día %d del mes de %B ")."en las horas de la ".$horas;
+			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')

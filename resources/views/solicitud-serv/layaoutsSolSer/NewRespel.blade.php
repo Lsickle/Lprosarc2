@@ -37,6 +37,13 @@
 				<option value="97">{{ trans('adminlte_lang::message.solserembaja3') }}</option>
 				<option value="96">{{ trans('adminlte_lang::message.solserembaja4') }}</option>
 				<option value="95">{{ trans('adminlte_lang::message.solserembaja5') }}</option>
+				<option value="94">{{ trans('adminlte_lang::message.solserembaja6') }}</option>
+				<option value="93">{{ trans('adminlte_lang::message.solserembaja7') }}</option>
+				<option value="92">{{ trans('adminlte_lang::message.solserembaja8') }}</option>
+				<option value="91">{{ trans('adminlte_lang::message.solserembaja9') }}</option>
+				<option value="90">{{ trans('adminlte_lang::message.solserembaja10') }}</option>
+				<option value="89">{{ trans('adminlte_lang::message.solserembaja11') }}</option>
+				<option value="88">{{ trans('adminlte_lang::message.solserembaja12') }}</option>
 			</select>
 		</div>
 		<div class="form-group col-md-16 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`" style="text-align: center;">
@@ -61,9 +68,6 @@
 				<label>{{ trans('adminlte_lang::message.requirements') }}</label>
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-				<div class="form-group col-md-12">
-					<label>{{ trans('adminlte_lang::message.requirephotos') }}</label>
-				</div>
 				<div class="form-group col-md-6">
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguephoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguephotodescrit') }}</p>">
 						<label for="SolResFotoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguephoto') }}</label>
@@ -84,9 +88,6 @@
 				</div>
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-				<div class="form-group col-md-12">
-					<label>{{ trans('adminlte_lang::message.requirevideos') }}</label>
-				</div>
 				<div class="form-group col-md-6">
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguevideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
 						<label for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguevideo') }}</label>

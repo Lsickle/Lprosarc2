@@ -58,7 +58,7 @@
 								@break
 								@case('Programado')
 									<h4>
-										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+										@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Externo')
 											<div class="col-md-1 " style="float: right;">
 												<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 											</div>
@@ -279,9 +279,9 @@
 									@endphp
 									<thead>
 										<tr>
-											<th>{{trans('adminlte_lang::message.gener')}}</th>
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
+											<th>{{trans('adminlte_lang::message.gener')}}</th>
 											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
 											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
@@ -308,9 +308,9 @@
 													$TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
 												@endphp
 											<tr>
-												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
+												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgRecibido}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgConciliado}}</td>
@@ -331,11 +331,11 @@
 									<tfoot>
 										<tr>
 											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-											<th style="text-align: right;">{{$TotalEnv}} Kg</th>
-											<th style="text-align: right;">{{$TotalRec}} Kg</th>
-											<th style="text-align: right;">{{$TotalCons}} Kg</th>
+											<th style="text-align: right;">{{$TotalEnv}} kg</th>
+											<th style="text-align: right;">{{$TotalRec}} kg</th>
+											<th style="text-align: right;">{{$TotalCons}} kg</th>
 											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th style="text-align: right;">{{$TotalTrat}} Kg</th>
+												<th style="text-align: right;">{{$TotalTrat}} kg</th>
 											@endif
 											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
 												<th colspan="2"></th>
@@ -356,21 +356,21 @@
 													<div class="box box-info col-md-16" style="text-align: center;">
 														@foreach($Residuos as $Residuo)
 															<div class="col-md-12 col-xs-12" style="margin-top: 5px;">
-																<label>{{$Residuo->RespelName}}</label>
+																<label>{{$Residuo->RespelName.' - '.$Residuo->SolResEmbalaje}}</label>
 															</div>
 															<div class="col-md-12 col-xs-12">
-																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black;">
-																	<label>Desc/Pesa</label>
+																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black; border-right: 1px solid black;">
+																	<label>{{trans('adminlte_lang::message.requeredescargue')}}</label>
 																	<div style="width: 100%;">
-																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }} disabled="" />
-																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }} disabled="" />
+																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
+																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
 																	</div>
 																</div>
-																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black;">
-																	<label style="text-align: center;">Tratamiento</label>
+																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black; border-left: 1px solid black;">
+																	<label style="text-align: center;">{{trans('adminlte_lang::message.requeretratamiento')}}</label>
 																	<div style="width: 100%;">
-																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }} disabled="" />
-																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }} disabled="" />
+																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }}/>
+																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }}/>
 																	</div>
 																</div>
 															</div>
@@ -413,5 +413,7 @@
 			</form>`);
 			$('#myModal'+slug).modal();
 		}
+		$('.fotoswitch').bootstrapSwitch('disabled',true);
+		$('.videoswitch').bootstrapSwitch('disabled',true);
 	</script>
 @endsection
