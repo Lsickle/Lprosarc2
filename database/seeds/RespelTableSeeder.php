@@ -79,7 +79,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
-        $Respel->RespelStatus = 'Incompleta';
+        $Respel->RespelStatus = 'Incompleto';
         $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '1';
@@ -194,7 +194,7 @@ class RespelTableSeeder extends Seeder
         $Respel->RespelEstado = 'Solido';
         $Respel->RespelHojaSeguridad = 'RespelHojaDefault.pdf';
         $Respel->RespelTarj = 'RespelTarjetaDefault.pdf';
-        $Respel->RespelStatus = 'Incompleta';
+        $Respel->RespelStatus = 'Incompleto';
         $Respel->RespelSlug = md5((now().rand().$Respel->RespelName));
         $Respel->RespelDelete = '0';
         $Respel->FK_RespelCoti = '6';
