@@ -135,7 +135,7 @@
                                         <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientovideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientovideodescrit') }}</p>">
                                             <label for="SolResVideoTratamiento">{{ trans('adminlte_lang::message.requiretratamientovideo') }}</label>
                                             <div style="width: 100%; height: 34px;">
-                                                <input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  === '1' ? 'checked' : '' }}>
+                                                <input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }}>
                                                 {{-- falta modificar los valores de los checkbox --}}
                                                 <input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="0">
                                             </div>

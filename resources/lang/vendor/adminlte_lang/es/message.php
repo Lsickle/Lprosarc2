@@ -632,6 +632,17 @@ return [
     'requiretratamientovideodescrit' => 'Se requiere vídeo del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
 
     // Recursos
-    'solser' => 'Solicitud de Servicio',
-    'solresedit' => 'Editar Residuo de la Solcitud de Servicio',
+    'solser'                  => 'Solicitud de Servicio',
+    'solresedit'              => 'Editar Residuo de la Solcitud de Servicio',
+    'solrestitleclientepart1' => 'No puede',
+    'o'                       => 'o',
+    'solrestitleclientepart2' => 'este residuo porque',
+    'solresProgramador'       => 'ha sido programado',
+    'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP',
+    'solresTratado'           => 'ha sido tratado',
+    'solresCertificado'       => 'esta listo para realizar la certificación',
+    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
+    'solrestypeunity'         => 'Tipo de Unidad:',
+    'solrescantunity'         => 'Cantidad de Unidad:',
+    'solresembalaje'          => 'Embalaje:',
 ];

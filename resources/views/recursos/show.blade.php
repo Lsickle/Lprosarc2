@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
-@section('htmlheader_title','Recursos')
-
-@section('contentheader_title', 'Solicitud de Servicio')
+@section('htmlheader_title')
+{{ trans('adminlte_lang::message.solser') }}
+@endsection
+@section('contentheader_title')
+{{ trans('adminlte_lang::message.solser') }}
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -12,24 +15,24 @@
                     <div class="col-md-12" >
                         @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                <center><h4>No puede <b>Modificar</b> o <b>Eliminar</b> este residuo porque
+                                <center><h4>{{trans('adminlte_lang::message.solrestitleclientepart1')}} <b>{{trans('adminlte_lang::message.update')}}</b> {{trans('adminlte_lang::message.o')}} <b>{{trans('adminlte_lang::message.delete')}}</b> {{trans('adminlte_lang::message.solrestitleclientepart2')}}
                                     @switch($SolSer->SolSerStatus)
                                         @case('Programado')
-                                            ha sido programado
+                                            {{trans('adminlte_lang::message.solresProgramador')}}
                                             @break
                                         @case('Completado')
-                                            ha llegado a la planta de Prosarc S.A ESP 
+                                            {{trans('adminlte_lang::message.solresCompletado')}}
                                             @break
                                         @case('Tratado')
-                                            ha sido tratado
+                                            {{trans('adminlte_lang::message.solresTratado')}}
                                             @break
                                         @case('Certificacion')
-                                            esta listo para realizar la certificación
+                                            {{trans('adminlte_lang::message.solresCertificado')}}
                                             @break
                                     @endswitch
                                     </h4></center>
                             @else
-                                <h3 class="box-title">Residuo de la Solicitud de Servicio</h3>
+                                <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
                                 @if($SolSer->SolSerStatus !== 'Programado')
                                     <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
                                 @endif
@@ -37,7 +40,7 @@
                         @else
                             {{-- <div style="display: flex; justify-content:space-between"> --}}
                                 @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-                                    <h3 class="box-title">Residuo de la Solicitud de Servicio</h3>
+                                    <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
                                     {{-- <a method='get' href='#' data-toggle='modal' data-target='#addRecurso'  class="btn btn-success"><i class="fas fa-plus-circle"></i><b> {{trans('adminlte_lang::message.add')}}</b></a> --}}
                                 @else
                                     @component('layouts.partials.modal')
@@ -45,7 +48,7 @@
                                             {{$SolRes->SolResSlug}}
                                         @endslot
                                         @slot('textModal')
-                                            el residuo de la solicitud 
+                                            {{trans('adminlte_lang::message.solresrespel')}}
                                             <b>N° {{$SolSer->ID_SolSer}}</b>
                                         @endslot
                                     @endcomponent
@@ -67,15 +70,15 @@
 							<div class="col-md-12">
                                 <div class="col-md-16">
                                     <div class="col-md-4 border-gray">
-                                        <label>Tipo de Unidad: </label><br>
+                                        <label>{{trans('adminlte_lang::message.solrestypeunity')}}</label><br>
                                         <a>{{$SolRes->SolResTypeUnidad}}</a>
                                     </div>
                                     <div class="col-md-4 border-gray">
-                                        <label>Cantidad de Unidad: </label><br>
+                                        <label>{{trans('adminlte_lang::message.solrescantunity')}}</label><br>
                                         <a>{{$SolRes->SolResCantiUnidad}}</a>
                                     </div>
                                     <div class="col-md-4 border-gray">
-                                        <label>Embalaje: </label><br>
+                                        <label>{{trans('adminlte_lang::message.solresembalaje')}}</label><br>
                                         <a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolRes->SolResEmbalaje}}</p>">{{$SolRes->SolResEmbalaje}}</a>
                                     </div>
                                 </div>
@@ -142,7 +145,7 @@
                                 <div class="col-md-3" style="text-align: center; margin: 20px 0px 20px 0px; ">
                                     <label for="SolResFotoDescargue_Pesaje">Video Tratamiento</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  === '1' ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  <> null ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                             </div>

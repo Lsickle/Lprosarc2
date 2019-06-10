@@ -83,10 +83,6 @@ select.form-control{
 .fixed_widthbtn{
 	width:3em;
 }
-<<<<<<< HEAD
-.border-gray{
-	border-bottom:#f4f4f4 solid 2px;
-=======
 /*stilos swicht personalizado*/
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
@@ -164,5 +160,4 @@ select.form-control{
 .select2-selection__arrow{
 	height: 2.2em !important;
 	margin-bottom: 0.1em;
->>>>>>> da1eaa7cfafdb958f92f88e1ac0575608c69646f
 }
