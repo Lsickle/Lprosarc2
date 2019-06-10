@@ -44,8 +44,8 @@ Activos
                     <td>{{$Activo->ActModel}}</td>
                     <td>{{$Activo->ActSerialProsarc}}</td>
                     <td>{{$Activo->ActSerialProveed}}</td>
-                    <td></td>
-                    <td>{{$Activo->ID_Act}}</td>
+                    <td><a method='get' href='/activos/{{$Activo->ID_Act}}' class='btn btn-success'/>Ver</a></td>
+                    <td><a href='/activos/{{$Activo->ID_Act}}/edit' class='btn btn-warning'>Edit</a></td>
                   </tr>
                 
               @endforeach

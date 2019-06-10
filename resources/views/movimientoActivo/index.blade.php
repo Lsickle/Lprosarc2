@@ -39,7 +39,7 @@ Movimiento de Activos
                     <td>{{$Movimiento->PersFirstName}}</td>
                     <td>{{$Movimiento->created_at}}</td>
                     <td>{{$Movimiento->updated_at}}</td>
-                    <td>{{$Movimiento->ID_MovAct}}</td>
+                    <td><a href='movimiento-activos/{{$Movimiento->ID_MovAct}}/edit' class='btn btn-warning'>Edit</a></td>
                   </tr>
               @endforeach
             {{-- <tfoot>
