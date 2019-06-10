@@ -30,8 +30,7 @@
 									<th>{{ trans('adminlte_lang::message.seemore')}}</th>
 								</tr>
 							</thead>
-							<tbody hidden onload="renderTable()" id="readyTable">
-								@include('layouts.partials.spinner')
+							<tbody id="readyTable">
 								@foreach($Sedes as $Sede)
 									<tr @if($Sede->SedeDelete === 1)
 											style="color: red;" 

@@ -637,6 +637,7 @@ return [
 
     //Requerimientos
     'requirements'            => 'Requerimientos',
+    'requirementsdescript'    => 'Consulte con su asesor comercial si alguno de estos requerimientos tienen algún costo adicional',
     'requeredescargue'        => 'Descar/Pesa',
     'requeretratamiento'      => 'Tratamiento',
     'requiredescarguephoto'   =>'Foto Descargue/Pesaje',

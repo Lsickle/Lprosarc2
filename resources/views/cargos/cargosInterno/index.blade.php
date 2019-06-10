@@ -26,9 +26,7 @@
 									<th>{{trans('adminlte_lang::message.edit')}}</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-								@include('layouts.partials.spinner')
+							<tbody id="readyTable">
 								@foreach($Cargos as $Cargo)
 								<tr @if($Cargo->CargDelete === 1)
 									style="color: red;"

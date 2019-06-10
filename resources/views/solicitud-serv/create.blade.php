@@ -132,7 +132,9 @@
 									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
 								</div>
 								<div class="col-md-12" style="margin: 10px 0;">
-									<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
+									<center>
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requirements') }}</b>" data-content="{{ trans('adminlte_lang::message.requirementsdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.requirements') }}</label>
+									</center>
 									<div class="col-md-12" style="border: 2px dashed #00c0ef">
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">

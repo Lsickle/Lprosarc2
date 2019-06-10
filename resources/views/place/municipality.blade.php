@@ -19,8 +19,7 @@ Municipios
                 <th>Nombre</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
-              @include('layouts.partials.spinner')
+            <tbody id="readyTable">
               @foreach($municipios as $municipio)
               <tr>
                 <td>{{$municipio->MunName}}</td>

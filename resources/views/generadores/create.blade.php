@@ -14,7 +14,6 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.Generregistertittle') }}</h3>
 				</div>
 				<div class="box box-info">
-					@include('layouts.partials.spinner')
 					<!-- form start -->
 					<form role="form" action="/generadores" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
@@ -27,7 +26,7 @@
 								</ul>
 							</div>
 						@endif
-						<div class="box-body" hidden onload="renderTable()" id="readyTable">
+						<div class="box-body" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
 								<div class="smartwizard">
 									<ul>
