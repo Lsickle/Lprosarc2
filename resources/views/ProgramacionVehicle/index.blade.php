@@ -39,7 +39,7 @@
 									@endif
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 								@foreach($programacions as $programacion)
 								@php
 									if($programacion->ProgVehtipo == 1){

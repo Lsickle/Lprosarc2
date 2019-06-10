@@ -31,7 +31,7 @@
                   <th>Editar</th>
                 </tr>
               </thead>
-              <tbody  hidden onload="renderTable()" id="readyTable">
+              <tbody id="readyTable">
                 @foreach($Requerimientos as $Requerimiento)
                 <tr>
                   <td>{{$Requerimiento->CliName}}</td>

@@ -27,7 +27,7 @@
 									<th>Editar</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 								@foreach($CapaPers as $CapaPer)
 								<tr @if($CapaPer->CapaPersDelete === 1)
 											style="color: red;" 

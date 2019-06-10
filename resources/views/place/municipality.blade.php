@@ -19,7 +19,7 @@ Municipios
                 <th>Nombre</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach($municipios as $municipio)
               <tr>
                 <td>{{$municipio->MunName}}</td>

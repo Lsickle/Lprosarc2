@@ -21,7 +21,7 @@ requerimientos - Crear
 							<form role="form" action="/requerimientos/" method="POST" enctype="multipart/form-data">
 								@csrf
 								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-								<div class="box-body" hidden onload="renderTable()" id="readyTable">
+								<div class="box-body" id="readyTable">
 									<div class="tab-pane" id="addRowWizz">
 										<p>Actualice la información necesaria completando los campos requeridos según la información del residuo que registro</p>
 											<!-- general form elements -->

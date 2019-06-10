@@ -26,7 +26,7 @@
 								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 							</tr>
 							</thead>
-							<tbody onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 							@foreach($Clientes as $Cliente)
 							<tr @if($Cliente->CliDelete === 1)
 									style="color: red;" 

@@ -33,7 +33,7 @@ Activos
                     <th>Editar</th>
                 </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($Activos as $Activo)
                   <tr>
                     <td>{{$Activo->CatName}}</td>

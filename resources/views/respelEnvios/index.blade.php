@@ -36,7 +36,7 @@
                   <th>Kg Tratado</th>
                   <td>5</td>
                 </tr>
-              <tbody  hidden onload="renderTable()" id="readyTable">
+              <tbody id="readyTable">
               </tbody>
             </table>
           </div>

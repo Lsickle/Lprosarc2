@@ -32,7 +32,7 @@ Certificados
 
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach ($Certificados as $Certificado)
               <tr>
                 <td>{{$Certificado->CertNumero}}</td>

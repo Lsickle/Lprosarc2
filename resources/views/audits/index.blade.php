@@ -24,7 +24,7 @@
                 <th>LOG</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach($auditorias as $auditoria)
               <tr>
                 <td>{{$auditoria->id}}</td>

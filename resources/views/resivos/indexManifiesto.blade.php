@@ -30,7 +30,7 @@ Manifiesto
                 <th>Ver Más...</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
+            <tbody id="readyTable">
               @foreach($Manifiestos as $Manifiesto)
               <tr>
                 <td>{{$Manifiesto->ManifNumero}}</td>

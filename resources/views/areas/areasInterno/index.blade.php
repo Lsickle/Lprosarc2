@@ -24,7 +24,7 @@
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									</tr>
 								</thead>
-								<tbody  hidden onload="renderTable()" id="readyTable">
+								<tbody id="readyTable">
 									@foreach($Areas as $Area)
 									<tr @if($Area->AreaDelete === 1)
 										style="color: red;"

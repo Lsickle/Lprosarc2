@@ -26,7 +26,7 @@
 								<th>Ver más..</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 								@foreach($Inventarios as $Inventario)
 								<tr>
 									<td>{{$Inventario->PersFirstName." ".$Inventario->PersLastName}}</td>

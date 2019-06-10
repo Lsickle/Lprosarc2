@@ -28,7 +28,7 @@
 									<th>{{ trans('adminlte_lang::message.see') }}</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
+							<tbody id="readyTable">
 								@foreach($Personals as $Personal)
 								<tr @if($Personal->PersDelete === 1)
 									style="color: red;"
