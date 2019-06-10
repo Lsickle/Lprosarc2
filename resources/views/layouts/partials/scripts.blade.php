@@ -16,11 +16,11 @@
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 <script>
-	$(document).ready(function(){
-		var contenedor = $('#contenedor_carga');
+	window.onload = function(){
+		var contenedor = document.getElementById('contenedor_carga');
 		contenedor.style.visibility = 'hidden';
 		contenedor.style.opacity = '0';
-	});
+	} 
 </script>
 <script>
 $(document).ready(function() {

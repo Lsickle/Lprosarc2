@@ -27,6 +27,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/css/loader-dt.css'
    ], 'public/css/all.css')
    .combine([
+      'resources/assets/css/app.css'
+    ], 'public/css/app.css')
+   .combine([
        'node_modules/bootstrap/dist/css/bootstrap.min.css',
        'resources/assets/css/pratt_landing.min.css'
    ], 'public/css/all-landing.css')
