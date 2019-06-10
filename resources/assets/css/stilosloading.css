@@ -1,5 +1,6 @@
+/*Stilos del Loading con el logo de Prosarc*/
 #contenedor_carga{
-	background-color: rgba(250,240,245,0.9);
+	background-color: #ecf0f5;
 	height: 100%;
 	width: 100%;
 	position: fixed;
@@ -7,64 +8,66 @@
 	z-index: 10000;
 }
 #Superior{
-	background-image: url("Prueba Icono/Superior.png");
+	background-image: url("/img/LoadingProsarc/Superior.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 200px;
 	width: 300px;
 
 	position: relative;
-	top: 18%;
+	top: 0;
+	left: -8%;
 	margin: auto;
 	animation: superior 1.5s infinite;
 }
 #Derecho{
-	background-image: url("Prueba Icono/Derecho.png");
+	background-image: url("/img/LoadingProsarc/Derecho.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 200px;
 	width: 300px;
 
 	position: relative;
-	top: -6%;
-	left: 6%;
+	top: -25%;
+	left: -2%;
 	margin: auto;
 	animation: derecho 1.5s infinite;
 }
 #Izquierdo{
-	background-image: url("Prueba Icono/Izquierdo.png");
+	background-image: url("/img/LoadingProsarc/Izquierdo.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 200px;
 	width: 300px;
 
 	position: relative;
-	top: -33%;
-	left: -2%;
+	top: -52%;
+	left: -10%;
 	margin: auto;
 	animation: izquierdo 1.5s infinite;
 }
 #Inferior1{
-	background-image: url("Prueba Icono/Inferior1.png");
+	background-image: url("/img/LoadingProsarc/Inferior1.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 200px;
 	width: 290px;
 
 	position: relative;
-	top: -55.5%;
-	left: 0.5%;
+	top: -74.5%;
+	left: -7.5%;
 	margin: auto;
 	animation: inferior 1.5s infinite;
 }
 #Inferior2 {
-    background-image: url("Prueba Icono/Inferior2.png");
+    background-image: url("/img/LoadingProsarc/Inferior2.png");
     background-size: 100%;
     background-repeat: no-repeat;
     height: 200px;
     width: 300px;
     position: relative;
-    top: -84%;
+    top: -102.5%;
+    left: -8.2%;
     margin: auto;
     animation: inferior 1.5s infinite;
 }
