@@ -195,7 +195,8 @@
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
+								document.getElementById("divFK_PersCargo").style.display = 'none';
+								document.getElementById("FK_PersCargo").required = false;
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}

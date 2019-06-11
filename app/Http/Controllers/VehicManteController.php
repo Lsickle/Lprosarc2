@@ -57,12 +57,12 @@ class VehicManteController extends Controller
         ];
         $validation = Validator::make($request->all(), [
             'FK_VehMan'        => 'required',
-            'MvKm'             => 'required|numeric|max:11',
+            'MvKm'             => 'required|numeric',
             'HoraMavInicio1'   => 'required|date',
             'HoraMavInicio'    => 'required',
             'HoraMavFin1'      => 'required|date|after_or_equal:HoraMavInicio1',
             'HoraMavFin'       => 'required',
-            'MvType'           => 'required|alpha|max:255',
+            'MvType'           => 'required|max:255',
         ]);
         if($request->input('HoraMavInicio1') == $request->input('HoraMavFin1')){
             $validation = Validator::make($request->all(), [
@@ -125,12 +125,12 @@ class VehicManteController extends Controller
         ];
         $validation = Validator::make($request->all(), [
             'FK_VehMan'        => 'required',
-            'MvKm'             => 'required|max:11',
+            'MvKm'             => 'required',
             'HoraMavInicio1'   => 'required|date',
             'HoraMavInicio'    => 'required',
             'HoraMavFin1'      => 'required|date|after_or_equal:HoraMavInicio1',
             'HoraMavFin'       => 'required',
-            'MvType'           => 'required|alpha|max:255',
+            'MvType'           => 'required|max:255',
         ]);
         if($request->input('HoraMavInicio1') == $request->input('HoraMavFin1')){
             $validation = Validator::make($request->all(), [

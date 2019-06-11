@@ -4,9 +4,11 @@
 /public/img/*.png
 /public/img/*.pdf
 /public/img/*.jpg
+/public/img/*.gif
 /public/img/**/*.png
 /public/img/**/*.pdf
 /public/img/**/*.jpg
+/public/img/**/*.gif
 /public/js/*.js
 /storage/*.key
 /vendor

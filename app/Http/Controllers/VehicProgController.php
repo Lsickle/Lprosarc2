@@ -225,7 +225,9 @@ class VehicProgController extends Controller
             $programacion->ProgVehColor = $request->input('ProgVehColor');
         }
         else{
-            $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+            if($request->input('ProgVehEntrada')){
+                $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+            }
         }
         $programacion->save();
 
