@@ -17,10 +17,10 @@
 
 <script>
 	window.onload = function(){
-		var contenedor = document.getElementById('contenedor_carga');
-		contenedor.style.visibility = 'hidden';
-		contenedor.style.opacity = '0';
-	} 
+		$('#contenedor_carga').css('visibility', 'hidden');
+		$('#contenedor_carga').css('opacity', '0');
+		setTimeout(function(){$('#contenedor_carga').remove();}, 1000);
+	}
 </script>
 <script>
 $(document).ready(function() {
