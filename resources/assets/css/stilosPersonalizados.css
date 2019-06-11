@@ -32,7 +32,6 @@
 	text-align: right;
 }
 .popover-left{
-	/*float: left !important; */
 	width:100% !important;
 }
 a.textpopover{
@@ -55,7 +54,6 @@ a.textpopover{
 }
 .form-control{
 	height: auto;
-	/*margin-bottom: 0;*/
 	max-height: 2.4em;
 }
 select.form-control{
@@ -78,8 +76,6 @@ select.form-control{
 	white-space: nowrap;
 	color: #444;
 	line-height: 28px;
-	/*height: 2.1em;*/
-	/*padding-top: 2px;*/
 }
 .size-img{
 	width:120px; 
@@ -111,4 +107,10 @@ select.form-control{
 }
 .fixed_widthbtn{
 	width:3em;
+}
+.profile-user-img{
+	height: 100px;
+}
+.user-panel > .image > img{
+	height: 45px;
 }

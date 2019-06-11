@@ -17,10 +17,22 @@
 
 <script>
 	window.onload = function(){
-		var contenedor = document.getElementById('contenedor_carga');
-		contenedor.style.visibility = 'hidden';
-		contenedor.style.opacity = '0';
-	} 
+		$('#contenedor_carga').css('visibility', 'hidden');
+		$('#contenedor_carga').css('opacity', '0');
+		setTimeout(function(){$('#contenedor_carga').remove();}, 1000);
+	}
+</script>
+<script>
+$('form[data-toggle="validator"]').validator({
+	custom: {
+		filesize: function($el) {
+			var maxBytes = $el.data("filesize")*1024;
+			if ($el[0].files[0].size > maxBytes) {
+				return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
+			}
+		}
+	}
+});
 </script>
 <script>
 $(document).ready(function() {
@@ -521,57 +533,33 @@ function NotifiFalse(Mensaje) {
 	</script>
 	@endif
 
-	@if(Route::currentRouteName()=='respels.create')
-    {{-- este script agrega o elimina los campos de hoja de seguridad y TDE segun la peligrosidad del residuo --}}
-    <script>
-        $(document).ready(function() {
-            $('#myform').validator({
-              custom: {
-                'filesize': function ($el) {
-                  var maxBytes = $el.data('filesize') * 1024
-                  if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
-                    return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB."
-                  }
-                }
-                // 'filetype': function ($el) {
-                //   var allowtype = $el.data('filetype')
-                //   if ($el[0].files[0] && $el[0].files[0].type == allowtype) {
-                //     return "el archivo debe ser de tipo " + allowtype
-                //   }
-                // }
-              }
-            })
-        });
-    </script>
-    @endif
-
 	<script>
 	$(document).ready(function() {
-        /*var rol defino el rol del usuario*/
-        var rol = "<?php echo Auth::user()->UsRol; ?>";
-        /*var botoncito define los botones que se usaran si el usuario es programador*/
-        var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
-                    extend: 'collection',
-                    text: 'Selector',
-                    buttons: ['selectRows', 'selectCells']
-                }] : ['colvis', 'excel'];
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->UsRol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
+					extend: 'collection',
+					text: 'Selector',
+					buttons: ['selectRows', 'selectCells']
+				}] : ['colvis', 'excel'];
 
-        /*inicializacion de datatable general*/        
+		/*inicializacion de datatable general*/        
 		$('.table').DataTable({
-            "dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
+			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
+				"<'row'<'col-md-12'tr>>" +
+				"<'row'<'col-md-6'i><'col-md-6'p>>",
 			"scrollX": false,
 			"autoWidth": true,
-            // "select": true,
-            "colReorder": true,
-            "searchHighlight": true,
+			// "select": true,
+			"colReorder": true,
+			"searchHighlight": true,
 			"responsive": true,
-            "keys": true,
-            "lengthChange": true,
-            "buttons": [
-                botoncito
-            ],
+			"keys": true,
+			"lengthChange": true,
+			"buttons": [
+				botoncito
+			],
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
