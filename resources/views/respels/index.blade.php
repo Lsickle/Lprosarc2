@@ -91,7 +91,7 @@
 									        @break
 									    {{-- opción default --}}
 									    @default
-									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-primary'><i class='fas fa-ban'></i></a></td>
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-primary'><i class='fas fa-ban'></i></a></td>
 									@endswitch
 								@else
 									@switch($respel->RespelStatus)

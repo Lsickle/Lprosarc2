@@ -206,10 +206,13 @@ class RespelController extends Controller
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
         // return $ResiduoConDependencia1;
-
-        if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
-            $editButton = 'No editable';
-        }else{
+        if (Auth::user()->UsRol=='Cliente')
+            if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
+                $editButton = 'No editable';
+            }else{
+                $editButton = 'Editable';
+            }
+        else{
             $editButton = 'Editable';
         }
 
@@ -255,6 +258,9 @@ class RespelController extends Controller
             ->select('sedes.*', 'clientes.*', 'tratamientos.*')
             ->get();
 
+        // se verifica el rol y el status del residuo para devolver a la vista correspondiente
+            $statusRespel = $Respels->RespelStatus;
+
         if(Auth::user()->UsRol=='Cliente'){
             $Sede = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
@@ -263,15 +269,40 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->get();
-            return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+            switch ($statusRespel) {
+                case 'Pendiente':
+                    return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                    break;
+
+                case 'Incompleto':
+                    return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                    break;
+
+                case 'Aprobado':
+                    abort(403);
+                    break;
+
+                case 'Rechazado':
+                    abort(403);
+                    break;
+
+                case 'Vencido':
+                    abort(403);
+                    break;
+                
+                default:
+                    abort(403);
+                    break;
+            }
         }
         else{
             $Sedes = DB::table('clientes')
                 ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('sedes.ID_Sede', 'clientes.CliName')
+                ->select('sedes.ID_Sede', 'sedes.SedeName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
             return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+            
         }
 
         
