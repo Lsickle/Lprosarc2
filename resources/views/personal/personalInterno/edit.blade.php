@@ -166,8 +166,7 @@
 														<input name="PersIngreso" autofocus="true" type="text" class="form-control fechas" id="PersIngreso" required value="{{$Persona->PersIngreso}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersSalida">{{ trans('adminlte_lang::message.perssalida') }}</label><small class="help-block with-errors dir">*</small>
-														<input name="PersSalida" autofocus="true" type="text" class="form-control fechas" id="PersSalida" required value="{{$Persona->PersSalida}}">
+														<input name="PersSalida" autofocus="true" type="text" class="form-control fechas" id="PersSalida" value="{{$Persona->PersSalida}}">
 													</div>
 												</div>
 												<div class="box-footer">
