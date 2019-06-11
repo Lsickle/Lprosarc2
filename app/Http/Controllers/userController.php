@@ -79,7 +79,7 @@ class userController extends Controller
         $validate = $request->validate([
             'name'          => 'required',
             'email'         => 'required|unique:users,email,'.$user->id.',id',
-            'UsAvatar'      => 'mimes:jpeg,jpg,png,gif,web',
+            'UsAvatar'      => 'max:1536|mimes:jpeg,jpg,png,gif,web',
         ]);
         // return $request;
         if($request->hasfile('UsAvatar')){
