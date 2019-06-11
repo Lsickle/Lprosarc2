@@ -34,7 +34,10 @@
 							<form role="form" action="/profile/{{$user->UsSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 								@method('PUT')
 								@csrf
-								<input type="file" name="UsAvatar" id="UsAvatar" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .web">
+								<div class="col-md-6 col-md-offset-2 col-xs-6 col-xs-offset-2 form-group">
+									<small class="help-block with-errors"></small>
+									<input id="UsAvatar" name="UsAvatar" style="display: none;" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" required="">
+								</div>
 								<div class="form-group col-md-12 col-xs-12">
 									<label for="name">{{ trans('adminlte_lang::message.username') }}</label><small class="help-block with-errors">*</small>
 									<input required name="name" class="form-control" type="text" id="name" value="{{$user->name}}">
