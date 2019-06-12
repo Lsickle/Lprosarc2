@@ -8,10 +8,10 @@
 @section('main-content')
 @component('layouts.partials.modal')
 		@slot('slug')
-			{{$Respels->ID_Respel}}
+			{{$Respels->RespelSlug}}
 		@endslot
 		@slot('textModal')
-			la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+			 el Residuo:<b>	 {{$Respels->RespelName}}</b>
 		@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
@@ -132,9 +132,25 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelinfotag') }}</h3>
 						@if($editButton == 'Editable')
-							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning" style="float: right;">Editar</a>
+							<div class="btn-group-sm pull-right">
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
+								<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+								<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
+									@method('DELETE')
+									@csrf
+									<button type="submit" id="Eliminar{{$Respels->RespelSlug}}" style="display: none;">
+										{{ trans('adminlte_lang::message.delete') }}
+									</button>
+								</form>
+								
+							</div>
 						@else
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Incompleto'</b></i> o <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default" style="float: right;">Editar</a>
+						<div class="btn-group-sm pull-right">
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
+
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
+						</div>
+							
 
 						@endif
 					</div>
