@@ -314,7 +314,7 @@ function TransportadorExtr() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
-	$("#typecollect").attr('required', false);
+	$("#SolSerTypeCollect").attr('required', false);
 	$("#typecollect option:selected").prop("selected", false);
 	HiddenTypeCollect();
 	TransportadorCliente();

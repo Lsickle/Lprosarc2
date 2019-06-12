@@ -39,12 +39,12 @@ desired effect
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            @include('layouts.partials.loading')
 
             @include('layouts.partials.contentheader')
 
             <!-- Main content -->
-            <section class="content">
+            @include('layouts.partials.loading')
+            <section class="content" id="contenido" style="display: none;">
                 <!-- Your Page Content Here -->
                 @yield('main-content')
             </section><!-- /.content -->

@@ -168,7 +168,7 @@ class clientcontoller extends Controller
     public function show(Cliente $cliente)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
+            $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
@@ -180,7 +180,7 @@ class clientcontoller extends Controller
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             // $id = userController::IDClienteSegunUsuario();
-            $cliente = cliente::where('CliSlug', $id)->first();
+            $cliente = Cliente::where('CliSlug', $id)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
