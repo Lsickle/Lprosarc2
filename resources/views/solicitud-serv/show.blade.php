@@ -321,7 +321,6 @@
 </div>
 @endsection
 @section('NewScript')
-	
 	<script>
 		function addkgResivido(slug, cantidad){
 			alert('hola');

@@ -627,6 +627,7 @@ return [
     'solsershowtransempre'    => 'Empresa Transportadora:',
     'solsershowtranscity'     => 'Ciudad de la Transportadora:',
     'solsershowcantitotal'    => 'Cantidad Total:',
+    
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',
     'solserstatusrecibido'    => 'Recibido',
@@ -649,7 +650,7 @@ return [
     'requiretratamientovideo' =>'Vídeo Tratamiento',
     'requiretratamientovideodescrit' => 'Se requiere vídeo del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
 
-    // Recursos
+    // Solicitud de Residuo
     'solser'                  => 'Solicitud de Servicio',
     'solresedit'              => 'Editar Residuo de la Solcitud de Servicio',
     'solrestitleclientepart1' => 'No puede',
@@ -670,4 +671,18 @@ return [
     'solresalto'              => 'Alto:',
     'solresancho'             => 'Ancho:',
     'solresProfundo'          => 'Profundo:',
+
+    // recursos
+    'recursostratamiento'     => 'En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado',
+    'recursos'                => 'Recursos',
+    'recursoFoto'             => 'Fotos',
+    'recursoVideo'            => 'Videos',
+    'recampliarfoto'          => 'Ampliar Imagen',
+    'recdowloadfoto'          => 'Descargar Imagen',
+    'recdeletefoto'           => 'Eliminar Imagen',
+    'recaddfoto'              => 'Agregar Foto',
+    'recdowloadvideo'         => 'Descargar Video',
+    'recdeletevideo'          => 'Eliminar Imagen',
+    'recaddvideo'             => 'Agregar Video',
+
 ];

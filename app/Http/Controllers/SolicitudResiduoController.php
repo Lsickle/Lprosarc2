@@ -23,15 +23,7 @@ class SolicitudResiduoController extends Controller
      */
     public function index()
     {
-        // $Residuos = DB::table('solicitud_residuos')
-        //     ->join('respels', 'respels.ID_Respel', '=', 'solicitud_residuos.FK_SolResRespel')
-        //     ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-        //     ->join('sedes', 'solicitud_servicios.Fk_SolSerTransportador', '=', 'sedes.ID_Sede')
-        //     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-        //     ->select('clientes.CliShortname', 'clientes.CliSlug','respels.RespelName', 'solicitud_residuos.*', 'solicitud_servicios.ID_SolSer')
-        //     ->get();
-
-        return "index";
+        //
     }
 
     /**
@@ -58,7 +50,7 @@ class SolicitudResiduoController extends Controller
      */
     public function store(Request $request)
     {
-        return "hola"; 
+        //
     }
 
     /**
@@ -98,7 +90,7 @@ class SolicitudResiduoController extends Controller
                     abort(403);
                 }
             }
-            return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener'));
+            return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer'));
         }else{
             abort(403);
         }
@@ -111,15 +103,11 @@ class SolicitudResiduoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateSolRes(Request $request, $id){
-
-    }
-
-    public function update(SolResUpdateRequest $request, $id)
+ 
+    public function update(Request $request, $id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-
             $Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
 
             $Validate = $request->validate([
@@ -127,25 +115,60 @@ class SolicitudResiduoController extends Controller
                 'SolResEmbalaje' => 'required',
                 'SolResKgEnviado' => 'max:11|required',
                 'SolResCantiUnidad' => 'max:20|nullable',
-                'SolResAlto' => 'max:20|nullable',
-                'SolResAncho' => 'max:20|nullable',
-                'SolResProfundo' => 'max:20|nullable',
+                'SolResAlto' => 'max:20|nullable|numeric',
+                'SolResAncho' => 'max:20|nullable|numeric',
+                'SolResProfundo' => 'max:20|nullable|numeric',
                 'SolResFotoDescargue_Pesaje' => 'max:1|nullable',
                 'SolResFotoTratamiento' => 'max:1|nullable',
                 'SolResVideoDescargue_Pesaje' => 'max:1|nullable',
                 'SolResVideoTratamiento' => 'max:1|nullable',
             ]);
 
-            $SolRes->SolResKgEnviado = $request->input('SolResKgEnviado');
-            $SolRes->SolResCantiUnidad = $request->input('SolResCantiUnidad');
-            $SolRes->SolResAlto = $request->input('SolResAlto');
-            $SolRes->SolResAncho = $request->input('SolResAncho');
-            $SolRes->SolResProfundo = $request->input('SolResProfundo');
-            $SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
-            $SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
-            $SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
-            $SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
-    
+            if($request->input('SolResCantiUnidad') === NULL){
+            }elseif($request->input('SolResKgEnviado') === NULL){
+            }else{
+                $SolRes->SolResKgEnviado = $request->input('SolResKgEnviado');
+                $SolRes->SolResCantiUnidad = $request->input('SolResCantiUnidad');
+            }
+            
+            if($request->input('SolResAlto') === Null){
+            }elseif($request->input('SolResAncho') === Null){
+            }elseif($request->input('SolResProfundo') === Null){
+            }else{
+                $SolRes->SolResAlto = $request->input('SolResAlto');
+                $SolRes->SolResAncho = $request->input('SolResAncho');
+                $SolRes->SolResProfundo = $request->input('SolResProfundo');
+            }
+
+
+            if($request->input('SolResFotoDescargue_Pesaje') !== Null){
+                if($request->input('SolResFotoDescargue_Pesaje') === 0 || $request->input('SolResFotoDescargue_Pesaje') === 1){
+                    $SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+                }else{
+                    abort(500);
+                }
+            }
+            if($request->input('SolResFotoTratamiento') !== Null){
+                if($request->input('SolResFotoTratamiento') == 0 || $request->input('SolResFotoTratamiento') == 1){
+                    $SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+                }else{
+                    abort(500);
+                }
+            }
+            if($request->input('SolResVideoDescargue_Pesaje') !== Null){
+                if($request->input('SolResVideoDescargue_Pesaje') == 0 || $request->input('SolResVideoDescargue_Pesaje') == 1){
+                    $SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+                }else{
+                    abort(500);
+                }
+            }
+            if($request->input('SolResVideoTratamiento') !== Null){
+                if($request->input('SolResVideoTratamiento') == 0 || $request->input('SolResVideoTratamiento') == 1){
+                    $SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+                }else{
+                    abort(500);
+                }
+            }
             switch($request->input('SolResTypeUnidad')){
                 case 99: 
                     $SolRes->SolResTypeUnidad = 'Unidad';
@@ -153,6 +176,11 @@ class SolicitudResiduoController extends Controller
                 case 98: 
                     $SolRes->SolResTypeUnidad = 'Peso';
                     break;
+                case Null: 
+                    $SolRes->SolResTypeUnidad = Null;
+                    break;
+                default: 
+                    abort(500);
             }
     
             switch($request->input('SolResEmbalaje')){
@@ -177,20 +205,41 @@ class SolicitudResiduoController extends Controller
         }
         if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica')){
             $Validate = $request->validate([
-                'SolResKgConciliado' => 'numeric',
+                'SolResKgConciliado' => 'max:11|nullable',
             ]);
-            $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+            if($SolRes->SolResKgConciliado === Null){
+                $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+            }
         }
 
         if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
             $Validate = $request->validate([
-                'SolResKgRecibido' => 'numeric',
-                'SolResKgTratado' => 'numeric',
+                'SolResKgRecibido' => 'max:11|nullable',
+                'SolResKgTratado' => 'max:11|nullable',
             ]);
-            $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
-            $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+            
+            if($SolRes->SolResKgRecibido === Null){
+                if($request->input('SolResKgRecibido') === Null){
+                    $SolRes->SolResKgRecibido = 0;
+                    $SolRes->SolResKgConciliado = 0;
+                }else{
+                    $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+                    $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
+                }
+            }
+            
+            if($request->input('ValorConciliado') !== Null){
+                $SolRes->SolResKgTratado = $request->input('ValorConciliado');
+            }else{
+                if($request->input('SolResKgTratado') !== Null){
+                    $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+                }elseif($SolRes->SolResKgTratado === Null && $request->input('SolResKgTratado') === Null){
+                    $SolRes->SolResKgTratado = 0;
+                }else{
+                    $SolRes->SolResKgTratado = $SolRes->SolResKgTratado;
+                }
+            }
         }
-
         $SolRes->save();
 
         $log = new audit();
