@@ -49,8 +49,8 @@
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Registrar</button>
-										<a onclick="AgregarRes()" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Agregar Residuo</a>	
+										<button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Registrar</button>
+										<a onclick="AgregarRes()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Agregar Residuo</a>	
 									</div>
 								</div>
 							</form>
