@@ -27,8 +27,7 @@
                                 <th>{{ trans('adminlte_lang::message.seemore') }}</th>
                             </tr>
                             </thead>
-                            <tbody onload="renderTable()" id="readyTable">
-                            @include('layouts.partials.spinner')
+                            <tbody id="readyTable">
                             @foreach($Users as $User)
                             <tr 	@if($User->DeleteUser === 1)
                                         style="color: red;" 

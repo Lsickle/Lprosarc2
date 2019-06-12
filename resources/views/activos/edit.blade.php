@@ -13,9 +13,6 @@ Datos de Activos
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">Editar Datos</h3>
-					@component('layouts.partials.modal')
-						{{$Activos->ID_Act}}
-					@endcomponent
 					@if($Activos->ActDelete == 0)
 						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Activos->ID_Act}}'  class='btn btn-danger' style="float: right;">Eliminar</a>
 						<form action='/activos/{{$Activos->ID_Act}}' method='POST'>

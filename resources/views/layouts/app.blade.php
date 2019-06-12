@@ -39,6 +39,7 @@ desired effect
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            @include('layouts.partials.loading')
 
             @include('layouts.partials.contentheader')
 

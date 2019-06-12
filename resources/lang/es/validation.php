@@ -142,14 +142,16 @@ return [
     */
 
     'attributes' => [
-        'UsAvatar'      => '"Foto de perfil"',
-        'name'          => '"Nombre de Usuario"',
-        'email'         => '"Correo electrónico"',
-        'password'      => '"Contraseña"',
-        'UsStatus'      => '"Status de Usuario"',
-        'UsType'        => '"Tipo de Usuario"',
-        'UsRolDesc'     => '"Rol Principal"',
-        'UsRolDesc2'    => '"Rol Secundario"',
+        'UsAvatar'      => 'Foto de perfil',
+        'name'          => 'Nombre de Usuario',
+        'email'         => 'Correo electrónico',
+        'password'      => 'Contraseña',
+        'UsStatus'      => 'Status de Usuario',
+        'UsType'        => 'Tipo de Usuario',
+        'UsRolDesc'     => 'Rol Principal',
+        'UsRolDesc2'    => 'Rol Secundario',
+        'oldpassword'   => 'Contraseña Antigua',
+        'newpassword'   => 'Nueva Contraseña',
         
 
         'CliNit'        => '"Nit"',

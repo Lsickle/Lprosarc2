@@ -24,19 +24,7 @@
                 <th>LOG</th>
               </tr>
             </thead>
-            <tbody  hidden onload="renderTable()" id="readyTable">
-              {{-- <h1 id="loadingTable">LOADING...</h1> --}}
-              <div class="fingerprint-spinner" id="loadingTable">
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-              </div>
+            <tbody id="readyTable">
               @foreach($auditorias as $auditoria)
               <tr>
                 <td>{{$auditoria->id}}</td>

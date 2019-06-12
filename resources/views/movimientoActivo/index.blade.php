@@ -30,18 +30,7 @@ Movimiento de Activos
                 </tr>
             </thead>
           {{-- </tbody> --}}
-            <tbody  hidden onload="renderTable()" id="readyTable">
-              <div class="fingerprint-spinner" id="loadingTable">
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">L</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">o</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">a</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">d</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">i</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">n</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">g</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-                <div class="spinner-ring"><b style="font-size: 1.8rem;">.</b></div>
-              </div>
+            <tbody id="readyTable">
               @foreach ($Movimientos as $Movimiento)
                   <tr>
                     <td>{{$Movimiento->CliShortname}}</td>
@@ -50,7 +39,7 @@ Movimiento de Activos
                     <td>{{$Movimiento->PersFirstName}}</td>
                     <td>{{$Movimiento->created_at}}</td>
                     <td>{{$Movimiento->updated_at}}</td>
-                    <td>{{$Movimiento->ID_MovAct}}</td>
+                    <td><a href='movimiento-activos/{{$Movimiento->ID_MovAct}}/edit' class='btn btn-warning'>Edit</a></td>
                   </tr>
               @endforeach
             {{-- <tfoot>

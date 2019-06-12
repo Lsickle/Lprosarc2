@@ -132,7 +132,9 @@
 									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
 								</div>
 								<div class="col-md-12" style="margin: 10px 0;">
-									<center><label>{{ trans('adminlte_lang::message.requirements') }}</label></center>
+									<center>
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requirements') }}</b>" data-content="{{ trans('adminlte_lang::message.requirementsdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.requirements') }}</label>
+									</center>
 									<div class="col-md-12" style="border: 2px dashed #00c0ef">
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
@@ -182,8 +184,8 @@
 												</div>
 											</label>
 										</div>
-										<div class="form-group col-md-6 col-md-offset-3" style="text-align: center;">
-											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" hidden="" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>" class="col-md-12" >
+										<div class="form-group col-md-6 col-md-offset-3" style="text-align: center;" hidden="">
+											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>" class="col-md-12" >
 												<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
 												<input maxlength="128" type="text" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ old('SolSerDevolucionTipo')}}">
 												<small class="help-block with-errors"></small>

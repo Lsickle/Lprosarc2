@@ -25,9 +25,8 @@
 								</ul>
 							</div>
 						@endif
-						@include('layouts.partials.spinner')
 						<div class="box box-info">
-							<div class="box-body" hidden onload="renderTable()" id="readyTable">
+							<div class="box-body" id="readyTable">
 								<div class="tab-pane" id="addRowWizz">
 									<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>
 									<div class="smartwizard">
@@ -196,7 +195,8 @@
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>`);
+								document.getElementById("divFK_PersCargo").style.display = 'none';
+								document.getElementById("FK_PersCargo").required = false;
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}

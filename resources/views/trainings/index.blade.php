@@ -24,10 +24,7 @@
 									<th>Editar</th>
 								</tr>
 							</thead>
-							<tbody  hidden onload="renderTable()" id="readyTable">
-								{{-- <h1 id="loadingTable">LOADING...</h1> --}}
-									@include('layouts.partials.spinner')
-								
+							<tbody id="readyTable">
 								@foreach($Trainings as $Training)
 								<tr @if($Training->CapaDelete === 1)
 											style="color: red;" 

@@ -29,8 +29,7 @@ Lista de Tarifas
 								<th>Ver mas</th>
 							</tr>
 						</thead>
-						<tbody hidden onload="renderTable()" id="readyTable">
-							@include('layouts.partials.spinner')
+						<tbody id="readyTable">
 							@foreach($tarifas as $tarifa)
 							<tr @if($tarifa->TarifaDelete === 1) style="color: red;" @endif>
 								<th>{{$tarifa->ID_Tarifa}}</th>
