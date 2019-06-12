@@ -114,8 +114,8 @@ class RespelController extends Controller
 
             $Cotizacion = new Cotizacion();
             $Cotizacion->CotiNumero = 7;
-            $Cotizacion->CotiFechaSolicitud = now();
-            $Cotizacion->CotiDelete = 0;
+            $Cotizacion->CotiFechaSolicitud = 
+      time();      $Cotizacion->CotiDelete = 0;
             $Cotizacion->CotiStatus = "Pendiente";
             $Cotizacion->FK_CotiSede = $UserSedeID;
             $Cotizacion->save();
@@ -129,7 +129,7 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = Hash::make(now().rand().$file1->getClientOriginalName()).'.pdf';
+                $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
 
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
@@ -140,7 +140,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = Hash::make(now().rand().$file2->getClientOriginalName()).'.pdf';
+                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
@@ -149,7 +149,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto = Hash::make(now().rand().$file3->getClientOriginalName()).'.png';
+                $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
@@ -158,7 +158,7 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = Hash::make(now().rand().$file4->getClientOriginalName()).'.pdf';
+                $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
@@ -184,7 +184,7 @@ class RespelController extends Controller
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = Hash::make(now().rand().$request['RespelName'][$x]);
+            $respel->RespelSlug = hash('sha256', rand().time().$request['RespelName'][$x]);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
@@ -323,7 +323,7 @@ class RespelController extends Controller
 
         if (isset($request['RespelHojaSeguridad'])) {
             $file1 = $request['RespelHojaSeguridad'];
-            $hoja = Hash::make(now().rand().$file1->getClientOriginalName()).'.pdf';
+            $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
 
             $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
         }
@@ -334,7 +334,7 @@ class RespelController extends Controller
          /*verificar si se cargo un documento en este campo*/
         if (isset($request['RespelTarj'])) {
             $file2 = $request['RespelTarj'];
-            $tarj = Hash::make(now().rand().$file2->getClientOriginalName()).'.pdf';
+            $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
             $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
         }else{
             $tarj = $respel->RespelTarj;
@@ -343,7 +343,7 @@ class RespelController extends Controller
          /*verificar si se cargo un documento en este campo*/
         if (isset($request['RespelFoto'])) {
             $file3 = $request['RespelFoto'];
-            $foto = Hash::make(now().rand().$file3->getClientOriginalName()).'.png';
+            $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
             $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
         }else{
             $foto = $respel->RespelFoto;
@@ -352,7 +352,7 @@ class RespelController extends Controller
         /*verificar si se cargo un documento en este campo*/
         if (isset($request['SustanciaControladaDocumento'])) {
             $file4 = $request['SustanciaControladaDocumento'];
-            $ctrlDoc = Hash::make(now().rand().$file4->getClientOriginalName()).'.pdf';
+            $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
             $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
         }else{
             $ctrlDoc = $respel->SustanciaControladaDocumento;
