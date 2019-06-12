@@ -25,9 +25,9 @@
 									<th>Cliente</th>
 								@endif
 								@if(Auth::user()->UsRol !== "Cliente")
-									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Evaluar</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Evaluar</th>
 								@else
-									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Ver Más...</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a target='_blank' class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a target='_blank' class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Ver Más...</th>
 								@endif
 							</tr>
 						</thead>
@@ -67,7 +67,7 @@
 									<td>{{$respel->CliName}}</td>
 								@endif
 
-								@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
+								@if(Auth::user()->UsRol !== "Cliente")
 									@switch($respel->RespelStatus)
 									    {{-- evaluación pendiente --}}
 									    @case('Pendiente')
@@ -79,14 +79,18 @@
 									        @break
 									    {{-- residuo Aprobado --}}
 									    @case('Aprobado')
-									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-success'><i class='fas fa-thumbs-up'></i></a></td>
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-primary'><i class='fas fa-thumbs-up'></i></a></td>
 									        @break
 									    {{-- cotización vencida --}}
 									    @case('Vencido')
 									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-danger'><i class='fas fa-calendar-times'></i></a></td>
 									        @break
-									    {{-- cotización vencida --}}
+									    {{-- Informacion Incompleta --}}
 									    @case('Incompleto')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+									        @break
+									    {{-- Informacion Revisado --}}
+									    @case('Revisado')
 									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' target='_blank' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
 									        @break
 									    {{-- opción default --}}
@@ -105,7 +109,7 @@
 									        @break
 									    {{-- residuo Aprobado --}}
 									    @case('Aprobado')
-									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-success'><i class='fas fa-thumbs-up'></i></a></td>
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-primary'><i class='fas fa-thumbs-up'></i></a></td>
 									        @break
 									    {{-- cotización vencida --}}
 									    @case('Vencido')
@@ -113,6 +117,10 @@
 									        @break
 									    {{-- información del residuo incompleta --}}
 									    @case('Incompleto')
+									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+									        @break
+									    {{-- Residuo Revisado --}}
+									    @case('Revisado')
 									        <td><a method='get' href='/respels/{{$respel->RespelSlug}}' target='_blank' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
 									        @break
 									    {{-- opción default --}}
