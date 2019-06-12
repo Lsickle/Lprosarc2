@@ -91,9 +91,7 @@ class SolServStoreRequest extends FormRequest
             $rules['SGenerador.'.$Generador] = ['required', Rule::exists('gener_sedes', 'GSedeSlug')->where(function ($query) use ($request ,$Generador){
                 $SGeneradors = DB::table('gener_sedes')
                     ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-                    ->join('clientes', 'generadors.FK_GenerCli', '=', 'clientes.ID_Cli')
                     ->select('generadors.ID_Gener')
-                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                     ->where('gener_sedes.GSedeSlug', $request['SGenerador'][$Generador])
                     ->first();
                 if(isset($SGeneradors->ID_Gener)){
@@ -110,9 +108,7 @@ class SolServStoreRequest extends FormRequest
                         $RespelGeneradors = DB::table('residuos_geners')
                             ->join('gener_sedes', 'residuos_geners.FK_SGener', '=', 'gener_sedes.ID_GSede')
                             ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-                            ->join('clientes', 'generadors.FK_GenerCli', '=', 'clientes.ID_Cli')
                             ->select('gener_sedes.ID_GSede')
-                            ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                             ->where('residuos_geners.SlugSGenerRes', $request['FK_SolResRg'][$Generador][$y])
                             ->first();
                         if(isset($RespelGeneradors->ID_GSede)){

@@ -99,7 +99,7 @@ class RespelController extends Controller
         // $validatedData = $request->validate([
         //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
         // ]);
-        return $request;
+        // return $request;
 
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/

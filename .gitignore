@@ -9,6 +9,7 @@
 /public/img/**/*.pdf
 /public/img/**/*.jpg
 /public/img/**/*.gif
+/public/img/**/*.webp
 /public/js/*.js
 /storage/*.key
 /vendor
