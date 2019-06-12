@@ -1,6 +1,7 @@
 /node_modules
 /public/mix-*.json
 /public/css/*.css
+/public/images/*.png
 /public/img/*.png
 /public/img/*.pdf
 /public/img/*.jpg

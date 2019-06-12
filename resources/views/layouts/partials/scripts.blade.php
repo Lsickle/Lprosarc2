@@ -18,10 +18,10 @@
 <script>
 	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
-		$('#contenido').fadeIn(2000);
+		$('#contenido').fadeIn(2500);
 		setTimeout(function(){
 			$('#contenedor_carga').remove();
-		}, 2000);
+		}, 2500);
 	}
 </script>
 <script>
