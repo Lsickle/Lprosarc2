@@ -129,7 +129,7 @@ class RespelController extends Controller
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
                 $file1 = $request['RespelHojaSeguridad'][$x];
-                $hoja = Hash::make(now().rand().$file1->getClientOriginalName());
+                $hoja = Hash::make(now().rand().$file1->getClientOriginalName()).'.pdf';
 
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
@@ -140,7 +140,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
-                $tarj = Hash::make(now().rand().$file2->getClientOriginalName());
+                $tarj = Hash::make(now().rand().$file2->getClientOriginalName()).'.pdf';
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
@@ -149,7 +149,7 @@ class RespelController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
-                $foto = Hash::make(now().rand().$file3->getClientOriginalName());
+                $foto = Hash::make(now().rand().$file3->getClientOriginalName()).'.png';
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
@@ -158,7 +158,7 @@ class RespelController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
-                $ctrlDoc = Hash::make(now().rand().$file4->getClientOriginalName());
+                $ctrlDoc = Hash::make(now().rand().$file4->getClientOriginalName()).'.pdf';
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
