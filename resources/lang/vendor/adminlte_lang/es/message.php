@@ -655,4 +655,11 @@ return [
     'solrestypeunity'         => 'Tipo de Unidad:',
     'solrescantunity'         => 'Cantidad de Unidad:',
     'solresembalaje'          => 'Embalaje:',
+    'solresenviado'           => 'Kilogramos enviados:',
+    'solresresivido'          => 'Kilogramos Recibidos:',
+    'solresconciliado'        => 'Kilogramos conciliados:',
+    'solrestratado'           => 'Kilogramos tratados:',
+    'solresalto'              => 'Alto:',
+    'solresancho'             => 'Ancho:',
+    'solresProfundo'          => 'Profundo:',
 ];

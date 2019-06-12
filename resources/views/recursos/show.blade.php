@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('htmlheader_title')
 {{ trans('adminlte_lang::message.solser') }}
 @endsection
@@ -38,29 +37,27 @@
                                 @endif
                             @endif
                         @else
-                            {{-- <div style="display: flex; justify-content:space-between"> --}}
-                                @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-                                    <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
-                                    {{-- <a method='get' href='#' data-toggle='modal' data-target='#addRecurso'  class="btn btn-success"><i class="fas fa-plus-circle"></i><b> {{trans('adminlte_lang::message.add')}}</b></a> --}}
-                                @else
-                                    @component('layouts.partials.modal')
-                                        @slot('slug')
-                                            {{$SolRes->SolResSlug}}
-                                        @endslot
-                                        @slot('textModal')
-                                            {{trans('adminlte_lang::message.solresrespel')}}
-                                            <b>N° {{$SolSer->ID_SolSer}}</b>
-                                        @endslot
-                                    @endcomponent
-                                    <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolRes->SolResSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
-                                    <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-                                    <form action='/solicitud-residuo/{{$SolRes->SolResSlug}}' method='POST'>
-                                        @method('DELETE')
-                                        @csrf
-                                        <input type="submit" id="Eliminar{{$SolRes->SolResSlug}}" style="display: none;">
-                                    </form>
-                                @endif
-                            {{-- </div> --}}
+                            @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+                                <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
+                                {{-- <a method='get' href='#' data-toggle='modal' data-target='#addRecurso'  class="btn btn-success"><i class="fas fa-plus-circle"></i><b> {{trans('adminlte_lang::message.add')}}</b></a> --}}
+                            @else
+                                @component('layouts.partials.modal')
+                                    @slot('slug')
+                                        {{$SolRes->SolResSlug}}
+                                    @endslot
+                                    @slot('textModal')
+                                        {{trans('adminlte_lang::message.solresrespel')}}
+                                        <b>N° {{$SolSer->ID_SolSer}}</b>
+                                    @endslot
+                                @endcomponent
+                                <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolRes->SolResSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
+                                <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+                                <form action='/solicitud-residuo/{{$SolRes->SolResSlug}}' method='POST'>
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="submit" id="Eliminar{{$SolRes->SolResSlug}}" style="display: none;">
+                                </form>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -82,31 +79,24 @@
                                         <a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolRes->SolResEmbalaje}}</p>">{{$SolRes->SolResEmbalaje}}</a>
                                     </div>
                                 </div>
+                                <div class="border-gray" id="kgenviados">
+                                    <label>{{trans('adminlte_lang::message.soresenviado')}}</label><br>
+                                    <a>{{$SolRes->SolResKgEnviado}}</a>
+                                </div>
                                 @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
                                     <div class="col-md-3 border-gray">
-                                        <label>Kilogramos enviados: </label><br>
-                                        <a>{{$SolRes->SolResKgEnviado}}0</a>
+                                        <label>{{trans('adminlte_lang::message.solresresivido')}}</label><br>
+                                        <a>{{$SolRes->SolResKgRecibido}}</a>
                                     </div>
+                                @endif
+                                <div class="border-gray" id="kgconciliados">
+                                    <label>{{trans('adminlte_lang::message.solresconciliado')}}</label><br>
+                                    <a>{{$SolRes->SolResKgConciliado}}</a>
+                                </div>
+                                @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
                                     <div class="col-md-3 border-gray">
-                                        <label>Kilogramos Recibidos: </label><br>
-                                        <a>{{$SolRes->SolResKgRecibido}}0</a>
-                                    </div>
-                                    <div class="col-md-3 border-gray">
-                                        <label>Kilogramos conciliados: </label><br>
-                                        <a>{{$SolRes->SolResKgConciliado}}0</a>
-                                    </div>
-                                    <div class="col-md-3 border-gray">
-                                        <label>Kilogramos tratados: </label><br>
-                                        <a>{{$SolRes->SolResKgTratado}}0</a>
-                                    </div>
-                                @else
-                                    <div class="col-md-6 border-gray">
-                                        <label>Kilogramos enviados: </label><br>
-                                        <a>{{$SolRes->SolResKgEnviado}}</a>
-                                    </div>
-                                    <div class="col-md-6 border-gray">
-                                        <label>Kilogramos conciliados: </label><br>
-                                        <a>{{$SolRes->SolResKgConciliado}}</a>
+                                        <label>{{trans('adminlte_lang::message.solrestratado')}}</label><br>
+                                        <a>{{$SolRes->SolResKgTratado}}</a>
                                     </div>
                                 @endif
                                 <div class="col-md-4 border-gray">
@@ -127,7 +117,7 @@
                                 <div class="col-md-3" style="text-align: center; margin-top: 20px;">
                                     <label for="SolResFotoDescargue_Pesaje">Foto Pesaje/Descargue</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje  === '1' ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje === 1 ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                                 <div class="col-md-3" style="text-align: center; margin-top: 20px;">
@@ -145,7 +135,7 @@
                                 <div class="col-md-3" style="text-align: center; margin: 20px 0px 20px 0px; ">
                                     <label for="SolResFotoDescargue_Pesaje">Video Tratamiento</label>
                                     <div style="width: 100%; height: 34px;">
-                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  <> null ? 'checked' : '' }} hidden="">
+                                        <input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }} hidden="">
                                     </div>
                                 </div>
                             </div>
@@ -191,6 +181,9 @@
                 </form>   
                 {{-- final del modal --}}
                 @endif
+                <div id="deleteRecurso">
+
+                </div>
 				<div class="row">
                     @if($SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $SolSer->SolSerStatus === 'Completado')
@@ -212,48 +205,33 @@
                                                 @endif
                                             </h4>
                                             @if (!isset($Fotos[0]->RecTipo))
-                                                <img src="../../../img/defaultimage.png" height="300px" width="100%" max-width="1200">
+                                                <img src="../../../img/defaultimage.png" height="300px" width="100%" max-width="1200px">
                                             @else
-                                            <div style='overflow-y:auto; max-height:600px;'>
-                                                @foreach ($Fotos as $Foto)
-                                                    <div class="col-md-16">
-                                                        {{-- <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"> --}}
-                                                        {{-- <div class="slider">
-                                                            <img src="../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}" >
-                                                        </div> --}}
-                                                            <div style="background-image: url('../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:500px; background-size: cover; margin-bottom:10px;">
+                                                <div style='overflow-y:auto; max-height:600px;'>
+                                                    @foreach ($Fotos as $Foto)
+                                                        <div class="col-md-12">
+                                                            <div style="background-image: url('../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:500px; max-width:500px; background-size: cover; margin-bottom:10px;">
                                                                 <nav class="navbar navbar-inverse">
                                                                     <div class="container">
-                                                                        <ul class="nav nav-pills" style="padding-top: 2px">
+                                                                        <ul class="nav nav-pills" style="padding-top: 2px; max-width:500px" max-width="500px">
                                                                             <li role="presentation" class="navbar-brand" style="color:white;"><i>{{$Foto->RecTipo}}</i></li>
                                                                             <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="Ampliar Imagen" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
-
-                                                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                                                                <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().$Respel->RespelName.$Foto->RecTipo}}" style="color:pink;" title="Descargar Imagen"><label><i class="fas fa-download"></i></label></a></li>
+                                                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                                                                <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="Descargar Imagen"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
                                                                             @endif
-
                                                                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                                {{-- <li role="presentation"><a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="Agregar Foto" id="addFoto"><label for="add"><i class="fas fa-plus-circle"></i></label></a></li> --}}
-                                                                                <li role="presentation"><a href="#" title="Eliminar Imagen" class="adelete"><label for="deleterecfoto{{$Foto->ID_Rec}}" style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-                                                                                <form role="form" action="/recurso/{{$Foto->SlugRec}}" method="POST" enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <input type="submit" hidden value="{{$Foto->SlugRec}}" name="DeleteRec" id="deleterecfoto{{$Foto->ID_Rec}}">
-                                                                                    {{-- <button type="submit" style="display: none;" value ="{{$Foto->SlugRec}}" name="DeleteRec" id="deleterec{{$Foto->ID_Rec}}"></button> --}}
-                                                                                </form>
+                                                                                <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="Eliminar Imagen"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
                                                                             @endif
                                                                         </ul>
                                                                     </div>
                                                                 </nav>
                                                             </div>
-                                                            {{-- <button type="submit" class="btn btn-danger" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button> --}}
                                                         </div>
-                                                        @endforeach
-                                                    </div>
+                                                    @endforeach
+                                                </div>
                                             @endif
-                                            
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" style="margin-bottom:10px;">
                                             <h4>
                                                 Videos
                                                 @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
@@ -265,42 +243,21 @@
                                             @else
                                             <div style='overflow-y:auto; max-height:600px;'>
                                                 @foreach ($Videos as $Video)
-                                                    {{-- @if ($Video->RecTipo == 'Pesaje') --}}
                                                     <div class="col-md-16">
-                                                            {{-- <label>{{$Recurso->RecTipo}}</label> --}}
-                                                            {{-- <div id="PesajeRec"> --}}
-                                                                {{-- @foreach ($Recursos as $Recurso)
-                                                                    @if ($Recurso->RecTipo == 'Pesaje' and $Recurso->RecCarte == 'Foto') --}}
-                                                                        {{-- <div> --}}
-                                                                            {{-- <img src="{{ asset($Recurso->RecSrc . '/' . $Recurso->RecRmSrc) }}" height="auto" width="100%" max-width="1200"> --}}
-                                                                                {{-- <div class="slider">
-                                                                                    <img src="../../../img/Recursos/{{$Recurso->RecSrc}}/{{$Recurso->RecRmSrc}}" >
-                                                                                </div> --}}
-                                                        {{-- <div style="background-image: url('../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:500px; max-width:1200;  background-size: cover;"> --}}
                                                         <nav class="navbar navbar-inverse">
                                                             <div class="container">
                                                                 <ul class="nav nav-pills">
                                                                     <li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
                                                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                                                        <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().$Respel->RespelName.$Video->RecTipo}}" style="color:pink;" title="Descargar Video"><label><i class="fas fa-download"></i></label></a></li>
+                                                                        <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="Descargar Video"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
                                                                     @endif
-
-                                                                    {{-- <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" target="_blank" title="Ampliar Imagen"><label><i class="fas fa-expand-arrows-alt"></label></i></a></li> --}}
                                                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                    {{-- <li role="presentation"><a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="Agregar Video" id="addVideo"><label for="add"><i class="fas fa-plus-circle"></i></label></a></li> --}}
-                                                                        <li role="presentation"><a href="#" title="Eliminar Imagen" style="color:red"><label for="deleterecvideo{{$Video->ID_Rec}}"><i class="fas fa-trash-alt"></i></label></a></li>
-                                                                        <form role="form" action="/recurso/{{$Video->SlugRec}}" method="POST" enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <input type="submit" hidden value="{{$Video->SlugRec}}" name="DeleteRec" id="deleterecvideo{{$Video->ID_Rec}}">
-                                                                            {{-- <button type="submit" style="display: none;" value="{{$Video->SlugRec}}" name="DeleteRec" id="deleterecvideo{{$Video->ID_Rec}}"></button> --}}
-                                                                        </form>
+                                                                        <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="Eliminar Imagen"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
                                                                     @endif
                                                                 </ul>
                                                             </div>
                                                         </nav>
                                                         <video width="500px" style="margin-top:-30px;" muted controls height="250px" src="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}"></video>
-                                                        {{-- <button type="submit" class="btn btn-danger" value ="{{$Recurso->ID_Rec}}" name="DeleteRec">Eliminar</button> --}}
                                                     </div>
                                                     @endforeach
                                                 </div>
@@ -346,7 +303,6 @@
                 <option>Tratamiento</option>
             `);
         }
-                                                
         $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png')
     });
     $("#addVideo").click(function(e){
@@ -369,18 +325,39 @@
             `);
         }
         $('#recursoinputext').attr('accept', '.mp4')
-
     });
 </script>
 <script>
-    $(document).ready(function (){
-        $('#SolResFotoDescargue_Pesaje').bootstrapSwitch('checked', true);
-    });
+    if('{{Auth::user()->UsRol === trans("adminlte_lang::message.Cliente")}}'){
+        $('#kgenviados').addClass('col-md-6');
+        $('#kgconciliados').addClass('col-md-6');
+    }else{
+        $('#kgenviados').addClass('col-md-3');
+        $('#kgconciliados').addClass('col-md-3');
+    }
 </script>
-{{-- <script>
-    $(".adelete").click(function(e){
-        $("#deleterecfoto'{{$Foto->ID_Rec}}'").submit();
-    });
-</script> --}}
+<script>
+    function deleteRecursos(slug, tipo, categoria, value){
+        $('#deleteRecurso').empty();
+        $('#deleteRecurso').append(`
+            @component('layouts.partials.modal')
+                @slot('slug')
+                    `+slug+`
+                @endslot
+                @slot('textModal')
+                    `+categoria+` de `+tipo+`
+                @endslot
+            @endcomponent
+            <form action='/recurso/`+slug+`' method='POST'>
+                @method('DELETE')
+                @csrf
+                <input type="submit" id="Eliminar`+slug+`" style="display: none;">
+                <input value="`+value+`" name="DeleteRec" style="display: none;">
+
+            </form>
+        `);
+        $('#myModal'+slug).modal();
+    }
+</script>
 @endsection
 @endsection

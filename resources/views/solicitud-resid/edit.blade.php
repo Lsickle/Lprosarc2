@@ -104,7 +104,7 @@
                                             <label for="SolResFotoDescargue_Pesaje">{{ trans('adminlte_lang::message.requiredescarguephoto') }}</label>
                                             <div style="width: 100%; height: 34px;">
                                                 <input type="checkbox" class="fotoswitch" id="SolResFotoDescargue_Pesaje" data-name="SolResFotoDescargue_Pesaje1" {{$SolRes->SolResFotoDescargue_Pesaje  === 1 ? 'checked' : '' }}/>
-                                                <input type="text" id="SolResFotoDescargue_Pesaje1" name="SolResFotoDescargue_Pesaje" hidden value="0">
+                                                {{-- <input type="text" id="SolResFotoDescargue_Pesaje1" name="SolResFotoDescargue_Pesaje" hidden value="0"> --}}
                                             </div>
                                         </label>
                                     </div>
@@ -113,7 +113,7 @@
                                             <label for="SolResFotoTratamiento">{{ trans('adminlte_lang::message.requiretratamientophoto') }}</label>
                                             <div style="width: 100%; height: 34px;">
                                                 <input type="checkbox" class="fotoswitch" id="SolResFotoTratamiento" data-name="SolResFotoTratamiento1" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }}/>
-                                                <input type="text" id="SolResFotoTratamiento1" name="SolResFotoTratamiento" hidden value="0">
+                                                {{-- <input type="text" id="SolResFotoTratamiento1" name="SolResFotoTratamiento" hidden value="0"> --}}
                                             </div>
                                         </label>
                                     </div>
@@ -127,7 +127,7 @@
                                             <label for="SolResVideoDescargue_Pesaje">{{ trans('adminlte_lang::message.requiredescarguevideo') }}</label>
                                             <div style="width: 100%; height: 34px;">
                                                 <input type="checkbox" class="videoswitch" id="SolResVideoDescargue_Pesaje" data-name="SolResVideoDescargue_Pesaje1" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }}/>
-                                                <input type="text" id="SolResVideoDescargue_Pesaje1" name="SolResVideoDescargue_Pesaje" hidden value="0">
+                                                {{-- <input type="text" id="SolResVideoDescargue_Pesaje1" name="SolResVideoDescargue_Pesaje" hidden value="0"> --}}
                                             </div>
                                         </label>
                                     </div>
@@ -137,7 +137,7 @@
                                             <div style="width: 100%; height: 34px;">
                                                 <input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }}>
                                                 {{-- falta modificar los valores de los checkbox --}}
-                                                <input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="0">
+                                                {{-- <input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="0"> --}}
                                             </div>
                                         </label>
                                     </div>
@@ -240,11 +240,10 @@
         function SolResKgConciliado(){
             $('#SolResKgConciliado').prop('disabled', true);
         }
-
     </script>
 @endif
 
-    {{-- <script>
+    <script>
         function Checkboxs(){
         $('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
             if(state == true){
@@ -255,6 +254,6 @@
             }
         });
     }
-    </script> --}}
+    </script>
 @endsection
 @endsection

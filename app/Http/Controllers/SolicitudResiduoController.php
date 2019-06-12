@@ -111,6 +111,10 @@ class SolicitudResiduoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function updateSolRes(Request $request, $id){
+
+    }
+
     public function update(SolResUpdateRequest $request, $id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();

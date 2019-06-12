@@ -312,10 +312,15 @@
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgRecibido}}</td>
+												<td style="text-align: center;">
+													@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+														<a href="#" onclick="addkgResivido(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`)"><i class="fas fa-marker"></i></a>
+													@endif
+													{{$Residuo->SolResKgRecibido}}
+												</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgConciliado}}</td>
 												@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-													<th style="text-align: center;">{{$Residuo->SolResKgTratado}}</th>
+													<td style="text-align: center;"><a href="#" class="kg" onclick="addkgTratado()"><i class="fas fa-marker"></i></a>{{$Residuo->SolResKgTratado}}</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
 												@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
@@ -384,6 +389,9 @@
 										</div>
 									</div>
 								{{-- END Modal --}}
+								{{-- Modal --}}
+								  <div id="addkgmodal"></div>
+								{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -394,26 +402,65 @@
 </div>
 @endsection
 @section('NewScript')
+	
 	<script>
-		function ModalDeleteRespel(slug, respel, generador){
-			$('#ModalDeleteRespel').empty();
-			$('#ModalDeleteRespel').append(`
-			@component('layouts.partials.modal')
-				@slot('slug')
-					`+slug+`
-				@endslot
-				@slot('textModal')
-					el residuo <b>`+respel+`</b> del generador <b>`+generador+`</b> de esta solicitud
-				@endslot
-			@endcomponent
-			<form action="/solicitud-residuo/`+slug+`" method="POST">
-				@method('DELETE')
-				@csrf
-				<input type="submit" id="Eliminar`+slug+`" style="display: none;">
-			</form>`);
+		function addkgResivido(slug, cantidad){
+			alert('hola');
+			$('#addkgmodal').empty();
+			$('#addkgmodal').append(`
+				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" >
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="editkgResivido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+										<i class="fas fa-plus-circle"></i>
+										<span style="font-size: 0.3em; color: black;"><p>Editar</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									<div id="solres">
+									</div>
+									<div class="form-group col-md-12">
+										<label for="SolResKgRecibido">Cantidad Resivida</label>
+										<input type="text" class="form-control" id="SolResKgRecibido" name="SolResKgRecibido" value="`+cantidad+`">
+									</div>
+									<input type="text" name="SolRes" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">Guardar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			$('#editkgResivido').modal();
+		});
+	</script>
+	{{-- <script>
+		function addkgResivido(slug, cantidad){
+			$('#solres').append(`
+				<div class="form-group col-md-12">
+					<label for="SolResKgRecibido">Cantidad Resivida</label>
+					<input type="text" class="form-control" id="SolResKgRecibido" name="SolResKgRecibido" value="`+cantidad+`">
+				</div>
+			`);
+			$('#SolRes').val(slug);
 			$('#myModal'+slug).modal();
 		}
-		$('.fotoswitch').bootstrapSwitch('disabled',true);
-		$('.videoswitch').bootstrapSwitch('disabled',true);
-	</script>
+		function addkgTratado(slug, cantidad){
+			$('#solres').append(`
+				<div class="form-group col-md-12">
+					<label for="SolResKgRecibido">Cantidad Tratada</label>
+					<input type="text" class="form-control" id="SolResKgRecibido" name="SolResKgRecibido" value="`+cantidad+`>
+				</div>
+			`);
+			$('#SolRes').val(slug);
+			$('#myModal'+slug).modal();
+		}
+	</script> --}}
 @endsection
