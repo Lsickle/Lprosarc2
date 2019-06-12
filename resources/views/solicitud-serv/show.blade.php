@@ -378,7 +378,7 @@
 			@break
 			@case('Programado')
 				$('#titulo').empty();
-				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Externo')
+				@if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && $SolicitudServicio->SolSerTipo == 'Externo')
 					$('#titulo').append(edit);
 				@endif
 				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $ProgramacionesActivas <= 0)

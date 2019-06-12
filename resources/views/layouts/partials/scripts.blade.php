@@ -16,10 +16,12 @@
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 <script>
-	window.onload = function(){
-		$('#contenedor_carga').css('visibility', 'hidden');
+	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
-		setTimeout(function(){$('#contenedor_carga').remove();}, 1000);
+		$('#contenido').fadeIn(2500);
+		setTimeout(function(){
+			$('#contenedor_carga').remove();
+		}, 2500);
 	}
 </script>
 <script>
