@@ -202,6 +202,12 @@ class RespelController extends Controller
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
 
+        if ($Respels->RespelDelete == 1) {
+            abort(404);
+        }
+
+        $Respels = Respel::where('RespelSlug', $id)->first();
+
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
@@ -240,6 +246,10 @@ class RespelController extends Controller
     public function edit($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+
+        if ($Respels->RespelDelete == 1) {
+            abort(404);
+        }
 
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();

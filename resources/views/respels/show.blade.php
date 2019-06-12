@@ -142,7 +142,6 @@
 										{{ trans('adminlte_lang::message.delete') }}
 									</button>
 								</form>
-								
 							</div>
 						@else
 						<div class="btn-group-sm pull-right">
