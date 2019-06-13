@@ -233,6 +233,9 @@ return [
         'HoraMavFin'      => '"Hora de Finzalización"',
         'MvType'          => '"Tipo de Mantenimiento"',
 
+        'RecSrc'          => '"Archivos"',
+        'RecTipo'         => '"Tipo"',
+        'RecCarte'        => '"Categoría"',
 
     ],
 

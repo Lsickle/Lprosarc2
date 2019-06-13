@@ -162,27 +162,32 @@
             $("#divSolResKgRecibido").append(`
                 <div class="form-group col-md-6">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.edit') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Resivido</label><small class="help-block with-errors">*</small>
-                    <input type="number" class="form-control numberKg" id="SolResKgRecibido" min="0" maxlength="11" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
+                    <input type="number" class="form-control numberKg" id="SolResKgRecibido" min="0" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
                 </div>
             `);
             $("#divSolResKgConciliado").append(`
                 <div class="form-group col-md-6">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.delete') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Conciliado</label><small class="help-block with-errors">*</small>
-                    <input type="number" class="form-control numberKg" id="SolResKgConciliado" max="{{$SolRes->SolResKgRecibido}}" min="0" maxlength="11" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                    <input type="text" class="form-control" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
                 </div>
             `);
             $("#divSolResKgTratado").append(`
                 <div class="form-group col-md-12">
                     <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.update') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Tratado</label><small class="help-block with-errors">*</small>
                     <div class="input-group">
-                        <input type="number" class="form-control numberKg" id="SolResKgTratado" max="{{$SolRes->SolResKgConciliado}}" min="0" maxlength="11" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
+                        <input type="text" class="form-control numberKg" id="SolResKgTratado" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
                         <div class="input-group-btn">
                             <label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success">Tratado</a><label>
+                            @if($SolSer->SolSerStatus === 'Tratado')
                             <input type="submit" hidden name="ValorConciliado" id="ValorConciliado" value="{{$SolRes->SolResKgConciliado}}">
+                            @endif
                         </div>
                     </div>
                 </div>
             `);
+
+		    $('#SolResKgConciliado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgRecibido}}', rightAlign:false});
+		    $('#SolResKgTratado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgConciliado}}', rightAlign:false});
 
             $('#SolResTypeUnidad').prop('disabled', true);
             $('#SolResCantiUnidad').prop('disabled', true);

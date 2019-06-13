@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\SolResUpdateRequest;
 use App\SolicitudResiduo;
 use App\audit;
 use App\Respel;
@@ -193,7 +192,7 @@ class SolicitudResiduoController extends Controller
                 case 97: 
                     $SolRes->SolResEmbalaje = 'Estibas';
                     break;
-                case 96: 
+                case 96:
                     $SolRes->SolResEmbalaje = 'Garrafones';
                     break;
                 case 95: 
@@ -226,6 +225,9 @@ class SolicitudResiduoController extends Controller
                     $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
                     $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
                 }
+            }elseif($request->input('SolResKgTratado') === Null){
+                $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+                $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
             }
             
             if($request->input('ValorConciliado') !== Null){

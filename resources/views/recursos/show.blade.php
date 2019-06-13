@@ -32,10 +32,11 @@
                                     </h4></center>
                             @else
                                 <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
-                                @if($SolSer->SolSerStatus !== 'Certificacion')
-                                    @if($SolSer->SolSerStatus !== 'Programado')
-                                        @if(Auth::user()->UsRol !== trans('adminlte_lang::message.JefeLogistica') && $SolSer->SolSerStatus === 'Tratado')
-                                            <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+                                @if($SolSer->SolSerStatus != 'Certificacion')
+                                    @if($SolSer->SolSerStatus != 'Programado')
+                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && $SolSer->SolSerStatus === 'Tratado')
+                                        @else
+                                        <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
                                         @endif
                                     @endif
                                 @endif
@@ -170,43 +171,45 @@
                     </div>
                 </div>
                 @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                {{-- Modal Añadir Recurso  --}}
-                <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" >
-                    @method('PUT')
-                    {{csrf_field()}}
-                    @csrf
-                    <div class="modal modal-default fade in" id="addRecurso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-                                        <i class="fas fa-plus-circle"></i>
-                                        <span style="font-size: 0.3em; color: black;"><p>Añadir nuevo Recurso</p></span>
+                    @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
+                    {{-- Modal Añadir Recurso  --}}
+                        <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" >
+                            @method('PUT')
+                            {{csrf_field()}}
+                            @csrf
+                            <div class="modal modal-default fade in" id="addRecurso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+                                                <i class="fas fa-plus-circle"></i>
+                                                <span style="font-size: 0.3em; color: black;"><p>Añadir nuevo Recurso</p></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-header">
+                                            <div id="categoria">
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="tipo">Tipo</label><small class="help-block with-errors">*</small>
+                                                <select class="form-control" id="tipo" name="RecTipo" required>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="recursoinputext">Archivos</label><small class="help-block with-errors">*</small>
+                                                <input type="file" class="form-control" id="recursoinputext" name="RecSrc[]" multiple required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-header">
-                                    <div id="categoria">
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label for="tipo">Tipo</label><small class="help-block with-errors">*</small>
-                                        <select class="form-control" id="tipo" name="RecTipo" required>
-                                            
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label for="recursoinputext">Archivos</label><small class="help-block with-errors">*</small>
-                                        <input type="file" class="form-control" id="recursoinputext" name="RecSrc[]" multiple required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </form>   
-                {{-- final del modal --}}
+                        </form>   
+                    {{-- final del modal --}}
+                    @endif
                 @endif
                 <div id="deleteRecurso">
 
@@ -224,12 +227,24 @@
                                 <div class="col-md-12">
                                     <center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
                                     <div class="box box-warning">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" role="alert">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <p>{{$error}}</p>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
                                         <div class="col-md-6" style="margin-bottom:15px;">
                                             <h4>
                                                 {{trans('adminlte_lang::message.recursoFoto')}}
                                                 @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                    @if ($SolSer->SolSerStatus !== 'Tratado' || $SolSer->SolSerStatus !== 'Certificacion')
+                                                    @if ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Certificacion')
+                                                    @else
+                                                        @if($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
                                                         <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             </h4>
@@ -249,7 +264,7 @@
                                                                                 <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
                                                                             @endif
                                                                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                                @if ($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
+                                                                                @if ($SolSer->SolSerStatus === 'Certificacion')
                                                                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                                                                         <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
                                                                                     @endif
@@ -270,8 +285,11 @@
                                             <h4>
                                                 {{trans('adminlte_lang::message.recursoVideo')}}
                                                 @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                    @if ($SolSer->SolSerStatus !== 'Tratado' || $SolSer->SolSerStatus !== 'Certificacion')
+                                                    @if ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Certificacion')
+                                                    @else
+                                                        @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1)
                                                         <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             </h4>
@@ -289,7 +307,7 @@
                                                                         <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
                                                                     @endif
                                                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                        @if ($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
+                                                                        @if ($SolSer->SolSerStatus === 'Certificacion')
                                                                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                                                                 <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
                                                                             @endif
@@ -328,50 +346,82 @@
 </div>
 
 @section('NewScript')
-<script>
-    $("#addFoto").click(function(e){
-        $("#categoria").empty();
-        $("#tipo").empty();
-        $("#categoria").append(`
-            <input type="text" hidden value="Foto" name="RecCarte">
-        `);
-        $("#tipo").append(`
-            <option value="">Seleccione...</option>
-        `);
-        if('{{$SolRes->SolResFotoDescargue_Pesaje}}' === '1'){
-            $("#tipo").append(`
-                <option>Pesaje/Descargue</option>
+@if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+    <script>
+        $("#addFoto").click(function(e){
+            $("#categoria").empty();
+            $("#tipo").empty();
+            $("#categoria").append(`
+                <input type="text" hidden value="Foto" name="RecCarte">
             `);
-        }
-        if('{{$SolRes->SolResFotoTratamiento}}' === '1'){
             $("#tipo").append(`
-                <option>Tratamiento</option>
+                <option value="">Seleccione...</option>
             `);
-        }
-        $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png')
-    });
-    $("#addVideo").click(function(e){
-        $("#categoria").empty();
-        $("#tipo").empty();
-        $("#categoria").append(`
-            <input type="text" hidden value="Video" name="RecCarte">
-        `);
-        $("#tipo").append(`
-            <option value="">Seleccione...</option>
-        `);
-        if('{{$SolRes->SolResVideoDescargue_Pesaje}}' === '1'){
+            if('{{$SolRes->SolResFotoDescargue_Pesaje}}' === '1'){
+                $("#tipo").append(`
+                    <option>Pesaje/Descargue</option>
+                `);
+            }
+            if('{{$SolRes->SolResFotoTratamiento}}' === '1'){
+                $("#tipo").append(`
+                    <option>Tratamiento</option>
+                `);
+            }
+            $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png')
+        });
+
+        $("#addVideo").click(function(e){
+            $("#categoria").empty();
+            $("#tipo").empty();
+            $("#categoria").append(`
+                <input type="text" hidden value="Video" name="RecCarte">
+            `);
             $("#tipo").append(`
-                <option>Pesaje/Descargue</option>
+                <option value="">Seleccione...</option>
             `);
-        }
-        if('{{$SolRes->SolResVideoTratamiento}}' === '1'){
-            $("#tipo").append(`
-                <option>Tratamiento</option>
+            if('{{$SolRes->SolResVideoDescargue_Pesaje}}' === '1'){
+                $("#tipo").append(`
+                    <option>Pesaje/Descargue</option>
+                `);
+            }
+            if('{{$SolRes->SolResVideoTratamiento}}' === '1'){
+                $("#tipo").append(`
+                    <option>Tratamiento</option>
+                `);
+            }
+            $('#recursoinputext').attr('accept', '.mp4')
+        });
+    </script>
+    <script>
+        function deleteRecursos(slug, tipo, categoria, value){
+            $('#deleteRecurso').empty();
+            $('#deleteRecurso').append(`
+                @component('layouts.partials.modal')
+                    @slot('slug')
+                        `+slug+`
+                    @endslot
+                    @slot('textModal')
+                        `+categoria+` de `+tipo+`
+                    @endslot
+                @endcomponent
+                <form action='/recurso/`+slug+`' method='POST'>
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" id="Eliminar`+slug+`" style="display: none;">
+                    <input value="`+value+`" name="DeleteRec" style="display: none;">
+                </form>
             `);
+            $('#myModal'+slug).modal();
         }
-        $('#recursoinputext').attr('accept', '.mp4')
-    });
-</script>
+    </script>
+    {{-- @if ($errors->any())
+        <script>
+            $(document).ready(function() {
+                $("#addRecurso").modal("show");
+            });
+        </script>
+    @endif --}}
+@endif
 <script>
     if('{{Auth::user()->UsRol === trans("adminlte_lang::message.Cliente")}}'){
         $('#kgenviados').addClass('col-md-6');
@@ -379,29 +429,6 @@
     }else{
         $('#kgenviados').addClass('col-md-3');
         $('#kgconciliados').addClass('col-md-3');
-    }
-</script>
-<script>
-    function deleteRecursos(slug, tipo, categoria, value){
-        $('#deleteRecurso').empty();
-        $('#deleteRecurso').append(`
-            @component('layouts.partials.modal')
-                @slot('slug')
-                    `+slug+`
-                @endslot
-                @slot('textModal')
-                    `+categoria+` de `+tipo+`
-                @endslot
-            @endcomponent
-            <form action='/recurso/`+slug+`' method='POST'>
-                @method('DELETE')
-                @csrf
-                <input type="submit" id="Eliminar`+slug+`" style="display: none;">
-                <input value="`+value+`" name="DeleteRec" style="display: none;">
-
-            </form>
-        `);
-        $('#myModal'+slug).modal();
     }
 </script>
 @endsection
