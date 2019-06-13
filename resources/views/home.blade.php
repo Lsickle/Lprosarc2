@@ -24,6 +24,7 @@
 					</div>
 					<div class="box-body">
 						{{ trans('adminlte_lang::message.logged') }}. Comienza creandote una aplicacion increible!
+						<a href="/generate-pdf" class="btn btn-success">PDF</a>
 					</div>
 					<!-- /.box-body -->
 				</div>

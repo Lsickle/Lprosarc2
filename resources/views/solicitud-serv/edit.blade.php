@@ -431,16 +431,6 @@ function HiddenResiduosGener(id_div){
 	$(icon).addClass('fa-plus');
 	$("#DivRepel"+id_div).empty();
 }
-function Checkboxs(){
-	$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
-		if(state == true){
-			$("#"+this.dataset.name).val(1);
-		}
-		else{
-			$("#"+this.dataset.name).val(0);
-		}
-	});
-}
 $("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
 	if(state == true){
 		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', false);
