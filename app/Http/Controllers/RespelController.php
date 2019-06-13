@@ -408,11 +408,24 @@ class RespelController extends Controller
     public function destroy($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
-        if ($Respels->RespelDelete == 0) {
-            $Respels->RespelDelete = 1;
-        }
-        else{
-            $Respels->RespelDelete = 0;
+        switch (Auth::user()->-UsRol) {
+            case 'Programador':
+                if ($Respels->RespelDelete == 0) {
+                    $Respels->RespelDelete = 1;
+                }
+                else{
+                    $Respels->RespelDelete = 0;
+                }
+                break;
+                
+            default:
+                if ($Respels->RespelDelete == 0) {
+                    $Respels->RespelDelete = 1;
+                }
+                else{
+                    abort(403);
+                }
+                break;
         }
         $Respels->save();
 
