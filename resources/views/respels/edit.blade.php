@@ -49,7 +49,7 @@
 								<div class="col-md-12">	
 									<div class="box-footer">
 										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Actualizar</button>
-										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('tratamiento.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 									</div>
 								</div>
 							</form>
@@ -68,11 +68,12 @@
 </div>
 @endsection
 @else
+{{-- VISTA PARA PROSARC --}}
 @section('htmlheader_title')
-Respel-Editar
+Respel-Evaluar
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+Evaluación de Residuo
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -114,15 +115,87 @@ Respel-Editar
 								<b>Estado de aprobación</b>
 								<select name="RespelStatus" class="form-control">
 									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-									<option {{$Respels->RespelStatus == 'Negado' ? 'selected' : '' }}>Negado</option>
+									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>Rechazado</option>
 									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
 									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
+									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 								</select>
 							</li>
+							<li class="list-group-item">
+								<label>Observaciones</label>
+								<div class="input-group">
+									<textarea maxlength="250" name="RespelStatusDescription" id="taid" rows ="5" cols="24" wrap="soft">{{$Respels->RespelStatusDescription}}</textarea>
+								</div>	
+							</li>
+							<li class="list-group-item" style="display: block; overflow: auto";>
+								{{-- hoja de seguridad --}}
+								@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
+									<div class="col-md-12 form-group">
+										<label>Hoja de Seguridad</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Hoja de Seguridad</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+								{{-- tarjeta de emergencia --}}
+								@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
+									<div class="col-md-12 form-group">
+										<label>Tarjeta De Emergencia</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Tarjeta De Emergencia</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+								{{-- fotografia del residuo --}}
+								@if($Respels->RespelFoto!=='RespelFotoDefault.png')
+									<div class="col-md-12 form-group">
+										<label>Fotografía del Residuo</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Fotografía del Residuo</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+							</li>
 						</ul>
-						<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Hoja de Seguridad</a>
-						{{-- <br>
-						<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-danger btn-block'><i class='fas fa-file-pdf fa-2x'></i> Tarj de Emergencia</a> --}}
 					</div>
 					<!-- /.box-body -->
 				</div>
@@ -135,7 +208,7 @@ Respel-Editar
 				<div class="box">
 					<!-- box header -->
 					<div class="box-header with-border">
-						<h3 class="box-title">Edición de Residuos</h3>
+						<h3 class="box-title">Evaluación de Residuo</h3>
 					</div>
 					<!-- /.box header -->
 					<!-- box body -->
@@ -157,12 +230,10 @@ Respel-Editar
 								</li>
 							</ul>
 							<!-- nav-content -->
-							<div class="tab-content" style="min-height:40vh;">
+							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuopane">
-									<div class="form-horizontal">
-										@include('layouts.respel-comercial.respel-residuo')
-									</div>
+									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
