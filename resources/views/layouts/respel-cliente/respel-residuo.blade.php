@@ -7,7 +7,7 @@
 
 
 	<div class="col-md-6 form-group">
-			<label>Descripcion</label>
+			<label>Descripción</label>
 			<input type="text" class="form-control" value="{{$Respels->RespelDescrip}}" disabled>
 	</div>
 
@@ -15,12 +15,12 @@
 <div class="col-md-6 form-group">
 
 		@if($Respels->YRespelClasf4741 <> null)
-			<label >Clasificacion Y, segun
+			<label >Clasificación Y, según
 			<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741</a>
 		</label>
 			<input type="text" class="form-control" value="{{$Respels->YRespelClasf4741}}" disabled>
 		@else
-			<label >Clasificacion A, segun
+			<label >Clasificación A, según
 			<a href="{{route('ClasificacionA')}}" target="_blank"> Decreto Número 4741</a>
 			</label>
 			<input type="text" class="form-control" value="{{$Respels->ARespelClasf4741}}" disabled>
@@ -110,7 +110,7 @@
 @if($Respels->SustanciaControlada !== 0)
 	<div class="col-md-6 form-group">
 
-			<label>Sustancia controlada</label>
+			<label>¿Sustancia controlada?</label>
 			<input type="text" class="form-control" value="Si" disabled>
 
 	</div>
@@ -159,7 +159,7 @@
 @else
 	<div class="col-md-6 form-group">
 
-			<label>Sustancia controlada</label>
+			<label>¿Sustancia controlada?</label>
 			<input type="text" class="form-control" value="No" disabled>
 
 	</div>

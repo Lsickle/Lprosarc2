@@ -70,10 +70,10 @@
 @else
 {{-- VISTA PARA PROSARC --}}
 @section('htmlheader_title')
-Respel-Editar
+Respel-Evaluar
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+Evaluación de Residuo
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -208,7 +208,7 @@ Respel-Editar
 				<div class="box">
 					<!-- box header -->
 					<div class="box-header with-border">
-						<h3 class="box-title">Edición de Residuos</h3>
+						<h3 class="box-title">Evaluación de Residuo</h3>
 					</div>
 					<!-- /.box header -->
 					<!-- box body -->
@@ -230,12 +230,10 @@ Respel-Editar
 								</li>
 							</ul>
 							<!-- nav-content -->
-							<div class="tab-content" style="min-height:40vh;">
+							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuopane">
-									<div class="form-horizontal">
-										@include('layouts.respel-comercial.respel-residuo')
-									</div>
+									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->

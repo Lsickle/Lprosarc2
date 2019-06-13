@@ -29,7 +29,7 @@ $('form[data-toggle="validator"]').validator({
 	custom: {
 		filesize: function($el) {
 			var maxBytes = $el.data("filesize")*1024;
-			if ($el[0].files[0].size > maxBytes) {
+			if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
 				return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 			}
 		}

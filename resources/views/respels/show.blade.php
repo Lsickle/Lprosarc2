@@ -182,9 +182,7 @@
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuopane">
-									<div class="">
-										@include('layouts.respel-cliente.respel-residuo')
-									</div>
+									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
