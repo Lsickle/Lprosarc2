@@ -18,10 +18,10 @@
 <script>
 	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
-		$('#contenido').fadeIn(2500);
+		$('#contenido').fadeIn(2000);
 		setTimeout(function(){
 			$('#contenedor_carga').remove();
-		}, 2500);
+		}, 2000);
 	}
 </script>
 <script>
@@ -613,5 +613,19 @@ $(document).ready(function() {
 		});
 	}
 	$(document).ready(function() {Checkboxs();});
+</script>
+<script>
+	$('[type="submit"]').on('click', function(){
+		if(!$('[type="submit"]').hasClass('disabled')){
+			$('[type="submit"]').prop('disabled', true);
+			if(this.nodeName === "INPUT"){
+				$('[type="submit"]').val('Enviando...');
+			}
+			else{
+				$('[type="submit"]').empty();
+				$('[type="submit"]').append('Enviando...');
+			}
+		}
+	});
 </script>
 @yield('NewScript')
