@@ -76,6 +76,8 @@ class AjaxController extends Controller
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->groupBy('FK_Respel')
 				->where('RespelDelete', '=', 0)
+				->where('RespelStatus', '=', 'Aprobado')
+				->where('RespelStatus', '=', 'Incompleta')
 				->get();
                 
 			$Respels = DB::table('respels')

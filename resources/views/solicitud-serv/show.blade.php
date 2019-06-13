@@ -239,14 +239,14 @@
 															<a style="color: black"><i class="fas fa-marker"></i></a>
 														@endif
 													@endif
-													{{$Residuo->SolResKgRecibido}}
+													{{' '.$Residuo->SolResKgRecibido}}
 												</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgConciliado}}</td>
 												@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 													@if($SolicitudServicio->SolSerStatus == 'Conciliado')
-														<td style="text-align: center;"><a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"><i class="fas fa-marker"></i></a>{{$Residuo->SolResKgTratado}}</td>
+														<td style="text-align: center;"><a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"><i class="fas fa-marker"></i></a> {{$Residuo->SolResKgTratado}}</td>
 													@else
-														<td style="text-align: center;"><a style="color: black"><i class="fas fa-marker"></i></a>{{$Residuo->SolResKgTratado}}</td>
+														<td style="text-align: center;"><a style="color: black"><i class="fas fa-marker"></i></a> {{$Residuo->SolResKgTratado}}</td>
 													@endif
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -368,12 +368,12 @@
 										@if($SolicitudServicio->SolSerStatus === 'Completado')
 											<label for="SolResKg">Cantidad Resivida</label>
 											<small class="help-block with-errors">*</small>
-											<input type="text" class="form-control" id="SolResKg" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
+											<input type="text" class="form-control numeroKg" id="SolResKg" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
 										@else
 											<label for="SolResKg">Cantidad Tratada</label>
 											<small class="help-block with-errors">*</small>
 											<div class="input-group">
-												<input type="text" class="form-control" id="SolResKg" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
+												<input type="text" class="form-control" id="SolResKgTratado" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
 												<div class="input-group-btn">
 													<label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+conciliado+`)">Tratado</a><label>
 													<div id="conciliadokg"></div>
@@ -391,10 +391,9 @@
 					</div>
 				</form>
 			`);
+			numeroKg();
 			if('{{$SolicitudServicio->SolSerStatus === "Conciliado"}}'){
-				$('#SolResKg').inputmask({ alias: 'numeric', max:conciliado, rightAlign:false});
-			}else{
-				$('#SolResKg').inputmask({ alias: 'numeric', max:'99999999999', rightAlign:false});
+				$('#SolResKgTratado').inputmask({ alias: 'numeric', max:conciliado, rightAlign:false});
 			}
 			$('#editkgResivido').modal();
 			$('#FormKg').validator('update');
