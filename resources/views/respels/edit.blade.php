@@ -121,10 +121,81 @@ Respel-Editar
 									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 								</select>
 							</li>
+							<li class="list-group-item">
+								<label>Observaciones</label>
+								<div class="input-group">
+									<textarea maxlength="250" name="RespelStatusDescription" id="taid" rows ="5" cols="24" wrap="soft">{{$Respels->RespelStatusDescription}}</textarea>
+								</div>	
+							</li>
+							<li class="list-group-item" style="display: block; overflow: auto";>
+								{{-- hoja de seguridad --}}
+								@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
+									<div class="col-md-12 form-group">
+										<label>Hoja de Seguridad</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Hoja de Seguridad</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+								{{-- tarjeta de emergencia --}}
+								@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
+									<div class="col-md-12 form-group">
+										<label>Tarjeta De Emergencia</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Tarjeta De Emergencia</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+								{{-- fotografia del residuo --}}
+								@if($Respels->RespelFoto!=='RespelFotoDefault.png')
+									<div class="col-md-12 form-group">
+										<label>Fotografía del Residuo</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="Ver Documento" disabled>
+											<div class="input-group-btn">
+												<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@else
+									<div class="col-md-12 form-group">
+										<label>Fotografía del Residuo</label>
+										<div class="input-group">
+											<input type="text" class="form-control" value="No Adjuntado" disabled>
+											<div class="input-group-btn">
+												<a target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+											</div>
+										</div>	
+									</div>
+								@endif
+							</li>
 						</ul>
-						<a method='get' href='/img/HojaSeguridad/" + data + "' target='_blank' class='btn btn-success btn-block'><i class='fas fa-file-pdf fa-2x'></i> Hoja de Seguridad</a>
-						{{-- <br>
-						<a method='get' href='/img/TarjetaEmergencia/" + data + "' target='_blank' class='btn btn-danger btn-block'><i class='fas fa-file-pdf fa-2x'></i> Tarj de Emergencia</a> --}}
 					</div>
 					<!-- /.box-body -->
 				</div>
