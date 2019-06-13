@@ -112,5 +112,6 @@ select.form-control{
 	height: 100px;
 }
 .user-panel > .image > img{
-	height: 45px;
+	max-height: 45px;
+	height: 100%;
 }

@@ -330,7 +330,7 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus($id)
+	public function changestatus($id)//Queda verificar el rol para mejorar la validación
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
 		switch ($Solicitud->SolSerStatus) {
