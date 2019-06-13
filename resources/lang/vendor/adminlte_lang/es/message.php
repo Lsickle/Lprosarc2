@@ -202,7 +202,7 @@ return [
     'oldpassword'             => 'Contraseña Antigua',
     'changepassword'          => 'Cambio de Contraseña',
     'cancel'                  => 'Cancelar',
-
+    'save'                    => 'Guardar',
     'copy'                    => 'Copiar',
 
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',

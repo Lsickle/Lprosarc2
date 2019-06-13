@@ -103,6 +103,31 @@ class SolicitudResiduoController extends Controller
      * @return \Illuminate\Http\Response
      */
  
+    public function updateSolRes(Request $request, $id){
+        $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+        $SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+
+        $Validate = $request->validate([
+            'SolResKg'  => 'required|max:11',
+        ]);
+
+        if($SolSer->SolSerStatus === 'Completado'){
+            $SolRes->SolResKgRecibido = $request->input('SolResKg');
+            $SolRes->SolResKgConciliado = $request->input('SolResKg');
+        }else{
+            if( $request->input('ValorConciliado') === NULL){
+                $SolRes->SolResKgTratado = $request->input('SolResKg');
+            }else{
+                $SolRes->SolResKgTratado = $request->input('ValorConciliado');
+            }
+        }
+        $SolRes->save();
+
+        $id = $SolSer->SolSerSlug;
+
+        return redirect()->route('solicitud-servicio.show', compact('id'));
+    }
+
     public function update(Request $request, $id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
