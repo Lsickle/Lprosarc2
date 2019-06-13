@@ -314,7 +314,7 @@ function TransportadorExtr() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
-	$("#typecollect").attr('required', false);
+	$("#SolSerTypeCollect").attr('required', false);
 	$("#typecollect option:selected").prop("selected", false);
 	HiddenTypeCollect();
 	TransportadorCliente();
@@ -354,16 +354,6 @@ function HiddenResiduosGener(id_div){
 	$(icon).removeClass('fa-minus');
 	$(icon).addClass('fa-plus');
 	$("#DivRepel"+id_div).empty();
-}
-function Checkboxs(){
-	$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
-		if(state == true){
-			$("#"+this.dataset.name).val(1);
-		}
-		else{
-			$("#"+this.dataset.name).val(0);
-		}
-	});
 }
 $("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
 	if(state == true){

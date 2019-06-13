@@ -16,10 +16,12 @@
 <script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 <script>
-	window.onload = function(){
-		$('#contenedor_carga').css('visibility', 'hidden');
+	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
-		setTimeout(function(){$('#contenedor_carga').remove();}, 1000);
+		$('#contenido').fadeIn(2000);
+		setTimeout(function(){
+			$('#contenedor_carga').remove();
+		}, 2000);
 	}
 </script>
 <script>
@@ -27,7 +29,7 @@ $('form[data-toggle="validator"]').validator({
 	custom: {
 		filesize: function($el) {
 			var maxBytes = $el.data("filesize")*1024;
-			if ($el[0].files[0].size > maxBytes) {
+			if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
 				return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 			}
 		}
@@ -45,7 +47,6 @@ $(document).ready(function() {
 	});
 });
 </script>
-
 <script>
 $(document).ready(function() {
 	$('.select-multiple').select2({
@@ -458,7 +459,6 @@ function NotifiFalse(Mensaje) {
 	@endif
 @endif
 	@if(Route::currentRouteName() === 'contactos.show')
-		@if ($errors->any())
 		<script>
 		$(document).ready(function() {
 			$(".create").modal("show");
@@ -472,102 +472,84 @@ function NotifiFalse(Mensaje) {
 	<script>
 	var contador = `{{$contador}}`;
 
-	function attachPopover() {
-		$('[data-toggle="popover"]').popover({
-			html: true,
-			trigger: 'hover',
-			placement: 'auto'
-		});
-		$("#edittratamientoForm").validator('update');
-		// alert('popover actualizados');
-	}
-
-	function AgregarPreTrat() {
-		var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
-		$("#pretratamientosPanel").append(pretratamiento);
-		$("#edittratamientoForm").validator('update');
-		contador = parseInt(contador) + 1;
-		attachPopover();
-	}
-
-	function EliminarPreTrat(id) {
-		$("#pretratname" + id).remove();
-		$("#pretratdescription" + id).remove();
-		$("#pretratsparator" + id).remove();
-		$("#ID_Propo" + id).remove();
-		$("#edittratamientoForm").validator('update');
-		// alert('eliminado pretratamiento '+id);
-		contador = parseInt(contador) - 1;
-	}
-
-	</script>
-	@endif
-
-	<script>
-	$(document).ready(function() {
-		/*var rol defino el rol del usuario*/
-		var rol = "<?php echo Auth::user()->UsRol; ?>";
-		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
-					extend: 'collection',
-					text: 'Selector',
-					buttons: ['selectRows', 'selectCells']
-				}] : ['colvis', 'excel'];
-
-		/*inicializacion de datatable general*/        
-		$('.table').DataTable({
-			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
-				"<'row'<'col-md-12'tr>>" +
-				"<'row'<'col-md-6'i><'col-md-6'p>>",
-			"scrollX": false,
-			"autoWidth": true,
-			// "select": true,
-			"colReorder": true,
-			"searchHighlight": true,
-			"responsive": true,
-			"keys": true,
-			"lengthChange": true,
-			"buttons": [
-				botoncito
-			],
-			"language": {
-				"sProcessing":     "Procesando...",
-				"sLengthMenu":     "Mostrar _MENU_ registros",
-				"sZeroRecords":    "No se encontraron resultados",
-				"sEmptyTable":     "Ningún dato disponible en esta tabla",
-				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered":   "",
-				"sInfoPostFix":    "",
-				"sSearch":         "Buscar:",
-				"sUrl":            "",
-				"sInfoThousands":  ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst":    "Primero",
-					"sLast":     "Último",
-					"sNext":     "Siguiente",
-					"sPrevious": "Anterior"
-				},
-				"oAria": {
-					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				}
-			}
-		});
-	});
-
-	</script>
-	<script>
-		function AnimationMenusForm(target){
-			var icon = $("button[data-target='"+target+"']").find('svg');
-			if ($(icon).hasClass('fa-plus')){
-				$(icon).removeClass('fa-plus');
-				$(icon).addClass('fa-minus');
-			}else if($(icon).hasClass('fa-minus')){
-				$(icon).removeClass('fa-minus');
-				$(icon).addClass('fa-plus');
+			"<'row'<'col-md-12'tr>>" +
+			"<'row'<'col-md-6'i><'col-md-6'p>>",
+		"scrollX": false,
+		"autoWidth": true,
+		// "select": true,
+		"colReorder": true,
+		"searchHighlight": true,
+		"responsive": true,
+		"keys": true,
+		"lengthChange": true,
+		"buttons": [
+			botoncito
+		],
+		"language": {
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered":   "",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 			}
 		}
-	</script>
-	@yield('NewScript')
+	});
+});
+
+</script>
+<script>
+	function AnimationMenusForm(target){
+		var icon = $("button[data-target='"+target+"']").find('svg');
+		if ($(icon).hasClass('fa-plus')){
+			$(icon).removeClass('fa-plus');
+			$(icon).addClass('fa-minus');
+		}else if($(icon).hasClass('fa-minus')){
+			$(icon).removeClass('fa-minus');
+			$(icon).addClass('fa-plus');
+		}
+	}
+</script>
+<script>
+	function Checkboxs(){
+		$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state == true){
+				$("#"+this.dataset.name).val(1);
+			}
+			else{
+				$("#"+this.dataset.name).val(0);
+			}
+		});
+	}
+	$(document).ready(function() {Checkboxs();});
+</script>
+<script>
+	$('[type="submit"]').on('click', function(){
+		if(!$('[type="submit"]').hasClass('disabled')){
+			$('[type="submit"]').prop('disabled', true);
+			if(this.nodeName === "INPUT"){
+				$('[type="submit"]').val('Enviando...');
+			}
+			else{
+				$('[type="submit"]').empty();
+				$('[type="submit"]').append('Enviando...');
+			}
+		}
+	});
+</script>
+@yield('NewScript')

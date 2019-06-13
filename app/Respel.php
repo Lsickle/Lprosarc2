@@ -8,7 +8,7 @@ class Respel extends Model
 {
     protected $table='respels';
 
-    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741',  'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus','RespelDelete', 'RespelSlug', 'FK_RespelCoti'];
+    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741', 'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus','RespelDelete', 'RespelSlug', 'FK_RespelCoti', 'RespelStatusDescription'];
 
     protected $primaryKey = 'ID_Respel';
 

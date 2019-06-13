@@ -294,7 +294,7 @@
 			document.getElementById("NewInputA").required = true;
 			document.getElementById("divFK_PersCargo").style.display = 'none';
 			document.getElementById("FK_PersCargo").required = false;
-			// document.getElementById("FK_PersCargo").value = "0";
+			document.getElementById("FK_PersCargo").value = "0";
 			document.getElementById("NewCargo").style.display = 'block';
 			document.getElementById("NewInputC").required = true;
 		}

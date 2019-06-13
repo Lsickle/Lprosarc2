@@ -21,13 +21,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style type="text/css">
         body {
-           background-image: linear-gradient(#ffffff, #0091e0, #70be50, #07588d);
-           /*background-size: 100%;
-           #3c8dbc #173059*/
+           background-image: linear-gradient(#003152,#003152,#008eda);
         }
         .navbar {
             background-color: #3c8dbc;
-            /*border-bottom: 2px solid #ffffff;*/
         }
         .nav-link, .logo-lg{
             color: #fff !important;
