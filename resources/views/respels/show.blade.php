@@ -46,6 +46,12 @@
 									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
 								</select>
 							</li>
+							<li class="list-group-item">
+								<label>Observaciones</label>
+								<div class="input-group">
+									<textarea disabled form ="RespelStatusDescription" name="taname" id="taid" rows ="5" cols="24" wrap="soft">{{$Respels->RespelStatusDescription}}</textarea>
+								</div>	
+							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								{{-- hoja de seguridad --}}
 								@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')

@@ -114,8 +114,8 @@ class RespelController extends Controller
 
             $Cotizacion = new Cotizacion();
             $Cotizacion->CotiNumero = 7;
-            $Cotizacion->CotiFechaSolicitud = 
-      time();      $Cotizacion->CotiDelete = 0;
+            $Cotizacion->CotiFechaSolicitud = now();
+            $Cotizacion->CotiDelete = 0;
             $Cotizacion->CotiStatus = "Pendiente";
             $Cotizacion->FK_CotiSede = $UserSedeID;
             $Cotizacion->save();
@@ -206,8 +206,6 @@ class RespelController extends Controller
             abort(404);
         }
 
-        $Respels = Respel::where('RespelSlug', $id)->first();
-
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
@@ -271,7 +269,7 @@ class RespelController extends Controller
         // se verifica el rol y el status del residuo para devolver a la vista correspondiente
             $statusRespel = $Respels->RespelStatus;
 
-        if(Auth::user()->UsRol=='Cliente'){
+        if(Auth::user()->UsRol == 'Cliente'){
             $Sede = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
@@ -408,7 +406,7 @@ class RespelController extends Controller
     public function destroy($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
-        switch (Auth::user()->-UsRol) {
+        switch (Auth::user()->UsRol) {
             case 'Programador':
                 if ($Respels->RespelDelete == 0) {
                     $Respels->RespelDelete = 1;
@@ -417,7 +415,7 @@ class RespelController extends Controller
                     $Respels->RespelDelete = 0;
                 }
                 break;
-                
+
             default:
                 if ($Respels->RespelDelete == 0) {
                     $Respels->RespelDelete = 1;
