@@ -465,10 +465,9 @@ function NotifiFalse(Mensaje) {
 		});
 
 		</script>
-		@endif
 	@endif
 	
-	@if(Route::currentRouteName()=='tratamiento.edit')
+@if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
 	var contador = `{{$contador}}`;
 
@@ -513,6 +512,8 @@ function NotifiFalse(Mensaje) {
 });
 
 </script>
+@endif
+
 <script>
 	function AnimationMenusForm(target){
 		var icon = $("button[data-target='"+target+"']").find('svg');
