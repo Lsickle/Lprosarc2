@@ -32,6 +32,15 @@ $('form[data-toggle="validator"]').validator({
 			if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
 				return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 			}
+		},
+		filessizemultiple: function($el) {
+			var maxBytes = $el.data("filessizemultiple")*1024;
+			var max = 0;
+			for (var i = 0; i < $el[0].files.length; i++) {
+				if ($el[0].files[i] && $el[0].files[i].size > maxBytes) {
+					return "El archivo ("+($el[0].files[i].name)+") no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
+				}
+			}
 		}
 	}
 });

@@ -196,7 +196,7 @@
                                                     
                                                 </select>
                                             </div>
-                                            <div class="col-md-12 form-group">
+                                            <div class="col-md-12 form-group" id="archivo">
                                                 <label for="recursoinputext">Archivos</label><small class="help-block with-errors">*</small>
                                                 <input type="file" class="form-control" id="recursoinputext" name="RecSrc[]" multiple required>
                                             </div>
@@ -367,7 +367,8 @@
                     <option>Tratamiento</option>
                 `);
             }
-            $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png')
+            $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
+            $('#recursoinputext').attr('data-filessizemultiple', '2048');
         });
 
         $("#addVideo").click(function(e){
@@ -389,7 +390,8 @@
                     <option>Tratamiento</option>
                 `);
             }
-            $('#recursoinputext').attr('accept', '.mp4')
+            $('#recursoinputext').attr('accept', '.mp4');
+             $('#recursoinputext').attr('data-filessizemultiple', '10240')
         });
     </script>
     <script>
