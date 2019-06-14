@@ -33,6 +33,7 @@ use App\ArticuloPorProveedor;
 use App\MovimientoActivo;
 use App\Tarifa;
 use App\Pretratamiento;
+use App\ManifiestoCarga;
 
 
 class DatabaseSeeder extends Seeder
@@ -80,5 +81,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RecursoTableSeeder::class);
         $this->call(ArticuloXProveedorTableSeeder::class);
         $this->call(MovimientoActivoTableSeeder::class);
+        $this->call(ManifiestoCargaTableSeeder::class);
     }
 }
