@@ -685,4 +685,6 @@ return [
     'recdeletevideo'          => 'Eliminar Imagen',
     'recaddvideo'             => 'Agregar Video',
 
+    // Name PDF
+    'generatemanicargpdf'     => 'Manifieto de Carga',
 ];

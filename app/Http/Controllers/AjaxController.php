@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ProgramacionVehiculo;
 use App\Sede;
-use PDF;
 
 
 class AjaxController extends Controller
@@ -132,17 +131,4 @@ class AjaxController extends Controller
 			return $Requerimientos;
 		}
 	}
-
-	public function generatePDF()
-
-	    {
-
-	        $data = ['title' => 'Welcome to HDTuto.com'];
-
-	        $pdf = PDF::loadView('layouts.partials.myPDF', $data);
-	        $title = 'prueba.pdf';
-	  		return view('layouts.partials.myPDF', compact('title'));
-	        // return $pdf->download('Prueba.pdf');
-
-	    }
 }
