@@ -11,7 +11,7 @@ use App\Respel;
 use App\Recurso;
 use App\ResiduosGener;
 use App\SolicitudServicio;
-
+use App\ProgramacionVehiculo;
 
 class SolicitudResiduoController extends Controller
 {
@@ -76,20 +76,35 @@ class SolicitudResiduoController extends Controller
             $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
             $SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
             $RespelSgener = ResiduosGener::where('ID_SGenerRes', $SolRes->FK_SolResRg)->first();
+            $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolSer->ID_SolSer)->first();
             
             $Respel = DB::table('respels')
-            ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-            ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-            ->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
-            ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
-            ->first();
-            
-            if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-                if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
-                    abort(403);
-                }
+                ->join('residuos_geners', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+                ->join('solicitud_residuos', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+                ->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
+                ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
+                ->first();
+
+            switch(Auth::user()->UsRol){
+                case trans('adminlte_lang::message.Cliente'):
+                    if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
+                        abort(403);
+                    }
+                    break;
+                case trans('adminlte_lang::message.JefeLogistica'):
+                    if($SolSer->SolSerStatus !== 'Completado'){
+                        abort(403);
+                    }
+                    break;
+                case trans('adminlte_lang::message.SupervisorTurno'):
+                    if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Conciliado'){
+                    }else{
+                        abort(403);
+
+                    }
+                    break;
             }
-            return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer'));
+            return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion'));
         }else{
             abort(403);
         }

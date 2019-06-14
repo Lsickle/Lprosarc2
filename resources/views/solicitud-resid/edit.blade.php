@@ -178,7 +178,7 @@
                         <input type="text" class="form-control numberKg" id="SolResKgTratado" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
                         <div class="input-group-btn">
                             <label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success">Tratado</a><label>
-                            @if($SolSer->SolSerStatus === 'Tratado')
+                            @if($SolSer->SolSerStatus === 'Conciliado')
                             <input type="submit" hidden name="ValorConciliado" id="ValorConciliado" value="{{$SolRes->SolResKgConciliado}}">
                             @endif
                         </div>
@@ -196,7 +196,7 @@
             $('#SolResAlto').prop('disabled', true);
             $('#SolResAncho').prop('disabled', true);
             $('#SolResProfundo').prop('disabled', true);
-            $('#Form').validator('validate');
+            $('#Form').validator('update');
 
             $('#SolResFotoDescargue_Pesaje').bootstrapSwitch('disabled', true);
             $('#SolResFotoTratamiento').bootstrapSwitch('disabled', true);
@@ -205,23 +205,32 @@
         });
     </script>
     <script>
-        
         switch('{{Auth::user()->UsRol}}'){
             case '{{trans("adminlte_lang::message.JefeLogistica")}}':
                 $(document).ready(function (){
                     SolResKgRecibido();
+                    if('{{$SolSer->SolSerStatus !== "Completado"}}'){
+                            SolResKgConciliado();
+                    }
                 });
-                if('{{$SolSer->SolSerStatus !== "Conciliado"}}'){
-                    $(document).ready(function (){
-                        SolResKgConciliado();
-                    });
-                }
                 break;  
 
             case '{{trans("adminlte_lang::message.SupervisorTurno")}}':
                 
                 switch('{{$SolSer->SolSerStatus}}'){
-                    case 'Conciliado':
+                    case 'Programado':
+                        $(document).ready(function (){
+                            SolResKgTratado();
+                            ValorConciliado();
+                            SolResKgConciliado();
+                            if('{{$Programacion->ProgVehEntrada === Null}}'){
+                                SolResKgRecibido();
+                                $('SolResKgConciliado').prop('required', false);
+                                $('#Form').validator('update');
+                            }
+                        });
+                        break;
+                    case 'Completado':
                         $(document).ready(function (){
                             SolResKgRecibido();
                             SolResKgConciliado();
@@ -229,14 +238,7 @@
                             ValorConciliado();
                         });
                         break;
-                    case 'Completado':
-                        $(document).ready(function (){
-                            SolResKgTratado();
-                            ValorConciliado();
-                            SolResKgConciliado();
-                        });
-                        break;
-                    case 'Tratado':
+                    case 'Conciliado':
                         $(document).ready(function (){
                             SolResKgRecibido();
                             SolResKgConciliado();
@@ -247,6 +249,7 @@
                             SolResKgTratado();
                             SolResKgConciliado();
                             SolResKgRecibido();
+                            ValorConciliado();
                         });
                         break;
                 }

@@ -10,6 +10,7 @@ use App\audit;
 use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
+use App\ProgramacionVehiculo;
 
 class RecursoController extends Controller
 {
@@ -70,10 +71,11 @@ class RecursoController extends Controller
         
         $SolSer = DB::table('solicitud_residuos')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
-            // ->join('progvehiculos', 'progvehiculos.FK_ProgServi', 'solicitud_servicios.ID_SolSer')
             ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerStatus')
             ->where('solicitud_servicios.ID_SolSer', $SolRes->FK_SolResSolSer)
             ->first();
+
+        $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolSer->ID_SolSer)->first();
 
         $Fotos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
@@ -91,7 +93,7 @@ class RecursoController extends Controller
             ->orderBy('RecTipo')
             ->get();
 
-        return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel'));
+        return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel', 'Programacion'));
         }else{
             abort(403);
         }
@@ -126,12 +128,12 @@ class RecursoController extends Controller
         switch($request->input("RecCarte")){
             case 'Foto':
                 $validate = $request->validate([
-                    'RecSrc' => 'min:2048|mimes:jpeg,bmp,png|required',
+                    'RecSrc' => 'mimes:jpeg,bmp,png|required',
                 ]);
                 break;
             case 'Video':
                 $validate = $request->validate([
-                    'RecSrc' => 'min:2048|mimes:mp4|required',
+                    'RecSrc' => 'mimes:mp4|required',
                 ]);
                 break;
             default:
