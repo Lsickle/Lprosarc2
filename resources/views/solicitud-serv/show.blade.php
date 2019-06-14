@@ -367,11 +367,11 @@
 									@endif
 									<div class="form-group col-md-12">
 										@if($SolicitudServicio->SolSerStatus === 'Completado')
-											<label for="SolResKg">Cantidad Resivida</label>
+											<label for="SolResKgRecibido">Cantidad Resivida</label>
 											<small class="help-block with-errors">*</small>
-											<input type="text" class="form-control numeroKg" id="SolResKg" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
+											<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
 										@else
-											<label for="SolResKg">Cantidad Tratada</label>
+											<label for="SolResKgTratado">Cantidad Tratada</label>
 											<small class="help-block with-errors">*</small>
 											<div class="input-group">
 												<input type="text" class="form-control" id="SolResKgTratado" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
@@ -392,9 +392,10 @@
 					</div>
 				</form>
 			`);
-			numeroKg();
 			if('{{$SolicitudServicio->SolSerStatus === "Conciliado"}}'){
 				$('#SolResKgTratado').inputmask({ alias: 'numeric', max:conciliado, rightAlign:false});
+			}else{
+				numeroKg();
 			}
 			$('#editkgResivido').modal();
 			$('#FormKg').validator('update');

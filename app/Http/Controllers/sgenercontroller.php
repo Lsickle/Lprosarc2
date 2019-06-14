@@ -157,12 +157,13 @@ class sgenercontroller extends Controller
             $Respels = DB::table('residuos_geners')
                 ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
                 ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-                ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
+                ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes', 'respels.RespelStatus') 
                 ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
-                ->where('RespelDelete', 0)
+                ->where('respels.RespelDelete', '=', 0)
+                ->where('respels.RespelStatus', '=', 'Aprobado')
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->get();
-                    
+            // return $Respels;
             $Residuos = DB::table('respels')
                 ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')

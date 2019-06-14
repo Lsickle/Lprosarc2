@@ -93,7 +93,7 @@ $(document).ready(function() {
 	});
 </script>
 
-{{-- Mascaras del cliente --}}
+{{-- Mascaras --}}
 <script>
 $(document).ready(function() {
 	$('.nit').inputmask({ mask: "[9][9][9.][9][9][9.][9][9][9-][9]" });
@@ -513,7 +513,6 @@ function NotifiFalse(Mensaje) {
 
 </script>
 @endif
-
 <script>
 	function AnimationMenusForm(target){
 		var icon = $("button[data-target='"+target+"']").find('svg');

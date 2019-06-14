@@ -76,7 +76,7 @@
 							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.sedesgener') }}</i></h4>
 							<div style='overflow-y:auto; max-height:200px;'>
 								@php
-										$i = 0;
+									$i = 0;
 								@endphp
 								@foreach ($GenerSedes as $GenerSede)
 									<li class="list-group-item col-md-12 col-xs-12">

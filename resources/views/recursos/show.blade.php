@@ -202,7 +202,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                                            <button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
                                         </div>
                                     </div>
                                 </div>
