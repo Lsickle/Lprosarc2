@@ -551,5 +551,13 @@ function NotifiFalse(Mensaje) {
 			}
 		}
 	});
+	$('label').on('click', function(){
+		var idsubmit = $(this).attr('for');
+		if(!$('#'+idsubmit).hasClass('disabled')){
+			$(this).empty();
+			$(this).append('Enviando...');
+			$(this).attr('disabled', true);
+		}
+	});
 </script>
 @yield('NewScript')
