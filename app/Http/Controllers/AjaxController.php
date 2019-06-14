@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
 use PDF;
@@ -63,32 +64,28 @@ class AjaxController extends Controller
 	public function SGenerRespel(Request $request, $id)
 	{
 		if ($request->ajax()) {
-
+			$ID_Cli = userController::IDClienteSegunUsuario();
 			$ResSGeners = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('respels.ID_Respel')
 				->where('FK_SGener', '=', $id)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
-				->groupBy('FK_Respel')
 				->get();
                 
 			$Respels = DB::table('respels')
 				->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
 				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-				->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-				->join('gener_sedes', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->select('respels.ID_Respel', 'respels.RespelName')
-				->where('respels.RespelStatus', '=', 'Aprobado')
+				->where('clientes.ID_Cli', '=', $ID_Cli)
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
 				->where('respels.RespelDelete', '=', 0)
-				->where('gener_sedes.ID_GSede', '=', $id)
 				->where(function ($query) use ($ResSGeners){
 					foreach ($ResSGeners as $ResSGener) {
 						$query->where('respels.ID_Respel', '<>', $ResSGener->ID_Respel);
 					}
 				})
-				// ->whereIn('respels.ID_Respel', $ResSGeners)
-				// ->whereIn('respels.ID_Respel', [$ResSGeners->ID_Respel])
 				->get();
 				
 			return response()->json($Respels);

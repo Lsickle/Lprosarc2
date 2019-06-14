@@ -123,6 +123,14 @@ class SolicitudResiduoController extends Controller
         }
         $SolRes->save();
 
+        $log = new audit();
+        $log->AuditTabla="solicitud_residuos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$SolRes->ID_SolRes;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
         $id = $SolSer->SolSerSlug;
 
         return redirect()->route('solicitud-servicio.show', compact('id'));
