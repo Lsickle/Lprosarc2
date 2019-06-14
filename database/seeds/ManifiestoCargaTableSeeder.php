@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\ManifiestoCarga;
 
-class ManicargfiestoCargaTableSeeder extends Seeder
+class ManifiestoCargaTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
