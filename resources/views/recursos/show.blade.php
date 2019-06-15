@@ -195,124 +195,97 @@
                     @endif
                 @endif
                 <div id="deleteRecurso">
-
                 </div>
 				<div class="row">
-                    @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
-                        @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') && $SolSer->SolSerStatus === 'Completado')
+                    @if((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')))
+                        <tbody hidden onload="renderTable()" id="readyTable">
                             <div class="col-md-12">
-                                <center>
-                                    <h3 data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recursos</b>" data-content="{{trans('adminlte_lang::message.recursostratamiento')}}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Recursos</h3>
-                                </center>
-                            </div>
-                        @else
-                            <tbody hidden onload="renderTable()" id="readyTable">
-                                <div class="col-md-12">
-                                    <center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
-                                    <div class="box box-warning">
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger" role="alert">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <p>{{$error}}</p>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <div class="col-md-6" style="margin-bottom:15px;">
-                                            <h4>
-                                                {{trans('adminlte_lang::message.recursoFoto')}}
-                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                    @if ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Certificacion')
-                                                    @else
-                                                        @if($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
-                                                        <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
-                                                        @endif
-                                                    @endif
-                                                @endif
-                                            </h4>
-                                            @if (!isset($Fotos[0]->RecTipo))
-                                                <img src="../../../img/defaultimage.png" height="300px" width="100%" max-width="1200px">
-                                            @else
-                                                <div style='overflow-y:auto; overflow-x:hidden; max-height:600px;'>
-                                                    @foreach ($Fotos as $Foto)
-                                                        <div class="col-md-12">
-                                                            <div style="background-image: url('../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:100%; max-width:500px; background-size:100% 300px; margin-bottom:15px;">
-                                                                <nav class="navbar navbar-inverse">
-                                                                    <div class="container">
-                                                                        <ul class="nav nav-pills" style="padding-top: 2px; max-width:500px" max-width="500px">
-                                                                            <li role="presentation" class="navbar-brand" style="color:white;"><i>{{$Foto->RecTipo}}</i></li>
-                                                                            <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="{{trans('adminlte_lang::message.recampliarfoto')}}" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
-                                                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                                                                <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
-                                                                            @endif
-                                                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                                @if ($SolSer->SolSerStatus === 'Certificacion')
-                                                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                                                        <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-                                                                                    @endif
-                                                                                @else                                                                            
-                                                                                    <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-                                                                                @endif
-                                                                            @endif
-                                                                        </ul>
-                                                                    </div>
-                                                                </nav>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            @endif
+                                <center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
+                                <div class="box box-warning">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" role="alert">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <p>{{$error}}</p>
+                                                @endforeach
+                                            </ul>
                                         </div>
-                                        <div class="col-md-6" style="margin-bottom:15px;">
-                                            <h4>
-                                                {{trans('adminlte_lang::message.recursoVideo')}}
-                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                    @if ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Certificacion')
-                                                    @else
-                                                        @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1)
-                                                        <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
-                                                        @endif
-                                                    @endif
+                                    @endif
+                                    <div class="col-md-6" style="margin-bottom:15px;">
+                                        <h4>
+                                            {{trans('adminlte_lang::message.recursoFoto')}}
+                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')))
+                                                @if($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
+                                                    <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
                                                 @endif
-                                            </h4>
-                                            @if (!isset($Videos[0]->RecTipo))
-                                                <img src="../../../img/defaultvideo.jpg" height="auto" width="100%" max-width="1200">
-                                            @else
+                                            @endif
+                                        </h4>
+                                        @if (!isset($Fotos[0]->RecTipo))
+                                            <img src="../../../img/defaultimage.png" height="300px" width="100%" max-width="1200px">
+                                        @else
                                             <div style='overflow-y:auto; overflow-x:hidden; max-height:600px;'>
-                                                @foreach ($Videos as $Video)
-                                                    <div class="col-md-12" style="margin-bottom:10px;">
-                                                        <nav class="navbar navbar-inverse">
-                                                            <div class="container">
-                                                                <ul class="nav nav-pills">
-                                                                    <li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
-                                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-                                                                        <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
-                                                                    @endif
-                                                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                                                                        @if ($SolSer->SolSerStatus === 'Certificacion')
-                                                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                                                <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-                                                                            @endif
-                                                                        @else
-                                                                            <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+                                                @foreach ($Fotos as $Foto)
+                                                    <div class="col-md-12">
+                                                        <div style="background-image: url('../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:100%; max-width:500px; background-size:100% 300px; margin-bottom:15px;">
+                                                            <nav class="navbar navbar-inverse">
+                                                                <div class="container">
+                                                                    <ul class="nav nav-pills" style="padding-top: 2px; max-width:500px" max-width="500px">
+                                                                        <li role="presentation" class="navbar-brand" style="color:white;"><i>{{$Foto->RecTipo}}</i></li>
+                                                                        <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="{{trans('adminlte_lang::message.recampliarfoto')}}" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
+                                                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                                                            <li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
                                                                         @endif
-                                                                    @endif
-                                                                </ul>
-                                                            </div>
-                                                        </nav>
-                                                        <div class="col-md-12">
-                                                            <video width="100%" height="auto" style="margin-top:-20px;" muted controls  src="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}"></video>
+                                                                        @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')))
+                                                                            <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+                                                                        @endif
+                                                                    </ul>
+                                                                </div>
+                                                            </nav>
                                                         </div>
                                                     </div>
-                                                    @endforeach
-                                                </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-6" style="margin-bottom:15px;">
+                                        <h4>
+                                            {{trans('adminlte_lang::message.recursoVideo')}}
+                                            @if((Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')) || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                                                @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1)
+                                                    <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
+                                                @endif
                                             @endif
-                                        </div>
+                                        </h4>
+                                        @if (!isset($Videos[0]->RecTipo))
+                                            <img src="../../../img/defaultvideo.jpg" height="auto" width="100%" max-width="1200">
+                                        @else
+                                        <div style='overflow-y:auto; overflow-x:hidden; max-height:600px;'>
+                                            @foreach ($Videos as $Video)
+                                                <div class="col-md-12" style="margin-bottom:10px;">
+                                                    <nav class="navbar navbar-inverse">
+                                                        <div class="container">
+                                                            <ul class="nav nav-pills">
+                                                                <li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
+                                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+                                                                    <li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
+                                                                @endif
+                                                                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')))
+                                                                    <li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+                                                                @endif
+                                                            </ul>
+                                                        </div>
+                                                    </nav>
+                                                    <div class="col-md-12">
+                                                        <video width="100%" height="auto" style="margin-top:-20px;" muted controls  src="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}"></video>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                            </tbody>
-                        @endif
+                            </div>
+                        </tbody>
                     @else
                         @if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                             <div class="col-md-12">

@@ -661,6 +661,7 @@ return [
     'solresConciliadotext'    => 'ha sido Conciliado',
     'solresTratado'           => 'ha sido tratado',
     'solresCertificado'       => 'esta listo para realizar la certificación',
+    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
     'solrestypeunity'         => 'Tipo de Unidad:',
     'solrescantunity'         => 'Cantidad de Unidad:',
     'solresembalaje'          => 'Embalaje:',
