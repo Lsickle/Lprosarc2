@@ -237,18 +237,20 @@ return [
         'RecTipo'         => '"Tipo"',
         'RecCarte'        => '"Categoría"',
 
-        'SolResTypeUnidad'    => '"Unidades de Medidas"',
-        'SolResEmbalaje'      => '"Embalaje"',
-        'SolResKgEnviado'     => '"Cantidad (kg)"',
-        'SolResCantiUnidad'   => '"Cantidad"',
-        'SolResAlto'          => '"Alto (Metro)"',
-        'SolResAncho'         => '"Ancho (Metro)"',
-        'SolResProfundo'      => '"Profundo (Metro)"',
+        'SolResTypeUnidad'  => '"Unidades de Medidas"',
+        'SolResEmbalaje'    => '"Embalaje"',
+        'SolResKgEnviado'   => '"Cantidad (kg)"',
+        'SolResCantiUnidad' => '"Cantidad"',
+        'SolResAlto'        => '"Alto (Metro)"',
+        'SolResAncho'       => '"Ancho (Metro)"',
+        'SolResProfundo'    => '"Profundo (Metro)"',
         'SolResFotoDescargue_Pesaje'  => '"Foto Descar/Pesa"',
         'SolResFotoTratamiento'       => '"Foto  Tratamiento"',
         'SolResVideoDescargue_Pesaje' => '"Video Descar/Pesa"',
         'SolResVideoTratamiento'      => '"Video Tratamiento"',
-
+        'SolResKgConciliado'=> '"Conciliado (kg)"',
+        'SolResKgRecibido'  => '"Resivido (kg)"',
+        'SolResKgTratado'   => '"Tratado (kg)"',
     ],
 
 ];
