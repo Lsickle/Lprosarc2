@@ -32,7 +32,7 @@
                                             {{trans('adminlte_lang::message.solresCertificado')}}
                                             @break
                                     @endswitch
-                                    </h4></center>
+                                </h4></center>
                             @else
                                 <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
                                 @if($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
@@ -40,7 +40,10 @@
                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && $SolSer->SolSerStatus === 'Programado')
                                     @else
                                         @if($Programacion->ProgVehEntrada !== Null)
-                                        <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && $SolSer->SolSerStatus === 'Completado')
+                                            @else
+                                            <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+                                            @endif
                                         @endif
                                     @endif
                                 @endif
@@ -54,8 +57,7 @@
                                         {{$SolRes->SolResSlug}}
                                     @endslot
                                     @slot('textModal')
-                                        {{trans('adminlte_lang::message.solresrespel')}}
-                                        <b>N° {{$SolSer->ID_SolSer}}</b>
+                                        el residuo <b>{{$Respel->RespelName}}</b> de la Solicitud de Servicio <b>N° {{$SolSer->ID_SolSer}}</b>
                                     @endslot
                                 @endcomponent
                                 <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolRes->SolResSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
@@ -73,22 +75,17 @@
 					<div class="col-md-12 ">
 						<div class="box box-info">
 							<div class="col-md-12">
+                                <div class="col-md-12 border-gray">
+                                    <center><h3><b>{{$Respel->RespelName}}</b></h3></center><br>
+                                </div>
                                 <div class="col-md-16">
                                     <div class="col-md-4 border-gray">
                                         <label>{{trans('adminlte_lang::message.solrestypeunity')}}</label><br>
-                                        @if($SolRes->SolResTypeUnidad === Null)
-                                            <a>N/A</a>
-                                        @else
-                                            <a>{{$SolRes->SolResTypeUnidad}}</a>
-                                        @endif
+                                        <a>{{$SolRes->SolResTypeUnidad === Null ? 'N/A' : $SolRes->SolResTypeUnidad}}</a>
                                     </div>
                                     <div class="col-md-4 border-gray">
                                         <label>{{trans('adminlte_lang::message.solrescantunity')}}</label><br>
-                                        @if($SolRes->SolResCantiUnidad === Null)
-                                            <a>N/A</a>
-                                        @else
-                                            <a>{{$SolRes->SolResCantiUnidad}}</a>
-                                        @endif
+                                        <a>{{$SolRes->SolResCantiUnidad === Null ? 'N/A' : $SolRes->SolResCantiUnidad}}</a>
                                     </div>
                                     <div class="col-md-4 border-gray">
                                         <label>{{trans('adminlte_lang::message.solresembalaje')}}</label><br>
@@ -99,49 +96,31 @@
                                     <label>{{trans('adminlte_lang::message.solresenviado')}}</label><br>
                                     <a>{{$SolRes->SolResKgEnviado}}</a>
                                 </div>
-                                @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-                                    <div class="col-md-3 border-gray">
-                                        <label>{{trans('adminlte_lang::message.solresresivido')}}</label><br>
-                                        <a>{{$SolRes->SolResKgRecibido}}</a>
-                                    </div>
-                                @endif
+                                <div class="border-gray" id="kgresividos">
+                                    <label>{{trans('adminlte_lang::message.solresresivido')}}</label><br>
+                                    <a>{{$SolRes->SolResKgRecibido  === Null ? 'N/A' : $SolRes->SolResKgRecibido}}</a>
+                                </div>
                                 <div class="border-gray" id="kgconciliados">
                                     <label>{{trans('adminlte_lang::message.solresconciliado')}}</label><br>
-                                    <a>{{$SolRes->SolResKgConciliado}}</a>
+                                    <a>{{$SolRes->SolResKgConciliado === Null ? 'N/A' : $SolRes->SolResKgConciliado}}</a>
                                 </div>
                                 @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
                                     <div class="col-md-3 border-gray">
                                         <label>{{trans('adminlte_lang::message.solrestratado')}}</label><br>
-                                        @if ($SolRes->SolResKgTratado === Null)
-                                            <a>0</a>
-                                        @else
-                                            <a>{{$SolRes->SolResKgTratado}}</a>
-                                        @endif
+                                        <a>{{$SolRes->SolResKgTratado === Null ? 'N/A' : $SolRes->SolResKgTratado}}</a>
                                     </div>
                                 @endif
                                 <div class="col-md-4 border-gray">
                                     <label>{{trans('adminlte_lang::message.solresalto')}}</label><br>
-                                    @if ($SolRes->SolResAlto === Null)
-                                        <a>0</a>
-                                    @else
-                                        <a>{{$SolRes->SolResAlto}}</a>
-                                    @endif
+                                    <a>{{$SolRes->SolResAlto === Null ? 'N/A' : $SolRes->SolResAlto}}</a>
                                 </div>
                                 <div class="col-md-4 border-gray">
                                     <label>{{trans('adminlte_lang::message.solresancho')}}</label><br>
-                                    @if ($SolRes->SolResAncho === Null)
-                                        <a>0</a>
-                                    @else
-                                        <a>{{$SolRes->SolResAncho}}</a>
-                                    @endif
+                                    <a>{{$SolRes->SolResAncho === Null ? 'N/A' : $SolRes->SolResAncho}}</a>
                                 </div>
                                 <div class="col-md-4 border-gray">
                                     <label>{{trans('adminlte_lang::message.solresProfundo')}}</label><br>
-                                    @if($SolRes->SolResProfundo === Null)
-                                        <a>0</a>
-                                    @else
-                                        <a>{{$SolRes->SolResProfundo}}</a>
-                                    @endif
+                                    <a>{{$SolRes->SolResProfundo === Null ? 'N/A' : $SolRes->SolResProfundo}}</a>
                                 </div>
                             </div>
                             <div class="col-md-12 border-gray">
@@ -436,9 +415,12 @@
 @endif
 <script>
     if('{{Auth::user()->UsRol === trans("adminlte_lang::message.Cliente")}}'){
-        $('#kgenviados').addClass('col-md-6');
-        $('#kgconciliados').addClass('col-md-6');
+        $('#kgenviados').addClass('col-md-4');
+        $('#kgconciliados').addClass('col-md-4');
+        $('#kgresividos').addClass('col-md-4');
+        
     }else{
+        $('#kgresividos').addClass('col-md-3');
         $('#kgenviados').addClass('col-md-3');
         $('#kgconciliados').addClass('col-md-3');
     }
