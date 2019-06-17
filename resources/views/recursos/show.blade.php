@@ -35,17 +35,12 @@
                                 </h4></center>
                             @else
                                 <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
-                                @if($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
-                                @else
-                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && $SolSer->SolSerStatus === 'Programado')
-                                    @else
-                                        @if($Programacion->ProgVehEntrada !== Null)
-                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && $SolSer->SolSerStatus === 'Completado')
-                                            @else
-                                            <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-                                            @endif
-                                        @endif
+                                @if(($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') || (Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Conciliado')) || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && $SolSer->SolSerStatus === 'Completado') || $Programacion->ProgVehEntrada === Null)
+                                    @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+                                        <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
                                     @endif
+                                @else
+                                    <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
                                 @endif
                             @endif
                         @else
@@ -153,51 +148,49 @@
                         </div>
                     </div>
                 </div>
-                @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
-                    @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
+                @if((Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
                     {{-- Modal Añadir Recurso  --}}
-                        <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm">
-                            @method('PUT')
-                            {{csrf_field()}}
-                            @csrf
-                            <div class="modal modal-default fade in" id="addRecurso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-                                                <i class="fas fa-plus-circle"></i>
-                                                <span style="font-size: 0.3em; color: black;"><p>Añadir <b class="categoriaRec"></b></p></span>
-                                            </div>
+                    <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm">
+                        @method('PUT')
+                        {{csrf_field()}}
+                        @csrf
+                        <div class="modal modal-default fade in" id="addRecurso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+                                            <i class="fas fa-plus-circle"></i>
+                                            <span style="font-size: 0.3em; color: black;"><p>Añadir <b class="categoriaRec"></b></p></span>
                                         </div>
-                                        <div class="modal-header">
-                                            <div id="categoria">
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="tipo">Tipo</label><small class="help-block with-errors">*</small>
-                                                <select class="form-control" id="tipo" name="RecTipo" required>
-                                                    
-                                                </select>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="recursoinputext" class="categoriaRec"></label><small class="help-block with-errors">*</small>
-                                                <input type="file" class="form-control" id="recursoinputext" name="RecSrc[]" multiple required>
-                                            </div>
+                                    </div>
+                                    <div class="modal-header">
+                                        <div id="categoria">
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+                                        <div class="col-md-12 form-group">
+                                            <label for="tipo">Tipo</label><small class="help-block with-errors">*</small>
+                                            <select class="form-control" id="tipo" name="RecTipo" required>
+                                                
+                                            </select>
                                         </div>
+                                        <div class="col-md-12 form-group">
+                                            <label for="recursoinputext" class="categoriaRec"></label><small class="help-block with-errors">*</small>
+                                            <input type="file" class="form-control" id="recursoinputext" name="RecSrc[]" multiple required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
                                     </div>
                                 </div>
                             </div>
-                        </form>   
+                        </div>
+                    </form>   
                     {{-- final del modal --}}
-                    @endif
                 @endif
                 <div id="deleteRecurso">
                 </div>
 				<div class="row">
-                    @if((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')))
+                    @if(((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))) && $Programacion->ProgVehEntrada !== Null)
                         <tbody hidden onload="renderTable()" id="readyTable">
                             <div class="col-md-12">
                                 <center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -214,10 +207,8 @@
                                     <div class="col-md-6" style="margin-bottom:15px;">
                                         <h4>
                                             {{trans('adminlte_lang::message.recursoFoto')}}
-                                            @if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')))
-                                                @if($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1)
-                                                    <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
-                                                @endif
+                                            @if((Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado'))) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+                                                <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
                                             @endif
                                         </h4>
                                         @if (!isset($Fotos[0]->RecTipo))
@@ -250,10 +241,8 @@
                                     <div class="col-md-6" style="margin-bottom:15px;">
                                         <h4>
                                             {{trans('adminlte_lang::message.recursoVideo')}}
-                                            @if((Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')) || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-                                                @if($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1)
-                                                    <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
-                                                @endif
+                                            @if(((Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')) || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
+                                                <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
                                             @endif
                                         </h4>
                                         @if (!isset($Videos[0]->RecTipo))

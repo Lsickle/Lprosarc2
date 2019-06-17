@@ -671,6 +671,7 @@ return [
     'solresalto'              => 'Alto:',
     'solresancho'             => 'Ancho:',
     'solresProfundo'          => 'Profundo:',
+    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
 
     // recursos
     'recursostratamiento'     => 'En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado',

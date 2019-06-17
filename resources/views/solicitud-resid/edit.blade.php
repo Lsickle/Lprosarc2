@@ -220,7 +220,9 @@
                 break;  
 
             case '{{trans("adminlte_lang::message.Programador")}}':
-            case '{{trans("adminlte_lang::message.Administrador")}}':
+                
+            break;
+
             case '{{trans("adminlte_lang::message.SupervisorTurno")}}':
                 
                 switch('{{$SolSer->SolSerStatus}}'){
@@ -262,7 +264,14 @@
                         });
                         break;
                 }
-                break;  
+                default:
+                    $(document).ready(function (){
+                        SolResKgTratado();
+                        SolResKgConciliado();
+                        SolResKgRecibido();
+                        ValorConciliado();
+                    });
+                    break;
         }
 
         function ValorConciliado(){
