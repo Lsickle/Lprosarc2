@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ProgramacionVehiculo;
 use App\Sede;
-use PDF;
 
 
 class AjaxController extends Controller
@@ -63,11 +62,6 @@ class AjaxController extends Controller
 	public function SGenerRespel(Request $request, $id)
 	{
 		if ($request->ajax()) {
-			$SGener = DB::table('gener_sedes')
-				->join('generadors', 'generadors.ID_Gener', '=', 'FK_GSede')
-				->select('generadors.ID_Gener')
-				->where('ID_GSede', '=', $id)
-				->first();
 
 			$ResSGeners = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
@@ -76,15 +70,17 @@ class AjaxController extends Controller
 				->where('FK_SGener', '=', $id)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->groupBy('FK_Respel')
-				->where('RespelDelete', '=', 0)
 				->get();
                 
 			$Respels = DB::table('respels')
 				->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
 				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
 				->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('gener_sedes', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->select('respels.ID_Respel', 'respels.RespelName')
-				->where('generadors.ID_Gener', '=', $SGener->ID_Gener)
+				->where('respels.RespelStatus', '=', 'Aprobado')
+				->where('respels.RespelDelete', '=', 0)
+				->where('gener_sedes.ID_GSede', '=', $id)
 				->where(function ($query) use ($ResSGeners){
 					foreach ($ResSGeners as $ResSGener) {
 						$query->where('respels.ID_Respel', '<>', $ResSGener->ID_Respel);
@@ -135,17 +131,4 @@ class AjaxController extends Controller
 			return $Requerimientos;
 		}
 	}
-
-	public function generatePDF()
-
-	    {
-
-	        $data = ['title' => 'Welcome to HDTuto.com'];
-
-	        $pdf = PDF::loadView('layouts.partials.myPDF', $data);
-	        $title = 'prueba.pdf';
-	  		return view('layouts.partials.myPDF', compact('title'));
-	        // return $pdf->download('Prueba.pdf');
-
-	    }
 }

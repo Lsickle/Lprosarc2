@@ -213,7 +213,7 @@ class genercontroller extends Controller
 
             $GenerSedes = DB::table('gener_sedes')
                 ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
-                ->where('FK_GSede', $Generador->ID_Gener)
+                ->where('gener_sedes.FK_GSede', $Generador->ID_Gener)
                 ->where('GSedeDelete', 0)
                 ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
                 ->get();
@@ -225,7 +225,6 @@ class genercontroller extends Controller
                 ->where('FK_GSede', '=', $Generador->ID_Gener)
                 ->where('gener_sedes.GSedeDelete', '=', 0)
                 ->where('respels.RespelDelete', '=', 0)
-                ->where('respels.RespelStatus', '=', 'Aprobada')
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();

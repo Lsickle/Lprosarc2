@@ -57,7 +57,7 @@ class RecursoController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
 
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 
@@ -118,6 +118,27 @@ class RecursoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $Validate = $request->validate([
+            'RecTipo' => 'required|max:32',
+            'RecCarte' => 'required|max:32',
+        ]);
+
+        switch($request->input("RecCarte")){
+            case 'Foto':
+                $validate = $request->validate([
+                    'RecSrc' => 'min:2048|mimes:jpeg,bmp,png|required',
+                ]);
+                break;
+            case 'Video':
+                $validate = $request->validate([
+                    'RecSrc' => 'min:2048|mimes:mp4|required',
+                ]);
+                break;
+            default:
+                abort(500);
+            break;
+        }
+
         $SolRes = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', 'residuos_geners.FK_SGener')
@@ -136,7 +157,6 @@ class RecursoController extends Controller
                 $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->ID_SolRes,$name);
                 $Src = $SolRes->CliName.$SolRes->ID_SolRes;
                 
-                // $Recurso->RecName = $request->input("RecName");
                 $Recurso = new Recurso();
                 $Recurso->RecTipo = $request->input("RecTipo");
                 $Recurso->RecCarte = $request->input("RecCarte");
