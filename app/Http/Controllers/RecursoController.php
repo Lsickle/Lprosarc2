@@ -6,10 +6,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\RecursosStoreRequest;
 use App\audit;
 use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
+use App\ProgramacionVehiculo;
 
 class RecursoController extends Controller
 {
@@ -70,10 +73,11 @@ class RecursoController extends Controller
         
         $SolSer = DB::table('solicitud_residuos')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
-            // ->join('progvehiculos', 'progvehiculos.FK_ProgServi', 'solicitud_servicios.ID_SolSer')
             ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerStatus')
             ->where('solicitud_servicios.ID_SolSer', $SolRes->FK_SolResSolSer)
             ->first();
+
+        $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolSer->ID_SolSer)->first();
 
         $Fotos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
@@ -91,7 +95,7 @@ class RecursoController extends Controller
             ->orderBy('RecTipo')
             ->get();
 
-        return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel'));
+        return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel', 'Programacion'));
         }else{
             abort(403);
         }
@@ -116,28 +120,36 @@ class RecursoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecursosStoreRequest $request, $id)
     {
-        $Validate = $request->validate([
-            'RecTipo' => 'required|max:32',
-            'RecCarte' => 'required|max:32',
-        ]);
+        // $Validate = $request->validate([
+        //     'RecTipo' => 'required|max:32',
+        //     'RecCarte' => 'required|max:32',
+        // ]);
 
-        switch($request->input("RecCarte")){
-            case 'Foto':
-                $validate = $request->validate([
-                    'RecSrc' => 'min:2048|mimes:jpeg,bmp,png|required',
-                ]);
-                break;
-            case 'Video':
-                $validate = $request->validate([
-                    'RecSrc' => 'min:2048|mimes:mp4|required',
-                ]);
-                break;
-            default:
-                abort(500);
-            break;
-        }
+        // switch($request->input("RecCarte")){
+        //     case 'Foto':
+        //         $validate = $request->validate([
+        //             'RecSrc.*' => 'mimes:jpeg,jpg,png|required',
+        //         ]);
+
+        //         if (isset($request['RecSrc'])) {
+        //             $pdf = $request['RecSrc'];
+        //             foreach($pdf as $key => $value){
+        //                 $attributes['RecSrc.'.$key] = '"Hoja de Seguridad N° '.($key+1).'"';
+        //             }
+        //         }
+                
+        //         break;
+        //     case 'Video':
+        //         $validate = $request->validate([
+        //             'RecSrc.*' => 'mimes:mp4|required',
+        //         ]);
+        //         break;
+        //     default:
+        //         abort(500);
+        //     break;
+        // }
 
         $SolRes = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
@@ -150,7 +162,7 @@ class RecursoController extends Controller
             ->first();
             
         if ($request->hasfile('RecSrc')){
-            foreach($request->RecSrc as $file){ 
+            foreach($request->RecSrc as $file){
                 
                 $name = time().$file->getClientOriginalName();
                 $Extension = $file->extension();

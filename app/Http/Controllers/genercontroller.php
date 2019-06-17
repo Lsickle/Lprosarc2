@@ -73,8 +73,8 @@ class genercontroller extends Controller
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $id)
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
                 ->where('respels.RespelDelete', '=', 0)
-                ->where('respels.RespelStatus', '=', 'Aprobada')
                 ->get();
             
             if (old('FK_GSedeMun') !== null){
@@ -209,7 +209,7 @@ class genercontroller extends Controller
 
             $Generador = generador::where('GenerSlug',$id)->first();
             $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-            $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+            $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
 
             $GenerSedes = DB::table('gener_sedes')
                 ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
@@ -222,9 +222,10 @@ class genercontroller extends Controller
                 ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
                 ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
                 ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
-                ->where('FK_GSede', '=', $Generador->ID_Gener)
+                ->where('gener_sedes.FK_GSede', '=', $Generador->ID_Gener)
                 ->where('gener_sedes.GSedeDelete', '=', 0)
                 ->where('respels.RespelDelete', '=', 0)
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();
@@ -237,8 +238,8 @@ class genercontroller extends Controller
                     ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
                     ->select('respels.ID_Respel', 'respels.RespelName')
                     ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
-                    ->where('RespelDelete', 0)
-                    ->where('respels.RespelStatus', '=', 'Aprobada')
+                    ->where('respels.RespelDelete', 0)
+                    ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
                     ->groupBy('respels.ID_Respel')
                     ->get();
             }

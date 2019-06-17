@@ -658,9 +658,9 @@ return [
     'solrestitleclientepart2' => 'este residuo porque',
     'solresProgramador'       => 'ha sido programado',
     'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP',
+    'solresConciliadotext'    => 'ha sido Conciliado',
     'solresTratado'           => 'ha sido tratado',
     'solresCertificado'       => 'esta listo para realizar la certificación',
-    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
     'solrestypeunity'         => 'Tipo de Unidad:',
     'solrescantunity'         => 'Cantidad de Unidad:',
     'solresembalaje'          => 'Embalaje:',
@@ -671,6 +671,7 @@ return [
     'solresalto'              => 'Alto:',
     'solresancho'             => 'Ancho:',
     'solresProfundo'          => 'Profundo:',
+    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
 
     // recursos
     'recursostratamiento'     => 'En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado',
