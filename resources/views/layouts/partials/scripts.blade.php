@@ -32,6 +32,15 @@ $('form[data-toggle="validator"]').validator({
 			if ($el[0].files[0] && $el[0].files[0].size > maxBytes) {
 				return "El archivo no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 			}
+		},
+		filessizemultiple: function($el) {
+			var maxBytes = $el.data("filessizemultiple")*1024;
+			var max = 0;
+			for (var i = 0; i < $el[0].files.length; i++) {
+				if ($el[0].files[i] && $el[0].files[i].size > maxBytes) {
+					return "El archivo ("+($el[0].files[i].name)+") no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
+				}
+			}
 		}
 	}
 });
@@ -93,7 +102,7 @@ $(document).ready(function() {
 	});
 </script>
 
-{{-- Mascaras del cliente --}}
+{{-- Mascaras --}}
 <script>
 $(document).ready(function() {
 	$('.nit').inputmask({ mask: "[9][9][9.][9][9][9.][9][9][9-][9]" });
@@ -457,97 +466,20 @@ function NotifiFalse(Mensaje) {
 
 	</script>
 	@endif
-	@endif
+@endif
 	@if(Route::currentRouteName() === 'contactos.show')
-	@if ($errors->any())
-	<script>
-	$(document).ready(function() {
-		$(".create").modal("show");
-	});
-
-	</script>
-	@endif
-@endif
-@if (Route::currentRouteName() === 'generadores.show')
-<script>
-$(document).ready(function() {
-	$("#FK_SGener").change(function(e) {
-		id = $("#FK_SGener").val();
-		e.preventDefault();
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			}
+		<script>
+		$(document).ready(function() {
+			$(".create").modal("show");
 		});
-		$.ajax({
-			url: "{{url('/sedegener-respel')}}/" + id,
-			method: 'GET',
-			data: {},
-			success: function(res) {
-				$("#FK_Respel").empty();
-				var respel = new Array();
-				for (var i = res.length - 1; i >= 0; i--) {
-					if ($.inArray(res[i].ID_Respel, respel) < 0) {
-						$("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
-						respel.push(res[i].ID_Mun);
-					}
-				}
-			}
-		})
-	});
-});
 
-</script>
-@endif
+		</script>
+	@endif
+	
 @if(Route::currentRouteName()=='tratamiento.edit')
-<script>
-var contador = `{{$contador}}`;
+	<script>
+	var contador = `{{$contador}}`;
 
-function attachPopover() {
-	$('[data-toggle="popover"]').popover({
-		html: true,
-		trigger: 'hover',
-		placement: 'auto'
-	});
-	$("#edittratamientoForm").validator('update');
-	// alert('popover actualizados');
-}
-
-function AgregarPreTrat() {
-	var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
-	$("#pretratamientosPanel").append(pretratamiento);
-	$("#edittratamientoForm").validator('update');
-	contador = parseInt(contador) + 1;
-	attachPopover();
-}
-
-function EliminarPreTrat(id) {
-	$("#pretratname" + id).remove();
-	$("#pretratdescription" + id).remove();
-	$("#pretratsparator" + id).remove();
-	$("#ID_Propo" + id).remove();
-	$("#edittratamientoForm").validator('update');
-	// alert('eliminado pretratamiento '+id);
-	contador = parseInt(contador) - 1;
-}
-
-</script>
-@endif
-
-<script>
-$(document).ready(function() {
-	/*var rol defino el rol del usuario*/
-	var rol = "<?php echo Auth::user()->UsRol; ?>";
-	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
-				extend: 'collection',
-				text: 'Selector',
-				buttons: ['selectRows', 'selectCells']
-			}] : ['colvis', 'excel'];
-
-	/*inicializacion de datatable general*/        
-	$('.table').DataTable({
-		"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
 			"<'row'<'col-md-12'tr>>" +
 			"<'row'<'col-md-6'i><'col-md-6'p>>",
 		"scrollX": false,
@@ -589,6 +521,7 @@ $(document).ready(function() {
 });
 
 </script>
+@endif
 <script>
 	function AnimationMenusForm(target){
 		var icon = $("button[data-target='"+target+"']").find('svg');
@@ -625,6 +558,14 @@ $(document).ready(function() {
 				$('[type="submit"]').empty();
 				$('[type="submit"]').append('Enviando...');
 			}
+		}
+	});
+	$('label').on('click', function(){
+		var idsubmit = $(this).attr('for');
+		if(!$('#'+idsubmit).hasClass('disabled')){
+			$(this).empty();
+			$(this).append('Enviando...');
+			$(this).attr('disabled', true);
 		}
 	});
 </script>

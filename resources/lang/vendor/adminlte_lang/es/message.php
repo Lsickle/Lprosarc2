@@ -202,7 +202,7 @@ return [
     'oldpassword'             => 'Contraseña Antigua',
     'changepassword'          => 'Cambio de Contraseña',
     'cancel'                  => 'Cancelar',
-
+    'save'                    => 'Guardar',
     'copy'                    => 'Copiar',
 
     'passwordchangefalse'     => 'La Contraseña Antigua no coincide con la base de datos',
@@ -627,6 +627,7 @@ return [
     'solsershowtransempre'    => 'Empresa Transportadora:',
     'solsershowtranscity'     => 'Ciudad de la Transportadora:',
     'solsershowcantitotal'    => 'Cantidad Total:',
+    
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',
     'solserstatusrecibido'    => 'Recibido',
@@ -648,4 +649,43 @@ return [
     'requiredescarguevideodescrit' => 'Se requiere vídeo del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP.',
     'requiretratamientovideo' =>'Vídeo Tratamiento',
     'requiretratamientovideodescrit' => 'Se requiere vídeo del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP.',
+
+    // Solicitud de Residuo
+    'solser'                  => 'Solicitud de Servicio',
+    'solresedit'              => 'Editar Residuo de la Solcitud de Servicio',
+    'solrestitleclientepart1' => 'No puede',
+    'o'                       => 'o',
+    'solrestitleclientepart2' => 'este residuo porque',
+    'solresProgramador'       => 'ha sido programado',
+    'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP',
+    'solresConciliadotext'    => 'ha sido Conciliado',
+    'solresTratado'           => 'ha sido tratado',
+    'solresCertificado'       => 'esta listo para realizar la certificación',
+    'solrestypeunity'         => 'Tipo de Unidad:',
+    'solrescantunity'         => 'Cantidad de Unidad:',
+    'solresembalaje'          => 'Embalaje:',
+    'solresenviado'           => 'Kilogramos enviados:',
+    'solresresivido'          => 'Kilogramos Recibidos:',
+    'solresconciliado'        => 'Kilogramos conciliados:',
+    'solrestratado'           => 'Kilogramos tratados:',
+    'solresalto'              => 'Alto:',
+    'solresancho'             => 'Ancho:',
+    'solresProfundo'          => 'Profundo:',
+    'solresrespel'            => 'Residuo de la Solicitud de Servicio',
+
+    // recursos
+    'recursostratamiento'     => 'En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado',
+    'recursos'                => 'Recursos',
+    'recursoFoto'             => 'Fotos',
+    'recursoVideo'            => 'Videos',
+    'recampliarfoto'          => 'Ampliar Imagen',
+    'recdowloadfoto'          => 'Descargar Imagen',
+    'recdeletefoto'           => 'Eliminar Imagen',
+    'recaddfoto'              => 'Agregar Foto',
+    'recdowloadvideo'         => 'Descargar Video',
+    'recdeletevideo'          => 'Eliminar Imagen',
+    'recaddvideo'             => 'Agregar Video',
+
+    // Name PDF
+    'generatemanicargpdf'     => 'Manifieto de Carga',
 ];

@@ -16,7 +16,7 @@ class CreateSolicitudResiduosTable extends Migration
             Schema::create('solicitud_residuos', function (Blueprint $table) {
             $table->increments('ID_SolRes');
             $table->Integer('SolResKgEnviado');
-            $table->Integer('SolResKgRecibido');
+            $table->Integer('SolResKgRecibido')->nullable();
             $table->Integer('SolResKgConciliado')->nullable();
             $table->Integer('SolResKgTratado')->nullable();
             $table->timestamps();
