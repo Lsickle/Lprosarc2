@@ -114,6 +114,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
 	/*Rutas de generacion de PDF*/
-	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
+	Route::get('/PdfManiCarg/{id1}/{id2}','PdfController@PdfManiCarg');
 });
 
