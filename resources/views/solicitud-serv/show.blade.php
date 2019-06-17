@@ -232,23 +232,38 @@
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}</td>
 												<td style="text-align: center;">
-													@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-														@if($SolicitudServicio->SolSerStatus == 'Completado')
-															<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`)"><i class="fas fa-marker"></i></a>
+													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+														@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
+															<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
 														@else
-															<a style="color: black"><i class="fas fa-marker"></i></a>
+															<a style="color: black">
 														@endif
+														<i class="fas fa-marker"></i></a>
 													@endif
 													{{' '.$Residuo->SolResKgRecibido}}
 												</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgConciliado}}</td>
-												@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-													@if($SolicitudServicio->SolSerStatus == 'Conciliado')
-														<td style="text-align: center;"><a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"><i class="fas fa-marker"></i></a> {{$Residuo->SolResKgTratado}}</td>
-													@else
-														<td style="text-align: center;"><a style="color: black"><i class="fas fa-marker"></i></a> {{$Residuo->SolResKgTratado}}</td>
+												<td style="text-align: center;">
+													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
+														@if($SolicitudServicio->SolSerStatus === 'Completado')
+															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$Residuo->SolResKgRecibido}}`)"> 
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
 													@endif
-												@endif
+													{{' '.$Residuo->SolResKgConciliado}}
+												</td>
+												<td style="text-align: center;">	
+													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+														@if($SolicitudServicio->SolSerStatus === 'Conciliado')
+															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a> 
+													@endif
+													{{' '.$Residuo->SolResKgTratado}}
+												</td>
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
 												@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
 													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
@@ -330,9 +345,9 @@
 </div>
 @endsection
 @section('NewScript')
-@if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+@if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
 	<script>
-		function addkg(slug, cantidad, conciliado){
+		function addkg(slug, cantidad, cantidadmax){
 			$('#addkgmodal').empty();
 			$('#addkgmodal').append(`
 				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
@@ -347,11 +362,17 @@
 										<i class="fas fa-plus-circle"></i>
 										<span style="font-size: 0.3em; color: black;"><p>
 											Cantidad
-											@if($SolicitudServicio->SolSerStatus === 'Completado')
-												Resivida
-											@else
-												Tratada
-											@endif
+											@switch($SolicitudServicio->SolSerStatus)
+												@case('Programado')
+													Resivida
+													@break
+												@case('Completado')
+													Conciliada
+													@break
+												@case('Conciliado')
+													Tratada
+													@break
+											@endswitch
 										</p></span>
 									</div>
 								</div>
@@ -366,21 +387,29 @@
 										</div>
 									@endif
 									<div class="form-group col-md-12">
-										@if($SolicitudServicio->SolSerStatus === 'Completado')
-											<label for="SolResKgRecibido">Cantidad Resivida</label>
-											<small class="help-block with-errors">*</small>
-											<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
-										@else
-											<label for="SolResKgTratado">Cantidad Tratada</label>
-											<small class="help-block with-errors">*</small>
-											<div class="input-group">
-												<input type="text" class="form-control" id="SolResKgTratado" name="SolResKg" maxlength="11" value="`+cantidad+`" required>
-												<div class="input-group-btn">
-													<label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+conciliado+`)">Tratado</a><label>
-													<div id="conciliadokg"></div>
+										@switch($SolicitudServicio->SolSerStatus)
+											@case('Programado')
+												<label for="SolResKgRecibido">Cantidad Resivida</label>
+												<small class="help-block with-errors">*</small>
+												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+												@break
+											@case('Completado')
+												<label for="SolResKgConciliado">Cantidad Conciliada</label>
+												<small class="help-block with-errors">*</small>
+												<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+												@break
+											@case('Conciliado')
+												<label for="SolResKgTratado">Cantidad Tratada</label>
+												<small class="help-block with-errors">*</small>
+												<div class="input-group">
+													<input type="text" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+													<div class="input-group-btn">
+														<label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`)">Tratado</a><label>
+														<div id="conciliadokg"></div>
+													</div>
 												</div>
-											</div>
-										@endif
+												@break
+										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
 									</div>
 								</div>
@@ -392,18 +421,22 @@
 					</div>
 				</form>
 			`);
-			if('{{$SolicitudServicio->SolSerStatus === "Conciliado"}}'){
-				$('#SolResKgTratado').inputmask({ alias: 'numeric', max:conciliado, rightAlign:false});
-			}else{
-				numeroKg();
-			}
+			switch('{{$SolicitudServicio->SolSerStatus}}'){
+				case('Programado'):
+					numeroKg();
+					break;
+				case('Completado'):
+				case('Conciliado'):
+					$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					break;
+			};
 			$('#editkgResivido').modal();
 			$('#FormKg').validator('update');
 		};
 
-		function submit(conciliado){
+		function submit(cantidadmax){
 			$('#conciliadokg').append(`
-				<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+conciliado+`">
+				<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
 			`);
 			$('#ValorConciliado').prop('type', "submit");
 		}

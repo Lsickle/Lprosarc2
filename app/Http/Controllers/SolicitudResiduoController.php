@@ -124,16 +124,24 @@ class SolicitudResiduoController extends Controller
         $Validate = $request->validate([
             'SolResKg'  => 'required|max:11',
         ]);
-
-        if($SolSer->SolSerStatus === 'Completado'){
-            $SolRes->SolResKgRecibido = $request->input('SolResKg');
-            $SolRes->SolResKgConciliado = $request->input('SolResKg');
-        }else{
-            if( $request->input('ValorConciliado') === NULL){
-                $SolRes->SolResKgTratado = $request->input('SolResKg');
-            }else{
-                $SolRes->SolResKgTratado = $request->input('ValorConciliado');
-            }
+        switch($SolSer->SolSerStatus){
+            case 'Programado':
+                $SolRes->SolResKgRecibido = $request->input('SolResKg');
+                $SolRes->SolResKgConciliado = $request->input('SolResKg');
+                break;
+            case 'Completado':
+                $SolRes->SolResKgConciliado = $request->input('SolResKg');
+                break;
+            case 'Conciliado':
+                if( $request->input('ValorConciliado') === NULL){
+                    $SolRes->SolResKgTratado = $request->input('SolResKg');
+                }else{
+                    $SolRes->SolResKgTratado = $request->input('ValorConciliado');
+                }
+                break;
+            default:
+                abort(500);
+                break;
         }
         $SolRes->save();
 
