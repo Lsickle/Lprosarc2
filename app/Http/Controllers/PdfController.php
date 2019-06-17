@@ -8,12 +8,9 @@ use PDF;
 class PdfController extends Controller
 {
 	// function para generar PDF del manifiesto de carga
-	public function PdfManiCarg($id1, $id2)
+	public function PdfManiCarg($id)
 	{
-		return $id1.' - '.$id2;
-		$id = 'prueba.pdf';
-		return view('documentos.ManifiestoCarga', compact('id'));
-		$data = ['id' => 'Welcome to HDTuto.com'];
+		$data = ['id' => $id];
 		$pdf = PDF::loadView('documentos.ManifiestoCarga', $data);
 		return $pdf->download('Prueba.pdf');
 	}

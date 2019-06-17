@@ -15,9 +15,12 @@ class CreateManifiestoCargaTable extends Migration
     {
         Schema::create('manifiestos_carga', function (Blueprint $table) {
             $table->bigIncrements('ID_ManiCarg');
-            $table->unsignedInteger('FK_ManiCargSolSer')->nullable();
-            $table->foreign('FK_ManiCargSolSer')->references('ID_SolSer')->on('solicitud_servicios')->onDelete('cascade');
+            $table->unsignedInteger('FK_ManiCargProgVeh')->nullable();
+            $table->foreign('FK_ManiCargProgVeh')->references('ID_ProgVeh')->on('progvehiculos')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

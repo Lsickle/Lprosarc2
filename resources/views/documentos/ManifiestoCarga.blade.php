@@ -45,11 +45,11 @@
 	</header>
 	<section>
 		<div style="width: 15rem; float: left;">{{now()}}</div>
-		<div style="width: 50rem; text-align: center; float: left;">No. <span style="color: red;">{{ $id }}</span></div>
+		<div style="width: 50rem; text-align: center; float: left;"><b>No. <span style="color: red;">{{ $id }}</span></b></div>
 		<div style="width: 10rem; float: left;">
 			Auditable
 		</div>
-		<table border="1px" style="margin-top: 15rem;">
+		<table border="1px" style="margin-top: 15rem; border-collapse: collapse; width: 75rem;">
 			<thead>
 				<tr>
 					<th>Unidades</th>
