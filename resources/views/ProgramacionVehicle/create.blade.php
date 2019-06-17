@@ -260,7 +260,6 @@
 		var calendarEl = document.getElementById('calendar');
 		var Draggable = FullCalendarInteraction.Draggable;
 		var containerEl = document.getElementById('external-events');
-		var checkbox = document.getElementById('drop-remove');
 		new Draggable(containerEl, {
 			itemSelector: '.external-event',
 			eventData: function(eventEl) {
@@ -283,7 +282,7 @@
 				week: 'Semana'
 			},
 			defaultRangeSeparator: ' - ',
-			allDaySlot : false,
+			height: 'parent',
 			customButtons: {
 				AddMantVehc: {
 					text: 'Añadir Mantenimiento',
@@ -371,7 +370,6 @@
 				$('.ProgVehFecha').val(dropInfo.dateStr);
 				$('#ProgVehSalida').val(hora);
 			},
-			timeZoneName: 'short',
 			eventReceive: function( info ) {
 				var id = info.event.id;
 				var tipo = info.event.title;

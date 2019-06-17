@@ -41,4 +41,7 @@ class SolicitudServicio extends Model
 	public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
+	public function ManifiestoCarga(){
+		return $this->hasMany('App\ManifiestoCarga','ID_ManiCarg','id');//como solicitud de servicio tiene muchos manifiesto de carga
+	}
 }

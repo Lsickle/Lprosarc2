@@ -550,6 +550,11 @@
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
 				`);
 			@endif
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
+				$('#titulo').append(`
+					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><spam>{{$TextProgramacion}}</spam>
 			`);
@@ -559,6 +564,11 @@
 			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
+				`);
+			@endif
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
+				$('#titulo').append(`
+					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
@@ -577,6 +587,11 @@
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
 				`);
 			@endif
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
+				$('#titulo').append(`
+					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
 			`);
@@ -588,6 +603,11 @@
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
 				`);
 			@endif
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
+				$('#titulo').append(`
+					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
 			`);
@@ -597,6 +617,11 @@
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>
 			`);
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
+				$('#titulo').append(`
+					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
 		@break
 	@endswitch
 </script>

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\RecursosStoreRequest;
 use App\audit;
 use App\Recurso;
 use App\cliente;
@@ -118,28 +120,36 @@ class RecursoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecursosStoreRequest $request, $id)
     {
-        $Validate = $request->validate([
-            'RecTipo' => 'required|max:32',
-            'RecCarte' => 'required|max:32',
-        ]);
+        // $Validate = $request->validate([
+        //     'RecTipo' => 'required|max:32',
+        //     'RecCarte' => 'required|max:32',
+        // ]);
 
-        switch($request->input("RecCarte")){
-            case 'Foto':
-                $validate = $request->validate([
-                    'RecSrc' => 'mimes:jpeg,bmp,png|required',
-                ]);
-                break;
-            case 'Video':
-                $validate = $request->validate([
-                    'RecSrc' => 'mimes:mp4|required',
-                ]);
-                break;
-            default:
-                abort(500);
-            break;
-        }
+        // switch($request->input("RecCarte")){
+        //     case 'Foto':
+        //         $validate = $request->validate([
+        //             'RecSrc.*' => 'mimes:jpeg,jpg,png|required',
+        //         ]);
+
+        //         if (isset($request['RecSrc'])) {
+        //             $pdf = $request['RecSrc'];
+        //             foreach($pdf as $key => $value){
+        //                 $attributes['RecSrc.'.$key] = '"Hoja de Seguridad N° '.($key+1).'"';
+        //             }
+        //         }
+                
+        //         break;
+        //     case 'Video':
+        //         $validate = $request->validate([
+        //             'RecSrc.*' => 'mimes:mp4|required',
+        //         ]);
+        //         break;
+        //     default:
+        //         abort(500);
+        //     break;
+        // }
 
         $SolRes = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
@@ -152,7 +162,7 @@ class RecursoController extends Controller
             ->first();
             
         if ($request->hasfile('RecSrc')){
-            foreach($request->RecSrc as $file){ 
+            foreach($request->RecSrc as $file){
                 
                 $name = time().$file->getClientOriginalName();
                 $Extension = $file->extension();
