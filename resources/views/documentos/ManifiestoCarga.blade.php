@@ -5,30 +5,51 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Manifiesto de Carga</title>
+	<link rel="stylesheet" type="text/css" href="{{public_path()}}/css/manifiesto-carga-style.css">
 </head>
-
 <body>
-	<header style="position: relative;">
-		<div>
-			{{-- <img src="{{public_path()}}/img/LogoProsarcCompleto.png" style="width: 13rem; height: 1.5rem;"><br> --}}
-			<img src="/img/LogoProsarcCompleto.png" style="width: 13rem; height: 3rem;"><br>
-			<small><b>NIT. 900.079.188-0</b></small>
-		</div>
-		<div class="col-md-6">
-			<label>ENTREGA Y RECIBO DE MATERIAL</label>
-			<label>TRANSPORTE - RECOLECCION</label>
-		</div>
-		<div class="col-md-3">
-			<div class="col-md-12">FORMATO</div>
-			<div class="col-md-4">FR-06</div>
-			<div class="col-md-4">REV.3</div>
-			<div class="col-md-4">Feb/2014</div>
-		</div>
+	<header>
+		<table id="header">
+			<tr>
+				<th id="header1" rowspan="2">
+					<img src="{{public_path()}}/img/LogoProsarcCompleto.png" style="width: 20rem; height: 3.8rem;"><br>
+					{{-- <img src="/img/LogoProsarcCompleto.png" style="width: 100%; height: 80%;"><br> --}}
+					<small><b>NIT. 900.079.188-0</b></small>
+				</th>
+				<th id="textheader1">
+					<div>
+						<b>ENTREGA Y RECIBO DE MATERIAL</b>
+					</div>
+				</th>
+				<th id="textheader3" colspan="4">
+					<div>
+						<b>FORMATO</b>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<th id="textheader2">
+					<b>TRANSPORTE - RECOLECCION</b>
+				</th>
+				<td id="textheader4">
+					<div>FR-06</div>
+				</td>
+				<td id="textheader5">
+					<div>REV.3</div>
+				</td>
+				<td id="textheader6" colspan="2">
+					<div>Feb/2014</div>
+				</td>
+			</tr>
+		</table>
 	</header>
-	<section style="position: relative;">
-		<h1>Welcome to ñoño tiene café .com - {{ $title }}</h1>
-
-		<table>
+	<section>
+		<div style="width: 15rem; float: left;">{{now()}}</div>
+		<div style="width: 50rem; text-align: center; float: left;"><b>No. <span style="color: red;">{{ $id }}</span></b></div>
+		<div style="width: 10rem; float: left;">
+			Auditable
+		</div>
+		<table border="1px" style="margin-top: 15rem; border-collapse: collapse; width: 75rem;">
 			<thead>
 				<tr>
 					<th>Unidades</th>

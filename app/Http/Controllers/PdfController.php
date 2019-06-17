@@ -10,9 +10,7 @@ class PdfController extends Controller
 	// function para generar PDF del manifiesto de carga
 	public function PdfManiCarg($id)
 	{
-		$title = 'prueba.pdf';
-		return view('documentos.ManifiestoCarga', compact('title'));
-		$data = ['title' => 'Welcome to HDTuto.com'];
+		$data = ['id' => $id];
 		$pdf = PDF::loadView('documentos.ManifiestoCarga', $data);
 		return $pdf->download('Prueba.pdf');
 	}
