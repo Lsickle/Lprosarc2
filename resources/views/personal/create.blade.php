@@ -104,7 +104,7 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersFirstName">{{ trans('adminlte_lang::message.persfirstname') }}</label><small class="help-block with-errors">*</small>
-															<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}" x-inputmode="numeric">
+															<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label>

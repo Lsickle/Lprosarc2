@@ -115,7 +115,7 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersLastName">{{ trans('adminlte_lang::message.perslastname') }}</label><small class="help-block with-errors">*</small>
-															<input  required name="PersLastName"  type="text" class="form-control nombres" id="PersLastName" value="{{old('PersLastName')}}">
+															<input  required name="PersLastName" type="text" class="form-control nombres" id="PersLastName" value="{{old('PersLastName')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersEmail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
