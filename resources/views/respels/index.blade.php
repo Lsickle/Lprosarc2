@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Lista de Residuos')
+@section('htmlheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('contentheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -8,7 +8,7 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
