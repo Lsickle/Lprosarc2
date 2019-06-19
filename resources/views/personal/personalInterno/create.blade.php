@@ -107,10 +107,10 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersFirstName">{{ trans('adminlte_lang::message.persfirstname') }}</label><small class="help-block with-errors">*</small>
-															<input  required name="PersFirstName"  type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
+															<input required name="PersFirstName"  type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
 														</div>
 														<div class="form-group col-md-6">
-															<label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label>
+															<label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label><small class="help-block with-errors"></small>
 															<input name="PersSecondName"  type="text" class="form-control nombres" id="PersSecondName" value="{{old('PersSecondName')}}">
 														</div>
 														<div class="form-group col-md-6">
@@ -123,11 +123,11 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
-															<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
+															<input data-minlength="12" required name="PersCellphone" type="tel" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersAddress">{{ trans('adminlte_lang::message.address') }}</label>
-															<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
+															<input name="PersAddress" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
 														</div>
 													</div>
 												</div>
