@@ -107,15 +107,15 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersFirstName">{{ trans('adminlte_lang::message.persfirstname') }}</label><small class="help-block with-errors">*</small>
-															<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
+															<input  required name="PersFirstName"  type="text" class="form-control nombres" id="PersFirstName" value="{{old('PersFirstName')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label>
-															<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName" value="{{old('PersSecondName')}}">
+															<input name="PersSecondName"  type="text" class="form-control nombres" id="PersSecondName" value="{{old('PersSecondName')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersLastName">{{ trans('adminlte_lang::message.perslastname') }}</label><small class="help-block with-errors">*</small>
-															<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName" value="{{old('PersLastName')}}">
+															<input  required name="PersLastName" type="text" class="form-control nombres" id="PersLastName" value="{{old('PersLastName')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersEmail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
