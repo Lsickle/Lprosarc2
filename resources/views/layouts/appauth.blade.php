@@ -33,6 +33,9 @@
         .justify-content-center{
             margin-top: 8%;
         }
+        .in {
+          display: block !important;
+        }
     </style>
 
     {{-- script de idioma --}}
