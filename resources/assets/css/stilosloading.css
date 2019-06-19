@@ -132,6 +132,12 @@
 		width: 15rem;
 		top: -51rem;
 	}
+	.navbar-mobile{
+		top: -50px;
+	}
+	.breadcrumb{
+		display: none;
+	}
 }
 @media screen and (max-width:1024px) and (min-width:640px) {
 	#Superior{
@@ -166,6 +172,9 @@
 		margin-right: 25vw;
 		top: -68.2rem;
 	}
+	.navbar-mobile{
+		top: 0;
+	}
 }
 @media screen and (min-width:1024px) {
 	#Superior{
@@ -199,5 +208,8 @@
 		width: 30rem;
 		margin-right: 20vw;
 		top: -102.6rem;
+	}
+	.navbar-mobile{
+		top: 0;
 	}
 }
