@@ -640,4 +640,16 @@ function NotifiFalse(Mensaje) {
 		activateOptionScripts();
 	});
 </script>
+<script>
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    $("#topLogo").removeClass('navbar-mobile');
+  } else {
+    $("#topLogo").addClass('navbar-mobile');
+  }
+  prevScrollpos = currentScrollPos;
+}
+</script>
 @yield('NewScript')
