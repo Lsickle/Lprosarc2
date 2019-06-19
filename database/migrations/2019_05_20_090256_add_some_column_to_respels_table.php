@@ -13,7 +13,7 @@ class AddSomeColumnToRespelsTable extends Migration
      */
     public function up()
     {
-        Schema::table('Respels', function (Blueprint $table) {
+        Schema::table('respels', function (Blueprint $table) {
             $table->string('RespelFoto', 128)->nullable();
             $table->boolean('SustanciaControlada'); /*si=1 o no=0*/
             $table->boolean('SustanciaControladaTipo')->nullable(); /*sustancia controlada=1 o sustancia de uso masivo=0*/
@@ -30,7 +30,7 @@ class AddSomeColumnToRespelsTable extends Migration
      */
     public function down()
     {
-        Schema::table('Respels', function (Blueprint $table) {
+        Schema::table('respels', function (Blueprint $table) {
             $table->dropColumn('RespelFoto');
             $table->dropColumn('SustanciaControlada');
             $table->dropColumn('SustanciaControladaTipo');

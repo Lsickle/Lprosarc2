@@ -27,7 +27,7 @@
 				<select id="selectDanger0" name="RespelIgrosidad[]" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ (old('RespelIgrosidad.0') === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+					<option value ="{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ (old('RespelIgrosidad.0') === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger1') }}
 					</option>
 
@@ -123,6 +123,7 @@ function attachPopover() {
 		placement: 'auto',
 	});
 }
+
 function setDanger(id) {
 	var ifDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifDangerRespel')`;
 	$("#danger" + id).empty();
