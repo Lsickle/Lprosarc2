@@ -1,21 +1,21 @@
 <!-- REQUIRED JS SCRIPTS -->
 <!-- JQuery and bootstrap are required by Laravel 5.3 in resources/assets/js/bootstrap.js-->
 <!-- Laravel App -->
-<script src="{{ url (mix('/js/app.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/app.js')) }}"></script>
 {{-- Dependencias Package.json --}}
-<script src="{{ url (mix('/js/dependencias.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/dependencias.js')) }}"></script>
 {{-- Dependencias pdfmake --}}
 @if(Auth::user()->UsRol == 'Programador')
-<script src="{{ url (mix('/js/dependencias2.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/dependencias2.js')) }}"></script>
 @endif
 <!-- DataTables -->
-<script src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
-<script src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 {{-- fullcalendar --}}
-<script src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
-<script>
+<script type="text/javascript">
 	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
 		$('#contenido').fadeIn(2000);
@@ -24,7 +24,7 @@
 		}, 2000);
 	}
 </script>
-<script>
+<script type="text/javascript">
 $('form[data-toggle="validator"]').validator({
 	custom: {
 		filesize: function($el) {
@@ -45,7 +45,7 @@ $('form[data-toggle="validator"]').validator({
 	}
 });
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 	$('.select').select2({
 		placeholder: "Seleccione...",
@@ -56,7 +56,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 	$('.select-multiple').select2({
 		allowClear: true,
@@ -101,9 +101,17 @@ $(document).ready(function() {
 		});
 	});
 </script>
-
-{{-- Mascaras --}}
 <script>
+	$(document).ready(function(){
+		var ua = navigator.userAgent.toLowerCase();
+		var isAndroid = ua.indexOf("android") > -1; 
+		if(isAndroid) {
+			// $('.nombres').removeClass('nombres');
+		}
+	});
+</script>
+{{-- Mascaras --}}
+<script type="text/javascript">
 $(document).ready(function() {
 	$('.nit').inputmask({ mask: "[9][9][9.][9][9][9.][9][9][9-][9]" });
 	$('.phone').inputmask({ mask: "03[9 ][9][9][9][9][9][9][9]" });
@@ -112,9 +120,9 @@ $(document).ready(function() {
 
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]" });
-	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]" });
-	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd" });
+	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]",disablePredictiveText:true});
+	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]",disablePredictiveText:true});
+	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
 		alias: "currency",
 		rightAlign: false,
@@ -131,6 +139,7 @@ $(document).ready(function() {
 		placeholder: "00:00 AM"
 	});
 	$('.number').inputmask({ mask: "[9{0,40}]" });
+
 });
 	function numeroDimension(){
 		$('.numberDimension').inputmask({ alias: 'numeric', max:20, rightAlign:false});
@@ -139,7 +148,7 @@ $(document).ready(function() {
 		$('.numberKg').inputmask({ alias: 'numeric', max:50000, rightAlign:false});
 	}
 </script>
-<script>
+<script type="text/javascript">
 function Switch1() {
 	$(".testswitch").bootstrapSwitch({
 		animate: true,
@@ -149,7 +158,7 @@ function Switch1() {
 $(document).ready(Switch1());
 
 </script>
-<script>
+<script type="text/javascript">
 function Switch2() {
 	$(".fotoswitch").bootstrapSwitch({
 		animate: true,
@@ -161,7 +170,7 @@ function Switch2() {
 $(document).ready(Switch2());
 
 </script>
-<script>
+<script type="text/javascript">
 function Switch3() {
 	$(".videoswitch").bootstrapSwitch({
 		animate: true,
@@ -173,7 +182,7 @@ function Switch3() {
 $(document).ready(Switch3());
 
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function Switch4() {
 	$(".AllowUncheck").bootstrapSwitch({
 		animate: true,
@@ -185,7 +194,7 @@ $(document).ready(function Switch4() {
 });
 
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function Switch5() {
 	$(".CalendarSwitch").bootstrapSwitch({
 		animate: true,
@@ -197,7 +206,7 @@ $(document).ready(function Switch5() {
 });
 
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function Switch6() {
 	$(".CheckMin").bootstrapSwitch({
 		size: "mini",
@@ -210,7 +219,7 @@ $(document).ready(function Switch6() {
 });
 
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 	$('#RequerimientosTable').DataTable({
 		"scrollX": false,
@@ -238,7 +247,7 @@ $(document).ready(function() {
 @if(
 Route::currentRouteName()=='tarifas.index'
 )
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 
 	/*var rol defino el rol del usuario*/
@@ -284,7 +293,7 @@ $(document).ready(function() {
 
 </script>
 @endif
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){
 		$("#departamento").change(function(e){
 			id=$("#departamento").val();
@@ -314,7 +323,7 @@ $(document).ready(function() {
 </script>
 {{-- extension de la sede --}}
 @if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit' ||  Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		$(".tel").change(function(){
 			if($(this).val().length>10){
@@ -326,14 +335,14 @@ $(document).ready(function() {
 	});
 </script>
 	@if(Route::currentRouteName() === 'clientes.create' || Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit' || Route::currentRouteName() === 'sclientes.create' ||  Route::currentRouteName() === 'sclientes.edit')
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function(){    
 				if({{old('SedeExt2')}} !== null){
 					$('.ext').prop('disabled', false);
 				};
 			});
 		</script>
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function(){    
 			if({{old('SedeExt1')}} !== null){
 					$('.ext2').prop('disabled', false);
@@ -342,14 +351,14 @@ $(document).ready(function() {
 		</script>
 	@endif
 	@if(Route::currentRouteName() === 'generadores.create' || Route::currentRouteName() === 'sgeneradores.create' || Route::currentRouteName() === 'sgeneradores.edit')
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function(){    
 				if({{old('GSedeExt1')}} !== null){
 					$('.ext').prop('disabled', false);
 				};
 			});
 		</script>
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function(){    
 			if({{old('GSedeExt2')}} !== null){
 					$('.ext2').prop('disabled', false);
@@ -357,21 +366,21 @@ $(document).ready(function() {
 			});
 		</script>
 	@endif
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){  
 		if($('.tel').val()){
 			$('.ext').prop('disabled', false);
 		}
 	});
 </script>
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){  
 		if($('.tel2').val()){
 			$('.ext2').prop('disabled', false);
 		}
 	});
 </script>
-<script>
+<script type="text/javascript">
 	function Tel(){
 		$(".tel2").change(function(){
 			if($(this).val().length>10){
@@ -387,7 +396,7 @@ $(document).ready(function() {
 </script>
 @endif
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
-<script>
+<script type="text/javascript">
 function AddVehiculo() {
 	document.getElementById('AddVehiculo').style.display = 'block';
 	$('#VehicPlaca').prop('required', true);
@@ -409,7 +418,7 @@ function NoAddVehiculo() {
 
 </script>
 @endif
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 	popover();
 });
@@ -417,7 +426,7 @@ function popover(){
 	$('[data-toggle="popover"]').popover();
 }
 </script>
-<script>
+<script type="text/javascript">
 function copiarAlPortapapeles(id_elemento) {
 	var aux = document.createElement("input");
 	aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
@@ -430,7 +439,7 @@ function copiarAlPortapapeles(id_elemento) {
 }
 
 </script>
-<script>
+<script type="text/javascript">
 toastr.options = {
 	"closeButton": true,
 	"debug": true,
@@ -459,11 +468,11 @@ function NotifiFalse(Mensaje) {
 {{-- Aparicion del modal si existe la variable errors --}}
 @if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
 	@if ($errors->any())
-		<script>
-			$(document).ready(function() {
-				$("#add").modal("show");
-			});
-		</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#add").modal("show");
+		});
+	</script>
 	@endif
 @endif
 @if(Route::currentRouteName() === 'contactos.show')
@@ -558,7 +567,7 @@ function NotifiFalse(Mensaje) {
 		});
 	});
 </script>
-<script>
+<script type="text/javascript">
 	function AnimationMenusForm(target){
 		var icon = $("button[data-target='"+target+"']").find('svg');
 		if ($(icon).hasClass('fa-plus')){
@@ -570,7 +579,7 @@ function NotifiFalse(Mensaje) {
 		}
 	}
 </script>
-<script>
+<script type="text/javascript">
 	function Checkboxs(){
 		$('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
 			if(state == true){
@@ -603,6 +612,25 @@ function NotifiFalse(Mensaje) {
 			$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 			$(this).prop('disabled', true);
 		}
+	});
+</script>
+{{-- script para activar las funciones de los options --}}
+<script>
+	function activateOptionScripts() {
+		$('select').on('change', function(){
+			// var x="";
+			// var id="";
+			var option="";
+			// id = $(this).attr('id');
+			// x = $(this).val();
+			// option = $("[value=" + x.replace(" ", "\\ ") + "]");
+			option = $(this).children("option:selected");
+			option.click();
+			// alert(x);
+		});
+	}
+	$(document).ready(function(){
+		activateOptionScripts();
 	});
 </script>
 @yield('NewScript')

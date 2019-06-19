@@ -101,15 +101,20 @@ class RespelController extends Controller
         // ]);
         // return $request;
 
-
-        /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
-
+        if (Auth::user()->UsRol=='Cliente') {
             $UserSedeID = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
                 ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->value('sedes.ID_Sede');
+        }else{
+            $UserSedeID = $request->input('Sede');
+        }
+
+        /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
+
+            
             // return $UserSedeID;
 
             $Cotizacion = new Cotizacion();

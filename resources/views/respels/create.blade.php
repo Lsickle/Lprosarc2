@@ -45,7 +45,7 @@
 								@elseif(Auth::user()->UsRol=='Cliente')
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 								@endif
-								@include('layouts.RespelPartials.Respelform1')
+								@include('layouts.RespelPartials.respelform1')
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
