@@ -110,6 +110,10 @@ $(document).ready(function() {
 			$('.nombres').prop('pattern', '[A-Za-z ]+');
 			$('.nombres').attr('data-error', 'Unicamente letras');
 			$('.nombres').removeClass('nombres');
+			$('.inputText').prop('maxlength', '100');
+			$('.inputText').prop('pattern', '[A-Za-z ]+');
+			$('.inputText').attr('data-error', 'Unicamente letras');
+			$('.inputText').removeClass('inputText');
 		}
 	});
 </script>
@@ -123,7 +127,7 @@ $(document).ready(function() {
 
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]",disablePredictiveText:true});
+	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
 	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]"});
 	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
