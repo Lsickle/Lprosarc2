@@ -398,7 +398,6 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script>
 function AddVehiculo() {
-	alert('Hola');
 	document.getElementById('AddVehiculo').style.display = 'block';
 	$('#VehicPlaca').prop('required', true);
 	$('#VehicTipo').prop('required', true);

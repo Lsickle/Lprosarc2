@@ -50,7 +50,7 @@
                                                 </div>
                                                 <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
                                                     <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
-                                                    <select class="form-control" id="categoria" name="CliCategoria" onclick="AddVehiculo()" required>
+                                                    <select class="form-control" id="categoria" name="CliCategoria" required>
                                                         <option onclick="NoAddVehiculo()" value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                         <option onclick="AddVehiculo()" {{ old('CliCategoria') == trans('adminlte_lang::message.clienttransportador') ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
                                                         <option onclick="NoAddVehiculo()" {{old('CliCategoria') == trans('adminlte_lang::message.clientproveedor') ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clientproveedor') }}</option>
