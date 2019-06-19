@@ -101,7 +101,15 @@ $(document).ready(function() {
 		});
 	});
 </script>
-
+<script>
+	$(document).ready(function(){
+		var ua = navigator.userAgent.toLowerCase();
+		var isAndroid = ua.indexOf("android") > -1; 
+		if(isAndroid) {
+			// $('.nombres').removeClass('nombres');
+		}
+	});
+</script>
 {{-- Mascaras --}}
 <script>
 $(document).ready(function() {
@@ -112,9 +120,9 @@ $(document).ready(function() {
 
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]" });
-	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]" });
-	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd" });
+	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]",disablePredictiveText:true});
+	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]",disablePredictiveText:true});
+	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
 		alias: "currency",
 		rightAlign: false,
@@ -131,6 +139,7 @@ $(document).ready(function() {
 		placeholder: "00:00 AM"
 	});
 	$('.number').inputmask({ mask: "[9{0,40}]" });
+
 });
 	function numeroDimension(){
 		$('.numberDimension').inputmask({ alias: 'numeric', max:20, rightAlign:false});
@@ -389,6 +398,7 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script>
 function AddVehiculo() {
+	alert('Hola');
 	document.getElementById('AddVehiculo').style.display = 'block';
 	$('#VehicPlaca').prop('required', true);
 	$('#VehicTipo').prop('required', true);
@@ -459,22 +469,23 @@ function NotifiFalse(Mensaje) {
 {{-- Aparicion del modal si existe la variable errors --}}
 @if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
 	@if ($errors->any())
-	<script>
-	$(document).ready(function() {
-		$("#add").modal("show");
-	});
-
-	</script>
-	@endif
-@endif
-	@if(Route::currentRouteName() === 'contactos.show')
 		<script>
 		$(document).ready(function() {
-			$(".create").modal("show");
+			$("#add").modal("show");
 		});
 
 		</script>
 	@endif
+@endif
+@if(Route::currentRouteName() === 'contactos.show')
+	@if ($errors->any())
+		<script>
+		$(document).ready(function() {
+			$(".create").modal("show");
+		});
+		</script>
+	@endif
+@endif
 	
 @if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
