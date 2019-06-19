@@ -95,6 +95,9 @@ class RequerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
+
+        
         $Requerimiento = Requerimiento::where('ReqSlug', $id)->first();
         $Requerimiento->ReqFotoCargue = $request->input('ReqFotoCargue');
         $Requerimiento->ReqFotoDescargue = $request->input('ReqFotoDescargue');
