@@ -23,13 +23,13 @@
 									</div>
 								@endif
 							<div class="col-md-12 col-xs-12">
-								<label for="UsAvatar" class="img-responsive img-circle" title="Cambiar Foto" style="cursor: pointer; margin: 0 auto; width: 100px;">
+								<div id="foto" class="img-responsive img-circle" title="Cambiar Foto" style="cursor: pointer; margin: 0 auto; width: 100px;">
 									@if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
 										<img class="profile-user-img img-responsive img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar}}" alt="User profile picture">
 									@else
 										<img class="profile-user-img img-responsive img-circle" src="../../../img/defaultuser.png" alt="User profile picture">
 									@endif
-								</label>
+								</div>
 							</div>
 							<form role="form" action="/profile/{{$user->UsSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 								@method('PUT')
@@ -57,4 +57,11 @@
 			</div>
 		<!-- /.row -->
 	</div>
+@endsection
+@section('NewScript')
+	<script>
+		$('#foto').on('click', function(){
+			$('#UsAvatar').click();
+		});
+	</script>
 @endsection
