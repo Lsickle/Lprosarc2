@@ -19,6 +19,8 @@ return [
     'Respelinfotag'         => 'Información del Residuo',
     'Respeleditmenu'        => 'Edición del Residuo',
     'Respeledittag'         => 'Respel-Edición',
+    'Respelevaluatetag'     => 'Respel-Evaluar',
+    'Respelevaluetemenu'    => 'Evaluación de Residuo',
     'Respelasig'            => 'Asignación de tratamientos para Residuos',
     'RespelName'            => 'Nombre',
     'Respelclas'            => 'Clasificación 4741',
@@ -85,6 +87,7 @@ return [
     'aceptacionlabel'           => "Declaracion de veracidad",
     'CreaterespelButton'        => "Crear",
     'registerrespelButton'      => " Registrar",
+    'updaterespelButton'        => " Actualizar",
     'addrespelButton'           => " Agregar Residuo",
 
 

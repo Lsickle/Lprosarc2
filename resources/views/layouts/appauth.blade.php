@@ -36,6 +36,24 @@
         .in {
           display: block !important;
         }
+        @media screen and (max-width:640px) {
+            .g-recaptcha {
+                transform:scale(0.8);
+                transform-origin:0 0;
+            }
+        }
+        @media screen and (max-width:1024px) and (min-width:640px) {
+            .g-recaptcha {
+                transform:scale(0.6);
+                transform-origin:0 0;
+            }
+        }
+        @media screen and (min-width:1024px) {
+            .g-recaptcha {
+                transform:scale(1);
+                transform-origin:0 0;
+            }
+        }
     </style>
 
     {{-- script de idioma --}}
