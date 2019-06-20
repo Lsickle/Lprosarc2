@@ -39,11 +39,11 @@
 							<li class="list-group-item">
 								<b>Estado de aprobación</b>
 								<select disabled name="RespelStatus" class="form-control">
-									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
-									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>Rechazado</option>
-									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>Incompleto</option>
-									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>Vencido</option>
+									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
+									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
+									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuspendiente') }}</option>
+									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
+									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
 								</select>
 							</li>
 							<li class="list-group-item">
@@ -56,7 +56,7 @@
 								{{-- hoja de seguridad --}}
 								@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
 									<div class="col-md-12 form-group">
-										<label>Hoja de Seguridad</label>
+										<label>{{ trans('adminlte_lang::LangRespel.Respelhoja') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
@@ -66,7 +66,7 @@
 									</div>
 								@else
 									<div class="col-md-12 form-group">
-										<label>Hoja de Seguridad</label>
+										<label>{{ trans('adminlte_lang::LangRespel.Respelhoja') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="No Adjuntado" disabled>
 											<div class="input-group-btn">
@@ -78,7 +78,7 @@
 								{{-- tarjeta de emergencia --}}
 								@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
 									<div class="col-md-12 form-group">
-										<label>Tarjeta De Emergencia</label>
+										<label>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
@@ -88,7 +88,7 @@
 									</div>
 								@else
 									<div class="col-md-12 form-group">
-										<label>Tarjeta De Emergencia</label>
+										<label>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="No Adjuntado" disabled>
 											<div class="input-group-btn">
@@ -100,7 +100,7 @@
 								{{-- fotografia del residuo --}}
 								@if($Respels->RespelFoto!=='RespelFotoDefault.png')
 									<div class="col-md-12 form-group">
-										<label>Fotografía del Residuo</label>
+										<label>{{ trans('adminlte_lang::LangRespel.foto') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
@@ -110,7 +110,7 @@
 									</div>
 								@else
 									<div class="col-md-12 form-group">
-										<label>Fotografía del Residuo</label>
+										<label>{{ trans('adminlte_lang::LangRespel.foto') }}</label>
 										<div class="input-group">
 											<input type="text" class="form-control" value="No Adjuntado" disabled>
 											<div class="input-group-btn">
@@ -166,16 +166,16 @@
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
 								<li class="nav-item active">
-									<a class="nav-link" href="#Residuopane" data-toggle="tab">Residuo</a>
+									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">Tratamientos</a>
+									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">Requerimientos</a>
+									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">Tarifas</a>
+									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 								</li>
 							</ul>
 							<!-- nav-content -->
