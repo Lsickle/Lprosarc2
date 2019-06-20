@@ -392,6 +392,10 @@ function ResiduosGener(id_div, ID_Gener){
 		url: "{{url('/RespelGener')}}/"+ID_Gener,
 		method: 'GET',
 		data:{},
+		beforeSend: function(){
+			$(".load"+id_div+contadorRespel[id_div]).append('<i class="fas fa-sync-alt fa-spin"></i>');
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', true);
+		},
 		success: function(res){
 			if(res != ''){
 				var residuos = new Array();
@@ -409,6 +413,10 @@ function ResiduosGener(id_div, ID_Gener){
 				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
 			}
 		},
+		complete: function(){
+			$(".load"+id_div+contadorRespel[id_div]).empty();
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', false);
+		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			NotifiFalse("No se pudo conectar a la base de datos");
 		}
@@ -424,6 +432,10 @@ function RequeRespel(id_div, contador, Id_Respel){
 		url: "{{url('/RequeRespel')}}/"+Id_Respel,
 		method: 'GET',
 		data:{},
+		beforeSend: function(){
+			$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+			$("#municipio").prop('disabled', true);
+		},
 		success: function(res){
 			if(res[0] != ''){
 				if(res[0].ReqFotoDescargue === 1){
@@ -463,9 +475,14 @@ function RequeRespel(id_div, contador, Id_Respel){
 				HiddenRequeRespel(id_div, contador);
 			}
 		},
+		complete: function(){
+			$(".load").empty();
+			$("#municipio").prop('disabled', false);
+		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			HiddenRequeRespel(id_div, contador);
-		}
+		},
+		
 	});
 }
 function HiddenRequeRespel(id_div, contador){
@@ -520,6 +537,10 @@ function AgregarResPel(id_div,ID_Gener) {
 				$("#DivRepel"+id_div).empty();
 				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
 			}
+		},
+		complete: function(){
+			$(".load").empty();
+			$("#municipio").prop('disabled', false);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			NotifiFalse("No se pudo conectar a la base de datos");
