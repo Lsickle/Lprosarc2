@@ -42,7 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	
 	Route::resource('/clientes', 'clientcontoller');
-	Route::get('/cliente/{id}', 'clientcontoller@viewClientShow')->name('cliente');
+	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
+	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
+	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
