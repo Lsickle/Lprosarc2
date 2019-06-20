@@ -12,6 +12,10 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
+@if(Route::currentRouteName()=='vehicle-programacion.create')
+	{{-- fullcalendar --}}
+	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+@endif
 {{-- Chart --}}
 {{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
 
@@ -251,9 +255,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-@if(
-Route::currentRouteName()=='tarifas.index'
-)
+@if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -624,28 +626,19 @@ function NotifiFalse(Mensaje) {
 		if(!$('#'+idsubmit).hasClass('disabled')){
 			$(this).empty();
 			$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).prop('disabled', true);
+			$(this).attr('disabled', true);
 		}
 	});
 </script>
 {{-- script para activar las funciones de los options --}}
 <script>
-	function activateOptionScripts() {
+	$(document).ready(function(){
 		$('select').on('change', function(){
-			// var x="";
-			// var id="";
 			var option="";
-			// id = $(this).attr('id');
-			// x = $(this).val();
-			// option = $("[value=" + x.replace(" ", "\\ ") + "]");
 			option = $(this).children("option:selected");
 			option.click();
-			// alert(x);
 		});
 	}
-	$(document).ready(function(){
-		activateOptionScripts();
-	});
 </script>
 <script>
 var prevScrollpos = window.pageYOffset;

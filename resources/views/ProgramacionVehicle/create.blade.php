@@ -241,8 +241,6 @@
 @endsection
 
 @section('NewScript')
-{{-- fullcalendar --}}
-<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 
 <script>
 	@if ($errors->create->any())
