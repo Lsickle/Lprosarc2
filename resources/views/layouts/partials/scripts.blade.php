@@ -47,7 +47,7 @@ $('form[data-toggle="validator"]').validator({
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.select').select2({
+	$('select').select2({
 		placeholder: "Seleccione...",
 		allowClear: true,
 		width: 'resolve',
