@@ -698,4 +698,10 @@ var currentScrollPos = window.pageYOffset;
 	}
 </script>
 @endif
+<script>
+	$(document).ready(function(){
+		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{3,6}([.][a-zA-Z0-9_]{2})?');
+		$('input[type="email"]').attr('data-error', 'No es un emai valido');
+	})
+</script>
 @yield('NewScript')
