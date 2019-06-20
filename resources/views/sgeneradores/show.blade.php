@@ -143,37 +143,14 @@
 								<ul class="list-group" style="list-style:none; margin-top:10px;">
 									<li class="col-md-11 col-xs-12 col-12">
 										@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-											<a method='get' href='#' data-toggle='modal' data-target='#delete{{$Respel->ID_SGenerRes}}' style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$Generador->GenerShortname}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
 										@endif
 										<h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
 									</li>
 									<li class="col-md-12 col-xs-12 col-12">
 										{{--  Modal Eliminar un Residuo de una SedeGener--}}
 										@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-											<form action='/respelSGener/{{$Respel->SlugSGenerRes}}' method='POST' class="col-12 pull-right">
-												@method('DELETE')
-												@csrf
-												<div class="modal modal-default fade in" id="delete{{$Respel->ID_SGenerRes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-															<div class="modal-body">
-																<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<div style="font-size: 5em; color: red; text-align: center; margin: auto;">
-																	<i class="fas fa-exclamation-triangle"></i>
-																	<span style="font-size: 0.3em; color: black;">
-																		<p>{{ trans('adminlte_lang::message.modaldeletegener') }} <b><i>{{$Respel->RespelName}}</i></b> {{ trans('adminlte_lang::message.modalsgener') }} <b><i> {{$SedeGener->GSedeName}}</i></b>{{ trans('adminlte_lang::message.?') }} </p>
-																	</span>
-																</div> 
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
-																<label for="Eliminar{{$Respel->ID_SGenerRes}}" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
-															</div>
-														</div>
-													</div>
-												</div>
-												<input type="submit" id="Eliminar{{$Respel->ID_SGenerRes}}" style="display: none;">
-											</form>
+											<div class="deleterespelgener"></div>
 										@endif
 										{{-- END Modal --}}
 									</li>

@@ -168,6 +168,7 @@ return [
         'SedeExt2'      => '"Extensión 2 de la Sede"',
         'SedeCelular'   => '"Celular de la Sede"',
         'FK_SedeCli'    => '"Cliente"',
+        'FK_SedeMun'    => '"Municipio"',
 
         'PersDocNumber' => '"Número de Documento"',
         'PersEmail'     => '"Correo electrónico"',

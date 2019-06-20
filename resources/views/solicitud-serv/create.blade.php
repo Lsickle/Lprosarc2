@@ -81,7 +81,7 @@
 										</select>
 									</div>
 									<div class="form-group col-md-6">
-										<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label>
+										<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
 										<small class="help-block with-errors">*</small>
 										<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
 									</div>

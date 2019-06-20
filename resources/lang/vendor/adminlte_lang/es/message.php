@@ -213,7 +213,7 @@ return [
     'modaldeletegener'        => '¿Seguro, quiere eliminar',
     'modalgener'              => 'de todas las sedes del generador',
     'modaldelete'             => 'Si, eliminar',
-    'modalsgener'              => 'de la sedes',
+    'modalsgener'              => 'de la sede',
 
 
     // personal
