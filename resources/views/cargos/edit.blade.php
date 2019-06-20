@@ -32,7 +32,7 @@
 							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST' class="pull-right">
 								@method('DELETE')
 								@csrf
-								<input type="submit" class='btn btn-success btn-block' value="{{ trans('adminlte_lang::message.add') }}">
+								<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 							</form>
 						@endif
 					@endif

@@ -200,7 +200,7 @@
 							</div>
 						</div>
 						<div class="box-footer">
-							<input type="submit" class="btn btn-success pull-right" form="EditSolSer" value="{{ trans('adminlte_lang::message.update') }}">
+							<button type="submit" class="btn btn-success pull-right" form="EditSolSer">{{ trans('adminlte_lang::message.update') }}</button>
 						</div>
 					</form>
 				</div>

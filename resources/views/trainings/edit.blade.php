@@ -28,7 +28,7 @@
 						<form action='/capacitacion/{{$training->ID_Capa}}' method='POST' style="float: right;">
 							@method('DELETE')
 							@csrf
-							<input type="submit" class='btn btn-success' value="Añadir">
+							<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 						</form>
 					@endif
 				</div>

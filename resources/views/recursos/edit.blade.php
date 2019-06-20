@@ -39,7 +39,7 @@
                                 <form action='/recurso/{{$SolRes->SolResSlug}}' method='POST' style="float: right;">
                                 @method('DELETE')
                                 @csrf
-                                <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                                <button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
                                 </form>
                             @endif
 

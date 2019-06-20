@@ -47,7 +47,7 @@ $('form[data-toggle="validator"]').validator({
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.select').select2({
+	$('select').select2({
 		placeholder: "Seleccione...",
 		allowClear: true,
 		width: 'resolve',
@@ -613,14 +613,13 @@ function NotifiFalse(Mensaje) {
 			$('[type="submit"]').prop('disabled', true);
 			$('[type="submit"]').empty();
 			$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$('[type="submit"]').val(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 		}
 		$(this).submit(function(){
 			return false;
 		});
 		return true;
 	});
-	$('label').on('click', function(){
+	$('label.btn').on('click', function(){
 		var idsubmit = $(this).attr('for');
 		if(!$('#'+idsubmit).hasClass('disabled')){
 			$(this).empty();

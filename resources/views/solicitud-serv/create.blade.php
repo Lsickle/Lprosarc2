@@ -218,7 +218,7 @@
 							</div>
 						</div>
 						<div class="box-footer">
-							<input type="submit" class="btn btn-success pull-right" form="CreateSolSer" value="{{ trans('adminlte_lang::message.applyfor') }}">
+							<button type="submit" class="btn btn-success pull-right" form="CreateSolSer">{{ trans('adminlte_lang::message.applyfor') }}</button>
 						</div>
 					</form>
 				</div>

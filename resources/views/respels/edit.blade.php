@@ -257,7 +257,7 @@ Evaluación de Residuo
 							<!-- /.tab-content -->
 						</div>
 						<div class="row">
-							 <input class="btn btn-primary pull-right" type="submit" value="Actualizar" style="margin-right:5em" />
+							 <button class="btn btn-primary pull-right" type="submit" style="margin-right:5em">Actualizar</button>
 						</div>
 						<!-- /.nav-tabs-custom -->
 					</div>
