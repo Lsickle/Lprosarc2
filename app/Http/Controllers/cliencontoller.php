@@ -153,7 +153,7 @@ class clientcontoller extends Controller
             $user->FK_UserPers = $Personal->ID_Pers;
             $user->save();
 
-            $id = Auth::user()->UsSlug;
+            $id = Cliente::select('CliSlug')->where('ID_Cli', $Cliente->ID_Cli)->first();
                 
             return redirect()->route('cliente', compact('id'));
         }
@@ -179,8 +179,10 @@ class clientcontoller extends Controller
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            // $id = userController::IDClienteSegunUsuario();
-            $cliente = Cliente::where('CliSlug', $id)->first();
+            $ID_Cli = userController::IDClienteSegunUsuario();
+            // return $ID_Cli;
+            $cliente = Cliente::where('ID_Cli', $ID_Cli)->first();
+            // return $cliente;
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
