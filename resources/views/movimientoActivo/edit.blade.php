@@ -25,9 +25,9 @@ Articulos por Proveedor
                         </form>
                     @else
                         <form action='/movimiento-activos/{{$Movimientos->ID_MovAct}}' method='POST' style="float: right;">
-                        @method('DELETE')
-                        @csrf
-                        <input type="submit" class='btn btn-success btn-block' value="Añadir">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
                         </form>
                     @endif
                 </div>
