@@ -314,6 +314,10 @@ $(document).ready(function() {
 				url: "{{url('/muni-depart')}}/"+id,
 				method: 'GET',
 				data:{},
+				beforeSend: function(){
+					$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+					$("#municipio").prop('disabled', true);
+				},
 				success: function(res){
 					$("#municipio").empty();
 					var municipio = new Array();
@@ -323,6 +327,10 @@ $(document).ready(function() {
 							municipio.push(res[i].ID_Mun);
 						}
 					}
+				},
+				complete: function(){
+					$(".load").empty();
+					$("#municipio").prop('disabled', false);
 				}
 			})
 		});
@@ -652,4 +660,43 @@ var currentScrollPos = window.pageYOffset;
   prevScrollpos = currentScrollPos;
 }
 </script>
+@if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
+<script>
+	function deleteRespelGener(slug, RespelName, name){
+		$('.deleterespelgener').empty();
+		$('.deleterespelgener').append(`
+			<form action='/respelGener/`+slug+`' method='POST' role="form">
+				@method('DELETE')
+				@csrf
+				<div class="modal modal-default fade in" id="eliminar`+slug+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: red; text-align: center; margin: auto;" class="textodeleteRespelsSGener">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;">
+										<p>{{ trans('adminlte_lang::message.modaldeletegener') }} <b><i>`+RespelName+`</i></b> 
+										@if(Route::currentRouteName() === 'sgeneradores.show')
+											{{ trans('adminlte_lang::message.modalsgener') }} <b>
+										@else
+											{{ trans('adminlte_lang::message.modalgener') }} <b>
+										@endif
+											<i> `+name+`</i></b>{{ trans('adminlte_lang::message.?') }} </p>
+									</span>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+								<label for="delete`+slug+`" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="submit" id="delete`+slug+`" style="display: none;">
+			</form>
+		`);
+	}
+</script>
+@endif
 @yield('NewScript')

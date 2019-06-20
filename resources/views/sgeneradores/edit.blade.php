@@ -57,7 +57,7 @@
 										</select>
 									</div>
 									<div class="col-md-6 form-group">
-										<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label>
+										<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><a class="load"></a>
 										<select class="form-control select" id="municipio" name="FK_GSedeMun">
 											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach ($Municipios as $Municipio)
