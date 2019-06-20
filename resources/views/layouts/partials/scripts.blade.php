@@ -47,7 +47,7 @@ $('form[data-toggle="validator"]').validator({
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.select').select2({
+	$('select').select2({
 		placeholder: "Seleccione...",
 		allowClear: true,
 		width: 'resolve',
@@ -106,7 +106,14 @@ $(document).ready(function() {
 		var ua = navigator.userAgent.toLowerCase();
 		var isAndroid = ua.indexOf("android") > -1; 
 		if(isAndroid) {
-			// $('.nombres').removeClass('nombres');
+			$('.nombres').prop('maxlength', '60');
+			$('.nombres').prop('pattern', '[A-Za-z ]+');
+			$('.nombres').attr('data-error', 'Unicamente letras');
+			$('.nombres').removeClass('nombres');
+			$('.inputText').prop('maxlength', '100');
+			$('.inputText').prop('pattern', '[A-Za-z ]+');
+			$('.inputText').attr('data-error', 'Unicamente letras');
+			$('.inputText').removeClass('inputText');
 		}
 	});
 </script>
@@ -120,8 +127,8 @@ $(document).ready(function() {
 
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]",disablePredictiveText:true});
-	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]",disablePredictiveText:true});
+	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
+	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]"});
 	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
 		alias: "currency",
@@ -307,6 +314,10 @@ $(document).ready(function() {
 				url: "{{url('/muni-depart')}}/"+id,
 				method: 'GET',
 				data:{},
+				beforeSend: function(){
+					$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+					$("#municipio").prop('disabled', true);
+				},
 				success: function(res){
 					$("#municipio").empty();
 					var municipio = new Array();
@@ -316,6 +327,10 @@ $(document).ready(function() {
 							municipio.push(res[i].ID_Mun);
 						}
 					}
+				},
+				complete: function(){
+					$(".load").empty();
+					$("#municipio").prop('disabled', false);
 				}
 			})
 		});
@@ -598,14 +613,13 @@ function NotifiFalse(Mensaje) {
 			$('[type="submit"]').prop('disabled', true);
 			$('[type="submit"]').empty();
 			$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$('[type="submit"]').val(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 		}
 		$(this).submit(function(){
 			return false;
 		});
 		return true;
 	});
-	$('label').on('click', function(){
+	$('label.btn').on('click', function(){
 		var idsubmit = $(this).attr('for');
 		if(!$('#'+idsubmit).hasClass('disabled')){
 			$(this).empty();
@@ -632,5 +646,62 @@ function NotifiFalse(Mensaje) {
 	$(document).ready(function(){
 		activateOptionScripts();
 	});
+</script>
+<script>
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    $("#topLogo").removeClass('navbar-mobile');
+  } else {
+    $("#topLogo").addClass('navbar-mobile');
+  }
+  prevScrollpos = currentScrollPos;
+}
+</script>
+@if(Route::currentRouteName() === 'generadores.show' || Route::currentRouteName() === 'sgeneradores.show')
+<script>
+	function deleteRespelGener(slug, RespelName, name){
+		$('.deleterespelgener').empty();
+		$('.deleterespelgener').append(`
+			<form action='/respelGener/`+slug+`' method='POST' role="form">
+				@method('DELETE')
+				@csrf
+				<div class="modal modal-default fade in" id="eliminar`+slug+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: red; text-align: center; margin: auto;" class="textodeleteRespelsSGener">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;">
+										<p>{{ trans('adminlte_lang::message.modaldeletegener') }} <b><i>`+RespelName+`</i></b> 
+										@if(Route::currentRouteName() === 'sgeneradores.show')
+											{{ trans('adminlte_lang::message.modalsgener') }} <b>
+										@else
+											{{ trans('adminlte_lang::message.modalgener') }} <b>
+										@endif
+											<i> `+name+`</i></b>{{ trans('adminlte_lang::message.?') }} </p>
+									</span>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success pull-left" data-dismiss="modal">{{ trans('adminlte_lang::message.modalexit') }}</button>
+								<label for="delete`+slug+`" class='btn btn-danger'>{{ trans('adminlte_lang::message.modaldelete') }}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="submit" id="delete`+slug+`" style="display: none;">
+			</form>
+		`);
+	}
+</script>
+@endif
+<script>
+	$(document).ready(function(){
+		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{3,6}([.][a-zA-Z0-9_]{2})?');
+		$('input[type="email"]').attr('data-error', 'No es un emai valido');
+	})
 </script>
 @yield('NewScript')

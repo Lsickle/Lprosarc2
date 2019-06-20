@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Lista de Residuos')
+@section('htmlheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('contentheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -8,26 +8,26 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<a href="respels/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th>Nombre</th>
-								<th>Clasificación 4741</th>
-								<th>Peligrosidad</th>
-								<th>Estado del residuo</th>
-								<th>Hoja de Seguridad</th>
-								<th>Tarj. de Emergencia</th>
+								<th>{{trans('adminlte_lang::LangRespel.RespelName')}}</th>
+								<th>{{trans('adminlte_lang::LangRespel.Respelclas')}}</th>
+								<th>{{trans('adminlte_lang::LangRespel.Respeligro')}}</th>
+								<th>{{trans('adminlte_lang::LangRespel.Respelestado')}}</th>
+								<th>{{trans('adminlte_lang::LangRespel.Respelhoja')}}</th>
+								<th>{{trans('adminlte_lang::LangRespel.Respeltarj')}}</th>
 								@if(Auth::user()->UsRol !== "Cliente")
-									<th>Cliente</th>
+									<th>{{trans('adminlte_lang::LangRespel.Respelcliente')}}</th>
 								@endif
 								@if(Auth::user()->UsRol !== "Cliente")
-									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Evaluar</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
 								@else
-									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Ver Más...</th>
+									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelver')}}</th>
 								@endif
 							</tr>
 						</thead>

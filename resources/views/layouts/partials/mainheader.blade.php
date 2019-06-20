@@ -10,7 +10,7 @@
     </a>
 
     <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav id="topLogo" class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
             

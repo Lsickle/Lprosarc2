@@ -81,7 +81,7 @@
 										</select>
 									</div>
 									<div class="form-group col-md-6">
-										<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label>
+										<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
 										<small class="help-block with-errors">*</small>
 										<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
 									</div>
@@ -218,7 +218,7 @@
 							</div>
 						</div>
 						<div class="box-footer">
-							<input type="submit" class="btn btn-success pull-right" form="CreateSolSer" value="{{ trans('adminlte_lang::message.applyfor') }}">
+							<button type="submit" class="btn btn-success pull-right" form="CreateSolSer">{{ trans('adminlte_lang::message.applyfor') }}</button>
 						</div>
 					</form>
 				</div>

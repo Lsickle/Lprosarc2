@@ -32,7 +32,7 @@ Artículos por Proveedor
 						<form action='/articulos-proveedor/{{$ArtProvs->ID_ArtiProve}}' method='POST' style="float: right;">
 						@method('DELETE')
 						@csrf
-						<input type="submit" class='btn btn-success btn-block' value="Añadir">
+						<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 						</form>
 					@endif
 					{{-- <div class="box-tools pull-right">

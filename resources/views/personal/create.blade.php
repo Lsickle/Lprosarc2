@@ -49,7 +49,7 @@
 															</select>
 														</div>
 														<div class="form-group col-md-6">
-															<label for="CargArea">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
+															<label for="CargArea">{{ trans('adminlte_lang::message.areaname') }}</label><a class="loadCargArea"></a><small class="help-block with-errors">*</small>
 															<select name="CargArea" id="CargArea" class="form-control" required>
 																@if($Areas == null)
 																	<option value="" onclick="HiddenNewInputA()">{{ trans('adminlte_lang::message.select') }}</option>
@@ -62,7 +62,7 @@
 															</select>
 														</div>
 														<div class="form-group col-md-6" id="divFK_PersCargo" >
-															<label for="FK_PersCargo">{{ trans('adminlte_lang::message.cargoname') }}</label><small class="help-block with-errors">*</small>
+															<label for="FK_PersCargo">{{ trans('adminlte_lang::message.cargoname') }}</label><a class="loadFK_PersCargo"></a><small class="help-block with-errors">*</small>
 															<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
 																@if($Cargos == null)
 																	<option value="" onclick="HiddenNewInputC()">{{ trans('adminlte_lang::message.select') }}</option>
@@ -120,7 +120,7 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
-															<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
+															<input data-minlength="12" required name="PersCellphone" autofocus="true" type="tel" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersAddress">{{ trans('adminlte_lang::message.address') }}</label>
@@ -141,7 +141,7 @@
 						<!-- /.box-body -->
 					</form>
 				</div>
-						<!-- /.box -->
+				<!-- /.box -->
 			</div>
 		</div>
 	</div>
@@ -176,6 +176,10 @@
 						url: "{{url('/area-sede')}}/"+id,
 						method: 'GET',
 						data:{},
+						beforeSend: function(){
+							$(".loadCargArea").append('<i class="fas fa-sync-alt fa-spin"></i>');
+							$("#CargArea").prop('disabled', true);
+						},
 						success: function(res){
 							if(res != ''){
 								$("#CargArea").empty();
@@ -201,6 +205,10 @@
 								document.getElementById("NewInputC").required = true;
 							}
 						},
+						complete: function(){
+							$(".loadCargArea").empty();
+							$("#CargArea").prop('disabled', false);
+						}
 					})
 				}
 			});
@@ -217,6 +225,10 @@
 						url: "{{url('/cargo-area')}}/"+id,
 						method: 'GET',
 						data:{},
+						beforeSend: function(){
+							$(".loadFK_PersCargo").append('<i class="fas fa-sync-alt fa-spin"></i>');
+							$("#FK_PersCargo").prop('disabled', true);
+						},
 						success: function(res){
 							if(res != ''){
 								$("#FK_PersCargo").empty();
@@ -236,6 +248,10 @@
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
+						},
+						complete: function(){
+							$(".loadFK_PersCargo").empty();
+							$("#FK_PersCargo").prop('disabled', false);
 						}
 					})
 				}
