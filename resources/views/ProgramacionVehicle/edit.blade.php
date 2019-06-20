@@ -34,7 +34,7 @@
 							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST' class="pull-right">
 								@method('DELETE')
 								@csrf
-								<input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
+								<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 							</form>
 						@endif
 					@endif

@@ -47,7 +47,7 @@
 									<input required name="email" class="form-control" type="email" id="email" value="{{$user->email}}">
 								</div>
 								<div class="col-md-12 col-xs-12">
-									<input type="submit" class="btn btn-primary pull-right" value="{{ trans('adminlte_lang::message.update') }}">
+									<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
 							</form>
 						</div>
