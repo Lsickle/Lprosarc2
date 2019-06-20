@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.11",
         "acacha/admin-lte-template-laravel": "^6.0",
+        "anhskohbo/no-captcha": "^3.0",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
