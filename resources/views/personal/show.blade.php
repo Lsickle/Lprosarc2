@@ -34,9 +34,9 @@
 									  </form>
 									@else
 									  <form action='/personal/{{$Persona->PersSlug}}' method='POST' class="pull-left">
-									    @method('DELETE')
-									    @csrf
-									    <input type="submit" class='btn btn-success' value="{{ trans('adminlte_lang::message.add') }}">
+									  	@method('DELETE')
+									  	@csrf
+									  	<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 									  </form>
 									@endif
 								@endif
