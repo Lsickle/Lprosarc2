@@ -58,6 +58,7 @@
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}
     </noscript>
+    {!! NoCaptcha::renderJs() !!}
 </head>
 <body>
     <div id="app">
