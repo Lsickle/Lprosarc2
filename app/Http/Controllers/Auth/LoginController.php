@@ -90,4 +90,12 @@ class LoginController extends Controller
             $request->has('remember')
         );
     }
+    protected function validateLogin(Request $request)
+        {
+            $this->validate($request, [
+                $this->username() => 'required', 
+                'password' => 'required',
+                'g-recaptcha-response' => 'required|captcha',
+            ]);
+        }
 }

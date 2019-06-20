@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangRespel.respelmenu') }}
+{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelcreate') }}
@@ -34,9 +34,9 @@
 								@endif
 								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
 									<div class="col-md-12 form-group">
-										<label for="Sede">Sede del cliente</label>
+										<label for="Sede">{{ trans('adminlte_lang::LangRespel.createcliente') }}</label>
 										<select name="Sede" id="Sede" class="form-control" required>
-											<option value="">Seleccione</option>
+											<option value="">{{ trans('adminlte_lang::LangRespel.selecthem') }}</option>
 											@foreach($Sedes as $Cliente)
 												<option value="{{$Cliente->ID_Sede}}">{{$Cliente->CliName}}</option>
 											@endforeach
@@ -49,8 +49,8 @@
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-success"> Registrar</button>
-										<a onclick="AgregarRes()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Agregar Residuo</a>	
+										<button type="submit" class="btn btn-success">{{ trans('adminlte_lang::LangRespel.registerrespelButton') }}</button>
+										<a onclick="AgregarRes()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	
 									</div>
 								</div>
 							</form>
