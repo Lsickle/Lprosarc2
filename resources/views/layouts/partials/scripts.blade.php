@@ -13,7 +13,7 @@
 {{-- plugins de datatables --}}
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 {{-- Chart --}}
-<script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
+{{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
 
 <script type="text/javascript">
 	window.onload =function(){
