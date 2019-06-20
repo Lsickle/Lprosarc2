@@ -17,9 +17,10 @@
 
     {{-- Full Calendar --}}
      <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
+     {{-- Chart --}}
+     <link href="{{ mix('/css/chart.css') }}" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}">
 
