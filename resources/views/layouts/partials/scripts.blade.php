@@ -12,8 +12,6 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
-{{-- fullcalendar --}}
-<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 {{-- Chart --}}
 <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
 
