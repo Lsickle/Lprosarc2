@@ -10,6 +10,7 @@
 /public/img/**/*.pdf
 /public/img/**/*.jpg
 /public/img/**/*.gif
+/public/img/**/*.mp4
 /public/img/**/*.webp
 /public/js/*.js
 /storage/*.key

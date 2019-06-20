@@ -27,7 +27,7 @@
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
-		<select id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
+		<select onchange="selectDanger(`+contador+`)" id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
 			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 			<option onclick="setNoDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger1') }}</option>
 			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger2') }}</option>

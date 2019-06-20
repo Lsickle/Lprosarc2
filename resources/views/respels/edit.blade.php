@@ -86,8 +86,8 @@ Evaluación de Residuo
 @endcomponent
 <div class="container-fluid spark-screen">
 	<!-- form start -->
-	<form id="evaluacioncomercial" role="form" action="/Requerimientos/{{$Respels->ID_Respel}}" method="POST" enctype="multipart/form-data">
-		@method('POST')
+	<form id="evaluacioncomercial" role="form" action="/Requerimientos/{{$Respels->RespelSlug}}" method="POST" enctype="multipart/form-data">
+		@method('PUT')
 		@csrf
 		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 		<!-- row -->
