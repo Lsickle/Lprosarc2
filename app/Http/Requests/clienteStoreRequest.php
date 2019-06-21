@@ -26,7 +26,7 @@ class ClienteStoreRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        return [
+        $rule = [
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
                 $Cliente = DB::table('clientes')
                     ->select('clientes.CliNit')
@@ -67,7 +67,14 @@ class ClienteStoreRequest extends FormRequest
             'PersDocType'   => 'required|max:3|min:2',
             'PersCellphone' => 'required|max:12|min:12',
         ];
-            
-        
+        return $rule;
+    }
+    public function messages()
+    {
+        $request = $this->instance()->all();
+        $message = [
+        ];
+        $messages['PersEmail.unique'] = 'El campo "Correo Electronico de la Persona de Contacto" ya esta en uso ';
+        return $messages;
     }
 }

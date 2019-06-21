@@ -664,7 +664,11 @@ var currentScrollPos = window.pageYOffset;
 	function deleteRespelGener(slug, RespelName, name){
 		$('.deleterespelgener').empty();
 		$('.deleterespelgener').append(`
-			<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@if(Route::currentRouteName() === 'sgeneradores.show')
+				<form action='/respelSGener/`+slug+`' method='POST' role="form">
+			@else
+				<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@endif
 				@method('DELETE')
 				@csrf
 				<div class="modal modal-default fade in" id="eliminar`+slug+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -700,7 +704,7 @@ var currentScrollPos = window.pageYOffset;
 @endif
 <script>
 	$(document).ready(function(){
-		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{3,6}([.][a-zA-Z0-9_]{2})?');
+		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-zA-Z0-9_]{2})?');
 		$('input[type="email"]').attr('data-error', 'No es un emai valido');
 	})
 </script>
