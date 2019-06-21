@@ -34,7 +34,7 @@ class ClienteController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $cliente = cliente::select('CliNit')->where('CliSlug', $slug)->first();
+        $cliente = cliente::where('CliSlug', $slug)->first();
         $validate = $request->validate([
             'CliNit'        => ['required','min:13','max:13',Rule::unique('clientes')->ignore($cliente->CliNit, 'CliNit')],
             'CliName'       => 'required|max:255|min:1',
@@ -43,8 +43,8 @@ class ClienteController extends Controller
             
         $cliente->fill($request->all());
         $cliente->save();
-
-        return view('clientes.show', compact('cliente'));
+        $slug = $cliente->CliSlug;
+        return redirect()->route('cliente-show', compact('slug'));
         
     }
 }
