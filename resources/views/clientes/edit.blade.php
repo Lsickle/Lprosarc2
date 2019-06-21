@@ -15,7 +15,11 @@
 				</div>
 				<div class="box box-info">
 					<!-- form start -->
-					<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
+					@if(Route::currentRouteName() === 'clientes.edit')
+						<form role="form" action="/clientes/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
+					@else
+						<form role="form" action="/cliente/{{$cliente->CliSlug}}/update" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
+					@endif
 						@csrf
 						@method('PUT')
 						@if ($errors->any())

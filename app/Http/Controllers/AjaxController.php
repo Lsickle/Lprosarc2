@@ -7,7 +7,6 @@ use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
 
-
 class AjaxController extends Controller
 {
 	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/
@@ -78,7 +77,8 @@ class AjaxController extends Controller
 				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->select('respels.ID_Respel', 'respels.RespelName')
 				->where('clientes.ID_Cli', '=', $ID_Cli)
-				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+				->where('cotizacions.CotiStatus', '=', 'Aprobada')
 				->where('respels.RespelDelete', '=', 0)
 				->where(function ($query) use ($ResSGeners){
 					foreach ($ResSGeners as $ResSGener) {
@@ -99,24 +99,12 @@ class AjaxController extends Controller
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug')
 				->where('gener_sedes.GSedeSlug', $slug)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->get();
-			return $Respels;
+				return response()->json($Respels);
 		}
 	}
 	
-	/*Funcion para ver por medio de Ajax los Vehiculos que le competen a un Contacto*/
-	// public function VehiculosContacto(Request $request, $id)
-	// {
-	// 	if ($request->ajax()) {
-	// 		$Vehiculo = DB::table('vehiculos')
-	// 			->select('*')
-	// 			->where('ID_Vehic', $id)
-	// 			->where('VehicDelete', '=', 0)
-	// 			->get();
-	// 		return response()->json($Vehiculo);
-	// 	}
-	// }
-
 	/*Funcion para ver los requerimientos de un residuo sengun su tratamiento*/
 	public function RequeRespel(Request $request, $slug){
 		if($request->ajax()){
@@ -124,8 +112,8 @@ class AjaxController extends Controller
 				->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
 				->select('requerimientos.ReqFotoDescargue', 'requerimientos.ReqFotoDestruccion', 'requerimientos.ReqVideoDescargue', 'requerimientos.ReqVideoDestruccion')
 				->where('respels.RespelSlug', $slug)
-				->get();
-			return $Requerimientos;
+				->first();
+			return response()->json($Requerimientos);
 		}
 	}
 }

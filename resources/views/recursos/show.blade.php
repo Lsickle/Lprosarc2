@@ -295,7 +295,7 @@
     <script>
         function Pesaje(){
             $("#tipo").append(`
-                <option>Pesaje/Descargue</option>
+                <option>Pesaje-Descargue</option>
             `);
         }
         function Tratamiento(){
