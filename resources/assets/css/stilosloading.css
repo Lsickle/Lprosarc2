@@ -87,129 +87,94 @@
 	position: relative;
 	top: 1rem;
 	animation: superior 2s infinite;
+	height: 4.5rem;
+	width: 9rem;
 }
 #Derecho{
 	position: relative;
 	animation: derecho 2s infinite;
+	height: 5.4rem;
+	width: 5.8rem;
+	top: -1.4rem;
+	left: 3rem;
 }
 #Izquierdo{
 	position: relative;
 	animation: izquierdo 2s infinite;
+	height: 4.8rem;
+	width: 8.5rem;
+	top: -6rem;
+	left: -0.9rem;
 }
 #Inferior1{
 	position: relative;
 	animation: inferior1 2s infinite;
+	height: 2.5rem;
+	width: 9.9rem;
+	top: -6.7rem;
+	left: 0.5rem;
 }
 #Inferior2 {
 	position: relative;
 	animation: inferior2 2s infinite;
+	height: 2.5rem;
+	width: 7.9rem;
+	top: -7.8rem;
 }
 @media screen and (max-width:640px) {
-	#Superior{
-		height: 15rem;
-		width: 15rem;
-	}
-	#Derecho{
-		height: 15rem;
-		width: 15rem;
-		top: -11.8rem;
-		left: 4rem;
-	}
-	#Izquierdo{
-		height: 15rem;
-		width: 15rem;
-		top: -25.4rem;
-		left: -1.2rem;
-	}
-	#Inferior1{
-		height: 14.5rem;
-		width: 14.5rem;
-		top: -37.5rem;
-		left: 0.5rem;
-	}
-	#Inferior2 {
-		height: 15rem;
-		width: 15rem;
-		top: -51rem;
-	}
 	.navbar-mobile{
 		top: -50px;
 	}
 	.breadcrumb{
 		display: none;
 	}
+	#contenedor_carga>center{
+		transform: scale(1);
+	}
 }
 @media screen and (max-width:1024px) and (min-width:640px) {
 	#Superior{
-		height: 20rem;
-		width: 20rem;
 		margin-right: 25vw;
 	}
 	#Derecho{
-		height: 20rem;
-		width: 20rem;
 		margin-right: 25vw;
-		top: -16rem;
-		left: 5.5rem;
 	}
 	#Izquierdo{
-		height: 20rem;
-		width: 20rem;
 		margin-right: 25vw;
-		top: -34.1rem;
-		left: -1.7rem;
 	}
 	#Inferior1{
-		height: 19.5rem;
-		width: 19.5rem;
 		margin-right: 25vw;
-		top: -50.2rem;
-		left: 0.7rem;
 	}
 	#Inferior2 {
-		height: 20rem;
-		width: 20rem;
 		margin-right: 25vw;
-		top: -68.2rem;
 	}
 	.navbar-mobile{
 		top: 0;
+	}
+	#contenedor_carga>center{
+		transform: scale(1.5);
 	}
 }
 @media screen and (min-width:1024px) {
 	#Superior{
-		height: 30rem;
-		width: 30rem;
 		margin-right: 20vw;
 	}
 	#Derecho{
-		height: 30rem;
-		width: 30rem;
 		margin-right: 20vw;
-		top: -24.6rem;
-		left: 8.2rem;
 	}
 	#Izquierdo{
-		height: 30rem;
-		width: 30rem;
 		margin-right: 20vw;
-		top: -51.6rem;
-		left: -2.5rem;
 	}
 	#Inferior1{
-		height: 29rem;
-		width: 29rem;
 		margin-right: 20vw;
-		top: -75.8rem;
-		left: 1rem;
 	}
 	#Inferior2 {
-		height: 30rem;
-		width: 30rem;
 		margin-right: 20vw;
-		top: -102.6rem;
 	}
 	.navbar-mobile{
 		top: 0;
+	}
+	#contenedor_carga>center{
+		transform: scale(2);
 	}
 }

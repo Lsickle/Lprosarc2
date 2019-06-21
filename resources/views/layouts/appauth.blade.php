@@ -38,20 +38,59 @@
         }
         .in {
           display: block !important;
+        }        
+        @media screen and (max-width:640px) {
+            .g-recaptcha {
+                /*transform:scale(0.8);*/
+                transform-origin:0 0;
+            }
+        }
+        @media screen and (max-width:1024px) and (min-width:640px) {
+            .g-recaptcha {
+                /*transform:scale(0.6);*/
+                transform-origin:0 0;
+            }
+            #Superior{
+                margin-right: 0;
+            }
+            #Derecho{
+                margin-right: 0;
+            }
+            #Izquierdo{
+                margin-right: 0;
+            }
+            #Inferior1{
+                margin-right: 0;
+            }
+            #Inferior2 {
+                margin-right: 0;
+            }
+        }
+        @media screen and (min-width:1024px) {
+            .g-recaptcha {
+                /*transform:scale(1.049615);*/
+                transform-origin:0 0;
+            }
+            #Superior{
+                margin-right: 0;
+            }
+            #Derecho{
+                margin-right: 0;
+            }
+            #Izquierdo{
+                margin-right: 0;
+            }
+            #Inferior1{
+                margin-right: 0;
+            }
+            #Inferior2 {
+                margin-right: 0;
+            }
         }
         #contenedor_carga{
             background-image: linear-gradient(#003152,#003152,#008eda);
         }
     </style>
-    <script type="text/javascript">
-        window.onload =function(){
-            $('#contenedor_carga').css('opacity', '0');
-            $('#contenido').fadeIn(2000);
-            setTimeout(function(){
-                $('#contenedor_carga').remove();
-            }, 2000);
-        }
-    </script>
     {{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
@@ -125,9 +164,24 @@
             </div>
         </nav>
         @include('layouts.partials.loading')
-        <main class="container" id="contenido">
+        <main class="container" id="contenido" style="display: none;">
             @yield('content')
         </main>
     </div>
+    <script>
+        window.onload = function(){ 
+            // $('#contenedor_carga').css('opacity', '0');
+            // $('#contenido').fadeIn(2000);
+            setTimeout(function(){
+                // $('#contenedor_carga').remove();
+            }, 2000);
+            var input = document.getElementById('email');
+            var ancho = input.offsetWidth;
+            var scala = (ancho / (304));
+            var capchita = document.getElementsByClassName('g-recaptcha')[0];
+            capchita.style.transform = "scale("+scala+")";
+        };
+    </script>
+
 </body>
 </html>

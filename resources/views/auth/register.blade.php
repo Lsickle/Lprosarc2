@@ -64,7 +64,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 col-md-6 offset-md-4">
-                                {!! NoCaptcha::display() !!}
+                                {!! NoCaptcha::display(['data-theme' => 'dark', 'data-size' => 'normal', 'data-lang' => 'es']) !!}
                                 @if ($errors->has('g-recaptcha-response'))
                                     <span class="help-block text-danger" role="alert">
                                         <p>{{ $errors->first('g-recaptcha-response') }}</p>
