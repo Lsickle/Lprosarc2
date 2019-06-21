@@ -45,7 +45,7 @@
 								</select>
 							</div>
 							<div class="col-md-6 form-group">
-								<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><small class="help-block with-errors">*</small>
+								<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><a class="load"></a><small class="help-block with-errors">*</small>
 								<select class="form-control select" id="municipio" name="FK_SedeMun">
 									@foreach ($Municipios as $Municipio)
 										<option value="{{$Municipio->ID_Mun}}" {{ $Sede->FK_SedeMun == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
