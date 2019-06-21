@@ -62,12 +62,16 @@
 				</select>
 			</div>
 			<div id="danger0">
-				<select name="YRespelClasf4741[]" hidden="">
-					<option value="" selected></option>
-				</select>
-				<select name="ARespelClasf4741[]" hidden="">
-					<option value="" selected></option>
-				</select>
+				<div hidden="true">
+					<select name="YRespelClasf4741[]">
+						<option value="" selected></option>
+					</select>
+				</div>
+				<div hidden="true">
+					<select name="ARespelClasf4741[]">
+						<option value="" selected></option>
+					</select>
+				</div>
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>

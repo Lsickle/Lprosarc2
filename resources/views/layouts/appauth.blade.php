@@ -36,6 +36,24 @@
         .in {
           display: block !important;
         }
+        @media screen and (max-width:640px) {
+            .g-recaptcha {
+                /*transform:scale(0.8);*/
+                transform-origin:0 0;
+            }
+        }
+        @media screen and (max-width:1024px) and (min-width:640px) {
+            .g-recaptcha {
+                /*transform:scale(0.6);*/
+                transform-origin:0 0;
+            }
+        }
+        @media screen and (min-width:1024px) {
+            .g-recaptcha {
+                /*transform:scale(1.049615);*/
+                transform-origin:0 0;
+            }
+        }
     </style>
 
     {{-- script de idioma --}}
@@ -115,5 +133,18 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        window.onload = function(){ 
+            var input = document.getElementById('email');
+            var ancho = input.offsetWidth;
+            var scala = (ancho / (304));
+            var capchita = document.getElementsByClassName('g-recaptcha')[0];
+            // var ancho2 = capchita.offsetWidth;
+            capchita.style.transform = "scale("+scala+")";
+            // alert(ancho.offsetWidth);
+            // alert(ancho2);
+        };
+    </script>
+
 </body>
 </html>
