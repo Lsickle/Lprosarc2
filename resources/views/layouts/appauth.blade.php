@@ -19,6 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- Stilos Personalizados --}}
+    <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
+
     <style type="text/css">
         body {
            background-image: linear-gradient(#003152,#003152,#008eda);
@@ -36,8 +39,19 @@
         .in {
           display: block !important;
         }
+        #contenedor_carga{
+            background-image: linear-gradient(#003152,#003152,#008eda);
+        }
     </style>
-
+    <script type="text/javascript">
+        window.onload =function(){
+            $('#contenedor_carga').css('opacity', '0');
+            $('#contenido').fadeIn(2000);
+            setTimeout(function(){
+                $('#contenedor_carga').remove();
+            }, 2000);
+        }
+    </script>
     {{-- script de idioma --}}
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs
@@ -110,8 +124,8 @@
                 </div>
             </div>
         </nav>
-
-        <main class="container">
+        @include('layouts.partials.loading')
+        <main class="container" id="contenido">
             @yield('content')
         </main>
     </div>
