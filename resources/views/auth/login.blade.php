@@ -41,8 +41,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 col-md-6 offset-md-4">
-                                {!! NoCaptcha::display() !!}
+                            <div class="col-md-8 offset-md-4" id="html_element">
+                                {!! NoCaptcha::display(['data-theme' => 'light', 'data-size' => 'normal', 'data-lang' => 'es']) !!}
                                 @if ($errors->has('g-recaptcha-response'))
                                     <span class="help-block text-danger" role="alert">
                                         <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
