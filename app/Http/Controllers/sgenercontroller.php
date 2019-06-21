@@ -72,7 +72,7 @@ class sgenercontroller extends Controller
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $id)
                 ->where('respels.RespelDelete', '=', 0)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                 ->get();
             if (old('FK_GSedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
@@ -156,7 +156,7 @@ class sgenercontroller extends Controller
                 ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
                 ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                 ->where('respels.RespelDelete', '=', 0)
                 ->get();
 
@@ -166,7 +166,8 @@ class sgenercontroller extends Controller
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('respels.ID_Respel', 'respels.RespelName')
                 ->where('clientes.ID_Cli', '=', $Cliente->ID_Cli)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+                ->where('cotizacions.CotiStatus', '=', 'Aprobada')
                 ->where('respels.RespelDelete', '=', 0)
                 ->where(function ($query) use ($Respels){
                     foreach ($Respels as $Respel) {

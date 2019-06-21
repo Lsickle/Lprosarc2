@@ -664,7 +664,11 @@ var currentScrollPos = window.pageYOffset;
 	function deleteRespelGener(slug, RespelName, name){
 		$('.deleterespelgener').empty();
 		$('.deleterespelgener').append(`
-			<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@if(Route::currentRouteName() === 'sgeneradores.show')
+				<form action='/respelSGener/`+slug+`' method='POST' role="form">
+			@else
+				<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@endif
 				@method('DELETE')
 				@csrf
 				<div class="modal modal-default fade in" id="eliminar`+slug+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
