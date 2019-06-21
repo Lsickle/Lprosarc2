@@ -73,7 +73,7 @@ class genercontroller extends Controller
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $id)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                 ->where('respels.RespelDelete', '=', 0)
                 ->get();
             
@@ -225,7 +225,7 @@ class genercontroller extends Controller
                 ->where('gener_sedes.FK_GSede', '=', $Generador->ID_Gener)
                 ->where('gener_sedes.GSedeDelete', '=', 0)
                 ->where('respels.RespelDelete', '=', 0)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                 ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();
@@ -239,7 +239,7 @@ class genercontroller extends Controller
                     ->select('respels.ID_Respel', 'respels.RespelName')
                     ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
                     ->where('respels.RespelDelete', 0)
-                    ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleta'])
+                    ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                     ->groupBy('respels.ID_Respel')
                     ->get();
             }
