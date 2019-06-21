@@ -11,21 +11,15 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">{{ trans('adminlte_lang::message.generindex') }}</h3>
-					@if (!isset($Gener))
-						<div class="col-xs-12">
-							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-									<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
-							@endif
-							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+					<center>
+						<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
+						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+							@if (!isset($Gener))
 								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
 							@endif
-						</div>
-					@else
-						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
 							<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
-					@endif
+					</center>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
