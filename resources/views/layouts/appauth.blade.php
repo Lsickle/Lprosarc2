@@ -44,25 +44,17 @@
                 /*transform:scale(0.8);*/
                 transform-origin:0 0;
             }
+            #contenedor_carga>center{
+                transform: scale(1);
+            }
         }
         @media screen and (max-width:1024px) and (min-width:640px) {
             .g-recaptcha {
                 /*transform:scale(0.6);*/
                 transform-origin:0 0;
             }
-            #Superior{
-                margin-right: 0;
-            }
-            #Derecho{
-                margin-right: 0;
-            }
-            #Izquierdo{
-                margin-right: 0;
-            }
-            #Inferior1{
-                margin-right: 0;
-            }
-            #Inferior2 {
+            #contenedor_carga>center{
+                transform: scale(1.5);
                 margin-right: 0;
             }
         }
@@ -71,19 +63,9 @@
                 /*transform:scale(1.049615);*/
                 transform-origin:0 0;
             }
-            #Superior{
-                margin-right: 0;
-            }
-            #Derecho{
-                margin-right: 0;
-            }
-            #Izquierdo{
-                margin-right: 0;
-            }
-            #Inferior1{
-                margin-right: 0;
-            }
-            #Inferior2 {
+            #contenedor_carga>center{
+                transform: scale(2);
+                margin-top: 15%;
                 margin-right: 0;
             }
         }
@@ -170,10 +152,10 @@
     </div>
     <script>
         window.onload = function(){ 
-            // $('#contenedor_carga').css('opacity', '0');
-            // $('#contenido').fadeIn(2000);
+            $('#contenedor_carga').css('opacity', '0');
+            $('#contenido').fadeIn(2000);
             setTimeout(function(){
-                // $('#contenedor_carga').remove();
+                $('#contenedor_carga').remove();
             }, 2000);
             var input = document.getElementById('email');
             var ancho = input.offsetWidth;
