@@ -12,16 +12,12 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
-<<<<<<< HEAD
-
-=======
 @if(Route::currentRouteName()=='vehicle-programacion.create')
 	{{-- fullcalendar --}}
 	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 @endif
 {{-- Chart --}}
 {{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
->>>>>>> ba88f725ca4b5de2c9fe6ec381c38b5a7813e764
 
 <script type="text/javascript">
 	window.onload =function(){
