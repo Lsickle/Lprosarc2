@@ -12,7 +12,16 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
 {{-- plugins de datatables --}}
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
+<<<<<<< HEAD
 
+=======
+@if(Route::currentRouteName()=='vehicle-programacion.create')
+	{{-- fullcalendar --}}
+	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+@endif
+{{-- Chart --}}
+{{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
+>>>>>>> ba88f725ca4b5de2c9fe6ec381c38b5a7813e764
 
 <script type="text/javascript">
 	window.onload =function(){
@@ -250,9 +259,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-@if(
-Route::currentRouteName()=='tarifas.index'
-)
+@if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -623,28 +630,19 @@ function NotifiFalse(Mensaje) {
 		if(!$('#'+idsubmit).hasClass('disabled')){
 			$(this).empty();
 			$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).prop('disabled', true);
+			$(this).attr('disabled', true);
 		}
 	});
 </script>
 {{-- script para activar las funciones de los options --}}
 <script>
-	function activateOptionScripts() {
+	$(document).ready(function(){
 		$('select').on('change', function(){
-			// var x="";
-			// var id="";
 			var option="";
-			// id = $(this).attr('id');
-			// x = $(this).val();
-			// option = $("[value=" + x.replace(" ", "\\ ") + "]");
 			option = $(this).children("option:selected");
 			option.click();
-			// alert(x);
 		});
 	}
-	$(document).ready(function(){
-		activateOptionScripts();
-	});
 </script>
 <script>
 var prevScrollpos = window.pageYOffset;
@@ -663,7 +661,11 @@ var currentScrollPos = window.pageYOffset;
 	function deleteRespelGener(slug, RespelName, name){
 		$('.deleterespelgener').empty();
 		$('.deleterespelgener').append(`
-			<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@if(Route::currentRouteName() === 'sgeneradores.show')
+				<form action='/respelSGener/`+slug+`' method='POST' role="form">
+			@else
+				<form action='/respelGener/`+slug+`' method='POST' role="form">
+			@endif
 				@method('DELETE')
 				@csrf
 				<div class="modal modal-default fade in" id="eliminar`+slug+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -699,7 +701,7 @@ var currentScrollPos = window.pageYOffset;
 @endif
 <script>
 	$(document).ready(function(){
-		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{3,6}([.][a-zA-Z0-9_]{2})?');
+		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-zA-Z0-9_]{2})?');
 		$('input[type="email"]').attr('data-error', 'No es un emai valido');
 	})
 </script>

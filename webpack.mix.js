@@ -45,6 +45,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/toastr/build/toastr.css'
     ], 'public/css/dependencias.css')
    .combine([
+        'node_modules/chart.js/dist/Chart.css'
+    ], 'public/css/chart.css')
+   .combine([
         'node_modules/@fullcalendar/core/main.css',
         'node_modules/@fullcalendar/daygrid/main.css',
         'node_modules/@fullcalendar/timegrid/main.css'
@@ -88,6 +91,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/toastr/toastr.js',
         'resources/js/jquery.highlight.js'
     ], 'public/js/dependencias.js')
+   .scripts([
+        'node_modules/chart.js/dist/Chart.bundle.js',
+        'node_modules/chart.js/dist/Chart.js'
+    ], 'public/js/chart.js')
    .scripts([
    		'node_modules/@fullcalendar/core/main.js',
    		'node_modules/@fullcalendar/daygrid/main.js',

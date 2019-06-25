@@ -40,9 +40,9 @@ class VehiculoContactoController extends Controller
     public function update(Request $request, $id)
     {
         $Validate = $request->validate([
-            'VehicPlaca' => 'required|max:9|min:9|unique:vehiculos,VehicPlaca',
-            'VehicTipo' => 'required|max:64|',
-            'VehicCapacidad' => 'required|max:64|',
+            'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
+            'VehicTipo' => 'required|max:64',
+            'VehicCapacidad' => 'required|max:64',
         ]);
 
         $Vehiculo = Vehiculo::where('ID_Vehic', $id)->first();

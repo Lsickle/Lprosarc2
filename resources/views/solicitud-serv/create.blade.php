@@ -392,6 +392,10 @@ function ResiduosGener(id_div, ID_Gener){
 		url: "{{url('/RespelGener')}}/"+ID_Gener,
 		method: 'GET',
 		data:{},
+		beforeSend: function(){
+			$(".loadrespelone"+id_div+contadorRespel[id_div]).append('<i class="fas fa-sync-alt fa-spin"></i>');
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', true);
+		},
 		success: function(res){
 			if(res != ''){
 				var residuos = new Array();
@@ -409,6 +413,10 @@ function ResiduosGener(id_div, ID_Gener){
 				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
 			}
 		},
+		complete: function(){
+			$(".loadrespelone"+id_div+contadorRespel[id_div]).empty();
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', false);
+		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			NotifiFalse("No se pudo conectar a la base de datos");
 		}
@@ -424,9 +432,12 @@ function RequeRespel(id_div, contador, Id_Respel){
 		url: "{{url('/RequeRespel')}}/"+Id_Respel,
 		method: 'GET',
 		data:{},
+		beforeSend: function(){
+			$(".loadrequired"+id_div+contadorRespel[id_div]).append('<i class="fas fa-sync-alt fa-spin"></i>');
+		},
 		success: function(res){
-			if(res[0] != ''){
-				if(res[0].ReqFotoDescargue === 1){
+			if(res != ''){
+				if(res.ReqFotoDescargue === 1){
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
 				}
@@ -434,7 +445,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
-				if(res[0].ReqFotoDestruccion === 1){
+				if(res.ReqFotoDestruccion === 1){
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
 				}
@@ -442,7 +453,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
-				if(res[0].ReqVideoDescargue === 1){
+				if(res.ReqVideoDescargue === 1){
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
 				}
@@ -450,7 +461,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
-				if(res[0].ReqVideoDestruccion === 1){
+				if(res.ReqVideoDestruccion === 1){
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
 				}
@@ -463,9 +474,13 @@ function RequeRespel(id_div, contador, Id_Respel){
 				HiddenRequeRespel(id_div, contador);
 			}
 		},
+		complete: function(){
+			$(".loadrequired"+id_div+contadorRespel[id_div]).empty();
+		},
 		error: function (jqXHR, textStatus, errorThrown) {
+			NotifiFalse('Falla en la consulta');
 			HiddenRequeRespel(id_div, contador);
-		}
+		},
 	});
 }
 function HiddenRequeRespel(id_div, contador){
@@ -504,6 +519,10 @@ function AgregarResPel(id_div,ID_Gener) {
 		url: "{{url('/RespelGener')}}/"+ID_Gener,
 		method: 'GET',
 		data:{},
+		beforeSend: function(){
+			$(".loadrespelnew"+id_div+contadorRespel[id_div]).append('<i class="fas fa-sync-alt fa-spin"></i>');
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', true);
+		},
 		success: function(res){
 			if(res != ''){
 				var residuos = new Array();
@@ -520,6 +539,10 @@ function AgregarResPel(id_div,ID_Gener) {
 				$("#DivRepel"+id_div).empty();
 				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
 			}
+		},
+		complete: function(){
+			$(".loadrespelnew"+id_div+contadorRespel[id_div]).empty();
+			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', false);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			NotifiFalse("No se pudo conectar a la base de datos");
