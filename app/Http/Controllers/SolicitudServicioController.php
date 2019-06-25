@@ -354,6 +354,9 @@ class SolicitudServicioController extends Controller
 					case 'Recibida':
 						$Solicitud->SolSerStatus = 'Completado';
 						break;
+					case 'Conciliación':
+						$Solicitud->SolSerStatus = 'Completado';
+						break;
 					case 'Tratada':
 						$Solicitud->SolSerStatus = 'Tratado';
 						break;

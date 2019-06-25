@@ -632,6 +632,7 @@ return [
     'solserstatusaprobado'    => 'Aprobar',
     'solserstatusrechazado'   => 'Rechazar',
     'solserstatusrecibido'    => 'Recibido',
+    'solserstatusconciliacion' => 'Conciliación',
     'solserstatusconciliado'  => 'Conciliado',
     'solserstatusnoconciliado' => 'No Deacuerdo',
     'solserstatustratado'     => 'Tratado',

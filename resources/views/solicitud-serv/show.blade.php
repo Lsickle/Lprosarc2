@@ -522,7 +522,6 @@
 				@if(Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 					$('#titulo').append(`
 						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Aprobada')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>
-						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Rechazada')" class='btn btn-danger pull-left'> <i class="fas fa-calendar-times"></i> <b>{{trans('adminlte_lang::message.solserstatusrechazado')}}</b></a>
 					`);
 				@endif
 				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
@@ -580,6 +579,17 @@
 			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
 				$('#titulo').append(`
 					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
+			$('#titulo').append(`
+				<b>{{trans('adminlte_lang::message.solsershowcomple')}}</b>
+			`);
+		@break
+		@case('No Conciliado')
+			$('#titulo').empty();
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+				$('#titulo').append(`
+					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliación')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatusconciliacion')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
