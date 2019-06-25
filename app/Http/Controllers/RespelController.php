@@ -178,7 +178,6 @@ class RespelController extends Controller
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
             $respel->YRespelClasf4741 = $request['YRespelClasf4741'][$x];
             $respel->ARespelClasf4741 = $request['ARespelClasf4741'][$x];
-            $respel->RespelStatus = $request['RespelStatus'][$x];
             $respel->RespelEstado = $request['RespelEstado'][$x];
             $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
             $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
