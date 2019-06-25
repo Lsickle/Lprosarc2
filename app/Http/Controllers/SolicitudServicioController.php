@@ -330,9 +330,10 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus(Request $request, $id)//Queda verificar el rol para mejorar la validación
+	public function changestatus(Request $request)//Queda verificar el rol para mejorar la validación
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+		return $request;
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		switch ($Solicitud->SolSerStatus) {
 			case 'Pendiente':
 				$Solicitud->SolSerStatus = 'Aprobado';
@@ -357,6 +358,7 @@ class SolicitudServicioController extends Controller
 				}
 				break;
 		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
 
 		$log = new audit();
