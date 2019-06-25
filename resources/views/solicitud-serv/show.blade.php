@@ -615,7 +615,7 @@
 				`);
 			@endif
 			$('#titulo').append(`
-				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
+				<b>{{trans('adminlte_lang::message.solsershowtrata')}}</b>
 			`);
 		@break
 		@case('Certificacion')
