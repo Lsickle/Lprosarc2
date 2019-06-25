@@ -615,11 +615,12 @@ function NotifiFalse(Mensaje) {
 			$('[type="submit"]').prop('disabled', true);
 			$('[type="submit"]').empty();
 			$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+			$(this).submit(function(){
+				return false;
+			});
+			return true;
 		}
-		$(this).submit(function(){
-			return false;
-		});
-		return true;
+		return false;
 	});
 	$('label.btn').on('click', function(){
 		var idsubmit = $(this).attr('for');
