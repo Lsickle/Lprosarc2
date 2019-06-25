@@ -86,7 +86,7 @@
 @endcomponent
 <div class="container-fluid spark-screen">
 	<!-- form start -->
-	<form id="evaluacioncomercial" role="form" action="/Requerimientos/{{$Respels->RespelSlug}}" method="POST" enctype="multipart/form-data">
+	<form id="evaluacioncomercial" role="form" action="/respels/{{$Respels->RespelSlug}}/updateStatusRespel" method="POST" enctype="multipart/form-data">
 		@method('PUT')
 		@csrf
 		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
