@@ -121,7 +121,7 @@ class RespelController extends Controller
             $Cotizacion->CotiNumero = 7;
             $Cotizacion->CotiFechaSolicitud = now();
             $Cotizacion->CotiDelete = 0;
-            $Cotizacion->CotiStatus = "Pendiente";
+            $Cotizacion->CotiStatus = "Aprobada";
             $Cotizacion->FK_CotiSede = $UserSedeID;
             $Cotizacion->save();
 
