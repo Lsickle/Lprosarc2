@@ -334,29 +334,16 @@ class SolicitudServicioController extends Controller
 	{
 		return $request;
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
-		switch ($Solicitud->SolSerStatus) {
-			case 'Pendiente':
-				$Solicitud->SolSerStatus = 'Aprobado';
-				break;
-			case 'Programado':
-				$Solicitud->SolSerStatus = 'Completado';
-				break;
-			case 'Completado':
-				$Solicitud->SolSerStatus = 'Conciliado';
-				break;
-			case 'Conciliado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Tratado';
-				}
-				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
-			case 'Tratado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+			if($request->input('solserstatus') == 'No Conciliada'){
+				$Solicitud->SolSerStatus = $request->input('solserstatus');
+			}
+			if($request->input('solserstatus') == 'Conciliada'){
+				$Solicitud->SolSerStatus = $request->input('solserstatus');
+			}
+		}
+		else{
+			$Solicitud->SolSerStatus = $request->input('solserstatus');
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();

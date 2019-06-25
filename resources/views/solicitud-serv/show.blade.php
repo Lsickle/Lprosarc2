@@ -489,6 +489,7 @@
 									</div>
 									<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 									<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+									<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
 								</form>
 							</div> 
 						</div>
