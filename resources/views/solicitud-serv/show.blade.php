@@ -480,7 +480,7 @@
 							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 								<i class="fas fa-exclamation-triangle"></i>
 								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
-								<form action="/solicitud-servicio/`+slug+`/changestatus" method="POST" data-toggle="validator" id="SolSer">
+								<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
 									@csrf
 									<div class="form-group col-md-12">
 										<label style="font-size: 0.2em; color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
@@ -488,6 +488,7 @@
 										<small class="help-block with-errors" style="font-size: 0.2em;"></small>
 									</div>
 									<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+									<input type="submit" name="solserslug" value="`+slug+`" style="display: none;">
 								</form>
 							</div> 
 						</div>
