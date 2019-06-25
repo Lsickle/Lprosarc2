@@ -89,7 +89,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
-	Route::get('/solicitud-servicio/{id}/changestatus', 'SolicitudServicioController@changestatus');
+	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
