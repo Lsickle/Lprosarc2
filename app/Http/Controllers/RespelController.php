@@ -332,73 +332,72 @@ class RespelController extends Controller
         // return $request;
 
         $respel = Respel::where('RespelSlug', $id)->first();
+            if (isset($request['RespelHojaSeguridad'])) {
+                $file1 = $request['RespelHojaSeguridad'];
+                $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
 
-        if (isset($request['RespelHojaSeguridad'])) {
-            $file1 = $request['RespelHojaSeguridad'];
-            $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
+                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+            }
+            else{
+                $hoja = $respel->RespelHojaSeguridad;
+            }
 
-            $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
-        }
-        else{
-            $hoja = $respel->RespelHojaSeguridad;
-        }
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelTarj'])) {
+                $file2 = $request['RespelTarj'];
+                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
+                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+            }else{
+                $tarj = $respel->RespelTarj;
+            }
 
-         /*verificar si se cargo un documento en este campo*/
-        if (isset($request['RespelTarj'])) {
-            $file2 = $request['RespelTarj'];
-            $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-            $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
-        }else{
-            $tarj = $respel->RespelTarj;
-        }
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelFoto'])) {
+                $file3 = $request['RespelFoto'];
+                $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
+                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+            }else{
+                $foto = $respel->RespelFoto;
+            }
+            
+            /*verificar si se cargo un documento en este campo*/
+            if (isset($request['SustanciaControladaDocumento'])) {
+                $file4 = $request['SustanciaControladaDocumento'];
+                $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
+                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+            }else{
+                $ctrlDoc = $respel->SustanciaControladaDocumento;
+            }
+            if (Auth::user()->UsRol !== "Cliente") {
+                $respel->RespelStatus = $request['RespelStatus'];
+            }else{
+                $respel->RespelStatus = "Pendiente";
+            }
+            $respel->RespelName = $request['RespelName'];
+            $respel->RespelDescrip = $request['RespelDescrip'];
+            $respel->RespelIgrosidad = $request['RespelIgrosidad'];
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+            $respel->RespelEstado = $request['RespelEstado'];
+            $respel->SustanciaControlada = $request['SustanciaControlada'];
+            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
+            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'];
+            $respel->RespelHojaSeguridad = $hoja;
+            $respel->RespelTarj = $tarj;
+            $respel->RespelFoto = $foto;
+            $respel->SustanciaControladaDocumento = $ctrlDoc;
+            $respel->RespelDeclaracion = $request['RespelDeclaracion'];
+            $respel->update();
 
-         /*verificar si se cargo un documento en este campo*/
-        if (isset($request['RespelFoto'])) {
-            $file3 = $request['RespelFoto'];
-            $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-            $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
-        }else{
-            $foto = $respel->RespelFoto;
-        }
-        
-        /*verificar si se cargo un documento en este campo*/
-        if (isset($request['SustanciaControladaDocumento'])) {
-            $file4 = $request['SustanciaControladaDocumento'];
-            $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-            $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
-        }else{
-            $ctrlDoc = $respel->SustanciaControladaDocumento;
-        }
-        if (Auth::user()->UsRol !== "Cliente") {
-            $respel->RespelStatus = $request['RespelStatus'];
-        }else{
-            $respel->RespelStatus = "Pendiente";
-        }
-        $respel->RespelName = $request['RespelName'];
-        $respel->RespelDescrip = $request['RespelDescrip'];
-        $respel->RespelIgrosidad = $request['RespelIgrosidad'];
-        $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
-        $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
-        $respel->RespelEstado = $request['RespelEstado'];
-        $respel->SustanciaControlada = $request['SustanciaControlada'];
-        $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
-        $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'];
-        $respel->RespelHojaSeguridad = $hoja;
-        $respel->RespelTarj = $tarj;
-        $respel->RespelFoto = $foto;
-        $respel->SustanciaControladaDocumento = $ctrlDoc;
-        $respel->RespelDeclaracion = $request['RespelDeclaracion'];
-        $respel->update();
+            $log = new audit();
+            $log->AuditTabla="respels";
+            $log->AuditType="Modificado";
+            $log->AuditRegistro=$respel->ID_Respel;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=json_encode($request->all());
+            $log->save();
 
-        $log = new audit();
-        $log->AuditTabla="respels";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro=$respel->ID_Respel;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
-        $log->save();
-
-        return redirect()->route('respels.show', [$respel->RespelSlug]);
+            return redirect()->route('respels.show', [$respel->RespelSlug]);
     }
 
     /**
@@ -440,5 +439,31 @@ class RespelController extends Controller
         $log->save();
 
         return redirect()->route('respels.index');
+    }
+      /**
+     * actualiza el status del residuo .
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatusRespel(Request $request, $id)
+    {
+        $respel = Respel::where('RespelSlug', $id)->first();
+
+        if (Auth::user()->UsRol == "Programador") {
+            $respel->RespelStatus = $request['RespelStatus'];
+            $respel->RespelStatusDescription = $request['RespelStatusDescription'];
+            $respel->save();
+
+            $log = new audit();
+            $log->AuditTabla="respels";
+            $log->AuditType="Modificado";
+            $log->AuditRegistro=$respel->ID_Respel;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=json_encode($request->all());
+            $log->save();
+
+            return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        }
     }
 }
