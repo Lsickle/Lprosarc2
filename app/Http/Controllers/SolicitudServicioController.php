@@ -347,12 +347,14 @@ class SolicitudServicioController extends Controller
 				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
 					$Solicitud->SolSerStatus = 'Tratado';
 				}
-				else{
+				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
 					$Solicitud->SolSerStatus = 'Certificacion';
 				}
 				break;
 			case 'Tratado':
-				$Solicitud->SolSerStatus = 'Certificacion';
+				if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+					$Solicitud->SolSerStatus = 'Certificacion';
+				}
 				break;
 		}
 		$Solicitud->save();

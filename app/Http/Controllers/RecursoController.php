@@ -23,12 +23,7 @@ class RecursoController extends Controller
      */
     public function index()
     {
-        $Recursos = DB::table('solicitud_servicios')
-            ->join('solicitud_residuos', 'solicitud_residuos.FK_SolResSolSer', 'solicitud_servicios.ID_SolSer')
-            ->join('recursos', 'recursos.FK_RecSolRes', 'solicitud_residuos.ID_SolRes')
-            ->get();
-
-        return view('recursos.index', compact('Recursos'));
+        //
     }
 
     /**
@@ -70,7 +65,7 @@ class RecursoController extends Controller
             ->select('respels.RespelName')
             ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
             ->first();
-        
+
         $SolSer = DB::table('solicitud_residuos')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
             ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerStatus')
@@ -81,16 +76,18 @@ class RecursoController extends Controller
 
         $Fotos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
             ->select('recursos.*', 'solicitud_residuos.SolResSlug')
-            ->where('FK_RecSolRes', $SolRes->ID_SolRes)
-            ->where('RecCarte', 'Foto')
-            ->orderBy('RecTipo')
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
+            ->where('recursos.RecCarte', 'Foto')
+            ->orderBy('recursos.RecTipo')
             ->get();
 
         $Videos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
             ->select('recursos.*', 'solicitud_residuos.SolResSlug')
-            ->where('FK_RecSolRes', $SolRes->ID_SolRes)
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
             ->where('RecCarte', 'Video')
             ->orderBy('RecTipo')
             ->get();
@@ -122,64 +119,38 @@ class RecursoController extends Controller
      */
     public function update(RecursosStoreRequest $request, $id)
     {
-        // $Validate = $request->validate([
-        //     'RecTipo' => 'required|max:32',
-        //     'RecCarte' => 'required|max:32',
-        // ]);
-
-        // switch($request->input("RecCarte")){
-        //     case 'Foto':
-        //         $validate = $request->validate([
-        //             'RecSrc.*' => 'mimes:jpeg,jpg,png|required',
-        //         ]);
-
-        //         if (isset($request['RecSrc'])) {
-        //             $pdf = $request['RecSrc'];
-        //             foreach($pdf as $key => $value){
-        //                 $attributes['RecSrc.'.$key] = '"Hoja de Seguridad N° '.($key+1).'"';
-        //             }
-        //         }
-                
-        //         break;
-        //     case 'Video':
-        //         $validate = $request->validate([
-        //             'RecSrc.*' => 'mimes:mp4|required',
-        //         ]);
-        //         break;
-        //     default:
-        //         abort(500);
-        //     break;
-        // }
-
         $SolRes = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', 'residuos_geners.FK_SGener')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
             ->join('sedes', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
             ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
-            ->select('solicitud_residuos.ID_SolRes', 'clientes.CliName', 'generadors.GenerName')
+            ->select('solicitud_residuos.ID_SolRes', 'solicitud_residuos.FK_SolResSolSer', 'clientes.CliName', 'generadors.GenerName')
             ->where('solicitud_residuos.SolResSlug', $id)
             ->first();
             
         if ($request->hasfile('RecSrc')){
             foreach($request->RecSrc as $file){
                 
-                $name = time().$file->getClientOriginalName();
-                $Extension = $file->extension();
-                $file->move(public_path('/img/Recursos/').$SolRes->CliName.$SolRes->ID_SolRes,$name);
-                $Src = $SolRes->CliName.$SolRes->ID_SolRes;
+                
                 
                 $Recurso = new Recurso();
                 $Recurso->RecTipo = $request->input("RecTipo");
+
+                $name = $Recurso->RecTipo.' - '.time().$file->getClientOriginalName();
+                $Src = $SolRes->CliName.' - '.$SolRes->FK_SolResSolSer;
+
                 $Recurso->RecCarte = $request->input("RecCarte");
                 $Recurso->RecRmSrc = $name;
                 $Recurso->RecSrc = $Src;
                 $Recurso->SlugRec = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc S.A ESP.".substr(md5(rand()), 0,32);
 
-                $Recurso->RecFormat = '.'.$Extension;
+                $Recurso->RecFormat = '.'.$file->extension();
                 $Recurso->RecDelete = 0;
                 $Recurso->FK_RecSolRes = $SolRes->ID_SolRes;
                 $Recurso->save();
+                $file->move(public_path('/img/Recursos/').$SolRes->CliName.' - '.$SolRes->FK_SolResSolSer,$name);
+
             }
         }else{
             abort(500);

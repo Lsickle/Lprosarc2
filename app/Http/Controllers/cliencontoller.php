@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\ClienteStoreRequest;
@@ -153,9 +154,9 @@ class clientcontoller extends Controller
             $user->FK_UserPers = $Personal->ID_Pers;
             $user->save();
 
-            $id = Cliente::select('CliSlug')->where('ID_Cli', $Cliente->ID_Cli)->first();
+            $slug = Cliente::select('CliSlug')->where('ID_Cli', $Cliente->ID_Cli)->first();
                 
-            return redirect()->route('cliente', compact('id'));
+            return redirect()->route('cliente-show', compact('slug'));
         }
     }
 
@@ -168,7 +169,7 @@ class clientcontoller extends Controller
     public function show(Cliente $cliente)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
+            // $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
@@ -179,10 +180,8 @@ class clientcontoller extends Controller
     public function viewClientShow($id)
     {
         if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-            $ID_Cli = userController::IDClienteSegunUsuario();
-            // return $ID_Cli;
-            $cliente = Cliente::where('ID_Cli', $ID_Cli)->first();
-            // return $cliente;
+            // $id = userController::IDClienteSegunUsuario();
+            $cliente = Cliente::where('CliSlug', $id)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
@@ -246,9 +245,9 @@ class clientcontoller extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
         
-        $id = $cliente->CliSlug;
+        $slug = Cliente::where('CliSlug', $cliente->CliSlug)->first();
 
-        return redirect()->route('cliente', compact('id'));
+        return redirect()->route('clientes.show', compact('cliente'));
     }
 
     /**
