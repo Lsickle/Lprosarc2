@@ -638,7 +638,7 @@ function NotifiFalse(Mensaje) {
 			option = $(this).children("option:selected");
 			option.click();
 		});
-	}
+	});
 </script>
 <script>
 var prevScrollpos = window.pageYOffset;
