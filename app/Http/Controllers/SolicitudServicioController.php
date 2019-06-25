@@ -335,15 +335,33 @@ class SolicitudServicioController extends Controller
 		return $request;
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-			if($request->input('solserstatus') == 'No Conciliada'){
-				$Solicitud->SolSerStatus = $request->input('solserstatus');
+			if($request->input('solserstatus') == 'No Deacuerdo'){
+				$Solicitud->SolSerStatus = 'No Conciliado';
 			}
 			if($request->input('solserstatus') == 'Conciliada'){
-				$Solicitud->SolSerStatus = $request->input('solserstatus');
+				$Solicitud->SolSerStatus = 'Conciliado';
 			}
 		}
 		else{
-			$Solicitud->SolSerStatus = $request->input('solserstatus');
+			if($Solicitud->SolSerStatus <> 'Certificacion'){
+				switch ($request->input('solserstatus')) {
+					case 'Aprobada':
+						$Solicitud->SolSerStatus = 'Aprobado';
+						break;
+					case 'Rechazada':
+						$Solicitud->SolSerStatus = 'Rechazado';
+						break;
+					case 'Recibida':
+						$Solicitud->SolSerStatus = 'Completado';
+						break;
+					case 'Tratada':
+						$Solicitud->SolSerStatus = 'Tratado';
+						break;
+					case 'Certificada':
+						$Solicitud->SolSerStatus = 'Certificacion';
+						break;
+				}
+			}
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
