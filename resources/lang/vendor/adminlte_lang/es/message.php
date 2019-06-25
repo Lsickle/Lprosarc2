@@ -630,10 +630,13 @@ return [
     
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',
+    'solserstatusrechazado'   => 'Rechazar',
     'solserstatusrecibido'    => 'Recibido',
     'solserstatusconciliado'  => 'Conciliado',
     'solserstatustratado'     => 'Tratado',
     'solserstatuscertifi'     => 'Certificar',
+    'solserstatusdescrip'     => 'Descripción de la Solicitud',
+    'solserstatusdescripdetaill' => 'Describa brevemente <b>¿Porque cambia la solicitud?</b>',
 
 
     //Requerimientos
