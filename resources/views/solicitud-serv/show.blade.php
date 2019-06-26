@@ -507,6 +507,7 @@
 		`);
 		$('#SolSer').validator('update');
 		popover();
+		envsubmit();
 		$('#myModal').modal();
 	}
 	$('.testswitch').bootstrapSwitch('disabled',true);
