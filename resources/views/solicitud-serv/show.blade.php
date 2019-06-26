@@ -24,7 +24,7 @@
 							@csrf
 							<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
 						</form>
-						<div class="col-md-12" id="titulo" style="font-size: 1.2em;">
+						<div class="col-md-12" id="titulo" style="font-size: 1.2em; text-align:center;">
 						</div>
 					</div>
 				<div class="row">
@@ -117,13 +117,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12 border-gray" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
-								<div class="col-md-12">
+							<div class="col-md-12 border-gray">
+								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
+									<label>{{ trans('adminlte_lang::message.solserstatusdescrip') }}:</label><br>
+									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerDescript}}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
+								</div>
+								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
-									<a href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
 								</div>
 							</div>
+							<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
 									<label>Requerimientos de la solicitud</label>
@@ -484,7 +488,7 @@
 									@csrf
 									<div class="form-group col-md-12">
 										<label style="font-size: 0.2em; color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
-										<input type="text" class="form-control col-xs-12" `+(status == 'Rechazada' ? 'required' : '')+` name="solserdescript"/>
+										<input type="text" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"/>
 										<small class="help-block with-errors" style="font-size: 0.2em;"></small>
 									</div>
 									<input type="submit" id="Cambiar`+slug+`" style="display: none;">

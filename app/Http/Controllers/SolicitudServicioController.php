@@ -332,9 +332,8 @@ class SolicitudServicioController extends Controller
 
 	public function changestatus(Request $request)//Queda verificar el rol para mejorar la validación
 	{
-		return $request;
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
 			}
@@ -342,7 +341,7 @@ class SolicitudServicioController extends Controller
 				$Solicitud->SolSerStatus = 'Conciliado';
 			}
 		}
-		else{
+		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':

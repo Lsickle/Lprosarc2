@@ -637,7 +637,7 @@ return [
     'solserstatusnoconciliado' => 'No Deacuerdo',
     'solserstatustratado'     => 'Tratado',
     'solserstatuscertifi'     => 'Certificar',
-    'solserstatusdescrip'     => 'Descripción de la Solicitud',
+    'solserstatusdescrip'     => 'Descripción del cambio',
     'solserstatusdescripdetaill' => 'Describa brevemente <b>¿Porque cambia la solicitud?</b>',
 
 
