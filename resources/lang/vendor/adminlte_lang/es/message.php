@@ -634,7 +634,7 @@ return [
     'solserstatusrecibido'    => 'Recibido',
     'solserstatusconciliacion' => 'Conciliación',
     'solserstatusconciliado'  => 'Conciliado',
-    'solserstatusnoconciliado' => 'No Deacuerdo',
+    'solserstatusnoconciliado' => 'No de Acuerdo',
     'solserstatustratado'     => 'Tratado',
     'solserstatuscertifi'     => 'Certificar',
     'solserstatusdescrip'     => 'Descripción del cambio',
