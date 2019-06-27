@@ -559,11 +559,6 @@
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
 			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')//Añadir rol del jefe de logistica
-				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
-				`);
-			@endif
 			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $ProgramacionesActivas <= 0)
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
