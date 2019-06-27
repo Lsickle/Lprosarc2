@@ -615,17 +615,21 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			if(!$('[type="submit"]').hasClass('disabled')){
-				$('[type="submit"]').prop('disabled', true);
-				$('[type="submit"]').empty();
-				$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+			var buttonsubmit = $(this).children('[type="submit"]');
+			if(buttonsubmit.hasClass('disabled')){
+				return false;
+			}
+			else{
+				buttonsubmit.prop('disabled', true);
+				buttonsubmit.empty();
+				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 				$(this).submit(function(){
 					return false;
 				});
 				return true;
 			}
-			return false;
 		});
+		
 		$('label.btn').on('click', function(){
 			var idsubmit = $(this).attr('for');
 			if(!$('#'+idsubmit).hasClass('disabled')){
