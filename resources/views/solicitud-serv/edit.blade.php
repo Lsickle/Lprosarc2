@@ -89,12 +89,10 @@
 								</div>
 								<div id="Conductor" class="form-group col-md-6">
 									<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="">
 								</div>
 								<div id="Vehiculo" class="form-group col-md-6">
 									<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="">
 								</div>
 								<div id="typeaditable" class="form-group col-md-12">
@@ -248,10 +246,8 @@
 		$('#citytransportadora').attr('hidden',true);
 	@endif
 	$('#SolSerConductor').val('{{$Solicitud->SolSerConductor}}');
-	$("#SolSerConductor").attr('required', true);
 	$('#Conductor').attr('hidden',false);
 	$('#SolSerVehiculo').val('{{$Solicitud->SolSerVehiculo}}');
-	$("#SolSerVehiculo").attr('required', true);
 	$('#Vehiculo').attr('hidden',false);
 	$('#typeaditable').removeClass('col-md-6');
 	$('#typeaditable').addClass('col-md-12');
@@ -282,9 +278,7 @@
 	$('#addresstransportadora').attr('hidden',true);
 	$("#municipio").attr('required', false);
 	$('#citytransportadora').attr('hidden',true);
-	$("#SolSerConductor").attr('required', false);
 	$('#Conductor').attr('hidden',true);
-	$("#SolSerVehiculo").attr('required', false);
 	$('#Vehiculo').attr('hidden',true);
 	$('#typeaditable').removeClass('col-md-12');
 	$('#typeaditable').addClass('col-md-6');
@@ -331,8 +325,6 @@ function TransportadorProsarc() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
-	$("#SolSerConductor").removeAttr('required');
-	$("#SolSerVehiculo").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
 	$("#SolSerTypeCollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
@@ -375,7 +367,6 @@ function TransportadorExtr() {
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
 	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerConductor").attr('required', true);
 	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
