@@ -81,7 +81,8 @@ class VehicProgController extends Controller
             ->select('ID_Vehic','VehicPlaca')
             ->get();
         $serviciosnoprogramados = DB::table('solicitud_servicios')
-            ->select('ID_SolSer', 'SolSerSlug', 'SolSerTipo')
+            ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+            ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
             ->where('SolSerDelete', 0)
             ->where('SolSerStatus', 'Aprobado')
             ->get();
