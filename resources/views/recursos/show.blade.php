@@ -150,7 +150,7 @@
                 </div>
                 @if((Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
                     {{-- Modal Añadir Recurso  --}}
-                    <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm">
+                    <form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm" class="form">
                         @method('PUT')
                         {{csrf_field()}}
                         @csrf
@@ -323,10 +323,10 @@
             `);
             if('{{$SolRes->SolResFotoDescargue_Pesaje}}' === '1'){
                 Pesaje();
-            }
+            };
             if('{{$SolRes->SolResFotoTratamiento}}' === '1'){
                 Tratamiento();
-            }
+            };
             $('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
             $('#recursoinputext').attr('data-filessizemultiple', '2048');
         });
@@ -339,10 +339,10 @@
             `);
             if('{{$SolRes->SolResVideoDescargue_Pesaje}}' === '1'){
                 Pesaje();
-            }
+            };
             if('{{$SolRes->SolResVideoTratamiento}}' === '1'){
                 Tratamiento();
-            }
+            };
             $('#recursoinputext').attr('accept', '.mp4');
             $('#recursoinputext').attr('data-filessizemultiple', '10240');
         });
