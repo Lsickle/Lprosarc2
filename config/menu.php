@@ -40,10 +40,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				        ->addParentClass('treeview')
 				        ->addif(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), Link::toUrl('/personalInterno', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuPerslist')))
 				        ->add(Link::toUrl('/asistencia', '<i class="fas fa-tasks"></i> '.trans('adminlte_lang::message.MenuPersAsis')))
-				        ->add(Link::toUrl('/horario', '<i class="fas fa-user-clock"></i> '.trans('adminlte_lang::message.MenuPersHorari')))
+				        // ->add(Link::toUrl('/horario', '<i class="fas fa-user-clock"></i> '.trans('adminlte_lang::message.MenuPersHorari')))
 				        ->add(Link::toUrl('/cargosInterno', '<i class="fas fa-tools"></i> '.trans('adminlte_lang::message.MenuPersCarg')))
 				        ->add(Link::toUrl('/areasInterno', '<i class="fas fa-archive"></i> '.trans('adminlte_lang::message.MenuPersAreas')))
-				        ->add(Link::toUrl('/inventariotech', '<i class="fas fa-laptop"></i> '.trans('adminlte_lang::message.MenuPersInven')))
+				        // ->add(Link::toUrl('/inventariotech', '<i class="fas fa-laptop"></i> '.trans('adminlte_lang::message.MenuPersInven')))
 				        ->addClass('treeview-menu')
 			        )
 		        )
@@ -69,19 +69,19 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 			          )
 		        )
 		        /*PESTAÑA DE COMPRA*/
-			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-		              (Menu::new()
-				          ->prepend('<a href="#"><i class="fas fa-money-bill-wave"></i> <span>'.trans('adminlte_lang::message.MenuShopTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-				          ->addParentClass('treeview')
-				          ->add(Link::toUrl('/compra/orden', '<i class="fas fa-file-invoice-dollar"></i> '.trans('adminlte_lang::message.MenuShopOrde')))
-				          ->add(Link::toUrl('/compra/cotizacion', '<i class="fas fa-file-invoice"></i> '.trans('adminlte_lang::message.MenuShopCoti')))
-				          ->addClass('treeview-menu')
-			          )
-		        )
+			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+		     //          (Menu::new()
+				   //        ->prepend('<a href="#"><i class="fas fa-money-bill-wave"></i> <span>'.trans('adminlte_lang::message.MenuShopTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				   //        ->addParentClass('treeview')
+				   //        ->add(Link::toUrl('/compra/orden', '<i class="fas fa-file-invoice-dollar"></i> '.trans('adminlte_lang::message.MenuShopOrde')))
+				   //        ->add(Link::toUrl('/compra/cotizacion', '<i class="fas fa-file-invoice"></i> '.trans('adminlte_lang::message.MenuShopCoti')))
+				   //        ->addClass('treeview-menu')
+			    //       )
+		     //    )
 			    /*PESTAÑA DE ARTICULOS*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/articulos-proveedor', '<i class="far fa-newspaper"></i> <span>'. trans('adminlte_lang::message.MenuArticu').'</span>')))
             	/*PESTAÑA DE CODIGO QR*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>'. trans('adminlte_lang::message.MenuQr').'</span>')))
+	            // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>'. trans('adminlte_lang::message.MenuQr').'</span>')))
 
 	        /*FIN DEL MENU1 PARA PROSARC
 
@@ -147,15 +147,15 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				    )
 			    )
 			    /*PESTAÑA DE ACTIVOS*/
-			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-				     (Menu::new()
-					     ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-					     ->addParentClass('treeview')
-					     ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
-					     ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
-					     ->addClass('treeview-menu')
-				     )
-			    )
+			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+				   //   (Menu::new()
+					  //    ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+					  //    ->addParentClass('treeview')
+					  //    ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
+					  //    ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
+					  //    ->addClass('treeview-menu')
+				   //   )
+			    // )
 			    /*PESTAÑA DE SOLICITUD*/
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
@@ -223,15 +223,15 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				    )
 			    )
 			    /*PESTAÑA DE ACTIVOS*/
-			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
-				     (Menu::new()
-					     ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-					     ->addParentClass('treeview')
-					     ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
-					     ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
-					     ->addClass('treeview-menu')
-				     )
-			    )
+			    // ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
+				   //   (Menu::new()
+					  //    ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+					  //    ->addParentClass('treeview')
+					  //    ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
+					  //    ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
+					  //    ->addClass('treeview-menu')
+				   //   )
+			    // )
 			    /*PESTAÑA DE SOLICITUD*/
 			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
