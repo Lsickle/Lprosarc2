@@ -618,7 +618,7 @@ return [
     'solsershowconciliado'    => 'Los residuos han sido conciliados.',
     'solsershowtrata'         => 'Los residuos han sido tratados, están en proceso de certificación.',
     'solsershowcertifica'     => 'Se han emitido los certificados correspondientes de la solicitud',
-    'solsershowdate'          => 'Fecha:',
+    'solsershowdate'          => 'Fecha',
     'solsershowaudita'        => 'Auditable:',
     'solsershowempre'         => 'Empresa:',
     'solsershowemprenit'      => 'Nit:',

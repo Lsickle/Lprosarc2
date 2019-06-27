@@ -32,7 +32,7 @@
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-4">
-									<label>{{trans('adminlte_lang::message.solsershowdate')}}</label>
+									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
 								<div class="col-md-4">
