@@ -18,7 +18,7 @@
 						@method('PATCH')
 						@csrf
 						<div class="box-body">
-							<div class="col-md-12 col-xs-12" style="margin-bottom: 1.5em;">
+							<div class="col-md-12" style="margin-bottom: 1.5em;">
 								<div class="form-group col-md-12">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
