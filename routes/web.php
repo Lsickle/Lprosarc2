@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
