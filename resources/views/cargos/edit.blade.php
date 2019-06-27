@@ -9,7 +9,7 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<div class="box">
+			<div class="box box-info">
 				<div class="box-header">
 					@component('layouts.partials.modal')
 						@slot('slug')
@@ -37,7 +37,7 @@
 						@endif
 					@endif
 				</div>
-				<div class="box box-info">
+				<div class="box">
 					<form role="form" action="/cargos/{{$Cargos->CargSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PATCH')
 						@csrf
@@ -52,11 +52,7 @@
 						@endif
 						<div class="box-body">
 							<div class="form-group col-xs-12 col-md-12">
-								<label for="NombreCargo">{{trans('adminlte_lang::message.cargoname')}}</label><small class="help-block with-errors">*</small>
-								<input required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{$Cargos->CargName}}">
-							</div>
-							<div class="form-group col-xs-12 col-md-12">
-								<label for="AreaSelect">{{trans('adminlte_lang::message.areaname')}}</label><small class="help-block with-errors">*</small>
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargoareatittle') }}" data-content="{{ trans('adminlte_lang::message.cargoareainfo') }}" for="AreaSelect"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.inputarea')}}</label><small class="help-block with-errors">*</small>
 								<select name="CargArea" required id="AreaSelect" class="form-control select">
 									<option value="">{{trans('adminlte_lang::message.select')}}</option>
 									@foreach($Areas as $Area)
@@ -64,12 +60,15 @@
 									@endforeach
 								</select>
 							</div>
+							<div class="form-group col-xs-12 col-md-12">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargonametittle') }}" data-content="{{ trans('adminlte_lang::message.cargonameinfo') }}" for="NombreCargo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.cargoname')}}</label><small class="help-block with-errors">*</small>
+								<input required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{$Cargos->CargName}}">
+							</div>
+							
 						</div>
-						<div class="box box-info">
 							<div class="box-footer">
 								<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.register')}}</button>
 							</div>
-						</div>
 					</form>
 				</div>
 			</div>
