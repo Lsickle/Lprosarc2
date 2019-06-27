@@ -14,6 +14,6 @@
 		</select>
 		<br>
 	</div>
-	<div id="DivRepel`+contadorGenerador+`" class="col-md-16">
+	<div id="DivRepel`+contadorGenerador+`" class="form-group col-md-16">
 	</div>
 </div>

@@ -210,7 +210,7 @@
 									</select>
 									<br>
 								</div>
-								<div id="DivRepel0" class="col-md-16">
+								<div id="DivRepel0" class="form-group col-md-16">
 								</div>
 							</div>
 							<div id="AddGenerador" class="col-md-16">
