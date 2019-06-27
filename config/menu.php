@@ -69,19 +69,19 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 			          )
 		        )
 		        /*PESTAÑA DE COMPRA*/
-			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-		              (Menu::new()
-				          ->prepend('<a href="#"><i class="fas fa-money-bill-wave"></i> <span>'.trans('adminlte_lang::message.MenuShopTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-				          ->addParentClass('treeview')
-				          ->add(Link::toUrl('/compra/orden', '<i class="fas fa-file-invoice-dollar"></i> '.trans('adminlte_lang::message.MenuShopOrde')))
-				          ->add(Link::toUrl('/compra/cotizacion', '<i class="fas fa-file-invoice"></i> '.trans('adminlte_lang::message.MenuShopCoti')))
-				          ->addClass('treeview-menu')
-			          )
-		        )
+			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+		     //          (Menu::new()
+				   //        ->prepend('<a href="#"><i class="fas fa-money-bill-wave"></i> <span>'.trans('adminlte_lang::message.MenuShopTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				   //        ->addParentClass('treeview')
+				   //        ->add(Link::toUrl('/compra/orden', '<i class="fas fa-file-invoice-dollar"></i> '.trans('adminlte_lang::message.MenuShopOrde')))
+				   //        ->add(Link::toUrl('/compra/cotizacion', '<i class="fas fa-file-invoice"></i> '.trans('adminlte_lang::message.MenuShopCoti')))
+				   //        ->addClass('treeview-menu')
+			    //       )
+		     //    )
 			    /*PESTAÑA DE ARTICULOS*/
 	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/articulos-proveedor', '<i class="far fa-newspaper"></i> <span>'. trans('adminlte_lang::message.MenuArticu').'</span>')))
             	/*PESTAÑA DE CODIGO QR*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>'. trans('adminlte_lang::message.MenuQr').'</span>')))
+	            // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>'. trans('adminlte_lang::message.MenuQr').'</span>')))
 
 	        /*FIN DEL MENU1 PARA PROSARC
 
