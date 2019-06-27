@@ -18,7 +18,7 @@
 						@method('PATCH')
 						@csrf
 						<div class="box-body">
-							<div class="col-md-12 col-xs-12" style="margin-bottom: 1.5em;">
+							<div class="col-md-12" style="margin-bottom: 1.5em;">
 								<div class="form-group col-md-12">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
@@ -89,12 +89,10 @@
 								</div>
 								<div id="Conductor" class="form-group col-md-6">
 									<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="">
 								</div>
 								<div id="Vehiculo" class="form-group col-md-6">
 									<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="">
 								</div>
 								<div id="typeaditable" class="form-group col-md-12">
@@ -248,10 +246,8 @@
 		$('#citytransportadora').attr('hidden',true);
 	@endif
 	$('#SolSerConductor').val('{{$Solicitud->SolSerConductor}}');
-	$("#SolSerConductor").attr('required', true);
 	$('#Conductor').attr('hidden',false);
 	$('#SolSerVehiculo').val('{{$Solicitud->SolSerVehiculo}}');
-	$("#SolSerVehiculo").attr('required', true);
 	$('#Vehiculo').attr('hidden',false);
 	$('#typeaditable').removeClass('col-md-6');
 	$('#typeaditable').addClass('col-md-12');
@@ -282,9 +278,7 @@
 	$('#addresstransportadora').attr('hidden',true);
 	$("#municipio").attr('required', false);
 	$('#citytransportadora').attr('hidden',true);
-	$("#SolSerConductor").attr('required', false);
 	$('#Conductor').attr('hidden',true);
-	$("#SolSerVehiculo").attr('required', false);
 	$('#Vehiculo').attr('hidden',true);
 	$('#typeaditable').removeClass('col-md-12');
 	$('#typeaditable').addClass('col-md-6');
@@ -331,8 +325,6 @@ function TransportadorProsarc() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
-	$("#SolSerConductor").removeAttr('required');
-	$("#SolSerVehiculo").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
 	$("#SolSerTypeCollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
@@ -375,7 +367,6 @@ function TransportadorExtr() {
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
 	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerConductor").attr('required', true);
 	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
@@ -455,6 +446,7 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 	$(icon).removeClass('fa-plus');
 	$(icon).addClass('fa-minus');
@@ -491,6 +483,7 @@ function ResiduosGener(id_div, ID_Gener){
 	})
 }
 function RequeRespel(id_div, contador, Id_Respel){
+	Selects();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -570,6 +563,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {

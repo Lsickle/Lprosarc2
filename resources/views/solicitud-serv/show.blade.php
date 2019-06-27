@@ -24,7 +24,7 @@
 							@csrf
 							<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
 						</form>
-						<div class="col-md-12" id="titulo" style="font-size: 1.2em;">
+						<div class="col-md-12" id="titulo" style="font-size: 1.2em; text-align:center;">
 						</div>
 					</div>
 				<div class="row">
@@ -32,7 +32,7 @@
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-4">
-									<label>{{trans('adminlte_lang::message.solsershowdate')}}</label>
+									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
 								<div class="col-md-4">
@@ -117,13 +117,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12 border-gray" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
-								<div class="col-md-12">
+							<div class="col-md-12 border-gray">
+								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
+									<label>{{ trans('adminlte_lang::message.solserstatusdescrip') }}:</label><br>
+									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerDescript}}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
+								</div>
+								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
-									<a href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
 								</div>
 							</div>
+							<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
 									<label>Requerimientos de la solicitud</label>
@@ -190,11 +194,10 @@
 							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
 								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
 									@php 
-										$Contador = 1;
-										$TotalEnv = 0;
-										$TotalRec = 0;
-										$TotalCons = 0;
-										$TotalTrat = 0;
+										// $TotalEnv = 0;
+										// $TotalRec = 0;
+										// $TotalCons = 0;
+										// $TotalTrat = 0;
 									@endphp
 									<thead>
 										<tr>
@@ -220,17 +223,27 @@
 										@foreach($Residuos as $Residuo)
 											@if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
 												@php
-													$Contador++;
-													$TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
-													$TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
-													$TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
-													$TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
+													// $TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
+													// $TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
+													// $TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
+													// $TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
+													switch ($Residuo->SolResTypeUnidad) {
+														case 'Unidad':
+															$TypeUnidad = 'Unidad(es)';
+															break;
+														case 'Litros':
+															$TypeUnidad = 'Litros';
+															break;
+														default:
+															$TypeUnidad = 'Kilogramos';
+															break;
+													}
 												@endphp
 											<tr>
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}</td>
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}<br>{{$TypeUnidad}}</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
 														@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
@@ -240,7 +253,7 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													{{' '.$Residuo->SolResKgRecibido}}
+													{{' '.$Residuo->SolResKgRecibido}}<br>{{$TypeUnidad}}
 												</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
@@ -251,7 +264,7 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													{{' '.$Residuo->SolResKgConciliado}}
+													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
 												</td>
 												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
 													<td style="text-align: center;">	
@@ -261,7 +274,7 @@
 															<a style="color: black">
 														@endif
 														<i class="fas fa-marker"></i></a> 
-														{{' '.$Residuo->SolResKgTratado}}
+														{{' '.$Residuo->SolResKgTratado}}<br>{{$TypeUnidad}}
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -275,7 +288,7 @@
 										@endforeach
 									@endforeach
 									</tbody>
-									<tfoot>
+									{{-- <tfoot>
 										<tr>
 											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
 											<th style="text-align: right;">{{$TotalEnv}} kg</th>
@@ -290,7 +303,7 @@
 												<th></th>
 											@endif
 										</tr>
-									</tfoot>
+									</tfoot> --}}
 								</table>
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
@@ -480,6 +493,17 @@
 							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 								<i class="fas fa-exclamation-triangle"></i>
 								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
+								<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
+									@csrf
+									<div class="form-group col-md-12">
+										<label style="font-size: 0.2em; color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
+										<input type="text" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"/>
+										<small class="help-block with-errors" style="font-size: 0.2em;"></small>
+									</div>
+									<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+									<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+									<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
+								</form>
 							</div> 
 						</div>
 						<div class="modal-footer">
@@ -489,11 +513,10 @@
 					</div>
 				</div>
 			</div>
-			<form action="/solicitud-servicio/`+slug+`/changestatus" method="GET">
-				@csrf
-				<input type="submit" id="Cambiar`+slug+`" style="display: none;">
-			</form>
 		`);
+		$('#SolSer').validator('update');
+		popover();
+		envsubmit();
 		$('#myModal').modal();
 	}
 	$('.testswitch').bootstrapSwitch('disabled',true);
@@ -510,9 +533,9 @@
 				`);
 			@endif
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-				@if(Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-					$('#titulo').append(
-						`<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Aprobada')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>
+				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))//Añadir rol del encargado de aprobar la solicitud
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Aprobada')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>
 					`);
 				@endif
 				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
@@ -564,11 +587,23 @@
 			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
+					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'No Deacuerdo')" class='btn btn-danger pull-left'> <i class="fas fa-calendar-times"></i> <b>{{trans('adminlte_lang::message.solserstatusnoconciliado')}}</b></a>
 				`);
 			@endif
 			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
 				$('#titulo').append(`
 					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+				`);
+			@endif
+			$('#titulo').append(`
+				<b>{{trans('adminlte_lang::message.solsershowcomple')}}</b>
+			`);
+		@break
+		@case('No Conciliado')
+			$('#titulo').empty();
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+				$('#titulo').append(`
+					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliación')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatusconciliacion')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
@@ -604,7 +639,7 @@
 				`);
 			@endif
 			$('#titulo').append(`
-				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
+				<b>{{trans('adminlte_lang::message.solsershowtrata')}}</b>
 			`);
 		@break
 		@case('Certificacion')

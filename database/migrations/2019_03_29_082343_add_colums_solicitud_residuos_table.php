@@ -47,8 +47,8 @@ class AddColumsSolicitudResiduosTable extends Migration
             $table->dropColumn('SolResFotoTratamiento');
             $table->dropColumn('SolResVideoDescargue_Pesaje');
             $table->dropColumn('SolResVideoTratamiento');
-            $table->dropColumn('SolResUnidadCanti');
-            $table->dropColumn('SolResCanti');
+            $table->dropColumn('SolResTypeUnidad');
+            $table->dropColumn('SolResCantiUnidad');
             $table->dropColumn('SolResEmbalaje');
             $table->dropColumn('SolResAlto');
             $table->dropColumn('SolResAncho');

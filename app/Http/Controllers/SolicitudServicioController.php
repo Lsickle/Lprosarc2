@@ -330,33 +330,42 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus($id)//Queda verificar el rol para mejorar la validación
+	public function changestatus(Request $request)//Queda verificar el rol para mejorar la validación
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
-		switch ($Solicitud->SolSerStatus) {
-			case 'Pendiente':
-				$Solicitud->SolSerStatus = 'Aprobado';
-				break;
-			case 'Programado':
-				$Solicitud->SolSerStatus = 'Completado';
-				break;
-			case 'Completado':
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+			if($request->input('solserstatus') == 'No Deacuerdo'){
+				$Solicitud->SolSerStatus = 'No Conciliado';
+			}
+			if($request->input('solserstatus') == 'Conciliada'){
 				$Solicitud->SolSerStatus = 'Conciliado';
-				break;
-			case 'Conciliado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Tratado';
-				}
-				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
-			case 'Tratado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
+			}
 		}
+		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+			if($Solicitud->SolSerStatus <> 'Certificacion'){
+				switch ($request->input('solserstatus')) {
+					case 'Aprobada':
+						$Solicitud->SolSerStatus = 'Aprobado';
+						break;
+					case 'Rechazada':
+						$Solicitud->SolSerStatus = 'Rechazado';
+						break;
+					case 'Recibida':
+						$Solicitud->SolSerStatus = 'Completado';
+						break;
+					case 'Conciliación':
+						$Solicitud->SolSerStatus = 'Completado';
+						break;
+					case 'Tratada':
+						$Solicitud->SolSerStatus = 'Tratado';
+						break;
+					case 'Certificada':
+						$Solicitud->SolSerStatus = 'Certificacion';
+						break;
+				}
+			}
+		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
 
 		$log = new audit();

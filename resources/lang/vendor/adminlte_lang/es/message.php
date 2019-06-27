@@ -592,7 +592,7 @@ return [
     'solserunidad2'           => 'Litros',
     'solsercantidad'          => 'Cantidad',
     'solsercantidaddescrit'   => 'Indique la cantidad del residuo según la unidad seleccionada. <b>(Opcional)</b>',
-    'solsercantidadkg'        => 'Cantidad (kg)',
+    'solsercantidadkg'        => 'Cantidad',
     'solsercantienv'          => 'Enviada',
     'solsercantiresi'         => 'Recibida',
     'solsercanticonsi'        => 'Conciliada',
@@ -627,7 +627,7 @@ return [
     'solsershowconciliado'    => 'Los residuos han sido conciliados.',
     'solsershowtrata'         => 'Los residuos han sido tratados, están en proceso de certificación.',
     'solsershowcertifica'     => 'Se han emitido los certificados correspondientes de la solicitud',
-    'solsershowdate'          => 'Fecha:',
+    'solsershowdate'          => 'Fecha',
     'solsershowaudita'        => 'Auditable:',
     'solsershowempre'         => 'Empresa:',
     'solsershowemprenit'      => 'Nit:',
@@ -639,10 +639,15 @@ return [
     
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',
+    'solserstatusrechazado'   => 'Rechazar',
     'solserstatusrecibido'    => 'Recibido',
+    'solserstatusconciliacion' => 'Conciliación',
     'solserstatusconciliado'  => 'Conciliado',
+    'solserstatusnoconciliado' => 'No de Acuerdo',
     'solserstatustratado'     => 'Tratado',
     'solserstatuscertifi'     => 'Certificar',
+    'solserstatusdescrip'     => 'Descripción del cambio',
+    'solserstatusdescripdetaill' => 'Describa brevemente <b>¿Porque cambia la solicitud?</b>',
 
 
     //Requerimientos
