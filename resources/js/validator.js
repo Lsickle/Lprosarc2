@@ -1,30 +1,10 @@
-/* ========================================================================
- * Bootstrap (plugin): validator.js v0.11.9
- * ========================================================================
- * The MIT License (MIT)
+/*!
+ * Validator v0.11.9 for Bootstrap 3, by @1000hz
+ * Copyright 2017 Cina Saffary
+ * Licensed under http://opensource.org/licenses/MIT
  *
- * Copyright (c) 2016 Cina Saffary.
- * Made by @1000hz in the style of Bootstrap 3 era @fat
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * ======================================================================== */
-
+ * https://github.com/1000hz/bootstrap-validator
+ */
 
 +function ($) {
   'use strict';
@@ -248,55 +228,55 @@
   }
 
   Validator.prototype.showErrors = function ($el) {
-      var method = this.options.html ? 'html' : 'text'
-      var errors = $el.data('bs.validator.errors')
-      var $group = $el.closest('.form-group')
-      var $group2 = $group.parent('div').siblings('.form-group')
-      var $group3 = $group2.parent('div').parent('.form-group').siblings('.form-group')
-      var $block = $group.find('.help-block.with-errors')
-      var $feedback = $group.find('.form-control-feedback')
+        var method = this.options.html ? 'html' : 'text'
+        var errors = $el.data('bs.validator.errors')
+        var $group = $el.closest('.form-group')
+        var $group2 = $group.parent('div').siblings('.form-group')
+        var $group3 = $group2.parent('div').parent('.form-group').siblings('.form-group')
+        var $block = $group.find('.help-block.with-errors')
+        var $feedback = $group.find('.form-control-feedback')
 
-      if (!errors.length) return
+        if (!errors.length) return
 
-      errors = $('<ul/>')
-        .addClass('list-unstyled')
-        .append($.map(errors, function (error) { return $('<li/>')[method](error) }))
+        errors = $('<ul/>')
+          .addClass('list-unstyled')
+          .append($.map(errors, function (error) { return $('<li/>')[method](error) }))
 
-      $block.data('bs.validator.originalContent') === undefined && $block.data('bs.validator.originalContent', $block.html())
-      $block.empty().append(errors)
-      $group.addClass('has-error has-danger')
-      $group2.css('color', '#dd4b39')
-      $group3.css('color', '#dd4b39')
+        $block.data('bs.validator.originalContent') === undefined && $block.data('bs.validator.originalContent', $block.html())
+        $block.empty().append(errors)
+        $group.addClass('has-error has-danger')
+        $group2.css('color', '#dd4b39')
+        $group3.css('color', '#dd4b39')
 
-      $group.hasClass('has-feedback')
-        && $feedback.removeClass(this.options.feedback.success)
-        && $feedback.addClass(this.options.feedback.error)
-        && $group.removeClass('has-success')
-    }
-
-    Validator.prototype.clearErrors = function ($el) {
-      var $group = $el.closest('.form-group')
-      var $group2 = $group.parent('div').siblings('.form-group')
-      var $group3 = $group2.parent('div').parent('.form-group').siblings('.form-group')
-      var $block = $group.find('.help-block.with-errors')
-      var $feedback = $group.find('.form-control-feedback')
-
-      $block.html($block.data('bs.validator.originalContent'))
-      $group.removeClass('has-error has-danger has-success')
-      if(!$group.parent('div').find('.form-group').hasClass('has-error has-danger')){
-         $group2.css('color', '#333')
-      }
-      if(!$group2.parent('div').parent('.form-group').find('.form-group').hasClass('has-error has-danger')){
-         $group3.css('color', '#333')
+        $group.hasClass('has-feedback')
+          && $feedback.removeClass(this.options.feedback.success)
+          && $feedback.addClass(this.options.feedback.error)
+          && $group.removeClass('has-success')
       }
 
-      $group.hasClass('has-feedback')
-        && $feedback.removeClass(this.options.feedback.error)
-        && $feedback.removeClass(this.options.feedback.success)
-        && getValue($el)
-        && $feedback.addClass(this.options.feedback.success)
-        && $group.addClass('has-success')
-    }
+      Validator.prototype.clearErrors = function ($el) {
+        var $group = $el.closest('.form-group')
+        var $group2 = $group.parent('div').siblings('.form-group')
+        var $group3 = $group2.parent('div').parent('.form-group').siblings('.form-group')
+        var $block = $group.find('.help-block.with-errors')
+        var $feedback = $group.find('.form-control-feedback')
+
+        $block.html($block.data('bs.validator.originalContent'))
+        $group.removeClass('has-error has-danger has-success')
+        if(!$group.parent('div').find('.form-group').hasClass('has-error has-danger')){
+           $group2.css('color', '#333')
+        }
+        if(!$group2.parent('div').parent('.form-group').find('.form-group').hasClass('has-error has-danger')){
+           $group3.css('color', '#333')
+        }
+
+        $group.hasClass('has-feedback')
+          && $feedback.removeClass(this.options.feedback.error)
+          && $feedback.removeClass(this.options.feedback.success)
+          && getValue($el)
+          && $feedback.addClass(this.options.feedback.success)
+          && $group.addClass('has-success')
+      }
 
   Validator.prototype.hasErrors = function () {
     function fieldErrors() {
