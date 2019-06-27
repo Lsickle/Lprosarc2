@@ -583,7 +583,7 @@ return [
     'solserunidad2'           => 'Litros',
     'solsercantidad'          => 'Cantidad',
     'solsercantidaddescrit'   => 'Indique la cantidad del residuo según la unidad seleccionada. <b>(Opcional)</b>',
-    'solsercantidadkg'        => 'Cantidad (kg)',
+    'solsercantidadkg'        => 'Cantidad',
     'solsercantienv'          => 'Enviada',
     'solsercantiresi'         => 'Recibida',
     'solsercanticonsi'        => 'Conciliada',

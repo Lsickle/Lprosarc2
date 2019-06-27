@@ -194,11 +194,10 @@
 							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
 								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
 									@php 
-										$Contador = 1;
-										$TotalEnv = 0;
-										$TotalRec = 0;
-										$TotalCons = 0;
-										$TotalTrat = 0;
+										// $TotalEnv = 0;
+										// $TotalRec = 0;
+										// $TotalCons = 0;
+										// $TotalTrat = 0;
 									@endphp
 									<thead>
 										<tr>
@@ -224,17 +223,27 @@
 										@foreach($Residuos as $Residuo)
 											@if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
 												@php
-													$Contador++;
-													$TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
-													$TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
-													$TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
-													$TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
+													// $TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
+													// $TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
+													// $TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
+													// $TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
+													switch ($Residuo->SolResTypeUnidad) {
+														case 'Unidad':
+															$TypeUnidad = 'Unidad(es)';
+															break;
+														case 'Litros':
+															$TypeUnidad = 'Litros';
+															break;
+														default:
+															$TypeUnidad = 'Kilogramos';
+															break;
+													}
 												@endphp
 											<tr>
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}</td>
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}<br>{{$TypeUnidad}}</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
 														@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
@@ -244,7 +253,7 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													{{' '.$Residuo->SolResKgRecibido}}
+													{{' '.$Residuo->SolResKgRecibido}}<br>{{$TypeUnidad}}
 												</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
@@ -255,7 +264,7 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													{{' '.$Residuo->SolResKgConciliado}}
+													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
 												</td>
 												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
 													<td style="text-align: center;">	
@@ -265,7 +274,7 @@
 															<a style="color: black">
 														@endif
 														<i class="fas fa-marker"></i></a> 
-														{{' '.$Residuo->SolResKgTratado}}
+														{{' '.$Residuo->SolResKgTratado}}<br>{{$TypeUnidad}}
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -279,7 +288,7 @@
 										@endforeach
 									@endforeach
 									</tbody>
-									<tfoot>
+									{{-- <tfoot>
 										<tr>
 											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
 											<th style="text-align: right;">{{$TotalEnv}} kg</th>
@@ -294,7 +303,7 @@
 												<th></th>
 											@endif
 										</tr>
-									</tfoot>
+									</tfoot> --}}
 								</table>
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
