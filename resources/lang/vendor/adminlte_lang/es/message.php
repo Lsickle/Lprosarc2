@@ -335,7 +335,7 @@ return [
     'cargosalary'             => 'Salario Promedio',
     'editcargo'               => 'Edición de cargos',
     'cargoareatittle'         => '<b>Nombre del Área</b>',
-    'cargoareainfo'           => "<p style='width: 50%'>Seleccione el área a la que pertenece el cargo... <br> <b>(Campo Requerido)</b> <br> <br> En caso de que el área no este listada en este formulario, ingrese a la opción de <b>Áreas</b> del menú para crear una nueva área y luego intente crear el cargo </p>",
+    'cargoareainfo'           => "<p style='width: 50%'>Seleccione el área a la que pertenece el cargo... <br> <b>(Campo Requerido)</b> <br> <br> En caso de que el área no este listada en este formulario, <br> ingrese a la opción de <b>Áreas</b> del menú para crear una <br> nueva área y luego intente crear el cargo </p>",
     'cargogradetittle'        => '<b>Grado de instrucción académico</b>',
     'cargogradeinfo'          => "<p style='width: 50%'>Seleccione el Grado de instrucción que corresponde al cargo que esta creando... <br> <b>(Campo Opcional)</b></p>",
     'cargonametittle'         => '<b>Nombre del Cargo</b>',
