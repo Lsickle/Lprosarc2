@@ -55,12 +55,17 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}
 @component('mail::button', ['url' => $url])
 {{$nameButton}}
 @endcomponent
-@if($mail->SolSerStatus <> 'No Conciliado')
-    Si tiene alguna duda no olvide comunicarse con su asesor comercial.<br><br>
-    Saludos, Prosarc S.A. ESP<br>
+{{-- @if($mail->SolSerStatus <> 'No Conciliado')
+    @php
+        $end = 'Si tiene alguna duda no olvide comunicarse con su asesor comercial.Saludos, Prosarc S.A. ESP';
+    @endphp
 @else
-        Por favor dar clic en el botón "{{$nameButton}}" para ver más detalles
+    @php
+        $end = 'Por favor dar clic en el botón "'.$nameButton.'" para ver más detalles';
+    @endphp
 @endif
+{{$end}} --}}
+Si tiene alguna duda no olvide comunicarse con su asesor comercial.Saludos, Prosarc S.A. ESP
 @component('mail::subcopy')
 @lang(
     "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL \nen su navegador web: [:actionURL](:actionURL)",
