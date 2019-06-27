@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -56,8 +55,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'register@prosarc.com.co'),
-        'name' => env('MAIL_FROM_NAME', 'Prosarc ESP'),
+        'address' => env('MAIL_FROM_ADDRESS', 'notificaciones@prosarc.com.co'),
+        'name' => env('MAIL_FROM_NAME', 'Prosarc S.A. ESP'),
     ],
 
     /*

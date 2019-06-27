@@ -347,15 +347,17 @@ class SolicitudServicioController extends Controller
 				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
 					$Solicitud->SolSerStatus = 'Tratado';
 				}
-				else{
+				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
 					$Solicitud->SolSerStatus = 'Certificacion';
 				}
 				break;
 			case 'Tratado':
-				$Solicitud->SolSerStatus = 'Certificacion';
+				if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+					$Solicitud->SolSerStatus = 'Certificacion';
+				}
 				break;
 		}
-		$Solicitud->save();
+		// $Solicitud->save();
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -365,7 +367,12 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=$Solicitud->SolSerStatus;
 		$log->save();
 
+		if($Solicitud->SolSerStatus === 'Aprobado' || $Solicitud->SolSerStatus === 'Completado'|| $Solicitud->SolSerStatus === 'Certificacion'){
+			$slug = $Solicitud->SolSerSlug;
+			return redirect()->route('email', compact('slug'));
+		}
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+		
 	}
 
 

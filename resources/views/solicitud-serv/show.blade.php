@@ -364,7 +364,7 @@
 											Cantidad
 											@switch($SolicitudServicio->SolSerStatus)
 												@case('Programado')
-													Resivida
+													Recibida
 													@break
 												@case('Completado')
 													Conciliada
@@ -389,7 +389,7 @@
 									<div class="form-group col-md-12">
 										@switch($SolicitudServicio->SolSerStatus)
 											@case('Programado')
-												<label for="SolResKgRecibido">Cantidad Resivida</label>
+												<label for="SolResKgRecibido">Cantidad Recibida</label>
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
 												@break
