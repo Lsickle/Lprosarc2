@@ -446,6 +446,7 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 	$(icon).removeClass('fa-plus');
 	$(icon).addClass('fa-minus');
@@ -482,6 +483,7 @@ function ResiduosGener(id_div, ID_Gener){
 	})
 }
 function RequeRespel(id_div, contador, Id_Respel){
+	Selects();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -561,6 +563,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {

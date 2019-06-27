@@ -50,14 +50,17 @@ $('form[data-toggle="validator"]').validator({
 });
 </script>
 <script type="text/javascript">
+	function Selects(){
+		$('select').select2({
+			placeholder: "Seleccione...",
+			allowClear: true,
+			width: 'resolve',
+			width: '100%',
+			theme: "classic"
+		});
+	}
 $(document).ready(function() {
-	$('select').select2({
-		placeholder: "Seleccione...",
-		allowClear: true,
-		width: 'resolve',
-		width: '100%',
-		theme: "classic"
-	});
+	Selects();
 });
 </script>
 <script type="text/javascript">
