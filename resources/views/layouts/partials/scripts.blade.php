@@ -50,14 +50,17 @@ $('form[data-toggle="validator"]').validator({
 });
 </script>
 <script type="text/javascript">
+	function Selects(){
+		$('select').select2({
+			placeholder: "Seleccione...",
+			allowClear: true,
+			width: 'resolve',
+			width: '100%',
+			theme: "classic"
+		});
+	}
 $(document).ready(function() {
-	$('select').select2({
-		placeholder: "Seleccione...",
-		allowClear: true,
-		width: 'resolve',
-		width: '100%',
-		theme: "classic"
-	});
+	Selects();
 });
 </script>
 <script type="text/javascript">
@@ -610,25 +613,30 @@ function NotifiFalse(Mensaje) {
 	$(document).ready(function() {Checkboxs();});
 </script>
 <script>
-	$('form').on('submit', function(){
-		if(!$('[type="submit"]').hasClass('disabled')){
-			$('[type="submit"]').prop('disabled', true);
-			$('[type="submit"]').empty();
-			$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).submit(function(){
-				return false;
-			});
-			return true;
-		}
-		return false;
-	});
-	$('label.btn').on('click', function(){
-		var idsubmit = $(this).attr('for');
-		if(!$('#'+idsubmit).hasClass('disabled')){
-			$(this).empty();
-			$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).attr('disabled', true);
-		}
+	function envsubmit(){
+		$('form').on('submit', function(){
+			if(!$('[type="submit"]').hasClass('disabled')){
+				$('[type="submit"]').prop('disabled', true);
+				$('[type="submit"]').empty();
+				$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+				$(this).submit(function(){
+					return false;
+				});
+				return true;
+			}
+			return false;
+		});
+		$('label.btn').on('click', function(){
+			var idsubmit = $(this).attr('for');
+			if(!$('#'+idsubmit).hasClass('disabled')){
+				$(this).empty();
+				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+				$(this).attr('disabled', true);
+			}
+		});
+	}
+	$(document).ready(function(){
+		envsubmit();
 	});
 </script>
 {{-- script para activar las funciones de los options --}}

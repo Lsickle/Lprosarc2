@@ -85,7 +85,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'node_modules/inputmask/dist/inputmask/jquery.inputmask.js',
         'node_modules/inputmask/dist/jquery.inputmask.bundle.js',
         'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
-        'node_modules/bootstrap-validator/dist/validator.js',
+        'resources/js/validator.js',
         'node_modules/select2/dist/js/select2.full.js',
         'node_modules/jszip/dist/jszip.js',
         'node_modules/toastr/toastr.js',

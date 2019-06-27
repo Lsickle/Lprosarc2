@@ -26,7 +26,7 @@
 							</div>
 						@endif
 						<div class="box-body">
-							<div class="col-md-12 col-xs-12">
+							<div class="col-md-12">
 								<div class="form-group col-md-12">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
@@ -88,12 +88,10 @@
 								</div>
 								<div id="Conductor" class="form-group col-md-6" hidden="true">
 									<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
 								</div>
 								<div id="Vehiculo" class="form-group col-md-6" hidden="true">
 									<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
 								</div>
 								<div id="typeaditable" class="form-group col-md-6">
@@ -210,7 +208,7 @@
 									</select>
 									<br>
 								</div>
-								<div id="DivRepel0" class="col-md-16">
+								<div id="DivRepel0" class="form-group col-md-16">
 								</div>
 							</div>
 							<div id="AddGenerador" class="col-md-16">
@@ -254,8 +252,6 @@ function TransportadorProsarc() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
-	$("#SolSerConductor").removeAttr('required');
-	$("#SolSerVehiculo").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
 	$("#typecollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
@@ -298,8 +294,6 @@ function TransportadorExtr() {
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
 	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerConductor").attr('required', true);
-	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
 	$("#SolSerBascula").bootstrapSwitch('state',false);
@@ -379,6 +373,7 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 	$(icon).removeClass('fa-plus');
 	$(icon).addClass('fa-minus');
@@ -423,6 +418,7 @@ function ResiduosGener(id_div, ID_Gener){
 	})
 }
 function RequeRespel(id_div, contador, Id_Respel){
+	Selects();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -509,6 +505,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {
