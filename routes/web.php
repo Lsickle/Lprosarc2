@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
@@ -89,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
-	Route::get('/solicitud-servicio/{id}/changestatus', 'SolicitudServicioController@changestatus');
+	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');

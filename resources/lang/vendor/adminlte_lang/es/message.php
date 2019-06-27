@@ -313,6 +313,7 @@ return [
     // area
     'areatitle'               => 'Áreas',
     'areaname'                => 'Nombre del Área',
+    'inputarea'               => 'Área',
     'newarea'                 => 'Nueva Área',
     'namenewarea'             => '¿Cuál Área?',
     'listarea'                => 'Lista de áreas',
@@ -326,13 +327,21 @@ return [
     'namenewcargo'            => '¿Cuál Cargo?',
     'listcargo'               => 'Lista de Cargos',
     'createcargo'             => 'Creación de cargos',
-    'cargograde'              => 'Grado del cargo',
+    'cargograde'              => 'Grado de Instrucción',
     'cargogradelist1'         => 'Bachiller',
     'cargogradelist2'         => 'Técnico',
     'cargogradelist3'         => 'Tecnólogo',
     'cargogradelist4'         => 'Profesional',
-    'cargosalary'             => 'Salario del cargo',
+    'cargosalary'             => 'Salario Promedio',
     'editcargo'               => 'Edición de cargos',
+    'cargoareatittle'         => '<b>Nombre del Área</b>',
+    'cargoareainfo'           => "<p style='width: 50%'>Seleccione el área a la que pertenece el cargo... <br> <b>(Campo Requerido)</b> <br> <br> En caso de que el área no este listada en este formulario, <br> ingrese a la opción de <b>Áreas</b> del menú para crear una <br> nueva área y luego intente crear el cargo </p>",
+    'cargogradetittle'        => '<b>Grado de instrucción académico</b>',
+    'cargogradeinfo'          => "<p style='width: 50%'>Seleccione el Grado de instrucción que corresponde al cargo que esta creando... <br> <b>(Campo Opcional)</b></p>",
+    'cargonametittle'         => '<b>Nombre del Cargo</b>',
+    'cargonameinfo'           => "<p style='width: 50%'>Escriba el nombre del cargo... <br> <b>(Campo Requerido)</b> <br> <br> máximo 64 caracteres alfanuméricos </p>",
+    'cargosalarytittle'       => '<b>Salario Promedio</b>',
+    'cargosalaryinfo'         => "<p style='width: 50%'>escriba el monto promedio del salario para este cargo... <br> <b>(Campo Opcional)</b> <br> <br> máximo 12 caracteres numéricos </p>",
 
     // declaracion
     'declarationmenu'         => 'Declaraciones',
@@ -583,7 +592,7 @@ return [
     'solserunidad2'           => 'Litros',
     'solsercantidad'          => 'Cantidad',
     'solsercantidaddescrit'   => 'Indique la cantidad del residuo según la unidad seleccionada. <b>(Opcional)</b>',
-    'solsercantidadkg'        => 'Cantidad (kg)',
+    'solsercantidadkg'        => 'Cantidad',
     'solsercantienv'          => 'Enviada',
     'solsercantiresi'         => 'Recibida',
     'solsercanticonsi'        => 'Conciliada',
@@ -618,7 +627,7 @@ return [
     'solsershowconciliado'    => 'Los residuos han sido conciliados.',
     'solsershowtrata'         => 'Los residuos han sido tratados, están en proceso de certificación.',
     'solsershowcertifica'     => 'Se han emitido los certificados correspondientes de la solicitud',
-    'solsershowdate'          => 'Fecha:',
+    'solsershowdate'          => 'Fecha',
     'solsershowaudita'        => 'Auditable:',
     'solsershowempre'         => 'Empresa:',
     'solsershowemprenit'      => 'Nit:',
@@ -630,10 +639,15 @@ return [
     
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',
+    'solserstatusrechazado'   => 'Rechazar',
     'solserstatusrecibido'    => 'Recibido',
+    'solserstatusconciliacion' => 'Conciliación',
     'solserstatusconciliado'  => 'Conciliado',
+    'solserstatusnoconciliado' => 'No de Acuerdo',
     'solserstatustratado'     => 'Tratado',
     'solserstatuscertifi'     => 'Certificar',
+    'solserstatusdescrip'     => 'Descripción del cambio',
+    'solserstatusdescripdetaill' => 'Describa brevemente <b>¿Porque cambia la solicitud?</b>',
 
 
     //Requerimientos

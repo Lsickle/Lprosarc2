@@ -16,7 +16,7 @@ $factory->define(App\Generador::class, function (Faker $faker) {
         'GenerShortname'=> $title,
         'GenerCode'=> $faker->optional($weight = 0.3)->bothify('Cli ##??'), /*70% chance of NULL*/
         'GenerType'=>  $faker->randomElement(['organico', 'biologico','industrial', 'medicamentos', 'otros']),
-        'FK_GenerCli'=> $GenerClisede,
+        'FK_GenerCli'=> 1,
         'created_at'=> $ccreado,
         'updated_at'=> $cactualizado,
         'GenerDelete'=> 0,
