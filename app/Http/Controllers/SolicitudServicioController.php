@@ -376,7 +376,12 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=$Solicitud->SolSerStatus;
 		$log->save();
 
+		if($Solicitud->SolSerStatus === 'Aprobado' || $Solicitud->SolSerStatus === 'Completado'|| $Solicitud->SolSerStatus === 'Certificacion'){
+			$slug = $Solicitud->SolSerSlug;
+			return redirect()->route('email', compact('slug'));
+		}
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+		
 	}
 
 

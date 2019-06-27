@@ -40,7 +40,7 @@ class sgenercontroller extends Controller
                     }
                     if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
                         $query->where('gener_sedes.GSedeDelete',0);
-                        $query->where('Sedes.FK_SedeCli', $id);
+                        $query->where('clientes.ID_Cli', $id);
                     }
                 })
                 ->get();

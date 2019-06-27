@@ -18,6 +18,9 @@ class Personal extends Model{
     public function MovimientoActivo(){
         return $this->hasMany('App\MovimientoActivo.php', 'ID_MovAct', 'id');//como personal tiene muchas movimiento de active 
     }
+    public function SolicitudServicio(){
+        return $this->hasMany('App\SolicitudServicio', 'ID_SolSer', 'id');//como personal tiene muchas Solicitudes de Servicio 
+    }
     public function Assistence(){
         return $this->hasMany('App\Assistence', 'ID_Asis','id');//como personal tiene muchas asistencias
     }
