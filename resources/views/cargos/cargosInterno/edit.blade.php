@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
-				<div class="box-header">
+				<div class="box-header with-border">
 					@component('layouts.partials.modal')
 						@slot('slug')
 							{{$Cargos->CargSlug}}

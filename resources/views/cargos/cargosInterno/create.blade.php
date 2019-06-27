@@ -10,10 +10,10 @@
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box box-info">
-				<div class="box-header">
+				<div class="box-header with-border">
 					<h3 class="box-title">{{trans('adminlte_lang::message.createcargo')}}</h3>
 				</div>
-				<div class="box">
+			
 					<form role="form" action="/cargosInterno" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
@@ -59,7 +59,7 @@
 							<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
 						</div>
 					</form>
-				</div>
+				
 			</div>
 		</div>
 	</div>

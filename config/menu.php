@@ -147,15 +147,15 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				    )
 			    )
 			    /*PESTAÑA DE ACTIVOS*/
-			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-				     (Menu::new()
-					     ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-					     ->addParentClass('treeview')
-					     ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
-					     ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
-					     ->addClass('treeview-menu')
-				     )
-			    )
+			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+				   //   (Menu::new()
+					  //    ->prepend('<a href="#"><i class="fas fa-laptop"></i> <span>'.trans('adminlte_lang::message.MenuActivTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+					  //    ->addParentClass('treeview')
+					  //    ->add(Link::toUrl('/activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivInven')))
+					  //    ->add(Link::toUrl('/movimiento-activos', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuActivMovi')))
+					  //    ->addClass('treeview-menu')
+				   //   )
+			    // )
 			    /*PESTAÑA DE SOLICITUD*/
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
