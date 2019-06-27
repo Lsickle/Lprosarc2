@@ -117,5 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
+	/*Rutas de envio de e-mail */
+	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
 });
 
