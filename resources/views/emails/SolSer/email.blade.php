@@ -35,12 +35,12 @@
         @break
     @case('Conciliado')
         @php
-            $text = "la ha aceptado el cliente $mail->CliName satisfactoriamente";
+            $text = "ha aceptado la conciliación satisfactoriamente el cliente $mail->CliName ";
         @endphp
         @break
     @case('Certificacion')
         @php
-            $text = 'ha sido Certificada con exíto, ahora podra ver su certificado en el botón de abajo. Gracias por escojernos y esperamos que vuelva';
+            $text = 'ha sido Certificada con éxito. Gracias por escogernos y esperamos que vuelva';
         @endphp
         @break
 @endswitch
