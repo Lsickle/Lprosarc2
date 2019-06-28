@@ -175,7 +175,9 @@
 								document.getElementById("NewArea").style.display = 'block';
 								document.getElementById("NewInputA").required = true;
 								$("#FK_PersCargo").empty();
-								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">Nuevo Cargo</option>`);
+								document.getElementById("divFK_PersCargo").style.display = 'none';
+								document.getElementById("FK_PersCargo").required = false;
+								document.getElementById("FK_PersCargo").value = "NewCargo";
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
@@ -226,7 +228,7 @@
 			document.getElementById("NewInputA").required = true;
 			document.getElementById("divFK_PersCargo").style.display = 'none';
 			document.getElementById("FK_PersCargo").required = false;
-			document.getElementById("FK_PersCargo").value = "0";
+			document.getElementById("FK_PersCargo").value = "NewCargo";
 			document.getElementById("NewCargo").style.display = 'block';
 			document.getElementById("NewInputC").required = true;
 		}
