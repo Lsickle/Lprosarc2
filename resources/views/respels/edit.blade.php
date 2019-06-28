@@ -18,47 +18,39 @@
 @endcomponent
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
+		<div class="col-md-12 col-md-offset-0">
 			<!-- Default box -->
-			<div class="box">
+			<div class="box box-primary">
+				<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
+					@method('PUT')
+					@csrf
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
 				</div>
-				<div class="row">
 					<!-- left column -->
-					<div class="col-md-12">
 						<!-- general form elements -->
-						<div class="box box-primary">
-							<!-- /.box-header -->
-							<!-- form start -->
-							<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
-								@method('PUT')
-								@csrf
-								@if ($errors->any())
-								    <div class="alert alert-danger" role="alert">
-								        <ul>
-								            @foreach ($errors->all() as $error)
-								                <li>{{$error}}</li>
-								            @endforeach
-								        </ul>
-								    </div>
-								@endif
-								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-								@include('layouts.RespelPartials.Respelform1Edit')
-								<!-- /.box-body -->
-								<div class="col-md-12">	
-									<div class="box-footer">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangTratamiento.updaterespelButton') }}</button>
-										<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
-									</div>
-								</div>
-							</form>
-						</div>
-						<!-- /.box -->
-					</div>
-					<!-- /.box-body -->
+				<div class="box-body">
+					<!-- /.box-header -->
+					<!-- form start -->
+					
+						@if ($errors->any())
+						    <div class="alert alert-danger" role="alert">
+						        <ul>
+						            @foreach ($errors->all() as $error)
+						                <li>{{$error}}</li>
+						            @endforeach
+						        </ul>
+						    </div>
+						@endif
+						<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+						@include('layouts.RespelPartials.Respelform1Edit')
+						<!-- /.box-body -->
 				</div>
-				<!-- /.box -->
+				<div class="box-footer">
+					<button type="submit" class="btn btn-success"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+					<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+				</div>
+			</form>
 			</div>
 			<!--/.col (right) -->
 		</div>
@@ -91,7 +83,6 @@
 		@csrf
 		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
 		<!-- row -->
-		<div class="row">
 			<!-- col md3 -->
 			<div class="col-md-3">
 				<!-- box -->
@@ -214,7 +205,7 @@
 					<!-- box body -->
 					<div class="box-body">
 						<!-- nav-tabs-custom -->
-						<div class="nav-tabs-custom">
+						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
 								<li class="nav-item active">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
@@ -248,25 +239,26 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="tarifaspane">
-									<div class="form-horizontal">
+
 										@include('layouts.respel-comercial.respel-tarifas')
-									</div>
+
 								</div>
 								<!-- /.tab-pane fade -->
 							</div>
 							<!-- /.tab-content -->
 						</div>
-						<div class="row">
-							 <button class="btn btn-primary pull-right" type="submit" style="margin-right:5em">{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-						</div>
-						<!-- /.nav-tabs-custom -->
 					</div>
 					<!-- /.box body -->
+					<div class="box-footer">
+						 <button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+
+						 <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+					</div>
+						<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
 			</div>
 			<!-- /.col md9 -->
-		</div>
 		<!-- /.row -->
 	</form>
 	<!-- /.form  -->

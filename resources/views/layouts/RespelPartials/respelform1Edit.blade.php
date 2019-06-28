@@ -1,9 +1,6 @@
 <div id="Respels">
 	<div id="Residuo">
 		{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
-			<div class="col-md-12">
-				<hr>
-			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::message.name') }}</label>
 				<input maxlength="128" name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{$Respels->RespelName}}">
