@@ -62,6 +62,11 @@ class VehicProgController extends Controller
             ->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerVehiculo')
             ->where('progvehiculos.ProgVehDelete', 0)
             ->get();
+        $transportadores = DB::table('clientes')
+            ->select('CliShortname', 'CliSlug')
+            ->where('CliCategoria', 'Transportador')
+            ->where('CliDelete', 0)
+            ->get();
         $mantenimientos = DB::table('mantenvehics')
             ->join('vehiculos', 'mantenvehics.FK_VehMan', '=', 'vehiculos.ID_Vehic')
             ->select('mantenvehics.*','vehiculos.VehicPlaca')
@@ -81,11 +86,12 @@ class VehicProgController extends Controller
             ->select('ID_Vehic','VehicPlaca')
             ->get();
         $serviciosnoprogramados = DB::table('solicitud_servicios')
-            ->select('ID_SolSer', 'SolSerSlug', 'SolSerTipo')
+            ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+            ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
             ->where('SolSerDelete', 0)
             ->where('SolSerStatus', 'Aprobado')
             ->get();
-        return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos'));
+        return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
     }
 
     /**
@@ -107,15 +113,36 @@ class VehicProgController extends Controller
         $programacion->ProgVehTurno = $turno;
         $programacion->ProgVehFecha = $request->input('ProgVehFecha');
         $programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
-        if(!is_null($request->input('FK_ProgVehiculo'))){
-            $programacion->ProgVehtipo = 1;
-            $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
-            $programacion->ProgVehColor = $request->input('ProgVehColor');
-            $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
-            $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
-            $conductor = Personal::select('PersFirstName', 'PersLastName')->where('ID_Pers', $request->input('FK_ProgConductor'))->first();
-            $nomConduct = $conductor->PersFirstName." ".$conductor->PersLastName;
-            $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first()->VehicPlaca;
+        if(!is_null($request->input('typetransportador'))){
+            if($request->input('typetransportador') == 0){
+                $programacion->ProgVehtipo = 1;
+                $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
+                $programacion->ProgVehColor = $request->input('ProgVehColor');
+                $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
+                $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+                $conductor = Personal::select('PersFirstName', 'PersLastName')->where('ID_Pers', $request->input('FK_ProgConductor'))->first();
+                $nomConduct = $conductor->PersFirstName." ".$conductor->PersLastName;
+                $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first()->VehicPlaca;
+                $transportador = DB::table('clientes')
+                    ->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                    ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                    ->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+                    ->where('ID_Cli', 1)
+                    ->first();
+            }
+            else{
+                $programacion->ProgVehtipo = 2;
+                $programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+                $programacion->ProgVehColor = '#FFFF00';
+                $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
+                $nomConduct = null;
+                $transportador = DB::table('clientes')
+                    ->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                    ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                    ->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+                    ->where('CliSlug', $request->input('transport'))
+                    ->first();
+            }
         }
         else{
             $nomConduct = null;
@@ -128,9 +155,13 @@ class VehicProgController extends Controller
 
         $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
         $SolicitudServicio->SolSerStatus = 'Programado';
-        if($nomConduct <> null){
+        if(!is_null($request->input('typetransportador'))){
             $SolicitudServicio->SolSerConductor = $nomConduct;
             $SolicitudServicio->SolSerVehiculo = $vehiculo;
+            $SolicitudServicio->SolSerNameTrans = $transportador->CliName;
+            $SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
+            $SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
+            $SolicitudServicio->SolSerCityTrans = $transportador->MunName;
         }
         $SolicitudServicio->save();
         
@@ -157,21 +188,18 @@ class VehicProgController extends Controller
     public function edit($id)
     {
         $programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-        $programaciones = DB::table('progvehiculos')
-            ->select('ID_ProgVeh', 'FK_ProgServi', 'ProgVehEntrada')
-            ->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)
-            ->where('progvehiculos.ProgVehEntrada', '<>', null)
-            ->get();
         $vehiculos = DB::table('vehiculos')
             ->select('ID_Vehic','VehicPlaca')
             ->get();
-        $servicios = DB::table('solicitud_servicios')
-            ->select('ID_SolSer', 'SolSerTipo')
-            ->where(function($query) use ($programaciones){
-                foreach($programaciones as $existentes){
-                    $query->where('ID_SolSer', '<>', $existentes->FK_ProgServi);
-                }
-            })
+        $SedeVehiculo = DB::table('sedes')
+            ->join('vehiculos', 'sedes.ID_Sede', '=', 'vehiculos.FK_VehiSede')
+            ->select('sedes.ID_Sede')
+            ->where('vehiculos.ID_Vehic', $programacion->FK_ProgVehiculo)
+            ->first();
+        $Vehiculos2 = DB::table('vehiculos')
+            ->select('VehicPlaca', 'ID_Vehic')
+            ->where('FK_VehiSede', $SedeVehiculo->ID_Sede)
+            ->where('VehicDelete', 0)
             ->get();
         $conductors = DB::table('personals')
             ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -183,7 +211,7 @@ class VehicProgController extends Controller
             ->select('ID_Pers', 'PersFirstName', 'PersLastName')
             ->where('CargName', 'Operario')
             ->get();
-        return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'servicios', 'conductors', 'ayudantes'));
+        return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2'));
     }
 
     /**
@@ -219,17 +247,38 @@ class VehicProgController extends Controller
                 $programacion->ProgVehEntrada = null;
                 $programacion->progVehKm = null;
             }
+            $conductor = Personal::select('PersFirstName', 'PersLastName')->where('ID_Pers', $request->input('FK_ProgConductor'))->first();
+            $nomConduct = $conductor->PersFirstName." ".$conductor->PersLastName;
+            $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first()->VehicPlaca;
             $programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
             $programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
             $programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
             $programacion->ProgVehColor = $request->input('ProgVehColor');
         }
+        else if($programacion->ProgVehtipo == 0){
+            if($request->input('ProgVehEntrada')){
+                $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+            }
+            $nomConduct = null;
+            $vehiculo = null;
+        }
         else{
             if($request->input('ProgVehEntrada')){
                 $programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
             }
+            $programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+            $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
+            $nomConduct = null;
         }
         $programacion->save();
+
+        $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+        $SolicitudServicio->SolSerStatus = 'Programado';
+        if($programacion->ProgVehtipo <> 0){
+            $SolicitudServicio->SolSerConductor = $nomConduct;
+            $SolicitudServicio->SolSerVehiculo = $vehiculo;
+        }
+        $SolicitudServicio->save();
 
         $log = new audit();
         $log->AuditTabla="progvehiculos";
@@ -258,8 +307,18 @@ class VehicProgController extends Controller
             if(is_null($programaciones) && $SolicitudServicio->SolSerStatus == 'Programado'){
                 $SolicitudServicio->SolSerStatus = 'Aprobado';
                 if($SolicitudServicio->SolSerTipo == 'Interno'){
+                    $transportador = DB::table('clientes')
+                                        ->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                                        ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+                                        ->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+                                        ->where('ID_Cli', 1)
+                                        ->first();
                     $SolicitudServicio->SolSerConductor = null;
                     $SolicitudServicio->SolSerVehiculo = null;
+                    $SolicitudServicio->SolSerNameTrans = $transportador->CliName;
+                    $SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
+                    $SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
+                    $SolicitudServicio->SolSerCityTrans = $transportador->MunName;
                 }
                 $SolicitudServicio->save();
             }
