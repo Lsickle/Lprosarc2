@@ -83,16 +83,12 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-md-6 vehiculoAlquilado" hidden="true">
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label>Vehiculo</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control">
 										<option value="">Seleccione...</option>
 									</select>
-								</div>
-								<div class="form-group col-md-6 vehiculoAlquilado" hidden="true">
-									<label>Conductor</label>
-									<input type="text" name="conducalqui" id="conducalqui" class="form-control">
 								</div>
 								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
