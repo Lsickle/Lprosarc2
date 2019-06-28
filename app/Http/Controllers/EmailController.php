@@ -15,10 +15,10 @@ class EmailController extends Controller
     protected function sendemail($slug)
     {
         $SolSer = SolicitudServicio::where('SolSerSlug', $slug)->first();
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Conciliado')){
             $email = DB::table('solicitud_servicios')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                ->join('sedes', 'sedesFK_SedeCli', '=' ,'clientes.ID_Cli')
+                ->join('sedes', 'sedes.FK_SedeCli', '=' ,'clientes.ID_Cli')
                 ->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('personals', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -39,6 +39,5 @@ class EmailController extends Controller
         }
 
         return back();
-        // return redirect()->route('solicitud-servicio.show', ['id' => $SolSer->SolSerSlug]);
     }
 }

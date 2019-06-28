@@ -568,7 +568,7 @@
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
 			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))//Añadir rol encargado de enviar las notificaciones a los clientes de la programción
 				$('#titulo').append(`
 					<a href="/email/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
 				`);
