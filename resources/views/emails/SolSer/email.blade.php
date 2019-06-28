@@ -25,42 +25,56 @@
         @break
     @case('Completado')
         @php
-            $text = 'ha llegado a Prosarc S.A ESP, porfavor revise los pesos que han llegado a planta para poder tratar sus residuos';
+            $text = 'esta lista para realizar una conciliación, por favor revise los pesos y/o cantidades de los residuos, para poder tratarlos';
         @endphp
         @break
     @case('No Conciliado')
         @php
-            $text = "la ha rechazado el cliente $mail->CliName por desacuerdo en en los pesos de la solicitud";
+            $text = "la ha rechazado el cliente $mail->CliName";
         @endphp
         @break
-    {{-- @case('Conciliado')
+    @case('Conciliado')
         @php
-            $text = 'ha sido conciliada y ahora sus residuos estan listos para ser tratados';
+            $text = "ha aceptado la conciliación satisfactoriamente el cliente $mail->CliName ";
         @endphp
-        @break --}}
-    {{-- @case('Tratado')
-        @php
-            $text ='ha sido tratada con exito solo falta la aprobacion para poder entregar su certificado';
-        @endphp
-        @break --}}
+        @break
     @case('Certificacion')
         @php
-            $text = 'ha sido Certificada con exíto, ahora podra ver su certificado en el botón de abajo. Gracias por escojernos y esperamos que vuelva';
+            $text = 'ha sido Certificada con éxito. Gracias por escogernos y esperamos que vuelva';
         @endphp
         @break
 @endswitch
 
-En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}
+En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<br>
+
+@if ($mail->SolSerStatus === 'No Conciliado')
+## @lang('¿Por qué?')
+
+*@lang($mail->SolSerDescript)*<br><br>
+
+@lang("Puede comunicarse con:")<br>
+
+***@lang("Nombre: ")***{{$mail->PersFirstName}} {{$mail->PersLastName}}<br>
+
+***@lang("E-mail: ")***{{$mail->PersEmail}}<br>
+@endif
 
 @component('mail::button', ['url' => $url])
 {{$nameButton}}
 @endcomponent
-@if($mail->SolSerStatus <> 'No Conciliado')
-    Si tiene alguna duda no olvide comunicarse con su asesor comercial.<br><br>
-    Saludos, Prosarc S.A. ESP<br>
+
+@if ($mail->SolSerStatus === 'Conciliado' || $mail->SolSerStatus === 'No Conciliado')
+    @php
+        $end = 'Por favor dar clic en el botón "'.$nameButton.'" para ver más detalles.';
+    @endphp
 @else
-        Por favor dar clic en el botón "{{$nameButton}}" para ver más detalles
+    @php
+        $end = 'Si tiene alguna duda no olvide comunicarse con su asesor comercial. Saludos, Prosarc S.A. ESP.';
+    @endphp
 @endif
+
+{{$end}}
+
 @component('mail::subcopy')
 @lang(
     "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL \nen su navegador web: [:actionURL](:actionURL)",
