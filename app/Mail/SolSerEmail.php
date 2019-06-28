@@ -34,7 +34,7 @@ class SolSerEmail extends Mailable
     public function build()
     {
         if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($this->mail->SolSerStatus === 'No Conciliado' || $this->mail->SolSerStatus === 'Conciliado')){
-            return $this->from(Auth::user()->email, $this->mail->CliName)
+            return $this->from('notificaciones@prosarc.com.co', $this->mail->CliName)
                         ->subject('Solicitud de Servicio')
                         ->markdown('emails.SolSer.email');
         }else{

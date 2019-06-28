@@ -50,7 +50,13 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
 @if ($mail->SolSerStatus === 'No Conciliado')
 ## @lang('¿Por qué?')
 
-*@lang($mail->SolSerDescript)*
+*@lang($mail->SolSerDescript)*<br><br>
+
+@lang("Puede comunicarse con:")<br>
+
+***@lang("Nombre: ")***{{$mail->PersFirstName}} {{$mail->PersLastName}}<br>
+
+***@lang("E-mail: ")***{{$mail->PersEmail}}<br>
 @endif
 
 @component('mail::button', ['url' => $url])
