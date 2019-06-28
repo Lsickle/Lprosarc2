@@ -135,7 +135,7 @@
 													</div>
 												</div>
 												<div class="box-footer">
-													<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+													<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 												</div>
 											</div>
 										</div>
