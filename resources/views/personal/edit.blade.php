@@ -167,6 +167,10 @@
 						url: "{{url('/area-sede')}}/"+id,
 						method: 'GET',
 						data:{},
+						beforeSend: function(){
+							$(".loadCargArea").append('<i class="fas fa-sync-alt fa-spin"></i>');
+							$("#CargArea").prop('disabled', true);
+						},
 						success: function(res){
 							if(res != ''){
 								$("#CargArea").empty();
@@ -192,6 +196,10 @@
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
+						},
+						complete: function(){
+							$(".loadCargArea").empty();
+							$("#CargArea").prop('disabled', false);
 						}
 					})
 				}
@@ -209,6 +217,10 @@
 						url: "{{url('/cargo-area')}}/"+id,
 						method: 'GET',
 						data:{},
+						beforeSend: function(){
+							$(".loadFK_PersCargo").append('<i class="fas fa-sync-alt fa-spin"></i>');
+							$("#FK_PersCargo").prop('disabled', true);
+						},
 						success: function(res){
 							if(res != ''){
 								$("#FK_PersCargo").empty();
@@ -228,6 +240,10 @@
 								document.getElementById("NewCargo").style.display = 'block';
 								document.getElementById("NewInputC").required = true;
 							}
+						},
+						complete: function(){
+							$(".loadFK_PersCargo").empty();
+							$("#FK_PersCargo").prop('disabled', false);
 						}
 					})
 				}
