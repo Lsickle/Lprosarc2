@@ -172,11 +172,12 @@
 															<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{old('PersIngreso')}}">
 														</div>
 														<div class="form-group col-md-6">
+															<label for="PersIngreso">{{ trans('adminlte_lang::message.perssalida') }}</label>
 															<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" value="{{old('PersSalida')}}">
 														</div>
 													</div>
 													<div class="box-footer">
-														<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+														<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 													</div>
 												</div>
 											</div>
