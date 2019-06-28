@@ -131,7 +131,7 @@
 												<div id="form-step-2" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
 														<label for="PersBirthday">{{ trans('adminlte_lang::message.persbirthday') }}</label>
-														<input name="PersBirthday" autofocus="true" type="text" class="form-control fechas" id="PersBirthday" value="{{$Persona->PersBirthday}}">
+														<input name="PersBirthday" autofocus="true" type="date" class="form-control fechas" id="PersBirthday" value="{{$Persona->PersBirthday <> null ? date('Y-m-d', strtotime($Persona->PersBirthday)) : ''}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersPhoneNumber">{{ trans('adminlte_lang::message.persphone') }}</label>
@@ -163,11 +163,11 @@
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersIngreso">{{ trans('adminlte_lang::message.persingreso') }}</label><small class="help-block with-errors dir">*</small>
-														<input name="PersIngreso" autofocus="true" type="text" class="form-control fechas" id="PersIngreso" required value="{{$Persona->PersIngreso}}">
+														<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{$Persona->PersIngreso <> null ? date('Y-m-d', strtotime($Persona->PersIngreso)) : ''}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersIngreso">{{ trans('adminlte_lang::message.perssalida') }}</label>
-														<input name="PersSalida" autofocus="true" type="text" class="form-control fechas" id="PersSalida" value="{{$Persona->PersSalida}}">
+														<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" value="{{$Persona->PersSalida <> null ? date('Y-m-d', strtotime($Persona->PersSalida)) : ''}}">
 													</div>
 												</div>
 												<div class="box-footer">
