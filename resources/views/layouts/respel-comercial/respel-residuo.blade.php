@@ -48,7 +48,7 @@
 </div>
 <div class="col-md-1">
 	<label>Ver</label><br>
-	<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
+	<a method='get' href='{{ asset("/img/HojaSeguridad/".$Respels->RespelHojaSeguridad)}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
 </div>
 <div class="col-md-5">
 	<label>Tarjeta De Emergencia</label>
@@ -56,7 +56,7 @@
 </div>
 <div class="col-md-1">
 	<label>Ver</label><br>
-	<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
+	<a method='get' href='{{ asset("/img/TarjetaEmergencia/".$Respels->RespelTarj)}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
 </div>
 	
 	

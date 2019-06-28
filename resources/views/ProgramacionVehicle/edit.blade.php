@@ -186,7 +186,7 @@
 							<!-- /.box-body -->
 						</form>
 					</div>
-				@else
+				@elseif($programacion->ProgVehtipo == 1)
 					<div class="box box-info">
 						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
@@ -209,6 +209,42 @@
 									<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
 							</div>
+							<!-- /.box-body -->
+						</form>
+					</div>
+				@else
+					<div class="box box-info">
+						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+							@csrf
+							@method('PUT')
+							<div class="box-body">
+								<div class="form-group col-md-6 col-md-offset-3">
+									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
+									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
+									<input type="time" required="" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label><small class="help-block with-errors">*</small>
+									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
+								</div>
+								<div class="fomr-group col-md-12" style="margin-bottom: 30px;">
+									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<small class="help-block with-errors">*</small>
+									<select name="vehicalqui" id="vehicalqui" class="form-control">
+										@foreach($Vehiculos2 as $Vehiculo)
+											<option value="{{$Vehiculo->ID_Vehic}}" {{$Vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$Vehiculo->VehicPlaca}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="col-md-12 col-xs-12 box box-info"></div>
+								<div class="box-footer">
+									<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+								</div>
+							</div>
+
 							<!-- /.box-body -->
 						</form>
 					</div>
@@ -276,6 +312,16 @@
 				$("#progVehKm").prop('readonly', true);
 			@endif
 			});
+	@endif
+	@if($programacion->ProgVehtipo == 2)
+		$('#vehicalqui').attr('required', true);
+		@if($programacion->ProgVehEntrada <> null)
+			$(".select2-selection").css("background-image", "none");
+			$("#vehicalqui").prop("disabled", true);
+			$("#ProgVehSalida").prop("disabled", true);
+			$("#ProgVehEntrada").prop("disabled", true);
+			$("#update").prop("disabled", true);
+		@endif
 	@endif
 	</script>
 @endsection

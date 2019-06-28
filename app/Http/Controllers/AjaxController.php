@@ -116,4 +116,23 @@ class AjaxController extends Controller
 			return response()->json($Requerimientos);
 		}
 	}
+
+	/*Funcion para ver por medio de Ajax los vehiculos que le competen a un Transportador*/
+	public function VehicTransport(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$SedeTransportador = DB::table('clientes')
+				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+				->select('sedes.ID_Sede')
+				->where('clientes.CliSlug', $id)
+				->where('CliDelete', '=', 0)
+				->first();
+			$Vehiculos = DB::table('vehiculos')
+				->select('VehicPlaca', 'ID_Vehic')
+				->where('FK_VehiSede', $SedeTransportador->ID_Sede)
+				->where('VehicDelete', 0)
+				->get();
+			return response()->json($Vehiculos);
+		}
+	}
 }
