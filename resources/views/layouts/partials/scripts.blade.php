@@ -615,7 +615,7 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			var buttonsubmit = $(this).children('[type="submit"]');
+			var buttonsubmit = $(this).find('[type="submit"]');
 			if(buttonsubmit.hasClass('disabled')){
 				return false;
 			}
