@@ -65,7 +65,36 @@
 									<input class="form-control" type="time" required id="ProgVehSalida" name="ProgVehSalida" value="{{old('ProgVehSalida')}}">
 									<small class="help-block with-errors"></small>
 								</div>
-								<div class="form-group col-xs-12 col-md-12">
+								<div class="form-group col-md-12">
+									<label>Tipo de Transportador</label>
+									<select name="typetransportador" id="typetransportador" class="form-control">
+										<option value="">Seleccione...</option>
+										<option onclick="TranspotadorProsarc()" value="0">Prosarc S.A. ESP</option>
+										<option onclick="TranspotadorAlquilado()" value="1">Alquilado</option>
+									</select>
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label>Transportador</label>
+									<small class="help-block with-errors">*</small>
+									<select name="transport" id="transport" class="form-control">
+										<option value="">Seleccione...</option>
+										@foreach($transportadores as $transportador)
+											<option value="{{$transportador->CliSlug}}">{{$transportador->CliShortname}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-md-6 vehiculoAlquilado" hidden="true">
+									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<small class="help-block with-errors">*</small>
+									<select name="vehicalqui" id="vehicalqui" class="form-control">
+										<option value="">Seleccione...</option>
+									</select>
+								</div>
+								<div class="form-group col-md-6 vehiculoAlquilado" hidden="true">
+									<label>Conductor</label>
+									<input type="text" name="conducalqui" id="conducalqui" class="form-control">
+								</div>
+								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control" required>
@@ -75,7 +104,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control" required>
@@ -85,7 +114,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control" required>
@@ -95,7 +124,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-xs-12 col-md-12">
+								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
 								</div>
@@ -326,7 +355,7 @@
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
-						@if($programacion->ProgVehtipo == 1 && $programacion->ProgVehEntrada == null)
+						@if(($programacion->ProgVehtipo == 1 || $programacion->ProgVehtipo == 2) && $programacion->ProgVehEntrada == null)
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
@@ -426,6 +455,65 @@
 					NotifiFalse("{{trans('adminlte_lang::message.progvehcediterror')}}");
 				}
 			});
+		}
+	});
+	function TranspotadorProsarc(){
+		$('.vehiculoAlquilado').attr('hidden', true);
+		$('.vehiculoProsarc').attr('hidden', false);
+		$('#transport').attr('required', false);
+		$('#vehicalqui').attr('required', false);
+		$('#FK_ProgVehiculo').attr('required', true);
+		$('#FK_ProgConductor').attr('required', true);
+		$('#FK_ProgAyudante').attr('required', true);
+	}
+	function TranspotadorAlquilado(){
+		$('.vehiculoProsarc').attr('hidden', true);
+		$('.vehiculoAlquilado').attr('hidden', false);
+		$('#transport').attr('required', true);
+		$('#vehicalqui').attr('required', true);
+		$('#FK_ProgVehiculo').attr('required', false);
+		$('#FK_ProgConductor').attr('required', false);
+		$('#FK_ProgAyudante').attr('required', false);
+	}
+	$('#transport').on('change', function() { 
+		var id = $('#transport').val();
+		if(id != 0){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{url('/vehicle-transport')}}/"+id,
+				method: 'GET',
+				data:{},
+				beforeSend: function(){
+					$(".loadvehicalqui").append('<i class="fas fa-sync-alt fa-spin"></i>');
+					$("#vehicalqui").prop('disabled', true);
+				},
+				success: function(res){
+					if(res != ''){
+						$("#vehicalqui").empty();
+						var vehiculos = new Array();
+						$("#vehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+						for(var i = res.length -1; i >= 0; i--){
+							if ($.inArray(res[i].ID_Carg, vehiculos) < 0) {
+								$("#vehicalqui").append(`<option value="${res[i].ID_Vehic}">${res[i].VehicPlaca}</option>`);
+								vehiculos.push(res[i].ID_Carg);
+							}
+						}
+					}
+					else{
+						$("#vehicalqui").empty();
+						$("#vehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+						NotifiFalse('EL transportador no tiene vehiculos asignados');
+					}
+				},
+				complete: function(){
+					$(".loadvehicalqui").empty();
+					$("#vehicalqui").prop('disabled', false);
+				}
+			})
 		}
 	});
 </script>
