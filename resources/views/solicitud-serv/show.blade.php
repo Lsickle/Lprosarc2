@@ -232,7 +232,7 @@
 															$TypeUnidad = 'Unidad(es)';
 															break;
 														case 'Litros':
-															$TypeUnidad = 'Litros';
+															$TypeUnidad = 'Litro(s)';
 															break;
 														default:
 															$TypeUnidad = 'Kilogramos';
@@ -402,14 +402,30 @@
 									<div class="form-group col-md-12">
 										@switch($SolicitudServicio->SolSerStatus)
 											@case('Programado')
-												<label for="SolResKgRecibido">Cantidad Recibida</label>
+												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+											</div>
+												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+												<div class="form-group col-md-12">
+													<label for="SolResCantiUnidadRecibida">Cantidad Recibida {{$TypeUnidad}}</label>
+													<small class="help-block with-errors">*</small>
+													<input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolRescantidad" maxlength="5" value="`+cantidad+`" required>
+												</div>
+												@endif
 												@break
 											@case('Completado')
 												<label for="SolResKgConciliado">Cantidad Conciliada</label>
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+											</div>
+												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+													<div class="form-group col-md-12">
+														<label for="SolResCantiUnidadConciliada">Cantidad Conciliada {{$TypeUnidad}}</label>
+														<small class="help-block with-errors">*</small>
+														<input type="text" class="form-control numberKg" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="`+cantidad+`" required>
+													</div>
+												@endif
 												@break
 											@case('Conciliado')
 												<label for="SolResKgTratado">Cantidad Tratada</label>
@@ -421,10 +437,10 @@
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
+											</div>
 												@break
 										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
-									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
