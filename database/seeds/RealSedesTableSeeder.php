@@ -13,22 +13,22 @@ class RealSedesTableSeeder extends Seeder
     public function run()
     {
 		$sede = new Sede();
-		$sede->SedeName = 'Prosarc S.A. ESP. (principal)';
+		$sede->SedeName = 'Planta';
 		$sede->SedeAddress = 'KM 6 VÍA LA MESA SUB ESTACIÓN BALSILLAS';
-		$sede->SedeEmail = 'ProsarcS.A.ESP._ppal@gmail.com';
+		$sede->SedeEmail = 'logistica@prosarc.com.com';
 		$sede->FK_SedeCli = '1';
 		$sede->FK_SedeMun = '584';
-		$sede->SedeSlug = 'sede-11584';
+		$sede->SedeSlug = hash('sha256', rand().time().$sede->SedeAddress);
 		$sede->SedeDelete = 0;
 		$sede->save();
 
 		$sede = new Sede();
-		$sede->SedeName = 'Prosarc S.A. ESP. (Comercial)';
-		$sede->SedeAddress = 'Bogotá';
-		$sede->SedeEmail = 'ProsarcS.A.ESP.comercial@gmail.com';
+		$sede->SedeName = 'Bogotá';
+		$sede->SedeAddress = 'Cll 120# 7-62 Ed cei3 ofi 610';
+		$sede->SedeEmail = 'servicomercial@prosarc.com.co';
 		$sede->FK_SedeCli = '1';
 		$sede->FK_SedeMun = '169';
-		$sede->SedeSlug = 'sede-21211';
+		$sede->SedeSlug = hash('sha256', rand().time().$sede->SedeAddress);
 		$sede->SedeDelete = 0;
 		$sede->save();
 
