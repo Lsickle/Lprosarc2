@@ -77,12 +77,6 @@
                                     <option value="90" {{$SolRes->SolResEmbalaje  === "Tachos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja10') }}</option>
                                     <option value="89" {{$SolRes->SolResEmbalaje  === "Embalajes Compuestos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja11') }}</option>
                                     <option value="88" {{$SolRes->SolResEmbalaje  === "Granel" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja12') }}</option>
-{{--                                     
-                                    <option value="99" {{$SolRes->SolResEmbalaje  === "Bolsas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja1') }}</option>
-                                    <option value="98" {{$SolRes->SolResEmbalaje  === "Canecas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja2') }}</option>
-                                    <option value="97" {{$SolRes->SolResEmbalaje  === "Estibas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja3') }}</option>
-                                    <option value="96" {{$SolRes->SolResEmbalaje  === "Garrafones" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja4') }}</option>
-                                    <option value="95" {{$SolRes->SolResEmbalaje  === "Cajas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja5') }}</option> --}}
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -187,22 +181,26 @@
         $(document).ready(function (){
             $("#divSolResKgRecibido").append(`
                 <div class="form-group col-md-6">
-                    <label></i>Resivido {{$TypeUnidad}}</label><small class="help-block with-errors">*</small>
+                    <label></i>Kilogramos Recibidos</label><small class="help-block with-errors">*</small>
                     <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
                 </div>
             `);
             $("#divSolResKgConciliado").append(`
                 <div class="form-group col-md-6">
-                    <label></i>Conciliado  {{$TypeUnidad}}</label>
+                    <label></i>{{$TypeUnidad}} Conciliadas</label>
                     @if(Auth::user()->UsRol !== trans('adminlte_lang::message.SupervisorTurno'))
                         <small class="help-block with-errors">*</small>
                     @endif
-                    <input type="text" class="form-control" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                    @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                        <input type="text" class="form-control" maxlength="5" id="SolResKgConciliado" name="SolResCantiUnidadConciliada" value="{{$SolRes->SolResCantiUnidadConciliada}}" required>
+                    @else
+                        <input type="text" class="form-control" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                    @endif
                 </div>
             `);
             $("#divSolResKgTratado").append(`
-                <div class="form-group col-md-12">
-                    <label></i>Tratado  Kilogramos</label>
+                <div class="form-group col-md-12" id="tratado">
+                    <label></i> Kilogramos Tratados</label>
                     @if($SolSer->SolSerStatus === 'Conciliado')
                     <small class="help-block with-errors">*</small>
                     @endif
@@ -217,7 +215,16 @@
                     </div>
                 </div>
             `);
-
+            @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                $("#divSolResKgRecibido").append(`
+                        <div class="form-group col-md-6">
+                            <label></i>{{$TypeUnidad}} Recibidos</label><small class="help-block with-errors">*</small>
+                            <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResCantiUnidadRecibida}}" required>
+                        </div>
+                `);
+                $('#tratado').removeClass('col-md-12');
+                $('#tratado').addClass('col-md-6');
+            @endif
             $('#SolResTypeUnidad').prop('disabled', true);
             $('#SolResCantiUnidad').prop('disabled', true);
             $('#SolResEmbalaje').prop('disabled', true);
@@ -257,7 +264,6 @@
                             SolResKgTratado();
                             ValorConciliado();
                             SolResKgConciliado();
-                            numeroKg();
                             if('{{$Programacion->ProgVehEntrada === Null}}'){
                                 SolResKgRecibido();
                             }
@@ -319,6 +325,8 @@
             $('#SolResKgConciliado').prop('required', false);
         }
         function updateForm(){
+            numeroKg();
+
             $('#FormSolRes').validator('update');
         }
     </script>

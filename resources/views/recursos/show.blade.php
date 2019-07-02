@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header with-border">
                     <div class="col-md-12" >
-                        @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
+                        @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliao' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                 <center><h4>{{trans('adminlte_lang::message.solrestitleclientepart1')}} <b>{{trans('adminlte_lang::message.update')}}</b> {{trans('adminlte_lang::message.o')}} <b>{{trans('adminlte_lang::message.delete')}}</b> {{trans('adminlte_lang::message.solrestitleclientepart2')}}
                                     @switch($SolSer->SolSerStatus)
@@ -22,6 +22,7 @@
                                         @case('Completado')
                                             {{trans('adminlte_lang::message.solresCompletado')}}
                                             @break
+                                        @case('No Conciliado')
                                         @case('Conciliado')
                                             {{trans('adminlte_lang::message.solresConciliadotext')}}
                                             @break
@@ -64,6 +65,19 @@
                                 </form>
                             @endif
                         @endif
+                        @php
+                            switch ($SolRes->SolResTypeUnidad) {
+                                case 'Unidad':
+                                    $TypeUnidad = 'Unidad(es)';
+                                    break;
+                                case 'Litros':
+                                    $TypeUnidad = 'Litro(s)';
+                                    break;
+                                default:
+                                    $TypeUnidad = 'Kilogramos';
+                                    break;
+                            }
+                        @endphp
                     </div>
                 </div>
                 <div class="row">
@@ -87,24 +101,39 @@
                                         <a>{{$SolRes->SolResEmbalaje}}</a>
                                     </div>
                                 </div>
+
                                 <div class="border-gray" id="kgenviados">
                                     <label>{{trans('adminlte_lang::message.solresenviado')}}</label><br>
                                     <a>{{$SolRes->SolResKgEnviado}}</a>
                                 </div>
+                                
                                 <div class="border-gray" id="kgresividos">
                                     <label>{{trans('adminlte_lang::message.solresresivido')}}</label><br>
                                     <a>{{$SolRes->SolResKgRecibido  === Null ? 'N/A' : $SolRes->SolResKgRecibido}}</a>
                                 </div>
+
+                                @if(($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'))
+                                    <div class="border-gray" id="unidadrecibida">
+                                        <label>{{$TypeUnidad}} {{trans('adminlte_lang::message.solresresivido')}}</label><br>
+                                        <a>{{$SolRes->SolResCantiUnidadRecibida  === Null ? 'N/A' : $SolRes->SolResCantiUnidadRecibida}}</a>
+                                    </div>
+                                @endif
                                 <div class="border-gray" id="kgconciliados">
-                                    <label>{{trans('adminlte_lang::message.solresconciliado')}}</label><br>
-                                    <a>{{$SolRes->SolResKgConciliado === Null ? 'N/A' : $SolRes->SolResKgConciliado}}</a>
+                                    <label>{{$TypeUnidad}} {{trans('adminlte_lang::message.solresconciliado')}}</label><br>
+                                    @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                                        <a>{{$SolRes->SolResCantiUnidadConciliada  === Null ? 'N/A' : $SolRes->SolResCantiUnidadConciliada}}</a>
+                                    @else
+                                        <a>{{$SolRes->SolResKgConciliado === Null ? 'N/A' : $SolRes->SolResKgConciliado}}</a>
+                                    @endif
                                 </div>
                                 @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-                                    <div class="col-md-3 border-gray">
+                                    <div class="border-gray" id="kgtratado">
                                         <label>{{trans('adminlte_lang::message.solrestratado')}}</label><br>
                                         <a>{{$SolRes->SolResKgTratado === Null ? 'N/A' : $SolRes->SolResKgTratado}}</a>
                                     </div>
                                 @endif
+                                
+
                                 <div class="col-md-4 border-gray">
                                     <label>{{trans('adminlte_lang::message.solresalto')}}</label><br>
                                     <a>{{$SolRes->SolResAlto === Null ? 'N/A' : $SolRes->SolResAlto}}</a>
@@ -190,7 +219,7 @@
                 <div id="deleteRecurso">
                 </div>
 				<div class="row">
-                    @if(((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))) && $Programacion->ProgVehEntrada !== Null)
+                    @if(((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))) && $Programacion->ProgVehEntrada !== Null)
                         <tbody hidden onload="renderTable()" id="readyTable">
                             <div class="col-md-12">
                                 <center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -207,7 +236,7 @@
                                     <div class="col-md-6" style="margin-bottom:15px;">
                                         <h4>
                                             {{trans('adminlte_lang::message.recursoFoto')}}
-                                            @if((Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado'))) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+                                            @if((Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
                                                 <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
                                             @endif
                                         </h4>
@@ -241,7 +270,7 @@
                                     <div class="col-md-6" style="margin-bottom:15px;">
                                         <h4>
                                             {{trans('adminlte_lang::message.recursoVideo')}}
-                                            @if(((Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado')) || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
+                                            @if(((Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')  && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')) || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
                                                 <a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
                                             @endif
                                         </h4>
@@ -379,14 +408,29 @@
 @endif
 <script>
     if('{{Auth::user()->UsRol === trans("adminlte_lang::message.Cliente")}}'){
-        $('#kgenviados').addClass('col-md-4');
-        $('#kgconciliados').addClass('col-md-4');
-        $('#kgresividos').addClass('col-md-4');
-        
+        if("{{$SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'}}"){
+            $('#kgenviados').addClass('col-md-3');
+            $('#kgconciliados').addClass('col-md-3');
+            $('#kgresividos').addClass('col-md-3');
+            $('#unidadrecibida').addClass('col-md-3');
+        }else{
+            $('#kgenviados').addClass('col-md-4');
+            $('#kgconciliados').addClass('col-md-4');
+            $('#kgresividos').addClass('col-md-4');
+        }
     }else{
-        $('#kgresividos').addClass('col-md-3');
-        $('#kgenviados').addClass('col-md-3');
-        $('#kgconciliados').addClass('col-md-3');
+        if("{{$SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'}}"){
+            $('#kgresividos').addClass('col-md-4');
+            $('#kgenviados').addClass('col-md-4');
+            $('#unidadrecibida').addClass('col-md-4');
+            $('#kgconciliados').addClass('col-md-6');
+            $('#kgtratado').addClass('col-md-6');
+        }else{
+            $('#kgresividos').addClass('col-md-3');
+            $('#kgenviados').addClass('col-md-3');
+            $('#kgconciliados').addClass('col-md-3');
+            $('#kgtratado').addClass('col-md-3');
+        }
     }
 </script>
 @endsection
