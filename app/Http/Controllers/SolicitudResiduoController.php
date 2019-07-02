@@ -250,24 +250,45 @@ class SolicitudResiduoController extends Controller
                 default: 
                     abort(500);
             }
-    
-            switch($request->input('SolResEmbalaje')){
-                case 99: 
-                    $SolRes->SolResEmbalaje = 'Bolsas';
+            // return $request->input('SolResEmbalaje');
+            switch ($request->input('SolResEmbalaje')) {
+                case 99:
+                    $SolRes->SolResEmbalaje = "Sacos/Bolsas";
                     break;
-                case 98: 
-                    $SolRes->SolResEmbalaje = 'Canecas';
+                case 98:
+                    $SolRes->SolResEmbalaje = "Bidones Pequeños";
                     break;
-                case 97: 
-                    $SolRes->SolResEmbalaje = 'Estibas';
+                case 97:
+                    $SolRes->SolResEmbalaje = "Bidones Grandes";
                     break;
                 case 96:
-                    $SolRes->SolResEmbalaje = 'Garrafones';
+                    $SolRes->SolResEmbalaje = "Estibas";
                     break;
-                case 95: 
-                    $SolRes->SolResEmbalaje = 'Cajas';
+                case 95:
+                    $SolRes->SolResEmbalaje = "Garrafones/Jerricanes";
                     break;
-                default: 
+                case 94:
+                    $SolRes->SolResEmbalaje = "Cajas";
+                    break;
+                case 93:
+                    $SolRes->SolResEmbalaje = "Cuñetes";
+                    break;
+                case 92:
+                    $SolRes->SolResEmbalaje = "Big Bags";
+                    break;
+                case 91:
+                    $SolRes->SolResEmbalaje = "Isotanques";
+                    break;
+                case 90:
+                    $SolRes->SolResEmbalaje = "Tachos";
+                    break;
+                case 89:
+                    $SolRes->SolResEmbalaje = "Embalajes Compuestos";
+                    break;
+                case 88:
+                    $SolRes->SolResEmbalaje = "Granel";
+                    break;
+                default:
                     abort(500);
             }
         }

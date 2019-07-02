@@ -25,7 +25,20 @@
 									@endforeach
 								</ul>
 							</div>
-						@endif
+                        @endif
+                        @php
+                            switch ($SolRes->SolResTypeUnidad) {
+                                case 'Unidad':
+                                    $TypeUnidad = 'Unidad(es)';
+                                    break;
+                                case 'Litros':
+                                    $TypeUnidad = 'Litro(s)';
+                                    break;
+                                default:
+                                    $TypeUnidad = 'Kilogramos';
+                                    break;
+                            }
+                        @endphp
                         <div class="box-body">
                             <div class="form-group col-md-12">
                                 <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserrespel') }}</b>" data-content="{{ trans('adminlte_lang::message.solserrespeldescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserrespel') }}</label>
@@ -52,11 +65,24 @@
                                 <small class="help-block with-errors">*</small>
                                 <select name="SolResEmbalaje" id="SolResEmbalaje" class="form-control" required>
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+                                    <option value="99" {{$SolRes->SolResEmbalaje  === "Sacos/Bolsas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja1') }}</option>
+                                    <option value="98" {{$SolRes->SolResEmbalaje  === "Bidones Pequeños" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja2') }}</option>
+                                    <option value="97" {{$SolRes->SolResEmbalaje  === "Bidones Grandes" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja3') }}</option>
+                                    <option value="96" {{$SolRes->SolResEmbalaje  === "Estibas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja4') }}</option>
+                                    <option value="95" {{$SolRes->SolResEmbalaje  === "Garrafones/Jerricanes" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja5') }}</option>
+                                    <option value="94" {{$SolRes->SolResEmbalaje  === "Cajas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja6') }}</option>
+                                    <option value="93" {{$SolRes->SolResEmbalaje  === "Cuñetes" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja7') }}</option>
+                                    <option value="92" {{$SolRes->SolResEmbalaje  === "Big Bags" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja8') }}</option>
+                                    <option value="91" {{$SolRes->SolResEmbalaje  === "Isotanques" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja9') }}</option>
+                                    <option value="90" {{$SolRes->SolResEmbalaje  === "Tachos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja10') }}</option>
+                                    <option value="89" {{$SolRes->SolResEmbalaje  === "Embalajes Compuestos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja11') }}</option>
+                                    <option value="88" {{$SolRes->SolResEmbalaje  === "Granel" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja12') }}</option>
+{{--                                     
                                     <option value="99" {{$SolRes->SolResEmbalaje  === "Bolsas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja1') }}</option>
                                     <option value="98" {{$SolRes->SolResEmbalaje  === "Canecas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja2') }}</option>
                                     <option value="97" {{$SolRes->SolResEmbalaje  === "Estibas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja3') }}</option>
                                     <option value="96" {{$SolRes->SolResEmbalaje  === "Garrafones" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja4') }}</option>
-                                    <option value="95" {{$SolRes->SolResEmbalaje  === "Cajas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja5') }}</option>
+                                    <option value="95" {{$SolRes->SolResEmbalaje  === "Cajas" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja5') }}</option> --}}
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -161,13 +187,13 @@
         $(document).ready(function (){
             $("#divSolResKgRecibido").append(`
                 <div class="form-group col-md-6">
-                    <label></i>Resivido (kg)</label><small class="help-block with-errors">*</small>
+                    <label></i>Resivido {{$TypeUnidad}}</label><small class="help-block with-errors">*</small>
                     <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
                 </div>
             `);
             $("#divSolResKgConciliado").append(`
                 <div class="form-group col-md-6">
-                    <label></i>Conciliado  (kg)</label>
+                    <label></i>Conciliado  {{$TypeUnidad}}</label>
                     @if(Auth::user()->UsRol !== trans('adminlte_lang::message.SupervisorTurno'))
                         <small class="help-block with-errors">*</small>
                     @endif
@@ -176,7 +202,7 @@
             `);
             $("#divSolResKgTratado").append(`
                 <div class="form-group col-md-12">
-                    <label></i>Tratado  (kg)</label>
+                    <label></i>Tratado  Kilogramos</label>
                     @if($SolSer->SolSerStatus === 'Conciliado')
                     <small class="help-block with-errors">*</small>
                     @endif
