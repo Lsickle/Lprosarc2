@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header with-border">
                     <div class="col-md-12" >
-                        @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliao' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
+                        @if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion')
                             @if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
                                 <center><h4>{{trans('adminlte_lang::message.solrestitleclientepart1')}} <b>{{trans('adminlte_lang::message.update')}}</b> {{trans('adminlte_lang::message.o')}} <b>{{trans('adminlte_lang::message.delete')}}</b> {{trans('adminlte_lang::message.solrestitleclientepart2')}}
                                     @switch($SolSer->SolSerStatus)
@@ -23,6 +23,8 @@
                                             {{trans('adminlte_lang::message.solresCompletado')}}
                                             @break
                                         @case('No Conciliado')
+                                            {{trans('adminlte_lang::message.solresNoConciliadotext')}}
+                                            @break
                                         @case('Conciliado')
                                             {{trans('adminlte_lang::message.solresConciliadotext')}}
                                             @break
@@ -36,7 +38,7 @@
                                 </h4></center>
                             @else
                                 <h3 class="box-title">{{trans('adminlte_lang::message.solresrespel')}}</h3>
-                                @if(($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') || (Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Conciliado')) || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && $SolSer->SolSerStatus === 'Completado') || $Programacion->ProgVehEntrada === Null)
+                                @if(($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') || (Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Conciliado') ) || (Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') && $SolSer->SolSerStatus === 'Completado') || $Programacion->ProgVehEntrada === Null)
                                     @if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
                                         <a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
                                     @endif
@@ -114,12 +116,12 @@
 
                                 @if(($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'))
                                     <div class="border-gray" id="unidadrecibida">
-                                        <label>{{$TypeUnidad}} {{trans('adminlte_lang::message.solresresivido')}}</label><br>
+                                        <label>{{$TypeUnidad}} Recibidos(a)</label><br>
                                         <a>{{$SolRes->SolResCantiUnidadRecibida  === Null ? 'N/A' : $SolRes->SolResCantiUnidadRecibida}}</a>
                                     </div>
                                 @endif
                                 <div class="border-gray" id="kgconciliados">
-                                    <label>{{$TypeUnidad}} {{trans('adminlte_lang::message.solresconciliado')}}</label><br>
+                                    <label>{{$TypeUnidad}} Conciliados(a)</label><br>
                                     @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
                                         <a>{{$SolRes->SolResCantiUnidadConciliada  === Null ? 'N/A' : $SolRes->SolResCantiUnidadConciliada}}</a>
                                     @else
@@ -128,7 +130,7 @@
                                 </div>
                                 @if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
                                     <div class="border-gray" id="kgtratado">
-                                        <label>{{trans('adminlte_lang::message.solrestratado')}}</label><br>
+                                        <label>{{$TypeUnidad}} Tratado</label><br>
                                         <a>{{$SolRes->SolResKgTratado === Null ? 'N/A' : $SolRes->SolResKgTratado}}</a>
                                     </div>
                                 @endif

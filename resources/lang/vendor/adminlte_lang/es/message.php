@@ -335,7 +335,6 @@ return [
     'sgenerlist'              => 'Lista de las Sedes del Generador',
     'sgenernamesede'          => 'Nombre de la Sede',
     
-    
     // area
     'areatitle'               => 'Áreas',
     'areaname'                => 'Nombre del Área',
@@ -699,6 +698,7 @@ return [
     'solresProgramador'       => 'ha sido programado',
     'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP',
     'solresConciliadotext'    => 'ha sido Conciliado',
+    'solresNoConciliadotext'    => 'esta en proceso de Conciliación',
     'solresTratado'           => 'ha sido tratado',
     'solresCertificado'       => 'esta listo para realizar la certificación',
     'solrestypeunity'         => 'Tipo de Unidad:',

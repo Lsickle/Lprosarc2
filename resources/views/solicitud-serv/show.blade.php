@@ -261,7 +261,7 @@
 												</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
-														@if($SolicitudServicio->SolSerStatus === 'Completado')
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$Residuo->SolResKgRecibido}}`)"> 
 														@else
 															<a style="color: black">
@@ -274,15 +274,18 @@
 													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
 													@endif
 												</td>
-												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
 													<td style="text-align: center;">	
-														@if($SolicitudServicio->SolSerStatus === 'Conciliado')
-															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+														@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
 														@else
-															<a style="color: black">
+															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
+																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+															@else
+																<a style="color: black">
+															@endif
+															<i class="fas fa-marker"></i></a> 
 														@endif
-														<i class="fas fa-marker"></i></a> 
-														{{' '.$Residuo->SolResKgTratado}}<br> Kilogramos
+														{{' '.$Residuo->SolResKgTratado}}<br> {{$TypeUnidad}}
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -387,6 +390,7 @@
 												@case('Programado')
 													Recibida
 													@break
+												@case('No Conciliado')
 												@case('Completado')
 													Conciliada
 													@break
@@ -422,6 +426,7 @@
 													</div>
 												@endif
 												@break
+											@case('No Conciliado')
 											@case('Completado')
 													<label for="SolResKgConciliado">Cantidad Conciliada {{$TypeUnidad}}</label>
 													<small class="help-block with-errors">*</small>
@@ -461,8 +466,9 @@
 					break;
 				case('Completado'):
 				case('Conciliado'):
+				case('No Conciliado'):
 					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
-						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadConciliada}}', rightAlign:false});
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadRecibida}}', rightAlign:false});
 					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 					@endif

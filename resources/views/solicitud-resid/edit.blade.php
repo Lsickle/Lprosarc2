@@ -41,7 +41,7 @@
                         @endphp
                         <div class="box-body">
                             <div class="form-group col-md-12">
-                                <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserrespel') }}</b>" data-content="{{ trans('adminlte_lang::message.solserrespeldescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserrespel') }}</label>
+                                <label>{{ trans('adminlte_lang::message.solserrespel') }}</label>
                                 <small class="help-block with-errors">*</small>
                                 <select name="FK_SolResSolSer" id="FK_SolResSolSer" disabled class="form-control" required>
                                     <option value="{{$Respel->RespelSlug}}" {{ $SolRes->FK_SolResSolSer == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
@@ -187,27 +187,27 @@
             `);
             $("#divSolResKgConciliado").append(`
                 <div class="form-group col-md-6">
-                    <label></i>{{$TypeUnidad}} Conciliadas</label>
+                    <label></i>{{$TypeUnidad}} Conciliados(a)</label>
                     @if(Auth::user()->UsRol !== trans('adminlte_lang::message.SupervisorTurno'))
                         <small class="help-block with-errors">*</small>
                     @endif
                     @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
-                        <input type="text" class="form-control" maxlength="5" id="SolResKgConciliado" name="SolResCantiUnidadConciliada" value="{{$SolRes->SolResCantiUnidadConciliada}}" required>
+                        <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResCantiUnidadConciliada" value="{{$SolRes->SolResCantiUnidadConciliada}}" required>
                     @else
-                        <input type="text" class="form-control" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                        <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
                     @endif
                 </div>
             `);
             $("#divSolResKgTratado").append(`
                 <div class="form-group col-md-12" id="tratado">
-                    <label></i> Kilogramos Tratados</label>
+                    <label></i>{{$TypeUnidad}} Tratados</label>
                     @if($SolSer->SolSerStatus === 'Conciliado')
                     <small class="help-block with-errors">*</small>
                     @endif
                     <div class="input-group">
-                        <input type="text" class="form-control" id="SolResKgTratado" maxlength="5" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
+                        <input type="text" class="form-control cantidadmaxtratada" id="SolResKgTratado" maxlength="5" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
                         <div class="input-group-btn">
-                            <label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success">Tratado</a><label>
+                            <label for="ValorConciliado"><a onclick="valueTratamiento()" title="Lo conciliado ya esta tratado" id="btn-conciliado" class="btn btn-success">Tratado</a><label>
                             @if($SolSer->SolSerStatus === 'Conciliado')
                                 <input type="submit" hidden name="ValorConciliado" id="ValorConciliado" value="{{$SolRes->SolResKgConciliado}}">
                             @endif
@@ -217,10 +217,10 @@
             `);
             @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
                 $("#divSolResKgRecibido").append(`
-                        <div class="form-group col-md-6">
-                            <label></i>{{$TypeUnidad}} Recibidos</label><small class="help-block with-errors">*</small>
-                            <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResCantiUnidadRecibida}}" required>
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label for="SolResCantiUnidadRecibida"></i>{{$TypeUnidad}} Recibidos</label><small class="help-block with-errors">*</small>
+                        <input type="text" class="form-control numberKg"  maxlength="5" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" value="{{$SolRes->SolResCantiUnidadRecibida}}" required>
+                    </div>
                 `);
                 $('#tratado').removeClass('col-md-12');
                 $('#tratado').addClass('col-md-6');
@@ -237,6 +237,15 @@
             $('#SolResFotoTratamiento').bootstrapSwitch('disabled', true);
             $('#SolResVideoDescargue_Pesaje').bootstrapSwitch('disabled', true);
             $('#SolResVideoTratamiento').bootstrapSwitch('disabled', true);
+
+            @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                $('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResCantiUnidadRecibida}}', rightAlign:false});
+                $('.cantidadmaxtratada').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResCantiUnidadConciliada}}', rightAlign:false});
+            @else
+                $('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgRecibido}}', rightAlign:false});
+            @endif
+
+            numeroKg();
         });
     </script>
     <script>
@@ -244,8 +253,9 @@
             case '{{trans("adminlte_lang::message.JefeLogistica")}}':
                 $(document).ready(function (){
                     SolResKgRecibido();
-                    $('#SolResKgConciliado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgRecibido}}', rightAlign:false});
-                    if('{{$SolSer->SolSerStatus !== "Completado"}}'){
+                    SolResCantiUnidadRecibida();
+                    if('{{$SolSer->SolSerStatus === "Completado" || $SolSer->SolSerStatus === "No Conciliado"}}'){
+                    }else{
                         SolResKgConciliado();
                     }
                     updateForm();
@@ -257,7 +267,6 @@
             break;
 
             case '{{trans("adminlte_lang::message.SupervisorTurno")}}':
-                
                 switch('{{$SolSer->SolSerStatus}}'){
                     case 'Programado':
                         $(document).ready(function (){
@@ -266,22 +275,15 @@
                             SolResKgConciliado();
                             if('{{$Programacion->ProgVehEntrada === Null}}'){
                                 SolResKgRecibido();
+                                SolResCantiUnidadRecibida();
                             }
-                            updateForm();
-                        });
-                        break;
-                    case 'Completado':
-                        $(document).ready(function (){
-                            SolResKgRecibido();
-                            SolResKgConciliado();
-                            SolResKgTratado();
-                            ValorConciliado();
                             updateForm();
                         });
                         break;
                     case 'Conciliado':
                         $(document).ready(function (){
                             SolResKgRecibido();
+                            SolResCantiUnidadRecibida();
                             SolResKgConciliado();
 		                    $('#SolResKgTratado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgConciliado}}', rightAlign:false});
                             updateForm();
@@ -289,6 +291,7 @@
                         break;
                     default:
                         $(document).ready(function (){
+                            SolResCantiUnidadRecibida();
                             SolResKgTratado();
                             SolResKgConciliado();
                             SolResKgRecibido();
@@ -296,8 +299,10 @@
                         });
                         break;
                 }
+                break;
                 default:
                     $(document).ready(function (){
+                        SolResCantiUnidadRecibida();
                         SolResKgTratado();
                         SolResKgConciliado();
                         SolResKgRecibido();
@@ -307,12 +312,16 @@
         }
 
         function ValorConciliado(){
-            $('#btn-consiliado').attr('disabled', true);
+            $('#btn-conciliado').attr('disabled', true);
             $('#ValorConciliado').prop('type', "text");
         }
         function SolResKgRecibido(){
             $('#SolResKgRecibido').prop('disabled', true);
             $('#SolResKgRecibido').prop('required', false);
+        }
+        function SolResCantiUnidadRecibida(){
+            $('#SolResCantiUnidadRecibida').prop('disabled', true);
+            $('#SolResCantiUnidadRecibida').prop('required', false);
         }
 
         function SolResKgTratado(){
@@ -325,9 +334,10 @@
             $('#SolResKgConciliado').prop('required', false);
         }
         function updateForm(){
-            numeroKg();
-
             $('#FormSolRes').validator('update');
+        }
+        function valueTratamiento(){
+            $('#SolResKgTratado').val('{{$SolRes->SolResKgConciliado}}');
         }
     </script>
 @endif
