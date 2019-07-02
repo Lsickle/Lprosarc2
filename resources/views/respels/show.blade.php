@@ -60,7 +60,7 @@
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
-												<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+												<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 											</div>
 										</div>	
 									</div>
@@ -82,7 +82,7 @@
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
-												<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+												<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 											</div>
 										</div>	
 									</div>
@@ -104,7 +104,7 @@
 										<div class="input-group">
 											<input type="text" class="form-control" value="Ver Documento" disabled>
 											<div class="input-group-btn">
-												<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
+												<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-image fa-lg'></i></a>
 											</div>
 										</div>	
 									</div>
@@ -163,7 +163,7 @@
 					<!-- box body -->
 					<div class="box-body">
 						<!-- nav-tabs-custom -->
-						<div class="nav-tabs-custom">
+						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
 								<li class="nav-item active">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>

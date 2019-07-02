@@ -44,8 +44,8 @@ class PersonalStoreRequest extends FormRequest
             'PersPase'      => 'max:25',
             'PersBank'      => 'max:255',
             'PersBankAccaunt' => 'max:64',
-            'PersIngreso'   => 'date|before:PersSalida',
-            'PersSalida'    => 'date|after:PersIngreso',
+            'PersIngreso'   => 'date',
+            'PersSalida'    => 'date|after:PersIngreso|nullable',
         ];
     }
 }

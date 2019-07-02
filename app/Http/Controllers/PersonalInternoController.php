@@ -171,7 +171,9 @@ class PersonalInternoController extends Controller
         $Personal->PersBank = $request->input('PersBank');
         $Personal->PersBankAccaunt = $request->input('PersBankAccaunt');
         $Personal->PersIngreso = $request->input('PersIngreso');
-        $Personal->PersSalida = $request->input('PersSalida');
+        if($request->input('PersSalida') <> null){
+            $Personal->PersSalida = $request->input('PersSalida');
+        }
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersDelete = 0;
         $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);

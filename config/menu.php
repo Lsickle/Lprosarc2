@@ -48,15 +48,15 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 			        )
 		        )
 		        /*PESTAÑA DE CAPACITACIONES*/
-		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-			         (Menu::new()
-				         ->prepend('<a href="#"><i class="fas fa-scroll"></i> <span>'.trans('adminlte_lang::message.MenuTrainingTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-				         ->addParentClass('treeview')
-				         ->add(Link::toUrl('/capacitacion', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuTraininglist')))
-				         ->add(Link::toUrl('/capacitacion-personal', '<i class="fas fa-user-check"></i> '.trans('adminlte_lang::message.MenuTrainingPers')))
-				         ->addClass('treeview-menu')
-			         )
-		        )
+		        // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+			       //   (Menu::new()
+				      //    ->prepend('<a href="#"><i class="fas fa-scroll"></i> <span>'.trans('adminlte_lang::message.MenuTrainingTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				      //    ->addParentClass('treeview')
+				      //    ->add(Link::toUrl('/capacitacion', '<i class="fas fa-list-alt"></i> '.trans('adminlte_lang::message.MenuTraininglist')))
+				      //    ->add(Link::toUrl('/capacitacion-personal', '<i class="fas fa-user-check"></i> '.trans('adminlte_lang::message.MenuTrainingPers')))
+				      //    ->addClass('treeview-menu')
+			       //   )
+		        // )
 		        /*PESTAÑA DE VEHICULOS*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 			          (Menu::new()
@@ -79,7 +79,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 			    //       )
 		     //    )
 			    /*PESTAÑA DE ARTICULOS*/
-	            ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/articulos-proveedor', '<i class="far fa-newspaper"></i> <span>'. trans('adminlte_lang::message.MenuArticu').'</span>')))
+	            // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/articulos-proveedor', '<i class="far fa-newspaper"></i> <span>'. trans('adminlte_lang::message.MenuArticu').'</span>')))
             	/*PESTAÑA DE CODIGO QR*/
 	            // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/code', '<i class="fas fa-qrcode"></i> <span>'. trans('adminlte_lang::message.MenuQr').'</span>')))
 
@@ -115,16 +115,6 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				         ->addClass('treeview-menu')
 			         )
 		        )
-		        /*PESTAÑA DE DOCUMENTOS*/
-		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
-			        (Menu::new()
-				         ->prepend('<a href="#"><i class="fas fa-print"></i> <span>'. trans('adminlte_lang::message.MenuDocumentsTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-				         ->addParentClass('treeview')
-				         ->add(Link::toUrl('/certificado', '<i class="fas fa-certificate"></i> '. trans('adminlte_lang::message.MenuCertificado')))
-				         ->add(Link::toUrl('/manifiesto', '<i class="fas fa-tools"></i> '. trans('adminlte_lang::message.MenuManifiesto')))
-				         ->addClass('treeview-menu')
-		        	)
-		        )
 		        /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), 
 			        (Menu::new()
@@ -136,6 +126,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				        ->addClass('treeview-menu')
 			        )
 		        )
+			    /*PESTAÑA DE SOLICITUD*/
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 		        /*PESTAÑA DE COTIZACIONES*/
 			    ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 				    (Menu::new()
@@ -146,6 +138,16 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					    ->addClass('treeview-menu')
 				    )
 			    )
+		        /*PESTAÑA DE DOCUMENTOS*/
+		        ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
+			        (Menu::new()
+				         ->prepend('<a href="#"><i class="fas fa-print"></i> <span>'. trans('adminlte_lang::message.MenuDocumentsTitle').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				         ->addParentClass('treeview')
+				         ->add(Link::toUrl('/certificado', '<i class="fas fa-certificate"></i> '. trans('adminlte_lang::message.MenuCertificado')))
+				         ->add(Link::toUrl('/manifiesto', '<i class="fas fa-tools"></i> '. trans('adminlte_lang::message.MenuManifiesto')))
+				         ->addClass('treeview-menu')
+		        	)
+		        )
 			    /*PESTAÑA DE ACTIVOS*/
 			    // ->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),
 				   //   (Menu::new()
@@ -156,8 +158,6 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					  //    ->addClass('treeview-menu')
 				   //   )
 			    // )
-			    /*PESTAÑA DE SOLICITUD*/
-				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
 
 	        /*FIN DEL MENU2 PARA PROSARC*/
@@ -191,16 +191,6 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				         ->addClass('treeview-menu')
 			         )
 		        )
-		        /*PESTAÑA DE DOCUMENTOS*/
-		        ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
-			        (Menu::new()
-				         ->prepend('<a href="#"><i class="fas fa-print"></i> <span>'. trans('adminlte_lang::message.MenuDocumentsClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
-				         ->addParentClass('treeview')
-				         ->add(Link::toUrl('/certificado', '<i class="fas fa-certificate"></i> '. trans('adminlte_lang::message.MenuCertificado')))
-				         ->add(Link::toUrl('/manifiesto', '<i class="fas fa-tools"></i> '. trans('adminlte_lang::message.MenuManifiesto')))
-				         ->addClass('treeview-menu')
-		        	)
-		        )
 		        /*PESTAÑA DE PERSONAL*/
 		        ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), 
 			        (Menu::new()
@@ -212,6 +202,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				        ->addClass('treeview-menu')
 			        )
 		        )
+			    /*PESTAÑA DE SOLICITUD*/
+			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 		        /*PESTAÑA DE COTIZACIONES*/
 			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
 				    (Menu::new()
@@ -222,6 +214,16 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					    ->addClass('treeview-menu')
 				    )
 			    )
+		        /*PESTAÑA DE DOCUMENTOS*/
+		        ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
+			        (Menu::new()
+				         ->prepend('<a href="#"><i class="fas fa-print"></i> <span>'. trans('adminlte_lang::message.MenuDocumentsClien').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				         ->addParentClass('treeview')
+				         ->add(Link::toUrl('/certificado', '<i class="fas fa-certificate"></i> '. trans('adminlte_lang::message.MenuCertificado')))
+				         ->add(Link::toUrl('/manifiesto', '<i class="fas fa-tools"></i> '. trans('adminlte_lang::message.MenuManifiesto')))
+				         ->addClass('treeview-menu')
+		        	)
+		        )
 			    /*PESTAÑA DE ACTIVOS*/
 			    // ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),
 				   //   (Menu::new()
@@ -232,8 +234,6 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					  //    ->addClass('treeview-menu')
 				   //   )
 			    // )
-			    /*PESTAÑA DE SOLICITUD*/
-			    ->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 
 	        /*FIN DEL MENU PARA EL CLIENTE*/
 
