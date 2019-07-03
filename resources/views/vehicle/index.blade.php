@@ -12,21 +12,21 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Lista de vehiculos</h3>
-					<a href="/vehicle/create" class="btn btn-primary" style="float: right;">Crear</a>
+					<h3 class="box-title">{{trans('adminlte_lang::message.vehiclelist')}}</h3>
+					<a href="/vehicle/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::message.create')}}</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<table id="VehicleTable" class="table table-compact table-bordered table-striped">
 						<thead>
 								<tr>
-									<th>Placa</th>
-									<th>Tipo</th>
-									<th>Capacidad</th>
-									<th>Km Actual</th>
-									<th>Sede</th>
-									<th>Fecha Registrado</th>
-									<th>Editar</th>
+									<th>{{trans('adminlte_lang::message.vehicplaca')}}</th>
+									<th>{{trans('adminlte_lang::message.vehictipo')}}</th>
+									<th>{{trans('adminlte_lang::message.vehiccapacidad')}}</th>
+									<th>{{trans('adminlte_lang::message.vehickm')}}</th>
+									<th>{{trans('adminlte_lang::message.vehicsedes')}}</th>
+									<th>{{trans('adminlte_lang::message.vehicdateregister')}}</th>
+									<th>{{trans('adminlte_lang::message.edit')}}</th>
 								</tr>
 						</thead>
 						<tbody id="readyTable">

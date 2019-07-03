@@ -19,7 +19,7 @@
 							el vehiculo con placa <b>{{$Vehicle->VehicPlaca}}</b>
 						@endslot
 					@endcomponent
-					<h3 class="box-title">Datos del vehiculo</h3>
+					<h3 class="box-title">{{trans('adminlte_lang::message.vehicleedit')}}</h3>
 					@if($Vehicle->VehicDelete === 0)
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Vehicle->VehicPlaca}}'  class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 					<form action='/vehicle/{{$Vehicle->VehicPlaca}}' method='POST'>
@@ -41,32 +41,32 @@
 						@csrf
 						<div class="box-body">
 							<div class="form-group col-md-12">
-									<label for="FK_VehiSede">Sede</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control" id="FK_VehiSede" name="FK_VehiSede" required="true">
-										<option value="{{$Vehicle->FK_VehiSede}}">Seleccione...</option>
-										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->ID_Sede}}" {{$Vehicle->FK_VehiSede == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
-										@endforeach
-									</select>
+								<label for="FK_VehiSede">{{trans('adminlte_lang::message.vehicsedes')}}</label>
+								<small class="help-block with-errors">*</small>
+								<select class="form-control" id="FK_VehiSede" name="FK_VehiSede" required="true">
+									<option value="">Seleccione...</option>
+									@foreach($Sedes as $Sede)
+										<option value="{{$Sede->ID_Sede}}" {{$Vehicle->FK_VehiSede == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
+									@endforeach
+								</select>
 							</div>
 							<div class="form-group col-md-6">
-								<label for="VehicPlaca">Numero de placa</label>
+								<label for="VehicPlaca">{{trans('adminlte_lang::message.vehicplaca')}}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="text" class="form-control placa" id="VehicPlaca" name="VehicPlaca" required="true" data-minlength="7" value="{{$Vehicle->VehicPlaca}}">
 							</div>
 							<div class="form-group col-md-6">
-								<label for="VehicTipo">Tipo de vehiculo</label>
+								<label for="VehicTipo">{{trans('adminlte_lang::message.vehictipo')}}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="text" class="form-control" id="VehicTipo" name="VehicTipo" maxlength="16" value="{{$Vehicle->VehicTipo}}">
 							</div>
 							<div class="form-group col-md-6">
-								<label for="VehicCapacidad">Capacidad (Kilos)</label>
+								<label for="VehicCapacidad">{{trans('adminlte_lang::message.vehiccapacidad')}}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="number" class="form-control" id="VehicCapacidad" name="VehicCapacidad" max="999999" value="{{$Vehicle->VehicCapacidad}}">
 							</div>
 							<div class="form-group col-md-6">
-								<label for="VehicKmActual">Kilometraje actual</label>
+								<label for="VehicKmActual">{{trans('adminlte_lang::message.vehickm')}}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" required="true" max="999999" value="{{$Vehicle->VehicKmActual}}">
 							</div>
