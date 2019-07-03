@@ -418,18 +418,8 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script type="text/javascript">
 function AddVehiculo() {
-	document.getElementById('AddVehiculoPlaca').style.display = 'block';
-	document.getElementById('AddVehiculoTipo').style.display = 'block';
-	document.getElementById('AddVehiculoCapacidad').style.display = 'block';
-	$('#VehicPlaca').prop('required', true);
-	$('#VehicTipo').prop('required', true);
-	$('#VehicCapacidad').prop('required', true);
-	// $('#Form').validator('update');
-	$('#form').validator('update');
-	// $('#form').validator('validate');
-	
+	Vehiculo();
 };
-
 function NoAddVehiculo() {
 	document.getElementById('AddVehiculoPlaca').style.display = 'none';
 	document.getElementById('AddVehiculoTipo').style.display = 'none';
@@ -440,9 +430,27 @@ function NoAddVehiculo() {
 	$('#VehicPlaca').val('');
 	$('#VehicTipo').val('');
 	$('#VehicCapacidad').val('');
-	$('#form').validator('validate');
+	$('#form').validator('destroy');
+	$('#form').validator('update');
 };
+
+function Vehiculo(){
+	document.getElementById('AddVehiculoPlaca').style.display = 'block';
+	document.getElementById('AddVehiculoTipo').style.display = 'block';
+	document.getElementById('AddVehiculoCapacidad').style.display = 'block';
+	$('#VehicPlaca').prop('required', true);
+	$('#VehicTipo').prop('required', true);
+	$('#VehicCapacidad').prop('required', true);
+	$('#form').validator('update');
+}
 </script>
+@if(old('VehicTipo') !== null)
+	<script>
+		$(document).ready(function(){
+			Vehiculo();
+		});
+	</script>
+@endif
 @endif
 <script type="text/javascript">
 $(document).ready(function() {

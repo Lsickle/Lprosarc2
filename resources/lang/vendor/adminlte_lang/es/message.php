@@ -301,6 +301,12 @@ return [
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
     'clicontactedit'          => 'Editar el Contacto',
+    'contacvehictipomessage'  => 'Tipo de vehículo que esta registrando por ejemplo: Camión, Turbo, Mula, etc...',
+    'contacvehiccapacidadmessage'   => 'Kilogramos que logra llevar el vehículo.',
+    'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP o una empresa que brinda el transporte a la planta.',
+    'contacclientcategoríamessage2' => 'Después podra registrar más vehículos del traportador.',
+    'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social',
+
 
     // sede
     'csedeindex'              => 'Lista de sedes',
