@@ -15,6 +15,8 @@ use App\Cliente;
 use App\Departamento;
 use App\Municipio;
 use App\ResiduosGener;
+use Illuminate\Support\Facades\Hash;
+
 
 class sgenercontroller extends Controller
 {
@@ -114,7 +116,7 @@ class sgenercontroller extends Controller
         }
         $GenerSede->GSedeEmail = $request->input('GSedeEmail');
         $GenerSede->GSedeCelular = $request->input('GSedeCelular');
-        $GenerSede->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $GenerSede->GSedeSlug = hash('sha256', rand().time().$GenerSede->GSedeName);
         $GenerSede->FK_GSede = $request->input('FK_GSede');
         $GenerSede->FK_GSedeMun = $request->input('FK_GSedeMun');
         $GenerSede->GSedeDelete = 0;
@@ -127,7 +129,7 @@ class sgenercontroller extends Controller
                 $ResiduoSedeGener->FK_SGener = $GenerSede->ID_GSede;
                 $ResiduoSedeGener->FK_Respel = $Respel;
                 $ResiduoSedeGener->DeleteSGenerRes = 0;
-                $ResiduoSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $ResiduoSedeGener->SlugSGenerRes = hash('sha256', rand().time().$ResiduoSedeGener->FK_Respel);
                 $ResiduoSedeGener->save();
             }
         }

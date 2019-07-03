@@ -11,6 +11,8 @@ use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
+use Illuminate\Support\Facades\Hash;
+
 
 class sclientcontroller extends Controller
 {
@@ -93,7 +95,7 @@ class sclientcontroller extends Controller
         }
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
+        $Sede->SedeSlug = hash('sha256', rand().time().$Sede->SedeName);
         $Sede->FK_SedeMun = $request->input('FK_SedeMun');
 
         $id = userController::IDClienteSegunUsuario();
