@@ -1,5 +1,10 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Vehiculos')
+@section('htmlheader_title')
+{{trans('adminlte_lang::message.vehicletitle')}}
+@endsection
+@section('contentheader_title')
+{{trans('adminlte_lang::message.vehicletitle')}}
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -7,7 +12,7 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Datos de los vehiculos</h3>
+					<h3 class="box-title">Lista de vehiculos</h3>
 					<a href="/vehicle/create" class="btn btn-primary" style="float: right;">Crear</a>
 				</div>
 				<!-- /.box-header -->

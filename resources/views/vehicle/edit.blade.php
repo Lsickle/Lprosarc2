@@ -1,7 +1,9 @@
 @extends('layouts.app')
-@section('htmlheader_title', 'Vehiculos')
+@section('htmlheader_title')
+{{trans('adminlte_lang::message.vehicletitle')}}
+@endsection
 @section('contentheader_title')
-Edición de vehiculos
+{{trans('adminlte_lang::message.vehicletitle')}}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

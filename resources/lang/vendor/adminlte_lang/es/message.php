@@ -387,6 +387,12 @@ return [
     // municipio
     'municipio'               =>'Municipio',
 
+    //Vehiculos
+    'vehicletitle'            => 'Vehiculos',
+    'vehiclelist'             => 'Lista de Vehiculos',
+    'vehiclecreate'           => 'Registro de Vehiculos',
+    'vehicleedit'             => 'Edición de Vehiculos',
+
     // programación de un vehículo
     'progvehictitle'          => 'Programación de Vehículos',
     'progvehiclist'           => 'Lista de Programaciones',
