@@ -108,7 +108,7 @@ Artículos por Proveedor
 								</div>
 								<div class="col-md-12">		
 									<div class="box-footer" style="float:right; margin-right:5%">
-										<button type="submit" class="btn btn-primary">Registrar</button>
+										<button type="submit" class="btn btn-success">Registrar</button>
 									</div>	
 								</div>
 							</form>

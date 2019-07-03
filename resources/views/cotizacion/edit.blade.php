@@ -142,7 +142,7 @@ Edición de cotización
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-warning">Actualizar</button>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
                     </div>
                 </form>
             </div>

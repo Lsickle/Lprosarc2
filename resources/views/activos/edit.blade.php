@@ -114,7 +114,7 @@ Datos de Activos
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Actualizar</button>
+											<button type="submit" class="btn btn-success">Actualizar</button>
 										</div>	
 									</div>
 								</div>

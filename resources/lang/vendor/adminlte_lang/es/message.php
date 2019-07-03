@@ -434,16 +434,23 @@ return [
     'respelscreate'           => 'Crear Residuos',
     'assignrespels'           => 'Asignar Residuos',
 
-    // vehiculo
-    'vehicplaca'              => 'Placa',
-    'vehiccapacidad'          => 'Capacidad',
-    'vehictipo'               => 'Tipo',
+    // vehículo
+    'vehicplaca'              => 'Número de placa',
+    'vehiccapacidad'          => 'Capacidad (kg)',
+    'vehictipo'               => 'Tipo de vehículo',
     'vehiculos'               => 'Vehículos',
     'vehicdata'               => 'Datos del Vehículo',
     'addvehiculo'             => 'Crear Vehículo',
     'deletevehiculo'          => '¿Esta seguro, desea eliminar el vehículo',
     'vehiculocreate'          => 'Crear Vehículo',
     'vehiculoedit'            => 'Editar Vehículo',
+    'vehickm'                 => 'Kilometraje actual',
+    'vehicletitle'            => 'Vehículos',
+    'vehiclelist'             => 'Lista de Vehículos',
+    'vehiclecreate'           => 'Registro de Vehículos',
+    'vehicleedit'             => 'Edición de Vehículos',
+    'vehicdateregister'       => 'Fecha Registrado',
+    'vehicsedes'              => 'Sedes para el vehículo',
 
     // user
     'userperson'              => 'Nombre de la persona',

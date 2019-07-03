@@ -168,7 +168,7 @@
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                                                <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
                                             </div>
                                         </div>
                                     </div>

@@ -282,7 +282,7 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
 			->where('solicitud_servicios.SolSerSlug', $id)
 			->first();
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;

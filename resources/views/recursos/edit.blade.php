@@ -68,7 +68,7 @@
                                     <input hidden value="0" name="number">
                                 <div class="col-md-8">
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                        <button type="submit" class="btn btn-success">Registrar</button>
                                     </div>
                                 </div>
                             </form>

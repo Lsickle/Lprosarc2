@@ -115,7 +115,7 @@
 								<!-- /.box-body -->
 								<div class="box box-info" >
 									<div class="box-footer pull-right">
-										<button type="submit" class="btn btn-primary">{{ trans('adminlte_lang::message.register') }}</button>
+										<button type="submit" class="btn btn-success">{{ trans('adminlte_lang::message.register') }}</button>
 									</div>
 								</div>
 							</form>

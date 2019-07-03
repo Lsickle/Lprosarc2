@@ -96,7 +96,7 @@ Registro de Activos
 								<div class="container-fluid spark-screen">
 									<div class="row">			
 										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Registrar</button>
+											<button type="submit" class="btn btn-success">Registrar</button>
 										</div>	
 									</div>
 								</div>
