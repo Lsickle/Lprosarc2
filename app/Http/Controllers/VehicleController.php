@@ -17,19 +17,18 @@ class VehicleController extends Controller
      */
     public function index()
     { 
-        if(Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Vehicles = DB::table('vehiculos')
                 ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
                 ->select('vehiculos.*', 'sedes.SedeName')
+                ->where(function($query){
+                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                        $query->where('VehicDelete', 0);
+                    }
+                })
                 ->get();
             return view('vehicle.index', compact('Vehicles'));
         }
-        $Vehicles = DB::table('vehiculos')
-                ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
-                ->select('vehiculos.*', 'sedes.SedeName')
-                ->where('VehicDelete', 0)
-                ->get();
-            return view('vehicle.index', compact('Vehicles'));
     }
 
     /**

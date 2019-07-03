@@ -19,7 +19,6 @@
 									<th>Tipo</th>
 									<th>Capacidad</th>
 									<th>Km Actual</th>
-									<th>Procedencia</th>
 									<th>Sede</th>
 									<th>Fecha Registrado</th>
 									<th>Editar</th>
@@ -33,13 +32,8 @@
 								>
 									<td>{{$Vehicle->VehicPlaca}}</td>
 									<td>{{$Vehicle->VehicTipo}}</td>
-									<td>{{$Vehicle->VehicCapacidad}} Kilos</td>
+									<td>{{$Vehicle->VehicCapacidad}} kg</td>
 									<td>{{$Vehicle->VehicKmActual}}</td>
-									@if ($Vehicle->VehicInternExtern == 1)
-											<td>Interno</td>
-									@else
-											<td>Externo</td>
-									@endif
 									<td>{{$Vehicle->SedeName}}</td>
 									<td>{{$Vehicle->created_at}}</td>
 									<td><a href='/vehicle/{{$Vehicle->VehicPlaca}}/edit' class='btn btn-warning btn-block'>Edit</a></td>
