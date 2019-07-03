@@ -40,6 +40,7 @@ class VehicleController extends Controller
     {
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
+            ->where('SedeDelete', 0)
             ->get();
         return view('vehicle.create', compact('Sedes'));
     }
@@ -58,7 +59,7 @@ class VehicleController extends Controller
         $Vehicle->VehicKmActual = $request->input('VehicKmActual');
         $Vehicle->VehicTipo = $request->input('VehicTipo');
         $Vehicle->FK_VehiSede = $request->input('FK_VehiSede');
-        $Vehicle->VehicInternExtern = $request->input('VehicInternExtern');
+        $Vehicle->VehicInternExtern = 1;
         $Vehicle->VehicDelete = 0;
         $Vehicle->save();
         
