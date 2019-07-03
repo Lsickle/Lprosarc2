@@ -465,10 +465,16 @@
 					numeroKg();
 					break;
 				case('Completado'):
-				case('Conciliado'):
 				case('No Conciliado'):
 					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadRecibida}}', rightAlign:false});
+					@else
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					@endif
+					break;
+				case('Conciliado'):
+					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadConciliada}}', rightAlign:false});
 					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 					@endif

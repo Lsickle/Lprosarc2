@@ -86,12 +86,16 @@
                             </div>
 
                             @if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
-                                <div id="divSolResKgRecibido">
+                                <div id="divSolResKgRecibido" class="form-group col-md-6">
                                 </div>
-                                <div id="divSolResKgConciliado">
+                                @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                                <div id="divSolResCantiUnidadRecibida" class="form-group col-md-6">
+                                </div>
+                                @endif
+                                <div id="divSolResKgConciliado" class="form-group col-md-6">
                                 </div>
                                 @if (Auth::user()->UsRol !== trans('adminlte_lang::message.JefeLogistica'))
-                                    <div id="divSolResKgTratado">
+                                    <div id="divSolResKgTratado" class="form-group col-md-12">
                                     </div>
                                 @endif 
                             @endif
@@ -180,51 +184,38 @@
     <script>
         $(document).ready(function (){
             $("#divSolResKgRecibido").append(`
-                <div class="form-group col-md-6">
-                    <label></i>Kilogramos Recibidos</label><small class="help-block with-errors">*</small>
-                    <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
-                </div>
+                <label for="SolResKgRecibido"></i>Kilogramos Recibidos</label><small class="help-block with-errors">*</small>
+                <input type="text" class="form-control numberKg"  maxlength="5" id="SolResKgRecibido" name="SolResKgRecibido" value="{{$SolRes->SolResKgRecibido}}" required>
+            `);
+            $("#divSolResCantiUnidadRecibida").append(`
+                <label for="SolResCantiUnidadRecibida"></i>{{$TypeUnidad}} Recibidos</label><small class="help-block with-errors">*</small>
+                <input type="text" class="form-control numberKg"  maxlength="5" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" value="{{$SolRes->SolResCantiUnidadRecibida}}" required>
             `);
             $("#divSolResKgConciliado").append(`
-                <div class="form-group col-md-6">
-                    <label></i>{{$TypeUnidad}} Conciliados(a)</label>
-                    @if(Auth::user()->UsRol !== trans('adminlte_lang::message.SupervisorTurno'))
-                        <small class="help-block with-errors">*</small>
-                    @endif
-                    @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
-                        <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResCantiUnidadConciliada" value="{{$SolRes->SolResCantiUnidadConciliada}}" required>
-                    @else
-                        <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
-                    @endif
-                </div>
+                <label for="SolResKgConciliado"></i>{{$TypeUnidad}} Conciliados(a)</label>
+                @if(Auth::user()->UsRol !== trans('adminlte_lang::message.SupervisorTurno'))
+                    <small class="help-block with-errors">*</small>
+                @endif
+                @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                    <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResCantiUnidadConciliada" value="{{$SolRes->SolResCantiUnidadConciliada}}" required>
+                @else
+                    <input type="text" class="form-control cantidadmax" maxlength="5" id="SolResKgConciliado" name="SolResKgConciliado" value="{{$SolRes->SolResKgConciliado}}" required>
+                @endif
             `);
             $("#divSolResKgTratado").append(`
-                <div class="form-group col-md-12" id="tratado">
-                    <label></i>{{$TypeUnidad}} Tratados</label>
-                    @if($SolSer->SolSerStatus === 'Conciliado')
-                    <small class="help-block with-errors">*</small>
-                    @endif
-                    <div class="input-group">
-                        <input type="text" class="form-control cantidadmaxtratada" id="SolResKgTratado" maxlength="5" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
-                        <div class="input-group-btn">
-                            <label for="ValorConciliado"><a onclick="valueTratamiento()" title="Lo conciliado ya esta tratado" id="btn-conciliado" class="btn btn-success">Tratado</a><label>
-                            @if($SolSer->SolSerStatus === 'Conciliado')
-                                <input type="submit" hidden name="ValorConciliado" id="ValorConciliado" value="{{$SolRes->SolResKgConciliado}}">
-                            @endif
-                        </div>
+                <label for="SolResKgTratado"></i>{{$TypeUnidad}} Tratados</label>
+                <small class="help-block with-errors">*</small>
+                <div class="input-group">
+                    <input type="text" class="form-control cantidadmaxtratada" id="SolResKgTratado" maxlength="5" name="SolResKgTratado" value="{{$SolRes->SolResKgTratado}}" required>
+                    <div class="input-group-btn">
+                        <label for="ValorConciliado"><a onclick="valueTratamiento()" title="Lo conciliado ya esta tratado" id="btn-conciliado" class="btn btn-success">Tratado</a><label>
+                        @if($SolSer->SolSerStatus === 'Conciliado')
+                            <input type="submit" hidden id="ValorConciliado">
+                        @endif
                     </div>
                 </div>
             `);
-            @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
-                $("#divSolResKgRecibido").append(`
-                    <div class="form-group col-md-6">
-                        <label for="SolResCantiUnidadRecibida"></i>{{$TypeUnidad}} Recibidos</label><small class="help-block with-errors">*</small>
-                        <input type="text" class="form-control numberKg"  maxlength="5" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" value="{{$SolRes->SolResCantiUnidadRecibida}}" required>
-                    </div>
-                `);
-                $('#tratado').removeClass('col-md-12');
-                $('#tratado').addClass('col-md-6');
-            @endif
+           
             $('#SolResTypeUnidad').prop('disabled', true);
             $('#SolResCantiUnidad').prop('disabled', true);
             $('#SolResEmbalaje').prop('disabled', true);
@@ -239,13 +230,17 @@
             $('#SolResVideoTratamiento').bootstrapSwitch('disabled', true);
 
             @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                $('#divSolResKgTratado').removeClass('col-md-12');
+                $('#divSolResKgTratado').addClass('col-md-6');
                 $('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResCantiUnidadRecibida}}', rightAlign:false});
                 $('.cantidadmaxtratada').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResCantiUnidadConciliada}}', rightAlign:false});
             @else
                 $('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgRecibido}}', rightAlign:false});
+                $('.cantidadmaxtratada').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgConciliado}}', rightAlign:false});
             @endif
 
             numeroKg();
+            updateForm();
         });
     </script>
     <script>
@@ -285,7 +280,7 @@
                             SolResKgRecibido();
                             SolResCantiUnidadRecibida();
                             SolResKgConciliado();
-		                    $('#SolResKgTratado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgConciliado}}', rightAlign:false});
+		                    // $('#SolResKgTratado').inputmask({ alias: 'numeric', max:'{{$SolRes->SolResKgConciliado}}', rightAlign:false});
                             updateForm();
                         });
                         break;
@@ -337,7 +332,13 @@
             $('#FormSolRes').validator('update');
         }
         function valueTratamiento(){
-            $('#SolResKgTratado').val('{{$SolRes->SolResKgConciliado}}');
+            @if($SolSer->SolSerStatus === 'Conciliado')
+                @if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad')
+                $('#SolResKgTratado').val('{{$SolRes->SolResCantiUnidadConciliada}}');
+                @else
+                $('#SolResKgTratado').val('{{$SolRes->SolResKgConciliado}}');
+                @endif
+            @endif
         }
     </script>
 @endif
