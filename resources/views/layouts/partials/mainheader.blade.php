@@ -1,8 +1,8 @@
 <!-- Main Header -->
-<header class="main-header">
+<header class="main-header" style="height: 50px;">
 
     <!-- Logo -->
-    <a href="{{ url('/home') }}" class="logo">
+    <a href="{{ url('/home') }}" class="logo" style="height: 100%;">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="/img/LogoProsarc.png" style="width: 60%; margin: 5px; border-radius: 50%;"></span>
         <!-- logo for regular state and mobile devices -->
@@ -10,7 +10,7 @@
     </a>
 
     <!-- Header Navbar -->
-    <nav id="topLogo" class="navbar navbar-static-top" role="navigation">
+    <nav id="topLogo" class="navbar navbar-static-top" role="navigation" style="height: 100%">
         <!-- Sidebar toggle button-->
         <a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
             
