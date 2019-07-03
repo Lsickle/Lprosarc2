@@ -73,7 +73,7 @@
 						</div>
 						<!-- /.box-body -->
 						<div class="box-footer">
-							<button type="submit" class="btn btn-warning pull-right">{{trans('adminlte_lang::message.update')}}</button>
+							<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.update')}}</button>
 						</div>
 					</form>
 				</div>

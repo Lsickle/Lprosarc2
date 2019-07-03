@@ -48,7 +48,7 @@
 									<input required name="newpassword_confirmation" data-match="#newpassword" data-error="{{ trans('adminlte_lang::message.confirmpasswordfalse') }}" class="form-control" type="password" id="newpassword_confirmation">
 								</div>
 								<div class="col-md-12 col-xs-12">
-									<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.change') }}</button>
+									<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.change') }}</button>
 								</div>
 							</form>
 						</div>

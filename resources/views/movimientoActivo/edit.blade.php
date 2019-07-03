@@ -92,7 +92,7 @@ Articulos por Proveedor
                                     </div>
                                     <div class="col-md-12">		
 										<div class="box-footer" style="float:right; margin-right:5%">
-											<button type="submit" class="btn btn-primary">Actualizar</button>
+											<button type="submit" class="btn btn-success">Actualizar</button>
 										</div>	
 									</div>
 								</div>
