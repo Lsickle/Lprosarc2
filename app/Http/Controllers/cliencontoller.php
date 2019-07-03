@@ -20,6 +20,8 @@ use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class clientcontoller extends Controller
 {
@@ -88,7 +90,7 @@ class clientcontoller extends Controller
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
             $Cliente->CliCategoria = 'Cliente';
-            $Cliente->CliSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('CliShortname').substr(md5(rand()), 0,32);
+            $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;
             $Cliente->save();
 
@@ -116,7 +118,7 @@ class clientcontoller extends Controller
             }
             $Sede->SedeEmail = $request->input('SedeEmail');
             $Sede->SedeCelular = $request->input('SedeCelular');
-            $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
+            $Sede->SedeSlug = hash('sha256', rand().time().$Sede->SedeName);
             $Sede->FK_SedeCli = $Cliente->ID_Cli;
             $Sede->FK_SedeMun = $request->input('FK_SedeMun');
             $Sede->SedeDelete = 0;
@@ -126,14 +128,14 @@ class clientcontoller extends Controller
             $Area->AreaName = $request->input("AreaName");
             $Area->FK_AreaSede = $Sede->ID_Sede;
             $Area->AreaDelete = 0;
-            $Area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+            $Area->AreaSlug = hash('sha256', rand().time().$Area->AreaName);
             $Area->save();
             
             $Cargo = new Cargo();
             $Cargo->CargName = $request->input("CargName");
             $Cargo->CargArea =  $Area->ID_Area;
             $Cargo->CargDelete =  0;
-            $Cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+            $Cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
             $Cargo->save();
             
             $Personal = new Personal();
@@ -145,7 +147,7 @@ class clientcontoller extends Controller
             $Personal->PersDocNumber = $request->input("PersDocNumber");
             $Personal->PersCellphone = $request->input("PersCellphone");
             $Personal->PersType = 1;
-            $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input("PersFirstName").substr(md5(rand()), 0,32);
+            $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersFirstName);
             $Personal->PersDelete = 0; 
             $Personal->FK_PersCargo = $Cargo->ID_Carg; 
             $Personal->save();
