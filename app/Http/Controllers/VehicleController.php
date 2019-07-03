@@ -88,6 +88,7 @@ class VehicleController extends Controller
         $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
+            ->where('SedeDelete', 0)
             ->get();
         return view('vehicle.edit', compact('Vehicle','Sedes'));
     }
@@ -103,6 +104,7 @@ class VehicleController extends Controller
     {
         $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Vehicle->fill($request->all());
+        $Vehicle->VehicInternExtern = 1;
         $Vehicle->save();
 
         $log = new audit();
