@@ -10,6 +10,8 @@ use App\Cargo;
 use App\Personal;
 use App\audit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 
 
@@ -85,7 +87,7 @@ class AreaController extends Controller{
 		$area->AreaName = $request->input('AreaName');
 		$area->FK_AreaSede= $request->input('FK_AreaSede');
 		$area->AreaDelete = 0;
-		$area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+		$area->AreaSlug = hash('sha256', rand().time().$area->AreaName);
 		$area->save();
 
 		return redirect()->route('areas.index');

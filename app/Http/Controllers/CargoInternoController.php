@@ -10,6 +10,8 @@ use App\audit;
 use App\Area;
 use App\Cargo;
 use App\Personal;
+use Illuminate\Support\Facades\Hash;
+
 
 class CargoInternoController extends Controller
 {
@@ -84,7 +86,7 @@ class CargoInternoController extends Controller
         $cargo->CargGrade = $request->input('CargGrade');
         $cargo->CargSalary = $request->input('CargSalary');
         $cargo->CargDelete = 0;
-        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
         $cargo->save();
 
         return redirect()->route('cargosInterno.index');

@@ -188,7 +188,7 @@ class RespelController extends Controller
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = hash('sha256', rand().time().$request['RespelName'][$x]);
+            $respel->RespelSlug = hash('sha256', rand().time().$respel->RespelName);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
