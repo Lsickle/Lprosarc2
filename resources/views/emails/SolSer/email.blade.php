@@ -1,6 +1,6 @@
 @php
     $url = url("/solicitud-servicio/{$mail->SolSerSlug}");
-    $nameButton = 'Ver Solicitud de Servicio';   
+    $nameButton = 'Ver Solicitud de Servicio';
 @endphp
 @component('mail::message')
 # Solicitud de Servicio N° {{$mail->ID_SolSer}}

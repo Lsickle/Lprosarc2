@@ -232,7 +232,7 @@
 															$TypeUnidad = 'Unidad(es)';
 															break;
 														case 'Litros':
-															$TypeUnidad = 'Litros';
+															$TypeUnidad = 'Litro(s)';
 															break;
 														default:
 															$TypeUnidad = 'Kilogramos';
@@ -253,28 +253,39 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+													{{' '.$Residuo->SolResCantiUnidadRecibida}}<br>{{$TypeUnidad}}
+													@else
 													{{' '.$Residuo->SolResKgRecibido}}<br>{{$TypeUnidad}}
+													@endif
 												</td>
 												<td style="text-align: center;">
 													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
-														@if($SolicitudServicio->SolSerStatus === 'Completado')
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$Residuo->SolResKgRecibido}}`)"> 
 														@else
 															<a style="color: black">
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+													{{' '.$Residuo->SolResCantiUnidadConciliada}}<br>{{$TypeUnidad}}
+													@else
 													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
+													@endif
 												</td>
-												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
 													<td style="text-align: center;">	
-														@if($SolicitudServicio->SolSerStatus === 'Conciliado')
-															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+														@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
 														@else
-															<a style="color: black">
+															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
+																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+															@else
+																<a style="color: black">
+															@endif
+															<i class="fas fa-marker"></i></a> 
 														@endif
-														<i class="fas fa-marker"></i></a> 
-														{{' '.$Residuo->SolResKgTratado}}<br>{{$TypeUnidad}}
+														{{' '.$Residuo->SolResKgTratado}}<br> {{$TypeUnidad}}
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -379,6 +390,7 @@
 												@case('Programado')
 													Recibida
 													@break
+												@case('No Conciliado')
 												@case('Completado')
 													Conciliada
 													@break
@@ -402,14 +414,28 @@
 									<div class="form-group col-md-12">
 										@switch($SolicitudServicio->SolSerStatus)
 											@case('Programado')
-												<label for="SolResKgRecibido">Cantidad Recibida</label>
+												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+											</div>
+												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+													<div class="form-group col-md-12">
+														<label for="SolResCantiUnidadRecibida">Cantidad Recibida {{$TypeUnidad}}</label>
+														<small class="help-block with-errors">*</small>
+														<input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="{{$Residuo->SolResCantiUnidadRecibida}}" required>
+													</div>
+												@endif
 												@break
+											@case('No Conciliado')
 											@case('Completado')
-												<label for="SolResKgConciliado">Cantidad Conciliada</label>
-												<small class="help-block with-errors">*</small>
-												<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+													<label for="SolResKgConciliado">Cantidad Conciliada {{$TypeUnidad}}</label>
+													<small class="help-block with-errors">*</small>
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="{{$Residuo->SolResCantiUnidadConciliada}}" required>
+													@else
+														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+													@endif
+											</div>
 												@break
 											@case('Conciliado')
 												<label for="SolResKgTratado">Cantidad Tratada</label>
@@ -421,10 +447,10 @@
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
+											</div>
 												@break
 										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
-									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
@@ -439,8 +465,19 @@
 					numeroKg();
 					break;
 				case('Completado'):
+				case('No Conciliado'):
+					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadRecibida}}', rightAlign:false});
+					@else
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					@endif
+					break;
 				case('Conciliado'):
-					$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadConciliada}}', rightAlign:false});
+					@else
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					@endif
 					break;
 			};
 			$('#editkgResivido').modal();
@@ -449,7 +486,11 @@
 
 		function submit(cantidadmax){
 			$('#conciliadokg').append(`
-				<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
+				@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
+				@else
+					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
+				@endif
 			`);
 			$('#ValorConciliado').prop('type', "submit");
 		}
