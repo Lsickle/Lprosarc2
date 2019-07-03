@@ -215,7 +215,7 @@ class ContactoController extends Controller
         }elseif($request->input('CliCategoria') === 'Transportador' && !isset($Vehiculos[0])){
             // return 'Hola';
             $Validate = $request->validate([
-                'VehicPlaca' => 'required|unique:vehiculos,VehicPlaca|max:9|min:9',
+                'VehicPlaca' => 'required|unique:vehiculos,VehicPlaca|max:7|min:7',
                 'VehicTipo' => 'required|max:64',
                 'VehicCapacidad' => 'required|max:64',
             ]);

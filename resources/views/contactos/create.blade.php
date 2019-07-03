@@ -151,7 +151,7 @@
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                <button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                                                <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -164,4 +164,13 @@
 		</div>
 	</div>
 </div>
+@section('NewScript')
+@if(old('VehicTipo') !== null)
+	<script>
+		$(document).ready(function(){
+			Vehiculo();
+		});
+	</script>
+@endif
+@endsection
 @endsection

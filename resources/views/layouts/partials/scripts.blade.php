@@ -444,13 +444,6 @@ function Vehiculo(){
 	$('#form').validator('update');
 }
 </script>
-@if(old('VehicTipo') !== null)
-	<script>
-		$(document).ready(function(){
-			Vehiculo();
-		});
-	</script>
-@endif
 @endif
 <script type="text/javascript">
 $(document).ready(function() {

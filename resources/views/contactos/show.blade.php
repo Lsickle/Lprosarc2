@@ -119,7 +119,7 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{old('VehicCapacidad')}}" pattern="[0-9]{1,7}" data-error="Únicamente números" required>
+								<input type="number" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{old('VehicCapacidad')}}" required>
 							</div>
 						</div>
 						<div class="modal-footer">
