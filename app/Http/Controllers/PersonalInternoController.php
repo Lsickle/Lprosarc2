@@ -12,6 +12,8 @@ use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\audit;
+use Illuminate\Support\Facades\Hash;
+
 
 class PersonalInternoController extends Controller
 {
@@ -127,14 +129,14 @@ class PersonalInternoController extends Controller
                 $newArea->AreaName = $request->input('NewArea');
                 $newArea->FK_AreaSede = $request->input('Sede');
                 $newArea->AreaDelete = 0;
-                $newArea->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newArea->AreaSlug = hash('sha256', rand().time().$newArea->AreaName);
                 $newArea->save();
 
                 $newCargo = new Cargo();
                 $newCargo->CargName = $request->input('NewCargo');
                 $newCargo->CargArea = $newArea->ID_Area;
                 $newCargo->CargDelete = 0;
-                $newCargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
                 $newCargo->save();
                 $Cargo = $newCargo->ID_Carg;
             }
@@ -143,7 +145,7 @@ class PersonalInternoController extends Controller
                 $newCargo->CargName = $request->input('NewCargo');
                 $newCargo->CargArea = $request->input('CargArea');
                 $newCargo->CargDelete = 0;
-                $newCargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
                 $newCargo->save();
                 $Cargo = $newCargo->ID_Carg;
             }
@@ -176,7 +178,7 @@ class PersonalInternoController extends Controller
         }
         $Personal->PersPase = $request->input('PersPase');
         $Personal->PersDelete = 0;
-        $Personal->PersSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('PersFirstName').$request->input('PersLastName').substr(md5(rand()), 0,32);
+        $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersDocNumber);
         $Personal->save();
 
         return redirect()->route('personalInterno.index');
@@ -293,14 +295,14 @@ class PersonalInternoController extends Controller
                 $newArea->AreaName = $request->input('NewArea');
                 $newArea->FK_AreaSede = $request->input('Sede');
                 $newArea->AreaDelete = 0;
-                $newArea->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newArea->AreaSlug = hash('sha256', rand().time().$newArea->AreaName);
                 $newArea->save();
 
                 $newCargo = new Cargo();
                 $newCargo->CargName = $request->input('NewCargo');
                 $newCargo->CargArea = $newArea->ID_Area;
                 $newCargo->CargDelete = 0;
-                $newCargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
                 $newCargo->save();
                 $Cargo = $newCargo->ID_Carg;
             }
@@ -309,7 +311,7 @@ class PersonalInternoController extends Controller
                 $newCargo->CargName = $request->input('NewCargo');
                 $newCargo->CargArea = $request->input('CargArea');
                 $newCargo->CargDelete = 0;
-                $newCargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
                 $newCargo->save();
                 $Cargo = $newCargo->ID_Carg;
             }

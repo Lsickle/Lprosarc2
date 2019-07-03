@@ -10,6 +10,8 @@ use App\audit;
 use App\Area;
 use App\Cargo;
 use App\Personal;
+use Illuminate\Support\Facades\Hash;
+
 
 class CargoController extends Controller
 {
@@ -87,7 +89,7 @@ class CargoController extends Controller
         $cargo->CargName = $request->input('CargName');
         $cargo->CargArea = $request->input('CargArea');
         $cargo->CargDelete = 0;
-        $cargo->CargSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
         $cargo->save();
 
         return redirect()->route('cargos.index');

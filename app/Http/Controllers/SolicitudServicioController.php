@@ -22,6 +22,8 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
+use Illuminate\Support\Facades\Hash;
+
 
 class SolicitudServicioController extends Controller
 {
@@ -185,7 +187,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio->SolSerDevolucion = 1;
 			$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
 		}
-		$SolicitudServicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+		$SolicitudServicio->SolSerSlug = hash('sha256', rand().time().$SolicitudServicio->SolSerNameTrans);
 		$SolicitudServicio->SolSerDelete = 0;
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
@@ -209,7 +211,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResKgConciliado = 0;
 				$SolicitudResiduo->SolResKgTratado = 0;
 				$SolicitudResiduo->SolResDelete = 0;
-				$SolicitudResiduo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
 				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 					$SolicitudResiduo->SolResTypeUnidad = "Unidad";

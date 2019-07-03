@@ -17,6 +17,8 @@ use App\Municipio;
 use App\ResiduosGener;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class genercontroller extends Controller
@@ -98,7 +100,7 @@ class genercontroller extends Controller
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
         $Gener->GenerShortname = $request->input('GenerShortname');
-        $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $request->input('FK_GenerCli');
         $Gener->GenerDelete = 0;
         $Gener->GenerCode = $request->input('GenerCode');
@@ -127,7 +129,7 @@ class genercontroller extends Controller
         }
         $SGener->GSedeEmail = $request->input('GSedeEmail');
         $SGener->GSedeCelular = $request->input('GSedeCelular');
-        $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $SGener->GSedeSlug = hash('sha256', rand().time().$SGener->GSedeName);
         $SGener->FK_GSede = $Gener->ID_Gener;
         $SGener->FK_GSedeMun = $request->input('FK_GSedeMun');
         $SGener->GSedeDelete = 0;
@@ -140,7 +142,7 @@ class genercontroller extends Controller
                 $ResiduoSedeGener->FK_SGener = $SGener->ID_GSede;
                 $ResiduoSedeGener->FK_Respel = $Respel;
                 $ResiduoSedeGener->DeleteSGenerRes = 0;
-                $ResiduoSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $ResiduoSedeGener->SlugSGenerRes = hash('sha256', rand().time().$ResiduoSedeGener->FK_Respel);
                 $ResiduoSedeGener->save();
             }
         }
@@ -170,7 +172,7 @@ class genercontroller extends Controller
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
         $Gener->GenerShortname = $Cliente->CliShortname;
-        $Gener->GenerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
         $Gener->GenerDelete = $Cliente->CliDelete;
         $Gener->save();
@@ -185,7 +187,7 @@ class genercontroller extends Controller
             $SGener->GSedeExt2 =  $Sede->SedeExt2;
             $SGener->GSedeEmail = $Sede->SedeEmail;
             $SGener->GSedeCelular = $Sede->SedeCelular;
-            $SGener->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+            $SGener->GSedeSlug = hash('sha256', rand().time().$SGener->GSedeName);
             $SGener->FK_GSede = $Gener->ID_Gener;
             $SGener->FK_GSedeMun = $Sede->FK_SedeMun;
             $SGener->GSedeDelete = $Sede->SedeDelete;
