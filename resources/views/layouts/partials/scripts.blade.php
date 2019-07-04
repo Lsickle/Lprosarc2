@@ -502,15 +502,6 @@ function NotifiFalse(Mensaje) {
 	</script>
 	@endif
 @endif
-@if(Route::currentRouteName() === 'contactos.show')
-	@if ($errors->any())
-		<script>
-			$(document).ready(function() {
-				$(".create").modal("show");
-			});
-		</script>
-	@endif
-@endif
 @if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
 		var contador = `{{$contador}}`;

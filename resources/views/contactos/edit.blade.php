@@ -45,12 +45,19 @@
                                                     <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" maxlength="100" required value="{{$Cliente->CliName}}">
                                                 </div>
                                                 <div class="col-md-12 form-group">
-                                                    <label for="ClienteInputNombre">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="ClienteInputNombre" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientnombrecorto') }}
+                                                    </label>
+                                                    <small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" maxlength="100" required value="{{$Cliente->CliShortname}}">
                                                 </div>
+                                                <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
+                                                    <label for="categoria" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcategoría') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientcategoríamessage1') }}<br> <b>NOTA: </b>{{ trans('adminlte_lang::message.contacclientcategoríamessage2') }}" >
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientcategoría') }}
+                                                    </label>
                                                 @if ($Cliente->CliCategoria !== 'Transportador')
-                                                    <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
-                                                        <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
                                                         <select class="form-control" id="categoria" name="CliCategoria" required>
                                                             <option onclick="NoAddVehiculo()" value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                             <option onclick="AddVehiculo()" {{ $Cliente->CliCategoria == 'Transportador' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
@@ -82,8 +89,6 @@
                                                         <input type="number" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" min="0">
                                                     </div>
                                                 @else
-                                                    <div class="col-md-6 form-group"><small class="help-block with-errors">*</small>
-                                                        <label for="categoria">{{ trans('adminlte_lang::message.clientcategoría') }}</label>
                                                         <select class="form-control" id="categoria" name="CliCategoria" required>
                                                             <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                             <option {{ $Cliente->CliCategoria == 'Transportador' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.clienttransportador') }}</option>
