@@ -109,7 +109,7 @@ class ContactoController extends Controller
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
             $Vehiculo->VehicTipo = $request->input('VehicTipo');
             $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-            $Vehiculo->VehicInternExtern = 1;
+            $Vehiculo->VehicInternExtern = 0;
             $Vehiculo->VehicDelete = 0;
             $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
             $Vehiculo->save();
@@ -222,7 +222,7 @@ class ContactoController extends Controller
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
             $Vehiculo->VehicTipo = $request->input('VehicTipo');
             $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-            $Vehiculo->VehicInternExtern = 1;
+            $Vehiculo->VehicInternExtern = 0;
             $Vehiculo->VehicDelete = 0;
             $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
             $Vehiculo->save();

@@ -28,7 +28,7 @@ class VehiculoContactoController extends Controller
         $Vehiculo->VehicPlaca = $request->input('CreateVehicPlaca');
         $Vehiculo->VehicTipo = $request->input('CreateVehicTipo');
         $Vehiculo->VehicCapacidad = $request->input('CreateVehicCapacidad');
-        $Vehiculo->VehicInternExtern = 1;//vehiculo externo
+        $Vehiculo->VehicInternExtern = 0;
         $Vehiculo->VehicDelete = 0;
         $Vehiculo->FK_VehiSede = $Cliente->ID_Sede;
         $Vehiculo->save();
