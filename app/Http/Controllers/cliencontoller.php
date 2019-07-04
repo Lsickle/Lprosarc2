@@ -135,7 +135,7 @@ class clientcontoller extends Controller
             $Cargo->CargName = $request->input("CargName");
             $Cargo->CargArea =  $Area->ID_Area;
             $Cargo->CargDelete =  0;
-            $Cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
+            $Cargo->CargSlug = hash('sha256', rand().time().$Cargo->CargName);
             $Cargo->save();
             
             $Personal = new Personal();

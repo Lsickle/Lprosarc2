@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
-					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor'))
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$programacion->ID_ProgVeh}}
@@ -171,14 +171,20 @@
 								<div class="form-group col-md-6 col-md-offset-5">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}">
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+									@php
+										$Roles1 = [trans('adminlte_lang::message.Programador')];
+									@endphp
+									@if(in_array(Auth::user()->UsRol, $Roles1) || in_array(Auth::user()->UsRol2, $Roles1))
 										<br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 									@endif
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null)
-									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-success pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+									@php
+										$Roles2 = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.Supervisor')];
+									@endphp
+									@if((in_array(Auth::user()->UsRol, $Roles2) || in_array(Auth::user()->UsRol2, $Roles2)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 									@endif
 									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
@@ -186,7 +192,7 @@
 							<!-- /.box-body -->
 						</form>
 					</div>
-				@elseif($programacion->ProgVehtipo == 1)
+				@elseif($programacion->ProgVehtipo == 0)
 					<div class="box box-info">
 						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
@@ -284,7 +290,7 @@
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
 			@endif
-			@if(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
+			@if(Auth::user()->UsRol == trans('adminlte_lang::message.Supervisor') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Supervisor'))
 				$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
 				$("#ProgVehEntrada").prop('required', true);
 				$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
@@ -297,7 +303,10 @@
 				$("#FK_ProgAyudante").prop('disabled', true);
 				$("#ProgVehColor").prop("disabled", true);
 			@endif
-			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
+			@php
+				$Roles3 = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.Supervisor')];
+			@endphp
+			@if(!in_array(Auth::user()->UsRol, $Roles3) && !in_array(Auth::user()->UsRol2, $Roles3))
 				$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
 				$("#ProgVehFecha").prop('required', true);
 				$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);
