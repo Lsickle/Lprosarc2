@@ -61,7 +61,7 @@ class ResetPasswordNotification extends Notification
             ->subject('Restauración de contraseña')
             ->greeting('¡Hola!, '.$notifiable->name)
             ->line('Ha recibido este mensaje porque se solicitó un restablecimiento de contraseña para su cuenta, por favor, haga clic en el botón de abajo para realizar el cambio de su contraseña.')
-            ->action('Restablecer', url(config('app.url').route('password.reset', $this->token, false)))
+            ->action('Restablecer', url(/*config('app.url').*/route('password.reset', $this->token, false)))
             ->line('Si no ha solicitado el restablecimiento de contraseña, omita este correo electrónico.')
             ->salutation('Saludos, Prosarc S.A. ESP');
     }
