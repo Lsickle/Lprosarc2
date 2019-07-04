@@ -3,19 +3,19 @@
 namespace App;
 
 class Permisos{
-    const Array = ['Programador'];
+    const MenuPersonalInterno = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 }
 /*
 Programador
-AdministradorPlanta
+AdministradorPlanta - 
 Hseq
-JefeLogistica
+JefeLogistica - 
 AsistenteLogistica
 Conductor
-JefeOperaciones
+JefeOperaciones - 
 Supervisor
-AdministradorBogota
-JefeComercial
+AdministradorBogota - 
+JefeComercial - 
 Tesorería
 Comercial
 AsistenteComercial
