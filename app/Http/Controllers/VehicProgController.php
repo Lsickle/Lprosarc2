@@ -191,16 +191,22 @@ class VehicProgController extends Controller
         $vehiculos = DB::table('vehiculos')
             ->select('ID_Vehic','VehicPlaca')
             ->get();
-        $SedeVehiculo = DB::table('sedes')
-            ->join('vehiculos', 'sedes.ID_Sede', '=', 'vehiculos.FK_VehiSede')
-            ->select('sedes.ID_Sede')
-            ->where('vehiculos.ID_Vehic', $programacion->FK_ProgVehiculo)
-            ->first();
-        $Vehiculos2 = DB::table('vehiculos')
-            ->select('VehicPlaca', 'ID_Vehic')
-            ->where('FK_VehiSede', $SedeVehiculo->ID_Sede)
-            ->where('VehicDelete', 0)
-            ->get();
+        if($programacion->ProgVehtipo <> 0){
+            $SedeVehiculo = DB::table('sedes')
+                ->join('vehiculos', 'sedes.ID_Sede', '=', 'vehiculos.FK_VehiSede')
+                ->select('sedes.ID_Sede')
+                ->where('vehiculos.ID_Vehic', $programacion->FK_ProgVehiculo)
+                ->first();
+            $Vehiculos2 = DB::table('vehiculos')
+                ->select('VehicPlaca', 'ID_Vehic')
+                ->where('FK_VehiSede', $SedeVehiculo->ID_Sede)
+                ->where('VehicDelete', 0)
+                ->get();
+        }
+        else{
+            $SedeVehiculo = 0;
+            $Vehiculos2 = 0;
+        }
         $conductors = DB::table('personals')
             ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
             ->select('ID_Pers', 'PersFirstName', 'PersLastName')
