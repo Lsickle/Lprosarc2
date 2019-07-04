@@ -31,10 +31,10 @@ class EmailController extends Controller
                 ->join('personals', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('users', 'users.FK_UserPers', 'personals.ID_Pers')
                 ->select('users.email', 'clientes.CliName', 'solicitud_servicios.*')
-                ->where('users.UsRol', 'JefeLogistica')
+                ->where('users.UsRol', 'JefeLogistica')//rol que va ha ser contactado para las solicitudes de servicio
                 ->first();
             Mail::to($emailUser->email)->send(new SolSerEmail($email));
-        }else{
+        }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
                 ->join('progvehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'solicitud_servicios.ID_SolSer')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -43,8 +43,14 @@ class EmailController extends Controller
                 ->where('progvehiculos.FK_ProgVehiculo', '=', $SolSer->ID_SolSer)
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
+        }else{
+            $email = DB::table('solicitud_servicios')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->select('personals.PersEmail', 'solicitud_servicios.*')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                ->first();
+            Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }
-
         return back();
     }
 }

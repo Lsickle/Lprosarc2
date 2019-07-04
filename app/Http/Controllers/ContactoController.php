@@ -100,7 +100,7 @@ class ContactoController extends Controller
 
         if($request->input('CliCategoria') === 'Transportador'){
             $Validate = $request->validate([
-                'VehicPlaca' => 'required|max:9|min:9|unique:vehiculos,VehicPlaca',
+                'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
                 'VehicTipo' => 'required|max:64',
                 'VehicCapacidad' => 'required|max:64',
             ]);
@@ -109,7 +109,7 @@ class ContactoController extends Controller
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
             $Vehiculo->VehicTipo = $request->input('VehicTipo');
             $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-            $Vehiculo->VehicInternExtern = 1;
+            $Vehiculo->VehicInternExtern = 0;
             $Vehiculo->VehicDelete = 0;
             $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
             $Vehiculo->save();
@@ -176,7 +176,6 @@ class ContactoController extends Controller
     public function update(ContactosUpdateRequest $request, $id)
     {
         $validate = $request->validate([
-
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request, $id){
 
                 $Cliente = DB::table('clientes')
@@ -195,7 +194,6 @@ class ContactoController extends Controller
             })],
         ]);
 
-
         $Cliente = Cliente::where('CliSlug', $id)->first();
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
 
@@ -206,18 +204,16 @@ class ContactoController extends Controller
         $Cliente->save();
 
         $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->where('VehicDelete', 0)->get();
-            // return $Vehiculos;
+        
         if($request->input('CliCategoria') === 'Proveedor' && isset($Vehiculos[0])){
-            // return 'Nooooooooo';
             foreach($Vehiculos as $Vehiculo){
                 $Vehiculo->VehicDelete = 1;
                 $Vehiculo->save();
             }
             
         }elseif($request->input('CliCategoria') === 'Transportador' && !isset($Vehiculos[0])){
-            // return 'Hola';
             $Validate = $request->validate([
-                'VehicPlaca' => 'required|unique:vehiculos,VehicPlaca|max:9|min:9',
+                'VehicPlaca' => 'required|unique:vehiculos,VehicPlaca|max:7|min:7',
                 'VehicTipo' => 'required|max:64',
                 'VehicCapacidad' => 'required|max:64',
             ]);
@@ -226,7 +222,7 @@ class ContactoController extends Controller
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
             $Vehiculo->VehicTipo = $request->input('VehicTipo');
             $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-            $Vehiculo->VehicInternExtern = 1;
+            $Vehiculo->VehicInternExtern = 0;
             $Vehiculo->VehicDelete = 0;
             $Vehiculo->FK_VehiSede = $Sede->ID_Sede;
             $Vehiculo->save();
@@ -241,7 +237,6 @@ class ContactoController extends Controller
         $log->save();
 
         $id = $Cliente->CliSlug;
-
         return redirect()->route('contactos.show', compact('id'));
     }
 
@@ -256,7 +251,6 @@ class ContactoController extends Controller
         $Cliente = Cliente::where('CliSlug', $id)->first();
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
         $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
-        // return $Vehiculos;
         if ($Cliente->CliDelete == 0){
             foreach($Vehiculos as $Vehiculo){
                 $Vehiculo->VehicDelete = 1;
@@ -269,8 +263,7 @@ class ContactoController extends Controller
             $Sede->save();
 
             return redirect()->route('contactos.index');
-        }
-        else{
+        }else{
             foreach($Vehiculos as $Vehiculo){
                 $Vehiculo->VehicDelete = 0;
                 $Vehiculo->save();

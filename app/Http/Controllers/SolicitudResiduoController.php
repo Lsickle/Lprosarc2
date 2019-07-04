@@ -92,7 +92,8 @@ class SolicitudResiduoController extends Controller
                     }
                     break;
                 case trans('adminlte_lang::message.JefeLogistica'):
-                    if($SolSer->SolSerStatus !== 'Completado'){
+                    if($SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'No Conciliado'){
+                    }else{
                         abort(403);
                     }
                     break;
@@ -126,11 +127,20 @@ class SolicitudResiduoController extends Controller
         ]);
         switch($SolSer->SolSerStatus){
             case 'Programado':
+                if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidades'){
+                    $SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
+                    $SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
+                }
                 $SolRes->SolResKgRecibido = $request->input('SolResKg');
                 $SolRes->SolResKgConciliado = $request->input('SolResKg');
                 break;
+            case 'No Conciliado':
             case 'Completado':
-                $SolRes->SolResKgConciliado = $request->input('SolResKg');
+                if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidades'){
+                    $SolRes->SolResCantiUnidadConciliada = $request->input('SolResKg');
+                }else{
+                    $SolRes->SolResKgConciliado = $request->input('SolResKg');
+                }
                 break;
             case 'Conciliado':
                 if( $request->input('ValorConciliado') === NULL){
@@ -242,63 +252,111 @@ class SolicitudResiduoController extends Controller
                 default: 
                     abort(500);
             }
-    
-            switch($request->input('SolResEmbalaje')){
-                case 99: 
-                    $SolRes->SolResEmbalaje = 'Bolsas';
+            switch ($request->input('SolResEmbalaje')) {
+                case 99:
+                    $SolRes->SolResEmbalaje = "Sacos/Bolsas";
                     break;
-                case 98: 
-                    $SolRes->SolResEmbalaje = 'Canecas';
+                case 98:
+                    $SolRes->SolResEmbalaje = "Bidones Pequeños";
                     break;
-                case 97: 
-                    $SolRes->SolResEmbalaje = 'Estibas';
+                case 97:
+                    $SolRes->SolResEmbalaje = "Bidones Grandes";
                     break;
                 case 96:
-                    $SolRes->SolResEmbalaje = 'Garrafones';
+                    $SolRes->SolResEmbalaje = "Estibas";
                     break;
-                case 95: 
-                    $SolRes->SolResEmbalaje = 'Cajas';
+                case 95:
+                    $SolRes->SolResEmbalaje = "Garrafones/Jerricanes";
                     break;
-                default: 
+                case 94:
+                    $SolRes->SolResEmbalaje = "Cajas";
+                    break;
+                case 93:
+                    $SolRes->SolResEmbalaje = "Cuñetes";
+                    break;
+                case 92:
+                    $SolRes->SolResEmbalaje = "Big Bags";
+                    break;
+                case 91:
+                    $SolRes->SolResEmbalaje = "Isotanques";
+                    break;
+                case 90:
+                    $SolRes->SolResEmbalaje = "Tachos";
+                    break;
+                case 89:
+                    $SolRes->SolResEmbalaje = "Embalajes Compuestos";
+                    break;
+                case 88:
+                    $SolRes->SolResEmbalaje = "Granel";
+                    break;
+                default:
                     abort(500);
             }
         }
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $Validate = $request->validate([
-                'SolResKgConciliado' => 'max:11|required',
+                'SolResKgConciliado' => 'max:11',
             ]);
-
-            $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+            if($request->input('SolResCantiUnidadConciliada') !== null){
+                $SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+            }
+            if($request->input('SolResKgConciliado') !== null){
+                $SolRes->SolResKgConciliado = $request->input('SolResKgConciliado');
+            }
         }
-
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno')){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $Validate = $request->validate([
                 'SolResKgRecibido' => 'max:11|nullable',
                 'SolResKgTratado' => 'max:11|nullable',
             ]);
-            
-            if($SolRes->SolResKgRecibido === Null){
+            if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'){
                 if($request->input('SolResKgRecibido') === Null){
-                    $SolRes->SolResKgRecibido = 0;
-                    $SolRes->SolResKgConciliado = 0;
                 }else{
+                    $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+                    if($SolRes->SolResKgConciliado === null && $request->input('SolResKgConciliado') === null){
+                        $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
+                    }
+                }
+                if($request->input('SolResCantiUnidadRecibida') === null){
+                }else{
+                    $SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
+                    if($SolRes->SolResCantiUnidadConciliada === null && $request->input('SolResCantiUnidadConciliada') === null){
+                        $SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
+                    }
+                }
+                if($request->input('SolResCantiUnidadConciliada') === null){
+                }else{
+                    $SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+                }
+
+                if($request->input('SolResKgTratado') === null){
+                }else{
+                    $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+                }
+            }else{
+                if($SolRes->SolResKgRecibido === Null){
+                    if($request->input('SolResKgRecibido') === Null){
+                        $SolRes->SolResKgRecibido = 0;
+                        $SolRes->SolResKgConciliado = 0;
+                    }else{
+                        $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
+                        $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
+                    }
+                }elseif($request->input('SolResKgTratado') === Null && $request->input('ValorConciliado') === Null){
                     $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
                     $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
                 }
-            }elseif($request->input('SolResKgTratado') === Null && $request->input('ValorConciliado') === Null){
-                $SolRes->SolResKgRecibido = $request->input('SolResKgRecibido');
-                $SolRes->SolResKgConciliado = $request->input('SolResKgRecibido');
-            }
-            
-            if($request->input('ValorConciliado') !== Null){
-                $SolRes->SolResKgTratado = $request->input('ValorConciliado');
-            }else{
-                if($request->input('SolResKgTratado') !== Null){
-                    $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
-                }elseif($SolRes->SolResKgTratado === Null && $request->input('SolResKgTratado') === Null){
-                    $SolRes->SolResKgTratado = 0;
+                
+                if($request->input('ValorConciliado') !== Null){
+                    $SolRes->SolResKgTratado = $request->input('ValorConciliado');
                 }else{
-                    $SolRes->SolResKgTratado = $SolRes->SolResKgTratado;
+                    if($request->input('SolResKgTratado') !== Null){
+                        $SolRes->SolResKgTratado = $request->input('SolResKgTratado');
+                    }elseif($SolRes->SolResKgTratado === Null && $request->input('SolResKgTratado') === Null){
+                        $SolRes->SolResKgTratado = 0;
+                    }else{
+                        $SolRes->SolResKgTratado = $SolRes->SolResKgTratado;
+                    }
                 }
             }
         }

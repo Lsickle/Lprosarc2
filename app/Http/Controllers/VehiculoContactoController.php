@@ -13,9 +13,9 @@ class VehiculoContactoController extends Controller
     public function store(Request $request, $id)
     {
         $Validate = $request->validate([
-            'VehicPlaca' => 'required|max:9|min:9|unique:vehiculos,VehicPlaca',
-            'VehicTipo' => 'required|max:64|',
-            'VehicCapacidad' => 'required|max:64|',
+            'CreateVehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
+            'CreateVehicTipo' => 'required|max:64',
+            'CreateVehicCapacidad' => 'required|max:64',
         ]);
 
         $Cliente = DB::table('clientes')
@@ -25,10 +25,10 @@ class VehiculoContactoController extends Controller
             ->first();
 
         $Vehiculo = new Vehiculo();
-        $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
-        $Vehiculo->VehicTipo = $request->input('VehicTipo');
-        $Vehiculo->VehicCapacidad = $request->input('VehicCapacidad');
-        $Vehiculo->VehicInternExtern = 1;
+        $Vehiculo->VehicPlaca = $request->input('CreateVehicPlaca');
+        $Vehiculo->VehicTipo = $request->input('CreateVehicTipo');
+        $Vehiculo->VehicCapacidad = $request->input('CreateVehicCapacidad');
+        $Vehiculo->VehicInternExtern = 0;
         $Vehiculo->VehicDelete = 0;
         $Vehiculo->FK_VehiSede = $Cliente->ID_Sede;
         $Vehiculo->save();
@@ -39,13 +39,14 @@ class VehiculoContactoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $Vehiculo = Vehiculo::where('ID_Vehic', $id)->first();
+
         $Validate = $request->validate([
-            'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
+            'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca,'.$Vehiculo->VehicPlaca.',VehicPlaca',
             'VehicTipo' => 'required|max:64',
             'VehicCapacidad' => 'required|max:64',
         ]);
 
-        $Vehiculo = Vehiculo::where('ID_Vehic', $id)->first();
 
         $Cliente = DB::table('clientes')
             ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -80,8 +81,7 @@ class VehiculoContactoController extends Controller
 
         if ($Vehiculo->VehicDelete == 0) {
             $Vehiculo->VehicDelete = 1;
-        }
-        else{
+        }else{
             $Vehiculo->VehicDelete = 0;
         }
         $Vehiculo->save();
