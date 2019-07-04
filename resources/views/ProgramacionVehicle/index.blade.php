@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
-					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
+					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex1))
 						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 					@endif
 				</div>
@@ -27,12 +27,12 @@
 									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor'))
 										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
 								</tr>
@@ -78,7 +78,7 @@
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
 									@endif
 								</tr>

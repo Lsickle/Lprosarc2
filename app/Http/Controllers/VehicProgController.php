@@ -41,13 +41,13 @@ class VehicProgController extends Controller
             $vehiculos = DB::table('vehiculos')
                 ->select('ID_Vehic','VehicPlaca')
                 ->get();
+            return view('ProgramacionVehicle.index', compact('programacions', 'personals', 'vehiculos'));
         }
          /*Validacion para usuarios no permitidos en esta vista*/
         else{
             abort(403);
         }
             // return $programacions;
-        return view('ProgramacionVehicle.index', compact('programacions', 'personals', 'vehiculos'));
     }
 
     /**
@@ -57,41 +57,47 @@ class VehicProgController extends Controller
      */
     public function create()
     {
-        $programacions = DB::table('progvehiculos')
-            ->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-            ->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerVehiculo')
-            ->where('progvehiculos.ProgVehDelete', 0)
-            ->get();
-        $transportadores = DB::table('clientes')
-            ->select('CliShortname', 'CliSlug')
-            ->where('CliCategoria', 'Transportador')
-            ->where('CliDelete', 0)
-            ->get();
-        $mantenimientos = DB::table('mantenvehics')
-            ->join('vehiculos', 'mantenvehics.FK_VehMan', '=', 'vehiculos.ID_Vehic')
-            ->select('mantenvehics.*','vehiculos.VehicPlaca')
-            ->where('mantenvehics.HoraMavFin', '>', now())
-            ->get();
-        $conductors = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
-            ->where('CargName', 'Conductor')
-            ->get();
-        $ayudantes = DB::table('personals')
-            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-            ->select('ID_Pers', 'PersFirstName', 'PersLastName')
-            ->where('CargName', 'Operario')
-            ->get();
-        $vehiculos = DB::table('vehiculos')
-            ->select('ID_Vehic','VehicPlaca')
-            ->get();
-        $serviciosnoprogramados = DB::table('solicitud_servicios')
-            ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-            ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
-            ->where('SolSerDelete', 0)
-            ->where('SolSerStatus', 'Aprobado')
-            ->get();
-        return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
+        if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex1)){
+            $programacions = DB::table('progvehiculos')
+                ->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                ->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerVehiculo')
+                ->where('progvehiculos.ProgVehDelete', 0)
+                ->get();
+            $transportadores = DB::table('clientes')
+                ->select('CliShortname', 'CliSlug')
+                ->where('CliCategoria', 'Transportador')
+                ->where('CliDelete', 0)
+                ->get();
+            $mantenimientos = DB::table('mantenvehics')
+                ->join('vehiculos', 'mantenvehics.FK_VehMan', '=', 'vehiculos.ID_Vehic')
+                ->select('mantenvehics.*','vehiculos.VehicPlaca')
+                ->where('mantenvehics.HoraMavFin', '>', now())
+                ->get();
+            $conductors = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+                ->where('CargName', 'Conductor')
+                ->get();
+            $ayudantes = DB::table('personals')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+                ->where('CargName', 'Operario')
+                ->get();
+            $vehiculos = DB::table('vehiculos')
+                ->select('ID_Vehic','VehicPlaca')
+                ->get();
+            $serviciosnoprogramados = DB::table('solicitud_servicios')
+                ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+                ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
+                ->where('SolSerDelete', 0)
+                ->where('SolSerStatus', 'Aprobado')
+                ->get();
+            return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
+        }
+         /*Validacion para usuarios no permitidos en esta vista*/
+        else{
+            abort(403);
+        }
     }
 
     /**

@@ -4,7 +4,9 @@ namespace App;
 
 class Permisos{
     const Menu1 = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
-    const ProgVehicIndex = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
+    const ProgVehicIndex1 = ['Programador', 'JefeLogistica'];
+    /* Adicional -> VehicProgController::Create - */
+    const ProgVehicIndex1 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 }
 /*
 Programador
