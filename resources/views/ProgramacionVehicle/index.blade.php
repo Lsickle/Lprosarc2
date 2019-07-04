@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
-					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
 						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 					@endif
 				</div>
@@ -32,10 +32,8 @@
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
 									@endif
-									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
-									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
-										<td>{{ trans('adminlte_lang::message.titleconducedit') }}</td>
 									@endif
 								</tr>
 							</thead>
@@ -78,12 +76,10 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
 										<td>{{$conductor}}</td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
-										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : 'Externo'}}</td>
+										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 									@endif
-									@if(Auth::user()->UsRol == trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica'))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
-									@elseif(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
-										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.progvehicconducedit') }}</a></td>
 									@endif
 								</tr>
 								@endforeach

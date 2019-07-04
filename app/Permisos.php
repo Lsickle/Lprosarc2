@@ -4,6 +4,7 @@ namespace App;
 
 class Permisos{
     const Menu1 = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
+    const ProgVehicIndex = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 }
 /*
 Programador
