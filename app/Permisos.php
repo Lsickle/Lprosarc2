@@ -3,7 +3,7 @@
 namespace App;
 
 class Permisos{
-    const MenuPersonalInterno = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
+    const Menu1 = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 }
 /*
 Programador
