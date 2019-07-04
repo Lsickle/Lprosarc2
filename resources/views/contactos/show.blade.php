@@ -99,7 +99,7 @@
 								<span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.vehiculocreate') }}</p></span>
 							</div> 
 						</div>
-						@if ($errors->any())
+						@if ($errors->any() && !old('validate'))
 							<div class="alert alert-danger" role="alert">
 								<ul>
 									@foreach ($errors->all() as $error)
@@ -110,20 +110,32 @@
 						@endif
 						<div class="modal-header">
 							<div class="form-group col-md-12">
-								<label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="9" maxlength="9" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('VehicPlaca')}}">
+								<label for="VehicPlaca" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehicplaca') }}</b>" data-content="Placa de un vehiculo del Tranportador">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.vehicplaca') }}
+								</label>
+								<small class="help-block with-errors">*</small>
+								<input type="text" name="CreateVehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('CreateVehicPlaca')}}" required>
 							</div>
 							<div class="col-md-12 form-group">
-								<label for="VehicTipo"> {{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{old('VehicTipo')}}" required>
+								<label for="VehicTipo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehictipo') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehictipomessage') }}">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.vehictipo') }}
+								</label>
+								<small class="help-block with-errors">*</small>
+								<input type="text" name="CreateVehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="{{old('CreateVehicTipo')}}" required>
 							</div>
 							<div class="col-md-12 form-group">
-								<label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" value="{{old('VehicCapacidad')}}" required>
+								<label for="VehicCapacidad" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehiccapacidad') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehiccapacidadmessage') }}">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.vehiccapacidad') }}
+								</label>
+								<small class="help-block with-errors">*</small>
+								<input type="number" name="CreateVehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" min="0" value="{{old('CreateVehicCapacidad')}}" required>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+							<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
 						</div>
 					</div>
 				</div>
@@ -133,7 +145,7 @@
 		<div class="col-md-6">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
-					<li class="active box-info" ><a href="#vehiculo" data-toggle="tab">{{ trans('adminlte_lang::message.vehiculos') }}</a></li>
+					<li class="active box-info"><a href="#vehiculo" data-toggle="tab">{{ trans('adminlte_lang::message.vehiculos') }}</a></li>
 				</ul>
 				<div class="tab-content">
 					<div class="active tab-pane" id="vehiculo">
@@ -148,7 +160,7 @@
 								<div class="box-body box-profile">
 									{{-- BOTONES DE ELIMINAR Y EDITAR --}}
 									@if ($Vehiculo->VehicDelete === 0)
-										<a method='get' href='#' data-toggle='modal' data-target='#edit'  id="editvehiculo" onclick="editvehiculo(`{{$Vehiculo->ID_Vehic}}`, `{{$Vehiculo->VehicPlaca}}`, `{{$Vehiculo->VehicTipo}}`, `{{$Vehiculo->VehicCapacidad}}`)" title="Editar" class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
+										<a method='get' href='#' data-toggle='modal' data-target='#edit{{$Vehiculo->ID_Vehic}}'  id="editvehiculo" onclick="editvehiculo(`{{$Vehiculo->ID_Vehic}}`, `{{$Vehiculo->VehicPlaca}}`, `{{$Vehiculo->VehicTipo}}`, `{{$Vehiculo->VehicCapacidad}}`)" title="Editar" class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
 										<a method='get' href='#' data-toggle='modal' data-target='#contactosdelete'  id="deletevehiculo" onclick="deletevehiculo(`{{$Vehiculo->ID_Vehic}}`, `{{$Vehiculo->VehicPlaca}}`)" title="Eliminar" class="btn btn-danger pull-left"><i class="fas fa-trash-alt"></i></a>
 										<div id="editvehiculocontacto"></div>
 										<div id="deletevehiculocontacto"></div>
@@ -174,9 +186,6 @@
 										<b>{{ trans('adminlte_lang::message.vehiccapacidad') }}</b> <a class="pull-right">{{$Vehiculo->VehicCapacidad}}</a>
 									</li>
 								</div>
-								@if ($Vehiculo->VehicDelete === 0)
-									
-								@endif
 							@endforeach
 						</div>
 					</div>
@@ -195,7 +204,7 @@
 		<form role="form" action="/contacto-vehiculo-edit/`+id+`" method="POST" enctype="multipart/form-data" data-toggle="validator" id="formedit">
 			@csrf
 			@method('PUT')
-			<div class="modal modal-default fade in" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal modal-default fade in edit`+id+`" id="edit`+id+`" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -203,17 +212,9 @@
 							<div style="font-size: 5em; color: orange; text-align: center; margin: auto;">
 								<i class="fas fa-edit"></i>
 								<span style="font-size: 0.3em; color: black;"><p>{{ trans('adminlte_lang::message.vehiculoedit') }}</p></span>
-							</div> 
-						</div>
-						@if ($errors->any())
-							<div class="alert alert-danger" role="alert">
-								<ul>
-									@foreach ($errors->all() as $error)
-										<p>{{$error}}</p>
-									@endforeach
-								</ul>
 							</div>
-						@endif
+						</div>
+						<div id="errors"></div>
 						<div class="modal-header">
 							<div class="form-group col-md-12">
 								<label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
@@ -225,9 +226,10 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" name="VehicCapacidad" pattern="[0-9]{1,7}" data-error="Únicamente números" data-minlength="1" maxlength="7" class="form-control" id="VehicCapacidad" maxlength="64" value="`+capacidad+`" required>
+								<input type="number" name="VehicCapacidad" maxlength="7" min="0" class="form-control" id="VehicCapacidad" maxlength="64" value="`+capacidad+`" required>
 							</div>
 						</div>
+						<input type="text" name="validate" hidden value="`+id+`">
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 						</div>
@@ -267,5 +269,36 @@
 		</form>
 		`);
 	}
+	function errorNull(){
+		$('#errors').empty();
+		$('#errors').append(`
+			@if ($errors->any() && old('validate'))
+				<div class="alert alert-danger" role="alert">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<p>{{$error}}</p>
+						@endforeach
+					</ul>
+				</div>
+			@endif
+		`);
+	}
 </script>
+@if ($errors->any() && old('validate'))
+	<script>
+		$(document).ready(function() {
+			editvehiculo(`{{old('validate')}}`, `{{old('VehicPlaca')}}`, `{{old('VehicTipo')}}`, `{{old('VehicCapacidad')}}`);
+			errorNull();
+			$(".edit{{old('validate')}}").modal("show");
+		});
+	</script>
+@else
+	@if($errors->any())
+		<script>
+			$(document).ready(function() {
+				$(".create").modal("show");
+			});
+		</script>
+	@endif
+@endif
 @endsection

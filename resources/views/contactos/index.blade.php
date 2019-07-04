@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.MenuContactos') }}</h3>
-					<a href="/contactos/create" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+					<a href="/contactos/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -37,7 +37,7 @@
 								<td>{{$Cliente->CliShortname}}</td>
 								<td>{{$Cliente->CliNit}}</td>
 								<td>
-									<a method='get' href='/contactos/{{$Cliente->CliSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+									<a method='get' href='/contactos/{{$Cliente->CliSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
 								</td>
 							</tr>
 							@endforeach
