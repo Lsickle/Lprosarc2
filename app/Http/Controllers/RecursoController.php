@@ -13,6 +13,8 @@ use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
 use App\ProgramacionVehiculo;
+use Illuminate\Support\Facades\Hash;
+
 
 class RecursoController extends Controller
 {
@@ -142,7 +144,7 @@ class RecursoController extends Controller
                 $Recurso->RecCarte = $request->input("RecCarte");
                 $Recurso->RecRmSrc = $name;
                 $Recurso->RecSrc = $Src;
-                $Recurso->SlugRec = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc S.A ESP.".substr(md5(rand()), 0,32);
+                $Recurso->SlugRec = hash('sha256', rand().time().$Recurso->RecRmSrc);
 
                 $Recurso->RecFormat = '.'.$file->extension();
                 $Recurso->RecDelete = 0;

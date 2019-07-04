@@ -14,6 +14,8 @@ use App\Departamento;
 use App\Municipio;
 use App\Vehiculo;
 use App\audit;
+use Illuminate\Support\Facades\Hash;
+
 
 class ContactoController extends Controller
 {
@@ -63,7 +65,7 @@ class ContactoController extends Controller
         $Cliente->CliName = $request->input('CliName');
         $Cliente->CliShortname = $request->input('CliShortname');
         $Cliente->CliCategoria = $request->input('CliCategoria');
-        $Cliente->CliSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('CliShortname').substr(md5(rand()), 0,32);
+        $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
         $Cliente->CliDelete = 0;
         $Cliente->save();
 
@@ -90,7 +92,7 @@ class ContactoController extends Controller
         }
         $Sede->SedeEmail = $request->input('SedeEmail');
         $Sede->SedeCelular = $request->input('SedeCelular');
-        $Sede->SedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32).$request->input('SedeName').substr(md5(rand()), 0,32);
+        $Sede->SedeSlug = hash('sha256', rand().time().$Sede->SedeName);
         $Sede->FK_SedeCli = $Cliente->ID_Cli;
         $Sede->FK_SedeMun = $request->input('FK_SedeMun');
         $Sede->SedeDelete = 0;

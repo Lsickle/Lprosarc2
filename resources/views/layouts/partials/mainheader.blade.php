@@ -1,8 +1,8 @@
 <!-- Main Header -->
-<header class="main-header">
+<header class="main-header" style="height: 50px;">
 
     <!-- Logo -->
-    <a href="{{ url('/home') }}" class="logo">
+    <a href="{{ url('/home') }}" class="logo" style="height: 100%;">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="/img/LogoProsarc.png" style="width: 60%; margin: 5px; border-radius: 50%;"></span>
         <!-- logo for regular state and mobile devices -->
@@ -10,7 +10,7 @@
     </a>
 
     <!-- Header Navbar -->
-    <nav id="topLogo" class="navbar navbar-static-top" role="navigation">
+    <nav id="topLogo" class="navbar navbar-static-top" role="navigation" style="height: 100%">
         <!-- Sidebar toggle button-->
         <a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
             
@@ -19,8 +19,8 @@
             <i class="fas fa-bars"></i>
         </a> --}}
         <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+        <div class="navbar-custom-menu" style="height: 100%;">
+            <ul class="nav navbar-nav" style="height: 100%;">
                 <!-- Messages: style can be found in dropdown.less-->
                 {{-- <li class="dropdown messages-menu">
                     <!-- Menu toggle button -->
@@ -111,14 +111,14 @@
                         </li>
                     </ul>
                 </li> --}}
-                @if (Auth::guest())
+               {{--  @if (Auth::guest())
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
-                @else
+                @else --}}
                     <!-- User Account Menu -->
-                    <li class="dropdown user user-menu" id="user_menu" style="max-width: 280px;white-space: nowrap;">
+                    <li class="dropdown user user-menu" id="user_menu" style="max-width: 280px; height: 100%; white-space: nowrap;">
                         <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="max-width: 280px;white-space: nowrap;overflow: hidden;overflow-text: ellipsis">
+                        <a href="/profile/{{Auth::user()->UsSlug}}"{{--  class="dropdown-toggle" data-toggle="dropdown" --}} style="max-width: 280px;white-space: nowrap;overflow: hidden;overflow-text: ellipsis; height: 100%;" title="{{ Auth::user()->name }}">
                             <!-- The user image in the navbar-->
                             @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
                                 <img class="user-image" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
@@ -126,9 +126,10 @@
                                 <img class="user-image" src="../../../img/defaultuser.png" alt="User Image">
                             @endif
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
+                            <span class="hidden-xs" data-toggle="tooltip">{{ Auth::user()->name }}</span>
                         </a>
-                        <ul class="dropdown-menu">
+
+                        {{-- <ul class="dropdown-menu" id="profilewindows">
                             <!-- The user image in the menu -->
                             <li class="user-header">
                                 @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
@@ -156,12 +157,12 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/profile/{{Auth::user()->UsSlug}}" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.profile') }}</a>
+                                    <a href="/profile/{{Auth::user()->UsSlug}}" class="btn btn-info" style="background-color: #5bc0de;">{{ trans('adminlte_lang::message.profile') }}</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{ url('/logout') }}" class="btn btn-default btn-flat" id="logout"
+                                    <a href="{{ url('/logout') }}" class="btn btn-danger" id="logout"
                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                                 document.getElementById('logout-form').submit();" style="background-color: #d9534f;">
                                         {{ trans('adminlte_lang::message.signout') }}
                                     </a>
 
@@ -172,9 +173,21 @@
 
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </li>
-                @endif
+                    <li style="height: 100%;">
+                        <a href="{{ url('/logout') }}" id="logout"
+                           onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();" style="height: 100%;" title="Salir">
+                            <i class="fas fa-sign-out-alt" style="font-size: 1.5em"></i>
+                        </a>
+
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                            <input type="submit" value="logout" style="display: none;">
+                        </form>
+                    </li>
+                {{-- @endif --}}
                 
                 @if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador'))
                 <!-- Control Sidebar Toggle Button -->

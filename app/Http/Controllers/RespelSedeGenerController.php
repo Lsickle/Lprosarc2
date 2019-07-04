@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ResiduosGener;
 use App\audit;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class RespelSedeGenerController extends Controller
@@ -23,7 +25,7 @@ class RespelSedeGenerController extends Controller
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
                 $RespelSedeGener->FK_Respel = $Respel;
-                $RespelSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_SGener);
                 $RespelSedeGener->DeleteSGenerRes = 0;
                 $RespelSedeGener->save();
             }
@@ -98,7 +100,7 @@ class RespelSedeGenerController extends Controller
                 $RespelSedeGener->FK_SGener = $SGener->ID_GSede;
                 $RespelSedeGener->FK_Respel = $Respel;
                 $RespelSedeGener->DeleteSGenerRes = 0;
-                $RespelSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_Respel);
                 $RespelSedeGener->save();
             }
         }

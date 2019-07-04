@@ -64,7 +64,7 @@ Respel-Editar
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary pull-right" style="margin-right:5em">Actualizar</button>
+										<button type="submit" class="btn btn-success pull-right" style="margin-right:5em">Actualizar</button>
 									</div>
 								</div>
 							</form>

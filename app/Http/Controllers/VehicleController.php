@@ -17,19 +17,18 @@ class VehicleController extends Controller
      */
     public function index()
     { 
-        if(Auth::user()->UsRol === "Programador"){
+        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
             $Vehicles = DB::table('vehiculos')
                 ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
                 ->select('vehiculos.*', 'sedes.SedeName')
+                ->where(function($query){
+                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                        $query->where('VehicDelete', 0);
+                    }
+                })
                 ->get();
             return view('vehicle.index', compact('Vehicles'));
         }
-        $Vehicles = DB::table('vehiculos')
-                ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
-                ->select('vehiculos.*', 'sedes.SedeName')
-                ->where('VehicDelete', 0)
-                ->get();
-            return view('vehicle.index', compact('Vehicles'));
     }
 
     /**
@@ -41,6 +40,7 @@ class VehicleController extends Controller
     {
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
+            ->where('SedeDelete', 0)
             ->get();
         return view('vehicle.create', compact('Sedes'));
     }
@@ -59,7 +59,7 @@ class VehicleController extends Controller
         $Vehicle->VehicKmActual = $request->input('VehicKmActual');
         $Vehicle->VehicTipo = $request->input('VehicTipo');
         $Vehicle->FK_VehiSede = $request->input('FK_VehiSede');
-        $Vehicle->VehicInternExtern = $request->input('VehicInternExtern');
+        $Vehicle->VehicInternExtern = 1;
         $Vehicle->VehicDelete = 0;
         $Vehicle->save();
         
@@ -88,6 +88,7 @@ class VehicleController extends Controller
         $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Sedes = DB::table('sedes')
             ->select('ID_Sede', 'SedeName')
+            ->where('SedeDelete', 0)
             ->get();
         return view('vehicle.edit', compact('Vehicle','Sedes'));
     }
@@ -103,6 +104,7 @@ class VehicleController extends Controller
     {
         $Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
         $Vehicle->fill($request->all());
+        $Vehicle->VehicInternExtern = 1;
         $Vehicle->save();
 
         $log = new audit();

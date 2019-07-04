@@ -72,10 +72,10 @@ class RegisterController extends Controller
                 'name'          => $data['name'],
                 'email'         => $data['email'],
                 'password'      => bcrypt($data['password']),
-                'UsSlug'        => md5(now().$data['email'].rand())."SiRes".md5(now().$data['name'].rand())."ProsarcSAESP",
+                'UsSlug'        => hash('sha256', rand().time().$data['email']);
                 'UsRol'         => "Cliente",
-                'UsRolDesc'     => "Cliente General",
-                'UsRol2'        => "Usuario",
+                'UsRolDesc'     => "Usuario General",
+                'UsRol2'        => "Cliente",
                 'UsRolDesc2'    => "Usuario General",
                 'UsAvatar'      => "robot400x400.gif",
                 // 'FK_UserPers'    => "1",
