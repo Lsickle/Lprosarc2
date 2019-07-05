@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class PersonalStoreRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class PersonalStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'Sede'          => 'required',
@@ -30,6 +31,18 @@ class PersonalStoreRequest extends FormRequest
             'FK_PersCargo'  => 'required',
 
             'PersDocType'   => 'required|max:3|min:2',
+            'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
+                $Personal = DB::table('personals')
+                    ->select('PersDocNumber', 'PersDelete')
+                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
+                    ->first();
+                if(isset($Personal)){
+                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
+                    $query->where('PersDelete', '=', 0);
+                }
+                else
+                    $query->where('PersDocNumber', '=', null);
+            })],
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',

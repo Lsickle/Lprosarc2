@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
+use App\Area;
 
 class AjaxController extends Controller
 {
@@ -25,9 +26,10 @@ class AjaxController extends Controller
 	public function AreasSedes(Request $request, $id)
 	{
 		if ($request->ajax()) {
+			$Sede = Sede::where('SedeSlug', $id)->first();
 			$Areas = DB::table('areas')
-				->select('*')
-				->where('FK_AreaSede', $id)
+				->select('AreaSlug','AreaName')
+				->where('FK_AreaSede', $Sede->ID_Sede)
 				->where('AreaDelete', '=', 0)
 				->get();
 			return response()->json($Areas);
@@ -37,9 +39,10 @@ class AjaxController extends Controller
 	public function CargosAreas(Request $request, $id)
 	{
 		if ($request->ajax()) {
+			$Area = Area::where('AreaSlug', $id)->first();
 			$Cargos = DB::table('cargos')
-				->select('*')
-				->where('CargArea', $id)
+				->select('CargSlug', 'CargName')
+				->where('CargArea', $Area->ID_Area)
 				->where('CargDelete', '=', 0)
 				->get();
 			return response()->json($Cargos);

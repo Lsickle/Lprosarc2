@@ -59,31 +59,11 @@ class PersonalController extends Controller
 		/*Validacion para personas autorisadas a crear una persona*/
 		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			$Sedes = DB::table('sedes')
-				->select('sedes.ID_Sede', 'sedes.SedeName')
+				->select('sedes.SedeSlug', 'sedes.SedeName')
 				->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
 				->where('sedes.SedeDelete', '=', 0)
 				->get();
-			if(old('Sede') == null){
-				$Areas = null;
-			}
-			else{
-				$Areas = DB::table('areas')
-					->select('ID_Area', 'AreaName')
-					->where('FK_AreaSede', old('Sede'))
-					->where('AreaDelete', '=', 0)
-					->get();
-			}
-			if(old('CargArea') == null){
-				$Cargos = null;
-			}
-			else{
-				$Cargos = DB::table('cargos')
-					->select('ID_Carg', 'CargName')
-					->where('CargArea', old('CargArea'))
-					->where('CargDelete', '=', 0)
-					->get();
-			}
-			return view('personal.create', compact('Sedes', 'Areas', 'Cargos'));
+			return view('personal.create', compact('Sedes'));
 		}
 		else{
 			abort(403);
@@ -97,20 +77,6 @@ class PersonalController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(PersonalStoreRequest $request){
-		$validate = $request->validate([
-			'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
-				$Personal = DB::table('personals')
-					->select('PersDocNumber', 'PersDelete')
-					->where('PersDocNumber', '=', $request->input('PersDocNumber'))
-					->first();
-				if(isset($Personal)){
-					$query->where('PersDocNumber', '=', $Personal->PersDocNumber);
-					$query->where('PersDelete', '=', 0);
-				}
-				else
-					$query->where('PersDocNumber', '=', null);
-			})],
-		]);
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
 		if($request->input('CargArea') <> "NewArea"){
