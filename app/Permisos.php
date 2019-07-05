@@ -20,10 +20,12 @@ class Permisos{
 		VehicProgController::Edit
 		ProgramacionVehicle/edit
 	*/
-	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'],
+	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
 		personalInterno/index
-	 */
+		PersonalInternoController::Create
+		personalInterno/show
+	*/
 }
 
 /*
