@@ -59,9 +59,9 @@ class PersonalController extends Controller
 		/*Validacion para personas autorisadas a crear una persona*/
 		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			$Sedes = DB::table('sedes')
-				->select('sedes.SedeSlug', 'sedes.SedeName')
-				->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-				->where('sedes.SedeDelete', '=', 0)
+				->select('SedeSlug', 'SedeName')
+				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
+				->where('SedeDelete', '=', 0)
 				->get();
 			return view('personal.create', compact('Sedes'));
 		}
@@ -115,11 +115,11 @@ class PersonalController extends Controller
 			}
 		}
 		else{
-			$Cargo = $request->input('FK_PersCargo');
+			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 
 		$Personal = new Personal();
-		$Personal->PersType = $request->input('PersType');
+		$Personal->PersType = 1;
 		$Personal->PersDocType = $request->input('PersDocType');
 		$Personal->PersDocNumber = $request->input('PersDocNumber');
 		$Personal->PersFirstName = $request->input('PersFirstName');
@@ -129,16 +129,6 @@ class PersonalController extends Controller
 		$Personal->PersCellphone = $request->input('PersCellphone');
 		$Personal->PersAddress = $request->input('PersAddress');
 		$Personal->FK_PersCargo = $Cargo;
-		$Personal->PersBirthday = $request->input('PersBirthday');
-		$Personal->PersPhoneNumber = $request->input('PersPhoneNumber');
-		$Personal->PersEPS = $request->input('PersEPS');
-		$Personal->PersARL = $request->input('PersARL');
-		$Personal->PersLibreta = $request->input('PersLibreta');
-		$Personal->PersBank = $request->input('PersBank');
-		$Personal->PersBankAccaunt = $request->input('PersBankAccaunt');
-		$Personal->PersIngreso = $request->input('PersIngreso');
-		$Personal->PersSalida = $request->input('PersSalida');
-		$Personal->PersPase = $request->input('PersPase');
 		$Personal->PersDelete = 0;
 		$Personal->PersSlug = hash('sha256', rand().time().$Personal->PersDocNumber);
 		$Personal->save();
@@ -153,21 +143,16 @@ class PersonalController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-			$Personas = DB::table('personals')
-				->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
-				->where('PersSlug',$id)
-				->get();
-			$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
-			 return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
-		 }
-		else{
-			return route('home');
-		}
+		$Personas = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
+			->where('PersSlug',$id)
+			->get();
+		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+		return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
 
 	/**
@@ -177,38 +162,41 @@ class PersonalController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-			$Persona = Personal::where('PersSlug', $id)->first();
-			$Cargo = DB::table('cargos')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
+		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+		$Persona = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
+			->where('PersSlug', $id)
+			->first();
+		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador')){
+			$Sede = DB::table('sedes')
+				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->select('sedes.ID_Sede', 'areas.ID_Area', 'cargos.ID_Carg')
 				->where('cargos.ID_Carg', $Persona->FK_PersCargo)
-				->get();
+				->first();
 			$Sedes = DB::table('sedes')
-				->select('sedes.ID_Sede', 'sedes.SedeName')
-				->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-				->where('sedes.ID_Sede', '<>', $Cargo[0]->ID_Sede)
-				->where('sedes.SedeDelete', '=', 0)
+				->select('ID_Sede', 'SedeSlug', 'SedeName')
+				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
+				->where('SedeDelete', '=', 0)
 				->get();
 			$Areas = DB::table('areas')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->select('areas.ID_Area', 'areas.AreaName')
-				->where('areas.FK_AreaSede', $Cargo[0]->ID_Sede)
-				->where('areas.ID_Area', '<>', $Cargo[0]->ID_Area)
-				->where('areas.AreaDelete', '=', 0)
+				->select('ID_Area', 'AreaSlug', 'AreaName')
+				->where('FK_AreaSede', $Sede->ID_Sede)
+				->where('AreaDelete', '=', 0)
 				->get();
 			$Cargos = DB::table('cargos')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->select('cargos.*')
-				->where('cargos.CargArea', $Cargo[0]->ID_Area)
-				->where('cargos.ID_Carg', '<>', $Cargo[0]->ID_Carg)
-				->where('cargos.CargDelete', '=', 0)
+				->select('ID_Carg', 'CargSlug', 'CargName')
+				->where('CargArea', $Sede->ID_Area)
+				->where('CargDelete', '=', 0)
 				->get();
-			return view('personal.edit', compact('Persona', 'Cargo', 'Cargos', 'Sedes', 'Areas'));
+			return view('personal.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas'));
 		}
 		else{
-			return route('home');
+			abort(403);
 		}
 	}
 
@@ -270,7 +258,7 @@ class PersonalController extends Controller
 			}
 		}
 		else{
-			$Cargo = $request->input('FK_PersCargo');
+			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 		
 		$Persona->fill($request->except('FK_PersCargo'));
@@ -285,7 +273,7 @@ class PersonalController extends Controller
 		$log->Auditlog = $request->all();
 		$log->save();
 
-		return redirect()->route('personal.index');
+		return redirect()->route('personal.show',  ['id' => $id]);
 	}
 
 	/**
