@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\audit;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Sede;
+use Permisos;
 
 
 class AreaInternoController extends Controller
@@ -52,10 +54,10 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('ID_Sede', 'SedeName')
+                ->select('SedeSlug', 'SedeName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('sedes.SedeDelete', '=', 0)
                 ->get();
@@ -79,7 +81,7 @@ class AreaInternoController extends Controller
         ]);
         $area = new Area();
         $area->AreaName = $request->input('AreaName');
-        $area->FK_AreaSede= $request->input('FK_AreaSede');
+        $area->FK_AreaSede= Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_AreaSede'))->first()->ID_Sede;
         $area->AreaDelete = 0;
         $area->AreaSlug = hash('sha256', rand().time().$area->AreaName);
         $area->save();
