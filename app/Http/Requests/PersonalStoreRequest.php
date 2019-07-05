@@ -31,7 +31,7 @@ class PersonalStoreRequest extends FormRequest
             'CargArea'      => 'required',
             'FK_PersCargo'  => 'required',
 
-            'PersDocType'   => 'required|max:3|min:2',
+            'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
             'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
                 $Personal = DB::table('personals')
                     ->select('PersDocNumber', 'PersDelete')

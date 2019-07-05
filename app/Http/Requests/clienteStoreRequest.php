@@ -64,7 +64,7 @@ class ClienteStoreRequest extends FormRequest
             'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail',
             'PersSecondName'=> 'max:64|nullable',
             'PersDocNumber' => 'required|max:64|min:6|unique:personals,PersDocNumber',
-            'PersDocType'   => 'required|max:3|min:2',
+            'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
             'PersCellphone' => 'required|max:12|min:12',
         ];
         return $rule;
