@@ -11,12 +11,15 @@ class Permisos{
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
+		ProgramacionVehicle/index
 		ProgramacionVehicle/create
 		VehicProgController::create
 		ProgramacionVehicle/edit
+		ManteniVehicle/index
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using ->
+		ProgramacionVehicle/index
 		ProgramacionVehicle/create
 		VehicProgController::edit
 		ProgramacionVehicle/edit
