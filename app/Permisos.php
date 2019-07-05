@@ -25,6 +25,14 @@ class Permisos{
 		'AsistenteComercial',
 		'Cliente'
 	];
+	/*scliencontroller:create*/
+	const CLIENTEYADMINS = [
+		'Programador',
+		'Cliente',
+		'AdministradorPlanta', 
+		'AdministradorBogota'
+	];
+
 
 }
 /*

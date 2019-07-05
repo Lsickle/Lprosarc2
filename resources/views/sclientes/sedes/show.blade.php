@@ -12,7 +12,7 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
-					@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+					@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 						<p class="text-muted text-center">{{$Cliente->CliShortname}}</p>
 					@endif
 					<ul class="list-group list-group-unbordered">
