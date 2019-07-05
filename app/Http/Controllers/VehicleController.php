@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Vehiculo;
 use App\audit;
-use Illuminate\Support\Facades\Auth;
+use Permisos;
 
 class VehicleController extends Controller
 {
@@ -17,17 +18,20 @@ class VehicleController extends Controller
      */
     public function index()
     { 
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') ||Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
             $Vehicles = DB::table('vehiculos')
                 ->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
                 ->select('vehiculos.*', 'sedes.SedeName')
                 ->where(function($query){
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                    if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
                         $query->where('VehicDelete', 0);
                     }
                 })
                 ->get();
             return view('vehicle.index', compact('Vehicles'));
+        }
+        else{
+            abort(403);
         }
     }
 

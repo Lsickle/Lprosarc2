@@ -35,10 +35,7 @@
 						</thead>
 						<tbody id="readyTable">
 							@foreach ($MantVehicles as $MantVehicle)
-							<tr @if($MantVehicle->MvDelete === 1)
-								style="color: red;"
-								@endif
-								>
+							<tr style="{{$MantVehicle->MvDelete === 1 ? 'color: red' : ''}}">
 								<td>{{$MantVehicle->VehicPlaca}}</td>
 								<td>{{$MantVehicle->MvKm}}</td>
 								@if($MantVehicle->HoraMavFin >= now())

@@ -35,8 +35,8 @@ class Permisos{
 		CargoInternoController::create,edit
 		partials/controlsidebar
 	*/
-    const CLIENTE = ['Cliente'];
-    /* Using ->
+	const CLIENTE = ['Cliente'];
+	/* Using ->
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
 		clientes/create2
@@ -44,12 +44,12 @@ class Permisos{
 		clientes/show
 		clientes/edit
 	*/
-    const PROGRAMADOR = ['Programador'];
-    /* Using ->
+	const PROGRAMADOR = ['Programador'];
+	/* Using ->
 		ClienteController:index,show,edit
 	*/
-    const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
-    /* Using ->
+	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
+	/* Using ->
 		cliencontoller:index,show,edit
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
