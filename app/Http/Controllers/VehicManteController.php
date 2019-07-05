@@ -7,8 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MantenimientoVehiculo;
 use Illuminate\Support\Facades\DB;
-use App\audit;
 use Illuminate\Support\Facades\Auth;
+use App\audit;
+use Permisos;
 
 class VehicManteController extends Controller
 {
@@ -30,6 +31,7 @@ class VehicManteController extends Controller
 				})
 				->get();
 			return view('manteniVehicle.index', compact('MantVehicles'));
+		}
 		/*Validacion para usuarios no permitidos en esta vista*/
 		else{
 			abort(403);
