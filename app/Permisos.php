@@ -12,27 +12,25 @@ class Permisos{
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
 		ProgramacionVehicle/create
-		VehicProgController::Create
+		VehicProgController::create
 		ProgramacionVehicle/edit
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using ->
 		ProgramacionVehicle/create
-		VehicProgController::Edit
+		VehicProgController::edit
 		ProgramacionVehicle/edit
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
 		personalInterno/index
-		PersonalInternoController::Create
+		PersonalInternoController::create,edit
 		personalInterno/show
-		PersonalInternoController::Edit
 		areasInterno/index
-		AreaInternoController::Create
-		AreaInternoController::Edit
+		AreaInternoController::create,edit
 		cargosInterno/index
-		CargoInternoController::Create
-		CargoInternoController::Edit
+		CargoInternoController::create,edit
+		partials/controlsidebar
 	*/
     const CLIENTE = ['Cliente'];
     /* Using ->

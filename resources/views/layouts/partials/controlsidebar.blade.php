@@ -3,7 +3,7 @@
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
         <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        {{-- <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li> --}}
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -11,7 +11,7 @@
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.panel') }}</h3>
             <ul class='control-sidebar-menu'>
-                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.DirectorPlanta') || Auth::user()->UsRol === trans('adminlte_lang::message.Comercial'))
+                @if (in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
                     <li>
                         <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>
@@ -21,9 +21,7 @@
                             </div>
                         </a>
                     </li>
-                @endif
-                 @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "Administrador")
-                    <li>
+                    {{-- <li>
                         <a href='/audits'>
                             <i class="menu-icon fas fa-user-secret bg-green"></i>
                             <div class="menu-info">
@@ -31,10 +29,10 @@
                                 <p>{{ trans('adminlte_lang::message.auditdescription') }}</p>
                             </div>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
             </ul><!-- /.control-sidebar-menu -->
-
+{{-- 
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.progress') }}</h3>
             <ul class='control-sidebar-menu'>
                 <li>
@@ -48,13 +46,13 @@
                         </div>
                     </a>
                 </li>
-            </ul><!-- /.control-sidebar-menu -->
+            </ul> --}}<!-- /.control-sidebar-menu -->
 
         </div><!-- /.tab-pane -->
         <!-- Stats tab content -->
-        <div class="tab-pane" id="control-sidebar-stats-tab">{{ trans('adminlte_lang::message.statstab') }}</div><!-- /.tab-pane -->
+        {{-- <div class="tab-pane" id="control-sidebar-stats-tab">{{ trans('adminlte_lang::message.statstab') }}</div><!-- /.tab-pane --> --}}
         <!-- Settings tab content -->
-        <div class="tab-pane" id="control-sidebar-settings-tab">
+        {{-- <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
                 <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.generalset') }}</h3>
                 <div class="form-group">
@@ -67,7 +65,7 @@
                     </p>
                 </div><!-- /.form-group -->
             </form>
-        </div><!-- /.tab-pane -->
+        </div> --}}<!-- /.tab-pane -->
     </div>
 </aside><!-- /.control-sidebar -->
 
