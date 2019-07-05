@@ -4,38 +4,6 @@ namespace App;
 
 class Permisos{
 
-    const Menu1 = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
-    /*using: ClienteController:index,show,edit cliencontoller:index,show,edit clientes/create2 clientes/index clientes/show clientes/edit*/
-    const CLIENTE = ['Cliente'];
-    /*ClienteController:index,show,edit*/
-    const PROGRAMADOR = ['Programador'];
-    /*cliencontoller:index,show,edit*/
-    const TODOPROSARC = [
-    	'Programador',
-		'AdministradorPlanta',
-		'Hseq',
-		'JefeLogistica',
-		'AsistenteLogistica',
-		'Conductor',
-		'JefeOperaciones',
-		'Supervisor',
-		'AdministradorBogota',
-		'JefeComercial',
-		'Tesorería',
-		'Comercial',
-		'AsistenteComercial',
-		'Cliente'
-	];
-	/*scliencontroller:create*/
-	const CLIENTEYADMINS = [
-		'Programador',
-		'Cliente',
-		'AdministradorPlanta', 
-		'AdministradorBogota'
-	];
-
-
-
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
 		Menu.php
@@ -58,6 +26,27 @@ class Permisos{
 		personalInterno/index
 		PersonalInternoController::Create
 		personalInterno/show
+	*/
+    const CLIENTE = ['Cliente'];
+    /* Using ->
+		ClienteController:index,show,edit
+		cliencontoller:index,show,edit
+		clientes/create2
+		clientes/index
+		clientes/show
+		clientes/edit
+	*/
+    const PROGRAMADOR = ['Programador'];
+    /* Using ->
+		ClienteController:index,show,edit
+	*/
+    const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
+    /* Using ->
+		cliencontoller:index,show,edit
+	*/
+	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
+	/* Using ->
+		scliencontroller:create
 	*/
 
 }
