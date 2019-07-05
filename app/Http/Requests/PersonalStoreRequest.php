@@ -47,7 +47,7 @@ class PersonalStoreRequest extends FormRequest
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',
-            'PersEmail'     => 'required|email|max:255',
+            'PersEmail'     => 'required|email|max:255|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
             'PersCellphone' => 'required|min:12',
             'PersAddress'   => 'max:255|nullable',
 

@@ -51,7 +51,7 @@ class ClienteStoreRequest extends FormRequest
             'SedeExt1'      => 'min:2|max:5|nullable',
             'SedePhone2'    => 'max:11|min:11|nullable',
             'SedeExt2'      => 'min:2|max:5|nullable',
-            'SedeEmail'     => 'required|email|max:128',
+            'SedeEmail'     => 'required|email|max:128|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
             'SedeCelular'   => 'required|min:12|max:12',
             'FK_SedeMun'    => 'required',
 
@@ -61,7 +61,7 @@ class ClienteStoreRequest extends FormRequest
 
             'PersFirstName' => 'required|max:64|min:1',
             'PersLastName'  => 'required|max:64|min:1',
-            'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail',
+            'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
             'PersSecondName'=> 'max:64|nullable',
             'PersDocNumber' => 'required|max:64|min:6|unique:personals,PersDocNumber',
             'PersDocType'   => 'required|max:3|min:2',
