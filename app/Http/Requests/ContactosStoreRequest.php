@@ -44,7 +44,7 @@ class ContactosStoreRequest extends FormRequest
 
             'CliName'       => 'required|max:255|min:1',
             'CliShortname'  => 'required|max:255|min:1',
-            'CliCategoria'  => 'required|max:32',
+            'CliCategoria'  => 'required|in:Transportador,Proveedor',
 
             'SedeName'      => 'required|max:128|min:1',
             'SedeAddress'   => 'required|max:255|min:1',
@@ -54,7 +54,20 @@ class ContactosStoreRequest extends FormRequest
             'SedeExt2'      => 'min:2|max:5|nullable',
             'SedeEmail'     => 'required|email|max:128',
             'SedeCelular'   => 'required|min:12|max:12',
-            'FK_SedeMun'    => 'required',
+            'FK_SedeMun'    => 'required|numeric|min:1|max:1122',
+
+            'VehicPlaca'    => 'required_if:CliCategoria,Transportador|max:7|min:7|unique:vehiculos,VehicPlaca|nullable',
+            'VehicTipo'     => 'required_if:CliCategoria,Transportador|max:64',
+            'VehicCapacidad'=> 'required_if:CliCategoria,Transportador|numeric|max:999999999999999',
+        ];
+    }
+    public function messages(){
+        return [
+            'FK_SedeMun.required'=> 'El campo :attribute es requerido.',            
+            'FK_SedeMun.min'     => 'El campo :attribute es inválido.',            
+            'FK_SedeMun.max'     => 'El campo :attribute es inválido.',            
+            'FK_SedeMun.numeric' => 'El campo :attribute es inválido.',
+            'VehicCapacidad.max'     => 'El campo :attribute no debe contener más de 15 caracteres.'
         ];
     }
 }

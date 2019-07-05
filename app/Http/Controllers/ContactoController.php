@@ -106,11 +106,11 @@ class ContactoController extends Controller
         $Sede->save();
 
         if($request->input('CliCategoria') === 'Transportador'){
-            $Validate = $request->validate([
-                'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
-                'VehicTipo' => 'required|max:64',
-                'VehicCapacidad' => 'required|max:64',
-            ]);
+            // $Validate = $request->validate([
+            //     'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
+            //     'VehicTipo' => 'required|max:64',
+            //     'VehicCapacidad' => 'required|max:64',
+            // ]);
 
             $Vehiculo = new Vehiculo();
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
