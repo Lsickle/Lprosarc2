@@ -12,7 +12,12 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.MenuContactos') }}</h3>
-					<a href="/contactos/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+					@php
+						$ContactoIndex = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.AdministradorPlanta'), trans('adminlte_lang::message.JefeLogistica')]
+					@endphp
+					@if (in_array(Auth::user()->UsRol, $ContactoIndex))
+						<a href="/contactos/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+					@endif
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
