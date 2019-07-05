@@ -45,7 +45,7 @@
 															<select name="Sede" id="Sede" class="form-control select" required>
 																<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 																@foreach($Sedes as $Sede)
-																	<option value="{{$Sede->SedeSlug}}" {{old('Sede') == $Sede->SedeSlug ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+																	<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 																@endforeach
 															</select>
 														</div>
@@ -84,10 +84,10 @@
 															<small class="help-block with-errors">*</small>
 															<select name="PersDocType" id="PersDocType" class="form-control select" required>
 																<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-																<option value="CC" {{old('PersDocType') == 'CC' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
-																<option value="CE" {{old('PersDocType') == 'CE' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypece') }}</option>
-																<option value="NIT" {{old('PersDocType') == 'NIT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
-																<option value="RUT" {{old('PersDocType') == 'RUT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
+																<option value="CC">{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
+																<option value="CE">{{ trans('adminlte_lang::message.persdoctypece') }}</option>
+																<option value="NIT">{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
+																<option value="RUT">{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
 															</select>
 														</div>
 														<div class="form-group col-md-6">

@@ -58,33 +58,13 @@ class PersonalInternoController extends Controller
      */
     public function create(){
         /*Validacion para personas autorisadas a crear una persona*/
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Sedes = DB::table('sedes')
-                ->select('sedes.ID_Sede', 'sedes.SedeName')
-                ->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-                ->where('sedes.SedeDelete', '=', 0)
+                ->select('SedeSlug', 'SedeName')
+                ->where('FK_SedeCli', userController::IDClienteSegunUsuario())
+                ->where('SedeDelete', '=', 0)
                 ->get();
-            if(old('Sede') == null){
-                $Areas = null;
-            }
-            else{
-                $Areas = DB::table('areas')
-                    ->select('ID_Area', 'AreaName')
-                    ->where('FK_AreaSede', old('Sede'))
-                    ->where('AreaDelete', '=', 0)
-                    ->get();
-            }
-            if(old('CargArea') == null){
-                $Cargos = null;
-            }
-            else{
-                $Cargos = DB::table('cargos')
-                    ->select('ID_Carg', 'CargName')
-                    ->where('CargArea', old('CargArea'))
-                    ->where('CargDelete', '=', 0)
-                    ->get();
-            }
-            return view('personal.personalInterno.create', compact('Sedes', 'Areas', 'Cargos'));
+            return view('personal.personalInterno.create', compact('Sedes'));
         }
         else{
             return route('home');
