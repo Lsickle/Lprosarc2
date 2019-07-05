@@ -20,6 +20,7 @@ use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\User;
+use App\Permisos;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -32,18 +33,18 @@ class clientcontoller extends Controller
      */
     public function index()
     {
-        switch (Auth::user()->UsRol) {
+        switch (true) {
 
-            case trans('adminlte_lang::message.Programador'):
+            case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)):
                 $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             
-            case trans('adminlte_lang::message.Cliente'): 
+            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)): 
                 return redirect()->route('home');
                 break;
 
-            case trans('adminlte_lang::message.Administrador'):
+            case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
                 $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
@@ -60,7 +61,7 @@ class clientcontoller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             if(Auth::user()->FK_UserPers === NULL){
                 $Departamentos = Departamento::all();
                 if (old('FK_SedeMun') !== null){
@@ -83,7 +84,7 @@ class clientcontoller extends Controller
      */
     public function store(ClienteStoreRequest $request)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
 
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
@@ -135,7 +136,7 @@ class clientcontoller extends Controller
             $Cargo->CargName = $request->input("CargName");
             $Cargo->CargArea =  $Area->ID_Area;
             $Cargo->CargDelete =  0;
-            $Cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
+            $Cargo->CargSlug = hash('sha256', rand().time().$Cargo->CargName);
             $Cargo->save();
             
             $Personal = new Personal();
@@ -170,24 +171,20 @@ class clientcontoller extends Controller
      */
     public function show(Cliente $cliente)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             // $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
             abort(403);
         }
-    }
     
+    }
     // show del menu donde dice mi Empresa
     public function viewClientShow($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             // $id = userController::IDClienteSegunUsuario();
             $cliente = Cliente::where('CliSlug', $id)->first();
             return view('clientes.show', compact('cliente'));
-        }else{
-            abort(403);
-        }
     }
 
     /**
@@ -198,7 +195,7 @@ class clientcontoller extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             return view('clientes.edit', compact('cliente'));
         }else{
             abort(403);
@@ -259,7 +256,7 @@ class clientcontoller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($ID_Cli){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $Cliente = Cliente::where('CliSlug', $ID_Cli)->first();
                 if ($Cliente->CliDelete == 0) {
                     $Cliente->CliDelete = 1;
