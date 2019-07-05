@@ -21,7 +21,7 @@ class CargoInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
             $Cargos = DB::table('cargos')
                 ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
@@ -30,7 +30,7 @@ class CargoInternoController extends Controller
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
                         /*Validacion del personal de Prosarc autorizado para loscargos que no esten eliminados*/
-                        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
                             $query->where('clientes.ID_Cli', '=', $id);
                             $query->where('cargos.CargDelete', '=', 0);
                         }

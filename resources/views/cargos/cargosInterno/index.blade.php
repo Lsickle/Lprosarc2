@@ -12,7 +12,9 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{trans('adminlte_lang::message.listcargo')}}</h3>
+					@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 					<a href="/cargosInterno/create" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.create')}}</a>
+					@endif
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -22,21 +24,20 @@
 									<th>{{trans('adminlte_lang::message.cargoname')}}</th>
 									<th>{{trans('adminlte_lang::message.areaname')}}</th>
 									<th>{{trans('adminlte_lang::message.cargograde')}}</th>
-									<th>{{trans('adminlte_lang::message.cargosalary')}}</th>
+									@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 									<th>{{trans('adminlte_lang::message.edit')}}</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody id="readyTable">
 								@foreach($Cargos as $Cargo)
-								<tr @if($Cargo->CargDelete === 1)
-									style="color: red;"
+								<tr style="{{$Cargo->CargDelete === 1 ? 'color: red' : ''}}">
+									<td>{{$Cargo->CargName}}</td>
+									<td>{{$Cargo->AreaName}}</td>
+									<td>{{$Cargo->CargGrade}}</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
+									<td><a href='/cargosInterno/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 									@endif
-									>
-										<td>{{$Cargo->CargName}}</td>
-										<td>{{$Cargo->AreaName}}</td>
-										<td>{{$Cargo->CargGrade}}</td>
-										<td>{{$Cargo->CargSalary}}</td>
-										<td><a href='/cargosInterno/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 								</tr>
 								@endforeach
 							</tbody>
