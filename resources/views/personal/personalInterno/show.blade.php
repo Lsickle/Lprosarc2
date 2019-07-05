@@ -13,29 +13,31 @@
 					<div class="box box-primary">
 						<div class="box-body box-profile">
 							<div class="col-md-12 col-xs-12">
-								<a href="/personalInterno/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
-								@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
-									@component('layouts.partials.modal')
-										@slot('slug')
-											{{$Persona->ID_Pers}}
-										@endslot
-										@slot('textModal')
-											a <b>{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</b>
-										@endslot
-									@endcomponent
-									@if($Persona->PersDelete == 0)
-										<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-										<form action='/personalInterno/{{$Persona->PersSlug}}' method='POST'>
-											@method('DELETE')
-											@csrf
-											<input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
-										</form>
-									@else
-										<form action='/personalInterno/{{$Persona->PersSlug}}' method='POST' class="pull-left">
-											@method('DELETE')
-											@csrf
-											<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
-										</form>
+								@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
+									<a href="/personalInterno/{{$Persona->PersSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+									@if(Auth::user()->FK_UserPers <> $Persona->ID_Pers)
+										@component('layouts.partials.modal')
+											@slot('slug')
+												{{$Persona->ID_Pers}}
+											@endslot
+											@slot('textModal')
+												a <b>{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</b>
+											@endslot
+										@endcomponent
+										@if($Persona->PersDelete == 0)
+											<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+											<form action='/personalInterno/{{$Persona->PersSlug}}' method='POST'>
+												@method('DELETE')
+												@csrf
+												<input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
+											</form>
+										@else
+											<form action='/personalInterno/{{$Persona->PersSlug}}' method='POST' class="pull-left">
+												@method('DELETE')
+												@csrf
+												<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
+											</form>
+										@endif
 									@endif
 								@endif
 							</div>
