@@ -23,7 +23,7 @@ class PersonalInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') ||Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
             $Personals = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -33,7 +33,7 @@ class PersonalInternoController extends Controller
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
                     /*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+                    if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
                         $query->where('clientes.ID_Cli', '=', $id);
                         $query->where('personals.PersDelete', '=', 0);
                     }
@@ -42,7 +42,6 @@ class PersonalInternoController extends Controller
                         $query->where('clientes.ID_Cli', '=', $id);
                     }
                 })
-                ->where('clientes.ID_Cli', 1)
                 ->get();
             return view('personal.personalInterno.index', compact('Personals'));
         }

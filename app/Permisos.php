@@ -6,6 +6,7 @@ class Permisos{
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
 		Menu.php
+		PersonalInternoController::Index
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
@@ -19,6 +20,10 @@ class Permisos{
 		VehicProgController::Edit
 		ProgramacionVehicle/edit
 	*/
+	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'],
+	/* Using ->
+		personalInterno/index
+	 */
 }
 
 /*
