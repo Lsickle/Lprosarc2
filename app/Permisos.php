@@ -31,6 +31,7 @@ class Permisos{
 		AreaInternoController::Edit
 		cargosInterno/index
 		CargoInternoController::Create
+		CargoInternoController::Edit
 	*/
 }
 
