@@ -60,7 +60,7 @@
 															@foreach($Areas as $Area)
 																<option value="{{$Area->AreaSlug}}" {{$Sede->ID_Area == $Area->ID_Area ? 'selected' : ''}} onclick="HiddenNewInputA()">{{$Area->AreaName}}</option>
 															@endforeach
-															<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}
+															<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="divFK_PersCargo" >
@@ -71,7 +71,7 @@
 															@foreach($Cargos as $Cargo)
 																<option value="{{$Cargo->CargSlug}}" {{$Sede->ID_Carg == $Cargo->ID_Carg ? 'selected' : ''}} onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
 															@endforeach
-															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}
+															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">
@@ -94,10 +94,10 @@
 														<label for="PersDocType" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persdoctype') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotypedoc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persdoctype') }}</label>
 														<small class="help-block with-errors">*</small>
 														<select name="PersDocType" id="PersDocType" class="form-control" required>
-															<option {{$Persona->PersDocType == 'CC' ? 'selected' : ''}} value="CC">Cedula de Ciudadania</option>
-															<option {{$Persona->PersDocType == 'CE' ? 'selected' : ''}} value="CE">Cedula Extranjera</option>
-															<option {{$Persona->PersDocType == 'NIT' ? 'selected' : ''}} value="NIT">Nit</option>
-															<option {{$Persona->PersDocType == 'RUT' ? 'selected' : ''}} value="RUT">Rut</option>
+															<option {{$Persona->PersDocType == 'CC' ? 'selected' : ''}} value="CC">{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
+															<option {{$Persona->PersDocType == 'CE' ? 'selected' : ''}} value="CE">{{ trans('adminlte_lang::message.persdoctypece') }}</option>
+															<option {{$Persona->PersDocType == 'NIT' ? 'selected' : ''}} value="NIT">{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
+															<option {{$Persona->PersDocType == 'RUT' ? 'selected' : ''}} value="RUT">{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6">

@@ -48,7 +48,7 @@ class PersonalInternoController extends Controller
 		}
 		/*Validacion para usuarios no permitidos en esta vista*/
 		else{
-			return route('home');
+			abort(403);
 		}
 	}
 
@@ -68,7 +68,7 @@ class PersonalInternoController extends Controller
 			return view('personal.personalInterno.create', compact('Sedes'));
 		}
 		else{
-			return route('home');
+			abort(403);
 		}
 	}
 
@@ -176,38 +176,33 @@ class PersonalInternoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+		if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
 			$Persona = Personal::where('PersSlug', $id)->first();
-			$Cargo = DB::table('cargos')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->select('areas.ID_Area','cargos.*', 'areas.AreaName', 'sedes.ID_Sede', 'sedes.SedeName')
+			$Sede = DB::table('sedes')
+				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->select('sedes.ID_Sede', 'areas.ID_Area', 'cargos.ID_Carg')
 				->where('cargos.ID_Carg', $Persona->FK_PersCargo)
-				->get();
+				->first();
 			$Sedes = DB::table('sedes')
-				->select('sedes.ID_Sede', 'sedes.SedeName')
-				->where('sedes.FK_SedeCli', userController::IDClienteSegunUsuario())
-				->where('sedes.ID_Sede', '<>', $Cargo[0]->ID_Sede)
-				->where('sedes.SedeDelete', '=', 0)
+				->select('ID_Sede', 'SedeSlug', 'SedeName')
+				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
+				->where('SedeDelete', '=', 0)
 				->get();
 			$Areas = DB::table('areas')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->select('areas.ID_Area', 'areas.AreaName')
-				->where('areas.FK_AreaSede', $Cargo[0]->ID_Sede)
-				->where('areas.ID_Area', '<>', $Cargo[0]->ID_Area)
-				->where('areas.AreaDelete', '=', 0)
+				->select('ID_Area', 'AreaSlug', 'AreaName')
+				->where('FK_AreaSede', $Sede->ID_Sede)
+				->where('AreaDelete', '=', 0)
 				->get();
 			$Cargos = DB::table('cargos')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->select('cargos.*')
-				->where('cargos.CargArea', $Cargo[0]->ID_Area)
-				->where('cargos.ID_Carg', '<>', $Cargo[0]->ID_Carg)
-				->where('cargos.CargDelete', '=', 0)
+				->select('ID_Carg', 'CargSlug', 'CargName')
+				->where('CargArea', $Sede->ID_Area)
+				->where('CargDelete', '=', 0)
 				->get();
-			return view('personal.personalInterno.edit', compact('Persona', 'Cargo', 'Cargos', 'Sedes', 'Areas'));
+			return view('personal.personalInterno.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas'));
 		}
 		else{
-			return route('home');
+			abort(403);
 		}
 	}
 
@@ -278,7 +273,7 @@ class PersonalInternoController extends Controller
 			}
 		}
 		else{
-			$Cargo = $request->input('FK_PersCargo');
+			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 		
 		$Persona->fill($request->except('FK_PersCargo'));
@@ -293,7 +288,7 @@ class PersonalInternoController extends Controller
 		$log->Auditlog = $request->all();
 		$log->save();
 
-		return redirect()->route('personalInterno.show',['id' => $Persona->PersSlug]);
+		return redirect()->route('personalInterno.show',['id' => $id]);
 	}
 
 	/**
