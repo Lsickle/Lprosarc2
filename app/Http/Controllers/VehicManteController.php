@@ -106,12 +106,18 @@ class VehicManteController extends Controller
 	 */
 	public function edit($id)
 	{
-		$MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
-		$vehiculos = DB::table('vehiculos')
-			->select('ID_Vehic', 'VehicPlaca')
-			->get();
+		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)){
+			$MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
+			$vehiculos = DB::table('vehiculos')
+				->select('ID_Vehic', 'VehicPlaca')
+				->get();
 
-		return view('manteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
+			return view('manteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
+		}
+		/*Validacion para usuarios no permitidos en esta vista*/
+		else{
+			abort(403);
+		}
 	}
 
 	/**
