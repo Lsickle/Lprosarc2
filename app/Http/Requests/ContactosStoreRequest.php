@@ -54,7 +54,7 @@ class ContactosStoreRequest extends FormRequest
             'SedeExt2'      => 'min:2|max:5|nullable',
             'SedeEmail'     => 'required|email|max:128',
             'SedeCelular'   => 'required|min:12|max:12',
-            'FK_SedeMun'    => 'required',
+            'FK_SedeMun'    => 'required|numeric|min:1|max:1122',
         ];
     }
 }
