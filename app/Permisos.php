@@ -27,6 +27,8 @@ class Permisos{
 		personalInterno/show
 		PersonalInternoController::Edit
 		areasInterno/index
+		AreaInternoController::Create
+		AreaInternoController::Edit
 	*/
 }
 

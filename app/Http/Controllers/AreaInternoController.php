@@ -107,11 +107,11 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Areas = Area::where('AreaSlug', $id)->first();
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') && $Areas <> null){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
+            $Areas = Area::where('AreaSlug', $id)->first();
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('ID_Sede', 'SedeName')
+                ->select('ID_Sede', 'SedeSlug', 'SedeName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('sedes.SedeDelete', '=', 0)
                 ->get();
@@ -120,7 +120,7 @@ class AreaInternoController extends Controller
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->select('ID_Area')
                 ->where('personals.ID_Pers', '=', Auth::user()->FK_UserPers)
-                ->get();
+                ->first();
             return view('areas.areasInterno.edit', compact('Sedes', 'Areas', 'AreaOne'));
         }
         else{
@@ -142,7 +142,7 @@ class AreaInternoController extends Controller
         ]);
         $Area = Area::where('AreaSlug', $id)->first();
         $Area->AreaName = $request->input('AreaName');
-        $Area->FK_AreaSede = $request->input('FK_AreaSede');
+        $Area->FK_AreaSede = Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_AreaSede'))->first()->ID_Sede;
         $Area->save();
 
         $log = new audit();
