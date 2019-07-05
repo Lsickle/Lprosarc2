@@ -13,9 +13,6 @@ use App\Sede;
 use App\Personal;
 use App\audit;
 
-
-
-
 class AreaController extends Controller{
 	/**
 	 * Display a listing of the resource.
