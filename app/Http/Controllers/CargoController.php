@@ -54,11 +54,11 @@ class CargoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			$Areas = DB::table('areas')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('areas.ID_Area', 'areas.AreaName')
+				->select('areas.AreaSlug', 'areas.AreaName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('areas.AreaDelete', '=', 0)
 				->get();
@@ -77,12 +77,12 @@ class CargoController extends Controller
 	 */
 	public function store(Request $request){
 		$validate = $request->validate([
-			'CargName'       => 'required|min:4|max:128',
+			'CargName'       => 'required|min:5|max:128',
 			'CargArea'       => 'required',
 		]);
 		$cargo = new Cargo();
 		$cargo->CargName = $request->input('CargName');
-		$cargo->CargArea = $request->input('CargArea');
+		$cargo->CargArea = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first()->ID_Area;
 		$cargo->CargDelete = 0;
 		$cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
 		$cargo->save();
@@ -137,7 +137,7 @@ class CargoController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$validate = $request->validate([
-			'CargName'       => 'required|min:4|max:128',
+			'CargName'       => 'required|min:5|max:128',
 			'CargArea'       => 'required',
 		]);
 		$Cargo = Cargo::where('CargSlug', $id)->first();
