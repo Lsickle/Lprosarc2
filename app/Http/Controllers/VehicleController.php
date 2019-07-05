@@ -42,11 +42,16 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        $Sedes = DB::table('sedes')
-            ->select('ID_Sede', 'SedeName')
-            ->where('SedeDelete', 0)
-            ->get();
-        return view('vehicle.create', compact('Sedes'));
+        if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)){
+            $Sedes = DB::table('sedes')
+                ->select('ID_Sede', 'SedeName')
+                ->where('SedeDelete', 0)
+                ->get();
+            return view('vehicle.create', compact('Sedes'));
+        }
+        else{
+            abort(403);
+        }
     }
     
     /**
