@@ -32,7 +32,7 @@
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex2))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
 								</tr>
@@ -75,7 +75,7 @@
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehicIndex2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehicIndex2))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
 									@endif
 								</tr>
