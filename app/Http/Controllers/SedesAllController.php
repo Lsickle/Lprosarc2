@@ -9,12 +9,14 @@ use App\Sede;
 use App\cliente;
 use App\Departamento;
 use App\Municipio;
+use App\Permisos;
 
 class SedesAllController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        /*en  consultan todas las sedes que no pertenecen a prosarc*/
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
@@ -22,11 +24,10 @@ class SedesAllController extends Controller
                 ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                        $query->where('sedes.SedeDelete',  '=', 0);
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
                         $query->where('sedes.FK_SedeCli',  '<>', $id);
-                    }
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+                    }else{
+                        $query->where('sedes.SedeDelete',  '=', 0);
                         $query->where('sedes.FK_SedeCli',  '<>', $id);
                     }
                 })

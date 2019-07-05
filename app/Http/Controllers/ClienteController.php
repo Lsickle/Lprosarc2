@@ -14,7 +14,7 @@ class ClienteController extends Controller
 {
     public function show($slug)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE){
             $cliente = Cliente::where('CliSlug', $slug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
@@ -24,7 +24,7 @@ class ClienteController extends Controller
 
     public function edit($slug)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             $cliente = Cliente::where('CliSlug', $slug)->first();
             return view('clientes.edit', compact('cliente'));
         }else{

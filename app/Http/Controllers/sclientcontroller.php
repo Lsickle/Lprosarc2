@@ -12,6 +12,7 @@ use App\audit;
 use App\Departamento;
 use App\Municipio;
 use Illuminate\Support\Facades\Hash;
+use App\Permisos;
 
 
 class sclientcontroller extends Controller
@@ -23,7 +24,7 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
@@ -31,12 +32,11 @@ class sclientcontroller extends Controller
                 ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')){
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                        $query->where('FK_SedeCli', '=', $id);
+                    }else{
                         $query->where('FK_SedeCli', '=', $id);
                         $query->where('sedes.SedeDelete',  '=', 0);
-                    }
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-                        $query->where('FK_SedeCli', '=', $id);
                     }
                 })
                 ->get();
@@ -53,7 +53,7 @@ class sclientcontroller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')) {
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             if (old('FK_SedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
             }
@@ -137,7 +137,7 @@ class sclientcontroller extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol ===  trans('adminlte_lang::message.Cliente')) {
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $Sede = Sede::where('SedeSlug',$id)->first();
             if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                 $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
@@ -186,28 +186,31 @@ class sclientcontroller extends Controller
      */
     public function destroy($id)
     {
-        $Sede = Sede::where('SedeSlug', $id)->first();
-            if ($Sede->SedeDelete == 0) {
-                $Sede->SedeDelete = 1;
-                $Sede->save();
-                
-                return redirect()->route('sclientes.index');
-            }
-            else{
-                $Sede->SedeDelete = 0;
-                $Sede->save();
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            $Sede = Sede::where('SedeSlug', $id)->first();
+                if ($Sede->SedeDelete == 0) {
+                    $Sede->SedeDelete = 1;
+                    $Sede->save();
+                    
+                    return redirect()->route('sclientes.index');
+                }
+                else{
+                    $Sede->SedeDelete = 0;
+                    $Sede->save();
 
-                $id = $Sede->SedeSlug;
-                return redirect()->route('sclientes.show', compact('id'));
-            }
+                    $id = $Sede->SedeSlug;
+                    return redirect()->route('sclientes.show', compact('id'));
+                }
 
-        $log = new audit();
-        $log->AuditTabla="sedes";
-        $log->AuditType="Eliminado";
-        $log->AuditRegistro=$Sede->ID_Sede;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog = $Sede->SedeDelete;
-        $log->save();
-
+            $log = new audit();
+            $log->AuditTabla="sedes";
+            $log->AuditType="Eliminado";
+            $log->AuditRegistro=$Sede->ID_Sede;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog = $Sede->SedeDelete;
+            $log->save();
+        }else{
+            abort(403);
+        }
     }
 }
