@@ -45,7 +45,7 @@
 															<select name="Sede" id="Sede" class="form-control select" required>
 																<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 																@foreach($Sedes as $Sede)
-																	<option value="{{$Sede->ID_Sede}}" {{old('Sede') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+																	<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 																@endforeach
 															</select>
 														</div>
@@ -53,28 +53,14 @@
 															<label for="CargArea" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.areaname') }}</label><a class="loadCargArea"></a>
 															<small class="help-block with-errors">*</small>
 															<select name="CargArea" id="CargArea" class="form-control" required>
-																@if($Areas == null)
-																	<option value="" onclick="HiddenNewInputA()">{{ trans('adminlte_lang::message.select') }}</option>
-																@else
-																	@foreach($Areas as $Area)
-																		<option value="{{$Area->ID_Area}}" onclick="HiddenNewInputA()" {{old('CargArea') == $Area->ID_Area ? 'selected' : '' }}>{{$Area->AreaName}}</option>
-																	@endforeach
-																	<option onclick="NewInputA()" value="NewArea" {{old('CargArea') == "NewArea" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.newarea') }}</option>
-																@endif
+																<option value="" onclick="HiddenNewInputA()">{{ trans('adminlte_lang::message.select') }}</option>
 															</select>
 														</div>
 														<div class="form-group col-md-6" id="divFK_PersCargo" >
 															<label for="FK_PersCargo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfocargo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.cargoname') }}</label><a class="loadFK_PersCargo"></a>
 															<small class="help-block with-errors">*</small>
 															<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
-																@if($Cargos == null)
-																	<option value="" onclick="HiddenNewInputC()">{{ trans('adminlte_lang::message.select') }}</option>
-																@else
-																	@foreach($Cargos as $Cargo)
-																		<option value="{{$Cargo->ID_Carg}}" onclick="HiddenNewInputC()" {{old('FK_PersCargo') == $Cargo->ID_Carg ? 'selected' : '' }}>{{$Cargo->CargName}}</option>
-																	@endforeach
-																	<option onclick="NewInputC()" value="NewCargo" {{old('FK_PersCargo') == "NewCargo" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.newcargo') }}</option>
-																@endif
+																<option value="" onclick="HiddenNewInputC()">{{ trans('adminlte_lang::message.select') }}</option>
 															</select>
 														</div>
 														<div class="form-group col-md-6" id="NewArea" style="display: none;">
@@ -98,10 +84,10 @@
 															<small class="help-block with-errors">*</small>
 															<select name="PersDocType" id="PersDocType" class="form-control select" required>
 																<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-																<option value="CC" {{old('PersDocType') == 'CC' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
-																<option value="CE" {{old('PersDocType') == 'CE' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypece') }}</option>
-																<option value="NIT" {{old('PersDocType') == 'NIT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
-																<option value="RUT" {{old('PersDocType') == 'RUT' ? 'selected' : '' }}>{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
+																<option value="CC">{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
+																<option value="CE">{{ trans('adminlte_lang::message.persdoctypece') }}</option>
+																<option value="NIT">{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
+																<option value="RUT">{{ trans('adminlte_lang::message.persdoctyperut') }}</option>
 															</select>
 														</div>
 														<div class="form-group col-md-6">
@@ -197,9 +183,9 @@
 								var areas = new Array();
 								$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 								for(var i = res.length -1; i >= 0; i--){
-									if ($.inArray(res[i].ID_Area, areas) < 0) {
-										$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="${res[i].ID_Area}">${res[i].AreaName}</option>`);
-										areas.push(res[i].ID_Area);
+									if ($.inArray(res[i].AreaSlug, areas) < 0) {
+										$("#CargArea").append(`<option onclick="HiddenNewInputA()" value="${res[i].AreaSlug}">${res[i].AreaName}</option>`);
+										areas.push(res[i].AreaSlug);
 									}
 								}
 								$("#CargArea").append(`<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}</option>`);
@@ -247,9 +233,9 @@
 								var cargos = new Array();
 								$("#FK_PersCargo").append(`<option onclick="HiddenNewInputA()" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 								for(var i = res.length -1; i >= 0; i--){
-									if ($.inArray(res[i].ID_Carg, cargos) < 0) {
-										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].ID_Carg}">${res[i].CargName}</option>`);
-										cargos.push(res[i].ID_Carg);
+									if ($.inArray(res[i].CargSlug, cargos) < 0) {
+										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].CargSlug}">${res[i].CargName}</option>`);
+										cargos.push(res[i].CargSlug);
 									}
 								}
 								$("#FK_PersCargo").append(`<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>`);

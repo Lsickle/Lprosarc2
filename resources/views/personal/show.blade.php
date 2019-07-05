@@ -28,15 +28,15 @@
 									@if($Persona->PersDelete == 0)
 									  <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Persona->ID_Pers}}'  class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 									  <form action='/personal/{{$Persona->PersSlug}}' method='POST'>
-									      @method('DELETE')
-									      @csrf
-									      <input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
+										  @method('DELETE')
+										  @csrf
+										  <input  type="submit" id="Eliminar{{$Persona->ID_Pers}}" style="display: none;">
 									  </form>
 									@else
 									  <form action='/personal/{{$Persona->PersSlug}}' method='POST' class="pull-left">
-									  	@method('DELETE')
-									  	@csrf
-									  	<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
+										@method('DELETE')
+										@csrf
+										<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
 									  </form>
 									@endif
 								@endif

@@ -254,7 +254,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<label for="submit3" class="btn btn-success">Añadir</label>
+				<label for="submit3" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
 			</div>
 		</div>
 	</div>

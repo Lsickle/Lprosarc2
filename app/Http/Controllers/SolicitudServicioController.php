@@ -611,7 +611,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
-		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
 	/**
