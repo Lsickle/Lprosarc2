@@ -35,7 +35,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
 				
 	            /*PESTAÑA DE PERSONAL*/
-		        ->addIf(in_array(Auth::user()->UsRol, Permisos::Menu1) || in_array(Auth::user()->UsRol2, Permisos::Menu1),
+		        ->addIf(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes),
 			        (Menu::new()
 				        ->prepend('<a href="#"><i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
 				        ->addParentClass('treeview')

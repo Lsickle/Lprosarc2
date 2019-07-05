@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.personaltitlelist') }}</h3>
-					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Cliente'))
+					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Cliente'))
 						<a href="personal/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
 				</div>
@@ -30,17 +30,12 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<th>{{ trans('adminlte_lang::message.clientmenu') }}</th>
 									@endif
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AsistenteLogistica'))
 									<th>{{ trans('adminlte_lang::message.see') }}</th>
-									@endif
 								</tr>
 							</thead>
 							<tbody id="readyTable">
 								@foreach($Personals as $Personal)
-								<tr @if($Personal->PersDelete === 1)
-									style="color: red;"
-									@endif
-									>
+								<tr style="{{$Personal->PersDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$Personal->PersDocType." ".$Personal->PersDocNumber}}</td>
 									<td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
 									<td>{{$Personal->PersEmail}}</td>
@@ -50,9 +45,7 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<td>{{$Personal->CliShortname}}</td>
 									@endif
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol <> trans('adminlte_lang::message.AsistenteLogistica'))
 									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
-									@endif
 								</tr>
 								@endforeach
 							</tbody>

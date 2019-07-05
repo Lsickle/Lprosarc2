@@ -12,7 +12,9 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.personaltitlelist') }}</h3>
-					<a href="personalInterno/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+					@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
+						<a href="personalInterno/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+					@endif
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -30,10 +32,7 @@
 							</thead>
 							<tbody id="readyTable">
 								@foreach($Personals as $Personal)
-								<tr @if($Personal->PersDelete === 1)
-									style="color: red;"
-									@endif
-									>
+								<tr style="{{$Personal->PersDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$Personal->PersDocType." ".$Personal->PersDocNumber}}</td>
 									<td>{{$Personal->PersFirstName." ".$Personal->PersSecondName." ".$Personal->PersLastName}}</td>
 									<td>{{$Personal->PersEmail}}</td>
