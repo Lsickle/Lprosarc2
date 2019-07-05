@@ -53,12 +53,11 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function create(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			$Sedes = DB::table('sedes')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('ID_Sede', 'SedeName')
-				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-				->where('sedes.SedeDelete', '=', 0)
+				->select('SedeSlug', 'SedeName')
+				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
+				->where('SedeDelete', '=', 0)
 				->get();
 			return view('areas.create', compact('Sedes'));
 		}
