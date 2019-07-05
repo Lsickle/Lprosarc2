@@ -72,7 +72,7 @@ class RegisterController extends Controller
                 'name'          => $data['name'],
                 'email'         => $data['email'],
                 'password'      => bcrypt($data['password']),
-                'UsSlug'        => hash('sha256', rand().time().$data['email']);
+                'UsSlug'        => hash('sha256', rand().time().$data['email']),
                 'UsRol'         => "Cliente",
                 'UsRolDesc'     => "Usuario General",
                 'UsRol2'        => "Cliente",
