@@ -34,7 +34,7 @@ class ContactosStoreRequest extends FormRequest
                         ->where('CliCategoria', $request->input('CliCategoria'))
                         ->where('CliDelete', 0)
                         ->first();
-    
+
                     if(isset($Cliente->CliNit)){
                         $query->where('clientes.CliNit','=', $Cliente->CliNit);
                     }else{

@@ -16,6 +16,7 @@ use App\Departamento;
 use App\Municipio;
 use App\Vehiculo;
 use App\audit;
+use App\Permisos;
 
 
 class ContactoController extends Controller
@@ -27,7 +28,9 @@ class ContactoController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+            abort(403);
+        }else{
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Clientes = Cliente::where('CliCategoria', '<>', 'Cliente')
                 ->where(function($query){
@@ -38,8 +41,6 @@ class ContactoController extends Controller
                 ->where('clientes.ID_Cli','<>', $ID_Cli)
                 ->get();
             return view('contactos.index', compact('Clientes'));
-        }else{
-            abort(403);
         }
     }
 
@@ -131,9 +132,7 @@ class ContactoController extends Controller
      */
     public function show($id)
     {
-        $RolShow = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.AdministradorPlanta'), trans('adminlte_lang::message.JefeLogistica')];
-
-        if (in_array(Auth::user()->UsRol, $RolShow)){
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             $Cliente = Cliente::where('CliSlug', $id)->first();
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
             $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
