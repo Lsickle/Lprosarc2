@@ -117,10 +117,6 @@ $(document).ready(function() {
 			$('.nombres').prop('pattern', '[A-Za-z ]+');
 			$('.nombres').attr('data-error', 'Unicamente letras');
 			$('.nombres').removeClass('nombres');
-			$('.inputText').prop('maxlength', '100');
-			$('.inputText').prop('pattern', '[A-Za-z ]+');
-			$('.inputText').attr('data-error', 'Unicamente letras');
-			$('.inputText').removeClass('inputText');
 		}
 	});
 </script>
@@ -131,10 +127,10 @@ $(document).ready(function() {
 	$('.phone').inputmask({ mask: "03[9 ][9][9][9][9][9][9][9]" });
 	$('.mobile').inputmask({ mask: "3[9][9 ][9][9][9 ][9][9][9][9]" });
 	$('.extension').inputmask({ mask: "[9][9][9][9][9]" });
-
+	$('.inputText').prop('maxlength', '100');
+	$('.inputText').prop('pattern', '[A-Za-z ]+');
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
 	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]"});
 	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
@@ -613,7 +609,7 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			var buttonsubmit = $(this).find('[type="submit"]');
+			var buttonsubmit = $(this).find('button[type="submit"]');
 			if(buttonsubmit.hasClass('disabled')){
 				return false;
 			}
@@ -630,7 +626,10 @@ function NotifiFalse(Mensaje) {
 		
 		$('label.btn').on('click', function(){
 			var idsubmit = $(this).attr('for');
-			if(!$('#'+idsubmit).hasClass('disabled')){
+			if($('#'+idsubmit).hasClass('disabled')){
+				return false;
+			}
+			else{
 				$(this).empty();
 				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 				$(this).attr('disabled', true);
