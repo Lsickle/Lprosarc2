@@ -22,7 +22,7 @@ class AreaController extends Controller{
      * @return \Illuminate\Http\Response
      */
 	public function index(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			$Areas = DB::table('areas')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -32,11 +32,6 @@ class AreaController extends Controller{
 				/*Validacion del cliente que pueda ver solo las areas que tiene a cargo solo los que no esten eliminados*/
 				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
 					$query->where('clientes.ID_Cli', '=', $id);
-					$query->where('areas.AreaDelete', '=', 0);
-				}
-				/*Validacion del personal de Prosarc autorizado para las areas del cliente solo los que no esten eliminados*/
-				else if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-					$query->where('clientes.ID_Cli', '<>', $id);
 					$query->where('areas.AreaDelete', '=', 0);
 				}
 				/*Validacion del Programador para ver todas las areas del cliente aun asi este eliminado*/

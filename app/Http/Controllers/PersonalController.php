@@ -37,7 +37,7 @@ class PersonalController extends Controller
 					$query->where('personals.PersDelete', '=', 0);
 				}
 				/*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
-				else if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AuxiliarLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.AsistenteLogistica')){
+				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
 					$query->where('clientes.ID_Cli', '<>', $id);
 					$query->where('personals.PersDelete', '=', 0);
 				}
@@ -171,7 +171,7 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug', $id)
 			->first();
-		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador')){
+		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador' || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')){
 			$Sede = DB::table('sedes')
 				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')
