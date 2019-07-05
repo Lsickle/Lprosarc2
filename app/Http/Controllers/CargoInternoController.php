@@ -54,11 +54,11 @@ class CargoInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Areas = DB::table('areas')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('areas.ID_Area', 'areas.AreaName')
+                ->select('areas.AreaSlug', 'areas.AreaName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('areas.AreaDelete', '=', 0)
                 ->get();
@@ -82,7 +82,7 @@ class CargoInternoController extends Controller
         ]);
         $cargo = new Cargo();
         $cargo->CargName = $request->input('CargName');
-        $cargo->CargArea = $request->input('CargArea');
+        $cargo->CargArea = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first()->ID_Area;
         $cargo->CargGrade = $request->input('CargGrade');
         $cargo->CargSalary = $request->input('CargSalary');
         $cargo->CargDelete = 0;
