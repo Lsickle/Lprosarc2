@@ -63,10 +63,7 @@
 										$vehiculoPlaca = $programacion->SolSerVehiculo;
 									}
 								@endphp
-								<tr @if($programacion->ProgVehDelete === 1)
-									style="color: red;"
-									@endif
-									>
+								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$programacion->CliShortname}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$vehiculoPlaca}}</td>
