@@ -171,7 +171,7 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug', $id)
 			->first();
-		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador' || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')){
+		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')){
 			$Sede = DB::table('sedes')
 				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')

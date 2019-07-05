@@ -107,12 +107,12 @@ class CargoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id){
-		$Cargos = Cargo::where('CargSlug', $id)->first();
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $Cargos <> null){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+			$Cargos = Cargo::where('CargSlug', $id)->first();
 			$Areas = DB::table('areas')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('areas.ID_Area', 'areas.AreaName')
+				->select('areas.ID_Area', 'areas.AreaSlug', 'areas.AreaName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('areas.AreaDelete', '=', 0)
 				->get();
@@ -120,7 +120,7 @@ class CargoController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->select('ID_Carg')
 				->where('personals.ID_Pers', '=', Auth::user()->FK_UserPers)
-				->get();
+				->first();
 			return view('cargos.edit', compact('Areas','Cargos', 'CargoOne'));
 		}
 		else{
@@ -141,7 +141,8 @@ class CargoController extends Controller
 			'CargArea'       => 'required',
 		]);
 		$Cargo = Cargo::where('CargSlug', $id)->first();
-		$Cargo->fill($request->all());
+		$Cargo->CargName = $request->input('CargName');
+		$Cargo->CargArea = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first()->ID_Area;
 		$Cargo->save();
 
 		$log = new audit();

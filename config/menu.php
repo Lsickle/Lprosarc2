@@ -37,8 +37,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE PERSONAL*/
 				// ->add(Link::toUrl('/asistencia', '<i class="fas fa-tasks"></i> '.trans('adminlte_lang::message.MenuPersAsis')))
 				// ->add(Link::toUrl('/horario', '<i class="fas fa-user-clock"></i> '.trans('adminlte_lang::message.MenuPersHorari')))
-				->add(Link::toUrl('/areasInterno', '<i class="fas fa-archive"></i> <span>'.trans('adminlte_lang::message.MenuPersAreas').' </span>'))
-				->add(Link::toUrl('/cargosInterno', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').' </span>'))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), Link::toUrl('/areasInterno', '<i class="fas fa-archive"></i> <span>'.trans('adminlte_lang::message.MenuPersAreas').' </span>'))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), Link::toUrl('/cargosInterno', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').' </span>'))
 				->addIf(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes),(Link::toUrl('/personalInterno', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>')))
 				// ->add(Link::toUrl('/inventariotech', '<i class="fas fa-laptop"></i> '.trans('adminlte_lang::message.MenuPersInven')))
 				/*PESTAÑA DE VEHICULOS*/
@@ -110,7 +110,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					 )
 				)
 				/*PESTAÑA DE PERSONAL*/
-				->add(Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
+				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 				/*PESTAÑA DE COTIZACIONES*/
@@ -177,8 +177,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					 )
 				)
 				/*PESTAÑA DE PERSONAL*/
-				->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), Link::toUrl('/areas', '<i class="fas fa-archive"></i>'.trans('adminlte_lang::message.MenuPersAreas')))
-				->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), Link::toUrl('/cargos', '<i class="fas fa-tools"></i>'.trans('adminlte_lang::message.MenuPersCarg')))
+				->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), Link::toUrl('/areas', '<i class="fas fa-archive"></i> <span>'.trans('adminlte_lang::message.MenuPersAreas').'</span>'))
+				->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), Link::toUrl('/cargos', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').'</span>'))
 				->addif(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
