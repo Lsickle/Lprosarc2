@@ -13,9 +13,6 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
-						@php
-							$ContactoShow = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.AdministradorPlanta'), trans('adminlte_lang::message.JefeLogistica')]
-						@endphp
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$Cliente->ID_Cli}}
@@ -24,7 +21,7 @@
 								el proveedor <b>{{$Cliente->CliShortname}}</b>
 							@endslot
 						@endcomponent
-						@if($Cliente->CliDelete === 0 && in_array(Auth::user()->UsRol, $ContactoShow))
+						@if($Cliente->CliDelete === 0 && in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
 							<a href="/contactos/{{$Cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cliente->ID_Cli}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 							<form action='/contactos/{{$Cliente->CliSlug}}' method='POST'  class="col-12 pull-right">
@@ -33,7 +30,7 @@
 								<input type="submit" id="Eliminar{{$Cliente->ID_Cli}}" style="display: none;">
 							</form>
 						@else
-							@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $Cliente->CliDelete === 1)
+							@if((in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) && $Cliente->CliDelete === 1)
 								<form action='/contactos/{{$Cliente->CliSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf

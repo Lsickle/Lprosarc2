@@ -34,7 +34,8 @@ class ContactoController extends Controller
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Clientes = Cliente::where('CliCategoria', '<>', 'Cliente')
                 ->where(function($query){
-                    if(Auth::user()->UsRol !== trans('adminlte_lang::message.Programador')){
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+                    }else{
                         $query->where('CliDelete', 0);
                     }
                 })
@@ -51,8 +52,7 @@ class ContactoController extends Controller
      */
     public function create()
     {
-        $RolCreate = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.AdministradorPlanta'), trans('adminlte_lang::message.JefeLogistica')];
-        if(in_array(Auth::user()->UsRol, $RolCreate)){
+        if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
             $Departamentos = Departamento::all();
             if (old('FK_SedeMun') !== null){
                 $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
@@ -132,7 +132,9 @@ class ContactoController extends Controller
      */
     public function show($id)
     {
-        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+            abort(403);
+        }else{
             $Cliente = Cliente::where('CliSlug', $id)->first();
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
             $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
@@ -141,7 +143,8 @@ class ContactoController extends Controller
             if($Cliente->CliCategoria === 'Transportador'){
                 $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)
                     ->where(function($query){
-                        if(Auth::user()->UsRol !== trans('adminlte_lang::message.Programador')){
+                        if(in_array(Auth::user()->UsRol === Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2 === Permisos::PROGRAMADOR)){
+                        }else{
                             $query->where('VehicDelete', 0);
                         }
                     })
@@ -150,8 +153,6 @@ class ContactoController extends Controller
             }else{
                 return view('contactos.showProveedor', compact('Cliente', 'Sede', 'Municipio', 'Departamento'));
             }
-        }else{
-            abort(403);
         }
     }
 
@@ -163,8 +164,7 @@ class ContactoController extends Controller
      */
     public function edit($id)
     {
-        $RolEdit = [trans('adminlte_lang::message.Programador'), trans('adminlte_lang::message.AdministradorPlanta'), trans('adminlte_lang::message.JefeLogistica')];
-        if(in_array(Auth::user()->UsRol, $RolEdit)){
+        if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
             $Departamentos = Departamento::all();
             $Cliente = Cliente::where('CliSlug', $id)->first();
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
