@@ -31,20 +31,17 @@
 						<!-- general form elements -->
 				<div class="box-body">
 					<!-- /.box-header -->
-					<!-- form start -->
-					
-						@if ($errors->any())
-						    <div class="alert alert-danger" role="alert">
-						        <ul>
-						            @foreach ($errors->all() as $error)
-						                <li>{{$error}}</li>
-						            @endforeach
-						        </ul>
-						    </div>
-						@endif
-						<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-						@include('layouts.RespelPartials.Respelform1Edit')
-						<!-- /.box-body -->
+					@if ($errors->any())
+						<div class="alert alert-danger" role="alert">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{$error}}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+					@include('layouts.RespelPartials.Respelform1Edit')
 				</div>
 				<div class="box-footer">
 					<button type="submit" class="btn btn-success"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
@@ -81,7 +78,7 @@
 	<form id="evaluacioncomercial" role="form" action="/respels/{{$Respels->RespelSlug}}/updateStatusRespel" method="POST" enctype="multipart/form-data">
 		@method('PUT')
 		@csrf
-		<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+		{{-- <input hidden type="text" name="updated_by" value="{{Auth::user()->email}}"> --}}
 		<!-- row -->
 			<!-- col md3 -->
 			<div class="col-md-3">
@@ -239,9 +236,7 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="tarifaspane">
-
-										@include('layouts.respel-comercial.respel-tarifas')
-
+									@include('layouts.respel-comercial.respel-tarifas')
 								</div>
 								<!-- /.tab-pane fade -->
 							</div>
@@ -251,7 +246,6 @@
 					<!-- /.box body -->
 					<div class="box-footer">
 						 <button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-
 						 <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
 						<!-- /.nav-tabs-custom -->

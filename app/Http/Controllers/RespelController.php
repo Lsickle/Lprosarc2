@@ -298,11 +298,9 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede', 'sedes.SedeName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
-            return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
-            
-        }
 
-        
+            return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+        }
     }
 
     /**
@@ -314,8 +312,6 @@ class RespelController extends Controller
      */
     public function update(RespelStoreRequest $request, $id)
     {
-        // return $request;
-
         $respel = Respel::where('RespelSlug', $id)->first();
             if (isset($request['RespelHojaSeguridad'])) {
                 $file1 = $request['RespelHojaSeguridad'];
