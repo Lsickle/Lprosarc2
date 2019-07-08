@@ -50,6 +50,7 @@ class Permisos{
 	const SolSer1 = ['Programador', 'JefeOperaciones', 'Supervisor'];
 	/*Using ->
 		solicitud-serv/show
+		recursos/show
 	*/
 	const SolSer2 = ['Programador', 'JefeOperaciones', 'Supervisor', 'JefeLogistica', 'AsistenteLogistica'];
 	/*Using ->
@@ -65,6 +66,8 @@ class Permisos{
 		clientes/edit
 		ContactoController::Index
 		ContactoController::show
+		SolicitudResiduoController::edit
+		recursos/show
 	*/
 	const PROGRAMADOR = ['Programador'];
 	/* Using ->
