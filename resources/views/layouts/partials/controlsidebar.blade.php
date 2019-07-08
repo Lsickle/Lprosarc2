@@ -11,7 +11,7 @@
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">{{ trans('adminlte_lang::message.panel') }}</h3>
             <ul class='control-sidebar-menu'>
-                @if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.DirectorPlanta') || Auth::user()->UsRol === trans('adminlte_lang::message.Comercial'))
+                @if (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
                     <li>
                         <a href='/permisos'>
                             <i class="menu-icon fa fa-users bg-green"></i>
@@ -22,7 +22,7 @@
                         </a>
                     </li>
                 @endif
-                 @if (Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "Administrador")
+                 @if (in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
                     <li>
                         <a href='/audits'>
                             <i class="menu-icon fas fa-user-secret bg-green"></i>

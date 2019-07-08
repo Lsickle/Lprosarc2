@@ -60,7 +60,7 @@ class GeneradoresStoreRequest extends FormRequest
             'GSedeExt2'     => 'min:2|numeric|nullable',
             'GSedeName'     => 'required|max:128',
             'GSedeEmail'    => 'required|max:128|email',
-            'FK_GSedeMun'   => 'required|numeric',
+            'FK_GSedeMun'   => 'required|numeric|min:1|max:1122',
         ];
     }
 }
