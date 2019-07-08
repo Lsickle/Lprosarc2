@@ -18,6 +18,7 @@ class Permisos{
 		ManteniVehicle/index
 		vehicle/index
 		VehicleController::create,edit
+		solicitud-serv/show
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using ->
@@ -25,6 +26,7 @@ class Permisos{
 		ProgramacionVehicle/create
 		VehicProgController::edit
 		ProgramacionVehicle/edit
+		solicitud-serv/show
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
@@ -36,6 +38,14 @@ class Permisos{
 		cargosInterno/index
 		CargoInternoController::create,edit
 		partials/controlsidebar
+	*/
+	const SolSer1 = ['Programador', 'JefeOperaciones', 'Supervisor'];
+	/*Using ->
+		solicitud-serv/show
+	*/
+	const SolSer2 = ['Programador', 'JefeOperaciones', 'Supervisor', 'JefeLogistica', 'AsistenteLogistica'];
+	/*Using ->
+		solicitud-serv/show
 	*/
 	const CLIENTE = ['Cliente'];
 	/* Using ->
@@ -63,15 +73,15 @@ class Permisos{
 
 /*
 Programador
-AdministradorPlanta - 
+AdministradorPlanta
 Hseq
-JefeLogistica - 
+JefeLogistica
 AsistenteLogistica
 Conductor
-JefeOperaciones - 
+JefeOperaciones
 Supervisor
-AdministradorBogota - 
-JefeComercial - 
+AdministradorBogota
+JefeComercial
 Tesorería
 Comercial
 AsistenteComercial

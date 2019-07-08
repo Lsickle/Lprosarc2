@@ -337,10 +337,10 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus(Request $request)//Queda verificar el rol para mejorar la validación
+	public function changestatus(Request $request)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
 			}
@@ -352,22 +352,29 @@ class SolicitudServicioController extends Controller
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
-						$Solicitud->SolSerStatus = 'Aprobado';
-						break;
-					case 'Rechazada':
-						$Solicitud->SolSerStatus = 'Rechazado';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Aprobado';
+						}
 						break;
 					case 'Recibida':
-						$Solicitud->SolSerStatus = 'Completado';
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
 						break;
 					case 'Conciliación':
-						$Solicitud->SolSerStatus = 'Completado';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
 						break;
 					case 'Tratada':
-						$Solicitud->SolSerStatus = 'Tratado';
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Tratado';
+						}
 						break;
 					case 'Certificada':
-						$Solicitud->SolSerStatus = 'Certificacion';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Certificacion';
+						}
 						break;
 				}
 			}
