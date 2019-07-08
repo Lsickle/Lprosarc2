@@ -35,12 +35,12 @@ class clientcontoller extends Controller
     {
         switch (true) {
 
-            case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)):
+            case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
                 $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             
-            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)): 
+            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
                 return redirect()->route('home');
                 break;
 
