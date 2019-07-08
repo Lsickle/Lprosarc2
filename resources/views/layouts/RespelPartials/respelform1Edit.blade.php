@@ -78,12 +78,15 @@
 				    @endif
 				</div>
 				@else
-				<select name="YRespelClasf4741" hidden="">
-					<option value="" selected></option>
-				</select>
-				<select name="ARespelClasf4741" hidden="">
-					<option value="" selected></option>
-				</select>
+				<div hidden="">
+					<select name="YRespelClasf4741">
+						<option value="" selected></option>
+					</select>
+					<select name="ARespelClasf4741">
+						<option value="" selected></option>
+					</select>
+				</div>
+				
 				@endif
 			</div>
 			{{-- input de la hoja de seguridad --}}

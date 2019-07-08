@@ -56,10 +56,14 @@ class Permisos{
 	/*Using ->
 		solicitud-serv/show
 	*/
+
 	const CLIENTE = ['Cliente'];
 	/* Using ->
+		genercontroller:index,edit
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
+		generadores/index
+		generadores/show
 		clientes/create2
 		clientes/index
 		clientes/show
@@ -76,8 +80,12 @@ class Permisos{
 		solicitud-serv/index
 		solicitud-serv/show
 	*/
+
 	const PROGRAMADOR = ['Programador'];
 	/* Using ->
+		genercontroller:index
+		generadores/index
+		generadores/show
 		ClienteController:index,show,edit
 		ContactoController::Index
 		ContactoController::show
