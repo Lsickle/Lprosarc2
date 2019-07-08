@@ -25,7 +25,7 @@ class VehicProgController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Cliente')){
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')

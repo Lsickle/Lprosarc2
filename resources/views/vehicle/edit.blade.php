@@ -44,7 +44,7 @@
 								<label for="FK_VehiSede">{{trans('adminlte_lang::message.vehicsedes')}}</label>
 								<small class="help-block with-errors">*</small>
 								<select class="form-control" id="FK_VehiSede" name="FK_VehiSede" required="true">
-									<option value="">Seleccione...</option>
+									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach($Sedes as $Sede)
 										<option value="{{$Sede->ID_Sede}}" {{$Vehicle->FK_VehiSede == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
 									@endforeach

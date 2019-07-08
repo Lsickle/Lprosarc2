@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -22,7 +23,6 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
-use Illuminate\Support\Facades\Hash;
 
 
 class SolicitudServicioController extends Controller
@@ -61,25 +61,30 @@ class SolicitudServicioController extends Controller
 	 */
 	public function create()
 	{
-		$Departamentos = Departamento::all();
-		$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-		$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-		$SGeneradors = DB::table('gener_sedes')
-			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		$Personals = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		}
+		else{
+			abort(403);
+		}
 	}
 
 	/**
@@ -332,10 +337,10 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus(Request $request)//Queda verificar el rol para mejorar la validación
+	public function changestatus(Request $request)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
 			}
@@ -347,22 +352,29 @@ class SolicitudServicioController extends Controller
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
-						$Solicitud->SolSerStatus = 'Aprobado';
-						break;
-					case 'Rechazada':
-						$Solicitud->SolSerStatus = 'Rechazado';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Aprobado';
+						}
 						break;
 					case 'Recibida':
-						$Solicitud->SolSerStatus = 'Completado';
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
 						break;
 					case 'Conciliación':
-						$Solicitud->SolSerStatus = 'Completado';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
 						break;
 					case 'Tratada':
-						$Solicitud->SolSerStatus = 'Tratado';
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Tratado';
+						}
 						break;
 					case 'Certificada':
-						$Solicitud->SolSerStatus = 'Certificacion';
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Certificacion';
+						}
 						break;
 				}
 			}

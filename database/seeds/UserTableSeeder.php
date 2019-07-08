@@ -90,7 +90,7 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Jefe de area Operaciones';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 4;
-        $user->UsRol2 = 'SupervisorOperaciones';
+        $user->UsRol2 = 'Supervisor';
         $user->UsRolDesc2 = '';
         $user->DeleteUser = 0;
         $user->save();

@@ -6,6 +6,7 @@ class Permisos{
 
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
+		partials/controlsidebar
 		Menu.php
 		PersonalInternoController::Index
 		ContactoController::create
@@ -16,24 +17,46 @@ class Permisos{
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
+		ProgramacionVehicle/index
 		ProgramacionVehicle/create
-		VehicProgController::Create
+		VehicProgController::create
 		ProgramacionVehicle/edit
+		ManteniVehicle/index
+		vehicle/index
+		VehicleController::create,edit
+		solicitud-serv/show
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using ->
+		ProgramacionVehicle/index
 		ProgramacionVehicle/create
-		VehicProgController::Edit
+		VehicProgController::edit
 		ProgramacionVehicle/edit
+		solicitud-serv/show
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
+		partials/controlsidebar
+		permisos/index
 		personalInterno/index
-		PersonalInternoController::Create
+		PersonalInternoController::create,edit
 		personalInterno/show
+		areasInterno/index
+		AreaInternoController::create,edit
+		cargosInterno/index
+		CargoInternoController::create,edit
+		partials/controlsidebar
 	*/
-    const CLIENTE = ['Cliente'];
-    /* Using ->
+	const SolSer1 = ['Programador', 'JefeOperaciones', 'Supervisor'];
+	/*Using ->
+		solicitud-serv/show
+	*/
+	const SolSer2 = ['Programador', 'JefeOperaciones', 'Supervisor', 'JefeLogistica', 'AsistenteLogistica'];
+	/*Using ->
+		solicitud-serv/show
+	*/
+	const CLIENTE = ['Cliente'];
+	/* Using ->
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
 		clientes/create2
@@ -43,16 +66,16 @@ class Permisos{
 		ContactoController::Index
 		ContactoController::show
 	*/
-    const PROGRAMADOR = ['Programador'];
-    /* Using ->
+	const PROGRAMADOR = ['Programador'];
+	/* Using ->
 		ClienteController:index,show,edit
 		ContactoController::Index
 		ContactoController::show
 		Contactos/show
 		Contactos/showProveedor
 	*/
-    const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
-    /* Using ->
+	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
+	/* Using ->
 		cliencontoller:index,show,edit
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
@@ -63,15 +86,15 @@ class Permisos{
 
 /*
 Programador
-AdministradorPlanta - 
+AdministradorPlanta
 Hseq
-JefeLogistica - 
+JefeLogistica
 AsistenteLogistica
 Conductor
-JefeOperaciones - 
+JefeOperaciones
 Supervisor
-AdministradorBogota - 
-JefeComercial - 
+AdministradorBogota
+JefeComercial
 Tesorería
 Comercial
 AsistenteComercial

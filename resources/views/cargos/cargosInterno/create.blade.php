@@ -13,7 +13,6 @@
 				<div class="box-header with-border">
 					<h3 class="box-title">{{trans('adminlte_lang::message.createcargo')}}</h3>
 				</div>
-			
 					<form role="form" action="/cargosInterno" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
@@ -31,7 +30,7 @@
 								<select name="CargArea" required id="AreaSelect" class="form-control select">
 									<option value="">{{trans('adminlte_lang::message.select')}}</option>
 									@foreach($Areas as $Area)
-										<option value="{{$Area->ID_Area}}" {{old('CargArea') == $Area->ID_Area ? 'selected' : ''}}>{{$Area->AreaName}}</option>
+										<option value="{{$Area->AreaSlug}}">{{$Area->AreaName}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -39,15 +38,15 @@
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargogradetittle') }}" data-content="{{ trans('adminlte_lang::message.cargogradeinfo') }}" for="CargoGrade"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.cargograde')}}</label>
 								<select name="CargGrade" id="CargoGrade" class="form-control">
 									<option value="">{{trans('adminlte_lang::message.select')}}</option>
-									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist1') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist1')}}</option>
-									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist2') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist2')}}</option>
-									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist3') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist3')}}</option>
-									<option {{old('CargGrade') == trans('adminlte_lang::message.cargogradelist4') ? 'selected' : ''}}>{{trans('adminlte_lang::message.cargogradelist4')}}</option>
+									<option>{{trans('adminlte_lang::message.cargogradelist1')}}</option>
+									<option>{{trans('adminlte_lang::message.cargogradelist2')}}</option>
+									<option>{{trans('adminlte_lang::message.cargogradelist3')}}</option>
+									<option>{{trans('adminlte_lang::message.cargogradelist4')}}</option>
 								</select>
 							</div>
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargonametittle') }}" data-content="{{ trans('adminlte_lang::message.cargonameinfo') }}" for="NombreCargo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.cargoname')}}</label><small class="help-block with-errors">*</small>
-								<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{old('CargName')}}">
+								<input data-minlength="5" required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{old('CargName')}}">
 							</div>
 							
 							<div class="form-group col-md-6">

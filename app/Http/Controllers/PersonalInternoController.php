@@ -219,7 +219,7 @@ class PersonalInternoController extends Controller
 			'Sede'          => 'required',
 			'CargArea'      => 'required',
 			'FK_PersCargo'  => 'required',
-			'PersDocType'   => 'required|max:3|min:2',
+			'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
 			'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
 			'PersFirstName' => 'required|max:64',
 			'PersSecondName'=> 'max:64|nullable',
