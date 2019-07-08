@@ -23,6 +23,7 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
+use Permisos;
 
 
 class SolicitudServicioController extends Controller

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Hash;
 use App\audit;
 use App\Area;
 use App\Cargo;
 use App\Personal;
-use Illuminate\Support\Facades\Hash;
-
+use Permisos;
 
 class CargoController extends Controller
 {

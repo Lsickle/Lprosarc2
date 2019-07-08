@@ -14,6 +14,7 @@ class Permisos{
 		Contactos/index
 		Contactos/show
 		Contactos/showProveedor
+		partials/mainheader
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
@@ -79,6 +80,7 @@ class Permisos{
 		personal/index
 		solicitud-serv/index
 		solicitud-serv/show
+		Menu.php
 	*/
 
 	const PROGRAMADOR = ['Programador'];
@@ -114,6 +116,7 @@ class Permisos{
 		SolicitudServicioController::changestatus
 		VehicleController::index
 		VehicManteController::index
+		Menu.php
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
 	/* Using ->

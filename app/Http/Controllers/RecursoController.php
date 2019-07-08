@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RecursosStoreRequest;
+use Illuminate\Support\Facades\Hash;
 use App\audit;
 use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
 use App\ProgramacionVehiculo;
-use Illuminate\Support\Facades\Hash;
+use Permisos;
 
 
 class RecursoController extends Controller

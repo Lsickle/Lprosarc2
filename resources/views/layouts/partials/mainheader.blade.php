@@ -189,7 +189,7 @@
                     </li>
                 {{-- @endif --}}
                 
-                @if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador'))
+                @if((in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol, Permisos::Jefes)) || (Auth::user()->email == 'Sistemas@prosarc.com.co'||Auth::user()->email == 'Sistemas3@prosarc.com.co'||Auth::user()->email == 'Sistemas2@prosarc.com.co'))
                 <!-- Control Sidebar Toggle Button -->
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-cogs"></i></a>
