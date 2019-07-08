@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use Illuminate\Validation\Rule;
-
+use App\Permisos;
 use App\Cliente;
 
 class ClienteController extends Controller
 {
     public function show($slug)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             $cliente = Cliente::where('CliSlug', $slug)->first();
             return view('clientes.show', compact('cliente'));
         }else{
