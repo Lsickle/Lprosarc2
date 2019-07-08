@@ -13,7 +13,9 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
+						@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 						<a href="/permisos/{{$User->UsSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+						@endif
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$User->id}}
@@ -22,16 +24,18 @@
 								al usuario <b>{{$User->id}}</b>
 							@endslot
 						@endcomponent
-						@if ( $User->FK_UserPers === null)
+						@if ($User->FK_UserPers === null)
 							@if($User->DeleteUser === 0)
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$User->id}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-								<form action='/permisos/{{$User->UsSlug}}' method='POST'  class="col-12 pull-left">
-									@method('DELETE')
-									@csrf
-									<input type="submit" id="Eliminar{{$User->id}}" style="display: none;">
-								</form>
+								@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
+									<form action='/permisos/{{$User->UsSlug}}' method='POST'  class="col-12 pull-left">
+										@method('DELETE')
+										@csrf
+										<input type="submit" id="Eliminar{{$User->id}}" style="display: none;">
+									</form>
+								@endif
 							@else
-								@if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+								@if (in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 									<form action='/permisos/{{$User->UsSlug}}' method='POST' class="pull-left">
 										@method('DELETE')
 										@csrf

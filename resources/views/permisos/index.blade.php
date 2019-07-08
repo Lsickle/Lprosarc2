@@ -12,7 +12,9 @@
 			<div class="box">
 				<div class="box-header">
                     <h3 class="box-title">{{ trans('adminlte_lang::message.userlist') }}</h3>
+                    @if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
                     <a href="/permisos/create" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+                    @endif
 				</div>
                 <div class="box box-info">
 				    <div class="box-body">
