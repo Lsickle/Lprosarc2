@@ -55,10 +55,14 @@ class Permisos{
 	/*Using ->
 		solicitud-serv/show
 	*/
-	const CLIENTE = ['Cliente'];
-	/* Using ->
+
+    const CLIENTE = ['Cliente'];
+    /* Using ->
+    	genercontroller:index,edit
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
+		generadores/index
+		generadores/show
 		clientes/create2
 		clientes/index
 		clientes/show
@@ -66,13 +70,18 @@ class Permisos{
 		ContactoController::Index
 		ContactoController::show
 	*/
-	const PROGRAMADOR = ['Programador'];
-	/* Using ->
+
+    const PROGRAMADOR = ['Programador'];
+    /* Using ->
+    	genercontroller:index
+		generadores/index
+		generadores/show
 		ClienteController:index,show,edit
 		ContactoController::Index
 		ContactoController::show
 		Contactos/show
 		Contactos/showProveedor
+
 	*/
 	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
 	/* Using ->
