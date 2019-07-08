@@ -1,61 +1,63 @@
 @extends('layouts.app')
 {{-- vista de edición para el cliente --}}
 @if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-@section('htmlheader_title')
-{{ trans('adminlte_lang::LangRespel.Respeledittag') }}
-@endsection
-@section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
-@endsection
-@section('main-content')
-@component('layouts.partials.modal')
-	@slot('slug')
-		{{$Respels->ID_Respel}}
-	@endslot
-	@slot('textModal')
-		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
-	@endslot
-@endcomponent
-<div class="container-fluid spark-screen">
-	<div class="row">
-		<div class="col-md-12 col-md-offset-0">
-			<!-- Default box -->
-			<div class="box box-primary">
-				<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
-					@method('PUT')
-					@csrf
-				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
-				</div>
-					<!-- left column -->
-					<!-- general form elements -->
-				<div class="box-body">
-					<!-- /.box-header -->
-					@if ($errors->any())
-						<div class="alert alert-danger" role="alert">
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{$error}}</li>
-								@endforeach
-							</ul>
+	@section('htmlheader_title')
+	{{ trans('adminlte_lang::LangRespel.Respeledittag') }}
+	@endsection
+	
+	@section('contentheader_title')
+	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+	@endsection
+
+	@section('main-content')
+		@component('layouts.partials.modal')
+			@slot('slug')
+				{{$Respels->ID_Respel}}
+			@endslot
+			@slot('textModal')
+				la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+			@endslot
+		@endcomponent
+		<div class="container-fluid spark-screen">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0">
+					<!-- Default box -->
+					<div class="box box-primary">
+						<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+							@method('PUT')
+							@csrf
+						<div class="box-header with-border">
+							<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
 						</div>
-					@endif
-					<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-					@include('layouts.RespelPartials.Respelform1Edit')
+							<!-- left column -->
+							<!-- general form elements -->
+						<div class="box-body">
+							<!-- /.box-header -->
+							@if ($errors->any())
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<li>{{$error}}</li>
+										@endforeach
+									</ul>
+								</div>
+							@endif
+							<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+							@include('layouts.RespelPartials.Respelform1Edit')
+						</div>
+						<div class="box-footer">
+							<button type="submit" class="btn btn-success"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+							<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+						</div>
+					</form>
+					</div>
+					<!--/.col (right) -->
 				</div>
-				<div class="box-footer">
-					<button type="submit" class="btn btn-success"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-					<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
-				</div>
-			</form>
+				<!-- /.box-body -->
 			</div>
-			<!--/.col (right) -->
+			<!-- /.box -->
 		</div>
-		<!-- /.box-body -->
-	</div>
-	<!-- /.box -->
-</div>
-@endsection
+	@endsection
 @else
 {{-- VISTA PARA PROSARC --}}
 @section('htmlheader_title')

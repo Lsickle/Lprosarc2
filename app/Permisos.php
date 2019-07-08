@@ -65,6 +65,11 @@ class Permisos{
 		clientes/edit
 		ContactoController::Index
 		ContactoController::show
+		RespelController::Index
+		RespelController::Create
+		RespelController::Store
+		RespelController::Show
+		RespelController::Edit
 	*/
 	const PROGRAMADOR = ['Programador'];
 	/* Using ->
@@ -73,6 +78,12 @@ class Permisos{
 		ContactoController::show
 		Contactos/show
 		Contactos/showProveedor
+		RespelController::Index
+		RespelController::Create
+		RespelController::Edit
+		RespelController::Update
+		RespelController::Destroy
+		RespelController::updateStatusRespel
 	*/
 	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
 	/* Using ->

@@ -45,7 +45,16 @@ $('form[data-toggle="validator"]').validator({
 					return "El archivo ("+($el[0].files[i].name)+") no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 				}
 			}
-		}
+		},
+		accept: function($el){
+			var permitido = $el.data("accept")
+			var array = permitido.split(',');
+			var tipo = $el[0].files[0].type.split('/').pop();
+			var existe = permitido.indexOf(tipo);
+			if ($el[0].files[0] && existe < 0) {
+				return "Los archivos permitidos son: "+array;
+			}
+		},
 	}
 });
 </script>

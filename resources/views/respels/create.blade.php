@@ -32,7 +32,7 @@
 								        </ul>
 								    </div>
 								@endif
-								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS) || in_array(Auth::user()->UsRol2, Permisos::CLIENTEYADMINS))
+								@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 									<div class="col-md-12 form-group">
 										<label for="Sede">{{ trans('adminlte_lang::LangRespel.createcliente') }}</label>
 										<small class="help-block with-errors">*</small>

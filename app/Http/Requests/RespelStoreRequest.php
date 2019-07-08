@@ -32,30 +32,23 @@ class RespelStoreRequest extends FormRequest
             $request = $this->instance()->all();
 
             $rules = [
-                'RespelName.*' => 'required|max:128|string',
-                'RespelDescrip.*' => 'required|max:512|string',
-                'RespelIgrosidad.*' => 'required|max:30',
-                'RespelEstado.*' => 'required|max:12|string',
+                'RespelName.*'          => 'required|max:128|string',
+                'RespelDescrip.*'       => 'required|max:512|string',
+                'RespelIgrosidad.*'     => 'required|max:30|in:No peligroso,Corrosivo,Reactivo,Explosivo,Toxico,Inflamable,Patógeno - Infeccioso,Radiactivo',
+                'RespelEstado.*'        => 'required|max:12|string|in:Liquido,Solido,Gaseoso,Mezcla',
                 'RespelHojaSeguridad.*' => 'sometimes|max:2048|mimes:pdf',
-                'YRespelClasf4741.*' => 'sometimes|max:6',
-                'ARespelClasf4741.*' => 'sometimes|max:6',
-                'RespelTarj.*' => 'sometimes|max:2048|mimes:pdf',
-                'SustanciaControlada.*' => 'required|max:6|string',
-                'SustanciaControladaTipo.*' => 'sometimes|max:2|string|nullable',
-                'SustanciaControladaNombre.*' => 'sometimes|max:50|string|nullable',
-                'SustanciaControladaDocumento.*' => 'sometimes|max:2048|mimes:pdf',
-                'RespelFoto.*' => 'sometimes|max:2048|mimes:jpeg,png',
-                'RespelDeclaracion.*' => 'required|max:2',
+                'YRespelClasf4741.*'    => 'sometimes|max:6',
+                'ARespelClasf4741.*'    => 'sometimes|max:6',
+                'RespelTarj.*'          => 'sometimes|max:2048|mimes:pdf',
+                'RespelFoto.*'          => 'sometimes|max:2048|mimes:jpg,jpeg,png',
+                'RespelDeclaracion.*'   => 'required|max:2',
+                'SustanciaControlada.*' => 'required|boolean',
+                'SustanciaControladaTipo.*'     => 'sometimes|boolean|nullable',
+                'SustanciaControladaNombre.*'   => 'sometimes|max:50|string|nullable',
+                'SustanciaControladaDocumento.*'=> 'sometimes|max:2048|mimes:pdf',
 
             ];
 
-            if (isset($request['RespelFoto'])) {
-                $images = $request['RespelFoto'];
-                foreach($images as $key => $file) {
-                    // $rules['RespelFoto.'.$key] = 'max:2048|mimes:jpeg,png';
-                }
-            }
-  
             return $rules;
         }
 
@@ -63,17 +56,17 @@ class RespelStoreRequest extends FormRequest
     {   
         $request = $this->instance()->all();
         $attributes = [
-                'RespelIgrosidad.*' => 'Peligrosidad',
-                'RespelName.*' => 'Nombre',
-                'RespelDescrip.*' => 'Descripción',
-                'RespelEstado.*' => 'Estado Físico',
-                'YRespelClasf4741.*' => 'Clasificación Y',
-                'ARespelClasf4741.*' => 'Clasificación A',
-                'RespelTarj.*' => 'Tarjeta De Emergencia',
+                'RespelIgrosidad.*'     => 'Peligrosidad',
+                'RespelName.*'          => 'Nombre',
+                'RespelDescrip.*'       => 'Descripción',
+                'RespelEstado.*'        => 'Estado Físico',
+                'YRespelClasf4741.*'    => 'Clasificación Y',
+                'ARespelClasf4741.*'    => 'Clasificación A',
+                'RespelTarj.*'          => 'Tarjeta De Emergencia',
                 'SustanciaControlada.*' => '¿Sustancia controlada?',
-                'SustanciaControladaTipo.*' => 'Tipo de sustancia controlada',
-                'SustanciaControladaNombre.*' => 'Nombre de la sustancia',
-                'SustanciaControladaDocumento.*' => 'Certificado de Carencia/Certificado de Registro',
+                'SustanciaControladaTipo.*'     => 'Tipo de sustancia controlada',
+                'SustanciaControladaNombre.*'   => 'Nombre de la sustancia',
+                'SustanciaControladaDocumento.*'=> 'Certificado de Carencia/Certificado de Registro',
         ];
 
 
