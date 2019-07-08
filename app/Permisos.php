@@ -6,8 +6,14 @@ class Permisos{
 
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
+		partials/controlsidebar
 		Menu.php
 		PersonalInternoController::Index
+		ContactoController::create
+		ContactoController::edit
+		Contactos/index
+		Contactos/show
+		Contactos/showProveedor
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
@@ -30,6 +36,8 @@ class Permisos{
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
+		partials/controlsidebar
+		permisos/index
 		personalInterno/index
 		PersonalInternoController::create,edit
 		personalInterno/show
@@ -55,10 +63,16 @@ class Permisos{
 		clientes/index
 		clientes/show
 		clientes/edit
+		ContactoController::Index
+		ContactoController::show
 	*/
 	const PROGRAMADOR = ['Programador'];
 	/* Using ->
 		ClienteController:index,show,edit
+		ContactoController::Index
+		ContactoController::show
+		Contactos/show
+		Contactos/showProveedor
 	*/
 	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
 	/* Using ->

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -22,7 +23,6 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
-use Illuminate\Support\Facades\Hash;
 
 
 class SolicitudServicioController extends Controller
