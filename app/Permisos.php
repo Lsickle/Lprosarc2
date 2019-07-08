@@ -8,6 +8,11 @@ class Permisos{
 	/* Using ->
 		Menu.php
 		PersonalInternoController::Index
+		ContactoController::create
+		ContactoController::edit
+		Contactos/index
+		Contactos/show
+		Contactos/showProveedor
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
@@ -35,10 +40,16 @@ class Permisos{
 		clientes/index
 		clientes/show
 		clientes/edit
+		ContactoController::Index
+		ContactoController::show
 	*/
     const PROGRAMADOR = ['Programador'];
     /* Using ->
 		ClienteController:index,show,edit
+		ContactoController::Index
+		ContactoController::show
+		Contactos/show
+		Contactos/showProveedor
 	*/
     const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
     /* Using ->
