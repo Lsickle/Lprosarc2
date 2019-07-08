@@ -12,7 +12,9 @@
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
+						@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 						<a href="/areasInterno/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+						@endif
 					</div>
 					<div class="box box-info">
 						<div class="box-body">
@@ -21,20 +23,19 @@
 									<tr>
 										<th>{{ trans('adminlte_lang::message.areaname') }}</th>
 										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
+										@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+										@endif
 									</tr>
 								</thead>
 								<tbody id="readyTable">
 									@foreach($Areas as $Area)
-									<tr @if($Area->AreaDelete === 1)
-										style="color: red;"
-										@endif
-										>
+									<tr style="{{$Area->AreaDelete === 1 ? 'color: red' : ''}}">
 										<td>{{$Area->AreaName}}</td>
 										<td>{{$Area->SedeName}}</td>
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										@endif
+										@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 										<td><a href='/areasInterno/{{$Area->AreaSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+										@endif
 									</tr>
 									@endforeach
 								</tbody>

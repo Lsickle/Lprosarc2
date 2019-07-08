@@ -30,17 +30,18 @@
 							@endif
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-12">
-									<label for="AreaName">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
-									<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required name="AreaName" autofocus="true" type="text" class="form-control inputText" id="AreaName" value="{{old('AreaName')}}">
-								</div>
-								<div class="form-group col-xs-12 col-md-12">
 									<label for="SedeSelect">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
 									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->ID_Sede}}" {{old('FK_AreaSede') == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
+											<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 										@endforeach
 									</select>
+								</div>
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.areaname') }}</label>
+									<small class="help-block with-errors">*</small>
+									<input data-minlength="5" required name="AreaName" autofocus="true" type="text" class="form-control inputText" id="AreaName" value="{{old('AreaName')}}">
 								</div>
 							</div>	
 							<div class="box box-info">
