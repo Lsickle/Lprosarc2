@@ -711,4 +711,56 @@ var currentScrollPos = window.pageYOffset;
 		$('input[type="email"]').attr('data-error', 'No es un emai valido');
 	})
 </script>
+<script>
+$(document).ready(function(){
+var control = document.getElementById("hoja0");
+	control.addEventListener("change", function(event) {
+	    // When the control has changed, there are new files
+	    var files = control.files;
+	    for (var i = 0; i < files.length; i++) {
+	        // console.log("Filename: " + files[i].name);
+	        // console.log("Type: " + files[i].type);
+	        // console.log("Size: " + files[i].size + " bytes");
+	        var blob = files[i];
+	        // console.log(blob.type);
+	        var fileReader = new FileReader();
+	        var tipo="";
+	        fileReader.onloadend = function(e) {
+	          var arr = (new Uint8Array(e.target.result)).subarray(0, 4);
+	          var header = "";
+	          for(var i = 0; i < arr.length; i++) {
+	             header += arr[i].toString(16);
+	          }
+	          // console.log(header);
+	          switch (header) {
+	              case "89504e47":
+	                 tipo = "png";
+	                  break;
+	              case "47494638":
+	                 tipo = "gif";
+	                  break;
+	              case "ffd8ffe0":
+	              case "ffd8ffe1":
+	              case "ffd8ffe2":
+	              case "ffd8ffe3":
+	              case "ffd8ffe8":
+	                 tipo = "jpeg";
+	                  break;
+	              case "25504446":
+	                 tipo = "pdf";
+	                  break;
+	              default:
+	                 var tipo = "unknown"; // Or you can use the blob.type as fallback
+	                  break;
+	          }
+	        // return tipo;
+	        console.log(tipo);
+
+
+	        };
+	        fileReader.readAsArrayBuffer(blob.slice(0, 4));
+	    }
+	}, false);	
+})
+</script>
 @yield('NewScript')
