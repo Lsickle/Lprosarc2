@@ -61,25 +61,30 @@ class SolicitudServicioController extends Controller
 	 */
 	public function create()
 	{
-		$Departamentos = Departamento::all();
-		$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-		$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-		$SGeneradors = DB::table('gener_sedes')
-			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		$Personals = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		}
+		else{
+			abort(403);
+		}
 	}
 
 	/**
