@@ -25,13 +25,13 @@ class VehicProgController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
 				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliShortname')
 				->where(function($query){
-					if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
 					}
 				})

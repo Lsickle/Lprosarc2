@@ -285,7 +285,7 @@
 </div>
 
 @section('NewScript')
-@if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer1))
 	<script>
 		function Pesaje(){
 			$("#tipo").append(`
@@ -372,7 +372,7 @@
 	@endif --}}
 @endif
 <script>
-	if('{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)}}'){
+	if('{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)}}'){
 		if("{{$SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'}}"){
 			$('#kgenviados').addClass('col-md-3');
 			$('#kgconciliados').addClass('col-md-3');

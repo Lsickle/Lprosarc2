@@ -33,14 +33,14 @@ class PersonalInternoController extends Controller
 				->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
 				->where(function($query){
 					$id = userController::IDClienteSegunUsuario();
+					/*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
+					if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->where('clientes.ID_Cli', '=', $id);
+					}
+					else{
 					/*Validacion para el Administrador ver el personal de Prosarc solo los que no esten eliminados*/
-					if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
 						$query->where('clientes.ID_Cli', '=', $id);
 						$query->where('personals.PersDelete', '=', 0);
-					}
-					/*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
-					else{
-						$query->where('clientes.ID_Cli', '=', $id);
 					}
 				})
 				->get();

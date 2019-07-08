@@ -39,7 +39,7 @@ class SolicitudServicioController extends Controller
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug','personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
 			->where(function($query){
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
 			})
@@ -61,7 +61,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function create()
 	{
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
@@ -340,7 +340,7 @@ class SolicitudServicioController extends Controller
 	public function changestatus(Request $request)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
 			}
@@ -348,7 +348,7 @@ class SolicitudServicioController extends Controller
 				$Solicitud->SolSerStatus = 'Conciliado';
 			}
 		}
-		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
@@ -407,7 +407,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function edit($id)
 	{
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
 			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
 				abort(403);
