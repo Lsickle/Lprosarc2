@@ -93,7 +93,7 @@
                                                     <h2>{{ trans('adminlte_lang::message.sclientsede') }}</h2>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="sedeinputname">{{ trans('adminlte_lang::message.name') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="sedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control" id="sedeinputname" name="SedeName" data-maxlength="128" value="{{ old('SedeName') }}" required>
                                                 </div>
                                                 <div class="form-group col-md-6">

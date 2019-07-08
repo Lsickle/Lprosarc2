@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\ContactosStoreRequest;
 use App\Http\Requests\ContactosUpdateRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\userController;
 use App\Cliente;
 use App\Sede;
 use App\Departamento;
 use App\Municipio;
 use App\Vehiculo;
 use App\audit;
-use Illuminate\Support\Facades\Hash;
+use App\Permisos;
 
 
 class ContactoController extends Controller
@@ -26,11 +28,20 @@ class ContactoController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-        $Clientes = Cliente::where('CliCategoria', '<>', 'Cliente')->get();
-        return view('contactos.index', compact('Clientes'));
-        }else{
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
             abort(403);
+        }else{
+            $ID_Cli = userController::IDClienteSegunUsuario();
+            $Clientes = Cliente::where('CliCategoria', '<>', 'Cliente')
+                ->where(function($query){
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+                    }else{
+                        $query->where('CliDelete', 0);
+                    }
+                })
+                ->where('clientes.ID_Cli','<>', $ID_Cli)
+                ->get();
+            return view('contactos.index', compact('Clientes'));
         }
     }
 
@@ -41,7 +52,7 @@ class ContactoController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
             $Departamentos = Departamento::all();
             if (old('FK_SedeMun') !== null){
                 $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
@@ -99,11 +110,6 @@ class ContactoController extends Controller
         $Sede->save();
 
         if($request->input('CliCategoria') === 'Transportador'){
-            $Validate = $request->validate([
-                'VehicPlaca' => 'required|max:7|min:7|unique:vehiculos,VehicPlaca',
-                'VehicTipo' => 'required|max:64',
-                'VehicCapacidad' => 'required|max:64',
-            ]);
 
             $Vehiculo = new Vehiculo();
             $Vehiculo->VehicPlaca = $request->input('VehicPlaca');
@@ -126,24 +132,27 @@ class ContactoController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+            abort(403);
+        }else{
             $Cliente = Cliente::where('CliSlug', $id)->first();
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
             $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
             $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
             
             if($Cliente->CliCategoria === 'Transportador'){
-                if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-                    $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
-                }elseif(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                    $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->where('VehicDelete', 0)->get();
-                }
+                $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)
+                    ->where(function($query){
+                        if(in_array(Auth::user()->UsRol === Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2 === Permisos::PROGRAMADOR)){
+                        }else{
+                            $query->where('VehicDelete', 0);
+                        }
+                    })
+                    ->get();
                 return view('contactos.show', compact('Cliente', 'Sede', 'Vehiculos', 'Municipio', 'Departamento'));
             }else{
                 return view('contactos.showProveedor', compact('Cliente', 'Sede', 'Municipio', 'Departamento'));
             }
-        }else{
-            abort(403);
         }
     }
 
@@ -155,13 +164,17 @@ class ContactoController extends Controller
      */
     public function edit($id)
     {
-        $Departamentos = Departamento::all();
-        $Cliente = Cliente::where('CliSlug', $id)->first();
-        $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
-
-        $Municipality = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
-        $Departament = Departamento::where('ID_Depart', $Municipality->FK_MunCity)->first();
-        $Municipios = Municipio::where('FK_MunCity', $Municipality->FK_MunCity)->get();
+        if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
+            $Departamentos = Departamento::all();
+            $Cliente = Cliente::where('CliSlug', $id)->first();
+            $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+    
+            $Municipality = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
+            $Departament = Departamento::where('ID_Depart', $Municipality->FK_MunCity)->first();
+            $Municipios = Municipio::where('FK_MunCity', $Municipality->FK_MunCity)->get();
+        }else{
+            abort(403);
+        }
 
         return view('contactos.edit', compact('Cliente', 'Sede', 'Municipios', 'Departamentos', 'Municipality', 'Departament'));
     }
