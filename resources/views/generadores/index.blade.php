@@ -13,7 +13,7 @@
 				<div class="box-header">
 					<center>
 						<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
-						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							@if (!isset($Gener))
 								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
 							@endif
@@ -26,10 +26,10 @@
 						<table id="generadores" class="table table-bordered table-striped">
 							<thead>
 								<tr>
-									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th>{{ trans('adminlte_lang::message.clientcliente') }} - {{ trans('adminlte_lang::message.sclientsede') }}</th>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
 									@endif
 									<th>{{ trans('adminlte_lang::message.gener') }}</th>
@@ -43,10 +43,10 @@
 									style="color: red;" 
 								@endif
 								>
-									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<td>{{$Gener->SedeName}}</td>
 									@endif
 									<td>{{$Gener->GenerShortname}}</td>

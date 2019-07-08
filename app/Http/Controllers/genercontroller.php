@@ -37,11 +37,11 @@ class genercontroller extends Controller
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname', 'clientes.ID_Cli')
             ->where(function($query)use($id){
-                if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
-                    $query->where('GenerDelete',0);
+                if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
+                    $query->where('GenerDelete', 0);
                     $query->where('ID_Cli', '<>', $id);
                 }
-                if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
+                if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                     $query->where('FK_SedeCli', $id);
                     $query->where('GenerDelete', 0);
                 }
@@ -61,7 +61,7 @@ class genercontroller extends Controller
      */
     public function create()
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $id = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
             $Cliente = Sede::where('SedeDelete', 0)->get();
@@ -252,7 +252,7 @@ class genercontroller extends Controller
      */
     public function edit($id)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();
