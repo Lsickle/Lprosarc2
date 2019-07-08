@@ -38,8 +38,12 @@ class genercontroller extends Controller
             ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname', 'clientes.ID_Cli')
             ->where(function($query)use($id){
                 if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
-                    $query->where('GenerDelete', 0);
-                    $query->where('ID_Cli', '<>', $id);
+                    if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) {
+                        $query->where('ID_Cli', '<>', $id);
+                    }else{
+                        $query->where('GenerDelete', 0);
+                        $query->where('ID_Cli', '<>', $id);  
+                    }
                 }
                 if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                     $query->where('FK_SedeCli', $id);

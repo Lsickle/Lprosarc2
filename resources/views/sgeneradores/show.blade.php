@@ -12,7 +12,7 @@
 			<div class="box box-primary">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
-						@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							<a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@component('layouts.partials.modal')
 								@slot('slug')
@@ -23,7 +23,7 @@
 								@endslot
 							@endcomponent
 						@endif
-						@if($SedeGener->GSedeDelete == 0 && Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+						@if($SedeGener->GSedeDelete == 0 && in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
 							<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
 								@method('DELETE')
@@ -31,7 +31,7 @@
 								<input type="submit" id="Eliminar{{$SedeGener->ID_GSede}}" style="display: none;">
 							</form>
 						@else
-							@if ($SedeGener->GSedeDelete == 1 && Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+							@if ($SedeGener->GSedeDelete == 1 && in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf
@@ -47,7 +47,7 @@
 						<h3 class="profile-username text-center textolargo col-12">{{$SedeGener->GSedeName}}</h3>
 					</div>
 					<ul class="list-group list-group-unbordered">
-						@if (Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.clientcliente') }}</b> 
 								<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliShortname}}</p>">{{$Cliente->CliShortname}}</a>
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 		{{--  Modal Agregar un Residuo a una SedeGener--}}
-		@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+		@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 			<form role="form" action="/respelSGener" method="POST" enctype="multipart/form-data" data-toggle="validator">
 				@csrf
 				<div class="modal modal-default fade in" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -133,7 +133,7 @@
 				</ul>
 				<div class="tab-content">
 					<div class="active tab-pane" id="residuos">
-						@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							{{-- Barra de Navegacion --}}
 							<a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
 							<a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-success mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
@@ -142,14 +142,14 @@
 							@foreach ($Respels as $Respel)
 								<ul class="list-group" style="list-style:none; margin-top:10px;">
 									<li class="col-md-11 col-xs-12 col-12">
-										@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$Generador->GenerShortname}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
 										@endif
 										<h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
 									</li>
 									<li class="col-md-12 col-xs-12 col-12">
 										{{--  Modal Eliminar un Residuo de una SedeGener--}}
-										@if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 											<div class="deleterespelgener"></div>
 										@endif
 										{{-- END Modal --}}
