@@ -121,7 +121,7 @@
 									<select class="form-control select" id="SedeCollect" name="SedeCollect">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->SedeSlug}}" {{ $Solicitud->SedeCollect == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+											<option value="{{$Sede->SedeSlug}}" {{ $Solicitud->SolSerCollectAddress == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -186,7 +186,7 @@
 										<div class="form-group col-md-6 col-md-offset-3" {{ $Solicitud->SolSerDevolucion == null ? 'hidden' : '' }} style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsernameelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsernameelemdescrit') }} </p>">
 												<label for="SolSerDevolucionTipo">{{ trans('adminlte_lang::message.solsernameelem') }}</label>
-												<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{$Solicitud->SolSerDevolucion == null ? $Solicitud->SolSerDevolucionTipo : ''}}">
+												<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{$Solicitud->SolSerDevolucion <> null ? $Solicitud->SolSerDevolucionTipo : ''}}">
 												<small class="help-block with-errors"></small>
 											</label>
 										</div>
@@ -220,7 +220,7 @@
 	$("#requirimientos").remove();
 	$("#AddGenerador").remove();
 @endif
-@if($Solicitud->SolSerTipo == 'Externo' || $Solicitud->SolSerTipo == 'Alquilado')
+@if($Solicitud->SolSerTipo == 'Externo')
 	$("#SolSerTransportador").attr('required', true);
 	$('#transportador').attr('hidden',false);
 	@if($Cliente->CliName <> $Solicitud->SolSerNameTrans)
@@ -288,12 +288,16 @@
 		$('#SedeCollect').attr('required', true);
 		$('#sedecollect').attr('hidden',false);
 		$('#AddressCollect').val('');
+		$("#typecollect").removeClass('col-md-12');
+		$("#typecollect").addClass('col-md-6');
 		$('#AddressCollect').attr('required', false);
 		$('#addresscollect').attr('hidden',true);
 	@elseif($Solicitud->SolSerTypeCollect == 97)
 		$('#SedeCollect').attr('required', false);
 		$('#sedecollect').attr('hidden',true);
-		$('#AddressCollect').val('{{$Solicitud->AddressCollect}}');
+		$('#AddressCollect').val('{{$Solicitud->SolSerCollectAddress}}');
+		$("#typecollect").removeClass('col-md-12');
+		$("#typecollect").addClass('col-md-6');
 		$('#AddressCollect').attr('required', true);
 		$('#addresscollect').attr('hidden',false);
 	@else
@@ -367,7 +371,6 @@ function TransportadorExtr() {
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
 	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
 	$("#SolSerBascula").bootstrapSwitch('state',false);

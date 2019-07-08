@@ -20,7 +20,7 @@ class AreaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Areas = DB::table('areas')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -28,7 +28,7 @@ class AreaController extends Controller{
 			->where(function($query){
 				$id = userController::IDClienteSegunUsuario();
 				/*Validacion del cliente que pueda ver solo las areas que tiene a cargo solo los que no esten eliminados*/
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('clientes.ID_Cli', '=', $id);
 					$query->where('areas.AreaDelete', '=', 0);
 				}
@@ -51,7 +51,7 @@ class AreaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Sedes = DB::table('sedes')
 				->select('SedeSlug', 'SedeName')
 				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
@@ -102,7 +102,7 @@ class AreaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Areas = Area::where('AreaSlug', $id)->first();
 			$Sedes = DB::table('sedes')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')

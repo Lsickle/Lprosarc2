@@ -50,15 +50,16 @@ class Permisos{
 	const SolSer1 = ['Programador', 'JefeOperaciones', 'Supervisor'];
 	/*Using ->
 		solicitud-serv/show
+		recursos/show
 	*/
 	const SolSer2 = ['Programador', 'JefeOperaciones', 'Supervisor', 'JefeLogistica', 'AsistenteLogistica'];
 	/*Using ->
 		solicitud-serv/show
 	*/
 
-    const CLIENTE = ['Cliente'];
-    /* Using ->
-    	genercontroller:index,edit
+	const CLIENTE = ['Cliente'];
+	/* Using ->
+		genercontroller:index,edit
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
 		generadores/index
@@ -69,11 +70,20 @@ class Permisos{
 		clientes/edit
 		ContactoController::Index
 		ContactoController::show
+		SolicitudResiduoController::edit
+		SolicitudServicioController::index,create,edit,changestatus
+		recursos/show
+		AreaController:index,create,edit
+		CargoController::index,create,edit
+		PersonalController::index,create
+		personal/index
+		solicitud-serv/index
+		solicitud-serv/show
 	*/
 
-    const PROGRAMADOR = ['Programador'];
-    /* Using ->
-    	genercontroller:index
+	const PROGRAMADOR = ['Programador'];
+	/* Using ->
+		genercontroller:index
 		generadores/index
 		generadores/show
 		ClienteController:index,show,edit
@@ -81,17 +91,42 @@ class Permisos{
 		ContactoController::show
 		Contactos/show
 		Contactos/showProveedor
-
+		AreaController:index,create,edit
+		AreaInternoController::index
+		CargoController::index,create,edit
+		CargoInternoController::index
+		PersonalController::index,create,edit
+		PersonalInternoController::index
+		SolicitudServicioController::create,edit,changestatus
+		VehicleController::index
+		VehicManteController::index
+		personal/index
+		personal/show
+		ProgramacionVehicle/edit
+		solicitud-serv/index
+		solicitud-serv/show
 	*/
 	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
 	/* Using ->
 		cliencontoller:index,show,edit
+		AreaInternoController::index
+		CargoInternoController::index
+		SolicitudServicioController::changestatus
+		VehicleController::index
+		VehicManteController::index
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
 	/* Using ->
 		scliencontroller:create
 	*/
-
+	const ASISTENTELOGISTICA = ['JefeLogistica'];
+	/* Using ->
+		ProgramacionVehicle/edit
+	*/
+	const JEFELOGISTICA = ['AsistenteLogistica'];
+	/* Using ->
+		ProgramacionVehicle/edit
+	*/
 }
 
 /*

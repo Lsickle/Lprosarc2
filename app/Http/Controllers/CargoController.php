@@ -21,7 +21,7 @@ class CargoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Cargos = DB::table('cargos')
 				->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
@@ -30,7 +30,7 @@ class CargoController extends Controller
 				->where(function($query){
 						$id = userController::IDClienteSegunUsuario();
 						/*Validacion del cliente que pueda ver solo los cargos que tiene a cargo solo los que no esten eliminados*/
-						if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+						if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 							$query->where('clientes.ID_Cli', '=', $id);
 							$query->where('cargos.CargDelete', '=', 0);
 						}
@@ -54,7 +54,7 @@ class CargoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create(){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Areas = DB::table('areas')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -107,7 +107,7 @@ class CargoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id){
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Cargos = Cargo::where('CargSlug', $id)->first();
 			$Areas = DB::table('areas')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
