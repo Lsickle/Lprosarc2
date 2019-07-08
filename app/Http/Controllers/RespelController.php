@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
 use App\audit;
 use App\Respel;
@@ -14,8 +16,8 @@ use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
-use Illuminate\Validation\Validator;
-use Illuminate\Support\Facades\Hash;
+use App\Permisos;
+
 class RespelController extends Controller
 {
     /**
@@ -26,48 +28,28 @@ class RespelController extends Controller
     public function index(){
         /*se define la sede del usuario actual*/
         $UserSedeID = DB::table('personals')
-                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->value('sedes.ID_Sede');
+            ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+            ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+            ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+            ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+            ->value('sedes.ID_Sede');
 
-        // if(Auth::user()->UsRol === "Programador"){
-            $Respels = DB::table('respels')
+        $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.*', 'clientes.CliName')
-            ->where(function($query){
-                if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+            ->where(function($query) use ($UserSedeID){
+                if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
                 }elseif (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-                    $query->where('respels.RespelDelete',0)
-                    $query->where('sedes.ID_Sede', $UserSedeID)
+                    $query->where('respels.RespelDelete',0);
+                    $query->where('sedes.ID_Sede', $UserSedeID);
                 }else{
-                    $query->where('respels.RespelDelete',0)
+                    $query->where('respels.RespelDelete',0);
                 }
             })
             ->get();
-        }
-        elseif(Auth::user()->UsRol === "Cliente"){
-            $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
-            ->where('respels.RespelDelete',0)
-            ->where('sedes.ID_Sede', $UserSedeID)
-            ->get();
-        }
-        else{
-            $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
-            ->where('respels.RespelDelete',0)
-            ->get();
-        }
+
         return view('respels.index', compact('Respels')); 
     }
     /**

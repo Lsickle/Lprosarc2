@@ -7,9 +7,11 @@
 		<div class="col-md-12 col-md-offset-0">
 			<!-- /.box -->
 			<div class="box">
-				<div class="box-header">
-					<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
-				</div>
+				@if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS))
+					<div class="box-header">
+						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					</div>
+				@endif
 				<!-- /.box-header -->
 				<div class="box-body">
 					<table class="table table-bordered table-striped">
