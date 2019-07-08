@@ -33,7 +33,7 @@ class SedeGenerRequest extends FormRequest
             'GSedeEmail' => 'email|required|max:128|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
             'GSedeCelular' => 'required|max:12|min:12',
             'FK_GSede' => 'required',
-            'FK_GSedeMun' => 'required',
+            'FK_GSedeMun' => 'required|numeric|min:1|max:1122',
         ];
     }
 }

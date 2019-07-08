@@ -6,6 +6,7 @@ class Permisos{
 
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
+		partials/controlsidebar
 		Menu.php
 		PersonalInternoController::Index
 		ContactoController::create
@@ -28,6 +29,8 @@ class Permisos{
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
+		partials/controlsidebar
+		permisos/index
 		personalInterno/index
 		PersonalInternoController::Create
 		personalInterno/show
