@@ -59,23 +59,26 @@ class RespelController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol=='Cliente'){
-			$Sede = DB::table('personals')
-				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-				->select('sedes.ID_Sede')
-				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-				->get();
-			return view('respels.create', compact('Sede'));
-		}
-		else{
-			$Sedes = DB::table('clientes')
-				->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('sedes.ID_Sede', 'clientes.CliName')
-				->where('clientes.ID_Cli', '<>', 1) 
-				->get();
-			return view('respels.create', compact('Sedes'));
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS) || in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS)){
+            if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+                $Sede = DB::table('personals')
+                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                    ->select('sedes.ID_Sede')
+                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->get();
+                return view('respels.create', compact('Sede'));
+            }else{
+                $Sedes = DB::table('clientes')
+                    ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('sedes.ID_Sede', 'clientes.CliName')
+                    ->where('clientes.ID_Cli', '<>', 1) 
+                    ->get();
+                return view('respels.create', compact('Sedes'));
+            }
+        }else{
+            abort(403);
         }
     }
 

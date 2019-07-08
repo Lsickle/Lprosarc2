@@ -32,7 +32,7 @@
 								        </ul>
 								    </div>
 								@endif
-								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
+								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS) || in_array(Auth::user()->UsRol2, Permisos::CLIENTEYADMINS))
 									<div class="col-md-12 form-group">
 										<label for="Sede">{{ trans('adminlte_lang::LangRespel.createcliente') }}</label>
 										<select name="Sede" id="Sede" class="form-control" required>
@@ -42,7 +42,7 @@
 											@endforeach
 										</select>
 									</div>
-								@elseif(Auth::user()->UsRol=='Cliente')
+								@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 								@endif
 								@include('layouts.RespelPartials.respelform1')

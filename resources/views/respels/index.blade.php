@@ -7,7 +7,7 @@
 		<div class="col-md-12 col-md-offset-0">
 			<!-- /.box -->
 			<div class="box">
-				@if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS))
+				@if(in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS) || in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS))
 					<div class="box-header">
 						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 					</div>
