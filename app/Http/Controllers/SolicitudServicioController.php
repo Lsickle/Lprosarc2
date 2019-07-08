@@ -407,35 +407,40 @@ class SolicitudServicioController extends Controller
 	 */
 	public function edit($id)
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
-		if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
+		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
+				abort(403);
+			}
+			$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
+			$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+			$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
+			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
+				->select('PersSlug','PersFirstName','PersLastName')
+				->first();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Sedes'));
+		}
+		else{
 			abort(403);
 		}
-		$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
-		$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-		$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
-		$Departamentos = Departamento::all();
-		$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
-		$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-		$SGeneradors = DB::table('gener_sedes')
-			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
-			->select('PersSlug','PersFirstName','PersLastName')
-			->first();
-		$Personals = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Sedes'));
 	}
 
 	/**

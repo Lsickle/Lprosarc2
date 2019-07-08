@@ -99,22 +99,25 @@
 									</div>
 								</div>
 								<div class="col-md-12 border-gray collapse Transportadora">
+									@if($SolicitudServicio->SolSerTipo == 'Interno')
+										<div class="col-md-6">
+											<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
+											<a>{{$SolSerConductor == null ? trans('adminlte_lang::message.solsernullprogram') : $SolSerConductor}}</a>
+										</div>
+										<div class="col-md-6">
+											<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
+											<a>{{$SolicitudServicio->SolSerVehiculo == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerVehiculo}}</a>
+										</div>
+									@else
 									<div class="col-md-6">
 										<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
-										@if($SolicitudServicio->SolSerTipo == 'Interno')
-											@if($SolSerConductor == null)
-												<a>{{trans('adminlte_lang::message.solsernullprogram')}}</a>
-											@else
-												<a>{{$SolSerConductor->PersFirstName.' '.$SolSerConductor->PersLastName}}</a> <a title="Ver Personal" href="/personalInterno/{{$SolSerConductor->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-											@endif
-										@else
-											<a>{{$SolSerConductor}}</a>
-										@endif
+										<a>{{$SolSerConductor == null ? 'N/A' : $SolSerConductor}}</a>
 									</div>
 									<div class="col-md-6">
 										<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
-										<a>{{$SolicitudServicio->SolSerVehiculo == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerVehiculo}}</a>
+										<a>{{$SolicitudServicio->SolSerVehiculo == null ? 'N/A' : $SolicitudServicio->SolSerVehiculo}}</a>
 									</div>
+									@endif
 								</div>
 							</div>
 							<div class="col-md-12 border-gray">
