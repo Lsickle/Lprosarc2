@@ -18,15 +18,15 @@
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
-					<div class="box-header with-border">
-						<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
-							@method('DELETE')
-							@csrf
-							<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
-						</form>
-						<div class="col-md-12" id="titulo" style="font-size: 1.2em; text-align:center;">
-						</div>
+				<div class="box-header with-border">
+					<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+						@method('DELETE')
+						@csrf
+						<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
+					</form>
+					<div class="col-md-12" id="titulo" style="font-size: 1.2em; text-align:center;">
 					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12 ">
 						<div class="box box-info">
@@ -245,7 +245,7 @@
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}<br>{{$TypeUnidad}}</td>
 												<td style="text-align: center;">
-													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno'))
+													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
 															<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
 														@else
@@ -260,7 +260,7 @@
 													@endif
 												</td>
 												<td style="text-align: center;">
-													@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
+													@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$Residuo->SolResKgRecibido}}`)"> 
 														@else
@@ -274,17 +274,14 @@
 													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
 													@endif
 												</td>
-												@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
-													<td style="text-align: center;">	
-														@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
+												@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+													<td style="text-align: center;">
+														@if($SolicitudServicio->SolSerStatus === 'Conciliado')
+															<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
 														@else
-															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
-																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
-															@else
-																<a style="color: black">
-															@endif
-															<i class="fas fa-marker"></i></a> 
+															<a style="color: black">
 														@endif
+														<i class="fas fa-marker"></i></a> 
 														{{' '.$Residuo->SolResKgTratado}}<br> {{$TypeUnidad}}
 													</td>
 												@endif
@@ -357,7 +354,7 @@
 									</div>
 								{{-- END Modal --}}
 								{{-- Modal --}}
-								  	<div id="addkgmodal"></div>
+									<div id="addkgmodal"></div>
 								{{-- END Modal --}}
 							</div>
 						</div>
@@ -369,7 +366,7 @@
 </div>
 @endsection
 @section('NewScript')
-@if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica'))
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
 		function addkg(slug, cantidad, cantidadmax){
 			$('#addkgmodal').empty();
@@ -496,12 +493,12 @@
 		}
 	</script>
 	@if ($errors->any())
-        <script>
-            $(document).ready(function() {
-                $("#editkgResivido").modal("show");
-            });
-        </script>
-    @endif
+		<script>
+			$(document).ready(function() {
+				$("#editkgResivido").modal("show");
+			});
+		</script>
+	@endif
 @endif
 <script>
 	function ModalDeleteRespel(slug, respel, generador){
@@ -567,14 +564,14 @@
 	@switch($SolicitudServicio->SolSerStatus)
 		@case('Pendiente')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-				@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))//Añadir rol del encargado de aprobar la solicitud
+				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 					$('#titulo').append(`
 						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Aprobada')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>
 					`);
@@ -588,7 +585,7 @@
 		@break
 		@case('Aprobado')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
@@ -604,24 +601,19 @@
 		@break
 		@case('Programado')
 			$('#titulo').empty();
-			@if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolicitudServicio->SolSerTipo == 'Externo'))
+			@if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
 			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))//Añadir rol encargado de enviar las notificaciones a los clientes de la programción
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 				$('#titulo').append(`
 					<a href="/email/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
 				`);
 			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $ProgramacionesActivas <= 0)
+			@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($ProgramacionesActivas <= 0))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
-				`);
-			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
-				$('#titulo').append(`
-					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
@@ -630,15 +622,10 @@
 		@break
 		@case('Completado')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente'))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'No Deacuerdo')" class='btn btn-danger pull-left'> <i class="fas fa-calendar-times"></i> <b>{{trans('adminlte_lang::message.solserstatusnoconciliado')}}</b></a>
-				`);
-			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
-				$('#titulo').append(`
-					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
@@ -647,7 +634,7 @@
 		@break
 		@case('No Conciliado')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliación')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatusconciliacion')}}</a>
 				`);
@@ -658,12 +645,12 @@
 		@break
 		@case('Conciliado')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Tratada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatustratado')}}</a>
 				`);
 			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
 				`);
@@ -674,14 +661,9 @@
 		@break
 		@case('Tratado')
 			$('#titulo').empty();
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
-				`);
-			@endif
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
-				$('#titulo').append(`
-					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`
@@ -693,11 +675,6 @@
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>
 			`);
-			@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') && $SolicitudServicio->SolSerTipo == 'Interno')
-				$('#titulo').append(`
-					<a href='/PdfManiCarg/{{$SolicitudServicio->ID_SolSer}}' class="btn btn-info pull-right"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
-				`);
-			@endif
 		@break
 	@endswitch
 </script>
