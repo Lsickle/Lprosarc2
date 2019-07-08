@@ -241,7 +241,6 @@ class RespelController extends Controller
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-        // return $ResiduoConDependencia1;
 
         if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
             $deleteButton = 'No borrable';
@@ -291,8 +290,7 @@ class RespelController extends Controller
                     abort(403);
                     break;
             }
-        }
-        else{
+        }else{
             $Sedes = DB::table('clientes')
                 ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('sedes.ID_Sede', 'sedes.SedeName')

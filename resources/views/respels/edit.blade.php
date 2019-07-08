@@ -1,6 +1,6 @@
 @extends('layouts.app')
 {{-- vista de edición para el cliente --}}
-@if(Auth::user()->UsRol == "Cliente")
+@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 @section('htmlheader_title')
 {{ trans('adminlte_lang::LangRespel.Respeledittag') }}
 @endsection
@@ -21,14 +21,14 @@
 		<div class="col-md-12 col-md-offset-0">
 			<!-- Default box -->
 			<div class="box box-primary">
-				<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
+				<form role="form" action="/respels/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 					@method('PUT')
 					@csrf
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
 				</div>
 					<!-- left column -->
-						<!-- general form elements -->
+					<!-- general form elements -->
 				<div class="box-body">
 					<!-- /.box-header -->
 					@if ($errors->any())
@@ -59,10 +59,10 @@
 @else
 {{-- VISTA PARA PROSARC --}}
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelevaluatetag') }}
+	{{ trans('adminlte_lang::LangRespel.Respelevaluatetag') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
+	{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
