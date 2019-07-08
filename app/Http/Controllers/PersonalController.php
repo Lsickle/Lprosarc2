@@ -32,18 +32,18 @@ class PersonalController extends Controller
 			->where(function($query){
 				$id = userController::IDClienteSegunUsuario();
 				/*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('clientes.ID_Cli', '=', $id);
 					$query->where('personals.PersDelete', '=', 0);
 				}
-				/*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
-				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
-					$query->where('clientes.ID_Cli', '<>', $id);
-					$query->where('personals.PersDelete', '=', 0);
-				}
 				/*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
+				else if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+					$query->where('clientes.ID_Cli', '<>', $id);
+				}
+				/*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
 				else{
 					$query->where('clientes.ID_Cli', '<>', $id);
+					$query->where('personals.PersDelete', '=', 0);
 				}
 			})
 			->get();
@@ -57,7 +57,7 @@ class PersonalController extends Controller
 	 */
 	public function create(){
 		/*Validacion para personas autorisadas a crear una persona*/
-		if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 === trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Sedes = DB::table('sedes')
 				->select('SedeSlug', 'SedeName')
 				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
@@ -171,7 +171,7 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug', $id)
 			->first();
-		if($Persona->ID_Cli == $IDClienteSegunUsuario || Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')){
+		if($Persona->ID_Cli == $IDClienteSegunUsuario || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Sede = DB::table('sedes')
 				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')

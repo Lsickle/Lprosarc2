@@ -21,7 +21,7 @@ class CargoInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             $Cargos = DB::table('cargos')
                 ->join('areas','cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
@@ -29,14 +29,14 @@ class CargoInternoController extends Controller
                 ->select('cargos.CargSlug','cargos.CargDelete','cargos.CargName','cargos.CargSalary','cargos.CargGrade','areas.AreaName','clientes.ID_Cli', 'clientes.CliShortname')
                 ->where(function($query){
                     $id = userController::IDClienteSegunUsuario();
-                        /*Validacion del personal de Prosarc autorizado para loscargos que no esten eliminados*/
-                        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
-                            $query->where('clientes.ID_Cli', '=', $id);
-                            $query->where('cargos.CargDelete', '=', 0);
-                        }
                         /*Validacion del Programador para ver todas los cargos aun asi este eliminado*/
+                        if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                            $query->where('clientes.ID_Cli', '=', $id);
+                        }
+                        /*Validacion del personal de Prosarc autorizado para loscargos que no esten eliminados*/
                         else{
                             $query->where('clientes.ID_Cli', '=', $id);
+                            $query->where('cargos.CargDelete', '=', 0);
                         }
                     }
                 )
