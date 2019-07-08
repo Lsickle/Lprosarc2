@@ -17,7 +17,7 @@ class Permisos{
 		ProgramacionVehicle/edit
 		ManteniVehicle/index
 		vehicle/index
-		VehicleController::create
+		VehicleController::create,edit
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using ->
