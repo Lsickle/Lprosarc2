@@ -32,8 +32,11 @@ class Permisos{
 	*/
     const CLIENTE = ['Cliente'];
     /* Using ->
+    	genercontroller:index,edit
 		ClienteController:index,show,edit
 		cliencontoller:index,show,edit
+		generadores/index
+		generadores/show
 		clientes/create2
 		clientes/index
 		clientes/show
@@ -41,7 +44,10 @@ class Permisos{
 	*/
     const PROGRAMADOR = ['Programador'];
     /* Using ->
+    	genercontroller:index
 		ClienteController:index,show,edit
+		generadores/index
+		generadores/show
 	*/
     const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
     /* Using ->
