@@ -7,12 +7,13 @@ use App\Http\Requests\PersonalStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\audit;
-use Illuminate\Support\Facades\Hash;
+use Permisos;
 
 
 class PersonalController extends Controller

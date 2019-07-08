@@ -31,7 +31,8 @@
 									<p>Cambio de roles para programador</p>
 								</div>
 							</a>
-						<form style="margin: 1em;">
+						<form action="/changeRol/{{Auth::user()->UsSlug}}" style="margin: 1em;" method="POST">
+							@csrf
 							<label for="Rol1">Rol 1</label>
 							<select id="Rol1" name="UsRol1">
 								<option {{ (Auth::user()->UsRol === 'Programador' ? "selected" : "" )}} value="Programador">Programador</option>

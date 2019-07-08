@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
-	
+	Route::post('/changeRol/{id}', 'userController@changeRol');
 	Route::resource('/clientes', 'clientcontoller');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');

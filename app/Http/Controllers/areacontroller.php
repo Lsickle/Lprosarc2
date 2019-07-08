@@ -12,6 +12,7 @@ use App\Cargo;
 use App\Sede;
 use App\Personal;
 use App\audit;
+use Permisos;
 
 class AreaController extends Controller{
 	/**
