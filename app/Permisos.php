@@ -14,6 +14,7 @@ class Permisos{
 		Contactos/index
 		Contactos/show
 		Contactos/showProveedor
+		partials/mainheader
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
