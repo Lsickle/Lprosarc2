@@ -14,17 +14,13 @@ class ClienteController extends Controller
 {
     public function show($slug)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             $cliente = Cliente::where('CliSlug', $slug)->first();
             return view('clientes.show', compact('cliente'));
-        }else{
-            abort(403);
-        }
     }
 
     public function edit($slug)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1)){
             $cliente = Cliente::where('CliSlug', $slug)->first();
             return view('clientes.edit', compact('cliente'));
         }else{

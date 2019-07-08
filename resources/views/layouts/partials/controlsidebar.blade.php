@@ -22,6 +22,54 @@
 						</a>
 					</li>
 				@endif
+				@if (Auth::user()->email == 'Sistemas@prosarc.com.co'||Auth::user()->email == 'Sistemas3@prosarc.com.co'||Auth::user()->email == 'Sistemas2@prosarc.com.co')
+					<li>
+							<a href='#'>
+								<i class="menu-icon fa fa-user-tag bg-blue"></i>
+								<div class="menu-info">
+									<h4 class="control-sidebar-subheading">Rol Express</h4>
+									<p>Cambio de roles para programador</p>
+								</div>
+							</a>
+						<form style="margin: 1em;">
+							<label for="Rol1">Rol 1</label>
+							<select id="Rol1" name="UsRol1">
+								<option {{ (Auth::user()->UsRol === 'Programador' ? "selected" : "" )}} value="Programador">Programador</option>
+								<option {{ (Auth::user()->UsRol === 'AdministradorPlanta' ? "selected" : "" )}} value="AdministradorPlanta">AdministradorPlanta</option>
+								<option {{ (Auth::user()->UsRol === 'Hseq' ? "selected" : "" )}} value="Hseq">Hseq</option>
+								<option {{ (Auth::user()->UsRol === 'JefeLogistica' ? "selected" : "" )}} value="JefeLogistica">JefeLogistica</option>
+								<option {{ (Auth::user()->UsRol === 'AsistenteLogistica' ? "selected" : "" )}} value="AsistenteLogistica">AsistenteLogistica</option>
+								<option {{ (Auth::user()->UsRol === 'Conductor' ? "selected" : "" )}} value="Conductor">Conductor</option>
+								<option {{ (Auth::user()->UsRol === 'JefeOperaciones' ? "selected" : "" )}} value="JefeOperaciones">JefeOperaciones</option>
+								<option {{ (Auth::user()->UsRol === 'Supervisor' ? "selected" : "" )}} value="Supervisor">Supervisor</option>
+								<option {{ (Auth::user()->UsRol === 'AdministradorBogota' ? "selected" : "" )}} value="AdministradorBogota">AdministradorBogota</option>
+								<option {{ (Auth::user()->UsRol === 'JefeComercial' ? "selected" : "" )}} value="JefeComercial">JefeComercial</option>
+								<option {{ (Auth::user()->UsRol === 'Tesorería' ? "selected" : "" )}} value="Tesorería">Tesorería</option>
+								<option {{ (Auth::user()->UsRol === 'Comercial' ? "selected" : "" )}} value="Comercial">Comercial</option>
+								<option {{ (Auth::user()->UsRol === 'AsistenteComercial' ? "selected" : "" )}} value="AsistenteComercial">AsistenteComercial</option>
+								<option {{ (Auth::user()->UsRol === 'Cliente' ? "selected" : "" )}} value="Cliente">Cliente</option>
+							</select>
+							<label for="Rol2">Rol 2</label>
+							<select id="Rol2" name="UsRol2">
+								<option {{ (Auth::user()->UsRol2 === 'Programador' ? "selected" : "" )}} value="Programador">Programador</option>
+								<option {{ (Auth::user()->UsRol2 === 'AdministradorPlanta' ? "selected" : "" )}} value="AdministradorPlanta">AdministradorPlanta</option>
+								<option {{ (Auth::user()->UsRol2 === 'Hseq' ? "selected" : "" )}} value="Hseq">Hseq</option>
+								<option {{ (Auth::user()->UsRol2 === 'JefeLogistica' ? "selected" : "" )}} value="JefeLogistica">JefeLogistica</option>
+								<option {{ (Auth::user()->UsRol2 === 'AsistenteLogistica' ? "selected" : "" )}} value="AsistenteLogistica">AsistenteLogistica</option>
+								<option {{ (Auth::user()->UsRol2 === 'Conductor' ? "selected" : "" )}} value="Conductor">Conductor</option>
+								<option {{ (Auth::user()->UsRol2 === 'JefeOperaciones' ? "selected" : "" )}} value="JefeOperaciones">JefeOperaciones</option>
+								<option {{ (Auth::user()->UsRol2 === 'Supervisor' ? "selected" : "" )}} value="Supervisor">Supervisor</option>
+								<option {{ (Auth::user()->UsRol2 === 'AdministradorBogota' ? "selected" : "" )}} value="AdministradorBogota">AdministradorBogota</option>
+								<option {{ (Auth::user()->UsRol2 === 'JefeComercial' ? "selected" : "" )}} value="JefeComercial">JefeComercial</option>
+								<option {{ (Auth::user()->UsRol2 === 'Tesorería' ? "selected" : "" )}} value="Tesorería">Tesorería</option>
+								<option {{ (Auth::user()->UsRol2 === 'Comercial' ? "selected" : "" )}} value="Comercial">Comercial</option>
+								<option {{ (Auth::user()->UsRol2 === 'AsistenteComercial' ? "selected" : "" )}} value="AsistenteComercial">AsistenteComercial</option>
+								<option {{ (Auth::user()->UsRol2 === 'Cliente' ? "selected" : "" )}} value="Cliente">Cliente</option>
+							</select>
+							<button style="margin: 1em;" type="submit" class="btn btn-success pull-right">Update Rol</button>
+						</form>
+					</li>
+				@endif
 				{{-- <li>
 				 @if (in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
 					<li>
