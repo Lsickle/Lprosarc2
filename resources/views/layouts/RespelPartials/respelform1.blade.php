@@ -6,14 +6,16 @@
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::message.name') }}</label>
+				<small class="help-block with-errors">*</small>
 				<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName.0') }}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+				<small class="help-block with-errors">*</small>
 				<input required maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{ old('RespelDescrip.0') }}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
-				<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
+				<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label><small class="help-block with-errors">*</small>
 				<select name="RespelEstado[]" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 					<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
@@ -24,6 +26,7 @@
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
+				<small class="help-block with-errors">*</small>
 				<select id="selectDanger0" name="RespelIgrosidad[]" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
@@ -80,7 +83,7 @@
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
-				<small class="help-block with-errors">*</small>
+				<small class="help-block with-errors"></small>
 				<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
@@ -94,6 +97,7 @@
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.resolucion1tittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.resolucion1descrip') }}">{{ trans('adminlte_lang::LangRespel.controlx') }}
 					<a href="{{ trans('adminlte_lang::LangRespel.resolucion1link') }}" target="_blank">{{ trans('adminlte_lang::LangRespel.resolucion1') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 				</label>
+				<small class="help-block with-errors">*</small>
 				<select id="selectControl0" name="SustanciaControlada[]" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 					<option value="0" onclick="setNoControlada(0)">{{ trans('adminlte_lang::LangRespel.no') }}</option>
@@ -106,6 +110,7 @@
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
 					<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 				</label>
+				<small class="help-block with-errors">*</small>
 				<select id="selectDdeclaracion0" name="RespelDeclaracion[]" class="form-control" required>
 					<option value="" selected>{{ trans('adminlte_lang::LangRespel.select')}}</option>
 					<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>

@@ -59,7 +59,6 @@ class Permisos{
 	/* Using ->
 		scliencontroller:create
 	*/
-
 }
 
 /*

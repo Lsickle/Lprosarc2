@@ -90,12 +90,7 @@ class RespelController extends Controller
      */
     public function store(RespelStoreRequest $request)
     {   
-        // $validatedData = $request->validate([
-        //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
-        // ]);
-        // return $request;
-
-        if (Auth::user()->UsRol=='Cliente') {
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
             $UserSedeID = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
@@ -108,9 +103,6 @@ class RespelController extends Controller
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
 
-            
-            // return $UserSedeID;
-
             $Cotizacion = new Cotizacion();
             $Cotizacion->CotiNumero = 7;
             $Cotizacion->CotiFechaSolicitud = now();
@@ -119,10 +111,8 @@ class RespelController extends Controller
             $Cotizacion->FK_CotiSede = $UserSedeID;
             $Cotizacion->save();
 
-
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
-
 
             $respel = new Respel();
 
@@ -164,7 +154,8 @@ class RespelController extends Controller
             }
 
             /*se verifica el rol de usuario para asignar un status al residuo*/
-            if (Auth::user()->UsRol=='Cliente'||Auth::user()->UsRol=='Programador') {
+            // FALTA antes: Programador y cliente
+            if (in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS)) {
                 $statusinicial="Pendiente";
             }
             $respel->RespelName = $request['RespelName'][$x];
@@ -207,7 +198,7 @@ class RespelController extends Controller
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-        // return $ResiduoConDependencia1;
+
         if (Auth::user()->UsRol=='Cliente')
             if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
                 $editButton = 'No editable';
