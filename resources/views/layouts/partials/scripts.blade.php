@@ -724,39 +724,41 @@ var control = document.getElementById("hoja0");
 	        var blob = files[i];
 	        // console.log(blob.type);
 	        var fileReader = new FileReader();
+	        var tipo="";
 	        fileReader.onloadend = function(e) {
 	          var arr = (new Uint8Array(e.target.result)).subarray(0, 4);
 	          var header = "";
 	          for(var i = 0; i < arr.length; i++) {
 	             header += arr[i].toString(16);
 	          }
-	          console.log(header);
+	          // console.log(header);
 	          switch (header) {
 	              case "89504e47":
-	                 var tipo = "png";
+	                 tipo = "png";
 	                  break;
 	              case "47494638":
-	                 var tipo = "gif";
+	                 tipo = "gif";
 	                  break;
 	              case "ffd8ffe0":
 	              case "ffd8ffe1":
 	              case "ffd8ffe2":
 	              case "ffd8ffe3":
 	              case "ffd8ffe8":
-	                 var tipo = "jpeg";
+	                 tipo = "jpeg";
 	                  break;
 	              case "25504446":
-	                 var tipo = "pdf";
+	                 tipo = "pdf";
 	                  break;
 	              default:
 	                 var tipo = "unknown"; // Or you can use the blob.type as fallback
 	                  break;
 	          }
+	        // return tipo;
 	        console.log(tipo);
+
 
 	        };
 	        fileReader.readAsArrayBuffer(blob.slice(0, 4));
-
 	    }
 	}, false);	
 })
