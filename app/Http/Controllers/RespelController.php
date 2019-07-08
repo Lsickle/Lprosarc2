@@ -32,12 +32,21 @@ class RespelController extends Controller
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->value('sedes.ID_Sede');
 
-        if(Auth::user()->UsRol === "Programador"){
+        // if(Auth::user()->UsRol === "Programador"){
             $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.*', 'clientes.CliName')
+            ->where(function($query){
+                if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                }elseif (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+                    $query->where('respels.RespelDelete',0)
+                    $query->where('sedes.ID_Sede', $UserSedeID)
+                }else{
+                    $query->where('respels.RespelDelete',0)
+                }
+            })
             ->get();
         }
         elseif(Auth::user()->UsRol === "Cliente"){
