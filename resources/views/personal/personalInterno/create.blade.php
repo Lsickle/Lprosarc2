@@ -69,12 +69,12 @@
 														<div class="form-group col-md-6" id="NewArea" style="display: none;">
 															<label for="NewInputA" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.namenewarea') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.namenewarea') }}</label>
 															<small class="help-block with-errors">*</small>
-															<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewArea" type="text" id="NewInputA" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newarea') }}">
+															<input data-minlength="8" name="NewArea" type="text" id="NewInputA" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newarea') }}">
 														</div>
 														<div class="form-group col-md-6" id="NewCargo" style="display: none;">
 															<label for="NewInputC" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.namenewcargo') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewcarg') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.namenewcargo') }}</label>
 															<small class="help-block with-errors">*</small>
-															<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newcargo') }}">
+															<input data-minlength="8" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newcargo') }}">
 														</div>
 													</div>
 												</div>
@@ -96,7 +96,7 @@
 														<div class="form-group col-md-6">
 															<label for="PersDocNumber" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persdocument') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodoc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persdocument') }}</label>
 															<small class="help-block with-errors errorsdoc">*</small>
-															<input data-minlength="6" maxlength="11" required name="PersDocNumber" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" type="text" class="form-control document" id="PersDocNumber" value="{{old('PersDocNumber')}}">
+															<input data-minlength="6" maxlength="11" required name="PersDocNumber" type="text" class="form-control document" id="PersDocNumber" value="{{old('PersDocNumber')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersFirstName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persfirstname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfofirstname') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persfirstname') }}</label>
@@ -121,7 +121,7 @@
 														<div class="form-group col-md-6">
 															<label for="PersCellphone" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.mobile') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotel') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.mobile') }}</label>
 															<small class="help-block with-errors">*</small>
-															<input data-minlength="12" required name="PersCellphone" type="tel" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
+															<input data-minlength="12" required name="PersCellphone" type="tel" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{old('PersCellphone')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersAddress" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodir') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.address') }}</label>
@@ -141,17 +141,17 @@
 														<div class="form-group col-md-6">
 															<label for="PersPhoneNumber" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persphone') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotelloc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persphone') }}</label>
 															<small class="help-block with-errors dir"></small>
-															<input data-minlength="11" name="PersPhoneNumber" autofocus="true" type="text" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" class="form-control phone" id="PersPhoneNumber" value="{{old('PersPhoneNumber')}}">
+															<input data-minlength="11" name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber" value="{{old('PersPhoneNumber')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersEPS" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perseps') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoeps') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perseps') }}</label>
 															<small class="help-block with-errors dir">*</small>
-															<input data-minlength="5" name="PersEPS"  autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersEPS" required value="{{old('PersEPS')}}">
+															<input data-minlength="5" name="PersEPS"  autofocus="true" type="text" class="form-control" id="PersEPS" required value="{{old('PersEPS')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersARL" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persarl') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoarl') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persarl') }}</label>
 															<small class="help-block with-errors dir">*</small>
-															<input data-minlength="5" name="PersARL" autofocus="true" data-error="{{ trans('adminlte_lang::message.data-error-minlength5') }}" type="text" class="form-control" id="PersARL" required value="{{old('PersARL')}}">
+															<input data-minlength="5" name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required value="{{old('PersARL')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersLibreta" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perslibreta') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfolibreta') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perslibreta') }}</label>
@@ -163,12 +163,12 @@
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersBank" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persbank') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfobank') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persbank') }}</label>
-															<input data-minlength="4" name="PersBank" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" autofocus="true" type="text" class="form-control" id="PersBank" value="{{old('PersBank')}}">
+															<input data-minlength="4" name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank" value="{{old('PersBank')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersBankAccaunt" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persbankaccaunt') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfobankaccaunt') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persbankaccaunt') }}</label>
 															<small class="help-block with-errors"></small>
-															<input data-minlength="19" name="PersBankAccaunt" data-error="{{ trans('adminlte_lang::message.data-error-minlength16') }}" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{old('PersBankAccaunt')}}">
+															<input data-minlength="19" name="PersBankAccaunt" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{old('PersBankAccaunt')}}">
 														</div>
 														<div class="form-group col-md-6">
 															<label for="PersIngreso" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persingreso') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoingrso') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persingreso') }}</label>

@@ -114,7 +114,7 @@
 									{{ trans('adminlte_lang::message.vehicplaca') }}
 								</label>
 								<small class="help-block with-errors">*</small>
-								<input type="text" name="CreateVehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('CreateVehicPlaca')}}" required>
+								<input type="text" name="CreateVehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="{{old('CreateVehicPlaca')}}" required>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="VehicTipo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehictipo') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehictipomessage') }}">
@@ -219,7 +219,7 @@
 							<div class="modal-header">
 								<div class="form-group col-md-12">
 									<label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
-									<input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="`+placa+`" required>
+									<input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="`+placa+`" required>
 								</div>
 								<div class="col-md-12 form-group">
 									<label for="VehicTipo"> {{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>

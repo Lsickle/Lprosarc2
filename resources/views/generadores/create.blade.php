@@ -50,7 +50,7 @@
 												<div class="col-md-12 form-group">
 													<label for="GenerInputNit">{{ trans('adminlte_lang::message.clientNIT') }} </label>
 													<small class="help-block with-errors">*</small>
-													<input class="form-control nit" data-minlength="13" maxlength="13"  name="GenerNit" autofocus="true" type="text" id="GenerInputNit" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('GenerNit') }}" required>
+													<input class="form-control nit" data-minlength="13" maxlength="13"  name="GenerNit" autofocus="true" type="text" id="GenerInputNit" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('GenerNit') }}" required>
 												</div>
 												<div class="col-md-12 form-group">
 													<label for="GenerInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label>
@@ -125,30 +125,30 @@
 													<small class="help-block with-errors">*</small>
 													<div class="input-group">
 														<span class="input-group-addon">(+57)</span>
-														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
+														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
 													</div>
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label>
 													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.phone') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de Teléfono de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}">
+													<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}">
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label>
 													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.ext') }} " data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Extensión del Teléfono Local </p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors"></small>
-													<input type="text" class="form-control extension ext" id="GSedeinputext1" name="GSedeExt1" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" data-minlength="2" maxlength="5" value="{{ old('GSedeExt1') }}" disabled>
+													<input type="text" class="form-control extension ext" id="GSedeinputext1" name="GSedeExt1" data-minlength="2" maxlength="5" value="{{ old('GSedeExt1') }}" disabled>
 												</div>
 												<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 													<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
 													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}">
+													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}">
 												</div>
 												<div id="extension2" class="col-md-6 form-group" style="display: none;">
 													<label for="GSedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label> 
 													<small class="help-block with-errors"></small>
-													<input type="text" class="form-control extension ext2" id="GSedeinputext2" name="GSedeExt2" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" data-minlength="2" maxlength="5" value="{{ old('GSedeExt2') }}" disabled>
+													<input type="text" class="form-control extension ext2" id="GSedeinputext2" name="GSedeExt2" data-minlength="2" maxlength="5" value="{{ old('GSedeExt2') }}" disabled>
 												</div>
 												<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
 													<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
