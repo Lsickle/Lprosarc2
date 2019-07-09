@@ -20,12 +20,12 @@ class VehicManteController extends Controller
 	 */
 	public function index()
 	{
-		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
 			$MantVehicles = DB::table('mantenvehics')
 				->join('vehiculos', 'FK_VehMan', '=', 'ID_Vehic')
 				->select('mantenvehics.*', 'vehiculos.VehicPlaca')
 				->where(function($query){
-					if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('MvDelete', 0);
 					}
 				})

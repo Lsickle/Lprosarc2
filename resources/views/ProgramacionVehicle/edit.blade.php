@@ -290,13 +290,13 @@
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
 			@endif
-			@if(Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.AsistenteLogistica'))
+			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				$("#ProgVehEntrada").prop('required', true);
 				$("#progVehKm").prop('required', true);
 				$("#ProgVehEntrada").prop('disabled', false);
 				$("#progVehKm").prop('disabled', false);
 			@endif
-			@if(Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.JefeLogistica'))
+			@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 				$(".select2-selection").css("background-image", "none");
 				$("#ProgVehFecha").prop('disabled', false);
 				$("#ProgVehSalida").prop('disabled', false);
@@ -305,7 +305,7 @@
 				$("#FK_ProgAyudante").prop('disabled', false);
 				$("#ProgVehColor").prop("disabled", false);
 			@endif
-			@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')))
+			@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 				$("#ProgVehFecha").prop('disabled', false);
 				$("#ProgVehSalida").prop('disabled', false);
 				$("#ProgVehEntrada").prop('disabled', false);
@@ -325,15 +325,15 @@
 			$("#ProgVehEntrada").prop("disabled", true);
 			$("#update").prop("disabled", true);
 		@endif
-		@if(Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.AsistenteLogistica'))
+		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			$("#ProgVehEntrada").prop("required", true);
 			$("#ProgVehEntrada").prop("disabled", false);
 		@endif
-		@if(Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.JefeLogistica'))
+		@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 			$("#ProgVehFecha").prop("disabled", false);
 			$("#ProgVehSalida").prop("disabled", false);
 		@endif
-		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')))
+		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 			$("#ProgVehEntrada").prop("disabled", false);
 			$("#ProgVehFecha").prop("disabled", false);
 			$("#ProgVehSalida").prop("disabled", false);
@@ -348,16 +348,16 @@
 			$("#ProgVehEntrada").prop("disabled", true);
 			$("#update").prop("disabled", true);
 		@endif
-		@if(Auth::user()->UsRol == trans('adminlte_lang::message.AsistenteLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.AsistenteLogistica'))
+		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			$("#ProgVehEntrada").prop('required', true);
 			$("#ProgVehEntrada").prop('disabled', false);
 		@endif
-		@if(Auth::user()->UsRol == trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol2 == trans('adminlte_lang::message.JefeLogistica'))
+		@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 			$("#ProgVehFecha").prop("disabled", false);
 			$("#vehicalqui").prop("disabled", false);
 			$("#ProgVehSalida").prop("disabled", false);
 		@endif
-		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Programador')))
+		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 			$("#ProgVehEntrada").prop('disabled', false);
 			$("#ProgVehFecha").prop("disabled", false);
 			$("#vehicalqui").prop("disabled", false);

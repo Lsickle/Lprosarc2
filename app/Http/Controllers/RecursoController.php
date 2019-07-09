@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RecursosStoreRequest;
+use Illuminate\Support\Facades\Hash;
 use App\audit;
 use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
 use App\ProgramacionVehiculo;
-use Illuminate\Support\Facades\Hash;
+use Permisos;
 
 
 class RecursoController extends Controller
@@ -57,46 +58,41 @@ class RecursoController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 
-            $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+        $Respel = DB::table('solicitud_residuos')
+            ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
+            ->join('respels', 'respels.ID_Respel', 'residuos_geners.FK_Respel')
+            ->select('respels.RespelName')
+            ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
+            ->first();
 
-            $Respel = DB::table('solicitud_residuos')
-                ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
-                ->join('respels', 'respels.ID_Respel', 'residuos_geners.FK_Respel')
-                ->select('respels.RespelName')
-                ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
-                ->first();
+        $SolSer = DB::table('solicitud_residuos')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
+            ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerStatus')
+            ->where('solicitud_servicios.ID_SolSer', $SolRes->FK_SolResSolSer)
+            ->first();
 
-            $SolSer = DB::table('solicitud_residuos')
-                ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')
-                ->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerStatus')
-                ->where('solicitud_servicios.ID_SolSer', $SolRes->FK_SolResSolSer)
-                ->first();
+        $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolSer->ID_SolSer)->first();
 
-            $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolSer->ID_SolSer)->first();
+        $Fotos = DB::table('recursos')
+            ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
+            ->select('recursos.*', 'solicitud_residuos.SolResSlug')
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
+            ->where('recursos.RecCarte', 'Foto')
+            ->orderBy('recursos.RecTipo')
+            ->get();
 
-            $Fotos = DB::table('recursos')
-                ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
-                ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-                ->select('recursos.*', 'solicitud_residuos.SolResSlug')
-                ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
-                ->where('recursos.RecCarte', 'Foto')
-                ->orderBy('recursos.RecTipo')
-                ->get();
-
-            $Videos = DB::table('recursos')
-                ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
-                ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
-                ->select('recursos.*', 'solicitud_residuos.SolResSlug')
-                ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
-                ->where('RecCarte', 'Video')
-                ->orderBy('RecTipo')
-                ->get();
+        $Videos = DB::table('recursos')
+            ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
+            ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')
+            ->select('recursos.*', 'solicitud_residuos.SolResSlug')
+            ->where('solicitud_residuos.FK_SolResSolSer', $SolSer->ID_SolSer)
+            ->where('RecCarte', 'Video')
+            ->orderBy('RecTipo')
+            ->get();
         return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel', 'Programacion'));
-        }else{
-            abort(403);
-        }
 
     }
     

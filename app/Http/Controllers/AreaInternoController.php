@@ -23,21 +23,21 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             $Areas = DB::table('areas')
             ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('areas.AreaSlug', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
             ->where(function($query){
                 $id = userController::IDClienteSegunUsuario();
-                /*Validacion del personal de Prosarc autorizado para las areas solo los que no esten eliminados*/
-                if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
-                    $query->where('clientes.ID_Cli', '=', $id);
-                    $query->where('areas.AreaDelete', '=', 0);
-                }
                 /*Validacion del Programador para ver todas las areas aun asi este eliminado*/
+                if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                    $query->where('clientes.ID_Cli', '=', $id);
+                }
+                /*Validacion del personal de Prosarc autorizado para las areas solo los que no esten eliminados*/
                 else{
                     $query->where('clientes.ID_Cli', '=', $id);
+                    $query->where('areas.AreaDelete', '=', 0);
                 }
             })
             ->get();

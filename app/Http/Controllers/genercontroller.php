@@ -18,6 +18,7 @@ use App\ResiduosGener;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\auditController;
 use Illuminate\Support\Facades\Hash;
+use App\Permisos;
 
 
 
@@ -30,18 +31,21 @@ class genercontroller extends Controller
      */
     public function index()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
             $id = userController::IDClienteSegunUsuario();
             $Generadors = DB::table('generadors')
             ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('generadors.*', 'sedes.ID_Sede', 'sedes.SedeName', 'sedes.FK_SedeCli', 'clientes.CliShortname', 'clientes.ID_Cli')
             ->where(function($query)use($id){
-                if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                    $query->where('GenerDelete',0);
-                    $query->where('ID_Cli', '<>', $id);
+                if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
+                    if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) {
+                        $query->where('ID_Cli', '<>', $id);
+                    }else{
+                        $query->where('GenerDelete', 0);
+                        $query->where('ID_Cli', '<>', $id);  
+                    }
                 }
-                if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                     $query->where('FK_SedeCli', $id);
                     $query->where('GenerDelete', 0);
                 }
@@ -52,9 +56,6 @@ class genercontroller extends Controller
             
             return view('generadores.index', compact('Generadors', 'Gener'));
 
-        }else{
-            abort(403);
-        }
     }
 
     /**
@@ -64,7 +65,7 @@ class genercontroller extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $id = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
             $Cliente = Sede::where('SedeDelete', 0)->get();
@@ -207,8 +208,6 @@ class genercontroller extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-
             $Generador = generador::where('GenerSlug',$id)->first();
             $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
             $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
@@ -246,9 +245,7 @@ class genercontroller extends Controller
                     ->get();
             }
             return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos', 'old'));
-        }else{
-            abort(403);
-        }
+        
     }
 
     /**
@@ -259,7 +256,7 @@ class genercontroller extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();

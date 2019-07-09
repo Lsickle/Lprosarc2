@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.personaltitlelist') }}</h3>
-					@if(Auth::user()->UsRol == trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol2 == trans('adminlte_lang::message.Cliente'))
+					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 						<a href="personal/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
 				</div>

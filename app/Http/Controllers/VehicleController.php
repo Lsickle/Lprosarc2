@@ -18,12 +18,12 @@ class VehicleController extends Controller
 	 */
 	public function index()
 	{ 
-		if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente') ||Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
 			$Vehicles = DB::table('vehiculos')
 				->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
 				->select('vehiculos.*', 'sedes.SedeName')
 				->where(function($query){
-					if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador')){
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('VehicDelete', 0);
 					}
 				})
