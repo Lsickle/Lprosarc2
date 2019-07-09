@@ -716,7 +716,7 @@ var currentScrollPos = window.pageYOffset;
 <script>
 	$(document).ready(function(){
 		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?');
-		$('input[type="email"]').attr('data-error', 'No es un emai valido');
+		$('input[type="email"]').attr('data-error', 'No es un e-mail valido');
 	})
 </script>
 @yield('NewScript')

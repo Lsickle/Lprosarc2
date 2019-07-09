@@ -110,7 +110,7 @@ class RespelController extends Controller
         $Cotizacion->CotiDelete = 0;
         $Cotizacion->CotiStatus = "Aprobada";
         $Cotizacion->FK_CotiSede = $UserSedeID;
-        // $Cotizacion->save();
+        $Cotizacion->save();
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
