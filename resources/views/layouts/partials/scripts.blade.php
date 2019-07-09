@@ -51,7 +51,7 @@ $('form[data-toggle="validator"]').validator({
 			var tipo = $el[0].files[0].type.split('/').pop();
 			var existe = permitido.indexOf(tipo);
 			if ($el[0].files[0] && existe < 0) {
-				return "Los archivos permitidos son: "+permitido;
+				return "Las extensiones permitidas son: "+permitido;
 			}
 		},
 	}

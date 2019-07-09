@@ -38,7 +38,7 @@
                                             <div id="form-step-0" role="form" data-toggle="validator">
                                                 <div class="form-group col-md-12">
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Cliente->CliNit}}" required>
+                                                    <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{$Cliente->CliNit}}" required>
                                                 </div>
                                                 <div class="col-md-12 form-group">
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
@@ -70,7 +70,7 @@
                                                             {{ trans('adminlte_lang::message.vehicplaca') }}
                                                         </label>
                                                         <small class="help-block with-errors">*</small>
-                                                        <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}">
+                                                        <input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}">
                                                     </div>
                                                     <div id="AddVehiculoTipo" class="col-md-6 form-group" style="display:none;">
                                                         <label for="VehicTipo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehictipo') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehictipomessage') }}">
@@ -132,7 +132,7 @@
                                                     <label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <span class="input-group-addon">(+57)</span>
-                                                        <input type="text" class="form-control mobile" id="sedeinputcelular" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" data-minlength="12" value="{{ $Sede->SedeCelular}}" required>
+                                                        <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" data-minlength="12" value="{{ $Sede->SedeCelular}}" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -141,19 +141,19 @@
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
-                                                    <input type="text" class="form-control phone tel" id="sedeinputphone1" name="SedePhone1" data-minlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" value="{{ $Sede->SedePhone1}}">
+                                                    <input type="text" class="form-control phone tel" id="sedeinputphone1" name="SedePhone1" data-minlength="11" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" value="{{ $Sede->SedePhone1}}">
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                         <label for="sedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label><small class="help-block with-errors"></small>
-                                                    <input type="text" disabled class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" data-minlength="2" data-maxlength="5" value="{{ $Sede->SedeExt1}}">
+                                                    <input type="text" disabled class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-minlength="2" data-maxlength="5" value="{{ $Sede->SedeExt1}}">
                                                 </div>
                                                 <div id="telefono2" class="col-md-6 form-group" style="display: none;">
                                                     <label for="sedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label><small class="help-block with-errors"></small>
-                                                    <input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" value="{{ $Sede->SedePhone2}}">
+                                                    <input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" value="{{ $Sede->SedePhone2}}">
                                                 </div>
                                                 <div id="extension2" class="col-md-6 form-group" style="display: none;">
                                                     <label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
-                                                    <input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" disabled value="{{ $Sede->SedeExt2}}">
+                                                    <input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" disabled value="{{ $Sede->SedeExt2}}">
                                                 </div>
                                                 <div class="col-md-12" id="tel" style="display:flex; justify-content:center">
                                                     <a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
