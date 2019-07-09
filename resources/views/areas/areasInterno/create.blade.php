@@ -30,22 +30,22 @@
 							@endif
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-12">
-									<label for="AreaName">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
-									<input data-minlength="8" data-error="{{ trans('adminlte_lang::message.data-error-minlength4') }}" required name="AreaName" autofocus="true" type="text" class="form-control inputText" id="AreaName" value="{{old('AreaName')}}">
-								</div>
-								<div class="form-group col-xs-12 col-md-12">
 									<label for="SedeSelect">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
 									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->ID_Sede}}" {{ old('FK_AreaSede') == $Sede->ID_Sede ? 'selected' : ''}}>{{$Sede->SedeName}}</option>
+											<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 										@endforeach
 									</select>
 								</div>
-							</div>	
+								<div class="form-group col-xs-12 col-md-12">
+									<label for="AreaName">{{ trans('adminlte_lang::message.areaname') }}</label><small class="help-block with-errors">*</small>
+									<input data-minlength="5" required name="AreaName" autofocus="true" type="text" class="form-control inputText" id="AreaName" value="{{old('AreaName')}}">
+								</div>
+							</div>
 							<div class="box box-info">
 								<div class="box-footer">
-									<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+									<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 								</div>
 							</div>
 						</form>

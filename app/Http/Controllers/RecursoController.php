@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;  
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RecursosStoreRequest;
+use Illuminate\Support\Facades\Hash;
 use App\audit;
 use App\Recurso;
 use App\cliente;
 use App\SolicitudResiduo;
 use App\ProgramacionVehiculo;
+use Permisos;
+
 
 class RecursoController extends Controller
 {
@@ -55,8 +58,6 @@ class RecursoController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.JefeLogistica') || Auth::user()->UsRol === trans('adminlte_lang::message.SupervisorTurno') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 
         $Respel = DB::table('solicitud_residuos')
@@ -91,11 +92,7 @@ class RecursoController extends Controller
             ->where('RecCarte', 'Video')
             ->orderBy('RecTipo')
             ->get();
-
         return view('recursos.show', compact('Recursos', 'SolRes', 'Fotos', 'Videos', 'SolSer', 'Respel', 'Programacion'));
-        }else{
-            abort(403);
-        }
 
     }
     
@@ -143,7 +140,7 @@ class RecursoController extends Controller
                 $Recurso->RecCarte = $request->input("RecCarte");
                 $Recurso->RecRmSrc = $name;
                 $Recurso->RecSrc = $Src;
-                $Recurso->SlugRec = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc S.A ESP.".substr(md5(rand()), 0,32);
+                $Recurso->SlugRec = hash('sha256', rand().time().$Recurso->RecRmSrc);
 
                 $Recurso->RecFormat = '.'.$file->extension();
                 $Recurso->RecDelete = 0;

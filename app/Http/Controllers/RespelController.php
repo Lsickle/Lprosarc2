@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
 use App\audit;
 use App\Respel;
@@ -14,8 +16,8 @@ use App\Tratamiento;
 use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
-use Illuminate\Validation\Validator;
-use Illuminate\Support\Facades\Hash;
+use App\Permisos;
+
 class RespelController extends Controller
 {
     /**
@@ -24,41 +26,33 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        /*se define la sede del usuario actual*/
-        $UserSedeID = DB::table('personals')
-                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->value('sedes.ID_Sede');
+        $Respels = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.CliName')
+            ->where(function($query){
+                if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 
-        if(Auth::user()->UsRol === "Programador"){
-            $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
+                    /*se define la sede del usuario actual*/
+                    $UserSedeID = DB::table('personals')
+                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->value('sedes.ID_Sede');
+
+                    $query->where('respels.RespelDelete',0);
+                    $query->where('sedes.ID_Sede', $UserSedeID);
+
+                }elseif (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+                
+                }else{
+                    $query->where('respels.RespelDelete',0);
+                }
+            })
             ->get();
-        }
-        elseif(Auth::user()->UsRol === "Cliente"){
-            $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
-            ->where('respels.RespelDelete',0)
-            ->where('sedes.ID_Sede', $UserSedeID)
-            ->get();
-        }
-        else{
-            $Respels = DB::table('respels')
-            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
-            ->where('respels.RespelDelete',0)
-            ->get();
-        }
+
         return view('respels.index', compact('Respels')); 
     }
     /**
@@ -68,23 +62,24 @@ class RespelController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->UsRol=='Cliente'){
-			$Sede = DB::table('personals')
-				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-				->select('sedes.ID_Sede')
-				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-				->get();
-			return view('respels.create', compact('Sede'));
-		}
-		else{
-			$Sedes = DB::table('clientes')
-				->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('sedes.ID_Sede', 'clientes.CliName')
-				->where('clientes.ID_Cli', '<>', 1) 
-				->get();
-			return view('respels.create', compact('Sedes'));
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+            $Sede = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->select('sedes.ID_Sede')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->get();
+            return view('respels.create', compact('Sede'));
+        }elseif(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+            $Sedes = DB::table('clientes')
+                ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                ->select('sedes.ID_Sede', 'clientes.CliName')
+                ->where('clientes.ID_Cli', '<>', 1) 
+                ->get();
+            return view('respels.create', compact('Sedes'));
+        }else{
+            abort(403);
         }
     }
 
@@ -96,12 +91,8 @@ class RespelController extends Controller
      */
     public function store(RespelStoreRequest $request)
     {   
-        // $validatedData = $request->validate([
-        //     'RespelFoto.*' => 'sometimes|image|max:1024|mimes:jpeg,png',
-        // ]);
-        // return $request;
 
-        if (Auth::user()->UsRol=='Cliente') {
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
             $UserSedeID = DB::table('personals')
                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
@@ -113,22 +104,16 @@ class RespelController extends Controller
         }
 
         /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
-
-            
-            // return $UserSedeID;
-
-            $Cotizacion = new Cotizacion();
-            $Cotizacion->CotiNumero = 7;
-            $Cotizacion->CotiFechaSolicitud = now();
-            $Cotizacion->CotiDelete = 0;
-            $Cotizacion->CotiStatus = "Aprobada";
-            $Cotizacion->FK_CotiSede = $UserSedeID;
-            $Cotizacion->save();
-
+        $Cotizacion = new Cotizacion();
+        $Cotizacion->CotiNumero = 7;
+        $Cotizacion->CotiFechaSolicitud = now();
+        $Cotizacion->CotiDelete = 0;
+        $Cotizacion->CotiStatus = "Aprobada";
+        $Cotizacion->FK_CotiSede = $UserSedeID;
+        $Cotizacion->save();
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
-
 
             $respel = new Respel();
 
@@ -170,9 +155,11 @@ class RespelController extends Controller
             }
 
             /*se verifica el rol de usuario para asignar un status al residuo*/
-            if (Auth::user()->UsRol=='Cliente'||Auth::user()->UsRol=='Programador') {
-                $statusinicial="Pendiente";
-            }
+            // FALTA antes: Programador y cliente
+
+            // if (in_array(Auth::user()->UsRol, Permisos::CLIENTEYADMINS)) {
+            //     $statusinicial="Pendiente";
+            // }
             $respel->RespelName = $request['RespelName'][$x];
             $respel->RespelDescrip = $request['RespelDescrip'][$x];
             $respel->RespelIgrosidad = $request['RespelIgrosidad'][$x];
@@ -182,13 +169,14 @@ class RespelController extends Controller
             $respel->SustanciaControlada = $request['SustanciaControlada'][$x];
             $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'][$x];
             $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'][$x];
-            $respel->RespelStatus = $statusinicial;
+            $respel->RespelStatus = "Pendiente";
+            // $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
             $respel->RespelFoto = $foto;
             $respel->SustanciaControladaDocumento = $ctrlDoc;
             $respel->FK_RespelCoti = $Cotizacion->ID_Coti;
-            $respel->RespelSlug = hash('sha256', rand().time().$request['RespelName'][$x]);
+            $respel->RespelSlug = hash('sha256', rand().time().$respel->RespelName);
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
@@ -213,8 +201,8 @@ class RespelController extends Controller
         /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-        // return $ResiduoConDependencia1;
-        if (Auth::user()->UsRol=='Cliente')
+
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
             if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
                 $editButton = 'No editable';
             }else{
@@ -247,77 +235,63 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        $Respels = Respel::where('RespelSlug', $id)->first();
-
-        if ($Respels->RespelDelete == 1) {
-            abort(404);
-        }
-
-        /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
-        $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
-        $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-        // return $ResiduoConDependencia1;
-
-        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
-            $deleteButton = 'No borrable';
-        }else{
-            $deleteButton = 'borrable';
-        }   
-
-        $tratamientos = DB::table('tratamientos')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('sedes.*', 'clientes.*', 'tratamientos.*')
-            ->get();
-
-        // se verifica el rol y el status del residuo para devolver a la vista correspondiente
-            $statusRespel = $Respels->RespelStatus;
-
-        if(Auth::user()->UsRol == 'Cliente'){
-            $Sede = DB::table('personals')
-                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                ->select('sedes.ID_Sede')
-                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->get();
-            switch ($statusRespel) {
-                case 'Pendiente':
-                    return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
-                    break;
-
-                case 'Incompleto':
-                    return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
-                    break;
-
-                case 'Aprobado':
-                    abort(403);
-                    break;
-
-                case 'Rechazado':
-                    abort(403);
-                    break;
-
-                case 'Vencido':
-                    abort(403);
-                    break;
-                
-                default:
-                    abort(403);
-                    break;
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+            $Respels = Respel::where('RespelSlug', $id)->first();
+    
+            if ($Respels->RespelDelete == 1) {
+                abort(404);
             }
-        }
-        else{
-            $Sedes = DB::table('clientes')
-                ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('sedes.ID_Sede', 'sedes.SedeName')
-                ->where('clientes.ID_Cli', '<>', 1) 
+    
+            /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+            $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+            $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+    
+            if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+                $deleteButton = 'No borrable';
+            }else{
+                $deleteButton = 'borrable';
+            }   
+    
+            $tratamientos = DB::table('tratamientos')
+                ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->select('sedes.*', 'clientes.*', 'tratamientos.*')
                 ->get();
-            return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
-            
+    
+            // se verifica el rol y el status del residuo para devolver a la vista correspondiente
+                $statusRespel = $Respels->RespelStatus;
+    
+            if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+                $Sede = DB::table('personals')
+                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                    ->select('sedes.ID_Sede')
+                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->get();
+                switch ($statusRespel) {
+                    case 'Pendiente':
+                        return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
+                    case 'Incompleto':
+                        return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
+                    default:
+                        abort(403);
+                        break;
+                }
+            }else{
+                $Sedes = DB::table('clientes')
+                    ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->select('sedes.ID_Sede', 'sedes.SedeName')
+                    ->where('clientes.ID_Cli', '<>', 1) 
+                    ->get();
+    
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+            }
+        }else{
+            abort(403);
         }
-
-        
     }
 
     /**
@@ -329,8 +303,6 @@ class RespelController extends Controller
      */
     public function update(RespelStoreRequest $request, $id)
     {
-        // return $request;
-
         $respel = Respel::where('RespelSlug', $id)->first();
             if (isset($request['RespelHojaSeguridad'])) {
                 $file1 = $request['RespelHojaSeguridad'];
@@ -368,10 +340,10 @@ class RespelController extends Controller
             }else{
                 $ctrlDoc = $respel->SustanciaControladaDocumento;
             }
-            if (Auth::user()->UsRol !== "Cliente") {
-                $respel->RespelStatus = $request['RespelStatus'];
-            }else{
+            if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
                 $respel->RespelStatus = "Pendiente";
+            }else{
+                $respel->RespelStatus = $request['RespelStatus'];
             }
             $respel->RespelName = $request['RespelName'];
             $respel->RespelDescrip = $request['RespelDescrip'];
@@ -418,7 +390,6 @@ class RespelController extends Controller
                     $Respels->RespelDelete = 0;
                 }
                 break;
-
             default:
                 if ($Respels->RespelDelete == 0) {
                     $Respels->RespelDelete = 1;
@@ -450,7 +421,7 @@ class RespelController extends Controller
     {
         $respel = Respel::where('RespelSlug', $id)->first();
 
-        if (Auth::user()->UsRol == "Programador") {
+        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $respel->RespelStatus = $request['RespelStatus'];
             $respel->RespelStatusDescription = $request['RespelStatusDescription'];
             $respel->save();

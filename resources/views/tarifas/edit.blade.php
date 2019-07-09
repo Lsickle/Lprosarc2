@@ -138,7 +138,7 @@ Actualizción de Tarifa
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    <button type="submit" class="btn btn-success">Actualizar</button>
                                 </div>
                             </form>
                         </div>

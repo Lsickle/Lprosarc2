@@ -50,7 +50,7 @@ class GeneradoresStoreRequest extends FormRequest
 
             'GenerName'     => 'required|max:255',
             'GenerShortname'=> 'required|max:64',
-            'FK_GenerCli'   => 'required|max:10|numeric', 
+            'FK_GenerCli'   => 'required', 
 
             'GSedeAddress'  => 'required|max:255',
             'GSedeCelular'  => 'min:12|max:12|nullable',
@@ -59,8 +59,8 @@ class GeneradoresStoreRequest extends FormRequest
             'GSedePhone2'   => 'min:11|max:11|nullable',
             'GSedeExt2'     => 'min:2|numeric|nullable',
             'GSedeName'     => 'required|max:128',
-            'GSedeEmail'    => 'required|max:128|email',
-            'FK_GSedeMun'   => 'required|numeric',
+            'GSedeEmail'    => 'required|max:128|email|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
+            'FK_GSedeMun'   => 'required|numeric|min:1|max:1122',
         ];
     }
 }

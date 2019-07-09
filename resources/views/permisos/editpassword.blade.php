@@ -30,18 +30,18 @@
 						@endif
 						<div class="form-group col-md-12 col-xs-12">
 							<label for="oldpassword">{{ trans('adminlte_lang::message.oldpassword') }}</label><small class="help-block with-errors">*</small>
-							<input required name="oldpassword" class="form-control" type="password" id="oldpassword" data-minlength="6" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}"maxlength="255">
+							<input required name="oldpassword" class="form-control" type="password" id="oldpassword" data-minlength="6" maxlength="255">
 						</div>
 						<div class="form-group col-md-12 col-xs-12">
 							<label for="newpassword">{{ trans('adminlte_lang::message.newpassword') }}</label><small class="help-block with-errors">*</small>
-							<input required name="newpassword" class="form-control" type="password" id="newpassword" data-minlength="6" data-error="{{ trans('adminlte_lang::message.data-error-minlength6') }}" maxlength="255">
+							<input required name="newpassword" class="form-control" type="password" id="newpassword" data-minlength="6" maxlength="255">
 						</div>
 						<div class="form-group col-md-12 col-xs-12">
 							<label for="newpassword_confirmation">{{ trans('adminlte_lang::message.confirmpassword') }}</label><small class="help-block with-errors">*</small>
-							<input required name="newpassword_confirmation" data-minlength="6" maxlength="255" data-match="#newpassword" data-error="{{ trans('adminlte_lang::message.confirmpasswordfalse') }}" class="form-control" type="password" id="newpassword_confirmation">
+							<input required name="newpassword_confirmation" data-minlength="6" maxlength="255" data-match="#newpassword" class="form-control" type="password" id="newpassword_confirmation">
 						</div>
 						<div class="col-md-12 col-xs-12">
-							<button type="submit" class="btn btn-info pull-right">{{ trans('adminlte_lang::message.change') }}</button>
+							<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.change') }}</button>
 						</div>
 					</form>
 				</div>

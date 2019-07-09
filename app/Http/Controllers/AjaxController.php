@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
+use App\Area;
 
 class AjaxController extends Controller
 {
@@ -25,9 +26,10 @@ class AjaxController extends Controller
 	public function AreasSedes(Request $request, $id)
 	{
 		if ($request->ajax()) {
+			$Sede = Sede::where('SedeSlug', $id)->first();
 			$Areas = DB::table('areas')
-				->select('*')
-				->where('FK_AreaSede', $id)
+				->select('AreaSlug','AreaName')
+				->where('FK_AreaSede', $Sede->ID_Sede)
 				->where('AreaDelete', '=', 0)
 				->get();
 			return response()->json($Areas);
@@ -37,9 +39,10 @@ class AjaxController extends Controller
 	public function CargosAreas(Request $request, $id)
 	{
 		if ($request->ajax()) {
+			$Area = Area::where('AreaSlug', $id)->first();
 			$Cargos = DB::table('cargos')
-				->select('*')
-				->where('CargArea', $id)
+				->select('CargSlug', 'CargName')
+				->where('CargArea', $Area->ID_Area)
 				->where('CargDelete', '=', 0)
 				->get();
 			return response()->json($Cargos);
@@ -114,6 +117,25 @@ class AjaxController extends Controller
 				->where('respels.RespelSlug', $slug)
 				->first();
 			return response()->json($Requerimientos);
+		}
+	}
+
+	/*Funcion para ver por medio de Ajax los vehiculos que le competen a un Transportador*/
+	public function VehicTransport(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$SedeTransportador = DB::table('clientes')
+				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+				->select('sedes.ID_Sede')
+				->where('clientes.CliSlug', $id)
+				->where('CliDelete', '=', 0)
+				->first();
+			$Vehiculos = DB::table('vehiculos')
+				->select('VehicPlaca', 'ID_Vehic')
+				->where('FK_VehiSede', $SedeTransportador->ID_Sede)
+				->where('VehicDelete', 0)
+				->get();
+			return response()->json($Vehiculos);
 		}
 	}
 }

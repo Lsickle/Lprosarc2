@@ -118,3 +118,6 @@ select.form-control{
 .select2-selection--multiple > .select2-selection__rendered{
 	padding: 0 0 0 12px !important;
 }
+ul.list-unstyled li:not(:first-child) {
+	display: none;
+}

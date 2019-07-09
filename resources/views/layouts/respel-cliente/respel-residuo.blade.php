@@ -50,7 +50,7 @@
 		<div class="input-group">
 			<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 			<div class="input-group-btn">
-				<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+				<a method='get' href='{{ asset("/img/HojaSeguridad/".$Respels->RespelHojaSeguridad)}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 			</div>
 		</div>	
 	</div>
@@ -67,11 +67,11 @@
 @if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
 	<div class="col-md-6 form-group">
 
-			<label>Tarjeta De Emergencia</label>
+			<label>Tarjeta De Emergencia </label>
 			<div class="input-group">
 				<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 				<div class="input-group-btn">
-					<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+					<a method='get' href='{{ asset("/img/TarjetaEmergencia/".$Respels->RespelTarj)}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 				</div>
 			</div>	
 
@@ -79,7 +79,7 @@
 @else
 	<div class="col-md-6 form-group">
 
-			<label>Tarjeta De Emergencia</label>
+			<label>Tarjeta De Emergencia </label>
 			<input type="text" class="form-control" value="No adjuntado" disabled>
 
 	</div>
@@ -89,11 +89,12 @@
 @if($Respels->RespelFoto!=='RespelFotoDefault.png')
 	<div class="col-md-6 form-group">
 
-			<label>Fotografía del Residuo</label>
+			<label>Fotografía del Residuo </label>
 			<div class="input-group">
 				<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 				<div class="input-group-btn">
-					<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image'></i></a>
+					<a method='get' href='{{ asset("/img/fotoRespelCreate/".$Respels->RespelFoto)}}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-image'></i></a>
+
 				</div>
 			</div>	
 
@@ -106,6 +107,8 @@
 
 	</div>
 @endif
+
+
 {{-- sustancia controlada --}}
 @if($Respels->SustanciaControlada !== 0)
 	<div class="col-md-6 form-group">
@@ -138,7 +141,7 @@
 				<div class="input-group">
 					<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 					<div class="input-group-btn">
-						<a method='get' href='/img/SustanciaControlDoc/{{$Respels->SustanciaControladaDocumento}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+						<a method='get' href='{{ $Respels->SustanciaControladaDocumento === "SustanciaControlDocDefault.pdf" ? asset('/img/'.$Respels->SustanciaControladaDocumento) : asset('/img/SustanciaControlDoc/'.$Respels->SustanciaControladaDocumento) }}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>	
 
@@ -150,7 +153,7 @@
 				<div class="input-group">
 					<input type="text" class="form-control" value="Ver documento adjunto" disabled>
 					<div class="input-group-btn">
-						<a method='get' href='/img/SustanciaControlDoc/{{$Respels->SustanciaControladaDocumento}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+						<a method='get' href='{{ $Respels->SustanciaControladaDocumento === "SustanciaControlDocDefault.pdf" ? asset('/img/'.$Respels->SustanciaControladaDocumento) : asset('/img/SustanciaControlDoc/'.$Respels->SustanciaControladaDocumento) }}' target='_blank' class='btn btn-success' style="height: auto; max-height: 2.4em;"><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>	
 

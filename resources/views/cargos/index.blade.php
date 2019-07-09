@@ -12,9 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{trans('adminlte_lang::message.listcargo')}}</h3>
-					@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
-						<a href="/cargos/create" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.create')}}</a>
-					@endif
+					<a href="/cargos/create" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.create')}}</a>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -23,22 +21,15 @@
 								<tr>
 									<th>{{trans('adminlte_lang::message.cargoname')}}</th>
 									<th>{{trans('adminlte_lang::message.areaname')}}</th>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										<th>{{trans('adminlte_lang::message.edit')}}</th>
-									@endif
+									<th>{{trans('adminlte_lang::message.edit')}}</th>
 								</tr>
 							</thead>
 							<tbody id="readyTable">
 								@foreach($Cargos as $Cargo)
-								<tr @if($Cargo->CargDelete === 1)
-									style="color: red;"
-									@endif
-									>
-										<td>{{$Cargo->CargName}}</td>
-										<td>{{$Cargo->AreaName}}</td>
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
-										<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
-									@endif
+								<tr style="{{$Cargo->CargDelete === 1 ? 'color: red' : ''}}">
+									<td>{{$Cargo->CargName}}</td>
+									<td>{{$Cargo->AreaName}}</td>
+									<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
 								</tr>
 								@endforeach
 							</tbody>

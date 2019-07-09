@@ -78,7 +78,7 @@
 									</div>
 								</div>
 								<div class="box-footer" style="float:right; margin-right:5%">
-									<button type="submit" class="btn btn-primary">Actualizar</button>
+									<button type="submit" class="btn btn-success">Actualizar</button>
 								</div>
 							</form>
 						</div>

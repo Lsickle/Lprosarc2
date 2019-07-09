@@ -12,7 +12,8 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
-					@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+						<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$programacion->ID_ProgVeh}}
@@ -23,14 +24,12 @@
 						@endcomponent
 						@if($programacion->ProgVehDelete == 0)
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$programacion->ID_ProgVeh}}'  class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-							<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST'>
 								@method('DELETE')
 								@csrf
 								<input  type="submit" id="Eliminar{{$programacion->ID_ProgVeh}}" style="display: none;">
 							</form>
 						@else
-							<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 							<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST' class="pull-right">
 								@method('DELETE')
 								@csrf
@@ -130,19 +129,23 @@
 							<div class="box-body">
 								<div class="form-group col-md-6 col-md-offset-3">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
+									<small class="help-block with-errors">*</small>
+									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
-									<input type="time" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
+									<small class="help-block with-errors">*</small>
+									<input type="time" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label>
-									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
+									<small class="help-block with-errors">*</small>
+									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
-									<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control select">
+									<small class="help-block with-errors">*</small>
+									<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control select" required="" disabled="">
 										@foreach($vehiculos as $vehiculo)
 											<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
@@ -150,11 +153,13 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="progVehKm">{{ trans('adminlte_lang::message.progvehickm') }}</label>
-									<input type="text" class="form-control number" id="progVehKm" name="progVehKm" value="{{$programacion->progVehKm}}">
+									<small class="help-block with-errors">*</small>
+									<input type="text" class="form-control number" id="progVehKm" name="progVehKm" value="{{$programacion->progVehKm}}" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
-									<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control select">
+									<small class="help-block with-errors">*</small>
+									<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control select" required="" disabled="">
 										@foreach($conductors as $conductor)
 											<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
@@ -162,7 +167,8 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
-									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select">
+									<small class="help-block with-errors">*</small>
+									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select" required="" disabled="">
 										@foreach($ayudantes as $ayudante)
 											<option value="{{$ayudante->ID_Pers}}" {{$ayudante->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 										@endforeach
@@ -170,17 +176,43 @@
 								</div>
 								<div class="form-group col-md-6 col-md-offset-5">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}">
-									@if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador'))
+									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 										<br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
 									@endif
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null)
-									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-success pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 									@endif
-									<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</form>
+					</div>
+				@elseif($programacion->ProgVehtipo == 0)
+					<div class="box box-info">
+						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+							@csrf
+							@method('PUT')
+							<div class="box-body">
+								<div class="form-group col-md-6 col-md-offset-3">
+									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
+									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
+									<input type="time" required="" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}" required="" disabled="">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label><small class="help-block with-errors">*</small>
+									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}" disabled="">
+								</div>
+								<div class="col-md-12 col-xs-12 box box-info"></div>
+								<div class="box-footer">
+									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
 							</div>
 							<!-- /.box-body -->
@@ -194,21 +226,31 @@
 							<div class="box-body">
 								<div class="form-group col-md-6 col-md-offset-3">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
-									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}">
+									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
-									<input type="time" required="" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}">
+									<input type="time" required="" class="form-control" id="ProgVehSalida"  name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada2') }}</label><small class="help-block with-errors">*</small>
-									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}">
+									<input type="time" class="form-control" id="ProgVehEntrada" name="ProgVehEntrada" value="{{$programacion->ProgVehEntrada <> null ? date('H:i', strtotime($programacion->ProgVehEntrada)) : ''}}" disabled="">
+								</div>
+								<div class="fomr-group col-md-12" style="margin-bottom: 30px;">
+									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<small class="help-block with-errors">*</small>
+									<select name="vehicalqui" id="vehicalqui" class="form-control" required="" disabled="">
+										@foreach($Vehiculos2 as $Vehiculo)
+											<option value="{{$Vehiculo->ID_Vehic}}" {{$Vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$Vehiculo->VehicPlaca}}</option>
+										@endforeach
+									</select>
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
-									<button type="submit" class="btn btn-warning pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
 							</div>
+
 							<!-- /.box-body -->
 						</form>
 					</div>
@@ -248,34 +290,80 @@
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
 			@endif
-			@if(Auth::user()->UsRol == trans('adminlte_lang::message.SupervisorTurno'))
-				$("#ProgVehEntrada").before(`<small class="help-block with-errors">*</small>`);
+			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				$("#ProgVehEntrada").prop('required', true);
-				$("#progVehKm").before(`<small class="help-block with-errors">*</small>`);
 				$("#progVehKm").prop('required', true);
-				$(".select2-selection").css("background-image", "none");
-				$("#ProgVehFecha").prop('disabled', true);
-				$("#ProgVehSalida").prop('disabled', true);
-				$("#FK_ProgVehiculo").prop('disabled', true);
-				$("#FK_ProgConductor").prop('disabled', true);
-				$("#FK_ProgAyudante").prop('disabled', true);
-				$("#ProgVehColor").prop("disabled", true);
+				$("#ProgVehEntrada").prop('disabled', false);
+				$("#progVehKm").prop('disabled', false);
 			@endif
-			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.SupervisorTurno') && Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
-				$("#ProgVehFecha").before(`<small class="help-block with-errors">*</small>`);
-				$("#ProgVehFecha").prop('required', true);
-				$("#ProgVehSalida").before(`<small class="help-block with-errors">*</small>`);
-				$("#ProgVehSalida").prop('required', true);
-				$("#FK_ProgVehiculo").before(`<small class="help-block with-errors">*</small>`);
-				$("#FK_ProgVehiculo").prop('required', true);
-				$("#FK_ProgConductor").before(`<small class="help-block with-errors">*</small>`);
-				$("#FK_ProgConductor").prop('required', true);
-				$("#FK_ProgAyudante").before(`<small class="help-block with-errors">*</small>`);
-				$("#FK_ProgAyudante").prop('required', true);
-				$("#ProgVehEntrada").prop('readonly', true);
-				$("#progVehKm").prop('readonly', true);
+			@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
+				$(".select2-selection").css("background-image", "none");
+				$("#ProgVehFecha").prop('disabled', false);
+				$("#ProgVehSalida").prop('disabled', false);
+				$("#FK_ProgVehiculo").prop('disabled', false);
+				$("#FK_ProgConductor").prop('disabled', false);
+				$("#FK_ProgAyudante").prop('disabled', false);
+				$("#ProgVehColor").prop("disabled", false);
+			@endif
+			@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
+				$("#ProgVehFecha").prop('disabled', false);
+				$("#ProgVehSalida").prop('disabled', false);
+				$("#ProgVehEntrada").prop('disabled', false);
+				$("#progVehKm").prop('disabled', false);
+				$("#FK_ProgVehiculo").prop('disabled', false);
+				$("#FK_ProgConductor").prop('disabled', false);
+				$("#FK_ProgAyudante").prop('disabled', false);
+				$("#ProgVehColor").prop("disabled", false);
+				$("#ProgVehEntrada").prop('required', false);
 			@endif
 			});
+	@elseif($programacion->ProgVehtipo == 0)
+		@if($programacion->ProgVehEntrada <> null)
+			$("#ProgVehFecha").prop("disabled", true);
+			$(".select2-selection").css("background-image", "none");
+			$("#ProgVehSalida").prop("disabled", true);
+			$("#ProgVehEntrada").prop("disabled", true);
+			$("#update").prop("disabled", true);
+		@endif
+		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+			$("#ProgVehEntrada").prop("required", true);
+			$("#ProgVehEntrada").prop("disabled", false);
+		@endif
+		@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
+			$("#ProgVehFecha").prop("disabled", false);
+			$("#ProgVehSalida").prop("disabled", false);
+		@endif
+		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
+			$("#ProgVehEntrada").prop("disabled", false);
+			$("#ProgVehFecha").prop("disabled", false);
+			$("#ProgVehSalida").prop("disabled", false);
+			$("#ProgVehEntrada").prop('required', false);
+		@endif
+	@else
+		@if($programacion->ProgVehEntrada <> null)
+			$("#ProgVehFecha").prop("disabled", true);
+			$(".select2-selection").css("background-image", "none");
+			$("#vehicalqui").prop("disabled", true);
+			$("#ProgVehSalida").prop("disabled", true);
+			$("#ProgVehEntrada").prop("disabled", true);
+			$("#update").prop("disabled", true);
+		@endif
+		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+			$("#ProgVehEntrada").prop('required', true);
+			$("#ProgVehEntrada").prop('disabled', false);
+		@endif
+		@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
+			$("#ProgVehFecha").prop("disabled", false);
+			$("#vehicalqui").prop("disabled", false);
+			$("#ProgVehSalida").prop("disabled", false);
+		@endif
+		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
+			$("#ProgVehEntrada").prop('disabled', false);
+			$("#ProgVehFecha").prop("disabled", false);
+			$("#vehicalqui").prop("disabled", false);
+			$("#ProgVehSalida").prop("disabled", false);
+			$("#ProgVehEntrada").prop('required', false);
+		@endif
 	@endif
 	</script>
 @endsection

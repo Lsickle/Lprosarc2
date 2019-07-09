@@ -92,7 +92,7 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                    <button type="submit" class="btn btn-success">Registrar</button>
                                 </div>
                             </form>
                         </div>

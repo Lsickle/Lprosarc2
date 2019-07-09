@@ -29,6 +29,10 @@ class SolicitudServicio extends Model
 	{
 	 return $this->belongsTo('App\GenerSede', 'ID_GSede');
 	}
+	public function Personal()
+	{
+	 	return $this->belongsTo('App\Personal', 'ID_Pers');
+	}
 	public function Certificado(){
 		return $this->hasMany('App\Certificado','ID_Cert','id');//como solicitud de servicio tiene muchos certificados
 	}

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\audit;
-use Illuminate\Support\Facades\Auth;
+use App\Sede;
+use Permisos;
+
 
 class AreaInternoController extends Controller
 {
@@ -19,21 +23,21 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             $Areas = DB::table('areas')
             ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
             ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->select('areas.AreaSlug', 'areas.AreaName','areas.AreaDelete','sedes.SedeName','clientes.CliShortname','clientes.ID_Cli')
             ->where(function($query){
                 $id = userController::IDClienteSegunUsuario();
-                /*Validacion del personal de Prosarc autorizado para las areas solo los que no esten eliminados*/
-                if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                    $query->where('clientes.ID_Cli', '=', $id);
-                    $query->where('areas.AreaDelete', '=', 0);
-                }
                 /*Validacion del Programador para ver todas las areas aun asi este eliminado*/
+                if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                    $query->where('clientes.ID_Cli', '=', $id);
+                }
+                /*Validacion del personal de Prosarc autorizado para las areas solo los que no esten eliminados*/
                 else{
                     $query->where('clientes.ID_Cli', '=', $id);
+                    $query->where('areas.AreaDelete', '=', 0);
                 }
             })
             ->get();
@@ -50,10 +54,10 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('ID_Sede', 'SedeName')
+                ->select('SedeSlug', 'SedeName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('sedes.SedeDelete', '=', 0)
                 ->get();
@@ -72,14 +76,14 @@ class AreaInternoController extends Controller
      */
     public function store(Request $request){
         $validate = $request->validate([
-            'AreaName'       => 'required|min:4|max:128',
+            'AreaName'       => 'required|min:5|max:128',
             'FK_AreaSede'    => 'required',
         ]);
         $area = new Area();
         $area->AreaName = $request->input('AreaName');
-        $area->FK_AreaSede= $request->input('FK_AreaSede');
+        $area->FK_AreaSede= Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_AreaSede'))->first()->ID_Sede;
         $area->AreaDelete = 0;
-        $area->AreaSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $area->AreaSlug = hash('sha256', rand().time().$area->AreaName);
         $area->save();
 
         return redirect()->route('areasInterno.index');
@@ -103,11 +107,11 @@ class AreaInternoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $Areas = Area::where('AreaSlug', $id)->first();
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') && $Areas <> null){
+        if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
+            $Areas = Area::where('AreaSlug', $id)->first();
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->select('ID_Sede', 'SedeName')
+                ->select('ID_Sede', 'SedeSlug', 'SedeName')
                 ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
                 ->where('sedes.SedeDelete', '=', 0)
                 ->get();
@@ -116,7 +120,7 @@ class AreaInternoController extends Controller
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->select('ID_Area')
                 ->where('personals.ID_Pers', '=', Auth::user()->FK_UserPers)
-                ->get();
+                ->first();
             return view('areas.areasInterno.edit', compact('Sedes', 'Areas', 'AreaOne'));
         }
         else{
@@ -133,12 +137,12 @@ class AreaInternoController extends Controller
      */
     public function update(Request $request, $id){
         $validate = $request->validate([
-            'AreaName'       => 'required|min:4|max:128',
+            'AreaName'       => 'required|min:5|max:128',
             'FK_AreaSede'    => 'required',
         ]);
         $Area = Area::where('AreaSlug', $id)->first();
         $Area->AreaName = $request->input('AreaName');
-        $Area->FK_AreaSede = $request->input('FK_AreaSede');
+        $Area->FK_AreaSede = Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_AreaSede'))->first()->ID_Sede;
         $Area->save();
 
         $log = new audit();

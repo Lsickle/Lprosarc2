@@ -142,7 +142,7 @@ class PermisoUsuarioController extends Controller
     {
         $Validate = $request->validate([
             'email'     => 'required|max:255|unique:users,email',
-            'password'  => 'required|max:255|min:6|confirmed:password_confirmation',
+            'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
         ]);
         
         $Rol = DB::table('users')
@@ -161,7 +161,7 @@ class PermisoUsuarioController extends Controller
         $User->password = bcrypt($request->input('password'));
         $User->UsRolDesc = $request->input('UsRolDesc');
         $User->UsRolDesc2 = $request->input('UsRolDesc2');
-        $User->UsSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc S.A. ESP.".substr(md5(rand()), 0,32);
+        $User->UsSlug = hash('sha256', rand().time().$User->name);
         $User->UsRol = $Rol->UsRol;
 
         if(isset($Rol2)){
@@ -343,8 +343,8 @@ class PermisoUsuarioController extends Controller
         $User = User::where('UsSlug', $id)->first();
 
         $validate = $request->validate([
-            'oldpassword'          => 'required|min:6',
-            'newpassword'          => 'required|confirmed:confirmnewpassword|min:6',
+            'oldpassword'          => 'required|min:8',
+            'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
         ]);
         if(Hash::check($request->input('oldpassword'), $User->password)){
         	$User->password = bcrypt($request->input('newpassword'));

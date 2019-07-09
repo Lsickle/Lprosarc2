@@ -55,7 +55,7 @@ Registro del Tratamiento
 								</div>
 								<div>
 									<div class="box-footer">
-										<button type="submit" class="btn btn-primary">Registrar</button>
+										<button type="submit" class="btn btn-success">Registrar</button>
 									</div>
 								</div>
 								<!-- /.box-body -->

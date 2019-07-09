@@ -49,7 +49,7 @@ class VerifyEmail extends Notification
                 $this->verificationUrl($notifiable)
             )
             ->line('Si no ha creado una cuenta, no se requiere ninguna acción adicional.')
-            ->salutation('Saludos, Prosarc S.A ESP');
+            ->salutation('Saludos, Prosarc S.A. ESP');
     }
 
     /**

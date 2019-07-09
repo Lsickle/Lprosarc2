@@ -15,6 +15,9 @@ use App\Cliente;
 use App\Departamento;
 use App\Municipio;
 use App\ResiduosGener;
+use Illuminate\Support\Facades\Hash;
+use App\Permisos;
+
 
 class sgenercontroller extends Controller
 {
@@ -24,8 +27,8 @@ class sgenercontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+    {   
+        $id = userController::IDClienteSegunUsuario();
             $Gsedes = DB::table('gener_sedes')
                 ->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
                 ->join('sedes', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
@@ -33,21 +36,25 @@ class sgenercontroller extends Controller
                 ->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
                 ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
                 ->select('gener_sedes.GSedeName','gener_sedes.GSedeAddress', 'gener_sedes.GSedeEmail', 'gener_sedes.GSedeCelular', 'gener_sedes.GSedeDelete', 'gener_sedes.GSedeSlug',  'generadors.GenerShortname','municipios.MunName', 'departamentos.DepartName', 'clientes.CliShortname')
-                ->where(function($query){
+                ->where(function($query)use($id){
                     $id = userController::IDClienteSegunUsuario();
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador')){
-                        $query->where('gener_sedes.GSedeDelete',0);
+                    if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
+                        /*solo el programador puede ver los registros eliminados*/
+                        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+                            $query->where('clientes.ID_Cli', '<>', $id);
+                        }else{
+                            $query->where('gener_sedes.GSedeDelete',0);
+                            $query->where('clientes.ID_Cli', '<>', $id);
+                        }
                     }
-                    if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+                    /*el cliente solo puede ver las sedes de sus generadores*/
+                    if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                         $query->where('gener_sedes.GSedeDelete',0);
-                        $query->where('Sedes.FK_SedeCli', $id);
+                        $query->where('clientes.ID_Cli', $id);
                     }
                 })
                 ->get();
             return view('sgeneradores.index', compact('Gsedes'));
-        }else{
-            abort(403);
-        }
     }
 
     /**
@@ -57,7 +64,7 @@ class sgenercontroller extends Controller
      */
     public function create()
     {   
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
             $id = userController::IDClienteSegunUsuario();
             $Departamentos = Departamento::all();
             $Generadores = DB::table('generadors')
@@ -114,7 +121,7 @@ class sgenercontroller extends Controller
         }
         $GenerSede->GSedeEmail = $request->input('GSedeEmail');
         $GenerSede->GSedeCelular = $request->input('GSedeCelular');
-        $GenerSede->GSedeSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $GenerSede->GSedeSlug = hash('sha256', rand().time().$GenerSede->GSedeName);
         $GenerSede->FK_GSede = $request->input('FK_GSede');
         $GenerSede->FK_GSedeMun = $request->input('FK_GSedeMun');
         $GenerSede->GSedeDelete = 0;
@@ -127,7 +134,7 @@ class sgenercontroller extends Controller
                 $ResiduoSedeGener->FK_SGener = $GenerSede->ID_GSede;
                 $ResiduoSedeGener->FK_Respel = $Respel;
                 $ResiduoSedeGener->DeleteSGenerRes = 0;
-                $ResiduoSedeGener->SlugSGenerRes = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+                $ResiduoSedeGener->SlugSGenerRes = hash('sha256', rand().time().$ResiduoSedeGener->FK_Respel);
                 $ResiduoSedeGener->save();
             }
         }
@@ -143,12 +150,18 @@ class sgenercontroller extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador') || Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
-            $SedeGener = GenerSede::where('GSedeSlug',$id)->first();
-            $Generador = generador::where('ID_Gener',$SedeGener->FK_GSede)->first();
+            $SedeGener = GenerSede::where('GSedeSlug', $id)->first();
+            $Generador = generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
             $Municipio = Municipio::where('ID_Mun', $SedeGener->FK_GSedeMun)->first();
             $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-            $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
+            $Cliente = DB::table('gener_sedes')
+                ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+                ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->select('clientes.CliShortname', 'clientes.ID_Cli')
+                ->where('GSedeSlug', $id)
+                ->first();
+            // $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->get();
 
             $Respels = DB::table('residuos_geners')
                 ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
@@ -175,9 +188,6 @@ class sgenercontroller extends Controller
                     }
                 })
                 ->get();
-        }else{
-            abort(403);
-        }
 
         return view('sgeneradores.show', compact('SedeGener', 'Generador', 'Cliente', 'Respels', 'Residuos', 'Municipio', 'Departamento'));
     }
@@ -190,7 +200,7 @@ class sgenercontroller extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Generadores = DB::table('generadors')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')

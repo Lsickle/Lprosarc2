@@ -65,19 +65,19 @@
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
-								<input type="text" class="form-control phone tel" id="sedeinputphone1" class="btn btn-outline-success my-2 my-sm-0" name="SedePhone1" data-minlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" value="{{$Sede->SedePhone1}}">
+								<input type="text" class="form-control phone tel" id="sedeinputphone1" class="btn btn-outline-success my-2 my-sm-0" name="SedePhone1" data-minlength="11" value="{{$Sede->SedePhone1}}">
 							</div>
 							<div class="col-md-6 form-group">
 									<label for="sedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label><small class="help-block with-errors"></small>
-								<input type="text" class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}" data-minlength="2" data-maxlength="5" value="{{$Sede->SedeExt1}}" disabled>
+								<input type="text" class="form-control extension ext" id="sedeinputext1" name="SedeExt1" data-minlength="2" data-maxlength="5" value="{{$Sede->SedeExt1}}" disabled>
 							</div>
 							<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 								<label for="sedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label><small class="help-block with-errors"></small>
-								<input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" data-error="{{ trans('adminlte_lang::message.data-error-minlength10') }}" value="{{$Sede->SedePhone2}}">
+								<input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" value="{{$Sede->SedePhone2}}">
 							</div>
 							<div id="extension2" class="col-md-6 form-group" style="display: none;">
 								<label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>
-								<input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5" data-error="{{ trans('adminlte_lang::message.data-error-minlength2') }}"  value="{{$Sede->SedeExt2}}" disabled>
+								<input type="text" class="form-control extension ext2" id="sedeinputext2" name="SedeExt2" data-minlength="2" maxlength="5"  value="{{$Sede->SedeExt2}}" disabled>
 							</div>
 							<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
 								<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
@@ -86,7 +86,7 @@
 						</div>
 						<div class="box box-info">
 							<div class="box-footer">
-								<button type="submit" class="btn btn-warning pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+								<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</button>
 							</div>
 						</div>
 					</form>

@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Menu' => Spatie\Menu\Laravel\Facades\Menu::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Permisos' => App\Permisos::class,
     ],
 
 ];

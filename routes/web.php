@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
-	
+	Route::post('/changeRol/{id}', 'userController@changeRol');
 	Route::resource('/clientes', 'clientcontoller');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
@@ -90,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
-	Route::get('/solicitud-servicio/{id}/changestatus', 'SolicitudServicioController@changestatus');
+	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
@@ -116,7 +116,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sedegener-respel/{id}', 'AjaxController@SGenerRespel');
 	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
+	Route::get('/vehicle-transport/{id}', 'AjaxController@VehicTransport');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
+	/*Rutas de envio de e-mail */
+	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
 });
 

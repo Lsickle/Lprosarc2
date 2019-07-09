@@ -12,7 +12,7 @@
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">{{ trans('adminlte_lang::message.sgenerlist') }}</h3>
-						@if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente'))
+						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							<a href="/sgeneradores/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
 					</div>
@@ -21,7 +21,7 @@
 							<table id="sgeneradores" class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 											<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 										@endif
 										<th>{{ trans('adminlte_lang::message.gener') }}</th>
@@ -37,7 +37,7 @@
 										<tr @if($GSede->GSedeDelete === 1)
 												style="color: red;" 
 											@endif>
-											@if(Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente'))
+											@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 												<td>{{$GSede->CliShortname}}</td>
 											@endif
 											<td>{{$GSede->GenerShortname}}</td>

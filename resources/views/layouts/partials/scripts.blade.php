@@ -45,19 +45,30 @@ $('form[data-toggle="validator"]').validator({
 					return "El archivo ("+($el[0].files[i].name)+") no debe pesar mas de " + maxBytes/1024/1024 + " MB.";
 				}
 			}
-		}
+		},
+		accept: function ($el){
+			var permitido = $el.data("accept")
+			var tipo = $el[0].files[0].type.split('/').pop();
+			var existe = permitido.indexOf(tipo);
+			if ($el[0].files[0] && existe < 0) {
+				return "Las extensiones permitidas son: "+permitido;
+			}
+		},
 	}
 });
 </script>
 <script type="text/javascript">
+	function Selects(){
+		$('select').select2({
+			placeholder: "Seleccione...",
+			allowClear: true,
+			width: 'resolve',
+			width: '100%',
+			theme: "classic"
+		});
+	}
 $(document).ready(function() {
-	$('select').select2({
-		placeholder: "Seleccione...",
-		allowClear: true,
-		width: 'resolve',
-		width: '100%',
-		theme: "classic"
-	});
+	Selects();
 });
 </script>
 <script type="text/javascript">
@@ -114,10 +125,6 @@ $(document).ready(function() {
 			$('.nombres').prop('pattern', '[A-Za-z ]+');
 			$('.nombres').attr('data-error', 'Unicamente letras');
 			$('.nombres').removeClass('nombres');
-			$('.inputText').prop('maxlength', '100');
-			$('.inputText').prop('pattern', '[A-Za-z ]+');
-			$('.inputText').attr('data-error', 'Unicamente letras');
-			$('.inputText').removeClass('inputText');
 		}
 	});
 </script>
@@ -128,10 +135,10 @@ $(document).ready(function() {
 	$('.phone').inputmask({ mask: "03[9 ][9][9][9][9][9][9][9]" });
 	$('.mobile').inputmask({ mask: "3[9][9 ][9][9][9 ][9][9][9][9]" });
 	$('.extension').inputmask({ mask: "[9][9][9][9][9]" });
-
+	$('.inputText').prop('maxlength', '100');
+	$('.inputText').prop('pattern', '[A-Za-z ]+');
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
-	$('.inputText').inputmask({ mask: "[a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}] [a{0,20}]"});
 	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]"});
 	$('.fechas').inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd", });
 	$('.money').inputmask({
@@ -415,24 +422,31 @@ $(document).ready(function() {
 @if( Route::currentRouteName() === 'contactos.create' || Route::currentRouteName() === 'contactos.edit')
 <script type="text/javascript">
 function AddVehiculo() {
-	document.getElementById('AddVehiculo').style.display = 'block';
-	$('#VehicPlaca').prop('required', true);
-	$('#VehicTipo').prop('required', true);
-	$('#VehicCapacidad').prop('required', true);
-	$('#Form').validator('update');
+	Vehiculo();
 };
-
 function NoAddVehiculo() {
-	document.getElementById('AddVehiculo').style.display = 'none';
+	document.getElementById('AddVehiculoPlaca').style.display = 'none';
+	document.getElementById('AddVehiculoTipo').style.display = 'none';
+	document.getElementById('AddVehiculoCapacidad').style.display = 'none';
 	$('#VehicPlaca').prop('required', false);
 	$('#VehicTipo').prop('required', false);
 	$('#VehicCapacidad').prop('required', false);
 	$('#VehicPlaca').val('');
 	$('#VehicTipo').val('');
 	$('#VehicCapacidad').val('');
-	$('#Form').validator('validate');
+	$('#form').validator('destroy');
+	$('#form').validator('update');
 };
 
+function Vehiculo(){
+	document.getElementById('AddVehiculoPlaca').style.display = 'block';
+	document.getElementById('AddVehiculoTipo').style.display = 'block';
+	document.getElementById('AddVehiculoCapacidad').style.display = 'block';
+	$('#VehicPlaca').prop('required', true);
+	$('#VehicTipo').prop('required', true);
+	$('#VehicCapacidad').prop('required', true);
+	$('#form').validator('update');
+}
 </script>
 @endif
 <script type="text/javascript">
@@ -490,15 +504,6 @@ function NotifiFalse(Mensaje) {
 			$("#add").modal("show");
 		});
 	</script>
-	@endif
-@endif
-@if(Route::currentRouteName() === 'contactos.show')
-	@if ($errors->any())
-		<script>
-			$(document).ready(function() {
-				$(".create").modal("show");
-			});
-		</script>
 	@endif
 @endif
 @if(Route::currentRouteName()=='tratamiento.edit')
@@ -610,25 +615,37 @@ function NotifiFalse(Mensaje) {
 	$(document).ready(function() {Checkboxs();});
 </script>
 <script>
-	$('form').on('submit', function(){
-		if(!$('[type="submit"]').hasClass('disabled')){
-			$('[type="submit"]').prop('disabled', true);
-			$('[type="submit"]').empty();
-			$('[type="submit"]').append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).submit(function(){
+	function envsubmit(){
+		$('form').on('submit', function(){
+			var buttonsubmit = $(this).find('button[type="submit"]');
+			if(buttonsubmit.hasClass('disabled')){
 				return false;
-			});
-			return true;
-		}
-		return false;
-	});
-	$('label.btn').on('click', function(){
-		var idsubmit = $(this).attr('for');
-		if(!$('#'+idsubmit).hasClass('disabled')){
-			$(this).empty();
-			$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-			$(this).attr('disabled', true);
-		}
+			}
+			else{
+				buttonsubmit.prop('disabled', true);
+				buttonsubmit.empty();
+				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+				$(this).submit(function(){
+					return false;
+				});
+				return true;
+			}
+		});
+		
+		$('label.btn').on('click', function(){
+			var idsubmit = $(this).attr('for');
+			if($('#'+idsubmit).hasClass('disabled')){
+				return false;
+			}
+			else{
+				$(this).empty();
+				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+				$(this).attr('disabled', true);
+			}
+		});
+	}
+	$(document).ready(function(){
+		envsubmit();
 	});
 </script>
 {{-- script para activar las funciones de los options --}}
@@ -698,8 +715,8 @@ var currentScrollPos = window.pageYOffset;
 @endif
 <script>
 	$(document).ready(function(){
-		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-zA-Z0-9_]{2})?');
-		$('input[type="email"]').attr('data-error', 'No es un emai valido');
+		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?');
+		$('input[type="email"]').attr('data-error', 'No es un e-mail valido');
 	})
 </script>
 @yield('NewScript')

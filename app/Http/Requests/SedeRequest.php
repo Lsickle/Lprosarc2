@@ -31,9 +31,9 @@ class SedeRequest extends FormRequest
             'SedeExt1'      => 'min:2|max:5|nullable',
             'SedePhone2'    => 'max:11|min:11|nullable',
             'SedeExt2'      => 'min:2|max:5|nullable',
-            'SedeEmail'     => 'required|email|max:128',
+            'SedeEmail'     => 'required|email|max:128|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
             'SedeCelular'   => 'required|min:12|max:12',
-            'FK_SedeMun'    => 'required',
+            'FK_SedeMun'    => 'required|numeric|min:1|max:1122',
         ];
     }
 }

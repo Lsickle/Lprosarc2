@@ -26,14 +26,14 @@
 							</div>
 						@endif
 						<div class="box-body">
-							<div class="col-md-12 col-xs-12">
+							<div class="col-md-12">
 								<div class="form-group col-md-12">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach ($Personals as $Personal)
-										<option {{old('FK_SolSerPersona') == $Personal->PersSlug ? 'selected' : ''}} value="{{$Personal->PersSlug}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+										<option value="{{$Personal->PersSlug}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -42,8 +42,8 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorProsarc()" value="99" {{old('SolSerTipo') == 99 ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
-										<option onclick="TransportadorExtr()" value="98" {{old('SolSerTipo') == 98 ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertranspro') }}</option>
+										<option onclick="TransportadorProsarc()" value="99">{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
+										<option onclick="TransportadorExtr()" value="98">{{ trans('adminlte_lang::message.solsertranspro') }}</option>
 									</select>
 								</div>
 								<div id="transportador" class="form-group col-md-6" hidden="true">
@@ -51,8 +51,8 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99" {{old('SolSerTransportador') == 99 ? 'selected' : ''}}>{{$Cliente->CliShortname}}</option>
-										<option onclick="OtraTransportadora()" value="98" {{old('SolSerTransportador') == 98 ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransother') }}</option>
+										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliShortname}}</option>
+										<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
 									</select>
 								</div>
 								<div id="nametransportadora" class="form-group col-md-6" hidden="true">
@@ -76,7 +76,7 @@
 										<select class="form-control select" id="departamento">
 											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach ($Departamentos as $Departamento)
-												<option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+												<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -88,12 +88,10 @@
 								</div>
 								<div id="Conductor" class="form-group col-md-6" hidden="true">
 									<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
 								</div>
 								<div id="Vehiculo" class="form-group col-md-6" hidden="true">
 									<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
-									<small class="help-block with-errors">*</small>
 									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
 								</div>
 								<div id="typeaditable" class="form-group col-md-6">
@@ -101,9 +99,9 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option value="99" {{ old('SolResAuditoriaTipo') == 99 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
-										<option value="98" {{ old('SolResAuditoriaTipo') == 98 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
-										<option value="97" {{ old('SolResAuditoriaTipo') == 97 ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
+										<option value="99">{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
+										<option value="98">{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
+										<option value="97">{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
 									</select>
 								</div>
 								<div id="typecollect" class="form-group col-md-12" hidden="">
@@ -205,12 +203,12 @@
 									<select name="SGenerador[0]" id="SGenerador" class="form-control" required="">
 										<option onclick="HiddenResiduosGener(0)" value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($SGeneradors as $SGenerador)
-										<option onclick="ResiduosGener(0,'{{$SGenerador->GSedeSlug}}')" {{old('SGenerador.0') == $SGenerador->GSedeSlug ? 'selected' :''}} value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
+										<option onclick="ResiduosGener(0,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
 										@endforeach
 									</select>
 									<br>
 								</div>
-								<div id="DivRepel0" class="col-md-16">
+								<div id="DivRepel0" class="form-group col-md-16">
 								</div>
 							</div>
 							<div id="AddGenerador" class="col-md-16">
@@ -254,8 +252,6 @@ function TransportadorProsarc() {
 	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
-	$("#SolSerConductor").removeAttr('required');
-	$("#SolSerVehiculo").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
 	$("#typecollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
@@ -298,8 +294,6 @@ function TransportadorExtr() {
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
 	$("#SolSerTransportador").attr('required', true);
-	$("#SolSerConductor").attr('required', true);
-	$("#SolSerVehiculo").attr('required', true);
 	$("#typeaditable").removeClass('col-md-6');
 	$("#typeaditable").addClass('col-md-12');
 	$("#SolSerBascula").bootstrapSwitch('state',false);
@@ -379,6 +373,7 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 	$(icon).removeClass('fa-plus');
 	$(icon).addClass('fa-minus');
@@ -423,6 +418,7 @@ function ResiduosGener(id_div, ID_Gener){
 	})
 }
 function RequeRespel(id_div, contador, Id_Respel){
+	Selects();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -509,6 +505,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	numeroDimension();
 	numeroKg();
 	popover();
+	Selects();
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -22,6 +23,8 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
+use Permisos;
+
 
 class SolicitudServicioController extends Controller
 {
@@ -37,7 +40,7 @@ class SolicitudServicioController extends Controller
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug','personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
 			->where(function($query){
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Cliente')){
+				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
 			})
@@ -59,25 +62,30 @@ class SolicitudServicioController extends Controller
 	 */
 	public function create()
 	{
-		$Departamentos = Departamento::all();
-		$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-		$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-		$SGeneradors = DB::table('gener_sedes')
-			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		$Personals = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+		}
+		else{
+			abort(403);
+		}
 	}
 
 	/**
@@ -185,7 +193,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio->SolSerDevolucion = 1;
 			$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
 		}
-		$SolicitudServicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+		$SolicitudServicio->SolSerSlug = hash('sha256', rand().time().$SolicitudServicio->SolSerNameTrans);
 		$SolicitudServicio->SolSerDelete = 0;
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
@@ -209,7 +217,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResKgConciliado = 0;
 				$SolicitudResiduo->SolResKgTratado = 0;
 				$SolicitudResiduo->SolResDelete = 0;
-				$SolicitudResiduo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
 				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 					$SolicitudResiduo->SolResTypeUnidad = "Unidad";
@@ -280,7 +288,7 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersAddress')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
 			->where('solicitud_servicios.SolSerSlug', $id)
 			->first();
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
@@ -330,33 +338,49 @@ class SolicitudServicioController extends Controller
 	}
 
 
-	public function changestatus($id)//Queda verificar el rol para mejorar la validación
+	public function changestatus(Request $request)
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
-		switch ($Solicitud->SolSerStatus) {
-			case 'Pendiente':
-				$Solicitud->SolSerStatus = 'Aprobado';
-				break;
-			case 'Programado':
-				$Solicitud->SolSerStatus = 'Completado';
-				break;
-			case 'Completado':
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+			if($request->input('solserstatus') == 'No Deacuerdo'){
+				$Solicitud->SolSerStatus = 'No Conciliado';
+			}
+			if($request->input('solserstatus') == 'Conciliada'){
 				$Solicitud->SolSerStatus = 'Conciliado';
-				break;
-			case 'Conciliado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.JefeOperacion') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Tratado';
-				}
-				else if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
-			case 'Tratado':
-				if(Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-					$Solicitud->SolSerStatus = 'Certificacion';
-				}
-				break;
+			}
 		}
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
+			if($Solicitud->SolSerStatus <> 'Certificacion'){
+				switch ($request->input('solserstatus')) {
+					case 'Aprobada':
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Aprobado';
+						}
+						break;
+					case 'Recibida':
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
+						break;
+					case 'Conciliación':
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Completado';
+						}
+						break;
+					case 'Tratada':
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Tratado';
+						}
+						break;
+					case 'Certificada':
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Certificacion';
+						}
+						break;
+				}
+			}
+		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
 
 		$log = new audit();
@@ -367,7 +391,12 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=$Solicitud->SolSerStatus;
 		$log->save();
 
+		if($Solicitud->SolSerStatus === 'Aprobado' || $Solicitud->SolSerStatus === 'Completado'|| $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus = 'No Conciliado' || $Solicitud->SolSerStatus === 'Conciliado'){
+			$slug = $Solicitud->SolSerSlug;
+			return redirect()->route('email', compact('slug'));
+		}
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+		
 	}
 
 
@@ -379,35 +408,40 @@ class SolicitudServicioController extends Controller
 	 */
 	public function edit($id)
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
-		if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
+				abort(403);
+			}
+			$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
+			$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+			$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
+			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
+				->select('PersSlug','PersFirstName','PersLastName')
+				->first();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Sedes'));
+		}
+		else{
 			abort(403);
 		}
-		$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
-		$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-		$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
-		$Departamentos = Departamento::all();
-		$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
-		$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-		$SGeneradors = DB::table('gener_sedes')
-			->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-			->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
-			->select('PersSlug','PersFirstName','PersLastName')
-			->first();
-		$Personals = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
-			->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-			->get();
-		return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Sedes'));
 	}
 
 	/**
@@ -595,7 +629,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
-		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
 	/**
