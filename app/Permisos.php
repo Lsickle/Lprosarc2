@@ -71,6 +71,11 @@ class Permisos{
 		clientes/edit
 		ContactoController::Index
 		ContactoController::show
+		RespelController::Index
+		RespelController::Create
+		RespelController::Store
+		RespelController::Show
+		RespelController::Edit
 		SolicitudResiduoController::edit
 		SolicitudServicioController::index,create,edit,changestatus
 		recursos/show
@@ -93,6 +98,12 @@ class Permisos{
 		ContactoController::show
 		Contactos/show
 		Contactos/showProveedor
+		RespelController::Index
+		RespelController::Create
+		RespelController::Edit
+		RespelController::Update
+		RespelController::Destroy
+		RespelController::updateStatusRespel
 		AreaController:index,create,edit
 		AreaInternoController::index
 		CargoController::index,create,edit

@@ -18,7 +18,7 @@
 					<!-- left column -->
 					<div class="col-md-12">
 						<!-- general form elements -->
-						<div class="box box-primary">
+						<div class="box box-info">
 							<!-- /.box-header -->
 							<!-- form start -->
 							<form role="form" action="/respels" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
@@ -32,9 +32,10 @@
 								        </ul>
 								    </div>
 								@endif
-								@if(Auth::user()->UsRol=='Programador'||Auth::user()->UsRol=='admin'||Auth::user()->UsRol=='JefeOperacion')
+								@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 									<div class="col-md-12 form-group">
 										<label for="Sede">{{ trans('adminlte_lang::LangRespel.createcliente') }}</label>
+										<small class="help-block with-errors">*</small>
 										<select name="Sede" id="Sede" class="form-control" required>
 											<option value="">{{ trans('adminlte_lang::LangRespel.selecthem') }}</option>
 											@foreach($Sedes as $Cliente)
@@ -42,15 +43,15 @@
 											@endforeach
 										</select>
 									</div>
-								@elseif(Auth::user()->UsRol=='Cliente')
+								@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 								@endif
 								@include('layouts.RespelPartials.respelform1')
 								<!-- /.box-body -->
 								<div class="col-md-12">	
 									<div class="box-footer">
-										<button type="submit" class="btn btn-success">{{ trans('adminlte_lang::LangRespel.registerrespelButton') }}</button>
-										<a onclick="AgregarRes()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	
+										<a onclick="AgregarRes()" class="btn btn-primary"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	
+										<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::LangRespel.registerrespelButton') }}</button>
 									</div>
 								</div>
 							</form>

@@ -95,7 +95,7 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
 				<div class="input-group">
-					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
@@ -103,14 +103,14 @@
 				@else
 					@if($Respels->RespelIgrosidad !== 'No peligroso')
 					<div class="input-group">
-						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
 					</div>
 					@else
 					<div class="input-group">
-						<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+						<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
@@ -124,14 +124,14 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
 				<div class="input-group">
-					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" accept=".pdf">
+					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -146,14 +146,14 @@
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span> --}}
 				@if($Respels->RespelFoto!=='RespelFotoDefault.png')
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
