@@ -27,7 +27,7 @@
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
-		<select onchange="selectDanger(`+contador+`)" id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
+		<select id="selectDanger`+contador+`" name="RespelIgrosidad[]" class="form-control" required>
 			<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 			<option onclick="setNoDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger1') }}</option>
 			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger2') }}</option>
@@ -39,7 +39,12 @@
 			<option onclick="setDanger(`+contador+`)">{{ trans('adminlte_lang::LangRespel.danger8') }}</option>
 		</select>
 	</div>
-	<div id="danger`+contador+`">
+	<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;" id="danger`+contador+`" hidden="">
+		<label>Tipo de clasificación</label><br>
+		<a class="btn btn-success"  id="ClasifY`+contador+`" onclick="AgregarY(`+contador+`)">Y</a>
+		<a class="btn btn-default"  id="ClasifA`+contador+`" onclick="AgregarA(`+contador+`)">A</a>
+	</div>
+	<div class="col-md-6 form-group has-feedback" id="Clasif`+contador+`" hidden="">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
@@ -52,7 +57,7 @@
 		<input id="tarj`+contador+`" name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" accept=".pdf">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
-		<label class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+		<label style="margin-bottom: 3px;" class="control-label" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 		<small class="help-block with-errors"></small>
 		<input id="foto`+contador+`" name="RespelFoto[]" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
 		<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
@@ -68,7 +73,14 @@
 			<option value="1" onclick="setControlada(`+contador+`)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>
-	<div id="SustanciaControlada`+contador+`">
+	<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype`+contador+`" style="text-align: center;" hidden="">
+		<label style="margin-bottom: 0">Tipo de sustancia</label><br>
+		<a class="btn btn-success" id="Controlada`+contador+`" onclick="AgregarControlada(`+contador+`)"> Controlada</a>
+		<a class="btn btn-default" id="Masivo`+contador+`" onclick="AgregarMasivo(`+contador+`)">Uso masivo</a>
+	</div>
+	<div class="col-md-6 form-group has-feedback" id="sustanciaFormName`+contador+`" hidden="">
+	</div>
+	<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+contador+`" hidden="">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
 		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}

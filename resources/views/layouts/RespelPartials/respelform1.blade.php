@@ -17,10 +17,10 @@
 			<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label><small class="help-block with-errors">*</small>
 			<select name="RespelEstado[]" class="form-control" required>
 				<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
-				<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
-				<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico2') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
-				<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico3') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
-				<option {{ (old('RespelEstado.0') === trans('adminlte_lang::LangRespel.estadofisico4') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
+				<option value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
+				<option value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
+				<option value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
+				<option value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
 			</select>
 		</div>
 		<div class="col-md-6 form-group has-feedback">
@@ -29,51 +29,46 @@
 			<select id="selectDanger0" name="RespelIgrosidad[]" class="form-control" required>
 				<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-				<option value ="{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ (old('RespelIgrosidad.0') === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+				<option value ="{{ trans('adminlte_lang::LangRespel.danger1')}}" onclick="setNoDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger1') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger2') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger3') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger4') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger5') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger6') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger7') }}
 				</option>
 
-				<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ (old('RespelIgrosidad.0') === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
+				<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" onclick="setDanger(0)">
 					{{ trans('adminlte_lang::LangRespel.danger8') }}
 				</option>
 
 			</select>
 		</div>
-		<div id="danger0">
-			<div hidden="true">
-				<select name="YRespelClasf4741[]">
-					<option value="" selected></option>
-				</select>
-			</div>
-			<div hidden="true">
-				<select name="ARespelClasf4741[]">
-					<option value="" selected></option>
-				</select>
-			</div>
+		<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;" id="danger0" hidden="">
+			<label>Tipo de clasificación</label><br>
+			<a class="btn btn-success"  id="ClasifY0" onclick="AgregarY(0)">Y</a>
+			<a class="btn btn-default"  id="ClasifA0" onclick="AgregarA(0)">A</a>
+		</div>
+		<div class="col-md-6 form-group has-feedback" id="Clasif0" hidden="">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
@@ -86,7 +81,7 @@
 			<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label style="margin-bottom: 0" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+			<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
 			<small class="help-block with-errors"></small>
 			<input id="foto0" name="RespelFoto[]" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" value="{{ old('RespelFoto.0') }}">
 			<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
@@ -102,7 +97,14 @@
 				<option value="1" onclick="setControlada(0)">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 			</select>
 		</div>
-		<div id="SustanciaControlada0">
+		<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" hidden="">
+			<label style="margin-bottom: 0">Tipo de sustancia</label><br>
+			<a class="btn btn-success" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
+			<a class="btn btn-default" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
+		</div>
+		<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" hidden="">
+		</div>
+		<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" hidden="">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
@@ -128,47 +130,51 @@ function attachPopover() {
 }
 
 function setDanger(id) {
-	var ifDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifDangerRespel')`;
-	$("#danger" + id).empty();
-	$("#danger" + id).append(ifDangerRespel);
-	$("#myform").validator('destroy');
+	AgregarY(id);
+	$("#danger" + id).removeAttr("hidden");
+	$("#Clasif" + id).removeAttr("hidden");
+	// $("#myform").validator('destroy');
 	$("#hoja" + id).prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 }
 
 function setNoDanger(id) {
-	var ifNotDangerRespel = `@include('layouts.RespelPartials.layoutsRes.ifNotDangerRespel')`;
-	$("#danger" + id).empty();
-	$("#danger" + id).append(ifNotDangerRespel);
-	$("#hoja" + id).prop('required', false)
-	$("#myform").validator('destroy');
+	$("#danger" + id).attr("hidden", true);
+	$("#Clasif" + id).attr("hidden", true);
+	$("#hoja" + id).prop('required', false);
+	// $("#myform").validator('destroy');
 	$("#myform").validator('update');
 }
 
 function setControlada(id) {
-	var ifControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifControladaRespel')`;
-	$("#SustanciaControlada" + id).empty();
-	$("#SustanciaControlada" + id).append(ifControladaRespel);
+	AgregarControlada(id);
+	$("#sustanciaFormtype" + id).removeAttr('hidden');
+	$("#sustanciaFormName" + id).removeAttr('hidden');
+	$("#sustanciaFormDoc" + id).removeAttr('hidden');
 	$("#myform").validator('update');
 	attachPopover();
 }
 
 function setNoControlada(id) {
-	var ifNotControladaRespel = `@include('layouts.RespelPartials.layoutsRes.ifNotControladaRespel')`;
-	$("#SustanciaControlada" + id).empty();
-	$("#SustanciaControlada" + id).append(ifNotControladaRespel);
+	$("#sustanciaFormtype" + id).attr("hidden", true);
+	$("#sustanciaFormName" + id).attr("hidden", true);
+	$("#sustanciaFormDoc" + id).attr("hidden", true);
 	$("#myform").validator('update');
 }
 
 
 function AgregarRes() {
+	AgregarY(contador);
+	AgregarControlada(contador);
 	var Residuo = `@include('layouts.RespelPartials.layoutsRes.CreateResiduos')`;
 	$("#Respels").append(Residuo);
 	// $("#Clasif" + contador).append(ClasifY);
 	$("#myform").validator('update');
 	contador = parseInt(contador) + 1;
 	attachPopover();
+	Selects();
+	ChangeSelect();
 }
 
 function AgregarY(id) {
@@ -181,6 +187,7 @@ function AgregarY(id) {
 	$("#Clasif" + id).append(ClasifY);
 	$("#myform").validator('update');
 	attachPopover();
+	Selects();
 }
 
 function AgregarA(id) {
@@ -193,6 +200,7 @@ function AgregarA(id) {
 	$("#Clasif" + id).append(ClasifA);
 	$("#myform").validator('update');
 	attachPopover();
+	Selects();
 }
 
 function AgregarControlada(id) {
@@ -208,6 +216,7 @@ function AgregarControlada(id) {
 	$("#sustanciaFormName" + id).append(ControladaName);
 	$("#myform").validator('update');
 	attachPopover();
+	Selects();
 }
 
 function AgregarMasivo(id) {
@@ -223,6 +232,7 @@ function AgregarMasivo(id) {
 	$("#sustanciaFormName" + id).append(MasivoName);
 	$("#myform").validator('update');
 	attachPopover();
+	Selects();
 }
 
 function EliminarRes(id) {

@@ -1,6 +1,4 @@
-<select name="ARespelClasf4741" value="" hidden="">
-	<option value="" selected></option>
-</select>
+<input name="ARespelClasf4741[]" value="" hidden="">
 <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Clasificacion Y</b>" data-content="<p style='width: 50%'> Si el campo <b><i>Peligrosidad del residuo</i></b> es diferente a: <i>No peligroso</i>, entonces, este campo es Obligatorio<br> Puede hacer click en este enlace para ir al <b>Listado de la Clasificación Y</b> y ver los detalles correspondientes a cada Clasificación</p>">Clasificacion Y, segun
 	<a href="{{route('ClasificacionY')}}" target="_blank"> Decreto Número 4741  <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></a>
 </label>

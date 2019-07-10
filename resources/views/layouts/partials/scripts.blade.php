@@ -650,12 +650,15 @@ function NotifiFalse(Mensaje) {
 </script>
 {{-- script para activar las funciones de los options --}}
 <script>
-	$(document).ready(function(){
+	function ChangeSelect(){
 		$('select').on('change', function(){
-			var option="";
-			option = $(this).children("option:selected");
-			option.click();
-		});
+				var option="";
+				option = $(this).children("option:selected");
+				option.click();
+			});
+	}
+	$(document).ready(function(){
+		ChangeSelect();
 	});
 </script>
 <script>
