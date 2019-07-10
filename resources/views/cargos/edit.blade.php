@@ -9,35 +9,35 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<div class="box box-info">
+			<div class="box">
 				<div class="box-header with-border">
 					@component('layouts.partials.modal')
-						@slot('slug')
-							{{$Cargos->CargSlug}}
-						@endslot
-						@slot('textModal')
-							el cargo de <b>{{$Cargos->CargName}}</b>
-						@endslot
+					@slot('slug')
+					{{$Cargos->CargSlug}}
+					@endslot
+					@slot('textModal')
+					el cargo de <b>{{$Cargos->CargName}}</b>
+					@endslot
 					@endcomponent
 					<h3 class="box-title">{{trans('adminlte_lang::message.editcargo')}}</h3>
 					@if($Cargos->ID_Carg <> $CargoOne->ID_Carg)
-						@if($Cargos->CargDelete == 0)
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<input  type="submit" id="Eliminar{{$Cargos->CargSlug}}" style="display: none;">
-							</form>
-						@else
-							<form action='/cargos/{{$Cargos->CargSlug}}' method='POST' class="pull-right">
-								@method('DELETE')
-								@csrf
-								<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
-							</form>
-						@endif
+					@if($Cargos->CargDelete == 0)
+					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cargos->CargSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+					<form action='/cargos/{{$Cargos->CargSlug}}' method='POST'>
+						@method('DELETE')
+						@csrf
+						<input  type="submit" id="Eliminar{{$Cargos->CargSlug}}" style="display: none;">
+					</form>
+					@else
+					<form action='/cargos/{{$Cargos->CargSlug}}' method='POST' class="pull-right">
+						@method('DELETE')
+						@csrf
+						<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
+					</form>
+					@endif
 					@endif
 				</div>
-				<div class="box">
+				<div class="box box-info">
 					<form role="form" action="/cargos/{{$Cargos->CargSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PATCH')
 						@csrf
@@ -68,9 +68,11 @@
 							</div>
 							
 						</div>
+						<div class="box box-info">
 							<div class="box-footer">
 								<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
 							</div>
+						</div>
 					</form>
 				</div>
 			</div>
