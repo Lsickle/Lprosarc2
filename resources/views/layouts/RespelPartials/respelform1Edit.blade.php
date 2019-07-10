@@ -257,23 +257,11 @@ function AgregarY(id) {
 	$("#Clasif" + id).append(ClasifY);
 	$("#myform").validator('update');
 	attachPopover();
-}
-
-function AgregarY(id) {
-	var ClasifY = `@include('layouts.RespelPartials.layoutsRes.ClasificacionYCreate')`;
-	$("#ClasifY" + id).removeClass("btn-default");
-	$("#ClasifY" + id).addClass("btn-success");
-	$("#ClasifA" + id).removeClass("btn-success");
-	$("#ClasifA" + id).addClass("btn-default");
-	$("#Clasif" + id).empty();
-	$("#Clasif" + id).append(ClasifY);
-	$("#myform").validator('update');
-	attachPopover();
 	Selects();
 }
 
 function AgregarA(id) {
-	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionACreate')`;
+	var ClasifA = `@include('layouts.RespelPartials.layoutsRes.ClasificacionAEdit')`;
 	$("#ClasifA" + id).removeClass("btn-default");
 	$("#ClasifA" + id).addClass("btn-success");
 	$("#ClasifY" + id).removeClass("btn-success");
@@ -286,8 +274,8 @@ function AgregarA(id) {
 }
 
 function AgregarControlada(id) {
-	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
-	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
+	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaEditName')`;
+	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaEditDoc')`;
 	$("#Controlada" + id).removeClass("btn-default");
 	$("#Controlada" + id).addClass("btn-success");
 	$("#Masivo" + id).removeClass("btn-success");
@@ -302,8 +290,8 @@ function AgregarControlada(id) {
 }
 
 function AgregarMasivo(id) {
-	var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateName')`;
-	var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoCreateDoc')`;
+	var MasivoName = `@include('layouts.RespelPartials.layoutsRes.MasivoEditName')`;
+	var MasivoDoc = `@include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')`;
 	$("#Masivo" + id).removeClass("btn-default");
 	$("#Masivo" + id).addClass("btn-success");
 	$("#Controlada" + id).removeClass("btn-success");
