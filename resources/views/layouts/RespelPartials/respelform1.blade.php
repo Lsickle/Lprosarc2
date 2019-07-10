@@ -9,7 +9,7 @@
 			<input maxlength="128" name="RespelName[]" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{ old('RespelName.0') }}">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}">{{ trans('adminlte_lang::LangRespel.descripcion') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label>
 			<small class="help-block with-errors">*</small>
 			<input required maxlength="512" name="RespelDescrip[]" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{ old('RespelDescrip.0') }}">
 		</div>
@@ -71,17 +71,17 @@
 		<div class="col-md-6 form-group has-feedback" id="Clasif0" hidden="">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</label>
 			<small class="help-block with-errors">*</small>
 			<input id="hoja0" name="RespelHojaSeguridad[]" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</label>
 			<small class="help-block with-errors"></small>
 			<input name="RespelTarj[]" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}">{{ trans('adminlte_lang::LangRespel.fotolabel') }}<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i></label>
+			<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.fotolabel') }}</label>
 			<small class="help-block with-errors"></small>
 			<input id="foto0" name="RespelFoto[]" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" value="{{ old('RespelFoto.0') }}">
 			<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
@@ -107,8 +107,8 @@
 		<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" hidden="">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
-				<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
+				<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
 			</label>
 			<small class="help-block with-errors">*</small>
 			<select id="selectDdeclaracion0" name="RespelDeclaracion[]" class="form-control" required>
@@ -213,8 +213,10 @@ function AgregarControlada(id) {
 	$("#Masivo" + id).addClass("btn-default");
 	$("#sustanciaFormDoc" + id).empty();
 	$("#sustanciaFormDoc" + id).append(ControladaDoc);
+	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormName" + id).empty();
 	$("#sustanciaFormName" + id).append(ControladaName);
+	$("#sustanciaFormName" + id + " > select").prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 	Selects();
@@ -229,8 +231,10 @@ function AgregarMasivo(id) {
 	$("#Controlada" + id).addClass("btn-default");
 	$("#sustanciaFormDoc" + id).empty();
 	$("#sustanciaFormDoc" + id).append(MasivoDoc);
+	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormName" + id).empty();
 	$("#sustanciaFormName" + id).append(MasivoName);
+	$("#sustanciaFormName" + id + " > select").prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 	Selects();
