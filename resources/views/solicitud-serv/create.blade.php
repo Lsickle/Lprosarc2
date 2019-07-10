@@ -373,6 +373,7 @@ function ResiduosGener(id_div, ID_Gener){
 	numeroDimension();
 	numeroKg();
 	popover();
+	ChangeSelect();
 	Selects();
 	icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 	$(icon).removeClass('fa-plus');
@@ -418,7 +419,6 @@ function ResiduosGener(id_div, ID_Gener){
 	})
 }
 function RequeRespel(id_div, contador, Id_Respel){
-	Selects();
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -492,6 +492,8 @@ function HiddenRequeRespel(id_div, contador){
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
 	popover();
+	ChangeSelect();
+	Selects();
 	$('#CreateSolSer').validator('update');
 	contadorGenerador = contadorGenerador + 1;
 }
@@ -505,6 +507,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	numeroDimension();
 	numeroKg();
 	popover();
+	ChangeSelect();
 	Selects();
 	HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
