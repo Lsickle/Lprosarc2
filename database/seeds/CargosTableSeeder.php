@@ -84,7 +84,7 @@ class CargosTableSeeder extends Seeder
         $cargo->save();
 
         $cargo = new Cargo();
-        $cargo->CargName = "Supervisor de Turno";
+        $cargo->CargName = "Operario";//Supervisor de Turno
         $cargo->CargSalary = '$ 829,000';
         $cargo->CargGrade = "Profesional";
         $cargo->CargArea = '6';
