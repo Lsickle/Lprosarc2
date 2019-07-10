@@ -133,7 +133,7 @@ function setDanger(id) {
 	AgregarY(id);
 	$("#danger" + id).removeAttr("hidden");
 	$("#Clasif" + id).removeAttr("hidden");
-	// $("#myform").validator('destroy');
+	$("#myform").validator('destroy');
 	$("#hoja" + id).prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
@@ -144,7 +144,7 @@ function setNoDanger(id) {
 	$("#Clasif" + id).attr("hidden", true);
 	$("#Clasif" + id+" > select").prop('required', false);
 	$("#hoja" + id).prop('required', false);
-	// $("#myform").validator('destroy');
+	$("#myform").validator('destroy');
 	$("#myform").validator('update');
 }
 
@@ -152,7 +152,9 @@ function setControlada(id) {
 	AgregarControlada(id);
 	$("#sustanciaFormtype" + id).removeAttr('hidden');
 	$("#sustanciaFormName" + id).removeAttr('hidden');
+	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormDoc" + id).removeAttr('hidden');
+	$("#sustanciaFormName" + id + " > select").prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 }
@@ -160,7 +162,9 @@ function setControlada(id) {
 function setNoControlada(id) {
 	$("#sustanciaFormtype" + id).attr("hidden", true);
 	$("#sustanciaFormName" + id).attr("hidden", true);
+	$("#sustanciaFormFile" + id).prop('required', false);
 	$("#sustanciaFormDoc" + id).attr("hidden", true);
+	$("#sustanciaFormName" + id + " > select").prop('required', false);
 	$("#myform").validator('update');
 }
 
@@ -213,10 +217,8 @@ function AgregarControlada(id) {
 	$("#Masivo" + id).addClass("btn-default");
 	$("#sustanciaFormDoc" + id).empty();
 	$("#sustanciaFormDoc" + id).append(ControladaDoc);
-	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormName" + id).empty();
 	$("#sustanciaFormName" + id).append(ControladaName);
-	$("#sustanciaFormName" + id + " > select").prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 	Selects();
@@ -231,10 +233,8 @@ function AgregarMasivo(id) {
 	$("#Controlada" + id).addClass("btn-default");
 	$("#sustanciaFormDoc" + id).empty();
 	$("#sustanciaFormDoc" + id).append(MasivoDoc);
-	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormName" + id).empty();
 	$("#sustanciaFormName" + id).append(MasivoName);
-	$("#sustanciaFormName" + id + " > select").prop('required', true);
 	$("#myform").validator('update');
 	attachPopover();
 	Selects();
