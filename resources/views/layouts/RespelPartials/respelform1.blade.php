@@ -142,6 +142,7 @@ function setDanger(id) {
 function setNoDanger(id) {
 	$("#danger" + id).attr("hidden", true);
 	$("#Clasif" + id).attr("hidden", true);
+	$("#Clasif" + id+" > select").prop('required', false);
 	$("#hoja" + id).prop('required', false);
 	// $("#myform").validator('destroy');
 	$("#myform").validator('update');
