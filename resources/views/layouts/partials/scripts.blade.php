@@ -237,31 +237,6 @@ $(document).ready(function Switch6() {
 });
 
 </script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#RequerimientosTable').DataTable({
-		"scrollX": false,
-		"autoWidth": true,
-		"keys": true,
-		"responsive": true,
-		"columnDefs": [{
-				"targets": 6,
-				"data": "ReqSlug",
-				"render": function(data, type, row, meta) {
-					return "<a href='/requerimientos/" + data + "' class='btn btn-block btn-success'>Ver</a>";
-				}
-			},
-			{
-				"targets": 7,
-				"data": "ReqSlug",
-				"render": function(data, type, row, meta) {
-					return "<a href='/requerimientos/" + data + "/edit' class='btn btn-warning'>Edit</a>";
-				}
-			}
-		]
-	});
-});
-</script>
 @if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
 $(document).ready(function() {
@@ -650,12 +625,15 @@ function NotifiFalse(Mensaje) {
 </script>
 {{-- script para activar las funciones de los options --}}
 <script>
-	$(document).ready(function(){
+	function ChangeSelect(){
 		$('select').on('change', function(){
-			var option="";
-			option = $(this).children("option:selected");
-			option.click();
-		});
+				var option="";
+				option = $(this).children("option:selected");
+				option.click();
+			});
+	}
+	$(document).ready(function(){
+		ChangeSelect();
 	});
 </script>
 <script>

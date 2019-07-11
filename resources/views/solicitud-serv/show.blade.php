@@ -130,7 +130,9 @@
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
 								</div>
 							</div>
-							<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
+							@if (in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+								<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
+							@endif
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
 									<label>Requerimientos de la solicitud</label>

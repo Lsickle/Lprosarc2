@@ -91,15 +91,15 @@ class LoginController extends Controller
         );
     }
     protected function validateLogin(Request $request)
-        {
-            $rule = [
+    {
+        $rule = [
             $this->username() => 'required', 
-                'password' => 'required',
-                'g-recaptcha-response' => 'required|captcha',
-            ];
-            $messages = [
-                'g-recaptcha-response.required' => 'Este campo es requerido.',
-            ];
+            'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
+        ];
+        $messages = [
+            'g-recaptcha-response.required' => 'Este campo es requerido.',
+        ];
         $this->validate($request, $rule, $messages);
-        }
+    }
 }

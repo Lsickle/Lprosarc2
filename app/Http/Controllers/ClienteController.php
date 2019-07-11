@@ -14,8 +14,8 @@ class ClienteController extends Controller
 {
     public function show($slug)
     {
-            $cliente = Cliente::where('CliSlug', $slug)->first();
-            return view('clientes.show', compact('cliente'));
+        $cliente = Cliente::where('CliSlug', $slug)->first();
+        return view('clientes.show', compact('cliente'));
     }
 
     public function edit($slug)
@@ -41,6 +41,5 @@ class ClienteController extends Controller
         $cliente->save();
         $slug = $cliente->CliSlug;
         return redirect()->route('cliente-show', compact('slug'));
-        
     }
 }

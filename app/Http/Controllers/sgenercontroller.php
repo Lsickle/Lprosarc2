@@ -71,7 +71,7 @@ class sgenercontroller extends Controller
                 ->join('sedes', 'sedes.ID_Sede', 'generadors.FK_GenerCli')
                 ->select('generadors.ID_Gener', 'generadors.GenerName')
                 ->where('generadors.GenerDelete',0)
-                ->where('Sedes.FK_SedeCli', $id)
+                ->where('sedes.FK_SedeCli', $id)
                 ->get();
             $Respels = DB::table('respels')
                 ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
