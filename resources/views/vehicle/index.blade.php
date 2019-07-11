@@ -9,7 +9,6 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{trans('adminlte_lang::message.vehiclelist')}}</h3>
@@ -18,9 +17,10 @@
 					@endif
 				</div>
 				<!-- /.box-header -->
-				<div class="box-body">
-					<table id="VehicleTable" class="table table-compact table-bordered table-striped">
-						<thead>
+				<div class="box box-info">
+					<div class="box-body">
+						<table id="VehicleTable" class="table table-compact table-bordered table-striped">
+							<thead>
 								<tr>
 									<th>{{trans('adminlte_lang::message.vehicplaca')}}</th>
 									<th>{{trans('adminlte_lang::message.vehictipo')}}</th>
@@ -32,26 +32,25 @@
 									<th>{{trans('adminlte_lang::message.edit')}}</th>
 									@endif
 								</tr>
-						</thead>
-						<tbody id="readyTable">
-							@foreach ($Vehicles as $Vehicle)
-								<tr style="{{$Vehicle->VehicDelete === 1 ? 'color: red' : ''}}">
-									<td>{{$Vehicle->VehicPlaca}}</td>
-									<td>{{$Vehicle->VehicTipo}}</td>
-									<td>{{$Vehicle->VehicCapacidad}} kg</td>
-									<td>{{$Vehicle->VehicKmActual}}</td>
-									<td>{{$Vehicle->SedeName}}</td>
-									<td>{{$Vehicle->created_at}}</td>
-									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
-									<td><a href='/vehicle/{{$Vehicle->VehicPlaca}}/edit' class='btn btn-warning btn-block'>Edit</a></td>
-									@endif
-								</tr>
-							@endforeach
-					</table>
+							</thead>
+							<tbody id="readyTable">
+								@foreach ($Vehicles as $Vehicle)
+									<tr style="{{$Vehicle->VehicDelete === 1 ? 'color: red' : ''}}">
+										<td>{{$Vehicle->VehicPlaca}}</td>
+										<td>{{$Vehicle->VehicTipo}}</td>
+										<td>{{$Vehicle->VehicCapacidad}} kg</td>
+										<td>{{$Vehicle->VehicKmActual}}</td>
+										<td>{{$Vehicle->SedeName}}</td>
+										<td>{{$Vehicle->created_at}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+										<td><a href='/vehicle/{{$Vehicle->VehicPlaca}}/edit' class='btn btn-warning btn-block'>Edit</a></td>
+										@endif
+									</tr>
+								@endforeach
+						</table>
+					</div>
 				</div>
-				<!-- /.box-body -->
 			</div>
-			<!-- /.box -->
 		</div>
 	</div>
 </div>

@@ -33,7 +33,28 @@ class EmailController extends Controller
                 ->select('users.email', 'clientes.CliName', 'solicitud_servicios.*')
                 ->where('users.UsRol', 'JefeLogistica')//rol que va ha ser contactado para las solicitudes de servicio
                 ->first();
-            Mail::to($emailUser->email)->send(new SolSerEmail($email));
+            // $UsersMails = DB::table('users')
+            // $Roles1 = DB::table('users')
+            //     ->where('users.UsRol', 'JefeLogistica')
+            //     ->select('users.email')
+            //     ->get();
+            // $Roles2 = DB::table('users')
+            //     ->where('users.UsRol2', 'JefeLogistica')
+            //     ->select('users.email')
+            //     ->get();
+            //     foreach($Roles1 as $Rol1){
+            //         Mail::to($Rol1->email)->send(new SolSerEmail($email));
+            //     }
+            //     foreach($Roles2 as $Rol2){
+            //         Mail::to($Rol2->email)->send(new SolSerEmail($email));
+            //     }
+                // foreach($UsersMails as $UserMail){
+                    // Mail::to($UserMail->email)->send(new SolSerEmail($email));
+                    // }
+
+
+                Mail::to($emailUser->email)->send(new SolSerEmail($email));
+
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
                 ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')

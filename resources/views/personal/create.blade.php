@@ -126,9 +126,9 @@
 															<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
 														</div>
 													</div>
-													<div class="box-footer">
-														<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
-													</div>
+												</div>
+												<div class="box-footer">
+													<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 												</div>
 											</div>
 										</div>
