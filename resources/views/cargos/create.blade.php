@@ -13,6 +13,8 @@
 				<div class="box-header with-border">
 					<h3 class="box-title">{{trans('adminlte_lang::message.createcargo')}}</h3>
 				</div>
+				<div class="box box-info">
+
 					<form role="form" action="/cargos" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
@@ -40,12 +42,14 @@
 								<small class="help-block with-errors">*</small>
 								<input data-minlength="5" required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{old('CargName')}}">
 							</div>
-							
 						</div>
-						<div class="box-footer">
-							<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+							</div>
 						</div>
 					</form>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -37,8 +37,10 @@
 										<div id="step-1" class="tab-pane step-content">
 											<div id="form-step-0" role="form" data-toggle="validator">
 												<div class="col-md-12 form-group">
-													<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+													<label for="FK_GenerCli" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.MenuSedes') }}</b>" data-content="{{ trans('adminlte_lang::message.misSedes-gener') }}">
+														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+														{{ trans('adminlte_lang::message.MenuSedes') }}
+													</label>
 													<small class="help-block with-errors">*</small>
 													<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
@@ -58,20 +60,28 @@
 													<input name="GenerName" type="text" class="form-control" id="GenerInputRazon" value="{{ old('GenerName') }}" required>
 												</div>
 												<div class="col-md-12 form-group">
-													<label for="">{{ trans('adminlte_lang::message.clientnombrecorto') }}</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.nameCorto-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+													<label for="GenerShortname" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
+														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+														{{ trans('adminlte_lang::message.clientnombrecorto') }}
+													</label>
 													<small class="help-block with-errors">*</small>
 													<input name="GenerShortname" type="text" id="GenerInputNombre" class="form-control" value="{{ old('GenerShortname') }}" required>
 												</div>
 												<div class="col-md-6 form-group">
-													<label for="GenerCode">{{ trans('adminlte_lang::message.genercode') }}</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.code-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+													<label for="GenerCode" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.genercode') }}</b>" data-content="{{ trans('adminlte_lang::message.code-gener') }}">
+														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+														{{ trans('adminlte_lang::message.genercode') }}
+													</label>
 													<small class="help-block with-errors"></small>
 													<input name="GenerCode" type="text" class="form-control" id="GenerCode" value="{{ old('GenerCode') }}">
 												</div>
 												<div class="col-md-6 form-group">
-													<label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+													<label for="Respels" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.MenuRespel') }}</b>" data-content="{{ trans('adminlte_lang::message.respels-gener') }}">
+														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+														{{ trans('adminlte_lang::message.MenuRespel') }}
+													</label>
+													{{-- <label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
+													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
 														@foreach ($Respels as $Respel)
 															<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
@@ -82,6 +92,7 @@
 										</div>
 										<div id="step-2" class="tab-pane step-content">
 											<div id="form-step-1" role="form" data-toggle="validator">
+												<div class="box-body">
 												<h2>{{ trans('adminlte_lang::message.SGenertitle') }}</h2>
 												<div class="form-group col-md-6">
 													<label for="GSedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label>
@@ -90,7 +101,6 @@
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label>
-													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Dirrección de Correo electrónico de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors">*</small>
 													<input type="email" name="GSedeEmail" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{ old('GSedeEmail') }}" required>
 												</div>
@@ -117,11 +127,10 @@
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label>
 													<small class="help-block with-errors">*</small>
-													<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{ old('GSedeAddress') }}" required>
+													<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{ old('GSedeAddress') }}" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" required>
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
-													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de celular de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors">*</small>
 													<div class="input-group">
 														<span class="input-group-addon">(+57)</span>
@@ -130,20 +139,18 @@
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label>
-													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.phone') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Número de Teléfono de la Sede del Generador</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}">
+													<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 												</div>
 												<div class="col-md-6 form-group">
 													<label for="GSedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label>
-													{{-- <a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.ext') }} " data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>Extensión del Teléfono Local </p>"><i class="far fa-question-circle" ></i></a> --}}
 													<small class="help-block with-errors"></small>
 													<input type="text" class="form-control extension ext" id="GSedeinputext1" name="GSedeExt1" data-minlength="2" maxlength="5" value="{{ old('GSedeExt1') }}" disabled>
 												</div>
 												<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 													<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
 													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}">
+													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 												</div>
 												<div id="extension2" class="col-md-6 form-group" style="display: none;">
 													<label for="GSedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label> 
@@ -153,6 +160,7 @@
 												<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
 													<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
 												</div>
+											</div>
 											</div>
 											<div class="box-footer">
 												<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>

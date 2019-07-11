@@ -54,7 +54,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
-								<input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" value="{{$Sede->SedeAddress}}" required>
+								<input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" value="{{$Sede->SedeAddress}}" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" required>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
@@ -65,7 +65,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
-								<input type="text" class="form-control phone tel" id="sedeinputphone1" class="btn btn-outline-success my-2 my-sm-0" name="SedePhone1" data-minlength="11" value="{{$Sede->SedePhone1}}">
+								<input type="text" class="form-control phone tel" id="sedeinputphone1" class="btn btn-outline-success my-2 my-sm-0" name="SedePhone1" data-minlength="11" value="{{$Sede->SedePhone1}}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 							</div>
 							<div class="col-md-6 form-group">
 									<label for="sedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label><small class="help-block with-errors"></small>
@@ -73,7 +73,7 @@
 							</div>
 							<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 								<label for="sedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label><small class="help-block with-errors"></small>
-								<input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" value="{{$Sede->SedePhone2}}">
+								<input type="tel" class="form-control phone tel2" id="sedeinputphone2" name="SedePhone2" data-minlength="11"  data-maxlength="11" value="{{$Sede->SedePhone2}}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 							</div>
 							<div id="extension2" class="col-md-6 form-group" style="display: none;">
 								<label for="sedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label><small class="help-block with-errors"></small>

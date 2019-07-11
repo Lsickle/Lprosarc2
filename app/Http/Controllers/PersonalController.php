@@ -13,6 +13,7 @@ use App\Area;
 use App\Cargo;
 use App\Personal;
 use App\audit;
+use App\Sede;
 use Permisos;
 
 
@@ -82,17 +83,18 @@ class PersonalController extends Controller
 		$NuevoCargo =  $request->input('NewCargo');
 		if($request->input('CargArea') <> "NewArea"){
 			$NuevaArea = null;
-		}
-		if($request->input('FK_PersCargo') <> "NewCargo"){
-			$NuevoCargo = null;
+			if($request->input('FK_PersCargo') <> "NewCargo"){
+				$NuevoCargo = null;
+			}
 		}
 		/*Valida si se ha creado un nuevo cargo*/
 		if($NuevoCargo <> null){
 			/*Valida si se ha creado una nueva area*/
 			if($NuevaArea <> null){
+				$Sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('Sede'))->first();
 				$newArea = new Area();
 				$newArea->AreaName = $request->input('NewArea');
-				$newArea->FK_AreaSede = $request->input('Sede');
+				$newArea->FK_AreaSede = $Sede->ID_Sede;
 				$newArea->AreaDelete = 0;
 				$newArea->AreaSlug = hash('sha256', rand().time().$newArea->AreaName);
 				$newArea->save();
@@ -106,9 +108,10 @@ class PersonalController extends Controller
 				$Cargo = $newCargo->ID_Carg;
 			}
 			else{
+				$Area = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first();
 				$newCargo = new Cargo();
 				$newCargo->CargName = $request->input('NewCargo');
-				$newCargo->CargArea = $request->input('CargArea');
+				$newCargo->CargArea = $Area->ID_Area;
 				$newCargo->CargDelete = 0;
 				$newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
 				$newCargo->save();
@@ -116,6 +119,7 @@ class PersonalController extends Controller
 			}
 		}
 		else{
+			return "Cargo ".$NuevoCargo." Request ".$request->input('NewCargo');
 			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 
@@ -227,15 +231,16 @@ class PersonalController extends Controller
 		$NuevoCargo =  $request->input('NewCargo');
 		if($request->input('CargArea') <> "NewArea"){
 			$NuevaArea = null;
-		}
-		if($request->input('FK_PersCargo') <> "NewCargo"){
-			$NuevoCargo = null;
+			if($request->input('FK_PersCargo') <> "NewCargo"){
+				$NuevoCargo = null;
+			}
 		}
 		if($NuevoCargo <> null){
 			if($NuevaArea <> null){
+				$Sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('Sede'))->first();
 				$newArea = new Area();
 				$newArea->AreaName = $request->input('NewArea');
-				$newArea->FK_AreaSede = $request->input('Sede');
+				$newArea->FK_AreaSede = $Sede->ID_Sede;
 				$newArea->AreaDelete = 0;
 				$newArea->AreaSlug = hash('sha256', rand().time().$newArea->AreaName);
 				$newArea->save();
@@ -249,9 +254,10 @@ class PersonalController extends Controller
 				$Cargo = $newCargo->ID_Carg;
 			}
 			else{
+				$Area = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first();
 				$newCargo = new Cargo();
 				$newCargo->CargName = $request->input('NewCargo');
-				$newCargo->CargArea = $request->input('CargArea');
+				$newCargo->CargArea = $Area->ID_Area;
 				$newCargo->CargDelete = 0;
 				$newCargo->CargSlug = hash('sha256', rand().time().$newCargo->CargName);
 				$newCargo->save();

@@ -128,9 +128,6 @@ class RecursoController extends Controller
             
         if ($request->hasfile('RecSrc')){
             foreach($request->RecSrc as $file){
-                
-                
-                
                 $Recurso = new Recurso();
                 $Recurso->RecTipo = $request->input("RecTipo");
 
@@ -147,7 +144,6 @@ class RecursoController extends Controller
                 $Recurso->FK_RecSolRes = $SolRes->ID_SolRes;
                 $Recurso->save();
                 $file->move(public_path('/img/Recursos/').$SolRes->CliName.' - '.$SolRes->FK_SolResSolSer,$name);
-
             }
         }else{
             abort(500);
