@@ -118,9 +118,13 @@
 		</div>
 	</div>
 </div>
+@section('NewScript')
 <script type="application/javascript">
 var contador = 1;
-
+$(document).ready(function(){
+	$("#myform").validator('destroy');
+	$("#myform").validator('update');
+})
 function attachPopover() {
 	$('[data-toggle="popover"]').popover({
 		html: true,
@@ -246,3 +250,5 @@ function EliminarRes(id) {
 }
 
 </script>
+@endsection
+
