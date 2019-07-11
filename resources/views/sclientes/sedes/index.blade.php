@@ -44,7 +44,7 @@
 									</tr>
 									@endforeach
 							</tbody>
-							<tfoot>
+							{{-- <tfoot>
 								<tr>
 									<th>{{ trans('adminlte_lang::message.clientcliente') }}</th>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
@@ -53,7 +53,7 @@
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
 									<th>{{ trans('adminlte_lang::message.seemore')}}</th>
 								</tr>
-							</tfoot>
+							</tfoot> --}}
 						</table>
 					</div>
 				</div>
