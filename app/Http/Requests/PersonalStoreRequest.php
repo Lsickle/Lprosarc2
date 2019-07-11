@@ -29,7 +29,7 @@ class PersonalStoreRequest extends FormRequest
         return [
             'Sede'          => 'required',
             'CargArea'      => 'required',
-            'FK_PersCargo'  => 'required',
+            'FK_PersCargo'  => 'required_if:NewArea,null',
 
             'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
             'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){

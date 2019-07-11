@@ -28,12 +28,14 @@
 						@endif
 						<div class="box-body">
 							<div class="col-xs-12 form-group">
-								<label for="GenerInputTipo">{{ trans('adminlte_lang::message.MenuSedes') }}</label>
-								<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.MenuSedes') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.misSedes-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+								<label for="FK_GenerCli" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.MenuSedes') }}</b>" data-content="{{ trans('adminlte_lang::message.misSedes-gener') }}">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.MenuSedes') }}
+								</label>
 								<small class="help-block with-errors">*</small>
 								<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
 									@foreach($Sedes as $Sede)
-										<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+									<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -46,14 +48,18 @@
 								<input type="text" name="GenerName" class="form-control" id="GenerInputRazon" value="{{$Generador->GenerName}}" maxlength="255" required>
 							</div>
 							<div class="col-xs-12 form-group">
-								<label for="GenerInputNombre">{{ trans('adminlte_lang::message.name') }}</label>
-								<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.nameCorto-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+								<label for="GenerShortname" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.clientnombrecorto') }}
+								</label>
 								<small class="help-block with-errors">*</small>
 								<input type="text" name="GenerShortname" class="form-control" id="GenerInputNombre" value="{{$Generador->GenerShortname}}" maxlength="64">
 							</div>
 							<div class="col-md-12 form-group">
-								<label for="GenerCode">{{ trans('adminlte_lang::message.genercode') }}</label>
-								<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.code-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+								<label for="GenerCode" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.genercode') }}</b>" data-content="{{ trans('adminlte_lang::message.code-gener') }}">
+									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+									{{ trans('adminlte_lang::message.genercode') }}
+								</label>
 								<small class="help-block with-errors"></small>
 								<input name="GenerCode" type="text" class="form-control" id="GenerCode" value="{{$Generador->GenerCode}}" maxlength="32">
 							</div>
