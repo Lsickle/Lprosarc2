@@ -380,7 +380,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersBank = 'Av Villas';
         $personal->PersIngreso = '6/05/2012';
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
-        $personal->FK_PersCargo = 10;
+        $personal->FK_PersCargo = 3;
         $personal->PersDelete = 0;
         $personal->PersEmail = 'subgerencia@prosarc.com.co';
         $personal->save();

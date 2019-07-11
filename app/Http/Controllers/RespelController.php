@@ -340,7 +340,7 @@ class RespelController extends Controller
             }else{
                 $ctrlDoc = $respel->SustanciaControladaDocumento;
             }
-            if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
                 $respel->RespelStatus = "Pendiente";
             }else{
                 $respel->RespelStatus = $request['RespelStatus'];

@@ -1,7 +1,7 @@
 <input type="text" hidden="" name="SustanciaControladaTipo[]" value="0">
 
 <label>Nombre de la sustancia</label>
-<select name="SustanciaControladaNombre[]" class="form-control" required>
+<select name="SustanciaControladaNombre[]" class="form-control">
 	<option value="Acetato de butilo">Acetato de butilo</option>
 	<option value="Acetato de etilo">Acetato de etilo</option>
 	<option value="Acetato de isobutilo">Acetato de isobutilo</option>

@@ -36,11 +36,11 @@ class EmailController extends Controller
             Mail::to($emailUser->email)->send(new SolSerEmail($email));
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
-                ->join('progvehiculos', 'progvehiculos.FK_ProgVehiculo', '=', 'solicitud_servicios.ID_SolSer')
+                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
                 ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->where('progvehiculos.FK_ProgVehiculo', '=', $SolSer->ID_SolSer)
+                ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }else{
