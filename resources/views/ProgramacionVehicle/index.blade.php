@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
-					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 					@endif
 				</div>
