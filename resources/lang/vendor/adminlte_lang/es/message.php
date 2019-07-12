@@ -537,7 +537,7 @@ return [
     'MenuTraininglist'        => 'Lista de Capacitaciones',
     'MenuVehicleTitle'        => 'Vehículos',
     'MenuVehiclelist'         => 'Lista de Vehículos',
-    'MenuPrograVehic'         => 'Programación de Vehículos',
+    'MenuPrograVehic'         => 'Programación de Servicios',
     'MenuMantVehic'           => 'Mantenimiento de Vehículos',
     'MenuShopTitle'           => 'Compra',
     'MenuShopOrde'            => 'Orden de Compra',

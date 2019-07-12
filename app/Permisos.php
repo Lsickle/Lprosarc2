@@ -24,7 +24,7 @@ class Permisos{
 		ProgramacionVehicle/edit
 		ManteniVehicle/index
 		vehicle/index
-		VehicleController::create,edit
+		VehicleController::edit
 		solicitud-serv/show
 	*/
 	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
@@ -129,6 +129,7 @@ class Permisos{
 		VehicleController::index
 		VehicManteController::index
 		Menu.php
+		VehicleController::create
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
 	/* Using ->
