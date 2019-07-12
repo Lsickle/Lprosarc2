@@ -171,6 +171,8 @@ function Switch1() {
 	$(".testswitch").bootstrapSwitch({
 		animate: true,
 		labelText: '<i class="fas fa-arrows-alt-h"></i>',
+		onText: 'Si',
+		offText: 'No',
 	});
 }
 $(document).ready(Switch1());
