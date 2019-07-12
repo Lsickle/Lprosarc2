@@ -604,7 +604,7 @@ return [
     'solseraddrescollectdescrit' => 'Escriba la dirección a la cual el vehículo de Prosarc S.A. ESP. recolectara el(los) residuo(s)',
     'solserticket'            => 'Ticket de Bascula',
     'solserticketdescrit'     => 'Se requiere pesaje en bascula camionera y la presentación del Ticket correspondiente',
-    'solserperscapa'          => 'Personal con Capacitación',
+    'solserperscapa'          => 'Personal Capacitado',
     'solserperscapadescrit'   => 'Se requiere que el Conductor y/o Ayudante de Prosarc S.A. ESP haya realizado capacitación especifica, la cual es dictada por el Cliente',
     'solsermaspers'           => 'Personal Adicional',
     'solsermaspersdescrit'    => 'Se requiere el envió de una persona adicional, aparte del conductor y el ayudante, para el cargue de vehículos de Prosarc S.A. ESP.',
