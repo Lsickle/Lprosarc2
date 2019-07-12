@@ -121,5 +121,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
 	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
+	Route::get('/email/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 

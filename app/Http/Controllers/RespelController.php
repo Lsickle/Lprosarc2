@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\RespelMail;
 use App\audit;
 use App\Respel;
 use App\Sede;
@@ -368,8 +370,9 @@ class RespelController extends Controller
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=json_encode($request->all());
             $log->save();
-
+            
             return redirect()->route('respels.show', [$respel->RespelSlug]);
+            
     }
 
     /**
@@ -434,6 +437,10 @@ class RespelController extends Controller
             $log->Auditlog=json_encode($request->all());
             $log->save();
 
+            if($respel->RespelStatus === "Aprobado"){
+                // new  RespelMail($slug);
+                return redirect()->route('email-respel', [$respel->RespelSlug]);
+            }
             return redirect()->route('respels.edit', [$respel->RespelSlug]);
         }
     }

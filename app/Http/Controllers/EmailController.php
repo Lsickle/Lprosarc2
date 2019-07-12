@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SolSerEmail;
+use App\Mail\RespelMail;
 use App\SolicitudServicio;
 use App\Personal;
+use App\Respel;
 
 class EmailController extends Controller
 {
+    // Email de Solcitud de Servicio
     protected function sendemail($slug)
     {
         $SolSer = SolicitudServicio::where('SolSerSlug', $slug)->first();
@@ -57,6 +60,18 @@ class EmailController extends Controller
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }
+        return back();
+    }
+
+    protected function sendEmailRespel($slug){
+        $respel = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', 'respels.FK_RespelCoti')
+            ->join('sedes', 'cotizacions.FK_CotiSede', '=', 'sedes.ID_Sede')
+            ->select('respels.*', 'sedes.SedeEmail')
+            ->where('respels.RespelSlug', $slug)
+            ->first();
+        // Mail::to($respel->SedeEmail)->send(new RespelMail($respel));
+        Mail::to('sistemas3@prosarc.com.co')->send(new RespelMail($respel));
         return back();
     }
 }
