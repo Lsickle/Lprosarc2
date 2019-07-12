@@ -7,6 +7,7 @@
 @endsection
 @section('main-content')
 <div class="row">
+	@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 	<div class="col-md-3">
 		<div class="box box-info" style="overflow-y: auto; max-height: 560px;">
 			<div class="box-header with-border">
@@ -33,6 +34,9 @@
 		</div>
 	</div>
 	<div class="col-md-9">
+	@else
+	<div class="col-md-12">
+	@endif
 		<div class="box box-info">
 			<div class="box-body no-padding">
 				<div id='calendar'></div>
@@ -289,6 +293,7 @@
 			NotifiTrue('{{session('Delete')}}');
 		@endif
 		var calendarEl = document.getElementById('calendar');
+		@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 		var Draggable = FullCalendarInteraction.Draggable;
 		var containerEl = document.getElementById('external-events');
 		new Draggable(containerEl, {
@@ -300,12 +305,11 @@
 				};
 			}
 		});
+		@endif
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			plugins: ['interaction', 'dayGrid', 'timeGrid'],
 			locale: 'es',
 			timeZone: 'UTC',
-			droppable: true,
-			eventStartEditable: true,
 			defaultView: 'dayGridMonth',
 			buttonText:{
 				today: 'Hoy',
@@ -315,6 +319,7 @@
 			defaultRangeSeparator: ' - ',
 			height: 'parent',
 			customButtons: {
+				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 				AddMantVehc: {
 					text: 'Añadir Mantenimiento',
 					click: function() {
@@ -330,6 +335,7 @@
 						});
 					}
 				},
+				@endif
 				ListProg: {
 					text: 'Listar Programaciones',
 					click: function() {
@@ -357,10 +363,12 @@
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
-						@if(($programacion->ProgVehtipo == 1 || $programacion->ProgVehtipo == 2) && $programacion->ProgVehEntrada == null)
+						@if(($programacion->ProgVehtipo == 1 || $programacion->ProgVehtipo == 2) && ($programacion->ProgVehEntrada == null))
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
+							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
+							@endif
 							color: '{{$programacion->ProgVehColor}}',
 							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
 							start: '{{$programacion->ProgVehSalida}}',
@@ -370,7 +378,9 @@
 						@if($programacion->ProgVehtipo == 0)
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
+							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
+							@endif
 							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
 							color: '#00a65a',
 							start: '{{$programacion->ProgVehSalida}}',
@@ -383,7 +393,9 @@
 						{
 							id: '{{$mantenimiento->ID_Mv}}',
 							title: '{{$mantenimiento->VehicPlaca." - ".$mantenimiento->MvType}}',
+							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url:'{{url('/vehicle-mantenimiento/'.$mantenimiento->ID_Mv.'/edit')}}',
+							@endif
 							color: 'brown',
 							start: '{{$mantenimiento->HoraMavInicio}}',
 							end: '{{$mantenimiento->HoraMavFin}}',
@@ -392,6 +404,9 @@
 					@endforeach
 				],
 			}],
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+			droppable: true,
+			eventStartEditable: true,
 			drop : function( dropInfo ) {
 				let hora = FullCalendar.formatDate(dropInfo.date.toUTCString(), {
 					hour: '2-digit',
@@ -434,8 +449,10 @@
 				info.jsEvent.preventDefault();
 				window.open(info.event.url);
 			}
+			@endif
 		});
 		calendar.render();
+		@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 		function CambioDeFecha(event){
 			var id = event.id;
 			var fecha = event.start.toISOString();
@@ -458,7 +475,9 @@
 				}
 			});
 		}
+		@endif
 	});
+	@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 	function TranspotadorProsarc(){
 		$('.vehiculoAlquilado').attr('hidden', true);
 		$('.vehiculoProsarc').attr('hidden', false);
@@ -518,6 +537,7 @@
 			})
 		}
 	});
+	@endif
 </script>
 
 @endsection
