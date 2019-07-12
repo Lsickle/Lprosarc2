@@ -118,6 +118,7 @@ class Permisos{
 		ProgramacionVehicle/edit
 		solicitud-serv/index
 		solicitud-serv/show
+		sclientes/sedes/show
 	*/
 	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
 	/* Using ->

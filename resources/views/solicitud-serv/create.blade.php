@@ -215,8 +215,10 @@
 								<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-primary" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b> {{ trans('adminlte_lang::message.solseraddgener') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddgenerdescrit') }}"><i class="fas fa-plus-circle"></i> {{ trans('adminlte_lang::message.solseraddgener') }}</a>
 							</div>
 						</div>
-						<div class="box-footer">
-							<button type="submit" class="btn btn-success pull-right" form="CreateSolSer">{{ trans('adminlte_lang::message.applyfor') }}</button>
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-success pull-right" form="CreateSolSer">{{ trans('adminlte_lang::message.applyfor') }}</button>
+							</div>
 						</div>
 					</form>
 				</div>

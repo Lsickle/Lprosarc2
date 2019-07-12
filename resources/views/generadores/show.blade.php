@@ -72,6 +72,8 @@
 							<b>{{ trans('adminlte_lang::message.genercode') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
 						</li>
+						{{-- @if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) --}}
+
 							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.sedesgener') }}</i></h4>
 							<div style='overflow-y:auto; max-height:200px;'>
 								@php
@@ -92,6 +94,7 @@
 									@endphp
 								@endforeach
 							</div>
+						{{-- @endif --}}
 					</ul>
 				</div>
 			</div>

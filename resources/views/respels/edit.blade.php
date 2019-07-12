@@ -46,9 +46,10 @@
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 									@include('layouts.RespelPartials.Respelform1Edit')
 								</div>
-								<div class="box-footer">
-									<button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-									{{-- <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a> --}}
+								<div class="box box-info">
+									<div class="box-footer">
+										<button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -80,7 +81,6 @@
 		@method('PUT')
 		@csrf
 		{{-- <input hidden type="text" name="updated_by" value="{{Auth::user()->email}}"> --}}
-		<!-- row -->
 			<!-- col md3 -->
 			<div class="col-md-3">
 				<!-- box -->
@@ -246,10 +246,10 @@
 					</div>
 					<!-- /.box body -->
 					<div class="box-footer">
-						 <button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-						 <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+						<button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+						<a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
-						<!-- /.nav-tabs-custom -->
+					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
 			</div>

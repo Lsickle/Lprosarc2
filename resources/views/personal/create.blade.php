@@ -13,18 +13,18 @@
 					<div class="box-header">
 						<h3 class="box-title">{{ trans('adminlte_lang::message.personaltitleregister') }}</h3>
 					</div>
-					<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
-						@csrf
-						@if ($errors->any())
-							<div class="alert alert-danger" role="alert">
-								<ul>
-									@foreach ($errors->all() as $error)
-										<p>{{$error}}</p>
-									@endforeach
-								</ul>
-							</div>
-						@endif
-						<div class="box box-info">
+					<div class="box box-info">
+						<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
+								@csrf
+								@if ($errors->any())
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											@foreach ($errors->all() as $error)
+												<p>{{$error}}</p>
+											@endforeach
+										</ul>
+									</div>
+								@endif
 							<div class="box-body" id="readyTable">
 								<div class="tab-pane" id="addRowWizz">
 									<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>
@@ -65,12 +65,12 @@
 														<div class="form-group col-md-6" id="NewArea" style="display: none;">
 															<label for="NewInputA" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.namenewarea') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.namenewarea') }}</label>
 															<small class="help-block with-errors">*</small>
-															<input data-minlength="8" name="NewArea" type="text" id="NewInputA" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newarea') }}">
+															<input data-minlength="4" name="NewArea" type="text" id="NewInputA" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newarea') }}">
 														</div>
 														<div class="form-group col-md-6" id="NewCargo" style="display: none;">
 															<label for="NewInputC" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.namenewcargo') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewcarg') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.namenewcargo') }}</label>
 															<small class="help-block with-errors">*</small>
-															<input data-minlength="8" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newcargo') }}">
+															<input data-minlength="4" name="NewCargo" type="text" id="NewInputC" class="form-control inputText" placeholder="{{ trans('adminlte_lang::message.newcargo') }}">
 														</div>
 													</div>
 												</div>
@@ -126,19 +126,18 @@
 															<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{old('PersAddress')}}">
 														</div>
 													</div>
-													<div class="box-footer pull-right">
-														<button type="submit" class="btn btn-success">{{ trans('adminlte_lang::message.register') }}</button>
-													</div>
+												</div>
+												<div class="box-footer">
+													<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
-						<!-- /.box-body -->
-					</form>
+							<input hidden type="text" name="updated_by" value="{{Auth::user()->email}}">
+						</form>
+					</div>
 				</div>
 				<!-- /.box -->
 			</div>

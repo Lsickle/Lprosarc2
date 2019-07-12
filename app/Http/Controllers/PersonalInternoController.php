@@ -221,7 +221,9 @@ class PersonalInternoController extends Controller
 		$validate = $request->validate([
 			'Sede'          => 'required',
 			'CargArea'      => 'required',
-			'FK_PersCargo'  => 'required',
+			'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
+            'NewArea'       => 'required_if:CargArea,NewArea',
+            'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
 			'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
 			'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
 			'PersFirstName' => 'required|max:64',
