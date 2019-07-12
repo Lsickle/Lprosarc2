@@ -302,8 +302,8 @@ class SolicitudServicioController extends Controller
 		}
 		$TextProgramacion = null;
 		if($SolicitudServicio->SolSerStatus == 'Programado'){
-			setlocale(LC_TIME, "Spanish_Colombia");
-			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->first();
+			setlocale(LC_ALL, "es_CO.UTF-8");
+			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
 			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
 				$horas = " en las horas de la tarde";
 			}
