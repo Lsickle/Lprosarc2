@@ -26,13 +26,13 @@
 						@if($Areas->ID_Area <> $AreaOne->ID_Area)
 							@if($Areas->AreaDelete == 0)
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Areas->AreaSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-								<form action='/areas/{{$Areas->AreaSlug}}' method='POST'>
+								<form action='/areasInterno/{{$Areas->AreaSlug}}' method='POST'>
 									@method('DELETE')
 									@csrf
 									<input  type="submit" id="Eliminar{{$Areas->AreaSlug}}" style="display: none;">
 								</form>
 							@else
-								<form action='/areas/{{$Areas->AreaSlug}}' method='POST' class="pull-right">
+								<form action='/areasInterno/{{$Areas->AreaSlug}}' method='POST' class="pull-right">
 									@method('DELETE')
 									@csrf
 									<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>

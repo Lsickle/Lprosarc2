@@ -238,7 +238,7 @@ class RespelController extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
             $Respels = Respel::where('RespelSlug', $id)->first();
     
-            if ($Respels->RespelDelete == 1) {
+            if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
                 abort(404);
             }
     

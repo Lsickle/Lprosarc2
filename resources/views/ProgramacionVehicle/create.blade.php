@@ -129,9 +129,11 @@
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+				<div class="box box-info">
+					<div class="modal-footer">
+						<label for="submit1" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -167,9 +169,11 @@
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<label for="submit2" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+				<div class="box box-info">
+					<div class="modal-footer">
+						<label for="submit2" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -252,9 +256,11 @@
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<label for="submit3" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+				<div class="box box-info">
+					<div class="modal-footer">
+						<label for="submit3" class="btn btn-success">{{ trans('adminlte_lang::message.add') }}</label>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -21,7 +21,7 @@
 							@endslot
 						@endcomponent
 						@if($Cliente->CliDelete == 0)
-							@if(in_array(Auth::user()->UsRol === Permisos::Jefes) || in_array(Auth::user()->UsRol2 === Permisos::Jefes))
+							@if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
 							<a href="/contactos/{{$Cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Cliente->ID_Cli}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 							<form action='/contactos/{{$Cliente->CliSlug}}' method='POST'  class="col-12 pull-right">
@@ -31,7 +31,7 @@
 							</form>
 							@endif
 						@else
-							@if(in_array(Auth::user()->UsRol === Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2 === Permisos::PROGRAMADOR))
+							@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 								<form action='/contactos/{{$Cliente->CliSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 		</div>
-		@if(in_array(Auth::user()->UsRol === Permisos::Jefes) || in_array(Auth::user()->UsRol2 === Permisos::Jefes))
+		@if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
 		{{-- Modal para Crear un Vehiculo --}}
 		<form role="form" action="/contacto-vehiculo-create/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 			@csrf
@@ -151,7 +151,7 @@
 					<div class="active tab-pane" id="vehiculo">
 						<div class="text-center">
 							{{-- BOTON DE CREAR VEHICULO --}}
-							@if($Cliente->CliDelete == 0 && (in_array(Auth::user()->UsRol === Permisos::Jefes) || in_array(Auth::user()->UsRol2 === Permisos::Jefes)))
+							@if($Cliente->CliDelete == 0 && (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)))
 								<a method='get' href='#' data-toggle='modal' data-target='#create'  id="createvehiculo" class="btn btn-success text-center"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.addvehiculo') }}</b></a>
 							@endif
 						</div>
@@ -159,13 +159,13 @@
 							@foreach ($Vehiculos as $Vehiculo)
 								<div class="box-body box-profile">
 									{{-- BOTONES DE ELIMINAR Y EDITAR --}}
-									@if ($Vehiculo->VehicDelete === 0 && (in_array(Auth::user()->UsRol === Permisos::Jefes) || in_array(Auth::user()->UsRol2 === Permisos::Jefes)))
+									@if ($Vehiculo->VehicDelete === 0 && (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)))
 										<a method='get' href='#' data-toggle='modal' data-target='#edit{{$Vehiculo->ID_Vehic}}'  id="editvehiculo" onclick="editvehiculo(`{{$Vehiculo->ID_Vehic}}`, `{{$Vehiculo->VehicPlaca}}`, `{{$Vehiculo->VehicTipo}}`, `{{$Vehiculo->VehicCapacidad}}`)" title="Editar" class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
 										<a method='get' href='#' data-toggle='modal' data-target='#contactosdelete'  id="deletevehiculo" onclick="deletevehiculo(`{{$Vehiculo->ID_Vehic}}`, `{{$Vehiculo->VehicPlaca}}`)" title="Eliminar" class="btn btn-danger pull-left"><i class="fas fa-trash-alt"></i></a>
 										<div id="editvehiculocontacto"></div>
 										<div id="deletevehiculocontacto"></div>
 									@else
-										@if ($Cliente->CliDelete === 0 && (in_array(Auth::user()->UsRol === Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2 === Permisos::PROGRAMADOR)))
+										@if ($Cliente->CliDelete === 0 && (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)))
 											<form action='/contacto-vehiculo-delete/{{$Vehiculo->ID_Vehic}}' method='POST' class="pull-left">
 												@method('DELETE')
 												@csrf
@@ -197,7 +197,7 @@
 
 @endsection
 @section('NewScript')
-@if(in_array(Auth::user()->UsRol === Permisos::Jefes) || in_array(Auth::user()->UsRol2 === Permisos::Jefes))
+@if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
 	<script>
 		function editvehiculo(id, placa, tipo, capacidad){
 			$('#editvehiculocontacto').empty();

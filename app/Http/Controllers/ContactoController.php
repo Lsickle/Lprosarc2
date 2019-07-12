@@ -143,7 +143,7 @@ class ContactoController extends Controller
             if($Cliente->CliCategoria === 'Transportador'){
                 $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)
                     ->where(function($query){
-                        if(in_array(Auth::user()->UsRol === Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2 === Permisos::PROGRAMADOR)){
+                        if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
                         }else{
                             $query->where('VehicDelete', 0);
                         }

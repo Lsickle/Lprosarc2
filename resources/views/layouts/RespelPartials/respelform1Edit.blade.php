@@ -184,8 +184,6 @@
 					<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			
-			
 			{{--
 		</div> --}}
 	</div>

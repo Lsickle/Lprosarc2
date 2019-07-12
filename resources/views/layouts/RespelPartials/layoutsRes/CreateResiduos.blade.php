@@ -87,7 +87,7 @@
 	<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc`+contador+`" hidden="">
 	</div>
 	<div class="col-md-6 form-group has-feedback">
-		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
+		<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
 			<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
 		</label>
 		<small class="help-block with-errors">*</small>
@@ -96,7 +96,4 @@
 			<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>
-	
-	
-	
 </div>

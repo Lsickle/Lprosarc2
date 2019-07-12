@@ -199,7 +199,7 @@ class sclientcontroller extends Controller
                     $Sede->save();
 
                     $id = $Sede->SedeSlug;
-                    return redirect()->route('sclientes.show', compact('id'));
+                    return redirect()->route('sede-show', compact('id'));
                 }
 
             $log = new audit();

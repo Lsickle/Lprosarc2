@@ -107,7 +107,7 @@
 		<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" hidden="">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}<b>" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
 				<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
 			</label>
 			<small class="help-block with-errors">*</small>
@@ -118,9 +118,13 @@
 		</div>
 	</div>
 </div>
+@section('NewScript')
 <script type="application/javascript">
 var contador = 1;
-
+$(document).ready(function(){
+	$("#myform").validator('destroy');
+	$("#myform").validator('update');
+})
 function attachPopover() {
 	$('[data-toggle="popover"]').popover({
 		html: true,
@@ -246,3 +250,5 @@ function EliminarRes(id) {
 }
 
 </script>
+@endsection
+

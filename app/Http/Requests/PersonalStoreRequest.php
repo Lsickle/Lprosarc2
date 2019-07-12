@@ -29,7 +29,9 @@ class PersonalStoreRequest extends FormRequest
         return [
             'Sede'          => 'required',
             'CargArea'      => 'required',
-            'FK_PersCargo'  => 'required',
+            'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
+            'NewArea'       => 'required_if:CargArea,NewArea',
+            'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
 
             'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
             'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
@@ -60,6 +62,23 @@ class PersonalStoreRequest extends FormRequest
             'PersBankAccaunt' => 'max:64',
             'PersIngreso'   => 'date',
             'PersSalida'    => 'date|after:PersIngreso|nullable',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'NewArea'       => '"¿Cual Area?"',    
+            'NewCargo'      => '"¿Cual Cargo?"',
+            'FK_PersCargo'  => '"Nombre del cargo"',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'NewArea.required_if'         => 'El campo :attribute es inválido.',    
+            'NewCargo.required_if'        => 'El campo :attribute es inválido.',
+            'FK_PersCargo.required_unless'=> 'El campo :attribute es inválido.',
         ];
     }
 }

@@ -9,10 +9,11 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<div class="box box-info">
+			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{trans('adminlte_lang::message.createcargo')}}</h3>
 				</div>
+				<div class="box box-info">
 					<form role="form" action="/cargosInterno" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
@@ -54,11 +55,13 @@
 								<input maxlength="12" name="CargSalary" autofocus="true" type="text" class="form-control money" id="CargoSalary" value="{{old('CargSalary')}}">
 							</div>
 						</div>
-						<div class="box-footer">
-							<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+							</div>
 						</div>
 					</form>
-				
+				</div>
 			</div>
 		</div>
 	</div>
