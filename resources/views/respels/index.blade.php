@@ -27,10 +27,11 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 										<th>{{trans('adminlte_lang::LangRespel.Respelcliente')}}</th>
 									@endif
+									<th>{{trans('adminlte_lang::LangRespel.RespelStatus')}}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-										<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
+										<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
 									@else
-										<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-question'></i></a><i class='fas fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-tasks'></i></a><i class='fas fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-ban'></i></a><i class='fas fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-thumbs-up'></i></a><i class='fas fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-check-double'></i></a><i class='fas fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-calendar-times'></i></a><i class='fas fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelver')}}</th>
+										<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelver')}}</th>
 									@endif
 								</tr>
 							</thead>
@@ -69,66 +70,66 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 										<td>{{$respel->CliName}}</td>
 									@endif
-
+									<td>{{$respel->RespelStatus}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 										@switch($respel->RespelStatus)
 											{{-- evaluación pendiente --}}
 											@case('Pendiente')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-default'><i class='fas fa-question'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
 												@break
 											{{-- residuo Rechazado --}}
 											@case('Rechazado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-danger'><i class='fas fa-ban'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-primary'><i class='fas fa-thumbs-up'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
 												@break
 											{{-- cotización vencida --}}
 											@case('Vencido')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-danger'><i class='fas fa-calendar-times'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
 												@break
 											{{-- Informacion Incompleta --}}
 											@case('Incompleto')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- Informacion Revisado --}}
 											@case('Revisado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn btn-primary'><i class='fas fa-ban'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a></td>
 										@endswitch
 									@else
 										@switch($respel->RespelStatus)
 											{{-- evaluación pendiente --}}
 											@case('Pendiente')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-default'><i class='fas fa-question'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
 												@break
 											{{-- residuo Rechazado --}}
 											@case('Rechazado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-danger'><i class='fas fa-ban'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-primary'><i class='fas fa-thumbs-up'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
 												@break
 											{{-- cotización vencida --}}
 											@case('Vencido')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-danger'><i class='fas fa-calendar-times'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
 												@break
 											{{-- información del residuo incompleta --}}
 											@case('Incompleto')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>0
 												@break
 											{{-- Residuo Revisado --}}
 											@case('Revisado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-warning'><i class="fas fa-tasks"></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>0
 												@break
 											{{-- opción default --}}
 											@default
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn btn-primary'><i class='fas fa-search'></i></a></td>
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
 										@endswitch
 									@endif
 								</tr>
