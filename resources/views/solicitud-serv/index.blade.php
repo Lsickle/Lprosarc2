@@ -43,7 +43,7 @@
 											<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
 											<td>{{$Servicio->SolSerNameTrans}}</td>
 											<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
-											<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"><i class="fas fa-clipboard-list"></i></a></td>
+											<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 										</tr>
 								@endforeach
 							</tbody>

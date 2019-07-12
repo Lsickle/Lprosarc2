@@ -70,8 +70,8 @@ class EmailController extends Controller
             ->select('respels.*', 'sedes.SedeEmail')
             ->where('respels.RespelSlug', $slug)
             ->first();
-        // Mail::to($respel->SedeEmail)->send(new RespelMail($respel));
-        Mail::to('sistemas3@prosarc.com.co')->send(new RespelMail($respel));
+
+        Mail::to($respel->SedeEmail)->send(new RespelMail($respel));
         return back();
     }
 }

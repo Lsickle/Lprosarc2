@@ -167,6 +167,7 @@ return [
     
     // form
     'seemore'                 => 'Ver Más',
+    'seemoredetails'          => 'Ver más detalles',
     'seedetails'              => 'Ver Detalles',
     'see'                     => 'Ver',
     'emailaddress'            => 'Correo electrónico',
