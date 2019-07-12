@@ -720,6 +720,11 @@ var currentScrollPos = window.pageYOffset;
 	$(document).ready(function(){
 		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?');
 		$('input[type="email"]').attr('data-error', 'No es un e-mail valido');
-	})
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("form").attr("lang", "es");
+	});
 </script>
 @yield('NewScript')
