@@ -131,7 +131,10 @@
 								</div>
 							</div>
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-								<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
+								<a style="{{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'display: none;' : ''}} margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
+							@endif
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								<a href='#' data-toggle='modal' style="margin: 10px 10px;" data-target='#ModalRepeat' class="btn btn-info pull-right"> Repetir</a>
 							@endif
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
@@ -318,11 +321,29 @@
 										</tr>
 									</tfoot> --}}
 								</table>
-								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-									<a href="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-info"> Repetir{{-- <i class="fas fa-file-pdf fa-lg"></i> --}}</a>
-								@endif
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
+								{{--  Modal --}}
+									<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-body">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+														<i class="fas fa-exclamation-triangle"></i>
+														<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
+													</div> 
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+													<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
+														<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								{{-- END Modal --}}
 								 {{--  Modal --}}
 									<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 										<div class="modal-dialog" role="document">
@@ -553,7 +574,7 @@
 							</div> 
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">No, salir</button>
+							<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
 							<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
 						</div>
 					</div>
