@@ -318,6 +318,9 @@
 										</tr>
 									</tfoot> --}}
 								</table>
+								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+									<a href="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-info"> Repetir{{-- <i class="fas fa-file-pdf fa-lg"></i> --}}</a>
+								@endif
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
 								 {{--  Modal --}}

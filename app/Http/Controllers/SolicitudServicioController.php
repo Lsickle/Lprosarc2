@@ -396,9 +396,68 @@ class SolicitudServicioController extends Controller
 			return redirect()->route('email', compact('slug'));
 		}
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
-		
 	}
 
+
+	public function repeat($slug)
+	{
+		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
+		if(!is_null($SolicitudOld)){
+			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
+			$SolicitudNew = new SolicitudServicio();
+			$SolicitudNew->SolSerStatus = 'Pendiente';
+			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
+			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
+			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
+			$SolicitudNew->SolSerNitTrans = $SolicitudOld->SolSerNitTrans;
+			$SolicitudNew->SolSerAdressTrans = $SolicitudOld->SolSerAdressTrans;
+			$SolicitudNew->SolSerCityTrans = $SolicitudOld->SolSerCityTrans;
+			$SolicitudNew->SolSerConductor = $SolicitudOld->SolSerConductor;
+			$SolicitudNew->SolSerVehiculo = $SolicitudOld->SolSerVehiculo;
+			$SolicitudNew->SolSerTypeCollect = $SolicitudOld->SolSerTypeCollect;
+			$SolicitudNew->SolSerCollectAddress = $SolicitudOld->SolSerCollectAddress;
+			$SolicitudNew->SolSerBascula = $SolicitudOld->SolSerBascula;
+			$SolicitudNew->SolSerCapacitacion = $SolicitudOld->SolSerCapacitacion;
+			$SolicitudNew->SolSerMasPerson = $SolicitudOld->SolSerMasPerson;
+			$SolicitudNew->SolSerVehicExclusive = $SolicitudOld->SolSerVehicExclusive;
+			$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+			$SolicitudNew->SolSerDevolucion = $SolicitudOld->SolSerDevolucion;
+			$SolicitudNew->SolSerDevolucionTipo = $SolicitudOld->SolSerDevolucionTipo;
+			$SolicitudNew->FK_SolSerPersona = $SolicitudOld->FK_SolSerPersona;
+			$SolicitudNew->FK_SolSerCliente = $SolicitudOld->FK_SolSerCliente;
+			$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
+			$SolicitudNew->SolSerDelete = 0;
+			$SolicitudNew->save();
+
+			foreach ($SolResOlds as $SolResOld) {
+				$SolResNew = new SolicitudResiduo();
+				$SolResNew->SolResKgEnviado = $SolResOld->SolResKgEnviado;
+				$SolResNew->SolResKgRecibido = 0;
+				$SolResNew->SolResKgConciliado = 0;
+				$SolResNew->SolResKgTratado = 0;
+				$SolResNew->SolResDelete = 0;
+				$SolResNew->SolResSlug = hash('sha256', rand().time().$SolResNew->SolResKgEnviado);
+				$SolResNew->FK_SolResSolSer = $SolicitudNew->ID_SolSer;
+				$SolResNew->SolResTypeUnidad = $SolResOld->SolResTypeUnidad;
+				$SolResNew->SolResCantiUnidad = $SolResOld->SolResCantiUnidad;
+				$SolResNew->SolResEmbalaje = $SolResOld->SolResEmbalaje;
+				$SolResNew->SolResAlto = $SolResOld->SolResAlto;
+				$SolResNew->SolResAncho = $SolResOld->SolResAncho;
+				$SolResNew->SolResProfundo = $SolResOld->SolResProfundo;
+				$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
+				$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
+				$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
+				$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->FK_SolResRg = $SolResOld->FK_SolResRg;
+				$SolResNew->save();
+			}
+
+			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
+		}
+		else{
+			abort(404);
+		}
+	}
 
 	/**
 	 * Show the form for editing the specified resource.
