@@ -313,6 +313,7 @@
 			defaultView: 'dayGridMonth',
 			buttonText:{
 				today: 'Hoy',
+				day: 'Día',
 				month: 'Mes',
 				week: 'Semana'
 			},
@@ -344,7 +345,7 @@
 				}
 			},
 			header: {
-				left: 'dayGridMonth,timeGridWeek',
+				left: 'dayGridMonth,timeGridWeek,timeGridDay',
 				center: 'title',
 				right: 'prev,today,next'
 			},
@@ -352,12 +353,6 @@
 				left: 'AddMantVehc',
 				center: '',
 				right: 'ListProg'
-			},
-			eventLimit: true,
-			views: {
-				timeGrid: {
-					eventLimit: 6
-				}
 			},
 			aspectRatio: 2,
 			eventSources:[{
@@ -404,6 +399,16 @@
 					@endforeach
 				],
 			}],
+			eventLimit: true,
+			eventLimitText: "más",
+			views: {
+				month: {
+					eventLimit: 1
+				}
+			},
+			dateClick: function(info) {
+				calendar.changeView('timeGridDay', info.dateStr);
+			},
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 			droppable: true,
 			eventStartEditable: true,
