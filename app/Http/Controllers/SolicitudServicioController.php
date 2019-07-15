@@ -407,17 +407,11 @@ class SolicitudServicioController extends Controller
 		$log->save();
 
 		if($Solicitud->SolSerStatus === 'Tratado'){
-		// if($Solicitud->SolSerStatus === 'Aprobado' || $Solicitud->SolSerStatus === 'Completado'|| $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus = 'No Conciliado' || $Solicitud->SolSerStatus === 'Conciliado'){
 			return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 		}else{
 			$slug = $Solicitud->SolSerSlug;
 			return redirect()->route('email-solser', compact('slug'));
 		}
-<<<<<<< HEAD
-		
-=======
-		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
->>>>>>> af13d6d542892f202274ef48959edb8094b7a1ab
 	}
 
 

@@ -38,7 +38,6 @@
 							</thead>
 							<tbody>
 								@foreach ($Servicios as $Servicio)
-<<<<<<< HEAD
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
 										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
@@ -49,28 +48,15 @@
 										<td>{{$Servicio->SolSerNameTrans}}</td>
 										<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
 										<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
+										@php
+											$Status = ['Conciliado', 'Tratado'];
+										@endphp
+										@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol, Permisos::SolSerCertifi))
+										<td>
+											<a href='#' onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
+										</td>
+										@endif
 									</tr>
-=======
-										<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-											<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
-											<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
-											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
-											@endif
-											<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
-											<td>{{$Servicio->SolSerNameTrans}}</td>
-											<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
-											<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"><i class="fas fa-clipboard-list"></i></a></td>
-											@php
-												$Status = ['Conciliado', 'Tratado'];
-											@endphp
-											@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol, Permisos::SolSerCertifi))
-											<td>
-												<a href='#' onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
-											</td>
-											@endif
-										</tr>
->>>>>>> af13d6d542892f202274ef48959edb8094b7a1ab
 								@endforeach
 							</tbody>
 						</table>
