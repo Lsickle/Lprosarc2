@@ -277,11 +277,9 @@
 														<i class="fas fa-marker"></i></a>
 													@endif
 													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
-													{{-- {{' '.$Residuo->SolResCantiUnidadConciliada}} --}}
 														{{$Residuo->SolResCantiUnidadConciliada  === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 													@else
 														{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
-													{{-- {{' '.$Residuo->SolResKgConciliado}} --}}
 													@endif
 													<br>{{$TypeUnidad}}
 												</td>
@@ -294,11 +292,10 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 														{{$Residuo->SolResKgTratado  === null ? 'N/A' : $Residuo->SolResKgTratado }} 
-														{{-- {{' '.$Residuo->SolResKgTratado}} --}}
 														<br> {{$TypeUnidad}}
 													</td>
 												@endif
-												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
+												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-info btn-block'> <i class="fas fa-search"></i> </a></td>
 												@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
 													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
 												@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
