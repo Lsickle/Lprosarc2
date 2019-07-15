@@ -43,7 +43,7 @@
 							@endif
 						@endif
 					</div>
-					<div>
+					<div class="col-md-12">
 						<h3 class="profile-username text-center textolargo col-12">{{$SedeGener->GSedeName}}</h3>
 					</div>
 					<ul class="list-group list-group-unbordered">

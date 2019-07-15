@@ -41,7 +41,9 @@
 									@endif
 								@endif
 							</div>
-							<h3 class="profile-username text-center">{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</h3>
+							<div class="col-md-12">
+								<h3 class="profile-username text-center">{{$Persona->PersFirstName."  ".$Persona->PersLastName}}</h3>
+							</div>
 							<p class="text-muted text-center">{{$Persona->SedeName}}</p>
 							<ul class="list-group list-group-unbordered">
 								<li class="list-group-item">
