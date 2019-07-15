@@ -171,6 +171,8 @@ function Switch1() {
 	$(".testswitch").bootstrapSwitch({
 		animate: true,
 		labelText: '<i class="fas fa-arrows-alt-h"></i>',
+		onText: 'Si',
+		offText: 'No',
 	});
 }
 $(document).ready(Switch1());
@@ -592,11 +594,18 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			var buttonsubmit = $(this).find('button[type="submit"]');
+			var buttonsubmit = $(this).find('[type="submit"]');
+			var idbutton = buttonsubmit[0].id;
 			if(buttonsubmit.hasClass('disabled')){
 				return false;
 			}
 			else{
+				if(idbutton != ''){
+					var label = $('label[for="'+idbutton+'"]');
+					$(label).empty();
+					$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$(label).attr('disabled', true);
+				}
 				buttonsubmit.prop('disabled', true);
 				buttonsubmit.empty();
 				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
@@ -604,18 +613,6 @@ function NotifiFalse(Mensaje) {
 					return false;
 				});
 				return true;
-			}
-		});
-		
-		$('label.btn').on('click', function(){
-			var idsubmit = $(this).attr('for');
-			if($('#'+idsubmit).hasClass('disabled')){
-				return false;
-			}
-			else{
-				$(this).empty();
-				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-				$(this).attr('disabled', true);
 			}
 		});
 	}
@@ -695,6 +692,11 @@ var currentScrollPos = window.pageYOffset;
 	$(document).ready(function(){
 		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?');
 		$('input[type="email"]').attr('data-error', 'No es un e-mail valido');
-	})
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("form").attr("lang", "es");
+	});
 </script>
 @yield('NewScript')

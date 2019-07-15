@@ -53,6 +53,7 @@ class EmailController extends Controller
                 ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                ->where('progvehiculos.ProgVehDelete', 0)
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }else{

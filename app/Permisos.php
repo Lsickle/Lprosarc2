@@ -18,9 +18,7 @@ class Permisos{
 	*/
 	const ProgVehic1 = ['Programador', 'JefeLogistica'];
 	/* Using ->
-		ProgramacionVehicle/index
 		ProgramacionVehicle/create
-		VehicProgController::create
 		ProgramacionVehicle/edit
 		ManteniVehicle/index
 		vehicle/index
@@ -34,6 +32,7 @@ class Permisos{
 		VehicProgController::edit
 		ProgramacionVehicle/edit
 		solicitud-serv/show
+		SolicitudServicioController::changestatus
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
@@ -129,19 +128,26 @@ class Permisos{
 		VehicleController::index
 		VehicManteController::index
 		Menu.php
+		VehicProgController::create
+		ProgramacionVehicle/index
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
 	/* Using ->
 		scliencontroller:create
 	*/
-	const ASISTENTELOGISTICA = ['JefeLogistica'];
+	const ASISTENTELOGISTICA = ['AsistenteLogistica'];
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const JEFELOGISTICA = ['AsistenteLogistica'];
+	const JEFELOGISTICA = ['JefeLogistica'];
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
+	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
+	/*
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+	 */
 }
 
 /*

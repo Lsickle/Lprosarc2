@@ -95,7 +95,7 @@
 									</div>
 									<div class="col-md-6">
 										<label>{{ trans('adminlte_lang::message.solsershowtranscity') }}</label><br>
-										<a>{{$SolicitudServicio->SolSerCityTrans}}</a>
+										<a>{{$Municipio}}</a>
 									</div>
 								</div>
 								<div class="col-md-12 border-gray collapse Transportadora">
@@ -131,7 +131,10 @@
 								</div>
 							</div>
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-								<a {{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'hidden' : ''}} href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right' style="margin: 10px 0;"><i class="fas fa-list-ol"></i> <b>Residuos Requerimientos</b></a>
+								<a style="{{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'display: none;' : ''}} margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
+							@endif
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								<a href='#' data-toggle='modal' style="margin: 10px 10px;" data-target='#ModalRepeat' class="btn btn-info pull-right"> Repetir</a>
 							@endif
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
@@ -209,11 +212,11 @@
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
 											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
+												<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.seedetails')}}</th>
 											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
@@ -325,6 +328,27 @@
 								</table>
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
+								{{--  Modal --}}
+									<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-body">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+														<i class="fas fa-exclamation-triangle"></i>
+														<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
+													</div> 
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+													<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
+														<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								{{-- END Modal --}}
 								 {{--  Modal --}}
 									<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 										<div class="modal-dialog" role="document">
@@ -541,7 +565,26 @@
 							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 								<i class="fas fa-exclamation-triangle"></i>
 								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
+<<<<<<< HEAD
 							</div>
+=======
+								<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
+									@csrf
+									<div class="form-group col-md-12">
+										<label style="font-size: 0.2em; color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
+										<input type="text" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"/>
+										<small class="help-block with-errors" style="font-size: 0.2em;"></small>
+									</div>
+									<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+									<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+									<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
+								</form>
+							</div> 
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+							<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+>>>>>>> af13d6d542892f202274ef48959edb8094b7a1ab
 						</div>
 						<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
 							<div class="modal-header">
@@ -662,22 +705,12 @@
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Tratada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatustratado')}}</a>
 				`);
 			@endif
-			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
-				$('#titulo').append(`
-					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
-				`);
-			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
 			`);
 		@break
 		@case('Tratado')
 			$('#titulo').empty();
-			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
-				$('#titulo').append(`
-					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Certificada')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
-				`);
-			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowtrata')}}</b>
 			`);

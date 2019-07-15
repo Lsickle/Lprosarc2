@@ -42,7 +42,9 @@
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center">{{$Cliente->CliShortname}}</h3>
+					<div class="col-md-12">
+						<h3 class="profile-username text-center">{{$Cliente->CliShortname}}</h3>
+					</div>
 					<li class="list-group-item">
 						<b>{{ trans('adminlte_lang::message.clientcategoría') }}</b> <a class="pull-right">{{$Cliente->CliCategoria}}</a>
 					</li>

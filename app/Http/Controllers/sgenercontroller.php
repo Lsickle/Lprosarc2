@@ -161,7 +161,6 @@ class sgenercontroller extends Controller
                 ->select('clientes.CliShortname', 'clientes.ID_Cli')
                 ->where('GSedeSlug', $id)
                 ->first();
-            // $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->get();
 
             $Respels = DB::table('residuos_geners')
                 ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
@@ -177,7 +176,7 @@ class sgenercontroller extends Controller
                 ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->select('respels.ID_Respel', 'respels.RespelName')
+                ->select('respels.ID_Respel', 'respels.RespelName','respels.RespelSlug')
                 ->where('clientes.ID_Cli', '=', $Cliente->ID_Cli)
                 ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
                 ->where('cotizacions.CotiStatus', '=', 'Aprobada')

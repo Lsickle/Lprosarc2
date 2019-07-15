@@ -45,7 +45,7 @@
 													<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach($Sedes as $Sede)
-															<option value="{{$Sede->ID_Sede}}" {{ old('FK_GenerCli') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+															<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 														@endforeach()
 													</select>
 												</div>
@@ -82,7 +82,7 @@
 													</label>
 													<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
 														@foreach ($Respels as $Respel)
-															<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
+															<option value="{{$Respel->RespelSlug}}">{{$Respel->RespelName}}</option>
 														@endforeach
 													</select>
 												</div>
@@ -107,8 +107,8 @@
 														<small class="help-block with-errors">*</small>
 														<select class="form-control select" id="departamento" name="departamento" required>
 															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-															@foreach ($Departamentos as $Departamento)		
-																<option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+															@foreach ($Departamentos as $Departamento)
+																<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
 															@endforeach
 														</select>
 													</div>
@@ -117,7 +117,7 @@
 														<select class="form-control select" id="municipio" name="FK_GSedeMun">
 															@if (isset($Municipios))
 																@foreach ($Municipios as $Municipio)
-																	<option value="{{$Municipio->ID_Mun}}" {{ old('FK_GSedeMun') == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+																	<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
 																@endforeach
 															@endif
 														</select>

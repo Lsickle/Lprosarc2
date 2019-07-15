@@ -19,7 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'CambioDeFechaProgVehic/*',
     ];
 
     protected function tokensMatch($request)
@@ -31,7 +31,6 @@ class VerifyCsrfToken extends Middleware
         }
 
         $tokensMatch = hash_equals($request->session()->token(), $token);
-
         if($tokensMatch) $request->session()->regenerateToken();
 
         return $tokensMatch;

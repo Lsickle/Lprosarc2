@@ -31,7 +31,9 @@
 						@endif
 					</div>
 					@endif
-					<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
+					<div class="col-md-12">
+						<h3 class="profile-username text-center">{{$Sede->SedeName}}</h3>
+					</div>
 					@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 						<p class="text-muted text-center">{{$Cliente->CliShortname}}</p>
 					@endif
