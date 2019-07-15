@@ -134,11 +134,11 @@ class Permisos{
 	/* Using ->
 		scliencontroller:create
 	*/
-	const ASISTENTELOGISTICA = ['JefeLogistica'];
+	const ASISTENTELOGISTICA = ['AsistenteLogistica'];
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const JEFELOGISTICA = ['AsistenteLogistica'];
+	const JEFELOGISTICA = ['JefeLogistica'];
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
