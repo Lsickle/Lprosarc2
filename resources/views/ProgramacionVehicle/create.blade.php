@@ -355,6 +355,7 @@
 				right: 'ListProg'
 			},
 			aspectRatio: 2,
+			// displayEventTime : false,
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
@@ -365,7 +366,7 @@
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
 							color: '{{$programacion->ProgVehColor}}',
-							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
 							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
 						},
@@ -376,7 +377,7 @@
 							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
-							title: '{{$programacion->SolSerVehiculo." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
 							color: '#00a65a',
 							start: '{{$programacion->ProgVehSalida}}',
 							end: '{{$programacion->ProgVehEntrada}}',

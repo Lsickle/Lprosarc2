@@ -61,7 +61,8 @@ class VehicProgController extends Controller
 		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerVehiculo')
+				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliShortname')
 				->where('progvehiculos.ProgVehDelete', 0)
 				->get();
 			$transportadores = DB::table('clientes')
