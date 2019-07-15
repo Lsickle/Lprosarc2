@@ -21,10 +21,11 @@ class RespelSedeGenerController extends Controller
         ]);
 
         if($request->input('FK_Respel') !== null){
-            foreach($request->FK_Respel as $Respel){ 
+            foreach($request->FK_Respel as $Respel1){ 
+                $Respel2 = Respel::select('ID_Respel')->where('RespelSlug', $Respel1)->first();
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
-                $RespelSedeGener->FK_Respel = $Respel;
+                $RespelSedeGener->FK_Respel = $Respel2->ID_Respel;
                 $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_SGener);
                 $RespelSedeGener->DeleteSGenerRes = 0;
                 $RespelSedeGener->save();
