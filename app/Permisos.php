@@ -32,6 +32,7 @@ class Permisos{
 		VehicProgController::edit
 		ProgramacionVehicle/edit
 		solicitud-serv/show
+		SolicitudServicioController::changestatus
 	*/
 	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
@@ -142,6 +143,11 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
+	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
+	/*
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+	 */
 }
 
 /*

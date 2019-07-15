@@ -18,6 +18,7 @@
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
+						<div id="ModalStatus"></div>
 						<table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped">
 							<thead>
 								<tr>
@@ -30,6 +31,9 @@
 									<th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
 									<th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
 									<th>{{trans('adminlte_lang::message.seemore')}}</th>
+									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol, Permisos::SolSerCertifi))
+									<th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody>
@@ -44,6 +48,14 @@
 											<td>{{$Servicio->SolSerNameTrans}}</td>
 											<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
 											<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"><i class="fas fa-clipboard-list"></i></a></td>
+											@php
+												$Status = ['Conciliado', 'Tratado'];
+											@endphp
+											@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol, Permisos::SolSerCertifi))
+											<td>
+												<a href='#' onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
+											</td>
+											@endif
 										</tr>
 								@endforeach
 							</tbody>
@@ -54,4 +66,42 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+<script>
+	function ModalStatus(slug, id, boolean){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere certificar la solicitud <b>N° `+id+`</b>?</p></span>
+									<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
+										@csrf
+										<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+										<input type="text" name="solserstatus" value="Certificada" style="display: none;">
+									</form>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			$('#SolSer').validator('update');
+			popover();
+			envsubmit();
+			$('#myModal').modal();
+		}
+	}
+</script>
 @endsection

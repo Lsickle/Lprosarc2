@@ -349,7 +349,7 @@ class SolicitudServicioController extends Controller
 				$Solicitud->SolSerStatus = 'Conciliado';
 			}
 		}
-		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
@@ -373,7 +373,7 @@ class SolicitudServicioController extends Controller
 						}
 						break;
 					case 'Certificada':
-						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 							$Solicitud->SolSerStatus = 'Certificacion';
 						}
 						break;

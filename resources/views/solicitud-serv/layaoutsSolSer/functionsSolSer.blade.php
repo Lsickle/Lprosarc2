@@ -13,7 +13,6 @@ function TransportadorProsarc() {
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
-	$("#typecollect").attr('required', true);
 	$("#typecollect").removeClass('col-md-6');
 	$("#typecollect").addClass('col-md-12');
 	$("#SolSerNameTrans").val(null);
@@ -23,6 +22,7 @@ function TransportadorProsarc() {
 	$("#SolSerVehiculo").val(null);
 	$("#AddressCollect").val(null);
 	$("#SolSerTypeCollect").val(null).trigger("change");
+	$("#SolSerTypeCollect").attr('required', true);
 	$("#SolSerTransportador").val(null).trigger("change");
 	$("#departamento").val(null).trigger("change");
 	$("#municipio").val(null).trigger("change");
