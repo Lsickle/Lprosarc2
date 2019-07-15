@@ -594,11 +594,18 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			var buttonsubmit = $(this).find('button[type="submit"]');
+			var buttonsubmit = $(this).find('[type="submit"]');
+			var idbutton = buttonsubmit[0].id;
 			if(buttonsubmit.hasClass('disabled')){
 				return false;
 			}
 			else{
+				if(idbutton != ''){
+					var label = $('label[for="'+idbutton+'"]');
+					$(label).empty();
+					$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$(label).attr('disabled', true);
+				}
 				buttonsubmit.prop('disabled', true);
 				buttonsubmit.empty();
 				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
@@ -606,18 +613,6 @@ function NotifiFalse(Mensaje) {
 					return false;
 				});
 				return true;
-			}
-		});
-		
-		$('label.btn').on('click', function(){
-			var idsubmit = $(this).attr('for');
-			if($('#'+idsubmit).hasClass('disabled')){
-				return false;
-			}
-			else{
-				$(this).empty();
-				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-				$(this).attr('disabled', true);
 			}
 		});
 	}
