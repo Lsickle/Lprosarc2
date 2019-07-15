@@ -21,6 +21,7 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->string('SolSerCityTrans')->nullable();
             $table->string('SolSerTypeCollect',32)->nullable();
             $table->string('SolSerCollectAddress')->nullable();
+            $table->unsignedInteger('FK_SolSerCollectMun')->nullable();
             $table->boolean('SolSerBascula')->nullable();
             $table->boolean('SolSerCapacitacion')->nullable();
             $table->boolean('SolSerMasPerson')->nullable();
@@ -32,6 +33,7 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->unsignedInteger('FK_SolSerCliente');
             $table->foreign('FK_SolSerPersona')->references('ID_Pers')->on('personals');
             $table->foreign('FK_SolSerCliente')->references('ID_Cli')->on('clientes');
+            $table->foreign('FK_SolSerCollectMun')->references('ID_Mun')->on('municipios')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -62,8 +64,10 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->dropColumn('SolSerDevolucionTipo');
             $table->dropColumn('FK_SolSerPersona');
             $table->dropColumn('FK_SolSerCliente');
+            $table->dropColumn('FK_SolSerCollectMun');
             $table->dropForeign(['FK_SolSerPersona']);
             $table->dropForeign(['FK_SolSerCliente']);
+            $table->dropForeign(['FK_SolSerCollectMun']);
         });
     }
 }
