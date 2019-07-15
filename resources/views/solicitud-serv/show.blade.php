@@ -95,7 +95,7 @@
 									</div>
 									<div class="col-md-6">
 										<label>{{ trans('adminlte_lang::message.solsershowtranscity') }}</label><br>
-										<a>{{$SolicitudServicio->SolSerCityTrans}}</a>
+										<a>{{$Municipio}}</a>
 									</div>
 								</div>
 								<div class="col-md-12 border-gray collapse Transportadora">
