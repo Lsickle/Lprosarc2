@@ -43,9 +43,7 @@
 							@endif
 						@endif
 					</div>
-					<div class="col-md-12">
-						<h3 class="profile-username text-center textolargo col-12">{{$SedeGener->GSedeName}}</h3>
-					</div>
+					<h3 class="profile-username text-center textolargo">{{$SedeGener->GSedeName}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 							<li class="list-group-item">

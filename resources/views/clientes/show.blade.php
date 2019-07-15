@@ -21,9 +21,7 @@
 							@endif
 						@endif
 					</div>
-					<div class="col-md-12">
-						<h3 class="profile-username text-center">{{$cliente->CliShortname}}</h3>
-					</div>
+					<h3 class="profile-username text-center">{{$cliente->CliShortname}}</h3>
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
