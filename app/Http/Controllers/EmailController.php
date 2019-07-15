@@ -26,25 +26,25 @@ class EmailController extends Controller
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
            
-            // $Roles1 = DB::table('users')
-            //     ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
-            //     ->select('users.email')
-            //     ->get();
+            $Roles1 = DB::table('users')
+                ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
+                ->select('users.email')
+                ->get();
                 
-            // $Roles2 = DB::table('users')
-            //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
-            //     ->select('users.email')
-            //     ->get();
+            $Roles2 = DB::table('users')
+                ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
+                ->select('users.email')
+                ->get();
 
-            //     foreach($Roles1 as $Rol1){
-            //         Mail::to($Rol1->email)->send(new SolSerEmail($email));
-            //     }
-            //     foreach($Roles2 as $Rol2){
-            //         Mail::to($Rol2->email)->send(new SolSerEmail($email));
-            //     }
+                foreach($Roles1 as $Rol1){
+                    Mail::to($Rol1->email)->send(new SolSerEmail($email));
+                }
+                foreach($Roles2 as $Rol2){
+                    Mail::to($Rol2->email)->send(new SolSerEmail($email));
+                }
 
                 // para no enviar a logistica los email
-                Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
+                // Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
 
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
@@ -70,11 +70,22 @@ class EmailController extends Controller
         $respel = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', 'respels.FK_RespelCoti')
             ->join('sedes', 'cotizacions.FK_CotiSede', '=', 'sedes.ID_Sede')
-            ->select('respels.*', 'sedes.SedeEmail')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.*', 'clientes.ID_Cli')
             ->where('respels.RespelSlug', $slug)
             ->first();
 
-        Mail::to($respel->SedeEmail)->send(new RespelMail($respel));
+        $email = DB::table('users')
+            ->join('personals', 'personals.ID_Pers', 'users.FK_UserPers')
+            ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+            ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+            ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+            ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+            ->where('clientes.ID_Cli', $respel->ID_Cli)
+            ->select('users.email')
+            ->first();
+            
+        Mail::to($email->email)->send(new RespelMail($respel));
         return back();
     }
 }
