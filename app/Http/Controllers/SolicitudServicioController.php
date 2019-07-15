@@ -117,14 +117,14 @@ class SolicitudServicioController extends Controller
 			$cliente = DB::table('clientes')
 				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
 				->where('ID_Cli', 1)
 				->first();
 			$tipo = "Interno";
 			$transportadorname = $cliente->CliName;
 			$transportadornit = $cliente->CliNit;
 			$transportadoradress = $cliente->SedeAddress;
-			$transportadorcity = $cliente->MunName;
+			$transportadorcity = $cliente->ID_Mun;
 			$conductor = null;
 			$vehiculo = null;
 		}
@@ -133,20 +133,19 @@ class SolicitudServicioController extends Controller
 				$cliente = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
 					->where('ID_Cli', userController::IDClienteSegunUsuario())
 					->first();
 				$transportadorname = $cliente->CliName;
 				$transportadornit = $cliente->CliNit;
 				$transportadoradress = $cliente->SedeAddress;
-				$transportadorcity = $cliente->MunName;
+				$transportadorcity = $cliente->ID_Mun;
 			}
 			else{
-				$municipio = Municipio::select('MunName')->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
 				$transportadorname = $request->input('SolSerNameTrans');
 				$transportadornit = $request->input('SolSerNitTrans');
 				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $municipio->MunName;
+				$transportadorcity = $request->input('SolSerCityTrans');
 			}
 			$tipo = "Externo";
 			$conductor = $request->input('SolSerConductor');
@@ -473,12 +472,19 @@ class SolicitudServicioController extends Controller
 			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
 				abort(403);
 			}
-			$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
-			$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-			$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
-			$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
-			$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
-			$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
+			if($Solicitud->SolSerCityTrans <> null){
+				$Municipio = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->SolSerCityTrans)->first();
+				$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+				$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			}
+			else{
+				$Departamento->ID_Depart = 0;
+			}
+			if($Solicitud->FK_SolSerCollectMun <> null){
+				$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
+				$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
+				$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
+			}
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
 			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
@@ -525,20 +531,19 @@ class SolicitudServicioController extends Controller
 					$cliente = DB::table('clientes')
 						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
 						->where('ID_Cli', userController::IDClienteSegunUsuario())
 						->first();
 					$transportadorname = $cliente->CliName;
 					$transportadornit = $cliente->CliNit;
 					$transportadoradress = $cliente->SedeAddress;
-					$transportadorcity = $cliente->MunName;
+					$transportadorcity = $cliente->ID_Mun;
 				}
 				else{
-					$municipio = Municipio::select('MunName')->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
 					$transportadorname = $request->input('SolSerNameTrans');
 					$transportadornit = $request->input('SolSerNitTrans');
 					$transportadoradress = $request->input('SolSerAdressTrans');
-					$transportadorcity = $municipio->MunName;
+					$transportadorcity = $request->input('SolSerCityTrans');
 				}
 				$SolicitudServicio->SolSerTipo = "Externo";
 				$SolicitudServicio->SolSerNameTrans = $transportadorname;
@@ -580,14 +585,14 @@ class SolicitudServicioController extends Controller
 			$cliente = DB::table('clientes')
 				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
 				->where('ID_Cli', 1)
 				->first();
 			$tipo = "Interno";
 			$transportadorname = $cliente->CliName;
 			$transportadornit = $cliente->CliNit;
 			$transportadoradress = $cliente->SedeAddress;
-			$transportadorcity = $cliente->MunName;
+			$transportadorcity = $cliente->ID_Mun;
 			$conductor = null;
 			$vehiculo = null;
 			$collect = $request->input('SolSerTypeCollect');
@@ -597,20 +602,19 @@ class SolicitudServicioController extends Controller
 				$cliente = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
 					->where('ID_Cli', userController::IDClienteSegunUsuario())
 					->first();
 				$transportadorname = $cliente->CliName;
 				$transportadornit = $cliente->CliNit;
 				$transportadoradress = $cliente->SedeAddress;
-				$transportadorcity = $cliente->MunName;
+				$transportadorcity = $cliente->ID_Mun;
 			}
 			else{
-				$municipio = Municipio::select('MunName')->where('ID_Mun', $request->input('SolSerCityTrans'))->first();
 				$transportadorname = $request->input('SolSerNameTrans');
 				$transportadornit = $request->input('SolSerNitTrans');
 				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $municipio->MunName;
+				$transportadorcity = $request->input('SolSerCityTrans');
 			}
 			$tipo = "Externo";
 			$conductor = $request->input('SolSerConductor');

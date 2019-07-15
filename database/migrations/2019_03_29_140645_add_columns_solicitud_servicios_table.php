@@ -18,7 +18,7 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->string('SolSerNameTrans')->nullable();
             $table->string('SolSerNitTrans')->nullable();
             $table->string('SolSerAdressTrans')->nullable();
-            $table->string('SolSerCityTrans')->nullable();
+            $table->unsignedInteger('SolSerCityTrans')->nullable();
             $table->string('SolSerTypeCollect',32)->nullable();
             $table->string('SolSerCollectAddress')->nullable();
             $table->unsignedInteger('FK_SolSerCollectMun')->nullable();
@@ -34,6 +34,7 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->foreign('FK_SolSerPersona')->references('ID_Pers')->on('personals');
             $table->foreign('FK_SolSerCliente')->references('ID_Cli')->on('clientes');
             $table->foreign('FK_SolSerCollectMun')->references('ID_Mun')->on('municipios')->onDelete('set null');
+            $table->foreign('SolSerCityTrans')->references('ID_Mun')->on('municipios')->onDelete('set null');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -68,6 +69,7 @@ class AddColumnsSolicitudServiciosTable extends Migration
             $table->dropForeign(['FK_SolSerPersona']);
             $table->dropForeign(['FK_SolSerCliente']);
             $table->dropForeign(['FK_SolSerCollectMun']);
+            $table->dropForeign(['SolSerCityTrans']);
         });
     }
 }

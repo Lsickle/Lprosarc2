@@ -72,7 +72,7 @@
 									<select class="form-control select" id="departamento">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach ($Departamentos as $Departament)
-											<option value="{{$Departament->ID_Depart}}" {{ $Departamento->ID_Depart == $Departament->ID_Depart ? 'selected' : '' }}>{{$Departament->DepartName}}</option>
+											<option value="{{$Departament->ID_Depart}}" {{$Solicitud->SolSerCityTrans <> null ? ($Departamento->ID_Depart == $Departament->ID_Depart ? 'selected' : '') : ''}}>{{$Departament->DepartName}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -80,9 +80,11 @@
 									<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="SolSerCityTrans" class="form-control select" id="municipio">
+										@if($Solicitud->SolSerCityTrans <> null)
 										@foreach($Municipios as $Municipi)
-											<option value="{{$Municipi->ID_Mun}}" {{ $Solicitud->SolSerCityTrans == $Municipi->MunName ? 'selected' : '' }}>{{$Municipi->MunName}}</option>
+											<option value="{{$Municipi->ID_Mun}}" {{$Solicitud->SolSerCityTrans <> null ? ($Solicitud->SolSerCityTrans == $Municipi->ID_Mun ? 'selected' : '') : ''}}>{{$Municipi->MunName}}</option>
 										@endforeach
+										@endif
 									</select>
 								</div>
 								<div id="Conductor" class="form-group col-md-6">
@@ -133,7 +135,7 @@
 									<select class="form-control select" id="departamento2">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach ($Departamentos as $Departament2)
-											<option value="{{$Departament2->ID_Depart}}" {{ $Departamento2->ID_Depart == $Departament2->ID_Depart ? 'selected' : '' }}>{{$Departament2->DepartName}}</option>
+											<option value="{{$Departament2->ID_Depart}}" {{$Solicitud->FK_SolSerCollectMun <> null ? ($Departamento2->ID_Depart == $Departament2->ID_Depart ? 'selected' : '' ) : ''}}>{{$Departament2->DepartName}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -141,9 +143,11 @@
 									<label for="municipio2">{{ trans('adminlte_lang::message.solseraddrescollectmuni') }}</label><a class="load"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2">
+										@if($Solicitud->FK_SolSerCollectMun <> null)
 										@foreach($Municipios2 as $Municipio2)
-											<option value="{{$Municipio2->ID_Mun}}" {{ $Solicitud->FK_SolSerCollectMun == $Municipio2->ID_Mun ? 'selected' : '' }}>{{$Municipio2->MunName}}</option>
+											<option value="{{$Municipio2->ID_Mun}}" {{$Solicitud->FK_SolSerCollectMun <> null ? ($Solicitud->FK_SolSerCollectMun == $Municipio2->ID_Mun ? 'selected' : '') : ''}}>{{$Municipio2->MunName}}</option>
 										@endforeach
+										@endif
 									</select>
 								</div>
 								<div id="requirimientos" class="col-md-12" style="margin: 10px 0;">
