@@ -212,11 +212,11 @@
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
 											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th>{{trans('adminlte_lang::message.solsercantidadkg')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
+												<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.seedetails')}}</th>
 											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
