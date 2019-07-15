@@ -36,7 +36,7 @@ class RespelStoreRequest extends FormRequest
                 'RespelDescrip.*'       => 'required|max:512|string',
                 'RespelIgrosidad.*'     => 'required|max:30|in:No peligroso,Corrosivo,Reactivo,Explosivo,Toxico,Inflamable,Patógeno - Infeccioso,Radiactivo',
                 'RespelEstado.*'        => 'required|max:12|string|in:Liquido,Solido,Gaseoso,Mezcla',
-                'RespelHojaSeguridad.*' => 'sometimes|max:2048|mimes:pdf',
+                'RespelHojaSeguridad.*' => 'sometimes|max:2048|mimes:pdf|required_unless:RespelIgrosidad.*,No peligroso',
                 'YRespelClasf4741.*'    => 'sometimes|max:6',
                 'ARespelClasf4741.*'    => 'sometimes|max:6',
                 'RespelTarj.*'          => 'sometimes|max:2048|mimes:pdf',
@@ -44,7 +44,7 @@ class RespelStoreRequest extends FormRequest
                 'RespelDeclaracion.*'   => 'required|max:2',
                 'SustanciaControlada.*' => 'required|boolean',
                 'SustanciaControladaTipo.*'     => 'sometimes|boolean|nullable',
-                'SustanciaControladaNombre.*'   => 'sometimes|max:50|string|nullable',
+                'SustanciaControladaNombre.*'   => 'sometimes|max:50|string|nullable|in:',
                 'SustanciaControladaDocumento.*'=> 'sometimes|max:2048|mimes:pdf',
 
             ];
