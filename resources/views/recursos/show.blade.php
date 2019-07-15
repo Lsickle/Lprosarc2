@@ -36,7 +36,7 @@
 								@endswitch
 							</h4>
 						@endif
-						@if(($SolSer->SolSerStatus === 'Pendiente' || $SolSer->SolSerStatus === 'Aprobado') || (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+						@if(($SolSer->SolSerStatus === 'Pendiente' || $SolSer->SolSerStatus === 'Aprobado') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 							<a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 						@endif
 						@php

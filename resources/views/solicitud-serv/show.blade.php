@@ -258,11 +258,14 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
-													{{' '.$Residuo->SolResCantiUnidadRecibida}}<br>{{$TypeUnidad}}
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
+														{{-- {{' '.$Residuo->SolResCantiUnidadRecibida}} --}}
+														{{$Residuo->SolResCantiUnidadRecibida  === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
+
 													@else
-													{{' '.$Residuo->SolResKgRecibido}}<br>{{$TypeUnidad}}
+														{{' '.$Residuo->SolResKgRecibido}}
 													@endif
+													<br>{{$TypeUnidad}}
 												</td>
 												<td style="text-align: center;">
 													@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
@@ -273,11 +276,14 @@
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
-													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
-													{{' '.$Residuo->SolResCantiUnidadConciliada}}<br>{{$TypeUnidad}}
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
+													{{-- {{' '.$Residuo->SolResCantiUnidadConciliada}} --}}
+														{{$Residuo->SolResCantiUnidadConciliada  === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 													@else
-													{{' '.$Residuo->SolResKgConciliado}}<br>{{$TypeUnidad}}
+														{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
+													{{-- {{' '.$Residuo->SolResKgConciliado}} --}}
 													@endif
+													<br>{{$TypeUnidad}}
 												</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 													<td style="text-align: center;">
@@ -286,8 +292,10 @@
 														@else
 															<a style="color: black">
 														@endif
-														<i class="fas fa-marker"></i></a> 
-														{{' '.$Residuo->SolResKgTratado}}<br> {{$TypeUnidad}}
+														<i class="fas fa-marker"></i></a>
+														{{$Residuo->SolResKgTratado  === null ? 'N/A' : $Residuo->SolResKgTratado }} 
+														{{-- {{' '.$Residuo->SolResKgTratado}} --}}
+														<br> {{$TypeUnidad}}
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-primary'> <i class="fas fa-biohazard"></i> </a></td>
@@ -420,7 +428,7 @@
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
 											</div>
-												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
 													<div class="form-group col-md-12">
 														<label for="SolResCantiUnidadRecibida">Cantidad Recibida {{$TypeUnidad}}</label>
 														<small class="help-block with-errors">*</small>
@@ -432,7 +440,7 @@
 											@case('Completado')
 													<label for="SolResKgConciliado">Cantidad Conciliada {{$TypeUnidad}}</label>
 													<small class="help-block with-errors">*</small>
-													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
 														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="{{$Residuo->SolResCantiUnidadConciliada}}" required>
 													@else
 														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
@@ -468,14 +476,14 @@
 					break;
 				case('Completado'):
 				case('No Conciliado'):
-					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadRecibida}}', rightAlign:false});
 					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 					@endif
 					break;
 				case('Conciliado'):
-					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadConciliada}}', rightAlign:false});
 					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
@@ -488,7 +496,7 @@
 
 		function submit(cantidadmax){
 			$('#conciliadokg').append(`
-				@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidades')
+				@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
 				@else
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
