@@ -70,7 +70,7 @@
 									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
 								</div>
-								<div class="form-group col-md-6 citytransportadora">
+								<div class="form-group col-md-6 citytransportadora" hidden>
 									<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
 									<select class="form-control select" id="departamento">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
@@ -79,7 +79,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-md-6 citytransportadora">
+								<div class="form-group col-md-6 citytransportadora" hidden>
 									<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>

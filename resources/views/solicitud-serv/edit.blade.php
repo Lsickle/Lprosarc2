@@ -310,6 +310,7 @@
 	$("#addresscollect").remove();
 	$("#requirimientos").remove();
 	$("#AddGenerador").remove();
+	$('form[data-toggle="validator"]').validator('update');
 @endif
 </script>
 @include('solicitud-serv.layaoutsSolSer.functionsSolSer')
