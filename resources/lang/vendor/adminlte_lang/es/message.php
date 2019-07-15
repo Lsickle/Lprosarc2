@@ -401,7 +401,7 @@ return [
     'progvehicservi2'         => 'Ver servicio',
     'progvehictype'           => 'Tipo de transporte',
     'progvehicfech'           => 'Fecha de la programación',
-    'progvehicsalida'         => 'Hora de salida de planta',
+    'progvehicsalida'         => 'Hora de prestación del servicio',
     'progvehicvehic'          => 'Vehículo Asignado',
     'progvehicllegada'        => 'Hora de llegada a la planta',
     'progvehicsalida2'        => 'Hora Prevista',
