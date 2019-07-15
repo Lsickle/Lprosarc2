@@ -44,9 +44,7 @@
 							@endif
 						@endif
 					</div>
-					<div class="col-md-12">
-						<h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
-					</div>
+					<h3 class="profile-username text-center textolargo">{{$Generador->GenerShortname}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 							<li class="list-group-item">
