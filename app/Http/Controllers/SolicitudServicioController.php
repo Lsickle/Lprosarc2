@@ -163,6 +163,7 @@ class SolicitudServicioController extends Controller
 				break;
 			case 97:
 				$direccioncollect = $request->input('AddressCollect');
+				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;
@@ -475,6 +476,9 @@ class SolicitudServicioController extends Controller
 			$Municipio = Municipio::select('FK_MunCity')->where('MunName', $Solicitud->SolSerCityTrans)->first();
 			$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
 			$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
+			$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
+			$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
 			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
@@ -496,7 +500,7 @@ class SolicitudServicioController extends Controller
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Sedes'));
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes'));
 		}
 		else{
 			abort(403);
@@ -623,6 +627,7 @@ class SolicitudServicioController extends Controller
 				break;
 			case 97:
 				$direccioncollect = $request->input('AddressCollect');
+				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;

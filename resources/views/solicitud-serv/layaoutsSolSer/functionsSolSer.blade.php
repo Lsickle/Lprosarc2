@@ -25,25 +25,36 @@ function TransportadorProsarc() {
 	$("#SolSerTypeCollect").attr('required', true);
 	$("#SolSerTransportador").val(null).trigger("change");
 	$("#departamento").val(null).trigger("change");
-	$("#municipio").val(null).trigger("change");
+	$("#municipio").empty();
+	$("#municipio2").empty();
+	$("#municipio2").attr('required', false);
+	$("#departamento2").val(null).trigger("change");
 	$("#SedeCollect").val(null).trigger("change");
+	TransportadorCliente();
+	HiddenTypeCollect();
 }
 function HiddenTypeCollect(){
 	$("#sedecollect").attr('hidden', true);
 	$("#SedeCollect").attr('required', false);
 	$("#SedeCollect").val(null).trigger("change");
-	$("#addresscollect").attr('hidden', true);
+	$(".addresscollect").attr('hidden', true);
 	$("#AddressCollect").attr('required', false);
 	$("#AddressCollect").val(null);
+	$("#municipio2").empty();
+	$("#municipio2").attr('required', false);
+	$("#departamento2").val(null).trigger("change");
 	$("#typecollect").removeClass('col-md-6');
 	$("#typecollect").addClass('col-md-12');
 }
 function TypeCollectSede(){
 	$("#sedecollect").attr('hidden', false);
 	$("#SedeCollect").attr('required', true);
-	$("#addresscollect").attr('hidden', true);
+	$(".addresscollect").attr('hidden', true);
 	$("#AddressCollect").attr('required', false);
 	$("#AddressCollect").val(null);
+	$("#municipio2").empty();
+	$("#municipio2").attr('required', false);
+	$("#departamento2").val(null).trigger("change");
 	$("#typecollect").removeClass('col-md-12');
 	$("#typecollect").addClass('col-md-6');
 }
@@ -51,9 +62,12 @@ function TypeCollectOther(){
 	$("#sedecollect").attr('hidden', true);
 	$("#SedeCollect").attr('required', false);
 	$("#SedeCollect").val(null).trigger("change");
-	$("#addresscollect").attr('hidden', false);
+	$(".addresscollect").attr('hidden', false);
 	$("#AddressCollect").attr('required', true);
 	$("#AddressCollect").val(null);
+	$("#municipio2").empty();
+	$("#municipio2").attr('required', true);
+	$("#departamento2").val(null).trigger("change");
 	$("#typecollect").removeClass('col-md-12');
 	$("#typecollect").addClass('col-md-6');
 }
@@ -76,6 +90,7 @@ function TransportadorExtr() {
 	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
 	$("#SolSerTypeCollect").attr('required', false);
+	$("#municipio2").attr('required', false);
 	$("#SolSerConductor").val(null);
 	$("#SolSerVehiculo").val(null);
 	$("#SolSerNameTrans").val(null);
@@ -86,8 +101,12 @@ function TransportadorExtr() {
 	$("#SolSerTransportador").val(null).trigger("change");
 	$("#SolSerTransportador").attr('required', true);
 	$("#departamento").val(null).trigger("change");
-	$("#municipio").val(null).trigger("change");
+	$("#municipio").empty();
+	$("#municipio2").empty();
+	$("#departamento2").val(null).trigger("change");
 	$("#SedeCollect").val(null).trigger("change");
+	TransportadorCliente();
+	HiddenTypeCollect();
 }
 
 function TransportadorCliente() {
@@ -102,7 +121,7 @@ function TransportadorCliente() {
 	$("#SolSerNameTrans").val(null);
 	$("#SolSerNitTrans").val(null);
 	$("#SolSerAdressTrans").val(null);
-	$("#municipio").val(null).trigger("change");
+	$("#municipio").empty();
 	$("#departamento").val(null).trigger("change");
 }
 
@@ -117,7 +136,7 @@ function OtraTransportadora() {
 	$("#SolSerNameTrans").val(null);
 	$("#SolSerNitTrans").val(null);
 	$("#SolSerAdressTrans").val(null);
-	$("#municipio").val(null).trigger("change");
+	$("#municipio").empty();
 	$("#municipio").attr('required', true);
 	$("#departamento").val(null).trigger("change");
 }
@@ -342,4 +361,37 @@ function RemoveGenerador(id) {
 	$("#Generador"+id).remove();
 	$('form[data-toggle="validator"]').validator('update');
 }
+
+$("#departamento2").change(function(e){
+	id=$("#departamento2").val();
+	e.preventDefault();
+	$.ajaxSetup({
+	  headers: {
+		  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+	  }
+	});
+	$.ajax({
+		url: "{{url('/muni-depart')}}/"+id,
+		method: 'GET',
+		data:{},
+		beforeSend: function(){
+			$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+			$("#municipio2").prop('disabled', true);
+		},
+		success: function(res){
+			$("#municipio2").empty();
+			var municipio2 = new Array();
+			for(var i = res.length -1; i >= 0; i--){
+				if ($.inArray(res[i].ID_Mun, municipio2) < 0) {
+					$("#municipio2").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+					municipio2.push(res[i].ID_Mun);
+				}
+			}
+		},
+		complete: function(){
+			$(".load").empty();
+			$("#municipio2").prop('disabled', false);
+		}
+	})
+});
 </script>

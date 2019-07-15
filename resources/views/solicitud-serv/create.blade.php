@@ -122,10 +122,24 @@
 										@endforeach
 									</select>
 								</div>
-								<div id="addresscollect" class="form-group col-md-6" hidden="">
+								<div class="form-group col-md-6 addresscollect" hidden="">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrescollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrescollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraddrescollect') }}</label>
 									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
+								</div>
+								<div class="form-group col-md-6 addresscollect" hidden="">
+									<label for="departamento2">{{ trans('adminlte_lang::message.solseraddrescollectdepa') }}</label>
+									<select class="form-control select" id="departamento2">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach ($Departamentos as $Departamento)
+											<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-md-6 addresscollect" hidden="">
+									<label for="municipio2">{{ trans('adminlte_lang::message.solseraddrescollectmuni') }}</label><a class="load"></a>
+									<small class="help-block with-errors">*</small>
+									<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2"></select>
 								</div>
 								<div class="col-md-12" style="margin: 10px 0;">
 									<center>

@@ -123,10 +123,28 @@
 										@endforeach
 									</select>
 								</div>
-								<div id="addresscollect" class="form-group col-md-6" hidden="">
+								<div class="form-group col-md-6 addresscollect" hidden="">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrescollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrescollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraddrescollect') }}</label>
 									<small class="help-block with-errors">*</small>
 									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
+								</div>
+								<div class="form-group col-md-6 addresscollect" hidden="">
+									<label for="departamento2">{{ trans('adminlte_lang::message.solseraddrescollectdepa') }}</label>
+									<select class="form-control select" id="departamento2">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach ($Departamentos as $Departament2)
+											<option value="{{$Departament2->ID_Depart}}" {{ $Departamento2->ID_Depart == $Departament2->ID_Depart ? 'selected' : '' }}>{{$Departament2->DepartName}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-md-6 addresscollect" hidden="">
+									<label for="municipio2">{{ trans('adminlte_lang::message.solseraddrescollectmuni') }}</label><a class="load"></a>
+									<small class="help-block with-errors">*</small>
+									<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2">
+										@foreach($Municipios2 as $Municipio2)
+											<option value="{{$Municipio2->ID_Mun}}" {{ $Solicitud->FK_SolSerCollectMun == $Municipio2->ID_Mun ? 'selected' : '' }}>{{$Municipio2->MunName}}</option>
+										@endforeach
+									</select>
 								</div>
 								<div id="requirimientos" class="col-md-12" style="margin: 10px 0;">
 									<center>
@@ -243,7 +261,7 @@
 	$('#SedeCollect').attr('required', false);
 	$('#sedecollect').attr('hidden',true);
 	$('#AddressCollect').attr('required', false);
-	$('#addresscollect').attr('hidden',true);
+	$('.addresscollect').attr('hidden',true);
 	$("#SolSerBascula").bootstrapSwitch('state',false);
 	$('#SolSerBascula').bootstrapSwitch('disabled',true);
 	$('#SolSerCapacitacion').bootstrapSwitch('state',false);
@@ -278,7 +296,7 @@
 		$("#typecollect").removeClass('col-md-12');
 		$("#typecollect").addClass('col-md-6');
 		$('#AddressCollect').attr('required', false);
-		$('#addresscollect').attr('hidden',true);
+		$('.addresscollect').attr('hidden',true);
 	@elseif($Solicitud->SolSerTypeCollect == 97)
 		$('#SedeCollect').attr('required', false);
 		$('#sedecollect').attr('hidden',true);
@@ -286,13 +304,13 @@
 		$("#typecollect").removeClass('col-md-12');
 		$("#typecollect").addClass('col-md-6');
 		$('#AddressCollect').attr('required', true);
-		$('#addresscollect').attr('hidden',false);
+		$('.addresscollect').attr('hidden',false);
 	@else
 		$('#SedeCollect').attr('required', false);
 		$('#sedecollect').attr('hidden',true);
 		$('#AddressCollect').val('');
 		$('#AddressCollect').attr('required', false);
-		$('#addresscollect').attr('hidden',true);
+		$('.addresscollect').attr('hidden',true);
 	@endif
 	$('#SolSerBascula').bootstrapSwitch('disabled',false);
 	$('#SolSerCapacitacion').bootstrapSwitch('disabled',false);
@@ -307,7 +325,7 @@
 	$("#typeaditable").remove();
 	$("#typecollect").remove();
 	$("#sedecollect").remove();
-	$("#addresscollect").remove();
+	$(".addresscollect").remove();
 	$("#requirimientos").remove();
 	$("#AddGenerador").remove();
 	$('form[data-toggle="validator"]').validator('update');
