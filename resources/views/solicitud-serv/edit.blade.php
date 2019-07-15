@@ -207,17 +207,6 @@
 @endsection
 @section('NewScript')
 <script>
-@if($Solicitud->SolSerStatus === 'Programado')
-	$("#SolSerTipo").parent().remove();
-	$("#transportador").removeClass('col-md-6');
-	$("#transportador").addClass('col-md-12');
-	$("#typeaditable").remove();
-	$("#typecollect").remove();
-	$("#sedecollect").remove();
-	$("#addresscollect").remove();
-	$("#requirimientos").remove();
-	$("#AddGenerador").remove();
-@endif
 @if($Solicitud->SolSerTipo == 'Externo')
 	$("#SolSerTransportador").attr('required', true);
 	$('#transportador').attr('hidden',false);
@@ -310,6 +299,17 @@
 	$('#SolSerMasPerson').bootstrapSwitch('disabled',false);
 	$('#SolSerVehicExclusive').bootstrapSwitch('disabled',false);
 	$('#SolSerPlatform').bootstrapSwitch('disabled',false);
+@endif
+@if($Solicitud->SolSerStatus === 'Programado')
+	$("#SolSerTipo").parent().remove();
+	$("#transportador").removeClass('col-md-6');
+	$("#transportador").addClass('col-md-12');
+	$("#typeaditable").remove();
+	$("#typecollect").remove();
+	$("#sedecollect").remove();
+	$("#addresscollect").remove();
+	$("#requirimientos").remove();
+	$("#AddGenerador").remove();
 @endif
 </script>
 @include('solicitud-serv.layaoutsSolSer.functionsSolSer')
