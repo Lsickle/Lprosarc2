@@ -26,22 +26,25 @@ class EmailController extends Controller
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
            
-            $Roles1 = DB::table('users')
-                ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
-                ->select('users.email')
-                ->get();
+            // $Roles1 = DB::table('users')
+            //     ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
+            //     ->select('users.email')
+            //     ->get();
                 
-            $Roles2 = DB::table('users')
-                ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
-                ->select('users.email')
-                ->get();
+            // $Roles2 = DB::table('users')
+            //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
+            //     ->select('users.email')
+            //     ->get();
 
-                foreach($Roles1 as $Rol1){
-                    Mail::to($Rol1->email)->send(new SolSerEmail($email));
-                }
-                foreach($Roles2 as $Rol2){
-                    Mail::to($Rol2->email)->send(new SolSerEmail($email));
-                }
+            //     foreach($Roles1 as $Rol1){
+            //         Mail::to($Rol1->email)->send(new SolSerEmail($email));
+            //     }
+            //     foreach($Roles2 as $Rol2){
+            //         Mail::to($Rol2->email)->send(new SolSerEmail($email));
+            //     }
+
+                // para no enviar a logistica los email
+                Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
 
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')

@@ -34,17 +34,17 @@
 							</thead>
 							<tbody>
 								@foreach ($Servicios as $Servicio)
-										<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-											<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
-											<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
-											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
-											@endif
-											<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
-											<td>{{$Servicio->SolSerNameTrans}}</td>
-											<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
-											<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
-										</tr>
+									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
+										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
+										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
+										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
+										@endif
+										<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
+										<td>{{$Servicio->SolSerNameTrans}}</td>
+										<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
+										<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
+									</tr>
 								@endforeach
 							</tbody>
 						</table>

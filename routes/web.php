@@ -120,7 +120,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
-	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
-	Route::get('/email/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
+	Route::get('/email-solser/{slug}', 'EmailController@sendemail')->name('email-solser');
+	Route::get('/email-respel/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 
