@@ -28,7 +28,7 @@
 					<!-- /.box-body -->
 				</div>
 				<!-- /.box -->
-				{{-- <div class="box box-info">
+				<div class="box box-info">
 				  <div class="box-header with-border">
 					<h3 class="box-title">Solicitudes de Servicio</h3>
 
@@ -39,21 +39,26 @@
 				  <div class="box-body">
 					<canvas id="ChartSolSer"></canvas>
 				  </div>
-				</div> --}}
+				</div>
 
 			</div>
 		</div>
 	</div>
 @endsection
-{{-- @section('NewScript')
+@section('NewScript')
 	<script type="text/javascript">
 		var CSolSer = $('#ChartSolSer');
 		var ChartSolSer = new Chart(CSolSer, {
 			type: 'doughnut',
+			// type: 'line',
+			// type: 'bar',
+			// type: 'radar',
+			// type: 'polarArea',
+			// type: 'bubble',
 			data: {
 				labels: ['Pendientes {{$Pendientes}}', 'Aprobadas {{$Aprobadas}}', 'Programadas {{$Programadas}}', 'Recibidas {{$Recibidas}}', 'Concialiadas {{$Concialiadas}}', 'Tratadas {{$Tratadas}}', 'Certificadas {{$Certificadas}}'],
 				datasets: [{
-					label: 'No Solicitudes',
+					label: 'N° Solicitudes',
 					data: [{{$Pendientes}}, {{$Aprobadas}}, {{$Programadas}}, {{$Recibidas}}, {{$Concialiadas}}, {{$Tratadas}}, {{$Certificadas}}],
 					backgroundColor: [
 						'rgba(86, 86, 86, 0.2)',
@@ -83,7 +88,14 @@
 						'rgba(0, 255, 0, 1)'
 					],
 					borderWidth: 1
-				}]
+				}
+				// ,{ 
+
+				// label: 'N° Solicitudes',
+				// 	data: [{{$Pendientes}}, {{$Aprobadas}}, {{$Programadas}}, {{$Recibidas}}, {{$Concialiadas}}, {{$Tratadas}}, {{$Certificadas}}],
+				// 	type: 'line',
+				// }
+				],
 			},
 			options: {
 				responsive: true,
@@ -98,4 +110,4 @@
 			}
 		});
 	</script>
-@endsection --}}
+@endsection

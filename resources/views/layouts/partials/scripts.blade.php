@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 @endif
 {{-- Chart --}}
-{{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
+<script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
 
 <script type="text/javascript">
 	window.onload =function(){
