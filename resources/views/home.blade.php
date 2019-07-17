@@ -61,7 +61,38 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Calendario</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							<a class="docs-sublanding__image" href="/vehicle-programacion/create">
+								<img src="/img/CalendarWidget.png" alt="Screenshot: Drag-n-drop external events" style="width: 100%; height: 27rem; border-radius: 5px;">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Servicios pendientes por programar</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							@foreach($serviciosnoprogramados as $servicionoprogramado)
+								<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">
+									<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{date('Y/m/d', strtotime($servicionoprogramado->updated_at)).' - N°'.$servicionoprogramado->ID_SolSer}}</a>
+								</p>
+							@endforeach
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

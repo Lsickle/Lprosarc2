@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\SolicitudServicio;
 
 class HomeController extends Controller
@@ -58,14 +59,20 @@ class HomeController extends Controller
                     break;
             }
         }
+        $serviciosnoprogramados = DB::table('solicitud_servicios')
+            ->where('SolSerDelete', 0)
+            ->where('SolSerStatus', 'Aprobado')
+            ->orderBy('updated_at', 'asc')
+            ->limit(5)
+            ->get();
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
                 return redirect()->route('clientes.create');
             }else{
-                return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas'));
+                return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
             }
         }else{
-            return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas'));
+            return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
         }
     }
 }

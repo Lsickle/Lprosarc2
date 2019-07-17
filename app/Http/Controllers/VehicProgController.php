@@ -93,6 +93,7 @@ class VehicProgController extends Controller
 				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
 				->where('SolSerDelete', 0)
 				->where('SolSerStatus', 'Aprobado')
+				->orderBy('updated_at', 'asc')
 				->get();
 			return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
 		}
