@@ -7,7 +7,7 @@
 	{{ trans('adminlte_lang::message.home') }}
 @endsection
 @section('contentheader_title')
-<h2 class="text-center"> Bienvenido {{ Auth::user()->name }}</h2>
+<div class="text-center"><h2> Bienvenido {{ Auth::user()->name }}</h4></div>
 @endsection
 
 @section('main-content')
@@ -65,6 +65,7 @@
 			</div>
 		</div>
 	</div>
+	
 @endsection
 @section('NewScript')
 	<script type="text/javascript">
@@ -72,36 +73,21 @@
 		var ChartSolSer = new Chart(CSolSer, {
 			type: 'doughnut',
 			data: {
-				labels: ['Pendientes {{$Pendientes}}', 'Aprobadas {{$Aprobadas}}', 'Programadas {{$Programadas}}', 'Recibidas {{$Recibidas}}', 'Concialiadas {{$Concialiadas}}', 'Tratadas {{$Tratadas}}', 'Certificadas {{$Certificadas}}'],
+				labels: ['Pendientes {{$Aprobadas}}', 'Programadas {{$Programadas}}'],
 				datasets: [{
 					label: 'N° Solicitudes',
-					data: [{{$Pendientes}}, {{$Aprobadas}}, {{$Programadas}}, {{$Recibidas}}, {{$Concialiadas}}, {{$Tratadas}}, {{$Certificadas}}],
+					data: [{{$Aprobadas}}, {{$Programadas}}],
 					backgroundColor: [
 						'rgba(86, 86, 86, 0.2)',
 						'rgba(0, 213, 252, 0.2)',
-						'rgba(255, 255, 0, 0.2)',
-						'rgba(255, 108, 0, 0.2)',
-						'rgba(149, 15, 182, 0.2)',
-						'rgba(255, 0, 0, 0.2)',
-						'rgba(0, 255, 0, 0.2)'
 					],
 					borderColor: [
 						'rgba(86, 86, 86, 1)',
 						'rgba(0, 213, 252, 1)',
-						'rgba(255, 255, 0, 1)',
-						'rgba(255, 108, 0, 1)',
-						'rgba(149, 15, 182, 1)',
-						'rgba(255, 0, 0, 1)',
-						'rgba(0, 255, 0, 1)'
 					],
 					hoverBackgroundColor: [
 						'rgba(86, 86, 86, 1)',
 						'rgba(0, 213, 252, 1)',
-						'rgba(255, 255, 0, 1)',
-						'rgba(255, 108, 0, 1)',
-						'rgba(149, 15, 182, 1)',
-						'rgba(255, 0, 0, 1)',
-						'rgba(0, 255, 0, 1)'
 					],
 					borderWidth: 1
 				}],
@@ -122,17 +108,20 @@
 	<script type="text/javascript">
 		var Kilometraje = $('#ChartKilometraje');
 		var ChartKilometraje = new Chart(Kilometraje, {
-			// type: 'doughnut',
-			// type: 'line',
 			type: 'bar',
-			// type: 'radar',
-			// type: 'polarArea',
-			// type: 'bubble',
 			data: {
-				labels: ['Pendientes {{$Pendientes}}', 'Aprobadas {{$Aprobadas}}', 'Programadas {{$Programadas}}', 'Recibidas {{$Recibidas}}', 'Concialiadas {{$Concialiadas}}', 'Tratadas {{$Tratadas}}', 'Certificadas {{$Certificadas}}'],
+					labels: [
+						@foreach($Vehiculos as $Vehiculo)
+						'{{$Vehiculo->VehicPlaca}}',
+						@endforeach
+					],
 				datasets: [{
-					label: 'N° Solicitudes',
-					data: [{{$Pendientes}}, {{$Aprobadas}}, {{$Programadas}}, {{$Recibidas}}, {{$Concialiadas}}, {{$Tratadas}}, {{$Certificadas}}],
+					label: 'Kilometraje',
+					data: [
+						@foreach($Vehiculos as $Vehiculo)
+						{y:{{$Vehiculo->VehicKmActual}}},
+						@endforeach
+					],
 					backgroundColor: [
 						'rgba(86, 86, 86, 0.2)',
 						'rgba(0, 213, 252, 0.2)',
@@ -154,27 +143,17 @@
 					hoverBackgroundColor: [
 						'rgba(86, 86, 86, 1)',
 						'rgba(0, 213, 252, 1)',
-						'rgba(255, 255, 0, 1)',
-						'rgba(255, 108, 0, 1)',
-						'rgba(149, 15, 182, 1)',
 						'rgba(255, 0, 0, 1)',
 						'rgba(0, 255, 0, 1)'
 					],
 					borderWidth: 1
-				}
-				,{ 
-
-				label: 'N° Solicitudes',
-					data: [{{$Pendientes}}, {{$Aprobadas}}, {{$Programadas}}, {{$Recibidas}}, {{$Concialiadas}}, {{$Tratadas}}, {{$Certificadas}}],
-					type: 'line',
-				}
-				],
+				}],
 			},
 			options: {
 				responsive: true,
 				legend: {
 					position: 'left', 
-					display: true,
+					display: false,
 					labels: {
 						usePointStyle: true,
 						fontSize: 11
