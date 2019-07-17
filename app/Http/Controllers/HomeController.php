@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\SolicitudServicio;
+use App\Vehiculo;
+use App\ProgramacionVehiculo;
 
 class HomeController extends Controller
 {
@@ -26,6 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $Vehiculos = Vehiculo::select('VehicPlaca', 'ID_Vehic', 'VehicKmActual')->where('FK_VehiSede', 1)->get();
+
         $SolicitudServicios = SolicitudServicio::select('SolSerStatus')->get();
         $Pendientes = 0;
         $Aprobadas = 0;
@@ -72,7 +76,7 @@ class HomeController extends Controller
                 return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
             }
         }else{
-            return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
+            return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'Vehiculos', 'serviciosnoprogramados'));
         }
     }
 }
