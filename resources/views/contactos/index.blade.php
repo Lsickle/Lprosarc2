@@ -39,7 +39,7 @@
 								<td>{{$Cliente->CliShortname}}</td>
 								<td>{{$Cliente->CliNit}}</td>
 								<td>
-									<a method='get' href='/contactos/{{$Cliente->CliSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+									<a method='get' href='/contactos/{{$Cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 								</td>
 							</tr>
 							@endforeach

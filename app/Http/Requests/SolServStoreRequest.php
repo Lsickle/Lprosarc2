@@ -56,8 +56,8 @@ class SolServStoreRequest extends FormRequest
         if($request->input('SolSerTipo') == 98){
             $rules = [
                 'SolSerTransportador' => 'required|numeric|between:98,99',
-                'SolSerConductor'     => 'required|max:255',
-                'SolSerVehiculo'      => 'required|max:9',
+                'SolSerConductor'     => 'max:255',
+                'SolSerVehiculo'      => 'max:7',
             ];
             if($request->input('SolSerTransportador') == 98){
                 $rules = [
@@ -65,8 +65,8 @@ class SolServStoreRequest extends FormRequest
                     'SolSerNitTrans'     => 'required|max:20',
                     'SolSerAdressTrans'  => 'required|max:255',
                     'SolSerCityTrans'    => ['required',Rule::exists('municipios', 'ID_Mun')],
-                    'SolSerConductor'     => 'required|max:255',
-                    'SolSerVehiculo'      => 'required|max:9',
+                    'SolSerConductor'     => 'max:255',
+                    'SolSerVehiculo'      => 'max:7',
                 ];
             }
         }
@@ -83,6 +83,7 @@ class SolServStoreRequest extends FormRequest
                 if($request->input('SolSerTypeCollect') == 97){
                     $rule = [
                         'AddressCollect'           => 'required|max:255',
+                        'municipio2'               => ['required',Rule::exists('municipios', 'ID_Mun')],
                     ];
                 }
             }

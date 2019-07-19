@@ -46,7 +46,7 @@
 											<td>{{$GSede->GSedeEmail}}</td>
 											<td>{{$GSede->GSedeCelular}}</td>
 											<td>
-												<a method='get' href='/sgeneradores/{{$GSede->GSedeSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+												<a method='get' href='/sgeneradores/{{$GSede->GSedeSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 											</td>
 										</tr>
 									@endforeach

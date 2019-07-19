@@ -67,7 +67,7 @@ class genercontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $id = userController::IDClienteSegunUsuario();
-            $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
+            $Sedes = Sede::select('SedeName', 'SedeSlug')->where('FK_SedeCli', $id)->where('SedeDelete', 0)->get();
             $Cliente = Sede::where('SedeDelete', 0)->get();
             $Departamentos = Departamento::all();            
             
@@ -102,7 +102,8 @@ class genercontroller extends Controller
         $Gener->GenerName = $request->input('GenerName');
         $Gener->GenerShortname = $request->input('GenerShortname');
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
-        $Gener->FK_GenerCli = $request->input('FK_GenerCli');
+        $Sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('FK_GenerCli'))->first();
+        $Gener->FK_GenerCli = $Sede->ID_Sede;
         $Gener->GenerDelete = 0;
         $Gener->GenerCode = $request->input('GenerCode');
         $Gener->save();
@@ -137,11 +138,11 @@ class genercontroller extends Controller
         $SGener->save();
 
         if($request->input('FK_Respel') !== null){
-            foreach($request->FK_Respel as $Respel){ 
-
+            foreach($request->FK_Respel as $Respel1){ 
+                $Respel2 = Respel::select('ID_Respel')->where('RespelSlug', $Respel1)->first();
                 $ResiduoSedeGener = new ResiduosGener();
                 $ResiduoSedeGener->FK_SGener = $SGener->ID_GSede;
-                $ResiduoSedeGener->FK_Respel = $Respel;
+                $ResiduoSedeGener->FK_Respel = $Respel2->ID_Respel;
                 $ResiduoSedeGener->DeleteSGenerRes = 0;
                 $ResiduoSedeGener->SlugSGenerRes = hash('sha256', rand().time().$ResiduoSedeGener->FK_Respel);
                 $ResiduoSedeGener->save();
@@ -258,9 +259,8 @@ class genercontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
-            $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
+            $Sedes = Sede::select('SedeName', 'ID_Sede', 'SedeSlug')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();
-            
             return view('generadores.edit', compact('Sedes', 'Generador'));
         }else{
             abot(403);

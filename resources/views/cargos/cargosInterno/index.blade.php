@@ -36,7 +36,7 @@
 									<td>{{$Cargo->AreaName}}</td>
 									<td>{{$Cargo->CargGrade}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
-									<td><a href='/cargosInterno/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+									<td><a href='/cargosInterno/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
 								</tr>
 								@endforeach

@@ -47,8 +47,8 @@
 										<td>{{$Requerimiento->ReqAuditoriaTipo}}</td>
 										<td>{{$Requerimiento->created_at}}</td>
 										<td>{{$Requerimiento->updated_at}}</td>
-										<td><a method='get' href='/requerimientos/{{$Requerimiento->ReqSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
-										<td><a method='get' href='/requerimientos/{{$Requerimiento->ReqSlug}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+										<td><a method='get' href='/requerimientos/{{$Requerimiento->ReqSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
+										<td><a method='get' href='/requerimientos/{{$Requerimiento->ReqSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									</tr>
 									@endforeach
 								</tbody>

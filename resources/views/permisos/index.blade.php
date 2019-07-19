@@ -13,7 +13,7 @@
 				<div class="box-header">
                     <h3 class="box-title">{{ trans('adminlte_lang::message.userlist') }}</h3>
                     @if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
-                    <a href="/permisos/create" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+                    <a href="/permisos/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
                     @endif
 				</div>
                 <div class="box box-info">
@@ -41,7 +41,7 @@
                                 <td>{{$User->UsRolDesc}}</td>
                                 <td>{{$User->UsRolDesc2}}</td>
                                 <td>
-                                    <a method='get' href='/permisos/{{$User->UsSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+                                    <a method='get' href='/permisos/{{$User->UsSlug}}' class='btn btn-info btn-block'><i class="fas fa-search"></i></a>
                                 </td>
                             </tr>
                             @endforeach

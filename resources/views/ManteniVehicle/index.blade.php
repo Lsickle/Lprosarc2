@@ -50,7 +50,7 @@
 									<td>{{date('Y/m/d', strtotime($MantVehicle->HoraMavFin))}}</td>
 									<td>{{date('h:i A', strtotime($MantVehicle->HoraMavFin))}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
-									<td><a href='/vehicle-mantenimiento/{{$MantVehicle->ID_Mv}}/edit' class='btn btn-block btn-warning'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+									<td><a href='/vehicle-mantenimiento/{{$MantVehicle->ID_Mv}}/edit' class='btn btn-block btn-warning'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
 								</tr>
 								@endforeach

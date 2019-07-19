@@ -44,7 +44,7 @@
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
+					<h3 class="profile-username text-center textolargo">{{$Generador->GenerShortname}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 							<li class="list-group-item">
@@ -128,7 +128,7 @@
 								<select class="form-control select" id="FK_SGener" name="FK_SGener" required>
 									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($GenerSedes as $GenerSede)	
-										<option value="{{$GenerSede->ID_GSede}}" {{ old('FK_SGener') == $GenerSede->ID_GSede ? 'selected' : '' }}>{{$GenerSede->GSedeName}}</option>
+										<option value="{{$GenerSede->GSedeSlug}}">{{$GenerSede->GSedeName}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -137,7 +137,7 @@
 								<select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
 									@if(isset($Residuos))
 										@foreach ($Residuos as $Residuo)
-											<option value="{{$Residuo->ID_Respel}}" {{ $old == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+											<option value="{{$Residuo->RespelSlug}}">{{$Residuo->RespelName}}</option>
 										@endforeach 
 									@endif 
 								</select>
@@ -233,7 +233,7 @@
 					var respel = new Array();
 					for (var i = res.length - 1; i >= 0; i--) {
 						if ($.inArray(res[i].ID_Respel, respel) < 0) {
-							$("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+							$("#FK_Respel").append(`<option value="${res[i].RespelSlug}">${res[i].RespelName}</option>`);
 							respel.push(res[i].ID_Mun);
 						}
 					}

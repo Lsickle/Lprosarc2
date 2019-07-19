@@ -43,9 +43,7 @@
 							@endif
 						@endif
 					</div>
-					<div>
-						<h3 class="profile-username text-center textolargo col-12">{{$SedeGener->GSedeName}}</h3>
-					</div>
+					<h3 class="profile-username text-center textolargo">{{$SedeGener->GSedeName}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 							<li class="list-group-item">
@@ -111,7 +109,7 @@
 									<label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} </label><small class="help-block with-errors">*</small>
 									<select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
 										@foreach ($Residuos as $Residuo)
-											<option value="{{$Residuo->ID_Respel}}">{{$Residuo->RespelName}}</option>
+											<option value="{{$Residuo->RespelSlug}}">{{$Residuo->RespelName}}</option>
 										@endforeach     
 									</select>
 									<input type="text" hidden name="FK_SGener" value="{{$SedeGener->GSedeSlug}}">
