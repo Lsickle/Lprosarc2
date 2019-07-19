@@ -259,9 +259,8 @@ class genercontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
-            $Sedes = Sede::select('SedeName', 'ID_Sede')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
+            $Sedes = Sede::select('SedeName', 'ID_Sede', 'SedeSlug')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();
-            
             return view('generadores.edit', compact('Sedes', 'Generador'));
         }else{
             abot(403);
