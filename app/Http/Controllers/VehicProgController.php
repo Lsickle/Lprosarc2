@@ -135,7 +135,7 @@ class VehicProgController extends Controller
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
 					->where('ID_Cli', 1)
 					->first();
 			}
@@ -148,7 +148,7 @@ class VehicProgController extends Controller
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
 					->where('CliSlug', $request->input('transport'))
 					->first();
 			}
@@ -170,7 +170,7 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
 			$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
 			$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-			$SolicitudServicio->SolSerCityTrans = $transportador->MunName;
+			$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		}
 		$SolicitudServicio->save();
 		
@@ -331,7 +331,7 @@ class VehicProgController extends Controller
 					$transportador = DB::table('clientes')
 						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName',  'municipios.ID_Mun')
 						->where('ID_Cli', 1)
 						->first();
 					$SolicitudServicio->SolSerConductor = null;
@@ -339,7 +339,7 @@ class VehicProgController extends Controller
 					$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
 					$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
 					$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-					$SolicitudServicio->SolSerCityTrans = $transportador->MunName;
+					$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 				}
 				$SolicitudServicio->save();
 			}
