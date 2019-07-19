@@ -19,7 +19,7 @@ class Respel extends Model
     
 	public function Cotizacion()
 	{
-	 return $this->belongsTo('App\Cotizacion', 'FK_RespelCoti', 'ID_Coti');
+	    return $this->belongsTo('App\Cotizacion', 'FK_RespelCoti', 'ID_Coti');
 	}
 
     public function Requerimiento(){

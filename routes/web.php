@@ -91,6 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
+	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
@@ -120,6 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
-	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
+	Route::get('/email-solser/{slug}', 'EmailController@sendemail')->name('email-solser');
+	Route::get('/email-respel/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 

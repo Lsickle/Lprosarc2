@@ -13,13 +13,13 @@
         @break
     @case('Programado')
         @php
-            setlocale(LC_TIME, "Spanish_Colombia");
-			if(date('H', strtotime($mail->ProgVehFecha)) >= 12){
+            setlocale(LC_ALL, "es_CO.UTF-8");
+			if(date('H', strtotime($mail->ProgVehSalida)) >= 12){
 				$horas = " en las horas de la tarde";
             }else{
 				$horas = " en las horas de la mañana";
             }
-            $TextProgramacion = "el día ".strftime("%d", strtotime($mail->ProgVehFecha))." del mes de ".strftime("%B", strtotime($mail->ProgVehFecha)).$horas;
+            $TextProgramacion = "el día ".strftime("%d", strtotime($mail->ProgVehSalida))." del mes de ".strftime("%B", strtotime($mail->ProgVehSalida)).$horas;
             $text = "ha sido Programada para $TextProgramacion";
         @endphp
         @break

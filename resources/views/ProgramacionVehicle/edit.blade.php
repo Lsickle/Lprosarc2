@@ -280,18 +280,6 @@
 				$('#ProgVehFecha1').val("{{date('Y-m-d')}}");
 				$('#ProgVehColor1').val("#0000f6");
 			});
-			@if($programacion->ProgVehEntrada <> null)
-				$(".select2-selection").css("background-image", "none");
-				$("#ProgVehFecha").prop("disabled", true);
-				$("#ProgVehSalida").prop("disabled", true);
-				$("#FK_ProgVehiculo").prop("disabled", true);
-				$("#FK_ProgConductor").prop("disabled", true);
-				$("#FK_ProgAyudante").prop("disabled", true);
-				$("#ProgVehEntrada").prop("disabled", true);
-				$("#progVehKm").prop("disabled", true);
-				$("#ProgVehColor").prop("disabled", true);
-				$("#update").prop("disabled", true);
-			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				$("#ProgVehEntrada").prop('required', true);
 				$("#progVehKm").prop('required', true);
@@ -318,15 +306,20 @@
 				$("#ProgVehColor").prop("disabled", false);
 				$("#ProgVehEntrada").prop('required', false);
 			@endif
+			@if($programacion->ProgVehEntrada <> null)
+				$(".select2-selection").css("background-image", "none");
+				$("#ProgVehFecha").prop("disabled", true);
+				$("#ProgVehSalida").prop("disabled", true);
+				$("#FK_ProgVehiculo").prop("disabled", true);
+				$("#FK_ProgConductor").prop("disabled", true);
+				$("#FK_ProgAyudante").prop("disabled", true);
+				$("#ProgVehEntrada").prop("disabled", true);
+				$("#progVehKm").prop("disabled", true);
+				$("#ProgVehColor").prop("disabled", true);
+				$("#update").prop("disabled", true);
+			@endif
 			});
 	@elseif($programacion->ProgVehtipo == 0)
-		@if($programacion->ProgVehEntrada <> null)
-			$("#ProgVehFecha").prop("disabled", true);
-			$(".select2-selection").css("background-image", "none");
-			$("#ProgVehSalida").prop("disabled", true);
-			$("#ProgVehEntrada").prop("disabled", true);
-			$("#update").prop("disabled", true);
-		@endif
 		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			$("#ProgVehEntrada").prop("required", true);
 			$("#ProgVehEntrada").prop("disabled", false);
@@ -341,15 +334,14 @@
 			$("#ProgVehSalida").prop("disabled", false);
 			$("#ProgVehEntrada").prop('required', false);
 		@endif
-	@else
 		@if($programacion->ProgVehEntrada <> null)
 			$("#ProgVehFecha").prop("disabled", true);
 			$(".select2-selection").css("background-image", "none");
-			$("#vehicalqui").prop("disabled", true);
 			$("#ProgVehSalida").prop("disabled", true);
 			$("#ProgVehEntrada").prop("disabled", true);
 			$("#update").prop("disabled", true);
 		@endif
+	@else
 		@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			$("#ProgVehEntrada").prop('required', true);
 			$("#ProgVehEntrada").prop('disabled', false);
@@ -365,6 +357,14 @@
 			$("#vehicalqui").prop("disabled", false);
 			$("#ProgVehSalida").prop("disabled", false);
 			$("#ProgVehEntrada").prop('required', false);
+		@endif
+		@if($programacion->ProgVehEntrada <> null)
+			$("#ProgVehFecha").prop("disabled", true);
+			$(".select2-selection").css("background-image", "none");
+			$("#vehicalqui").prop("disabled", true);
+			$("#ProgVehSalida").prop("disabled", true);
+			$("#ProgVehEntrada").prop("disabled", true);
+			$("#update").prop("disabled", true);
 		@endif
 	@endif
 	</script>

@@ -51,8 +51,8 @@
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypeunidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypeunidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypeunidad') }}</label>
 								<select name="SolResTypeUnidad" id="SolResTypeUnidad" class="form-control">
 									<option value="" onclick="NoSolResCantiUnidad()">{{ trans('adminlte_lang::message.select') }}</option>
-									<option value="99" {{$SolRes->SolResTypeUnidad  === "Unidad" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
-									<option value="98" {{$SolRes->SolResTypeUnidad  === "Litros" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad2') }}</option>
+									<option value="Unidad" {{$SolRes->SolResTypeUnidad  === "Unidad" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
+									<option value="Litros" {{$SolRes->SolResTypeUnidad  === "Litros" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad2') }}</option>
 								</select>
 							</div>
 							<div class="form-group col-md-6">
