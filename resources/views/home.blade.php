@@ -33,7 +33,7 @@
 					<!-- /.box-body -->
 				</div> --}}
 				<!-- /.box -->
-				<div class="col-md-6">
+				{{-- <div class="col-md-6">
 					<div class="box box-info">
 						<div class="box-header with-border">
 							<h3 class="box-title">Solicitudes de Servicio</h3>
@@ -92,13 +92,13 @@
 							@endforeach
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 	</div>
 	
 @endsection
-@section('NewScript')
+{{-- @section('NewScript')
 	<script type="text/javascript">
 		var CSolSer = $('#ChartSolSer');
 		var ChartSolSer = new Chart(CSolSer, {
@@ -193,4 +193,4 @@
 			}
 		});
 	</script>
-@endsection
+@endsection --}}

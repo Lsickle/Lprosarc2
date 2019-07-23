@@ -1,3 +1,6 @@
+@php
+	use App\Personal;
+@endphp
 <!-- Main Header -->
 <header class="main-header" style="height: 50px;">
 
@@ -116,6 +119,7 @@
 					<li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
 				@else --}}
 					<!-- User Account Menu -->
+					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 					<li class="dropdown" style="max-width: 280px; height: 100%; white-space: nowrap;">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
 							<i class="fas fa-address-book" style="font-size: 1.5em"></i>
@@ -124,13 +128,27 @@
 							<div class="box-header with-border" style="text-align: center;">
 								<p>Contacto</p>
 							</div>
-							<div class="box-body">
-								<p>Nombre</p>
-								<p>Telefono</p>
-								<p>Correo</p>
+							<div class="box-body" style="white-space: normal;text-align: center;">
+								@if(Auth::user()->CliComercial <> null)
+									@php
+										$personal = Personal::where('ID_Pers', Auth::user()->CliComercial)->first();
+										$nombre = $personal->PersFirstName.' '.$personal->PersLastName;
+										$telefono = $personal->PersCellphone;
+										$correo = $personal->PersEmail;
+									@endphp
+								<label>Nombre:</label><br>
+								<a>{{$nombre}}</a><br>
+								<label>Telefono</label><br>
+								<a>{{$telefono}}</a><br>
+								<label>Correó Electronico</label><a title="Copiar" onclick="copiarAlPortapapeles('correocomercial')"> <i class="far fa-copy"></i></a><br>
+								<a id="correocomercial" href="mailto:{{$correo}}">{{$correo}}</a><br>
+								@else
+								<h4>Aun no tiene un comercial asignado</h4>
+								@endif
 							</div>
 						</div>
 					</li>
+					@endif
 					<li class="dropdown user user-menu" id="user_menu" style="max-width: 280px; height: 100%; white-space: nowrap;">
 						<!-- Menu Toggle Button -->
 						{{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="max-width: 280px;white-space: nowrap;overflow: hidden;overflow-text: ellipsis; height: 100%;" title="{{ Auth::user()->name }}"> --}}
