@@ -50,7 +50,7 @@ class clientcontoller extends Controller
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
                 $clientes = DB::table('clientes')
                     ->join('personal', 'clientes.CliComercial', '=', 'personal.ID_Pers')
-                    ->select('clientes.*', 'personal.PersFirstName', 'personal.PersLastName')
+                    ->select('clientes.*', 'personal.PersFirstName','personal.PersLastName')
                     ->where('CliDelete', 0)
                     ->where('CliCategoria', 'Cliente')
                     ->get();

@@ -154,7 +154,7 @@ class Permisos{
 		clientcontoller::index
 	*/
 	const AsigComercial = ['Programador', 'AdministradorBogota'];
-	/* Using -> 
+	/* Using ->
 		clientes/index
 	*/
 }
