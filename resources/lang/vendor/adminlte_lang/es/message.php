@@ -387,6 +387,9 @@ return [
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
 
+    'frequent questions'      => 'Preguntas Frecuentes',
+    'question-1-title'        => "Que significan el <strong class='text-danger'>*</strong>(asterisco) en los formularios",
+    'question-1-description'        => "Eso quiere decir que ese campo del formulario es de caracter obligatorio",
     // departamento
     'departamento'            => 'Departamento',
 
