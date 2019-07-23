@@ -72,7 +72,7 @@
 		{{$Respels->ID_Respel}}
 	@endslot
 	@slot('textModal')
-		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+		El residuo <b>N° {{$Respels->ID_Respel}}</b>
 	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">

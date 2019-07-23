@@ -148,6 +148,12 @@ class Permisos{
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 	 */
+
+	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
+	/*
+		respel/edit
+		
+	 */
 }
 
 /*

@@ -1,6 +1,6 @@
-<div class="col-md-6">
-    <label for="select1">Tratamiento 1</label>
-    <select class="form-control" id="select1" name="TratTipo">
+<div class="col-md-10">
+    <label for="tratamiento0">Opción 1</label>
+    <select class="form-control" id="tratamiento0" name="FK_ReqTrata[]">
   		<option>seleccione...</option>
     	<optgroup label="Interno">
     		@foreach($tratamientos as $tratamiento)
@@ -18,64 +18,19 @@
     	</optgroup>
     </select>
 </div> <b></b>
-
-<div class="col-md-6">
-    <label for="select1">Tratamiento 2</label>
-    <select class="form-control" id="select1" name="TratTipo">
-    	<option>seleccione...</option>
-    	<optgroup label="Interno">
-    		@foreach($tratamientos as $tratamiento)
-	    		@if($tratamiento->TratTipo == 0)
-	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
-	    		@endif
-	    	@endforeach	
-    	</optgroup>
-    	<optgroup label="Externo">
-    		@foreach($tratamientos as $tratamiento)
-	    		@if($tratamiento->TratTipo == 1)
-	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
-	    		@endif
-	    	@endforeach	
-    	</optgroup>
-    </select>
+<div class="col-md-2">
+    <div class="col-md-12">
+        <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tratamiento Ofertado</b>" data-content="<p style='width: 50%'> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
+        <input  type="checkbox" class="testswitch" id="ofert0" name="TratOfertado"/>  
+    </div>
 </div>
-
-<div class="col-md-6">
-    <label for="select1">Tratamiento 3</label>
-    <select class="form-control" id="select1" name="TratTipo">
-    	<option>seleccione...</option>
-    	<optgroup label="Interno">
-    		@foreach($tratamientos as $tratamiento)
-	    		@if($tratamiento->TratTipo == 0)
-	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
-	    		@endif
-	    	@endforeach	
-    	</optgroup>
-    	<optgroup label="Externo">
-    		@foreach($tratamientos as $tratamiento)
-	    		@if($tratamiento->TratTipo == 1)
-	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
-	    		@endif
-	    	@endforeach	
-    	</optgroup>
-    </select>
-</div>
-
-<div class="col-md-6">
-    <label for="select2">Gestor</label>
-    <select class="form-control" id="select2" name="FK_TratProv" required="true">
-        @foreach($Sedes as $sede)
-            <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
-        @endforeach
-    </select>
-</div>
-
-<div class="col-md-6">
-    <label for="input2">Pretratamiento</label>
-    <input id="input2" class="form-control" type="text" name="TratPretratamiento">
-</div>
-
+@section('NewScript')
 <script>
-
-
+function Switch(){
+    if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
+        $("#ofert0").bootstrapSwitch('disabled',true);
+    }
+}
+Switch();
 </script>
+@endsection
