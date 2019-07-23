@@ -289,6 +289,7 @@ class VehicProgController extends Controller
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
