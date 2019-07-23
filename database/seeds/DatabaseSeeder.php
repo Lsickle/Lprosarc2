@@ -22,6 +22,7 @@ use App\MantenimientoVehiculo;
 use App\OrdenCompra;
 use App\Quotation;
 use App\Tratamiento;
+use App\Clasificacion;
 use App\CategoriaActivo;
 use App\SubcategoriaActivo;
 use App\Activo;
@@ -72,6 +73,7 @@ class DatabaseSeeder extends Seeder
         $this->call(QuotationTableSeeder::class);
         $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
+        $this->call(ClasificacionTableSeeder::class);
         $this->call(TratamientoTableSeeder::class);
         $this->call(PretratamientosTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);

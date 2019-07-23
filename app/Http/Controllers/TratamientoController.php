@@ -11,6 +11,7 @@ use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
+use App\Clasificacion;
 use App\Tratamiento;
 use App\Pretratamiento;
 use App\Respel;
@@ -25,7 +26,8 @@ class TratamientoController extends Controller
      */
     public function index()
     {
-
+        // $tratamientos = Tratamiento::with('clasificaciones')->get();
+        // return $tratamientos;
         // $proveedor = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
         // $depart = Departamento::with('municipios')->get();
         $tratamientos = Tratamiento::with(['pretratamientos'])
