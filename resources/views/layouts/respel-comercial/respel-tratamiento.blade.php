@@ -5,19 +5,19 @@
     	<optgroup label="Interno">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 0)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
-	    	@endforeach	
+	    	@endforeach
     	</optgroup>
     	<optgroup label="Externo">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 1)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
 	    	@endforeach	
     	</optgroup>
     </select>
-</div>
+</div> <b></b>
 
 <div class="col-md-6">
     <label for="select1">Tratamiento 2</label>
@@ -26,14 +26,14 @@
     	<optgroup label="Interno">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 0)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
 	    	@endforeach	
     	</optgroup>
     	<optgroup label="Externo">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 1)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
 	    	@endforeach	
     	</optgroup>
@@ -47,14 +47,14 @@
     	<optgroup label="Interno">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 0)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
 	    	@endforeach	
     	</optgroup>
     	<optgroup label="Externo">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 1)
-	    		<option value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliName"}}</option>
+	    		<option value="{{$tratamiento->ID_Trat}}"><b>{{"$tratamiento->TratName"}}</b> - {{"$tratamiento->CliName"}}</option>
 	    		@endif
 	    	@endforeach	
     	</optgroup>
