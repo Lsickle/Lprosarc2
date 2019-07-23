@@ -55,7 +55,7 @@
                             <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="question3">
                                 <div class="panel-body">
                                     <span>
-                                        El icono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra informacion adicional ya sea en un formulario para llenar correctamente un campo o en un lugar del aplicativo para brindar información relevante.
+                                        El icono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra información adicional ya sea en un formulario para llenar correctamente un campo o en un lugar del aplicativo para brindar más detalles.
                                     </span>
                                 </div>
                             </div>
