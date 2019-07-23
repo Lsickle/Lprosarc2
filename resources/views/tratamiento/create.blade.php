@@ -33,7 +33,7 @@
                                         <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.manager') }}</label>
                                         <select class="form-control select" id="select2sedes" name="FK_TratProv" required="true">
                                             @foreach($sedes as $sede)
-                                            <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+                                            <option value="{{$sede->ID_Sede}}">{{$sede->CliShortname}} - {{$sede->SedeName}}</option>
                                             @endforeach
                                         </select>
                                     </div>
