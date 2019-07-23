@@ -143,7 +143,12 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
+	const SolSerCertifi = ['AdministradorPlanta'];
+	/*
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+	 */
+	const SOLSERVERIFICADO = ['Tesorería'];
 	/*
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
