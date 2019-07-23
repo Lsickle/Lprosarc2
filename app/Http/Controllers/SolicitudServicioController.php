@@ -326,7 +326,7 @@ class SolicitudServicioController extends Controller
 				$horas = " en las horas de la mañana";
 			}
 			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
-			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehEntrada', null)->get();
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehEntrada', null)->where('ProgVehDelete', 0)->get();
 			$ProgramacionesActivas = count($Programaciones);
 		}
 		$Cliente = DB::table('clientes')

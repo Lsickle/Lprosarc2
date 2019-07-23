@@ -44,8 +44,8 @@
                             <div class="col-md-8 offset-md-4" id="html_element">
                                 {!! NoCaptcha::display(['data-theme' => 'light', 'data-size' => 'normal', 'data-lang' => 'es']) !!}
                                 @if ($errors->has('g-recaptcha-response'))
-                                    <span class="help-block text-danger" role="alert">
-                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    <span style=" float:left;" class="help-block text-danger" role="alert">
+                                        <p>{{ $errors->first('g-recaptcha-response') }}</p>
                                     </span>
                                 @endif
                             </div>

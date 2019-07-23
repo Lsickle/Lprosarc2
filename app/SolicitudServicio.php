@@ -8,7 +8,7 @@ class SolicitudServicio extends Model
 {
     protected $table='solicitud_servicios';
 
-    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug', 'Fk_SolSerTransportador', 'FK_SolSerCliente', 'FK_SolSerPersona','SolSerDelete', 'created_at', 'updated_at'];
+    protected $fillable=['SolSerStatus', 'SolSerTipo', 'SolSerFrecuencia',' SolSerAuditable', 'SolSerConducExter','SolSerVehicExter', 'SolSerSlug', 'Fk_SolSerTransportador', 'FK_SolSerCliente', 'FK_SolSerPersona','SolSerDelete', 'created_at', 'updated_at', 'SolSerCityTrans', 'FK_SolSerCollectMun'];
     protected $primaryKey = 'ID_SolSer';
     	/**
 	 * Get the route key for the model.
@@ -23,6 +23,10 @@ class SolicitudServicio extends Model
 	public function sedes()
 	{
 	 return $this->belongsTo('App\Sede', 'ID_Sede');
+	}
+	public function municipio()
+	{
+	 return $this->belongsTo('App\Municipio', 'ID_Muns');
 	}
 	// especificar foranea del modelo GenerSede
 	public function GenerSedes()
