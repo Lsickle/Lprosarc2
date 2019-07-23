@@ -89,7 +89,7 @@
 					</div>
 				</form>
 			`);
-			Selects();
+			// Selects();
 			$('form').validator('update');
 			$('#changeComercial').modal();
 		}
