@@ -83,7 +83,7 @@
 		<div class="col-md-6 form-group has-feedback">
 			<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.fotolabel') }}</label>
 			<small class="help-block with-errors"></small>
-			<input id="foto0" name="RespelFoto[]" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" value="{{ old('RespelFoto.0') }}">
+			<input id="foto0" name="RespelFoto[]" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" value="{{ old('RespelFoto.0') }}">
 			<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span>
 		</div>
 		<div class="col-md-6 form-group has-feedback">

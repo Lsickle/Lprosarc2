@@ -142,14 +142,14 @@
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span> --}}
 				@if($Respels->RespelFoto!=='RespelFotoDefault.png')
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
