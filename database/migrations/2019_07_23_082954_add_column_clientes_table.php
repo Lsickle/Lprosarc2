@@ -14,7 +14,7 @@ class AddColumnClientesTable extends Migration
 	public function up()
 	{
 		Schema::table('clientes', function (Blueprint $table) {
-			$table->string('CliComercial');
+			$table->string('CliComercial')->nullable();
 		});
 	}
 
