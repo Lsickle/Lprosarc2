@@ -35,7 +35,7 @@
 								<td>{{$cliente->CliNit}}</td>
 								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 								<td>
-									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`)">
+									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`)"></a>
 									{{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
 								</td>
 								@endif

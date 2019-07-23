@@ -49,8 +49,8 @@ class clientcontoller extends Controller
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
                 $clientes = DB::table('clientes')
-                    ->join('personal', 'clientes.CliComercial', '=', 'personal.ID_Pers')
-                    ->select('clientes.*', 'personal.PersFirstName','personal.PersLastName')
+                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
                     ->where('CliDelete', 0)
                     ->where('CliCategoria', 'Cliente')
                     ->get();
