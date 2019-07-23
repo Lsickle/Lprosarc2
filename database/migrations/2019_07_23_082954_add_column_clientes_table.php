@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnUsersTable extends Migration
+class AddColumnClientesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,7 +13,7 @@ class AddColumnUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('users', function (Blueprint $table) {
+		Schema::table('clientes', function (Blueprint $table) {
 			$table->unsignedInteger('CliComercial')->nullable();
 			$table->foreign('CliComercial')->references('ID_Pers')->on('personals')->onDelete('set null');
 		});
@@ -26,7 +26,7 @@ class AddColumnUsersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('users', function (Blueprint $table) {
+		Schema::table('clientes', function (Blueprint $table) {
 			$table->dropForeign(['CliComercial']);
 			$table->dropColumn('CliComercial');
 		});

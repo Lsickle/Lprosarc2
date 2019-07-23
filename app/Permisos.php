@@ -144,9 +144,14 @@ class Permisos{
 		ProgramacionVehicle/edit
 	*/
 	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
-	/*
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
+	 */
+	
+	const COMERCIAL = ['Comercial'];
+	/* Using ->
+		clientcontoller::index
 	 */
 }
 

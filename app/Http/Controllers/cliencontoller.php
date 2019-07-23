@@ -43,12 +43,14 @@ class clientcontoller extends Controller
             case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
                 return redirect()->route('home');
                 break;
-
+            case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
+                return view('clientes.index', compact('clientes'));
+                break;
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
                 $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
                 return view('clientes.index', compact('clientes'));
                 break;
-
             default:
                 abort(403);
         }

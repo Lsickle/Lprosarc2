@@ -1,5 +1,9 @@
 @php
 	use App\Personal;
+	use App\Cliente;
+	use App\Http\Controllers\userController;
+	
+	$cliente = Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first();
 @endphp
 <!-- Main Header -->
 <header class="main-header" style="height: 50px;">
@@ -129,9 +133,9 @@
 								<p>Contacto</p>
 							</div>
 							<div class="box-body" style="white-space: normal;text-align: center;">
-								@if(Auth::user()->CliComercial <> null)
+								@if($cliente->CliComercial <> null)
 									@php
-										$personal = Personal::where('ID_Pers', Auth::user()->CliComercial)->first();
+										$personal = Personal::where('ID_Pers', $cliente->CliComercial)->first();
 										$nombre = $personal->PersFirstName.' '.$personal->PersLastName;
 										$telefono = $personal->PersCellphone;
 										$correo = $personal->PersEmail;
