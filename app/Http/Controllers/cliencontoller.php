@@ -54,11 +54,27 @@ class clientcontoller extends Controller
                     ->where('CliDelete', 0)
                     ->where('CliCategoria', 'Cliente')
                     ->get();
-                return view('clientes.index', compact('clientes'));
+                $personals = '';
+                if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial)){
+                    $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->orWhere('users.UsRol2', 'Comercial')
+                        ->get();
+                }
+                return view('clientes.index', compact('clientes', 'personals'));
                 break;
             default:
                 abort(403);
         }
+    }
+    public function changeComercial(Request $request, $id){
+        $cliente = Cliente::where('CliSlug', $id)->first();
+        $cliente->CliComercial = $request->input('Comercial');
+        $cliente->save();
+        return back();
     }
 
     /**

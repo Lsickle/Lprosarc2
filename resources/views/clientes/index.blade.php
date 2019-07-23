@@ -35,7 +35,7 @@
 								<td>{{$cliente->CliNit}}</td>
 								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 								<td>
-									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`)"></a>
+									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, `{{$cliente->CliComercial}}`)"><i class="fas fa-marker"></i></a>
 									{{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
 								</td>
 								@endif
@@ -54,32 +54,45 @@
 	</div>
 </div>
 @endsection
+@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 @section('NewScript')
 	<script>
-		function changeComercial(slug){
+		function changeComercial(slug, idPers){
+			var selected = '';
 			$('#divchangeComercial').empty();
 			$('#divchangeComercial').append(`
-				<form role="form" action="/solicitud-residuo/`+slug+`/changeComercial" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
-					@method('PUT')
+				<form role="form" action="/clientes/`+slug+`/changeComercial" method="POST" enctype="multipart/form-data" data-toggle="validator">
 					@csrf
 					<div class="modal modal-default fade in" id="changeComercial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-										<i class="fas fa-plus-circle"></i>
+									<label style="font-size: 2rem;">Asignación de comercial</label>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<label>Seleccione el comercial</label>
+										<select name="Comercial" id="Comercial" class="form-control" required>
+											<option value="">Seleccione...</option>
+											@foreach($personals as $personal)
+												<option value="{{$personal->ID_Pers}}">{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
+											@endforeach
+										</select>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+									<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.save')}}</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</form>
 			`);
+			Selects();
+			$('form').validator('update');
 			$('#changeComercial').modal();
 		}
 	</script>
 @endsection
+@endif
