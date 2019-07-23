@@ -147,11 +147,13 @@ class Permisos{
 	/*
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
 	 */
-	const SOLSERVERIFICADO = ['Tesorería'];
+	const SOLSERACEPTADO = ['Tesorería'];
 	/*
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
 	 */
 }
 

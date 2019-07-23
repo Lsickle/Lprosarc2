@@ -31,7 +31,7 @@
 									<th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
 									<th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
 									<th>{{trans('adminlte_lang::message.seemore')}}</th>
-									@if(in_array(Auth::user()->UsRol, Permisos::SOLSERVERIFICADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERVERIFICADO))
+									@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO))
 										<th>Aprobar</th>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
@@ -54,14 +54,14 @@
 										@php
 											$Status = ['Conciliado', 'Tratado'];
 										@endphp
+										@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO))
+											<td>
+												<a onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{$Servicio->SolSerStatus === 'Pendiente'}}', 'Aceptada', 'aprobar')" {{$Servicio->SolSerStatus === 'Pendiente' ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-check-circle"></i> Aprobar</a>
+											</td>
+										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 											<td>
 												<a onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
-											</td>
-										@endif
-										@if(in_array(Auth::user()->UsRol, Permisos::SOLSERVERIFICADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERVERIFICADO))
-											<td>
-												<a onclick="ModalStatus('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{$Servicio->SolSerStatus === 'Pendiente'}}', 'Verificada', 'aprobar')" {{$Servicio->SolSerStatus === 'Pendiente' ? '' :  'disabled'}} style="text-align: center;" class="btn btn-success"><i class="fas fa-check-circle"></i> Aprobar</a>
 											</td>
 										@endif
 									</tr>
