@@ -142,6 +142,7 @@ class VehicProgController extends Controller
 			else{
 				$programacion->ProgVehtipo = 2;
 				$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 				$programacion->ProgVehColor = '#FFFF00';
 				$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 				$nomConduct = null;
