@@ -152,7 +152,11 @@ class Permisos{
 	const COMERCIAL = ['Comercial'];
 	/* Using ->
 		clientcontoller::index
-	 */
+	*/
+	const AsigComercial = ['Programador', 'AdministradorBogota'];
+	/* Using -> 
+		clientes/index
+	*/
 }
 
 /*

@@ -48,7 +48,12 @@ class clientcontoller extends Controller
                 return view('clientes.index', compact('clientes'));
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
-                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
+                $clientes = DB::table('clientes')
+                    ->join('personal', 'clientes.CliComercial', '=', 'personal.ID_Pers')
+                    ->select('clientes.*', 'personal.PersFirstName', 'personal.PersLastName')
+                    ->where('CliDelete', 0)
+                    ->where('CliCategoria', 'Cliente')
+                    ->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             default:
