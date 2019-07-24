@@ -155,9 +155,9 @@
 		<div class="col-md-6">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
-						{{-- Barra de navegacion --}}
-						<li class="active box-info" ><a href="#residuos" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
-						<li><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
+					{{-- Barra de navegacion --}}
+					<li class="active box-info" ><a href="#residuos" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
+					<li><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
 				</ul>
 				<div class="tab-content">
 					<div class="active tab-pane" id="residuos">

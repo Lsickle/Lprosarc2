@@ -72,7 +72,7 @@
 								</div>
 								<div class="modal-body">
 									<div class="form-group">
-										<label>Seleccione el comercial</label>
+										<label>Seleccione el comercial</label><small class="help-block with-errors">*</small>
 										<select name="Comercial" id="Comercial" class="form-control" required>
 											<option value="">Seleccione...</option>
 											@foreach($personals as $personal)
