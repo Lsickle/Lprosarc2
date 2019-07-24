@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}
+{{ trans('adminlte_lang::LangTratamiento.pretratMenu') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangTratamiento.tratnew') }}
+{{ trans('adminlte_lang::LangTratamiento.pretratnew') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +12,7 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</h3>
+                    <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.pretratMenu') }}</h3>
                     <div class="box-tools pull-right">
                      <button onclick="AgregarPreTrat()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.pretratadd') }}</button>
                     </div>
@@ -25,58 +25,30 @@
                             <!-- /.box-header -->
                             <!-- form start -->
 
-                            <form role="form" action="/tratamiento" method="POST" enctype="multipart/form-data" id="createtratamientoForm">
+                            <form role="form" action="/pretratamiento" method="POST" enctype="multipart/form-data" id="createpretratamientoForm">
                                 @csrf
-                                <div class="box-body" id="boxbodypretrat">
-
-                                    <div class="col-md-6">
-                                        <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.manager') }}</label>
-                                        <select class="form-control select" id="select2sedes" name="FK_TratProv" required="true">
-                                            @foreach($sedes as $sede)
-                                            <option value="{{$sede->ID_Sede}}">{{$sede->CliShortname}} - {{$sede->SedeName}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="input1">{{ trans('adminlte_lang::LangTratamiento.tratname') }}</label>
-                                        <input maxlength="60" id="input1" class="form-control" type="text" name="TratName">
+                                <div class="box-body" id="pretratamientosPanel">
+                                    <div class="col-md-6" id="pretratname0">
+                                        {{-- input oculto para llevar el control y conteo de los ids --}}
+                                        <input id="ID_Propo0" class="form-control" type="hidden" name="ID_PreTrat[]">
+                                        <label for="input[]">{{ trans('adminlte_lang::LangTratamiento.pretratname') }} </label>
+                                        <div class="input-group">
+                                            <input maxlength="60" id="input[]" class="form-control" type="text" name="PreTratName[]" required>
+                                            <a onclick="EliminarPreTrat(0)" class="input-group-addon" style=" color: red;" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.pretratname') }}" data-content="{{ trans('adminlte_lang::LangTratamiento.popoverdescript1') }}"><i class="fas fa-backspace"></i></a>
+                                        </div><br>      
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
-                                        <select class="form-control select" id="select2clasf" name="FK_Clasf[]" required="true" multiple="multiple">
-                                            @foreach($clasificaciones as $clasificacion)
-                                            <option value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
-                                        <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" required="true" multiple="multiple">
-                                            @foreach($pretratamientos as $pretratamiento)
-                                            <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                      <div class="panel panel-default" style="margin-top: 2%;">
-                                        <div class="panel-heading">
-                                          <h3 class="panel-title">Pretratamientos</h3>
+                                    <div class="col-md-6" id="pretratdescription0">
+                                        <label for="inputdescript[]">{{ trans('adminlte_lang::LangTratamiento.pretratdescript') }} </label>
+                                        <div class="input-group">
+                                            <input maxlength="250" id="inputdescript[]" class="form-control" type="text" name="PreTratDescription[]">
+                                            <a class="input-group-addon" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.popovertittle2') }}" data-content="<p style='width: 50%'>{{ trans('adminlte_lang::LangTratamiento.popoverdescript2') }}</p>"><i class="fas fa-info-circle"></i></a>
                                         </div>
-                                        <div class="panel-body" id="pretratamientosPanel">
-                                          {{-- /*lista de pretratamientos*/ --}}
-                                          
-                                        </div>
-                                      </div>
-                                      <!-- /.box -->
                                     </div>
-                                    <!-- /.col -->
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-success" style="margin-left: 1.5rem;"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.tratcreate') }}</button>
+                                    <button type="submit" class="btn btn-success" style="margin-left: 1.5rem;"><i class="fas fa-check"></i> {{ trans('adminlte_lang::LangTratamiento.pretratcreate') }}</button>
 
                                     <a class="btn btn-default btn-close pull-right" style="margin-right: 1.7rem;" href="{{ route('tratamiento.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
                                 </div>

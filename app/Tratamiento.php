@@ -19,16 +19,15 @@ class Tratamiento extends Model
 	 //como tratamiento pertenece a un gestor/sede de cliente
 	}
 
-	public function pretratamientos()
-	{
-	 return $this->hasMany('App\Pretratamiento', 'FK_Pre_Trat');
-	 //cada tratamiento puede tener varios pretratamientos
-	}
-
     public function clasificaciones()
     {
         return $this->belongsToMany('App\Clasificacion','clasificacion_tratamiento', 'FK_Trat', 'FK_Clasf');
         //lista las clasificaciones relacionados usando muchos a muchos
+    }
+    public function pretratamientos()
+    {
+        return $this->belongsToMany('App\Pretratamiento','pretratamiento_tratamiento', 'FK_Trat', 'FK_PreTrat');
+        //lista las pretratamientos relacionados usando muchos a muchos
     }
 
 }

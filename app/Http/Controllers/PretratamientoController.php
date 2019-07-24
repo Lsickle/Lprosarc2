@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pretratamiento;
 use App\Permisos;
+use App\audit;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PretratamientoController extends Controller
@@ -31,8 +33,8 @@ class PretratamientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {                
+        return view('pretratamientos.create');
     }
 
     /**
@@ -43,7 +45,24 @@ class PretratamientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request['ID_PreTrat']!==null) {
+            for ($x=0; $x < count($request['PreTratName']); $x++) {
+                $pretratamiento = new Pretratamiento();
+                $pretratamiento->PreTratName = $request['PreTratName'][$x];
+                $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
+                $pretratamiento->PreTratDelete = 0;
+                $pretratamiento->save();
+
+                $log = new audit();
+                $log->AuditTabla="pretratamiento";
+                $log->AuditType="Creado";
+                $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
+                $log->AuditUser=Auth::user()->email;
+                $log->Auditlog=$request->all();
+                $log->save();
+            }
+        }
+        return redirect()->route('pretratamiento.index');
     }
 
     /**
