@@ -144,16 +144,27 @@ class Permisos{
 		ProgramacionVehicle/edit
 	*/
 	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
-	/*
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 	 */
+
 
 	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
 	/*
 		respel/edit
 		
 	 */
+	
+	const COMERCIAL = ['Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+	const AsigComercial = ['Programador', 'AdministradorBogota'];
+	/* Using ->
+		clientes/index
+	*/
+
 }
 
 /*

@@ -29,7 +29,7 @@ class RecursosStoreRequest extends FormRequest
                 $rule = [
                     'RecTipo' => 'required|max:32',
                     'RecCarte' => 'required|max:32',
-                    'RecSrc.*' => 'mimes:jpg,jpeg,png|max:2048|required',
+                    'RecSrc.*' => 'mimes:jpg,jpeg,png|max:5120|required',
                 ];
                 return $rule;
                 break;
