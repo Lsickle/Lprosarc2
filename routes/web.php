@@ -15,7 +15,6 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('/noscriptpage', function () {
@@ -28,6 +27,10 @@ Route::get('/profile/{id}/edit', 'userController@edit');
 Route::put('/profile/{id}','userController@update');
 Route::get('/profile/{id}/passwordreset', 'userController@viewchangepassword')->name('profile.changepassword');
 Route::patch('/profile/{id}', 'userController@changepassword');
+
+Route::get('/preguntas-frecuentes', function () {
+    return view('preguntas.index');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {

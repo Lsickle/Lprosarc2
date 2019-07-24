@@ -387,6 +387,21 @@ return [
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
 
+    'frequent questions'      => 'Preguntas Frecuentes',
+    'question-1-description'  => 'Cada asterisco significa que el campo que lo tiene es de carácter obligatorio y no lo dejara avanzar hasta que lo complete.',
+    'question-2-title'        => '¿Por qué no puedo asignar residuos a mi Generador?',
+    'question-2-description'  => 'Los residuos no se podran asignar hasta que hayan sido aprobados por Prosarc S.A. ESP.',
+    'question-4-title'        => 'Soy un generador y no quiero ingresar de nuevo mis datos del registro. ¿Hay otra forma de hacerlo?',
+    'question-4-description'  => 'Al dar clic en "Lista de Generadores" aparece en la parte superior un botón que dice "Soy Generador", al pulsarlo todos los datos que usted lleno de su empresa al registrarse pasarán a ser como las de un nuevo generador, sin perder los de su empresa.',
+    'question-5-title'        => '¿Para qué necesito ingresar datos de mi personal?',
+    'question-5-description'  => 'En la solicitud de Servicio los va a requerir para que Prosarc S.A. ESP pueda contactar con la persona que le asignó y así saber el futuro de sus residuos.',
+    'question-6-title'        => '¿Por qué no puede marcar los requerimientos de los reiduos?',
+    'question-6-description'  => 'Los requerimientos los habilita Prosarc S.A. ESP dependiendo del residuo.',
+    'question-7-title'        => '¿Cómo puedo saber en que paso va mi Solicitud de Servicio sin tener que llamar a Prosarc S.A. ESP?',
+    'question-7-description'  => 'Cada nuevo cambio que tenga su Solicitud de Servicio adentro de Prosarc S.A. ESP, se le notificará con un correo electrónico automatico.',
+    'question-8-title'        => '¿Dónde puedo ver las fotos y/o videos que requerí en la Solicitud de Servicio?',
+    'question-8-description'  => 'En la Solicitud de Sevicio en "Ver más", luego yendo a la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o videos una vez que el residuos haya sido tratado.',
+
     // departamento
     'departamento'            => 'Departamento',
 
