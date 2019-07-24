@@ -17,6 +17,7 @@ return [
     'tratMenu'              => 'Tratamiento',
     'tratnew'               => 'Nuevo Tratamiento',
     'pretratnew'            => 'Nuevo PreTratamiento',
+    'pretratupdate'         => 'Actualizar PreTratamiento',
     'tratname'              => 'Nombre',
     'manager'               => 'Gestor',
     'pretratname'           => 'Nombre',

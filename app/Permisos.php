@@ -171,6 +171,11 @@ class Permisos{
 	/* Using ->
 		clientes/index
 	*/
+	const JefeOperaciones = ['Programador', 'JefeOperaciones'];
+	/*Using ->
+		pretratamientos/edit
+		pretratamientocontoller::destroy
+	*/
 
 }
 

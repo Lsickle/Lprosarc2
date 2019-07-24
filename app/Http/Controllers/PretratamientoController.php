@@ -54,7 +54,7 @@ class PretratamientoController extends Controller
                 $pretratamiento->save();
 
                 $log = new audit();
-                $log->AuditTabla="pretratamiento";
+                $log->AuditTabla="pretratamientos";
                 $log->AuditType="Creado";
                 $log->AuditRegistro=$pretratamiento->ID_PreTrat ;
                 $log->AuditUser=Auth::user()->email;
@@ -84,7 +84,14 @@ class PretratamientoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pretratamiento = Pretratamiento::find($id);
+
+        if (!$pretratamiento) {
+            abort(404);
+        }
+        
+        // return $pretratamiento;  
+        return view('pretratamientos.edit', compact('pretratamiento'));
     }
 
     /**
@@ -96,7 +103,24 @@ class PretratamientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $pretratamiento = Pretratamiento::where('ID_PreTrat', $id)->first();
+        
+        // return $pretratamiento;
+        $pretratamiento->PreTratName = $request->input('PreTratName');
+        $pretratamiento->PreTratDescription = $request->input('PreTratDescription');
+        $pretratamiento->save();
+
+        /*auditoria*/
+        $log = new audit();
+        $log->AuditTabla="pretratamiento";
+        $log->AuditType="Actualizado";
+        $log->AuditRegistro=$pretratamiento->ID_PreTrat;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+
+        return redirect()->route('pretratamiento.index');
     }
 
     /**
@@ -107,6 +131,28 @@ class PretratamientoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)){
+            $pretratamiento = Pretratamiento::where('ID_PreTrat', $id)->first();
+                if ($pretratamiento->PreTratDelete == 0) {
+                    $pretratamiento->PreTratDelete = 1;
+                }
+                else{
+                    $pretratamiento->PreTratDelete = 0;
+                }
+            $pretratamiento->save();
+
+            $log = new audit();
+            $log->AuditTabla="pretratamientos";
+            $log->AuditType="Eliminado";
+            $log->AuditRegistro=$pretratamiento->ID_PreTrat;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog = $pretratamiento->PreTratDelete;
+            $log->save();
+    
+            return redirect()->route('pretratamiento.index');
+        }else{
+            abort(403);
+        }
     }
+    
 }
