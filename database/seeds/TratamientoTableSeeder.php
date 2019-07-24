@@ -21,7 +21,7 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->FK_TratProv = "1";
         $tratamiento->save();
         $tratamiento->clasificaciones()->attach([3,4,5,8,10,20,31,51,15]);
-        $tratamiento->pretratamientos()->attach([13,15,17]);
+        $tratamiento->pretratamientos()->attach([13,15,8]);
         
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "Biologico";
