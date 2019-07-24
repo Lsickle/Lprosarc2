@@ -9,13 +9,29 @@ use App\Http\Controllers\userController;
 use Illuminate\Validation\Rule;
 use App\Permisos;
 use App\Cliente;
+use App\Departamento;
+use App\Municipio;
+use App\Sede;
 
 class ClienteController extends Controller
 {
     public function show($slug)
     {
         $cliente = Cliente::where('CliSlug', $slug)->first();
-        return view('clientes.show', compact('cliente'));
+        $Sedes = DB::table('sedes')
+            ->join('municipios', 'municipios.ID_Mun', '=', 'sedes.FK_SedeMun')
+            ->join('departamentos', 'departamentos.ID_Depart', '=', 'municipios.FK_MunCity')
+            ->select('sedes.*', 'municipios.MunName', 'departamentos.DepartName')
+            ->where('sedes.FK_SedeCli', $cliente->ID_Cli)
+            ->where(function($query){
+                if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) {
+                }else{
+                    $query->where('sedes.SedeDelete', '=', 0);
+                }
+            })
+            ->get();
+
+        return view('clientes.show', compact('cliente', 'Sedes'));
     }
 
     public function edit($slug)
