@@ -106,6 +106,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						 ->add(Link::toUrl('/respels', '<i class="fa fa-search"></i> '. trans('adminlte_lang::message.MenuRespelList')))
 						 ->add(Link::toUrl('/requerimientos', '<i class="fas fa-list-ol"></i> '.trans('adminlte_lang::message.MenuRequRespel')))
 						 ->add(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> '.trans('adminlte_lang::message.MenuTrataRespel')))
+						 ->add(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> '.trans('adminlte_lang::message.MenuPreTrataRespel')))
 						 ->addClass('treeview-menu')
 					 )
 				)

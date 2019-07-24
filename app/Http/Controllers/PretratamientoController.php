@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pretratamiento;
+use App\Permisos;
+use Illuminate\Support\Facades\Auth;
 
 class PretratamientoController extends Controller
 {
@@ -13,7 +16,13 @@ class PretratamientoController extends Controller
      */
     public function index()
     {
-        //
+        
+        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            $pretratamientos = Pretratamiento::all();
+        }else{
+            $pretratamientos = Pretratamiento::where('PreTratDelete', 0)->get();
+        }
+        return view('pretratamientos.index', compact('pretratamientos'));
     }
 
     /**

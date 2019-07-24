@@ -12,12 +12,14 @@ return [
     | {{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
     */
 
+    'pretratMenu'           => 'PreTratamiento',
+    'pretratnew'            => 'Nuevo PreTratamiento',
     'tratMenu'              => 'Tratamiento',
     'tratnew'               => 'Nuevo Tratamiento',
     'tratname'              => 'Nombre',
     'manager'               => 'Gestor',
-    'pretratname'           => 'Nombre del PreTratamiento',
-    'pretratdescript'       => 'Descripción del PreTratamiento',
+    'pretratname'           => 'Nombre',
+    'pretratdescript'       => 'Descripción',
     'popovertittle1'        => 'Eliminar',
     'popovertittle2'        => 'Descripción del PreTratamiento',
     'popoverdescript1'      => '<p>En este campo debe escribir el nombre del Pretramiento<br><br>Tambien puede hacer click en el botton para <b>eliminar</b> este PreTratamiento del formulario</p>',
@@ -26,6 +28,7 @@ return [
     'pretratadd'            => 'Añadir Pretratamiento',
     'pretrat'               => 'Pretratamiento',
     'tratlist'              => 'Lista de Tratamientos',
+    'pretratlist'           => 'Lista de PreTratamientos',
     'tratprovee'            => 'Proveedor',
     'sede'                  => 'Sede',
     'type'                  => 'Tipo',

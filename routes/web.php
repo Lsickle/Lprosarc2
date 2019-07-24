@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
+	Route::resource('/pretratamiento','PretratamientoController');
 	Route::resource('/asistencia', 'AssistancesController');
 	Route::resource('/compra/orden','OrdenCompraController');
 	// Route::resource('/compra/cotizacion','QuotationController');
