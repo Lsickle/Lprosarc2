@@ -322,7 +322,7 @@
 				Tratamiento();
 			};
 			$('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
-			$('#recursoinputext').attr('data-filessizemultiple', '2048');
+			$('#recursoinputext').attr('data-filessizemultiple', '5120');
 		});
 
 		$("#addVideo").click(function(e){

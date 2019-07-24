@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
 	Route::resource('/clientes', 'clientcontoller');
+	Route::post('/clientes/{id}/changeComercial', 'clientcontoller@changeComercial');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');

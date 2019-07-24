@@ -114,7 +114,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
+								<div class="form-group col-xs-12 col-md-12 ambos" hidden="true">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control" required>
@@ -487,6 +487,7 @@
 	function TranspotadorProsarc(){
 		$('.vehiculoAlquilado').attr('hidden', true);
 		$('.vehiculoProsarc').attr('hidden', false);
+		$('.ambos').attr('hidden', false);
 		$('#transport').attr('required', false);
 		$('#vehicalqui').attr('required', false);
 		$('#FK_ProgVehiculo').attr('required', true);
@@ -496,11 +497,12 @@
 	function TranspotadorAlquilado(){
 		$('.vehiculoProsarc').attr('hidden', true);
 		$('.vehiculoAlquilado').attr('hidden', false);
+		$('.ambos').attr('hidden', false);
 		$('#transport').attr('required', true);
 		$('#vehicalqui').attr('required', true);
 		$('#FK_ProgVehiculo').attr('required', false);
 		$('#FK_ProgConductor').attr('required', false);
-		$('#FK_ProgAyudante').attr('required', false);
+		$('#FK_ProgAyudante').attr('required', true);
 	}
 	$('#transport').on('change', function() { 
 		var id = $('#transport').val();
@@ -524,9 +526,9 @@
 						var vehiculos = new Array();
 						$("#vehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 						for(var i = res.length -1; i >= 0; i--){
-							if ($.inArray(res[i].ID_Carg, vehiculos) < 0) {
+							if ($.inArray(res[i].ID_Vehic, vehiculos) < 0) {
 								$("#vehicalqui").append(`<option value="${res[i].ID_Vehic}">${res[i].VehicPlaca}</option>`);
-								vehiculos.push(res[i].ID_Carg);
+								vehiculos.push(res[i].ID_Vehic);
 							}
 						}
 					}

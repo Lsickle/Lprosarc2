@@ -155,6 +155,15 @@ class Permisos{
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
+	
+	const COMERCIAL = ['Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+	const AsigComercial = ['Programador', 'AdministradorBogota'];
+	/* Using ->
+		clientes/index
+	*/
 }
 
 /*

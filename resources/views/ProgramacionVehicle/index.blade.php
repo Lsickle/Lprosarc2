@@ -57,6 +57,19 @@
 											}
 										}
 									}
+									elseif($programacion->ProgVehtipo == 2){
+										foreach($personals as $personal){
+											if($programacion->FK_ProgAyudante == $personal->ID_Pers){
+												$ayudante = $personal->PersFirstName.' '.$personal->PersLastName;
+											}
+										}
+										$conductor = 'No aplica';
+										foreach ($vehiculos as $vehiculo) {
+											if($programacion->FK_ProgVehiculo == $vehiculo->ID_Vehic){
+												$vehiculoPlaca = $vehiculo->VehicPlaca;
+											}
+										}
+									}
 									else{
 										$ayudante = 'No aplica';
 										$conductor = $programacion->SolSerConductor;
