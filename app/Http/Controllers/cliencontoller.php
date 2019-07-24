@@ -37,7 +37,14 @@ class clientcontoller extends Controller
 
             case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
                 $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
-                return view('clientes.index', compact('clientes'));
+                 $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->orWhere('users.UsRol2', 'Comercial')
+                        ->get();
+                return view('clientes.index', compact('clientes', 'personals'));
                 break;
             
             case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
@@ -196,7 +203,22 @@ class clientcontoller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             // $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
-            return view('clientes.show', compact('cliente'));
+            // return view('clientes.show', compact('cliente'));
+
+            $Sedes = DB::table('sedes')
+                ->join('municipios', 'municipios.ID_Mun', '=', 'sedes.FK_SedeMun')
+                ->join('departamentos', 'departamentos.ID_Depart', '=', 'municipios.FK_MunCity')
+                ->select('sedes.*', 'municipios.MunName', 'departamentos.DepartName')
+                ->where('sedes.FK_SedeCli', $cliente->ID_Cli)
+                ->where(function($query){
+                    if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) {
+                    }else{
+                        $query->where('sedes.SedeDelete', '=', 0);
+                    }
+                })
+                ->get();
+
+            return view('clientes.show', compact('cliente', 'Sedes'));
         }else{
             abort(403);
         }
