@@ -166,14 +166,24 @@
 					<option value="1" onclick="setControlada(0)" {{ ($Respels->SustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
 				<label style="margin-bottom: 0">Tipo de sustancia</label><br>
-				<a class="btn btn-success" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
-				<a class="btn btn-default" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
+					@include('layouts.RespelPartials.layoutsRes.ControladaEditName')
+				@else
+					@include('layouts.RespelPartials.layoutsRes.MasivoEditName')
+				@endif
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
+					@include('layouts.RespelPartials.layoutsRes.ControladaEditDoc')
+				@else
+					@include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')
+				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
