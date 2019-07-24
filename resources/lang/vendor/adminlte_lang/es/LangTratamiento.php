@@ -38,6 +38,7 @@ return [
     'tratOutLong'           => 'Tratamiento Externo',
     'noPretrat'             => 'Sin pretratamientos asignados',
     'tratSince'             => 'Registrado desde',
+    'tratClasf'             => 'Clasificaciones permitidas',
 
 
 ];

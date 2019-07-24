@@ -42,6 +42,15 @@
                                         <input maxlength="60" id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
+                                        <select class="form-control select" id="select2sedes" name="FK_Clasf[]" required="true">
+                                            @foreach($clasificaciones as $sede)
+                                            <option value="{{$clasificaciones->ID_Clasf}}">{{$clasificaciones->ClasfCode}}
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-12">
                                       <div class="panel panel-default" style="margin-top: 2%;">
                                         <div class="panel-heading">

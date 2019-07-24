@@ -11,9 +11,9 @@ use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
-use App\Clasificacion;
 use App\Tratamiento;
 use App\Pretratamiento;
+use App\Clasificacion;
 use App\Respel;
 use App\Requerimiento;
 
@@ -60,8 +60,10 @@ class TratamientoController extends Controller
                 ->where('CliCategoria', '=', 'proveedor')
                 ->select('sedes.*', 'clientes.*')
                 ->get();
+
+        $clasificaciones = Clasificacion::All();
                 
-        return view('tratamiento.create', compact('residuos', 'sedes'));
+        return view('tratamiento.create', compact('residuos', 'sedes', 'clasificaciones'));
     }
 
     /**
