@@ -39,6 +39,7 @@ return [
     'noPretrat'             => 'Sin pretratamientos asignados',
     'tratSince'             => 'Registrado desde',
     'tratClasf'             => 'Clasificaciones permitidas',
+    'Pretrat'               => 'PreTratamientos disponibles',
 
 
 ];

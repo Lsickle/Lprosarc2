@@ -44,9 +44,18 @@
 
                                     <div class="col-md-6">
                                         <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
-                                        <select class="form-control select" id="select2sedes" name="FK_Clasf[]" required="true">
-                                            @foreach($clasificaciones as $sede)
-                                            <option value="{{$clasificaciones->ID_Clasf}}">{{$clasificaciones->ClasfCode}}
+                                        <select class="form-control select" id="select2clasf" name="FK_Clasf[]" required="true" multiple="multiple">
+                                            @foreach($clasificaciones as $clasificacion)
+                                            <option value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
+                                        <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" required="true" multiple="multiple">
+                                            @foreach($pretratamientos as $pretratamiento)
+                                            <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
                                             @endforeach
                                         </select>
                                     </div>

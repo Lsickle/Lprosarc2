@@ -62,8 +62,10 @@ class TratamientoController extends Controller
                 ->get();
 
         $clasificaciones = Clasificacion::All();
+
+        $pretratamientos = Pretratamiento::All();
                 
-        return view('tratamiento.create', compact('residuos', 'sedes', 'clasificaciones'));
+        return view('tratamiento.create', compact('residuos', 'sedes', 'clasificaciones', 'pretratamientos'));
     }
 
     /**
@@ -74,7 +76,7 @@ class TratamientoController extends Controller
      */
     public function store(Request $request)
     {   
-        // return $request; 
+        return $request; 
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = $request->input('TratName');
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
