@@ -219,7 +219,7 @@
 												<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.seedetails')}}</th>
-											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
+											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Aprobado')
 												<th>{{trans('adminlte_lang::message.delete')}}</th>
 											@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
 												<th>Certificado</th>
@@ -299,7 +299,7 @@
 													</td>
 												@endif
 												<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-info btn-block'> <i class="fas fa-search"></i> </a></td>
-												@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado')
+												@if($SolicitudServicio->SolSerStatus == 'Pendiente'|| $SolicitudServicio->SolSerStatus === 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Aprobado')
 													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
 												@elseif($SolicitudServicio->SolSerStatus == 'Certificacion')
 													<td style="text-align: center;"><a href="#" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i></a></td>
@@ -318,7 +318,7 @@
 											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 												<th style="text-align: right;">{{$TotalTrat}} kg</th>
 											@endif
-											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
+											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
 												<th colspan="2"></th>
 											@else
 												<th></th>
@@ -599,6 +599,15 @@
 
 	@switch($SolicitudServicio->SolSerStatus)
 		@case('Pendiente')
+			$('#titulo').empty();
+			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+				$('#titulo').append(`
+					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
+				`);
+			@endif
+		@break
+		@case('Aceptado')
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`

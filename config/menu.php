@@ -113,6 +113,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				->addif(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
 				/*PESTAÑA DE COTIZACIONES*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),
 				   //  (Menu::new()
@@ -182,6 +183,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
+
 				/*PESTAÑA DE COTIZACIONES*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),
 				   //  (Menu::new()

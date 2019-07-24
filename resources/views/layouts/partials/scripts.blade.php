@@ -522,7 +522,7 @@ function NotifiFalse(Mensaje) {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->UsRol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Exportar Excel'}, {extend: 'pdf', text: 'Exortar Pdf'}, {
+		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Exportar Excel'}, {extend: 'pdf', text: 'Exportar Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
