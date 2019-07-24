@@ -63,7 +63,7 @@
                                     <div class="col-md-12">
                                       <div class="panel panel-default" style="margin-top: 2%;">
                                         <div class="panel-heading">
-                                          <h3 class="panel-title">Pretratamientos</h3>
+                                          <h3 class="panel-title">Pretratamientos Nuevos</h3>
                                         </div>
                                         <div class="panel-body" id="pretratamientosPanel">
                                           {{-- /*lista de pretratamientos*/ --}}
