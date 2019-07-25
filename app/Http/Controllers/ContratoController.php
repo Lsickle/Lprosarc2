@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Contrato;
 use Permisos;
+use App\Cliente;
 
 class ContratoController extends Controller
 {
@@ -50,7 +51,13 @@ class ContratoController extends Controller
 	 */
 	public function create()
 	{
-		//
+		if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD)){
+			$Clientes = Cliente::where('CliDelete', 0)->get();
+			return view('contratos.create', compact('Clientes'));
+		}
+		else{
+			abort(403);
+		}
 	}
 
 	/**

@@ -143,23 +143,25 @@ class Permisos{
 		ProgramacionVehicle/edit
 	*/
 	const SolSerCertifi = ['AdministradorPlanta'];
-	/*
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
 	const SOLSERACEPTADO = ['Tesorería'];
-	/*
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
-
-
+	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
+	/* Using ->
+		contratos/index
+		ContratoController::create
+	 */
 	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
-	/*
+	/* Using ->
 		respel/edit
-		
 	 */
 	
 	const COMERCIAL = ['Comercial'];
