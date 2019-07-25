@@ -140,7 +140,7 @@ class TratamientoController extends Controller
     public function show($id)
     {   
         // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-        $tratamiento = Tratamiento::with(['pretratamientos'])
+        $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
             ->where('ID_Trat', $id)
             ->first();
 

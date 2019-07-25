@@ -294,6 +294,7 @@ return [
     'clientcliente'           => 'Cliente',
     'clienttransportador'     => 'Transportador',
     'clientproveedor'         => 'Proveedor',
+    'clientGestor'            => 'Gestor',
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Clientes',
     'clientcontact'           => 'Contactos',

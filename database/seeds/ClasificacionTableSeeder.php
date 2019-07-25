@@ -18,227 +18,227 @@ class ClasificacionTableSeeder extends Seeder
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y1';
+        $clasification->ClasfCode = 'Y1';
         $clasification->ClasfDescription = 'Desechos clínicos resultantes de la atención médica prestada en hospitales, centros médicos y clínicas';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y2';
+        $clasification->ClasfCode = 'Y2';
         $clasification->ClasfDescription = 'Sustancias y artículos de desecho que contengan, o estén contaminados por, bifenilos policlorados (PCB), terfenilos policlorados (PCT) o bifenilos polibromados (PBB)';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y3';
+        $clasification->ClasfCode = 'Y3';
         $clasification->ClasfDescription = 'Residuos alquitranados resultantes de la refinación, destilación o cualquier otro tratamiento pirolítico';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y4';
+        $clasification->ClasfCode = 'Y4';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción, preparación y utilización de tintas, colorantes, pigmentos, pinturas, lacas o barnices';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y5';
+        $clasification->ClasfCode = 'Y5';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción, preparación y utilización de resinas, látex, plastificantes o colas y adhesivos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y6';
+        $clasification->ClasfCode = 'Y6';
         $clasification->ClasfDescription = 'Sustancias químicas de desecho, no identificadas o nuevas, resultantes de la investigación y el desarrollo o de las actividades de enseñanza y cuyos efectos en el ser humano o el medio ambiente no se conozcan';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y7';
+        $clasification->ClasfCode = 'Y7';
         $clasification->ClasfDescription = 'Desechos de carácter explosivo que no estén sometidos a una legislación diferente';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y8';
+        $clasification->ClasfCode = 'Y8';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción; preparación y utilización de productos químicos y materiales para fines fotográficos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y9';
+        $clasification->ClasfCode = 'Y9';
         $clasification->ClasfDescription = 'Desechos resultantes del tratamiento de superficie de metales y plásticos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y10';
+        $clasification->ClasfCode = 'Y10';
         $clasification->ClasfDescription = 'Residuos resultantes de las operaciones de eliminación de desechos industriales';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y11';
+        $clasification->ClasfCode = 'Y11';
         $clasification->ClasfDescription = 'Metales carbonilos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y12';
+        $clasification->ClasfCode = 'Y12';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción y preparación de productos farmacéuticos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y13';
+        $clasification->ClasfCode = 'Y13';
         $clasification->ClasfDescription = 'Berilio, compuestos de berilio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y14';
+        $clasification->ClasfCode = 'Y14';
         $clasification->ClasfDescription = 'Compuestos de cromo hexavalente';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y15';
+        $clasification->ClasfCode = 'Y15';
         $clasification->ClasfDescription = 'Compuestos de cobre';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y16';
+        $clasification->ClasfCode = 'Y16';
         $clasification->ClasfDescription = 'Compuestos de zinc';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y17';
+        $clasification->ClasfCode = 'Y17';
         $clasification->ClasfDescription = 'Arsénico, compuestos de arsénico';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y18';
+        $clasification->ClasfCode = 'Y18';
         $clasification->ClasfDescription = 'Selenio, compuestos de selenio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y19';
+        $clasification->ClasfCode = 'Y19';
         $clasification->ClasfDescription = 'Cadmio, compuestos de cadmio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y20';
+        $clasification->ClasfCode = 'Y20';
         $clasification->ClasfDescription = 'Antimonio, compuestos de antimonio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y21';
+        $clasification->ClasfCode = 'Y21';
         $clasification->ClasfDescription = 'Telurio, compuestos de telurio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y22';
+        $clasification->ClasfCode = 'Y22';
         $clasification->ClasfDescription = 'Mercurio, compuestos de mercurio';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y23';
+        $clasification->ClasfCode = 'Y23';
         $clasification->ClasfDescription = 'Desechos de medicamentos y productos farmacéuticos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y24';
+        $clasification->ClasfCode = 'Y24';
         $clasification->ClasfDescription = 'Talio, compuestos de talío';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y25';
+        $clasification->ClasfCode = 'Y25';
         $clasification->ClasfDescription = 'Plomo, compuestos de plomo';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y26';
+        $clasification->ClasfCode = 'Y26';
         $clasification->ClasfDescription = 'Compuestos inorgánicos de flúor, con exclusión del fluoruro calcico';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y27';
+        $clasification->ClasfCode = 'Y27';
         $clasification->ClasfDescription = 'Cianuros inorgánicos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y28';
+        $clasification->ClasfCode = 'Y28';
         $clasification->ClasfDescription = 'Soluciones ácidas o ácidos en forma sólida';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y29';
+        $clasification->ClasfCode = 'Y29';
         $clasification->ClasfDescription = 'Soluciones básicas o bases en forma sólida';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y30';
+        $clasification->ClasfCode = 'Y30';
         $clasification->ClasfDescription = 'Asbesto (polvo y fibras)';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y31';
+        $clasification->ClasfCode = 'Y31';
         $clasification->ClasfDescription = 'Compuestos orgánicos de fósforo';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y32';
+        $clasification->ClasfCode = 'Y32';
         $clasification->ClasfDescription = 'Cianuros orgánicos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y33';
+        $clasification->ClasfCode = 'Y33';
         $clasification->ClasfDescription = 'Fenoles, compuestos fenólicos, con inclusión de clorofenoles';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y34';
+        $clasification->ClasfCode = 'Y34';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción, la preparación y la utilización de biocidas y productos fitofarmacéuticos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y35';
+        $clasification->ClasfCode = 'Y35';
         $clasification->ClasfDescription = 'Éteres';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y36';
+        $clasification->ClasfCode = 'Y36';
         $clasification->ClasfDescription = 'Solventes orgánicos halogenados';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y37';
+        $clasification->ClasfCode = 'Y37';
         $clasification->ClasfDescription = 'Disolventes orgánicos, con exclusión de disolventes halogenados';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y38';
+        $clasification->ClasfCode = 'Y38';
         $clasification->ClasfDescription = 'Cualquier sustancia del grupo de los dibenzofuranos policlorados';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y39';
+        $clasification->ClasfCode = 'Y39';
         $clasification->ClasfDescription = 'Cualquier sustancia del grupo de las dibenzoparadioxinas policloradas';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y40';
+        $clasification->ClasfCode = 'Y40';
         $clasification->ClasfDescription = 'Compuestos organohalogenados, que no sean las sustancias mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44).';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y41';
+        $clasification->ClasfCode = 'Y41';
         $clasification->ClasfDescription = 'Desechos resultantes de la fabricación, preparación y utilización de productos químicos para la preservación de la madera';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y42';
+        $clasification->ClasfCode = 'Y42';
         $clasification->ClasfDescription = 'Desechos resultantes de la producción, la preparación y la utilización de disolventes orgánicos';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y43';
+        $clasification->ClasfCode = 'Y43';
         $clasification->ClasfDescription = 'Desechos, que contengan cianuros, resultantes del tratamiento térmico y las operaciones de temple';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y44';
+        $clasification->ClasfCode = 'Y44';
         $clasification->ClasfDescription = 'Desechos de aceites minerales no aptos para el uso a que estaban destinados';
         $clasification->save();
 
         $clasification = new Clasificacion();
-        $clasification->ClasfCode = 'y45';
+        $clasification->ClasfCode = 'Y45';
         $clasification->ClasfDescription = 'Mezclas y emulsiones de desechos de aceite y agua o de hidrocarburos y agua';
         $clasification->save();
 

@@ -43,6 +43,7 @@ return [
     'tratInLong'            => 'Tratamiento Interno',
     'tratOutLong'           => 'Tratamiento Externo',
     'noPretrat'             => 'Sin pretratamientos asignados',
+    'noClasfif'             => 'Sin Clasificaciones Y/A asignadas',
     'tratSince'             => 'Registrado desde',
     'tratClasf'             => 'Clasificaciones permitidas',
     'Pretrat'               => 'PreTratamientos disponibles',
