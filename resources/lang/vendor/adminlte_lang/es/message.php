@@ -525,7 +525,7 @@ return [
 
     'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',
-    'MenuContactos'           => 'Lista de Contactos',
+    'MenuContactos'           => 'Lista de Proveedores',
     'MenuSedes'               => 'Mis Sedes',
     'MenuSedesClien'          => 'Lista de Sedes',
     'MenuGener'               => 'Generadores',

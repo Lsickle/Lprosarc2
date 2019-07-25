@@ -113,6 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
 	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
+	Route::resource('/contratos', 'ContratoController');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
