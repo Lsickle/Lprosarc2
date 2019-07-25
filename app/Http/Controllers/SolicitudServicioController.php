@@ -43,6 +43,12 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
+				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
+					$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+				}
+				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
+					$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+				}
 			})
 			->get();
 		foreach ($Servicios as $servicio) {
@@ -368,8 +374,13 @@ class SolicitudServicioController extends Controller
 			if($Solicitud->SolSerStatus <> 'Certificacion'){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
-						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2 ) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2 )){
 							$Solicitud->SolSerStatus = 'Aprobado';
+						}
+						break;
+					case 'Aceptada':
+						if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
+							$Solicitud->SolSerStatus = 'Aceptado';
 						}
 						break;
 					case 'Recibida':
@@ -406,14 +417,18 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=$Solicitud->SolSerStatus;
 		$log->save();
 
-		if($Solicitud->SolSerStatus === 'Tratado'){
-			return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
-		}else{
-			$slug = $Solicitud->SolSerSlug;
-			return redirect()->route('email-solser', compact('slug'));
+		switch($Solicitud->SolSerStatus){
+			case 'Tratado':
+				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+				break;
+			case 'Aceptado':
+				return redirect()->route('solicitud-servicio.index');
+				break;
+			default:
+				$slug = $Solicitud->SolSerSlug;
+				return redirect()->route('email-solser', compact('slug'));
 		}
 	}
-
 
 	public function repeat($slug)
 	{

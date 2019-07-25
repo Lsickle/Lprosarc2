@@ -74,8 +74,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CotizacionsTableSeder::class);
         $this->call(RespelTableSeeder::class);
         $this->call(ClasificacionTableSeeder::class);
-        $this->call(TratamientoTableSeeder::class);
         $this->call(PretratamientosTableSeeder::class);
+        $this->call(TratamientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);

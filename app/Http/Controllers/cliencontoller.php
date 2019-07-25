@@ -37,21 +37,51 @@ class clientcontoller extends Controller
 
             case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
                 $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
-                return view('clientes.index', compact('clientes'));
+                 $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->orWhere('users.UsRol2', 'Comercial')
+                        ->get();
+                return view('clientes.index', compact('clientes', 'personals'));
                 break;
             
             case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
                 return redirect()->route('home');
                 break;
-
-            case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
-                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->get();
+            case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
                 return view('clientes.index', compact('clientes'));
                 break;
-
+            case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
+                $clientes = DB::table('clientes')
+                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+                    ->where('CliDelete', 0)
+                    ->where('CliCategoria', 'Cliente')
+                    ->get();
+                $personals = '';
+                if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial)){
+                    $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->orWhere('users.UsRol2', 'Comercial')
+                        ->get();
+                }
+                return view('clientes.index', compact('clientes', 'personals'));
+                break;
             default:
                 abort(403);
         }
+    }
+    public function changeComercial(Request $request, $id){
+        $cliente = Cliente::where('CliSlug', $id)->first();
+        $cliente->CliComercial = $request->input('Comercial');
+        $cliente->save();
+        return back();
     }
 
     /**
@@ -173,7 +203,22 @@ class clientcontoller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
             // $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
-            return view('clientes.show', compact('cliente'));
+            // return view('clientes.show', compact('cliente'));
+
+            $Sedes = DB::table('sedes')
+                ->join('municipios', 'municipios.ID_Mun', '=', 'sedes.FK_SedeMun')
+                ->join('departamentos', 'departamentos.ID_Depart', '=', 'municipios.FK_MunCity')
+                ->select('sedes.*', 'municipios.MunName', 'departamentos.DepartName')
+                ->where('sedes.FK_SedeCli', $cliente->ID_Cli)
+                ->where(function($query){
+                    if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) {
+                    }else{
+                        $query->where('sedes.SedeDelete', '=', 0);
+                    }
+                })
+                ->get();
+
+            return view('clientes.show', compact('cliente', 'Sedes'));
         }else{
             abort(403);
         }

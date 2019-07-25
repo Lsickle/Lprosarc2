@@ -247,7 +247,11 @@ $(document).ready(function() {
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
 
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
+					extend: 'collection',
+					text: 'Selector',
+					buttons: ['selectRows', 'selectCells']
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#tarifasTable').DataTable({
@@ -518,11 +522,11 @@ function NotifiFalse(Mensaje) {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->UsRol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
+		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
-				}] : ['colvis', 'excel'];
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/        
 		$('.table').DataTable({
 			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
@@ -537,7 +541,7 @@ function NotifiFalse(Mensaje) {
 			"keys": true,
 			"lengthChange": true,
 			"buttons": [
-				botoncito
+				botoncito,
 			],
 			"language": {
 				"sProcessing":     "Procesando...",
@@ -561,7 +565,8 @@ function NotifiFalse(Mensaje) {
 				"oAria": {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				}
+				},
+				"colvis": 'Ajouté au presse-papiers',
 			}
 		});
 	});

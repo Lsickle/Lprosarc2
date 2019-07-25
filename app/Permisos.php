@@ -143,17 +143,40 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['AdministradorPlanta', 'Programador'];
+	const SolSerCertifi = ['AdministradorPlanta'];
 	/*
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
 	 */
+	const SOLSERACEPTADO = ['Tesorería'];
+	/*
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
+	 */
+
 
 	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
 	/*
 		respel/edit
 		
 	 */
+	
+	const COMERCIAL = ['Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+	const AsigComercial = ['Programador', 'AdministradorBogota'];
+	/* Using ->
+		clientes/index
+	*/
+	const JefeOperaciones = ['Programador', 'JefeOperaciones'];
+	/*Using ->
+		pretratamientos/edit
+		pretratamientocontoller::destroy
+	*/
+
 }
 
 /*

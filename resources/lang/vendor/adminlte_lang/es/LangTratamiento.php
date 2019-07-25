@@ -12,20 +12,26 @@ return [
     | {{ trans('adminlte_lang::LangGenerador.SGenerregistertittle') }}
     */
 
+    'pretratMenu'           => 'PreTratamiento',
+    'pretratnew'            => 'Nuevo PreTratamiento',
     'tratMenu'              => 'Tratamiento',
     'tratnew'               => 'Nuevo Tratamiento',
+    'pretratnew'            => 'Nuevo PreTratamiento',
+    'pretratupdate'         => 'Actualizar PreTratamiento',
     'tratname'              => 'Nombre',
     'manager'               => 'Gestor',
-    'pretratname'           => 'Nombre del PreTratamiento',
-    'pretratdescript'       => 'Descripción del PreTratamiento',
+    'pretratname'           => 'Nombre',
+    'pretratdescript'       => 'Descripción',
     'popovertittle1'        => 'Eliminar',
     'popovertittle2'        => 'Descripción del PreTratamiento',
-    'popoverdescript1'      => '<p>En este campo debe escribir el nombre del Pretramiento<br><br>Tambien puede hacer click en el botton para <b>eliminar</b> este PreTratamiento del formulario</p>',
-    'popoverdescript2'      => 'este campo opcional sirve para ingresar informacion adicional acerca del pretratamiento',
+    'popoverdescript1'      => '<p>En este campo debe escribir el nombre del Pretramiento<br><br>También puede hacer click en el botón para <b>eliminar</b> este PreTratamiento del formulario</p>',
+    'popoverdescript2'      => 'este campo opcional sirve para ingresar información adicional acerca del pretratamiento',
     'tratcreate'            => 'Crear Tratamiento',
+    'pretratcreate'         => 'Guardar',
     'pretratadd'            => 'Añadir Pretratamiento',
     'pretrat'               => 'Pretratamiento',
     'tratlist'              => 'Lista de Tratamientos',
+    'pretratlist'           => 'Lista de PreTratamientos',
     'tratprovee'            => 'Proveedor',
     'sede'                  => 'Sede',
     'type'                  => 'Tipo',
@@ -38,6 +44,8 @@ return [
     'tratOutLong'           => 'Tratamiento Externo',
     'noPretrat'             => 'Sin pretratamientos asignados',
     'tratSince'             => 'Registrado desde',
+    'tratClasf'             => 'Clasificaciones permitidas',
+    'Pretrat'               => 'PreTratamientos disponibles',
 
 
 ];

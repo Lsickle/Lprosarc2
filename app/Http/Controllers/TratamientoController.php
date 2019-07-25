@@ -11,9 +11,9 @@ use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
-use App\Clasificacion;
 use App\Tratamiento;
 use App\Pretratamiento;
+use App\Clasificacion;
 use App\Respel;
 use App\Requerimiento;
 
@@ -46,22 +46,26 @@ class TratamientoController extends Controller
      */
     public function create()
     {   
-        $residuos = DB::table('respels')
-                ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
-                ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
-                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-                ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-                ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
-                ->get();
+        // $residuos = DB::table('respels')
+        //         ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
+        //         ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
+        //         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        //         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+        //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
+        //         ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
+        //         ->get();
 
         $sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->where('CliCategoria', '=', 'proveedor')
                 ->select('sedes.*', 'clientes.*')
                 ->get();
+
+        $clasificaciones = Clasificacion::All();
+
+        $pretratamientos = Pretratamiento::All();
                 
-        return view('tratamiento.create', compact('residuos', 'sedes'));
+        return view('tratamiento.create', compact('sedes', 'clasificaciones', 'pretratamientos'));
     }
 
     /**
@@ -91,9 +95,9 @@ class TratamientoController extends Controller
                 $pretratamiento = new Pretratamiento();
                 $pretratamiento->PreTratName = $request['PreTratName'][$x];
                 $pretratamiento->PreTratDescription = $request['PreTratDescription'][$x];
-                $pretratamiento->FK_Pre_Trat = $tratamiento->ID_Trat;
                 $pretratamiento->PreTratDelete = 0;
                 $pretratamiento->save();
+                $tratamiento->pretratamientos()->attach($pretratamiento->ID_PreTrat);
 
                 $log = new audit();
                 $log->AuditTabla="pretratamiento";
@@ -102,6 +106,16 @@ class TratamientoController extends Controller
                 $log->AuditUser=Auth::user()->email;
                 $log->Auditlog=$request->all();
                 $log->save();
+            }
+        }
+        if ($request['FK_Pretrat']!==null) {
+            for ($x=0; $x < count($request['FK_Pretrat']); $x++) {
+                $tratamiento->pretratamientos()->attach($request['FK_Pretrat'][$x]);
+            }
+        }
+        if ($request['FK_Clasf']!==null) {
+            for ($x=0; $x < count($request['FK_Clasf']); $x++) {
+                $tratamiento->clasificaciones()->attach($request['FK_Clasf'][$x]); 
             }
         }
         

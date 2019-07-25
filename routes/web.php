@@ -15,7 +15,6 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('/noscriptpage', function () {
@@ -28,6 +27,10 @@ Route::get('/profile/{id}/edit', 'userController@edit');
 Route::put('/profile/{id}','userController@update');
 Route::get('/profile/{id}/passwordreset', 'userController@viewchangepassword')->name('profile.changepassword');
 Route::patch('/profile/{id}', 'userController@changepassword');
+
+Route::get('/preguntas-frecuentes', function () {
+    return view('preguntas.index');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
@@ -42,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
 	Route::resource('/clientes', 'clientcontoller');
+	Route::post('/clientes/{id}/changeComercial', 'clientcontoller@changeComercial');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
@@ -77,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
+	Route::resource('/pretratamiento','PretratamientoController');
 	Route::resource('/asistencia', 'AssistancesController');
 	Route::resource('/compra/orden','OrdenCompraController');
 	// Route::resource('/compra/cotizacion','QuotationController');

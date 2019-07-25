@@ -10,7 +10,7 @@ class Clasificacion extends Model
 
 	protected $primaryKey = 'ID_Clasf';
 
-	protected $fillable=['ClasfCode', 'ClasfDescription', 'FK_Clasftrat'];
+	protected $fillable=['ClasfCode', 'ClasfDescription'];
 
     public function tratamientos()
     {

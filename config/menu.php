@@ -29,7 +29,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),(Link::toUrl(route('cliente-show', Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first()->CliSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 
 				/*PESTAÑA DE LAS SEDES DE PROSARC*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
+				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
 				
 				/*PESTAÑA DE LOS CONTACTOS DE PROSARC*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
@@ -87,7 +87,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE CLIENTES*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/clientes', '<i class="fa fa-list-ul"></i> <span>'. trans('adminlte_lang::message.MenuClien').'</span>')))
 				/*PESTAÑA DE LAS SEDES DEL CLIENTE*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/sedes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedesClien').'</span>')))
+				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), (Link::toUrl('/sedes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedesClien').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),
 					  (Menu::new()
@@ -106,6 +106,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						 ->add(Link::toUrl('/respels', '<i class="fa fa-search"></i> '. trans('adminlte_lang::message.MenuRespelList')))
 						 ->add(Link::toUrl('/requerimientos', '<i class="fas fa-list-ol"></i> '.trans('adminlte_lang::message.MenuRequRespel')))
 						 ->add(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> '.trans('adminlte_lang::message.MenuTrataRespel')))
+						 ->add(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> '.trans('adminlte_lang::message.MenuPreTrataRespel')))
 						 ->addClass('treeview-menu')
 					 )
 				)
@@ -113,6 +114,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				->addif(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
 				/*PESTAÑA DE COTIZACIONES*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),
 				   //  (Menu::new()
@@ -154,7 +156,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE MI CLIENTE*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl(route('cliente-show',  Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first()->CliSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 				/*PESTAÑA DE LAS SEDES DEL CLIENTE*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
+				// ->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/sclientes', '<i class="fa fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),
 					  (Menu::new()
@@ -182,6 +184,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
+
 				/*PESTAÑA DE COTIZACIONES*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),
 				   //  (Menu::new()
