@@ -341,8 +341,8 @@ class UserTableSeeder extends Seeder
         $user->UsAvatar = 'robot400x400.gif';
         $user->UsStatus = 'Activo';
         $user->UsSlug = hash('sha256', rand().time().$user->email);
-        $user->UsRol = 'JefeComercial';
-        $user->UsRolDesc = 'Director Comercial';
+        $user->UsRol = 'Comercial';
+        $user->UsRolDesc = 'Ejecutivo Comercial';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 19;
         $user->UsRol2 = 'Comercial';

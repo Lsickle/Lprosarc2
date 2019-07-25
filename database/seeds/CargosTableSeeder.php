@@ -145,14 +145,5 @@ class CargosTableSeeder extends Seeder
         $cargo->CargDelete = 0;
         $cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
         $cargo->save();
-
-        $cargo = new Cargo();
-        $cargo->CargName = "Director(a)";
-        $cargo->CargSalary = '$ 829,000';
-        $cargo->CargGrade = "Profesional";
-        $cargo->CargArea = '2';
-        $cargo->CargDelete = 0;
-        $cargo->CargSlug = hash('sha256', rand().time().$cargo->CargName);
-        $cargo->save();
     }
 }
