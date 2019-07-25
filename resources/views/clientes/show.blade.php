@@ -107,7 +107,6 @@
 								</div>
 							</div>
 						</li>
-						
 						<li class="list-group-item">
 							<div class="col-sm-16">
 								<div class="row">

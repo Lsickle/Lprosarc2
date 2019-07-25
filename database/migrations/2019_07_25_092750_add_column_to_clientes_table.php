@@ -14,9 +14,9 @@ class AddColumnToClientesTable extends Migration
     public function up()
     {
         Schema::table('clientes', function (Blueprint $table) {
-            $table->string('CliRut');
-            $table->string('CliCamaraComercio');
-            $table->string('CliRepresentanteLegal');
+            $table->string('CliRut')->nullable();
+            $table->string('CliCamaraComercio')->nullable();
+            $table->string('CliRepresentanteLegal')->nullable();
             $table->string('CliCertificaionBancaria')->nullable();
             $table->string('CliCertificaionComercial')->nullable();
         });

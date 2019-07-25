@@ -126,7 +126,7 @@ class clientcontoller extends Controller
             $Cliente->CliRepresentanteLegal = $request->input('CliRepresentanteLegal');
             $Cliente->CliCertificaionBancaria = $request->input('CliCertificaionBancaria');
             $Cliente->CliCertificaionComercial = $request->input('CliCertificaionComercial');
-            
+
             $Cliente->CliCategoria = 'Cliente';
             $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;
@@ -281,6 +281,11 @@ class clientcontoller extends Controller
         })],
         'CliName'       => 'required|max:255|min:1',
         'CliShortname'  => 'required|max:255|min:1',
+        'CliRut'        => 'mimes:pdf|max:5120|sometimes',
+        'CliCamaraComercio'         => 'mimes:pdf|max:5120|sometimes',
+        'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|sometimes',
+        'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|sometimes',
+        'CliCertificaionComercial'  => 'mimes:pdf|max:5120|sometimes',
         ]);
             
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
