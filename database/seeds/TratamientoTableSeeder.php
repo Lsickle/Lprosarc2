@@ -15,7 +15,6 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "Incineración";
         $tratamiento->TratTipo = "0";
-        $tratamiento->TratPretratamiento = "mezcla";
         $tratamiento->TratOfertado = "1";
         $tratamiento->TratDelete = "0";
         $tratamiento->FK_TratProv = "1";
@@ -26,7 +25,6 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "Biologico";
         $tratamiento->TratTipo = "0";
-        $tratamiento->TratPretratamiento = "solidificacion";
         $tratamiento->TratOfertado = "1";
         $tratamiento->TratDelete = "0";
         $tratamiento->FK_TratProv = "1";
@@ -37,7 +35,6 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "Evaporacion";
         $tratamiento->TratTipo = "1";
-        $tratamiento->TratPretratamiento = "desarme";
         $tratamiento->TratOfertado = "1";
         $tratamiento->TratDelete = "0";
         $tratamiento->FK_TratProv = "4";
@@ -47,7 +44,6 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "celda de seguridad";
         $tratamiento->TratTipo = "1";
-        $tratamiento->TratPretratamiento = "desarme";
         $tratamiento->TratOfertado = "1";
         $tratamiento->TratDelete = "0";
         $tratamiento->FK_TratProv = "2";
@@ -58,7 +54,6 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento = new Tratamiento();
         $tratamiento->TratName = "incineración";
         $tratamiento->TratTipo = "0";
-        $tratamiento->TratPretratamiento = "solidificacion";
         $tratamiento->TratOfertado = "0";
         $tratamiento->TratDelete = "0";
         $tratamiento->FK_TratProv = "1";

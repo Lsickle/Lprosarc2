@@ -46,7 +46,7 @@
                                         <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
                                         <select class="form-control select" id="select2clasf" name="FK_Clasf[]" multiple="multiple">
                                             @foreach($clasificaciones as $clasificacion)
-                                            <option value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}
+                                            <option value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -55,7 +55,7 @@
                                         <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
                                         <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" multiple="multiple">
                                             @foreach($pretratamientos as $pretratamiento)
-                                            <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
+                                            <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -65,7 +65,7 @@
                                         <div class="panel-heading">
                                           <h3 class="panel-title">Pretratamientos Nuevos</h3>
                                         </div>
-                                        <div class="panel-body" id="pretratamientosPanel">
+                                        <div class="panel-body" id="pretratamientosPanel" onload="attachPopover()">
                                           {{-- /*lista de pretratamientos*/ --}}
                                           
                                         </div>

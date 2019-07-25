@@ -489,7 +489,7 @@ function NotifiFalse(Mensaje) {
 @endif
 @if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
-		var contador = `{{$contador}}`;
+		var contador = 0;
 		function attachPopover() {
 			$('[data-toggle="popover"]').popover({
 				html: true,

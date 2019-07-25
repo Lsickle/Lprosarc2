@@ -44,55 +44,32 @@
                       <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
                       <select class="form-control select" id="select2clasf" name="FK_Clasf[]" multiple="multiple">
                           @foreach($clasificacionesAll as $clasificacion)
-                            @foreach($tratamiento->clasificaciones as $clasificacionesSeleccionada)
-                              <option {{$clasificacionesSeleccionada->ID_Clasf == $clasificacion->ID_Clasf ? 'selected' : '' }} value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}</option>
+                            <option @foreach($tratamiento->clasificaciones as $clasificacionesSeleccionada)
+                               {{$clasificacionesSeleccionada->ID_Clasf == $clasificacion->ID_Clasf ? 'selected' : '' }} 
                             @endforeach
+                            value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}</option>
                           @endforeach
                       </select>
                   </div>
                   <div class="col-md-6">
                       <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
-                      <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" multiple="multiple">
-                          @foreach($pretratamientos as $pretratamiento)
-                          <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
+                      <select class="form-control select" id="select2pretrat" name="FK_PreTrat[]" multiple="multiple">
+                          @foreach($pretratamientosAll as $pretratamiento)
+                            <option @foreach($tratamiento->pretratamientos as $pretratamientosSeleccionado)
+                              {{$pretratamientosSeleccionado->ID_PreTrat == $pretratamiento->ID_PreTrat ? 'selected' : '' }} 
+                            @endforeach
+                            value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}}</option>
                           @endforeach
                       </select>
                   </div>
                   <div class="col-md-12">
                     <div class="panel panel-default" style="margin-top: 2%;">
                       <div class="panel-heading">
-                        <h3 class="panel-title">{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</h3>
+                        <h3 class="panel-title">Pretratamientos Nuevos</h3>
                       </div>
                       <div class="panel-body" id="pretratamientosPanel" onload="attachPopover()">
                         {{-- /*lista de pretratamientos*/ --}}
-                        {{-- se inicializa la variable contador para control de inputs --}}
-                        @php
-                        $contador = 1;
-                        @endphp
-                        {{-- se itera sobre los pretratamientos existentes --}}
-                        @foreach($tratamiento->pretratamientos as $pretratamiento)
-                        @if($pretratamiento->PreTratDelete == 0)
-                        <hr class="col-md-10 col-md-offset-1 align-self-center" id="pretratsparator{{$contador}}" />
-                        <input id="ID_Propo{{$contador}}" class="form-control" type="hidden" name="ID_PreTrat[]" value="{{$pretratamiento->ID_PreTrat}}">
-                        <div class="col-md-6" id="pretratname{{$contador}}">
-                          <label for="input[]">{{ trans('adminlte_lang::LangTratamiento.pretratname') }} </label>
-                          <div class="input-group">
-                            <input maxlength="60" id="input[]" class="form-control" type="text" name="PreTratName[]" value="{{$pretratamiento->PreTratName}}" required>
-                            <a data-placement="auto" data-trigger="hover" data-html="true" onclick="EliminarPreTrat({{$contador}})" class="input-group-addon" style=" color: red;" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.pretratname') }}" data-content="{{ trans('adminlte_lang::LangTratamiento.popoverdescript1') }}"><i class="fas fa-backspace"></i></a>
-                          </div><br>
-                        </div>
-                        <div class="col-md-6" id="pretratdescription{{$contador}}">
-                          <label for="inputdescript[]">{{ trans('adminlte_lang::LangTratamiento.pretratdescript') }} </label>
-                          <div class="input-group">
-                            <input maxlength="250" id="inputdescript[]" class="form-control" type="text" name="PreTratDescription[]" value="{{$pretratamiento->PreTratDescription}}">
-                            <a data-placement="auto" data-trigger="hover" data-html="true" class="input-group-addon" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.popovertittle2') }}" data-content="<p style='width: 50%'>{{ trans('adminlte_lang::LangTratamiento.popoverdescript2') }}</p>"><i class="fas fa-info-circle"></i></a>
-                          </div>
-                        </div>
-                        @php
-                        $contador = $contador+1;
-                        @endphp
-                        @endif
-                        @endforeach
+                        
                       </div>
                     </div>
                     <!-- /.box -->
