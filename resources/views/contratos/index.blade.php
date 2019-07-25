@@ -35,8 +35,8 @@ Contratos
 								@foreach($Contratos as $Contrato)
 								<tr style="{{$Contrato->ContraDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$Contrato->CliShortname}}</td>
-									<td><a href="/{{$Contrato->ContraPdf}}"></a></td>
-									<td>{{$Contrato->ContraVigencia}}</td>
+									<td style="text-align: center;"><a href="/img/Contratos/{{$Contrato->ContraPdf}}" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i> </a></td>
+									<td style="text-align: center;">{{$Contrato->ContraVigencia}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD))
 									<td><a href='/contratos/{{$Contrato->ContraSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
