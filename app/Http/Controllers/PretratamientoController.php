@@ -131,15 +131,24 @@ class PretratamientoController extends Controller
      */
     public function destroy($id)
     {
+
         if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)){
-            $pretratamiento = Pretratamiento::where('ID_PreTrat', $id)->first();
-                if ($pretratamiento->PreTratDelete == 0) {
-                    $pretratamiento->PreTratDelete = 1;
-                }
-                else{
-                    $pretratamiento->PreTratDelete = 0;
-                }
-            $pretratamiento->save();
+            /*se carga el registro del pretratamieento*/
+            $pretratamiento = Pretratamiento::find($id);
+            /*se elimina la relaciona entre pretratamiento y pretratamientos*/
+            $pretratamiento->tratamientos()->detach();
+
+            // $pretratamiento = Pretratamiento::where('ID_PreTrat', $id)->first();
+            //     if ($pretratamiento->PreTratDelete == 0) {
+            //         $pretratamiento->PreTratDelete = 1;
+            //     }
+            //     else{
+            //         $pretratamiento->PreTratDelete = 0;
+            //     }
+            // $pretratamiento->save();
+
+            /*se elimina el pretratamiento de la base de datos*/
+            $pretratamiento->delete();
 
             $log = new audit();
             $log->AuditTabla="pretratamientos";

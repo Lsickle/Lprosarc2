@@ -209,11 +209,11 @@ class TratamientoController extends Controller
         $tratamiento->FK_TratProv = $request->input('FK_TratProv');
         $tratamiento->save();
 
-        /*se sincronizan los pretratamientos y clasificaciones*/
+        /*se sincronizan los pretratamientos y clasificaciones existentes*/
         $tratamiento->pretratamientos()->sync($request['FK_PreTrat']);
         $tratamiento->clasificaciones()->sync($request['FK_Clasf']);
 
-        /*iteracion sobre los pretratamientos insertados en el formulario*/
+        /*iteracion sobre los pretratamientos nuevos insertados en el formulario*/
         if ($request['ID_PreTrat']!==null) {
             for ($x=0; $x < count($request['PreTratName']); $x++) {
                 if (!$request['ID_PreTrat'][$x]) {
