@@ -14,12 +14,13 @@ class CreateContratosTable extends Migration
 	public function up()
 	{
 		Schema::create('contratos', function (Blueprint $table) {
-			$table->bigIncrements('id');
+			$table->bigIncrements('ID_Contra');
 			$table->string('ContraPdf');
 			$table->date('ContraVigencia');
 			$table->date('ContraNotifiVigencia')->nullabe();
 			$table->unsignedInteger('Fk_ContraCli');
 			$table->foreign('Fk_ContraCli')->references('ID_Cli')->on('clientes');
+			$table->boolean('ContraDelete');
 			$table->timestamps();
 			$table->engine = 'InnoDB';
 			$table->charset = 'utf8';
