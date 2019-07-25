@@ -256,14 +256,38 @@ class TratamientoController extends Controller
      */
     public function destroy($id)
     {
-        $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-            if ($tratamiento->TratDelete == 0) {
-                $tratamiento->TratDelete = 1;
+        $tratamiento = Tratamiento::find($id);
+
+        /*se elimina la relacion entre tratamiento y pretratamientos/clasificaciones*/
+        $tratamiento->clasificaciones()->detach();
+
+        foreach ($tratamiento->pretratamientos as $pretratamiento) {
+            $key = $pretratamiento->ID_PreTrat;
+            // $pretratamiento = Pretratamiento::find($key);
+            $pretratamientoRelated = Pretratamiento::withCount(['tratamientos'])
+                ->where('ID_PreTrat', $key)
+                ->first();
+            if ($pretratamientoRelated->tratamientos_count > 1) {
+                $tratamiento->pretratamientos()->detach($key);
+            }else{
+                $tratamiento->pretratamientos()->detach($key);
+                $pretratamientoRelated->delete();
             }
-            else{
-                $tratamiento->TratDelete = 0;
-            }
-        $tratamiento->update();
+            
+        }
+
+        
+        // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
+        //     if ($tratamiento->TratDelete == 0) {
+        //         $tratamiento->TratDelete = 1;
+        //     }
+        //     else{
+        //         $tratamiento->TratDelete = 0;
+        //     }
+        // $tratamiento->update();
+
+        /*se elimina el tratamiento de la base de datos*/
+        $tratamiento->delete();
         
 
         $log = new audit();

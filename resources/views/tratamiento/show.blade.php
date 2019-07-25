@@ -14,6 +14,14 @@
     <!-- row -->
     <div class="row">
         <!-- col md3 -->
+        @component('layouts.partials.modal')
+            @slot('slug')
+                {{$tratamiento->ID_Trat}}
+            @endslot
+            @slot('textModal')
+                el tratamiento <b>{{$tratamiento->TratName}}</b>
+            @endslot
+        @endcomponent
         <div class="col-md-3">
             <!-- box -->
             <div class="box box-primary">
@@ -47,6 +55,26 @@
                 <!-- box header -->
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratdetaillong') }}</h3>
+                    @if($tratamiento->TratDelete == 0)
+                      @if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+                      <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$tratamiento->ID_Trat}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+                      <form action='/tratamiento/{{$tratamiento->ID_Trat}}' method='POST'>
+                        @method('DELETE')
+                        @csrf
+                        <input type="submit" id="Eliminar{{$tratamiento->ID_Trat}}" style="display: none;">
+                      </form>
+                      @endif
+                    @else
+                      @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+                        <form action='/tratamiento/{{$tratamiento->ID_Trat}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <button type="submit" class='btn btn-success pull-right'>
+                            <i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.add') }}</b>
+                          </button>
+                        </form>
+                      @endif
+                    @endif
                 </div>
                 <!-- /.box header -->
                 <!-- box body -->

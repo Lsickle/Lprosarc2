@@ -21,10 +21,11 @@
                 <div class="box-body box-profile">
                     {{-- <img id="" class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
                     <h3 class="profile-username text-center">{{$tratamiento->TratName}}</h3>
-                    <p class="text-muted text-center">@if($tratamiento->TratTipo=='1')
-                        <td>{{ trans('adminlte_lang::LangTratamiento.tratInLong') }}</td>
+                    <p class="text-muted text-center">
+                        @if($tratamiento->TratTipo=='1')
+                            <td>{{ trans('adminlte_lang::LangTratamiento.tratInLong') }}</td>
                         @else
-                        <td>{{ trans('adminlte_lang::LangTratamiento.tratOutLong') }}</td>
+                            <td>{{ trans('adminlte_lang::LangTratamiento.tratOutLong') }}</td>
                         @endif
                     </p>
                     <ul class="list-group list-group-unbordered">
