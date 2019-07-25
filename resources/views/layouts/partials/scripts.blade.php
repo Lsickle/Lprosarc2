@@ -247,11 +247,11 @@ $(document).ready(function() {
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
 
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Exportar Excel'}, {extend: 'pdf', text: 'Exortar Pdf'}, {
+	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
-				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Exportar Excel'}];
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#tarifasTable').DataTable({
@@ -522,11 +522,11 @@ function NotifiFalse(Mensaje) {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->UsRol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Exportar Excel'}, {extend: 'pdf', text: 'Exportar Pdf'}, {
+		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
-				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Exportar Excel'}];
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/        
 		$('.table').DataTable({
 			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +

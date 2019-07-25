@@ -155,6 +155,13 @@ class Permisos{
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
+
+
+	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
+	/*
+		respel/edit
+		
+	 */
 	
 	const COMERCIAL = ['Comercial'];
 	/* Using ->
@@ -163,6 +170,12 @@ class Permisos{
 	const AsigComercial = ['Programador', 'AdministradorBogota'];
 	/* Using ->
 		clientes/index
+	*/
+
+	const JefeOperaciones = ['Programador', 'JefeOperaciones'];
+	/*Using ->
+		pretratamientos/edit
+		pretratamientocontoller::destroy
 	*/
 
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
@@ -179,6 +192,8 @@ class Permisos{
 	const TRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
 	const PERSONALCLIENTE = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
 	const SERVICIOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
+	const PRETRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
+
 }
 
 /*

@@ -33,7 +33,7 @@
                                         <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.manager') }}</label>
                                         <select class="form-control select" id="select2sedes" name="FK_TratProv" required="true">
                                             @foreach($sedes as $sede)
-                                            <option value="{{$sede->ID_Sede}}">{{$sede->SedeName}}</option>
+                                            <option value="{{$sede->ID_Sede}}">{{$sede->CliShortname}} - {{$sede->SedeName}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -42,10 +42,28 @@
                                         <input maxlength="60" id="input1" class="form-control" type="text" name="TratName">
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
+                                        <select class="form-control select" id="select2clasf" name="FK_Clasf[]" multiple="multiple">
+                                            @foreach($clasificaciones as $clasificacion)
+                                            <option value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
+                                        <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" multiple="multiple">
+                                            @foreach($pretratamientos as $pretratamiento)
+                                            <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-12">
                                       <div class="panel panel-default" style="margin-top: 2%;">
                                         <div class="panel-heading">
-                                          <h3 class="panel-title">Pretratamientos</h3>
+                                          <h3 class="panel-title">Pretratamientos Nuevos</h3>
                                         </div>
                                         <div class="panel-body" id="pretratamientosPanel">
                                           {{-- /*lista de pretratamientos*/ --}}

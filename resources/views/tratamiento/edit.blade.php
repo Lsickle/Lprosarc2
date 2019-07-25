@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangTratamiento.tratnew') }}
+{{ trans('adminlte_lang::LangTratamiento.tratupdate') }}
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::LangTratamiento.tratMenu') }}
@@ -12,7 +12,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratnew') }}</h3>
+          <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratupdate') }}</h3>
           <div class="box-tools pull-right">
             <button onclick="AgregarPreTrat()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.pretratadd') }}</button>
           </div>
@@ -31,14 +31,32 @@
                   <div class="col-md-6">
                     <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.manager') }}</label>
                     <select class="form-control select" id="select2sedes" name="FK_TratProv" required="true">
-                      @foreach($sedes as $sede)
-                      <option value="{{$sede->ID_Sede}}" {{ $sede->ID_Sede === $SelectedSede->ID_Sede ? 'selected' : '' }}>{{$sede->SedeName}}</option>
-                      @endforeach
+                        @foreach($sedes as $sede)
+                        <option {{$tratamiento->FK_TratProv == $sede->ID_Sede ? 'selected' : '' }} value="{{$sede->ID_Sede}}">{{$sede->CliShortname}} - {{$sede->SedeName}}</option>
+                        @endforeach
                     </select>
                   </div>
                   <div class="col-md-6">
                     <label for="input1">{{ trans('adminlte_lang::LangTratamiento.tratname') }}</label>
                     <input maxlength="60" id="input1" class="form-control" type="text" name="TratName" value="{{$tratamiento->TratName}}">
+                  </div>
+                  <div class="col-md-6">
+                      <label for="select2sedes">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</label>
+                      <select class="form-control select" id="select2clasf" name="FK_Clasf[]" multiple="multiple">
+                          @foreach($clasificacionesAll as $clasificacion)
+                            @foreach($tratamiento->clasificaciones as $clasificacionesSeleccionada)
+                              <option {{$clasificacionesSeleccionada->ID_Clasf == $clasificacion->ID_Clasf ? 'selected' : '' }} value="{{$clasificacion->ID_Clasf}}">{{$clasificacion->ClasfCode}}</option>
+                            @endforeach
+                          @endforeach
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="select2pretrat">{{ trans('adminlte_lang::LangTratamiento.Pretrat') }}</label>
+                      <select class="form-control select" id="select2pretrat" name="FK_Pretrat[]" multiple="multiple">
+                          @foreach($pretratamientos as $pretratamiento)
+                          <option value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}} {{-- - {{$pretratamiento->PreTratDescription}} --}}
+                          @endforeach
+                      </select>
                   </div>
                   <div class="col-md-12">
                     <div class="panel panel-default" style="margin-top: 2%;">
