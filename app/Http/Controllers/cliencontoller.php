@@ -120,6 +120,13 @@ class clientcontoller extends Controller
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
             $Cliente->CliShortname = $request->input('CliShortname');
+
+            $Cliente->CliRut = $request->input('CliRut');
+            $Cliente->CliCamaraComercio = $request->input('CliCamaraComercio');
+            $Cliente->CliRepresentanteLegal = $request->input('CliRepresentanteLegal');
+            $Cliente->CliCertificaionBancaria = $request->input('CliCertificaionBancaria');
+            $Cliente->CliCertificaionComercial = $request->input('CliCertificaionComercial');
+            
             $Cliente->CliCategoria = 'Cliente';
             $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;

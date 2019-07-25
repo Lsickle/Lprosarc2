@@ -19,17 +19,115 @@
 						@endif
 					</div>
 					<h3 class="profile-username text-center textolargo">{{$cliente->CliShortname}}</h3>
-					<li class="list-group-item">
-						<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
-						<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliName}}</p>">{{$cliente->CliName}}</a>
-					</li>
-					<li class="list-group-item">
-						<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
-						<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliShortname}}</p>">{{$cliente->CliShortname}}</a>
-					</li>
-					<li class="list-group-item">
-						<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> <a class="pull-right">{{$cliente->CliNit}}</a>
-					</li>
+					<ul>
+						<li class="list-group-item">
+							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliName}}</p>">{{$cliente->CliName}}</a>
+						</li>
+						<li class="list-group-item">
+							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliShortname}}</p>">{{$cliente->CliShortname}}</a>
+						</li>
+						<li class="list-group-item">
+							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> <a class="pull-right">{{$cliente->CliNit}}</a>
+						</li>
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientcamaracomercio') }}</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
+													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientrut') }}</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
+													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientlegalrepresentative') }}</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
+													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientbankcertification') }}</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
+													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }}</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
+													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -44,6 +44,11 @@ class ClienteStoreRequest extends FormRequest
             'CliName'       => 'required|max:255|min:1',
             'CliShortname'  => 'required|max:255|min:1',
             'CliCategoria'  => 'max:32|alpha|nullable',
+            'CliRut'        => 'mimes:jpg,jpeg,png|max:5120|required',
+            'CliCamaraComercio'         => 'mimes:pdf|max:5120|required',
+            'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|required',
+            'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|nullable',
+            'CliCertificaionComercial'  => 'mimes:pdf|max:5120|nullable',
 
             'SedeName'      => 'required|max:128|min:1',
             'SedeAddress'   => 'required|max:255|min:1',

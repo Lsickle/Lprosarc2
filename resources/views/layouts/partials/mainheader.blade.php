@@ -123,7 +123,7 @@
 					<li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
 				@else --}}
 					<!-- User Account Menu -->
-					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) && isset(Auth::user()->FK_UserPers))
 					<li class="dropdown" style="max-width: 280px; height: 100%; white-space: nowrap;">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
 							<i class="fas fa-address-book" style="font-size: 1.5em"></i>

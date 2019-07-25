@@ -113,6 +113,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				// PESTAÑA DE PREGUNTAS FRECUENTES
 				->addif(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
 				/*PESTAÑA DE COTIZACIONES*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC),
@@ -183,6 +184,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>'))
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
+				// PESTAÑA DE PREGUNTAS FRECUENTES
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
 
 				/*PESTAÑA DE COTIZACIONES*/
@@ -224,9 +226,11 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 		return Menu::adminlteMenu()
 			/*ECABEZAMIENTO TITULO*/
 			->add(Html::raw(trans('adminlte_lang::message.header'))->addParentClass('header'))
-
 			/*PESTAÑA DE INICIO / HOME*/
 			->action('HomeController@index', '<i class="fa fa-home"></i> <span>'.trans('adminlte_lang::message.home').'</span>')
+			// PREGUNTAS FRECUENTES
+			->add(Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
+			
 			->setActiveFromRequest();
 	}
 });

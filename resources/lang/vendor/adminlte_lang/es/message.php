@@ -278,9 +278,9 @@ return [
     'persinfoingrso'          => 'Escriba o seleccione la fecha de ingreso de su personal',
     'persinfosalida'          => 'Escriba o seleccione la fecha de salida de su personal <b>(Opcional)</b>',
 
-
     // cliente
     'clientmenu'              => 'Clientes',
+    'clientcliente'           => 'Cliente',
     'clientindex'             => 'Listado',
     'clientregistertittle'    => 'Registro del cliente',
     'clientboxtitle'          => 'Datos Básicos de la empresa',
@@ -290,10 +290,6 @@ return [
     'clientNITplacehoder'     => 'XXX.XXX.XXX-Y',
     'clirazonsocplacehoder'   => 'PROTECCION SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.',
     'clinombcortplacehoder'   => 'Prosarc',
-    'clientcategoría'         => 'Categoría',
-    'clientcliente'           => 'Cliente',
-    'clienttransportador'     => 'Transportador',
-    'clientproveedor'         => 'Proveedor',
     'clientsidebar'           => 'Mi Empresa',
     'clientindexboxtitle'     => 'Lista de Clientes',
     'clientcontact'           => 'Contactos',
@@ -301,13 +297,27 @@ return [
     'clientNIT'               => 'NIT',
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
+    'clientcamaracomercio'    => 'Camara de Comercio',
+    'clientrut'               => 'Rut',
+    'clientbankcertification' => 'Certificación Bancaria',
+    'clientlegalrepresentative'     => 'Representante Legal',
+    'clientcommercialcertification' => 'Certificación Comercial',
+    'clientrut-info'            => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> del Rut',
+    'clientcamaracomercio-info' => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Camara del Comercio',
+    'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Certificacion Bancario no mas de tres(3) meses <b>(optional)</b>',
+    'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Cedula de Cidadania del Representante Legal',
+    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Certificacion Commercial <b>(optional)</b>',
+
+    // contactos
+    'clientcategoría'         => 'Categoría',
+    'clienttransportador'     => 'Transportador',
+    'clientproveedor'         => 'Proveedor',
     'clicontactedit'          => 'Editar el Contacto',
     'contacvehictipomessage'  => 'Tipo de vehículo que esta registrando por ejemplo: Camión, Turbo, Mula, etc...',
     'contacvehiccapacidadmessage'   => 'Kilogramos que logra llevar el vehículo.',
     'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP o una empresa que brinda el transporte a la planta.',
     'contacclientcategoríamessage2' => 'Después podra registrar más vehículos del traportador.',
     'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social',
-
 
     // sede
     'csedeindex'              => 'Lista de sedes',
