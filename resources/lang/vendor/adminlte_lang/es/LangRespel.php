@@ -60,6 +60,7 @@ return [
     'fotolabel'             => 'Fotografía ',
     'respeltabtittle'       => 'Residuo ',
     'trattabtittle'         => 'Tratamientos ',
+    'pretrattabtittle'      => 'Pretratamientos ',
     'requertabtittle'       => 'Requerimientos ',
     'tarifatabtittle'       => 'Tarifas ',
     'fotopopoverinfo'       => "<p style='width: 50%'> Puede adjuntar una fotografía del residuo en formato png o jpg, en especial, si considera que la misma es relevante para el evaluación del residuo... <i>el tamaño máximo permitido para el archivo es de 2 Mb.</i></p>",
