@@ -7,7 +7,6 @@ class Permisos{
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
 		partials/controlsidebar
-		Menu.php
 		PersonalInternoController::Index
 		ContactoController::create
 		ContactoController::edit
