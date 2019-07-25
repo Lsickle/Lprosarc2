@@ -27,6 +27,7 @@
 									<th>{{ trans('adminlte_lang::message.address') }}</th>
 									<th>{{ trans('adminlte_lang::LangTratamiento.tratMenu') }}</th>
 									<th>{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</th>
+									<th>clasificaciones Permitidas</th>
 									<th>{{ trans('adminlte_lang::message.seemore') }}</th>
 								</tr>
 							</thead>
@@ -54,6 +55,26 @@
 												@endif
 											@endforeach
 										</ul>
+									</td>
+									<td>
+										<table>
+											<tbody>
+												<tr  style="background-color: transparent;">
+													@php
+														$i = 1;
+													@endphp
+													@foreach($tratamiento->clasificaciones as $clasificacion)
+														<td><li>{{$clasificacion->ClasfCode}}</li></td>
+														@if($i>0 && $i%4==0)
+																</tr><tr style="background-color: transparent;">
+														@endif
+														@php
+															$i++;
+														@endphp
+													@endforeach
+												</tr>
+											</tbody>
+										</table>
 									</td>
 									<td><a method='get' href='/tratamiento/{{$tratamiento->ID_Trat}}/' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>

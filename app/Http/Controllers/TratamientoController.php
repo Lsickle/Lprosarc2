@@ -30,7 +30,7 @@ class TratamientoController extends Controller
         // return $tratamientos;
         // $proveedor = Tratamiento::with(['respel.tratamiento.pretratamientos'])->get();
         // $depart = Departamento::with('municipios')->get();
-        $tratamientos = Tratamiento::with(['pretratamientos'])
+        $tratamientos = Tratamiento::with(['pretratamientos', 'clasificaciones'])
         ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
         ->get();
