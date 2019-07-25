@@ -32,16 +32,16 @@ Contratos
 								</tr>
 							</thead>
 							<tbody id="readyTable">
-								{{-- @foreach($Contratos as $Contrato)
-								<tr style="{{$Contrato->CargDelete === 1 ? 'color: red' : ''}}">
-									<td>{{$Contrato->CargName}}</td>
-									<td>{{$Contrato->AreaName}}</td>
-									<td>{{$Contrato->CargGrade}}</td>
+								@foreach($Contratos as $Contrato)
+								<tr style="{{$Contrato->ContraDelete === 1 ? 'color: red' : ''}}">
+									<td>{{$Contrato->CliShortname}}</td>
+									<td><a href="/{{$Contrato->ContraPdf}}"></a></td>
+									<td>{{$Contrato->ContraVigencia}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
-									<td><a href='/cargosInterno/{{$Contrato->CargSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
+									<td><a href='/contratos/{{$Contrato->ContraSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
 								</tr>
-								@endforeach --}}
+								@endforeach
 							</tbody>
 						</table>
 					</div>

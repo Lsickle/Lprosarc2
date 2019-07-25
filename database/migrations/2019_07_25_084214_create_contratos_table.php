@@ -21,6 +21,7 @@ class CreateContratosTable extends Migration
 			$table->unsignedInteger('Fk_ContraCli');
 			$table->foreign('Fk_ContraCli')->references('ID_Cli')->on('clientes');
 			$table->boolean('ContraDelete');
+			$table->string('ContraSlug')->unique();
 			$table->timestamps();
 			$table->engine = 'InnoDB';
 			$table->charset = 'utf8';
