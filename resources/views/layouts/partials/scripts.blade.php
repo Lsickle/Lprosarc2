@@ -19,7 +19,7 @@
 {{-- Chart --}}
 <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
 {{-- Moment --}}
-<script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script>
+{{-- <script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script> --}}
 
 <script type="text/javascript">
 	window.onload =function(){
