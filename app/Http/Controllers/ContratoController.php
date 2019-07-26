@@ -87,6 +87,8 @@ class ContratoController extends Controller
 		$Contrato->ContraPdf = $ContraPdf;
 		$Contrato->ContraVigencia = $request->input('ContraVigencia');
 		$Contrato->ContraNotifiVigencia = date('Y-m-d', strtotime($Contrato->ContraVigencia."- ".$request->input('numdma')." ".$typedate));
+		$Contrato->ContratoNumVigencia = $request->input('numdma');
+		$Contrato->COntratoTypeVigencia = $request->input('inputdma');
 		$Contrato->Fk_ContraCli = $Cliente;
 		$Contrato->ContraDelete = 0;
 		$Contrato->ContraSlug = hash('sha256', rand().time().$Contrato->ContraPdf);
