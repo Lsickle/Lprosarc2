@@ -759,6 +759,20 @@ return [
     'recdeletevideo'          => 'Eliminar Imagen',
     'recaddvideo'             => 'Agregar Video',
 
+    //Contratos
+    'contracttitle'           => 'Contratos',
+    'contractindex'           => 'Lista de contratos',
+    'contractcreate'          => 'Creación de Contratos',
+    'contractedit'            => 'Edición de Contratos',
+    'contractclien'           => 'Clientes',
+    'contractcliendescript'   => 'Seleccione el cliente al cual le adjuntara el contrato',
+    'contractpdf'             => 'Contrato',
+    'contractpdfdescript'     => 'Adjunte el archivo del contrato en formato <b>PDF</b> y que no pase de <b>5Mb</b>',
+    'contractvigencia'        => 'Fecha de vigencia',
+    'contractvigenciadescript' => 'Seleccione la fecha de vencimiento y/o vigencia del documento anteriormente adjuntado',
+    'contractnotify'          => '¿Cuando notificar?',
+    'contractnotifydescript'  => 'Indique cuantos (días, semanas o meses) anteriores quiere recibir una notificación de la vigencia del documento',
+
     // Name PDF
     'generatemanicargpdf'     => 'Manifieto de Carga',
 ];
