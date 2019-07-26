@@ -212,7 +212,9 @@ class PermisoUsuarioController extends Controller
     public function edit($id)
     {
         $User = User::where('UsSlug', $id)->first();
-
+        if (!$User) {
+            abort(404);
+        }
         $Personal = Personal::select('PersFirstName', 'PersLastName', 'PersSlug', 'ID_Pers')->where('ID_Pers', $User->FK_UserPers)->first();
         
          // Sede del usuario
@@ -268,7 +270,9 @@ class PermisoUsuarioController extends Controller
     public function update(PermisoUserRequest $request, $id)
     {
         $User = User::where('UsSlug', $id)->first();
-
+        if (!$User) {
+            abort(404);
+        }
         if(isset($User)){
 
             $Validate = $request->validate([
@@ -335,13 +339,17 @@ class PermisoUsuarioController extends Controller
 
     public function editpassword($id){
         $User = User::select('UsSlug')->where('UsSlug', $id)->first();
-        
+        if (!$User) {
+            abort(404);
+        }
         return view('permisos.editpassword', compact('User'));
     }
 
     public function updatepassword(Request $request, $id){
         $User = User::where('UsSlug', $id)->first();
-
+        if (!$User) {
+            abort(404);
+        }
         $validate = $request->validate([
             'oldpassword'          => 'required|min:8',
             'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
@@ -373,6 +381,9 @@ class PermisoUsuarioController extends Controller
     public function destroy($id)
     {
         $User = User::where('UsSlug', $id)->first();
+        if (!$User) {
+            abort(404);
+        }
         if($User->DeleteUser == 0){
             $User->DeleteUser = 1;
             $User->save();
