@@ -122,6 +122,7 @@
 					<li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
 					<li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
 				@else --}}
+					
 					<!-- User Account Menu -->
 					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) && isset(Auth::user()->FK_UserPers))
 					<li class="dropdown" style="max-width: 280px; height: 100%; white-space: nowrap;">
@@ -214,6 +215,9 @@
 						</ul> --}}
 					</li>
 					<li style="height: 100%;">
+						<a href="/preguntas-frecuentes" style="height: 100%;" title="Preguntas Frecuentes"><i class="fas x2 fa-question-circle" style="font-size: 1.5em"></i></a>
+					</li>
+					<li style="height: 100%;">
 						<a href="{{ url('/logout') }}" id="logout"
 						   onclick="event.preventDefault();
 									 document.getElementById('logout-form').submit();" style="height: 100%;" title="Salir">
@@ -225,6 +229,7 @@
 							<input type="submit" value="logout" style="display: none;">
 						</form>
 					</li>
+					
 				{{-- @endif --}}
 				
 				@if((in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol, Permisos::Jefes)) || (Auth::user()->email == 'Sistemas@prosarc.com.co'||Auth::user()->email == 'Sistemas3@prosarc.com.co'||Auth::user()->email == 'Sistemas2@prosarc.com.co'))
