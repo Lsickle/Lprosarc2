@@ -112,9 +112,17 @@ class ContratoController extends Controller
 	 * @param  \App\Contrato  $contrato
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Contrato $contrato)
+	public function edit($id)
 	{
-		//
+		if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD)){
+			$Contrato = Contrato::where('ContraSlug', $id)->first();
+			// return $Contrato;
+			$Clientes = Cliente::where('CliDelete', 0)->where('ID_Cli', '<>', 1)->get();
+			return view('contratos.edit', compact('Clientes', 'Contrato'));
+		}
+		else{
+			abort(403);
+		}
 	}
 
 	/**
@@ -126,7 +134,7 @@ class ContratoController extends Controller
 	 */
 	public function update(Request $request, Contrato $contrato)
 	{
-		//
+		
 	}
 
 	/**

@@ -157,7 +157,7 @@ class Permisos{
 	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
 	/* Using ->
 		contratos/index
-		ContratoController::create
+		ContratoController::create, edit
 	 */
 	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
 	/* Using ->
