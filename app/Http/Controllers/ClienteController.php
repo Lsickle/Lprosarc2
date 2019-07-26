@@ -38,6 +38,9 @@ class ClienteController extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1)){
             $cliente = Cliente::where('CliSlug', $slug)->first();
+            if (!$cliente) {
+                abort(404);
+            }
             return view('clientes.edit', compact('cliente'));
         }else{
             abort(403);
@@ -47,6 +50,9 @@ class ClienteController extends Controller
     public function update(Request $request, $slug)
     {
         $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
         $validate = $request->validate([
             'CliNit'        => ['required','min:13','max:13',Rule::unique('clientes')->ignore($cliente->CliNit, 'CliNit')],
             'CliName'       => 'required|max:255|min:1',
