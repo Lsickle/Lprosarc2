@@ -13,14 +13,21 @@ class Tratamiento extends Model
 
 	protected $fillable=['TratName', 'TratTipo', 'TratDelete', 'TratPretratamiento', 'FK_TratRespel',' FK_TratProv'];
 
-    public function respel()
+    public function gestor()
 	{
-	 return $this->belongsTo('App\Respel', 'FK_Tratrespel', 'ID_Respel');
+	 return $this->belongsTo('App\Cliente', 'FK_TratProv', 'ID_Sede');
+	 //como tratamiento pertenece a un gestor/sede de cliente
 	}
 
-	public function pretratamientos()
-	{
-	 return $this->hasMany('App\Pretratamiento', 'FK_Pre_Trat');
-	}
+    public function clasificaciones()
+    {
+        return $this->belongsToMany('App\Clasificacion','clasificacion_tratamiento', 'FK_Trat', 'FK_Clasf');
+        //lista las clasificaciones relacionados usando muchos a muchos
+    }
+    public function pretratamientos()
+    {
+        return $this->belongsToMany('App\Pretratamiento','pretratamiento_tratamiento', 'FK_Trat', 'FK_PreTrat');
+        //lista las pretratamientos relacionados usando muchos a muchos
+    }
 
 }

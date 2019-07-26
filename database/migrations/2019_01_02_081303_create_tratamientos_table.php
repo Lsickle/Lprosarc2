@@ -16,7 +16,8 @@ class CreateTratamientosTable extends Migration
         Schema::create('tratamientos', function (Blueprint $table) {
             $table->increments('ID_Trat')->unique();
             $table->string('TratName');
-            $table->boolean('TratTipo');
+            $table->boolean('TratTipo'); // 0=interno 1=externo
+            $table->boolean('TratOfertado')->default(0);// 0=No Ofertado 1=Ofertado
             $table->timestamps();
             $table->unsignedInteger('FK_TratProv')->nullable();
             $table->foreign('FK_TratProv')->references('ID_Sede')->on('sedes')->onDelete('set null');

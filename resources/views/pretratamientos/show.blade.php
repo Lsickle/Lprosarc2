@@ -55,13 +55,10 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">{{ trans('adminlte_lang::message.clientGestor') }}</a>
+                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">{{ trans('adminlte_lang::message.clientproveedor') }}</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#Clasificacionespane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</a>
                             </li>
                         </ul>
                         <!-- nav-content -->
@@ -123,31 +120,6 @@
                                         @if($conteoDePretratamientos==0)
                                             <li class="list-group-item">
                                                 <p class="text-center"><br><b>{{ trans('adminlte_lang::LangTratamiento.noPretrat') }}</b></p>
-                                            </li>
-                                        @endif 
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /.tab-pane fade -->
-                            <!-- tab-pane fade -->
-                            <div class="tab-pane fade" id="Clasificacionespane">
-                                <div class="form-horizontal">
-                                    <ul class="list-group list-group-unbordered">
-                                        @php
-                                            $conteoDeClasificaciones=0;
-                                        @endphp 
-                                                
-                                        @foreach($tratamiento->clasificaciones as $clasificacion)
-                                                <li class="list-group-item">
-                                                    <b>{{$clasificacion->ClasfCode}}</b> <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="Descripción del Pretratamiento" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="{{$clasificacion->ClasfDescription}}">{{$clasificacion->ClasfDescription}}</a>
-                                                </li>
-                                                @php
-                                                $conteoDeClasificaciones = $conteoDePretratamientos + 1;
-                                                @endphp
-                                        @endforeach
-                                        @if($conteoDeClasificaciones==0)
-                                            <li class="list-group-item">
-                                                <p class="text-center"><br><b>{{ trans('adminlte_lang::LangTratamiento.noClasfif') }}</b></p>
                                             </li>
                                         @endif 
                                     </ul>

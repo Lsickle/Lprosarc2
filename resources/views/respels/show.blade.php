@@ -167,6 +167,9 @@
 								<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
 							</li>
 							<li class="nav-item">
+								<a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.pretrattabtittle') }}</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 							</li>
 							<li class="nav-item">
@@ -184,8 +187,13 @@
 							<div class="tab-pane fade " id="Tratamientospane">
 								@include('layouts.respel-cliente.respel-tratamiento')
 							</div>
-							<!-- tab-pane fade -->
 							<!-- /.tab-pane fade -->
+							<!-- tab-pane fade -->
+							<div class="tab-pane fade " id="Pretratamientospane">
+								@include('layouts.respel-comercial.respel-pretrat')
+							</div>
+							<!-- /.tab-pane fade -->
+							<!-- tab-pane fade -->
 							<div class="tab-pane fade" id="Requerimientospane">
 								@include('layouts.respel-cliente.respel-requerimiento')
 							</div>

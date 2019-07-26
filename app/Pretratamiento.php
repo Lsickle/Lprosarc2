@@ -11,12 +11,13 @@ class Pretratamiento extends Model
 
 	protected $primaryKey = 'ID_PreTrat';
 
-	protected $fillable=['PreTratName', 'PreTratDescription', 'FK_Pre_Trat'];
+	protected $fillable=['PreTratName', 'PreTratDescription'];
 
 
-    public function tratamiento()
-	{
-	 return $this->belongsTo('App\Tratamiento', 'FK_Pre_Trat', 'ID_Trat');
-	}
+    public function tratamientos()
+    {
+        return $this->belongsToMany('App\Tratamiento','pretratamiento_tratamiento', 'FK_PreTrat', 'FK_Trat');
+        //lista los tratamientos relacionados usando muchos a muchos
+    }
 
 }
