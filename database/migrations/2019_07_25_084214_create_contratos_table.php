@@ -19,7 +19,7 @@ class CreateContratosTable extends Migration
 			$table->date('ContraVigencia');
 			$table->date('ContraNotifiVigencia')->nullable();
 			$table->integer('ContratoNumVigencia', 2)->nullable();
-			$table->string('COntratoTypeVigencia', 16)_>nullable();
+			$table->string('ContratoTypeVigencia', 16)_>nullable();
 			$table->unsignedInteger('Fk_ContraCli');
 			$table->foreign('Fk_ContraCli')->references('ID_Cli')->on('clientes');
 			$table->boolean('ContraDelete');

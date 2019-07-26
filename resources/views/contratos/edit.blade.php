@@ -16,9 +16,9 @@ Contratos
 					<h3 class="box-title">{{-- {{trans('adminlte_lang::message.createcargo')}} --}}Edición de Contratos</h3>
 				</div>
 				<div class="box box-info">
-					<form role="form" action="/contratos" method="POST" enctype="multipart/form-data" data-toggle="validator">
-						@csrf
+					<form role="form" action="/contratos/{{$Contrato->ContraSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
+						@csrf
 						<div class="box-body">
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargoareatittle') }}" data-content="{{ trans('adminlte_lang::message.cargoareainfo') }}" for="AreaSelect"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{-- {{trans('adminlte_lang::message.inputarea')}} --}}Clientes</label><small class="help-block with-errors">*</small>
@@ -46,10 +46,12 @@ Contratos
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargosalarytittle') }}" data-content="{{ trans('adminlte_lang::message.cargosalaryinfo') }}" for="CargoSalary"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{-- {{trans('adminlte_lang::message.cargosalary')}} --}}¿Cuando notificar?</label>
 								<div class="input-group">
-									<input type="text" class="form-control" name="numdma"value="{{$Contrato->ContratoNumVigencia}}">
-									<input type="text" name="inputdma" id="inputdma" hidden="" value="{{$Contrato->COntratoTypeVigencia}}">
+									<input type="text" class="form-control" name="ContratoNumVigencia"value="{{$Contrato->ContratoNumVigencia}}">
+									<input type="text" name="ContratoTypeVigencia" id="ContratoTypeVigencia" hidden="" value="{{$Contrato->COntratoTypeVigencia}}">
 									<div class="input-group-btn">
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btndma">{{$Contrato->COntratoTypeVigencia}} <span class="caret"></span></button>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btndma">
+											{{$Contrato->COntratoTypeVigencia}} <span class="caret"></span>
+										</button>
 										<ul class="dropdown-menu dropdown-menu-right">
 											<li><a onclick="changedma('Día(s)')">Día(s)</a></li>
 											<li><a onclick="changedma('Semana(s)')">Semana(s)</a></li>
@@ -76,7 +78,7 @@ Contratos
 		function changedma(valor){
 			$('#btndma').empty();
 			$('#btndma').append(valor+` <span class="caret"></span>`);
-			$('#inputdma').val(valor);
+			$('#ContratoTypeVigencia').val(valor);
 		}
 	</script>
 @endsection

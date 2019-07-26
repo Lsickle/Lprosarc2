@@ -68,7 +68,7 @@ class ContratoController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		switch ($request->input('inputdma')) {
+		switch ($request->input('ContratoTypeVigencia')) {
 			case 'Día(s)':
 				$typedate = 'day';
 				break;
@@ -86,9 +86,9 @@ class ContratoController extends Controller
 		$Contrato = new Contrato();
 		$Contrato->ContraPdf = $ContraPdf;
 		$Contrato->ContraVigencia = $request->input('ContraVigencia');
-		$Contrato->ContraNotifiVigencia = date('Y-m-d', strtotime($Contrato->ContraVigencia."- ".$request->input('numdma')." ".$typedate));
-		$Contrato->ContratoNumVigencia = $request->input('numdma');
-		$Contrato->COntratoTypeVigencia = $request->input('inputdma');
+		$Contrato->ContraNotifiVigencia = date('Y-m-d', strtotime($Contrato->ContraVigencia."- ".$request->input('ContratoNumVigencia')." ".$typedate));
+		$Contrato->ContratoNumVigencia = $request->input('ContratoNumVigencia');
+		$Contrato->ContratoTypeVigencia = $request->input('ContratoTypeVigencia');
 		$Contrato->Fk_ContraCli = $Cliente;
 		$Contrato->ContraDelete = 0;
 		$Contrato->ContraSlug = hash('sha256', rand().time().$Contrato->ContraPdf);
@@ -118,8 +118,8 @@ class ContratoController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD)){
 			$Contrato = Contrato::where('ContraSlug', $id)->first();
-			// return $Contrato;
 			$Clientes = Cliente::where('CliDelete', 0)->where('ID_Cli', '<>', 1)->get();
+			// return $Contrato;
 			return view('contratos.edit', compact('Clientes', 'Contrato'));
 		}
 		else{
@@ -134,9 +134,41 @@ class ContratoController extends Controller
 	 * @param  \App\Contrato  $contrato
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Contrato $contrato)
+	public function update(Request $request, $id)
 	{
-		
+		$Contrato = Contrato::where('ContraSlug', $id)->first();
+		$Cliente = Cliente::select('ID_Cli')->where('CliSlug', $request->input('Fk_ContraCli'))->first()->ID_Cli;
+		switch ($request->input('ContratoTypeVigencia')) {
+			case 'Día(s)':
+				$typedate = 'day';
+				break;
+			case 'Semana(s)':
+				$typedate = 'week';
+				break;
+			case 'Mes(es)':
+				$typedate = 'month';
+				break;
+		}
+		if (isset($request['ContraPdf'])) {
+			if($Contrato->ContraPdf <> null && file_exists(public_path().'/img/Contratos/'.$Contrato->ContraPdf)){
+				unlink(public_path().'/img/Contratos/'.$Contrato->ContraPdf);
+			}
+			$file = $request['ContraPdf'];
+			$ContraPdf = hash('sha256', rand().time().$file->getClientOriginalName()).'.pdf';
+			$file->move(public_path().'\img\Contratos/',$ContraPdf);
+		}
+		else{
+			$ContraPdf = $Contrato->ContraPdf;
+		}
+		$Contrato->ContraPdf = $ContraPdf;
+		$Contrato->ContraVigencia = $request->input('ContraVigencia');
+		$Contrato->ContraNotifiVigencia = date('Y-m-d', strtotime($Contrato->ContraVigencia."- ".$request->input('ContratoNumVigencia')." ".$typedate));
+		$Contrato->ContratoNumVigencia = $request->input('ContratoNumVigencia');
+		$Contrato->ContratoTypeVigencia = $request->input('ContratoTypeVigencia');
+		$Contrato->Fk_ContraCli = $Cliente;
+		$Contrato->save();
+
+		return redirect()->route('contratos.edit', [$id]);
 	}
 
 	/**
