@@ -18,6 +18,9 @@ class ClienteController extends Controller
     public function show($slug)
     {
         $cliente = Cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
         $Sedes = DB::table('sedes')
             ->join('municipios', 'municipios.ID_Mun', '=', 'sedes.FK_SedeMun')
             ->join('departamentos', 'departamentos.ID_Depart', '=', 'municipios.FK_MunCity')

@@ -198,6 +198,9 @@ class PermisoUsuarioController extends Controller
     public function show($id)
     {
         $User = User::where('UsSlug', $id)->first();
+        if (!$User) {
+            abort(404);
+        }
         $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
 
         return view('permisos.show', compact('User', 'Personal'));

@@ -136,6 +136,9 @@ class ContactoController extends Controller
             abort(403);
         }else{
             $Cliente = Cliente::where('CliSlug', $id)->first();
+            if (!$Cliente) {
+                abort(404);
+            }
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
             $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
             $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
