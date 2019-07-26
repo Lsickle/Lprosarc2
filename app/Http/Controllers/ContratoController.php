@@ -119,6 +119,9 @@ class ContratoController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD)){
 			$Contrato = Contrato::where('ContraSlug', $id)->first();
+			if (!$Contrato) {
+				abort(404);
+			}
 			$Clientes = Cliente::where('CliDelete', 0)->where('ID_Cli', '<>', 1)->get();
 			// return $Contrato;
 			return view('contratos.edit', compact('Clientes', 'Contrato'));
@@ -138,6 +141,9 @@ class ContratoController extends Controller
 	public function update(Request $request, $id)
 	{
 		$Contrato = Contrato::where('ContraSlug', $id)->first();
+		if (!$Contrato) {
+			abort(404);
+		}
 		$Cliente = Cliente::select('ID_Cli')->where('CliSlug', $request->input('Fk_ContraCli'))->first()->ID_Cli;
 		switch ($request->input('ContratoTypeVigencia')) {
 			case 'Día(s)':
@@ -189,6 +195,9 @@ class ContratoController extends Controller
 	public function destroy($id)
 	{
 		$Contrato = Contrato::where('ContraSlug', $id)->first();
+		if (!$Contrato) {
+			abort(404);
+		}
 		if ($Contrato->ContraDelete == 0) {
 			$Contrato->ContraDelete = 1;
 			$Contrato->save();
