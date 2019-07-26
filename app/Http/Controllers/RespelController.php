@@ -306,6 +306,9 @@ class RespelController extends Controller
     public function update(RespelStoreRequest $request, $id)
     {
         $respel = Respel::where('RespelSlug', $id)->first();
+        if (!$respel) {
+            abort(404);
+        }
             if (isset($request['RespelHojaSeguridad'])) {
                 if($respel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad)){
                     unlink(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad);
@@ -395,6 +398,9 @@ class RespelController extends Controller
     public function destroy($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+        if (!$Respels) {
+            abort(404);
+        }
         switch (Auth::user()->UsRol) {
             case 'Programador':
                 if ($Respels->RespelDelete == 0) {
