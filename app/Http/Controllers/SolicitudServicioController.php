@@ -297,6 +297,9 @@ class SolicitudServicioController extends Controller
 			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
 			->where('solicitud_servicios.SolSerSlug', $id)
 			->first();
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
@@ -362,6 +365,9 @@ class SolicitudServicioController extends Controller
 	public function changestatus(Request $request)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
@@ -433,6 +439,9 @@ class SolicitudServicioController extends Controller
 	public function repeat($slug)
 	{
 		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
+		if (!$SolicitudOld) {
+			abort(404);
+		}
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
@@ -500,6 +509,9 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if (!$Solicitud) {
+				abort(404);
+			}
 			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
 				abort(403);
 			}
@@ -552,7 +564,9 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		if($SolicitudServicio->SolSerStatus === 'Programado'){
 			if($request->input('SolSerTransportador') <> null){
 				if($request->input('SolSerTransportador') <> 98){
@@ -737,6 +751,9 @@ class SolicitudServicioController extends Controller
 	public function destroy($id)
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
 
 		$log = new audit();
