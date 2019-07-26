@@ -20,6 +20,7 @@
 					@else
 						<form role="form" action="/cliente/{{$cliente->CliSlug}}/update" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
 					@endif
+						{{csrf_field()}}
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -54,7 +55,14 @@
 									{{ trans('adminlte_lang::message.clientrut') }}
 								</label>
 								<small class="help-block with-errors"></small>
-								<input type="file" name="CliRut" class="form-control" id="CliRut" accept=".pdf" data-accept="pdf" data-filesize="5120">
+								<div class="input-group">
+									<input type="file" name="CliRut" class="form-control" id="CliRut" accept=".pdf" data-accept="pdf" data-filesize="5120">
+									<div class="input-group-btn ">
+										<a class="{{$cliente->CliRut === null ? 'btn btn-default' : 'btn btn-success'}}">
+											<i class='{{$cliente->CliRut === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+										</a>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="CliCamaraComercio" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcamaracomercio') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcamaracomercio-info') }}">
@@ -62,7 +70,14 @@
 									{{ trans('adminlte_lang::message.clientcamaracomercio') }}
 								</label>
 								<small class="help-block with-errors"></small>
-								<input type="file" name="CliCamaraComercio" class="form-control" id="CliCamaraComercio" accept=".pdf" data-accept="pdf" data-filesize="5120">
+								<div class="input-group">
+									<input type="file" name="CliCamaraComercio" class="form-control" id="CliCamaraComercio" accept=".pdf" data-accept="pdf" data-filesize="5120">
+									<div class="input-group-btn ">
+										<a class="{{$cliente->CliCamaraComercio === null ? 'btn btn-default' : 'btn btn-success'}}">
+											<i class='{{$cliente->CliCamaraComercio === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+										</a>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="CliRepresentanteLegal" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientlegalrepresentative') }}</b>" data-content="{{ trans('adminlte_lang::message.clientlegalrepresentative-info') }}">
@@ -70,7 +85,14 @@
 									{{ trans('adminlte_lang::message.clientlegalrepresentative') }}
 								</label>
 								<small class="help-block with-errors"></small>
-								<input type="file" name="CliRepresentanteLegal" class="form-control" id="CliRepresentanteLegal" accept=".pdf" data-accept="pdf" data-filesize="5120">
+								<div class="input-group">
+									<input type="file" name="CliRepresentanteLegal" class="form-control" id="CliRepresentanteLegal" accept=".pdf" data-accept="pdf" data-filesize="5120">
+									<div class="input-group-btn ">
+										<a class="{{$cliente->CliRepresentanteLegal === null ? 'btn btn-default' : 'btn btn-success'}}">
+											<i class='{{$cliente->CliRepresentanteLegal === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+										</a>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="CliCertificaionBancaria" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientbankcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientbankcertification-info') }}">
@@ -78,7 +100,14 @@
 									{{ trans('adminlte_lang::message.clientbankcertification') }}
 								</label>
 								<small class="help-block with-errors"></small>
-								<input type="file" name="CliCertificaionBancaria" class="form-control" id="CliCertificaionBancaria" accept=".pdf" data-accept="pdf" data-filesize="5120">
+								<div class="input-group">
+									<input type="file" name="CliCertificaionBancaria" class="form-control" id="CliCertificaionBancaria" accept=".pdf" data-accept="pdf" data-filesize="5120">
+									<div class="input-group-btn ">
+										<a class="{{$cliente->CliCertificaionBancaria === null ? 'btn btn-default' : 'btn btn-success'}}">
+											<i class='{{$cliente->CliCertificaionBancaria === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+										</a>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="CliCertificaionComercial" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcommercialcertification-info') }}">
@@ -86,7 +115,14 @@
 									{{ trans('adminlte_lang::message.clientcommercialcertification') }}
 								</label>
 								<small class="help-block with-errors"></small>
-								<input type="file" name="CliCertificaionComercial" class="form-control" id="CliCertificaionComercial" accept=".pdf" data-accept="pdf" data-filesize="5120">
+								<div class="input-group">
+									<input type="file" name="CliCertificaionComercial" class="form-control" id="CliCertificaionComercial" accept=".pdf" data-accept="pdf" data-filesize="5120">
+									<div class="input-group-btn ">
+										<a class="{{$cliente->CliCertificaionComercial === null ? 'btn btn-default' : 'btn btn-success'}}">
+											<i class='{{$cliente->CliCertificaionComercial === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="box box-info">

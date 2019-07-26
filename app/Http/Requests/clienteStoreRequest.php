@@ -16,7 +16,11 @@ class ClienteStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        // if ($errors->has('PersEmail.unique') || $errors->has('CliNit.unique') || $errors->has('PersDocNumber.unique')) {
+            return true;
+        // }else{
+            // return false;
+        // }
     }
 
     /**
@@ -26,7 +30,7 @@ class ClienteStoreRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $rule = [
+        return [
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
                 $Cliente = DB::table('clientes')
                     ->select('clientes.CliNit')
@@ -44,7 +48,7 @@ class ClienteStoreRequest extends FormRequest
             'CliName'       => 'required|max:255|min:1',
             'CliShortname'  => 'required|max:255|min:1',
             'CliCategoria'  => 'max:32|alpha|nullable',
-            'CliRut'        => 'mimes:jpg,jpeg,png|max:5120|required',
+            'CliRut'        => 'mimes:pdf|max:5120|required',
             'CliCamaraComercio'         => 'mimes:pdf|max:5120|required',
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|required',
             'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|nullable',
@@ -72,14 +76,11 @@ class ClienteStoreRequest extends FormRequest
             'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
             'PersCellphone' => 'required|max:12|min:12',
         ];
-        return $rule;
     }
     public function messages()
     {
-        $request = $this->instance()->all();
-        $message = [
+        return [
+            'PersEmail.unique' => 'El campo "Correo Electrónico de la Persona de Contacto" ya esta en uso.',
         ];
-        $messages['PersEmail.unique'] = 'El campo "Correo Electronico de la Persona de Contacto" ya esta en uso ';
-        return $messages;
     }
 }

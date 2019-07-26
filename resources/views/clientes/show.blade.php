@@ -39,10 +39,10 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<input type="text" value="{{$cliente->CliCamaraComercio === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
-													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												<a href="{{$cliente->CliCamaraComercio === null ? '#' : "/img/DatosClientes/$cliente->CliCamaraComercio"}}" class="{{$cliente->CliCamaraComercio === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliCamaraComercio === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliCamaraComercio === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
 										</div>
@@ -58,10 +58,10 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<input type="text" value="{{$cliente->CliRut === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
-													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												<a href="{{$cliente->CliRut === null ? '#' : "/img/DatosClientes/$cliente->CliRut"}}" class="{{$cliente->CliRut === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliRut === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliRut === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
 										</div>
@@ -77,10 +77,10 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<input type="text" value="{{$cliente->CliRepresentanteLegal === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
-													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												<a href="{{$cliente->CliRepresentanteLegal === null ? '#' : "/img/DatosClientes/$cliente->CliRepresentanteLegal"}}" target="_blank" class="{{$cliente->CliRepresentanteLegal === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliRepresentanteLegal === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliRepresentanteLegal === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
 										</div>
@@ -96,10 +96,10 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<input type="text" value="{{$cliente->CliCertificaionBancaria === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
-													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												<a href="{{$cliente->CliCertificaionBancaria === null ? '#' : "/img/DatosClientes/$cliente->CliCertificaionBancaria"}}" class="{{$cliente->CliCertificaionBancaria === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliCertificaionBancaria === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliCertificaionBancaria === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
 										</div>
@@ -115,10 +115,10 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="input-group">
-											<input type="text" value="{{$cliente->CliNit === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<input type="text" value="{{$cliente->CliCertificaionComercial === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliNit === null ? '#' : $cliente->CliNit}}" class="{{$cliente->CliNit === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliNit === null ? 'disabled' : ''}}>
-													<i class='{{$cliente->CliNit === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												<a href="{{$cliente->CliCertificaionComercial === null ? '#' : "/img/DatosClientes/$cliente->CliCertificaionComercial"}}" class="{{$cliente->CliCertificaionComercial === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliCertificaionComercial === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliCertificaionComercial === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
 										</div>

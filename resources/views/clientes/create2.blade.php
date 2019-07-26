@@ -15,6 +15,7 @@
 				</div>
                 <div class="box box-info">
                     <form role="form" id="formCliente " action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
+                        {{csrf_field()}}
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger" role="alert">
@@ -76,7 +77,7 @@
                                                         {{ trans('adminlte_lang::message.clientlegalrepresentative') }}
                                                     </label>
                                                     <small class="help-block with-errors">*</small>
-                                                    <input type="file" name="CliRepresentanteLegal" class="form-control" id="CliRepresentanteLegal" accept=".pdf" data-accept="pdf" data-filesize="5120">
+                                                    <input type="file" name="CliRepresentanteLegal" class="form-control" id="CliRepresentanteLegal" accept=".pdf" data-accept="pdf" data-filesize="5120" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="CliCertificaionBancaria" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientbankcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientbankcertification-info') }}">
@@ -84,7 +85,7 @@
                                                         {{ trans('adminlte_lang::message.clientbankcertification') }}
                                                     </label>
                                                     <small class="help-block with-errors"></small>
-                                                    <input type="file" name="CliCertificaionBancaria" class="form-control" id="CliCertificaionBancaria" accept=".pdf" data-accept="pdf" data-filesize="5120" required>
+                                                    <input type="file" name="CliCertificaionBancaria" class="form-control" id="CliCertificaionBancaria" accept=".pdf" data-accept="pdf" data-filesize="5120">
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="CliCertificaionComercial" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcommercialcertification-info') }}">
