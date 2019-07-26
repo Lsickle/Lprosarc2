@@ -167,6 +167,9 @@ class ContactoController extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
             $Departamentos = Departamento::all();
             $Cliente = Cliente::where('CliSlug', $id)->first();
+            if (!$Cliente) {
+                abort(404);
+            }
             $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
     
             $Municipality = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
@@ -208,6 +211,9 @@ class ContactoController extends Controller
         ]);
 
         $Cliente = Cliente::where('CliSlug', $id)->first();
+        if (!$Cliente) {
+            abort(404);
+        }
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
 
         $Sede->fill($request->all());
@@ -262,6 +268,9 @@ class ContactoController extends Controller
     public function destroy($id)
     {
         $Cliente = Cliente::where('CliSlug', $id)->first();
+        if (!$Cliente) {
+            abort(404);
+        }
         $Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
         $Vehiculos = Vehiculo::where('FK_VehiSede', $Sede->ID_Sede)->get();
         if ($Cliente->CliDelete == 0){
