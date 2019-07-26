@@ -140,6 +140,9 @@ class sclientcontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $Sede = Sede::where('SedeSlug',$id)->first();
+            if (!$Sede) {
+                abort(404);
+            }
             if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
                 $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
                 $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
@@ -163,6 +166,9 @@ class sclientcontroller extends Controller
     public function update(SedeRequest $request, $id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
+        if (!$Sede) {
+            abort(404);
+        }
         $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $Sede->fill($request->except('FK_SedeCli'));
         $ID_Cli = userController::IDClienteSegunUsuario();
@@ -192,6 +198,9 @@ class sclientcontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $Sede = Sede::where('SedeSlug', $id)->first();
+            if (!$Sede) {
+                abort(404);
+            }
             $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
                 if ($Sede->SedeDelete == 0) {
                     $Sede->SedeDelete = 1;
