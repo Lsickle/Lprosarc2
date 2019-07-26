@@ -24,6 +24,7 @@
 									<th>{{trans('adminlte_lang::message.contractclien')}}</th>
 									<th>{{trans('adminlte_lang::message.contractpdf')}}</th>
 									<th>{{trans('adminlte_lang::message.contractvigencia')}}</th>
+									<th>{{trans('adminlte_lang::message.contractvigencia2')}}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD))
 									<th>{{trans('adminlte_lang::message.edit')}}</th>
 									@endif
@@ -35,6 +36,7 @@
 									<td>{{$Contrato->CliShortname}}</td>
 									<td style="text-align: center;"><a href="/img/Contratos/{{$Contrato->ContraPdf}}" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i> </a></td>
 									<td style="text-align: center;">{{$Contrato->ContraVigencia}}</td>
+									<td>{{$Contrato->ContraVigencia < now() ? 'Vencida' : ($Contrato->ContraNotifiVigencia <= now() ? 'Pronto a Vencer' : 'Vigente')}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::CONTRATOSCRUD) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOSCRUD))
 									<td><a href='/contratos/{{$Contrato->ContraSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif

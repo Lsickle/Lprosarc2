@@ -764,6 +764,7 @@ return [
     'contractindex'           => 'Lista de contratos',
     'contractcreate'          => 'Creación de Contratos',
     'contractedit'            => 'Edición de Contratos',
+    'contractvigencia2'       => 'Vigencia',
     'contractclien'           => 'Clientes',
     'contractcliendescript'   => 'Seleccione el cliente al cual le adjuntara el contrato',
     'contractpdf'             => 'Contrato',
