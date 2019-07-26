@@ -11,9 +11,31 @@ Contratos
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16">
+			@component('layouts.partials.modal')
+			@slot('slug')
+			{{$Contrato->ContraSlug}}
+			@endslot
+			@slot('textModal')
+			este contrato
+			@endslot
+			@endcomponent
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">{{-- {{trans('adminlte_lang::message.createcargo')}} --}}Edición de Contratos</h3>
+					@if($Contrato->ContraDelete == 0)
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Contrato->ContraSlug}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+						<form action='/contratos/{{$Contrato->ContraSlug}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<input  type="submit" id="Eliminar{{$Contrato->ContraSlug}}" style="display: none;">
+						</form>
+					@else
+						<form action='/contratos/{{$Contrato->ContraSlug}}' method='POST' class="pull-right">
+							@method('DELETE')
+							@csrf
+							<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
+						</form>
+					@endif
 				</div>
 				<div class="box box-info">
 					<form role="form" action="/contratos/{{$Contrato->ContraSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">

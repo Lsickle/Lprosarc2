@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Contrato;
+use App\audit;
 use Permisos;
 use App\Cliente;
 
@@ -168,6 +169,14 @@ class ContratoController extends Controller
 		$Contrato->Fk_ContraCli = $Cliente;
 		$Contrato->save();
 
+		$log = new audit();
+		$log->AuditTabla="contratos";
+		$log->AuditType="Modificado";
+		$log->AuditRegistro=$Contrato->ID_Contra;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$request->all();
+		$log->save();
+
 		return redirect()->route('contratos.edit', [$id]);
 	}
 
@@ -177,8 +186,39 @@ class ContratoController extends Controller
 	 * @param  \App\Contrato  $contrato
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Contrato $contrato)
+	public function destroy($id)
 	{
-		//
+		$Contrato = Contrato::where('ContraSlug', $id)->first();
+		if ($Contrato->ContraDelete == 0) {
+			$Contrato->ContraDelete = 1;
+			$Contrato->save();
+
+			$log = new audit();
+			$log->AuditTabla="contratos";
+			$log->AuditType="Eliminado";
+			$log->AuditRegistro=$Contrato->ID_Contra;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog= $Contrato->ContraDelete;
+			$log->save();
+
+			return redirect()->route('contratos.index');
+		}
+		else{
+			if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+				$Contrato->ContraDelete = 0;
+				$Contrato->save();
+
+				$log = new audit();
+				$log->AuditTabla="contratos";
+				$log->AuditType="Restaurado";
+				$log->AuditRegistro=$Contrato->ID_Contra;
+				$log->AuditUser=Auth::user()->email;
+				$log->Auditlog= $Contrato->ContraDelete;
+				$log->save();
+
+				return redirect()->route('contratos.edit', [$id]);
+			}
+			return redirect()->route('contratos.index');
+		}
 	}
 }
