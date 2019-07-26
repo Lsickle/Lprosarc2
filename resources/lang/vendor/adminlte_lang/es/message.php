@@ -472,7 +472,7 @@ return [
     'vehiclecreate'           => 'Registro de Vehículos',
     'vehicleedit'             => 'Edición de Vehículos',
     'vehicdateregister'       => 'Fecha Registrado',
-    'vehicsedes'              => 'Sedes para el vehículo',
+    'vehicsedes'              => 'Sedes del vehículo',
 
     // user
     'userperson'              => 'Nombre de la persona',
