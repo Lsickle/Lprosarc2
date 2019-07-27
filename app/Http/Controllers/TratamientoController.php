@@ -267,6 +267,7 @@ class TratamientoController extends Controller
             $pretratamientoRelated = Pretratamiento::withCount(['tratamientos'])
                 ->where('ID_PreTrat', $key)
                 ->first();
+            /*si los pretratamietnos estan relacionados con mas de un tratamiento No se eliminan*/
             if ($pretratamientoRelated->tratamientos_count > 1) {
                 $tratamiento->pretratamientos()->detach($key);
             }else{
