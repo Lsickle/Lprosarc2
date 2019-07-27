@@ -151,6 +151,9 @@ class sgenercontroller extends Controller
     public function show($id)
     {
             $SedeGener = GenerSede::where('GSedeSlug', $id)->first();
+            if (!$SedeGener) {
+                abort(404);
+            }
             $Generador = generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
             $Municipio = Municipio::where('ID_Mun', $SedeGener->FK_GSedeMun)->first();
             $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
@@ -208,7 +211,9 @@ class sgenercontroller extends Controller
                 ->get();
 
             $GSede = GenerSede::where('GSedeSlug',$id)->first();
-
+            if (!$GSede) {
+                abort(404);
+            }
             $Municipio = Municipio::where('ID_Mun', $GSede->FK_GSedeMun)->first();
             $Municipios = Municipio::where('FK_MunCity', $Municipio->FK_MunCity)->get();
             $Departamentos = Departamento::all();
@@ -229,6 +234,9 @@ class sgenercontroller extends Controller
     public function update(SedeGenerRequest $request, $id)
     {
         $GSede = GenerSede::where('GSedeSlug',$id)->first();
+        if (!$GSede) {
+            abort(404);
+        }
         $GSede->fill($request->except('created_at'));
         $GSede->save();
 

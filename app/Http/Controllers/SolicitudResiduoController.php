@@ -68,6 +68,9 @@ class SolicitudResiduoController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+			if (!$SolRes) {
+				abort(404);
+			}
 			$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
 			$RespelSgener = ResiduosGener::where('ID_SGenerRes', $SolRes->FK_SolResRg)->first();
 			$Respel = DB::table('respels')
@@ -96,6 +99,9 @@ class SolicitudResiduoController extends Controller
  
 	public function updateSolRes(Request $request, $id){
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
 		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
 
 		$Validate = $request->validate([
@@ -148,6 +154,9 @@ class SolicitudResiduoController extends Controller
 	public function update(SolResUpdateRequest $request, $id)
 	{
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
 		$Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
 		
 		$SolRes->SolResTypeUnidad = $request->input('SolResTypeUnidad');
@@ -224,6 +233,9 @@ class SolicitudResiduoController extends Controller
 	public function destroy($id)
 	{
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
 		$Recursos = Recurso::where('FK_RecSolRes', $SolRes->ID_SolRes)->get();
 		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
 		

@@ -17,10 +17,13 @@ class CreateContratosTable extends Migration
 			$table->bigIncrements('ID_Contra');
 			$table->string('ContraPdf');
 			$table->date('ContraVigencia');
-			$table->date('ContraNotifiVigencia')->nullabe();
+			$table->date('ContraNotifiVigencia')->nullable();
+			$table->string('ContratoNumVigencia', 2)->nullable();
+			$table->string('ContratoTypeVigencia', 16)->nullable();
 			$table->unsignedInteger('Fk_ContraCli');
 			$table->foreign('Fk_ContraCli')->references('ID_Cli')->on('clientes');
 			$table->boolean('ContraDelete');
+			$table->string('ContraSlug')->unique();
 			$table->timestamps();
 			$table->engine = 'InnoDB';
 			$table->charset = 'utf8';

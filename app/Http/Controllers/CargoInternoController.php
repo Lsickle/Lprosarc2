@@ -111,6 +111,9 @@ class CargoInternoController extends Controller
     public function edit($id){
         if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Cargos = Cargo::where('CargSlug', $id)->first();
+            if (!$Cargos) {
+                abort(404);
+            }
             $Areas = DB::table('areas')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -143,6 +146,9 @@ class CargoInternoController extends Controller
             'CargArea'       => 'required',
         ]);
         $Cargo = Cargo::where('CargSlug', $id)->first();
+        if (!$Cargo) {
+            abort(404);
+        }
         $Cargo->CargName = $request->input('CargName');
         $Cargo->CargArea = Area::select('ID_Area')->where('AreaSlug', $request->input('CargArea'))->first()->ID_Area;
         $Cargo->CargGrade = $request->input('CargGrade');
@@ -168,6 +174,9 @@ class CargoInternoController extends Controller
      */
     public function destroy($id){
         $Cargo = Cargo::where('CargSlug', $id)->first();
+        if (!$Cargo) {
+            abort(404);
+        }
         $Personal = Personal::where('FK_PersCargo', $Cargo->ID_Carg)->get();
             if ($Cargo->CargDelete == 0) {
                 $Cargo->CargDelete = 1;

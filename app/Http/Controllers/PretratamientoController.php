@@ -105,7 +105,9 @@ class PretratamientoController extends Controller
     {
         
         $pretratamiento = Pretratamiento::where('ID_PreTrat', $id)->first();
-        
+        if (!$pretratamiento) {
+            abort(404);
+        }
         // return $pretratamiento;
         $pretratamiento->PreTratName = $request->input('PreTratName');
         $pretratamiento->PreTratDescription = $request->input('PreTratDescription');
@@ -133,6 +135,7 @@ class PretratamientoController extends Controller
     {
 
         if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)){
+
             /*se carga el registro del pretratamieento*/
             $pretratamiento = Pretratamiento::find($id);
             /*se elimina la relaciona entre pretratamiento y pretratamientos*/
