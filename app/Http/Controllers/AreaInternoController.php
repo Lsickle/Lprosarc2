@@ -109,6 +109,9 @@ class AreaInternoController extends Controller
     public function edit($id){
         if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
             $Areas = Area::where('AreaSlug', $id)->first();
+            if (!$Areas) {
+                abort(404);
+            }
             $Sedes = DB::table('sedes')
                 ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('ID_Sede', 'SedeSlug', 'SedeName')
@@ -141,6 +144,9 @@ class AreaInternoController extends Controller
             'FK_AreaSede'    => 'required',
         ]);
         $Area = Area::where('AreaSlug', $id)->first();
+        if (!$Area) {
+            abort(404);
+        }
         $Area->AreaName = $request->input('AreaName');
         $Area->FK_AreaSede = Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_AreaSede'))->first()->ID_Sede;
         $Area->save();
@@ -164,6 +170,9 @@ class AreaInternoController extends Controller
      */
     public function destroy($id){
         $Area = Area::where('AreaSlug', $id)->first();
+        if (!$Area) {
+            abort(404);
+        }
         $Cargo = Cargo::where('CargArea', $Area->ID_Area)->get();
             if ($Area->AreaDelete == 0) {
                 $Area->AreaDelete = 1;
