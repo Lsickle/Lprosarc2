@@ -2,6 +2,13 @@
     <label for="tratamiento0">Opción 1</label>
     <select class="form-control" id="tratamiento0" name="FK_ReqTrata[]">
   		<option>seleccione...</option>
+        <optgroup label="Tratamientos Viables">
+            @foreach($tratamientosViables as $tratamientoviable)
+                @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
+                    <option value="{{$tratamientoviable1->ID_Trat}}"><b><b>{{"$tratamientoviable1->TratName"}}</b></b> - {{"$tratamientoviable1->CliName"}}</option>
+                @endforeach
+            @endforeach
+        </optgroup>
     	<optgroup label="Interno">
     		@foreach($tratamientos as $tratamiento)
 	    		@if($tratamiento->TratTipo == 0)
