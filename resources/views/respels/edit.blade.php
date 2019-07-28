@@ -198,7 +198,11 @@
 					<!-- box header -->
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
+						<div class="box-tools pull-right">
+						 <button onclick="AgregarOption()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+						</div>
 					</div>
+
 					<!-- /.box header -->
 					<!-- box body -->
 					<div class="box-body">
@@ -266,5 +270,47 @@
 	</form>
 	<!-- /.form  -->
 </div>
+
+@endsection
+@section('NewScript')
+<script>
+    var contador = 1;
+    function attachPopover(){
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                trigger: 'hover',
+                placement: 'auto',
+            });
+        });
+    };
+    function Switch(){
+        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
+            $("#ofert0").bootstrapSwitch('disabled',true);
+        }
+    };
+    function AgregarOption(){
+        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
+        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+        var requerimientos = `@include('layouts.respel-comercial.respel-requerimiento')`;
+        var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
+        $("#Tratamientospane").append(tratamiento);
+        $("#Pretratamientospane").append(pretratamiento);
+        $("#Requerimientospane").append(requerimientos);
+        $("#tarifaspane").append(tarifas);
+        $("#evaluacioncomercial").validator('update');
+        contador= parseInt(contador)+1;
+        attachPopover();
+        Switch();
+    };
+    function EliminarOption(id){
+        $("#pretratname"+id).remove();
+        $("#pretratdescription"+id).remove();
+        $("#pretratsparator"+id).remove();
+        $("#createtratamientoForm").validator('update');
+    };    
+</script>
 @endsection
 @endif
+
+

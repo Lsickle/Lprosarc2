@@ -31,13 +31,3 @@
         <input  type="checkbox" class="testswitch" id="ofert0" name="TratOfertado"/>  
     </div>
 </div>
-@section('NewScript')
-<script>
-function Switch(){
-    if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
-        $("#ofert0").bootstrapSwitch('disabled',true);
-    }
-}
-Switch();
-</script>
-@endsection

@@ -167,8 +167,3 @@
 
 	</div>
 @endif
-
-<script>
-
-
-</script>
