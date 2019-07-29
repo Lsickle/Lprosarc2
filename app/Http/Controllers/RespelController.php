@@ -15,6 +15,7 @@ use App\Respel;
 use App\Sede;
 use App\Cotizacion;
 use App\Tratamiento;
+use App\Clasificacion;
 use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
@@ -252,14 +253,18 @@ class RespelController extends Controller
                 $deleteButton = 'No borrable';
             }else{
                 $deleteButton = 'borrable';
-            }   
-    
+            } 
+
+            $tratamientosViables = Clasificacion::with(['tratamientos'])
+            ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
+            ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
+            ->get();
+            // return $tratamientosViables;
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
                 ->get();
-    
             // se verifica el rol y el status del residuo para devolver a la vista correspondiente
                 $statusRespel = $Respels->RespelStatus;
     
@@ -289,7 +294,7 @@ class RespelController extends Controller
                     ->where('clientes.ID_Cli', '<>', 1) 
                     ->get();
     
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{
             abort(403);
