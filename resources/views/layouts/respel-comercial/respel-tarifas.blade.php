@@ -58,9 +58,3 @@
 	<label>Ver</label><br>
 	<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-search'></i></a>
 </div>
-	
-	
-<script>
-
-
-</script>
