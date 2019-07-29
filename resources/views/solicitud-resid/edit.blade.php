@@ -168,9 +168,11 @@
 								</div>
 							</div>
 						</div>
+						<div id="ModalSupport"></div>
 						<div class="box box-info">
 							<div class="box-footer">
-								<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</button>
+								<a href="#" onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</a>
+								<button type="submit" id="Submit" style="display: none;"></button>
 							</div>
 						</div>
 					</form>
@@ -213,6 +215,59 @@
 			$('#SolResCantiUnidad').prop('disabled', true);
 			$('#SolResCantiUnidad').val('');
 			$('#FormSolRes').validator('validate');
+		}
+		function submitverify(){
+			var CantidadTotalkg = {{$totalenviado}};
+			CantidadTotalkg = parseInt(CantidadTotalkg)+parseInt($("#SolResKgEnviado").val());
+			if(CantidadTotalkg != 0){
+				if(CantidadTotalkg >= 500){
+					$("#Submit2").empty();
+					$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$("#Submit2").attr('disabled', true);
+					$('#Submit').click();
+				}
+				else{
+					@if($SolSer->SolSerSupport == null)
+					$('#ModalSupport').empty();
+					$('#ModalSupport').append(`
+						<div class="modal modal-default fade in" id="SupportPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+											<i class="fas fa-exclamation-triangle"></i>
+											<span style="font-size: 0.3em; color: black;"><p>Su solicitud es inferior a 500kg adjunte el soporte de pago</p></span>
+											<span style="font-size: 0.3em; color: black;"><p>Su solicitud es de <b>`+CantidadTotalkg+` kg</b></p></span>
+										</div>
+									</div>
+									<div class="modal-header">
+										<div class="form-group col-md-12">
+											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
+											<small class="help-block with-errors"></small>
+											<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+										</div>
+									</div> 
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+										<label for="Submit" class='btn btn-success'>Enviar</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					`);
+					popover();
+					$('#CreateSolSer').validator('update');
+					envsubmit();
+					$('#SupportPay').modal();
+					@else
+					$("#Submit2").empty();
+					$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$("#Submit2").attr('disabled', true);
+					$('#Submit').click();
+					@endif
+				}
+			}
 		}
 	</script>
 @endsection

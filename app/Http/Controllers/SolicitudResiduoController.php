@@ -82,8 +82,16 @@ class SolicitudResiduoController extends Controller
 			if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
 				abort(403);
 			}
-
-			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion'));
+			$KGenviados = DB::table('solicitud_residuos')
+				->select('SolResKgEnviado')
+				->where('FK_SolResSolSer', $SolSer->ID_SolSer)
+				->where('ID_SolRes', '<>', $SolRes->ID_SolRes)
+				->get();
+			$totalenviado = 0;
+			foreach ($KGenviados as $KGenviado) {
+				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion', 'totalenviado'));
 		}else{
 			abort(403);
 		}
@@ -137,6 +145,17 @@ class SolicitudResiduoController extends Controller
 				break;
 		}
 		$SolRes->save();
+
+		if(isset($request['SupportPay'])){
+			if($SolSer->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport)){
+				unlink(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport);
+			}
+			$fileSupport = $request['SupportPay'];
+			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolSer->SolSerSupport = $nameSupport;
+			$SolSer->save();
+		}
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_residuos";
