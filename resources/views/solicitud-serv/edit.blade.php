@@ -353,6 +353,7 @@ function submitverify(){
 			$('#Submit').click();
 		}
 		else{
+			@if($Solicitud->SolSerSupport == null)
 			$('#ModalSupport').empty();
 			$('#ModalSupport').append(`
 				<div class="modal modal-default fade in" id="SupportPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -385,6 +386,12 @@ function submitverify(){
 			$('#CreateSolSer').validator('update');
 			envsubmit();
 			$('#SupportPay').modal();
+			@else
+			$("#Submit2").empty();
+			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+			$("#Submit2").attr('disabled', true);
+			$('#Submit').click();
+			@endif
 		}
 	}
 }

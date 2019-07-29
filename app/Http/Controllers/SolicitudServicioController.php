@@ -175,9 +175,9 @@ class SolicitudServicioController extends Controller
 			$fileSupport = $request['SupportPay'];
 			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
 			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;
-		$SolicitudServicio->SolSerSupport = $nameSupport;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;
 		$SolicitudServicio->SolSerNitTrans = $transportadornit;
 		$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
@@ -697,9 +697,9 @@ class SolicitudServicioController extends Controller
 			$fileSupport = $request['SupportPay'];
 			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
 			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;
-		$SolicitudServicio->SolSerSupport = $nameSupport;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;
 		$SolicitudServicio->SolSerNitTrans = $transportadornit;
 		$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
