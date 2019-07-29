@@ -304,11 +304,11 @@ return [
     'clientbankcertification' => 'Certificación Bancaria',
     'clientlegalrepresentative'     => 'Representante Legal',
     'clientcommercialcertification' => 'Certificación Comercial',
-    'clientrut-info'            => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> del Rut',
-    'clientcamaracomercio-info' => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Camara del Comercio',
-    'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Certificacion Bancario no mas de tres(3) meses <b>(optional)</b>',
-    'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Cedula de Cidadania del Representante Legal',
-    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso maximo de <strong>5 mb</strong> de la Certificacion Commercial <b>(optional)</b>',
+    'clientrut-info'                => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> del Rut',
+    'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio',
+    'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>',
+    'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal',
+    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(optional)</b>',
 
     // contactos
     'clientcategoría'         => 'Categoría',
@@ -399,6 +399,7 @@ return [
     // manifiesto
     'manifiestmenu'           => 'Manifiestos',
 
+    //question
     'frequent questions'      => 'Preguntas Frecuentes',
     'question-1-description'  => 'Cada asterisco significa que el campo que lo tiene es de carácter obligatorio y no lo dejara avanzar hasta que lo complete.',
     'question-2-title'        => '¿Por qué no puedo asignar residuos a mi Generador?',

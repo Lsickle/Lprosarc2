@@ -53,6 +53,7 @@ class ClienteStoreRequest extends FormRequest
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|required',
             'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|nullable',
             'CliCertificaionComercial'  => 'mimes:pdf|max:5120|nullable',
+            'CliCertificaionComercial2' => 'mimes:pdf|max:5120|nullable',
 
             'SedeName'      => 'required|max:128|min:1',
             'SedeAddress'   => 'required|max:255|min:1',

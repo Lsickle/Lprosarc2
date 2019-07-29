@@ -84,7 +84,7 @@ class userController extends Controller
 			'email'         => 'required|unique:users,email,'.$user->id.',id',
 			'UsAvatar'      => 'max:1536|mimes:jpeg,jpg,png,gif,web',
 		]);
-		// return $request;
+
 		if($request->hasfile('UsAvatar')){
 			if($user->UsAvatar <> null && file_exists(public_path().'/img/ImagesProfile/'.$user->UsAvatar)){
 				unlink(public_path().'/img/ImagesProfile/'.$user->UsAvatar);

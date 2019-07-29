@@ -19,6 +19,7 @@ class AddColumnToClientesTable extends Migration
             $table->string('CliRepresentanteLegal')->nullable();
             $table->string('CliCertificaionBancaria')->nullable();
             $table->string('CliCertificaionComercial')->nullable();
+            $table->string('CliCertificaionComercial2')->nullable();
         });
     }
 
@@ -35,6 +36,7 @@ class AddColumnToClientesTable extends Migration
             $table->dropColumn('CliRepresentanteLegal');
             $table->dropColumn('CliCertificaionBancaria');
             $table->dropColumn('CliCertificaionComercial');
+            $table->dropColumn('CliCertificaionComercial2');
         });
     }
 }

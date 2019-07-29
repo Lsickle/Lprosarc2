@@ -56,6 +56,7 @@ class ClienteController extends Controller
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|sometimes',
             'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|sometimes',
             'CliCertificaionComercial'  => 'mimes:pdf|max:5120|sometimes',
+            'CliCertificaionComercial2' => 'mimes:pdf|max:5120|sometimes',
         ]);
         $cliente->fill($request->except('CliRut', 'CliCamaraComercio', 'CliRepresentanteLegal', 'CliCertificaionComercial', 'CliCertificaionBancaria'));
         $Folder = $cliente->CliShortname;
@@ -90,6 +91,14 @@ class ClienteController extends Controller
             $CertificacionComercial = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial->getClientOriginalName()).'.'.$request->CliCertificaionComercial->extension();
             $request->CliCertificaionComercial->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial);
             $cliente->CliCertificaionComercial = $Folder.'/'.$CertificacionComercial;
+        }
+        if ($request->hasfile('CliCertificaionComercial2')){
+            if(isset($cliente->CliCertificaionComercial2) && file_exists(public_path().'/img/DatosClientes/'.$cliente->CliCertificaionComercial2)){
+                unlink(public_path("img/DatosClientes/$cliente->CliCertificaionComercial2"));
+            }
+            $CertificacionComercial2 = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial2->getClientOriginalName()).'.'.$request->CliCertificaionComercial2->extension();
+            $request->CliCertificaionComercial2->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial2);
+            $cliente->CliCertificaionComercial2 = $Folder.'/'.$CertificacionComercial2;
         }
         if ($request->hasfile('CliCertificaionBancaria')){
             if(isset($cliente->CliCertificaionBancaria) && file_exists(public_path().'/img/DatosClientes/'.$cliente->CliCertificaionBancaria)){

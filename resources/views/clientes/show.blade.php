@@ -126,6 +126,25 @@
 								</div>
 							</div>
 						</li>
+						<li class="list-group-item">
+							<div class="col-sm-16">
+								<div class="row">
+									<div class="col-sm-6">
+										<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }} 2</b>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<input type="text" value="{{$cliente->CliCertificaionComercial2 === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
+											<div class="input-group-btn ">
+												<a href="{{$cliente->CliCertificaionComercial2 === null ? '#' : "/img/DatosClientes/$cliente->CliCertificaionComercial2"}}" class="{{$cliente->CliCertificaionComercial2 === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliCertificaionComercial2 === null ? '' : 'target="_blank"'}}>
+													<i class='{{$cliente->CliCertificaionComercial2 === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
