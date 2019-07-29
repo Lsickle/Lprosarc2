@@ -611,13 +611,13 @@ function NotifiFalse(Mensaje) {
 					var label = $('label[for="'+idbutton+'"]');
 					$(label).empty();
 					$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-					$(label).attr('disabled', true);
+					// $(label).attr('disabled', true);
 				}
-				buttonsubmit.prop('disabled', true);
+				// buttonsubmit.prop('disabled', true);
 				buttonsubmit.empty();
 				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 				$(this).submit(function(){
-					return false;
+					// return false;
 				});
 				return true;
 			}
