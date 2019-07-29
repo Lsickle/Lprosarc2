@@ -19,7 +19,7 @@
 						@csrf
 						<div class="box-body">
 							<div class="col-md-12" style="margin-bottom: 1.5em;">
-								<div class="form-group col-md-12">
+								<div class="form-group col-md-{{$Solicitud->SolSerSupport == null ? '12' : '6'}}">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
@@ -29,6 +29,18 @@
 										@endforeach
 									</select>
 								</div>
+								@if($Solicitud->SolSerSupport <> null)
+								<div class="form-group col-md-6">
+									<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
+										<small class="help-block with-errors"></small>
+									<div class="input-group">
+										<input type="file" name="SupportPay" data-validate="true" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+										<div class="input-group-btn">
+											<a href="/img/SupportPay/{{$Solicitud->SolSerSupport}}" class="btn btn-info" target="_blank"> <i class="fas fa-file-pdf fa-lg"></i> </a>
+										</div>
+									</div>
+								</div>
+								@endif
 								<div class="form-group col-md-6">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 									<small class="help-block with-errors">*</small>
@@ -369,7 +381,7 @@ function submitverify(){
 							</div>
 							<div class="modal-header">
 								<div class="form-group col-md-12">
-									<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
+									<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
 									<small class="help-block with-errors"></small>
 									<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 								</div>

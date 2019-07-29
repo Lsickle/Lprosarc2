@@ -31,7 +31,7 @@ class VerifyCsrfToken extends Middleware
         }
 
         $tokensMatch = hash_equals($request->session()->token(), $token);
-        // if($tokensMatch) $request->session()->regenerateToken();
+        if($tokensMatch) $request->session()->regenerateToken();
 
         return $tokensMatch;
     }
