@@ -79,6 +79,9 @@ class userController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$user = User::where('UsSlug', $id)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'name'          => 'required',
 			'email'         => 'required|unique:users,email,'.$user->id.',id',
@@ -124,6 +127,9 @@ class userController extends Controller
 
 	public function changepassword(Request $request, $id){
 		$user = User::where('UsSlug', $id)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'oldpassword'          => 'required',
 			'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
@@ -151,6 +157,9 @@ class userController extends Controller
 
 	public function changeRol(Request $request, $slug){
 		$user = User::where('UsSlug', $slug)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$user->UsRol = $request->input('UsRol1');
 		$user->UsRol2 = $request->input('UsRol2');
 		$user->save();

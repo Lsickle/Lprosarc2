@@ -484,7 +484,7 @@ return [
     'vehiclecreate'           => 'Registro de Vehículos',
     'vehicleedit'             => 'Edición de Vehículos',
     'vehicdateregister'       => 'Fecha Registrado',
-    'vehicsedes'              => 'Sedes para el vehículo',
+    'vehicsedes'              => 'Sedes del vehículo',
 
     // user
     'userperson'              => 'Nombre de la persona',
@@ -538,11 +538,11 @@ return [
     'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',
     'MenuContactos'           => 'Lista de Proveedores',
-    'MenuSedes'               => 'Mis Sedes',
+    'MenuSedes'               => 'Sedes',
     'MenuSedesClien'          => 'Lista de Sedes',
     'MenuGener'               => 'Generadores',
     'MenuSedesGener'          => 'Lista de Sedes del Generador',
-    'MenuGenerClientitle'     => 'Mis Generadores',
+    'MenuGenerClientitle'     => 'Generadores',
     'MenuGenerClien'          => 'Lista de Generadores',
     'MenuRespel'              => 'Residuos',
     'MenuRespelClien'         => 'Mis Residuos',
@@ -554,7 +554,7 @@ return [
     'MenuDocumentsClien'      => 'Mis Documentos',
     'MenuCertificado'         => 'Certificados',
     'MenuManifiesto'          => 'Manifiestos',
-    'MenuPersonal'            => 'Mi Personal',
+    'MenuPersonal'            => 'Personal',
     'MenuPersonal2'           => 'Personal Cliente',
     'MenuPerslist'            => 'Lista de Personal',
     'MenuPersAsis'            => 'Asistencia',
@@ -770,6 +770,21 @@ return [
     'recdowloadvideo'         => 'Descargar Video',
     'recdeletevideo'          => 'Eliminar Imagen',
     'recaddvideo'             => 'Agregar Video',
+
+    //Contratos
+    'contracttitle'           => 'Contratos',
+    'contractindex'           => 'Lista de contratos',
+    'contractcreate'          => 'Creación de Contratos',
+    'contractedit'            => 'Edición de Contratos',
+    'contractvigencia2'       => 'Vigencia',
+    'contractclien'           => 'Clientes',
+    'contractcliendescript'   => 'Seleccione el cliente al cual le adjuntara el contrato',
+    'contractpdf'             => 'Contrato',
+    'contractpdfdescript'     => 'Adjunte el archivo del contrato en formato <b>PDF</b> y que no pase de <b>5Mb</b>',
+    'contractvigencia'        => 'Fecha de vigencia',
+    'contractvigenciadescript' => 'Seleccione la fecha de vencimiento y/o vigencia del documento anteriormente adjuntado',
+    'contractnotify'          => '¿Cuando notificar?',
+    'contractnotifydescript'  => 'Indique cuantos (días, semanas o meses) anteriores quiere recibir una notificación de la vigencia del documento',
 
     // Name PDF
     'generatemanicargpdf'     => 'Manifieto de Carga',

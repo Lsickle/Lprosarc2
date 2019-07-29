@@ -60,7 +60,9 @@
     "smartwizard": "^4.3.1",
     "toastr": "^2.1.4",
     "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "bootstrap-daterangepicker": "^3.0.5"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

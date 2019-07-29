@@ -108,6 +108,9 @@ class VehicManteController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)){
 			$MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
+			if (!$MantVehicles) {
+				abort(404);
+			}
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic', 'VehicPlaca')
 				->get();
@@ -151,6 +154,9 @@ class VehicManteController extends Controller
 			return back()->withErrors($validation, 'createManVeh')->withInput();
 		}
 		$MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
+		if (!$MantVehicles) {
+			abort(404);
+		}
 		$MantVehicles->FK_VehMan = $request->input('FK_VehMan');
 		$MantVehicles->MvKm = $request->input('MvKm');
 		$MantVehicles->HoraMavInicio = $request->input('HoraMavInicio1').' '.$request->input('HoraMavInicio');
@@ -178,6 +184,9 @@ class VehicManteController extends Controller
 	public function destroy($id)
 	{
 		$MantVehicles = MantenimientoVehiculo::where('ID_Mv', $id)->first();
+		if (!$MantVehicles) {
+			abort(404);
+		}
 		if ($MantVehicles->MvDelete == 0) {
 				$MantVehicles->MvDelete = 1;
 				$log = new audit();

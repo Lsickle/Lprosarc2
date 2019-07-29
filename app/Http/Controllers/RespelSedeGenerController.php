@@ -46,7 +46,9 @@ class RespelSedeGenerController extends Controller
 
     public function destroyGener($id){
         $RespelSedeGener = ResiduosGener::select('FK_SGener', 'FK_Respel')->where('SlugSGenerRes', $id)->first();
-        
+        if (!$RespelSedeGener) {
+            abort(404);
+        }
         $Gener = DB::table('generadors')
             ->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
             ->select('generadors.GenerSlug', 'generadors.ID_Gener')
@@ -115,7 +117,9 @@ class RespelSedeGenerController extends Controller
 
     public function destroySGener($id){
         $RespelSedeGener = ResiduosGener::where('SlugSGenerRes', $id)->first();
-
+        if (!$RespelSedeGener) {
+            abort(404);
+        }
         $SGener = DB::table('gener_sedes')
             ->select('gener_sedes.GSedeSlug')
             ->where('gener_sedes.ID_GSede', '=', $RespelSedeGener->FK_SGener)
