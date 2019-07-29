@@ -159,7 +159,7 @@
 							<a href="/sclientes/create" class="btn btn-primary pull-right"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
 						@endif
 					</div>
-					<div style='overflow-y:auto; max-height:463px;'>
+					<div style='overflow-y:auto; max-height:485px;'>
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
