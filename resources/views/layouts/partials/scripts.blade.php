@@ -632,7 +632,7 @@ function NotifiFalse(Mensaje) {
 	function ChangeSelect(){
 		$('select').on('change', function(){
 				var option="";
-				option = $(this).children("option:selected");
+				option = $(this).find("option:selected");
 				option.click();
 			});
 	}
