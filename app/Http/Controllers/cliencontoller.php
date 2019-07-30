@@ -385,10 +385,19 @@ class clientcontoller extends Controller
      * @param  int  $ID_Cli
      * @return \Illuminate\Http\Response
      */
-    public function destroy($ID_Cli){
+    public function destroy($slug){
         if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-            $Cliente = Cliente::where('CliSlug', $ID_Cli)->first();
-                if ($Cliente->CliDelete == 0) {
+            $Cliente = Cliente::where('CliSlug', $slug)->first();
+            
+            if ($Cliente->CliDelete == 0) {
+                    // $Data = DB::table('clientes')->where('CliSlug', $slug)
+                        // ->chunkById(100, function ($users) {
+                        //     foreach ($users as $user) {
+                        //         DB::table('users')
+                        //             ->where('id', $user->id)
+                        //             ->update(['active' => true]);
+                        //     }
+                        // });
                     $Cliente->CliDelete = 1;
                 }
                 else{

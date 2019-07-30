@@ -12,8 +12,47 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
+						@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
+							{{--  Modal Delete de Cliente--}}
+							<div class="modal modal-default fade in" id="myModalCliente{{$cliente->CliSlug}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<div style="font-size: 5em; color: red; text-align: center; margin: auto;">
+												<i class="fas fa-exclamation-triangle"></i>
+												<span style="font-size: 0.3em; color: black;"><p>¿Seguro quiere eliminar el cliente <b>{{$cliente->CliShortname}}</b>?</p></span>
+												<small><h5>NOTA: Los datos dependientes a este registro seran eliminados</h5></small>
+											</div> 
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-success pull-left" data-dismiss="modal">No, salir</button>
+											<label for="Eliminar{{$cliente->CliSlug}}" class='btn btn-danger'>Si, eliminar</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							{{-- END Modal --}}
+
+							<form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
+								@method('DELETE')
+								@csrf
+								<input type="submit" id="Eliminar{{$cliente->CliSlug}}" style="display: none;">
+							</form>
+							@if($cliente->CliDelete == 0 )
+								<a method='get' href='#' data-toggle='modal' data-target='#myModalCliente{{$cliente->CliSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+							@else
+								<form action='/clientes/{{$cliente->CliSlug}}' method='POST' class="pull-left">
+									@method('DELETE')
+									@csrf
+									<button type="submit" class='btn btn-success btn-block' title="{{ trans('adminlte_lang::message.add') }}">
+										<i class="fas fa-plus-square"></i>
+									</button>
+								</form>
+							@endif
+						@endif
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1))
-							@if(Route::currentRouteName() === 'cliente-show')
+							@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show'))
 								<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@endif
 						@endif
@@ -163,7 +202,7 @@
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
-								@if(Route::currentRouteName() === 'cliente-show')
+								@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show'))
 									@if($Sede->SedeDelete == 0 )
 										<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
 										@if(count($Sedes) > 1)
