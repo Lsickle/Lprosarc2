@@ -19,6 +19,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerConductor = '3';
         $Servicio->SolSerVehiculo = 'PSY-462';
         $Servicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Servicio->SolSerCityTrans = 584;
         $Servicio->FK_SolSerCliente = '2';
         $Servicio->FK_SolSerPersona = '2';
         $Servicio->SolSerDelete = '0';
@@ -31,18 +32,20 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerConductor = 'Juan';
         $Servicio->SolSerVehiculo = 'HDT-567';
         $Servicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Servicio->SolSerCityTrans = 584;
         $Servicio->FK_SolSerCliente = '1';
         $Servicio->FK_SolSerPersona = '1';
         $Servicio->SolSerDelete = '0';
         $Servicio->save();
 
         $Servicio = new SolicitudServicio();
-        $Servicio->SolSerStatus = 'Programado';
+        $Servicio->SolSerStatus = 'Pendiente';
         $Servicio->SolSerTipo = 'Alquilado';
         $Servicio->SolSerAuditable = NULL;
         $Servicio->SolSerConductor = 'Cristian';
         $Servicio->SolSerVehiculo = 'HGT-478';
         $Servicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Servicio->SolSerCityTrans = 584;
         $Servicio->FK_SolSerCliente = '5';
         $Servicio->FK_SolSerPersona = '5';
         $Servicio->SolSerDelete = '0';
@@ -55,6 +58,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerConductor = '';
         $Servicio->SolSerVehiculo = '';
         $Servicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Servicio->SolSerCityTrans = 584;
         $Servicio->FK_SolSerCliente = '3';
         $Servicio->FK_SolSerPersona = '3';
         $Servicio->SolSerDelete = '0';
@@ -67,6 +71,7 @@ class SolicitudServicioTableSeeder extends Seeder
         $Servicio->SolSerConductor = '';
         $Servicio->SolSerVehiculo = '';
         $Servicio->SolSerSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
+        $Servicio->SolSerCityTrans = 584;
         $Servicio->FK_SolSerCliente = '4';
         $Servicio->FK_SolSerPersona = '4';
         $Servicio->SolSerDelete = '0';
