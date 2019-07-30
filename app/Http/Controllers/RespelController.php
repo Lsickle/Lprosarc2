@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\RespelMail;
 use App\audit;
 use App\Respel;
 use App\Sede;
 use App\Cotizacion;
 use App\Tratamiento;
+use App\Clasificacion;
 use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
@@ -238,7 +241,7 @@ class RespelController extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
             $Respels = Respel::where('RespelSlug', $id)->first();
     
-            if ($Respels->RespelDelete == 1) {
+            if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
                 abort(404);
             }
     
@@ -250,14 +253,18 @@ class RespelController extends Controller
                 $deleteButton = 'No borrable';
             }else{
                 $deleteButton = 'borrable';
-            }   
-    
+            } 
+
+            $tratamientosViables = Clasificacion::with(['tratamientos'])
+            ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
+            ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
+            ->get();
+            // return $tratamientosViables;
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
                 ->get();
-    
             // se verifica el rol y el status del residuo para devolver a la vista correspondiente
                 $statusRespel = $Respels->RespelStatus;
     
@@ -287,7 +294,7 @@ class RespelController extends Controller
                     ->where('clientes.ID_Cli', '<>', 1) 
                     ->get();
     
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{
             abort(403);
@@ -304,10 +311,15 @@ class RespelController extends Controller
     public function update(RespelStoreRequest $request, $id)
     {
         $respel = Respel::where('RespelSlug', $id)->first();
+        if (!$respel) {
+            abort(404);
+        }
             if (isset($request['RespelHojaSeguridad'])) {
+                if($respel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad)){
+                    unlink(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad);
+                }
                 $file1 = $request['RespelHojaSeguridad'];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
-
                 $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
             }
             else{
@@ -316,6 +328,9 @@ class RespelController extends Controller
 
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'])) {
+                if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
+                    unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
+                }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
                 $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
@@ -325,6 +340,9 @@ class RespelController extends Controller
 
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'])) {
+                if($respel->RespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto)){
+                    unlink(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto);
+                }
                 $file3 = $request['RespelFoto'];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
                 $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
@@ -334,6 +352,9 @@ class RespelController extends Controller
             
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'])) {
+                if($respel->SustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento)){
+                    unlink(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento);
+                }
                 $file4 = $request['SustanciaControladaDocumento'];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
                 $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
@@ -368,8 +389,9 @@ class RespelController extends Controller
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=json_encode($request->all());
             $log->save();
-
+            
             return redirect()->route('respels.show', [$respel->RespelSlug]);
+            
     }
 
     /**
@@ -381,6 +403,9 @@ class RespelController extends Controller
     public function destroy($id)
     {
         $Respels = Respel::where('RespelSlug', $id)->first();
+        if (!$Respels) {
+            abort(404);
+        }
         switch (Auth::user()->UsRol) {
             case 'Programador':
                 if ($Respels->RespelDelete == 0) {
@@ -434,6 +459,10 @@ class RespelController extends Controller
             $log->Auditlog=json_encode($request->all());
             $log->save();
 
+            if($respel->RespelStatus === "Aprobado"){
+                // new  RespelMail($slug);
+                return redirect()->route('email-respel', [$respel->RespelSlug]);
+            }
             return redirect()->route('respels.edit', [$respel->RespelSlug]);
         }
     }

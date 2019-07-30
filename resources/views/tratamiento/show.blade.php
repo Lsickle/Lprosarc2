@@ -14,6 +14,14 @@
     <!-- row -->
     <div class="row">
         <!-- col md3 -->
+        @component('layouts.partials.modal')
+            @slot('slug')
+                {{$tratamiento->ID_Trat}}
+            @endslot
+            @slot('textModal')
+                el tratamiento <b>{{$tratamiento->TratName}}</b>
+            @endslot
+        @endcomponent
         <div class="col-md-3">
             <!-- box -->
             <div class="box box-primary">
@@ -47,6 +55,26 @@
                 <!-- box header -->
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratdetaillong') }}</h3>
+                    @if($tratamiento->TratDelete == 0)
+                      @if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+                      <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$tratamiento->ID_Trat}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+                      <form action='/tratamiento/{{$tratamiento->ID_Trat}}' method='POST'>
+                        @method('DELETE')
+                        @csrf
+                        <input type="submit" id="Eliminar{{$tratamiento->ID_Trat}}" style="display: none;">
+                      </form>
+                      @endif
+                    @else
+                      @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+                        <form action='/tratamiento/{{$tratamiento->ID_Trat}}' method='POST'>
+                          @method('DELETE')
+                          @csrf
+                          <button type="submit" class='btn btn-success pull-right'>
+                            <i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.add') }}</b>
+                          </button>
+                        </form>
+                      @endif
+                    @endif
                 </div>
                 <!-- /.box header -->
                 <!-- box body -->
@@ -55,10 +83,13 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">{{ trans('adminlte_lang::message.clientproveedor') }}</a>
+                                <a class="nav-link" href="#Proveedorpane" data-toggle="tab">{{ trans('adminlte_lang::message.clientGestor') }}</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.pretrat') }}s</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#Clasificacionespane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</a>
                             </li>
                         </ul>
                         <!-- nav-content -->
@@ -120,6 +151,31 @@
                                         @if($conteoDePretratamientos==0)
                                             <li class="list-group-item">
                                                 <p class="text-center"><br><b>{{ trans('adminlte_lang::LangTratamiento.noPretrat') }}</b></p>
+                                            </li>
+                                        @endif 
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane fade -->
+                            <!-- tab-pane fade -->
+                            <div class="tab-pane fade" id="Clasificacionespane">
+                                <div class="form-horizontal">
+                                    <ul class="list-group list-group-unbordered">
+                                        @php
+                                            $conteoDeClasificaciones=0;
+                                        @endphp 
+                                                
+                                        @foreach($tratamiento->clasificaciones as $clasificacion)
+                                                <li class="list-group-item">
+                                                    <b>{{$clasificacion->ClasfCode}}</b> <a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="Descripción del Pretratamiento" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="{{$clasificacion->ClasfDescription}}">{{$clasificacion->ClasfDescription}}</a>
+                                                </li>
+                                                @php
+                                                $conteoDeClasificaciones = $conteoDePretratamientos + 1;
+                                                @endphp
+                                        @endforeach
+                                        @if($conteoDeClasificaciones==0)
+                                            <li class="list-group-item">
+                                                <p class="text-center"><br><b>{{ trans('adminlte_lang::LangTratamiento.noClasfif') }}</b></p>
                                             </li>
                                         @endif 
                                     </ul>

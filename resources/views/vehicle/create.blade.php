@@ -48,8 +48,10 @@
 								<input type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" required="true" max="999999">
 							</div>
 						</div>
-						<div class="box-footer">
-							<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+						<div class="box box-info">
+							<div class="box-footer">
+								<button type="submit" class="btn btn-success pull-right">{{trans('adminlte_lang::message.register')}}</button>
+							</div>
 						</div>
 					</form>
 				</div>

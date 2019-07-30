@@ -58,10 +58,11 @@ class VehicProgController extends Controller
 	 */
 	public function create()
 	{
-		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerVehiculo')
+				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliShortname')
 				->where('progvehiculos.ProgVehDelete', 0)
 				->get();
 			$transportadores = DB::table('clientes')
@@ -92,6 +93,7 @@ class VehicProgController extends Controller
 				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
 				->where('SolSerDelete', 0)
 				->where('SolSerStatus', 'Aprobado')
+				->orderBy('solicitud_servicios.updated_at', 'asc')
 				->get();
 			return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
 		}
@@ -133,20 +135,21 @@ class VehicProgController extends Controller
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
 					->where('ID_Cli', 1)
 					->first();
 			}
 			else{
 				$programacion->ProgVehtipo = 2;
 				$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 				$programacion->ProgVehColor = '#FFFF00';
 				$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 				$nomConduct = null;
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
 					->where('CliSlug', $request->input('transport'))
 					->first();
 			}
@@ -168,7 +171,7 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
 			$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
 			$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-			$SolicitudServicio->SolSerCityTrans = $transportador->MunName;
+			$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		}
 		$SolicitudServicio->save();
 		
@@ -196,6 +199,9 @@ class VehicProgController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
 			$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+			if (!$programacion) {
+				abort(404);
+			}
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
 				->get();
@@ -243,6 +249,9 @@ class VehicProgController extends Controller
 	public function update(Request $request, $id)
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacion) {
+			abort(404);
+		}
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
 		$llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
@@ -286,6 +295,7 @@ class VehicProgController extends Controller
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
@@ -318,6 +328,9 @@ class VehicProgController extends Controller
 	public function destroy($id)
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacions) {
+			abort(404);
+		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
 		if ($programacion->ProgVehDelete == 0){
@@ -329,7 +342,7 @@ class VehicProgController extends Controller
 					$transportador = DB::table('clientes')
 						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName',  'municipios.ID_Mun')
 						->where('ID_Cli', 1)
 						->first();
 					$SolicitudServicio->SolSerConductor = null;
@@ -337,7 +350,7 @@ class VehicProgController extends Controller
 					$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
 					$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
 					$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-					$SolicitudServicio->SolSerCityTrans = $transportador->MunName;
+					$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 				}
 				$SolicitudServicio->save();
 			}

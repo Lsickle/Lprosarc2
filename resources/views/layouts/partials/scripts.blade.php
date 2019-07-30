@@ -17,7 +17,9 @@
 	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 @endif
 {{-- Chart --}}
-{{-- <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script> --}}
+<script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
+{{-- Moment --}}
+{{-- <script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script> --}}
 
 <script type="text/javascript">
 	window.onload =function(){
@@ -171,6 +173,8 @@ function Switch1() {
 	$(".testswitch").bootstrapSwitch({
 		animate: true,
 		labelText: '<i class="fas fa-arrows-alt-h"></i>',
+		onText: 'Si',
+		offText: 'No',
 	});
 }
 $(document).ready(Switch1());
@@ -245,7 +249,11 @@ $(document).ready(function() {
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
 
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf'] : ['colvis', 'copy'];
+	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
+					extend: 'collection',
+					text: 'Selector',
+					buttons: ['selectRows', 'selectCells']
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#tarifasTable').DataTable({
@@ -483,7 +491,7 @@ function NotifiFalse(Mensaje) {
 @endif
 @if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
-		var contador = `{{$contador}}`;
+		var contador = 0;
 		function attachPopover() {
 			$('[data-toggle="popover"]').popover({
 				html: true,
@@ -516,11 +524,11 @@ function NotifiFalse(Mensaje) {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->UsRol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 'Programador') ? ['colvis', 'copy', 'excel', 'pdf', {
+		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
-				}] : ['colvis', 'excel'];
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/        
 		$('.table').DataTable({
 			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
@@ -535,7 +543,7 @@ function NotifiFalse(Mensaje) {
 			"keys": true,
 			"lengthChange": true,
 			"buttons": [
-				botoncito
+				botoncito,
 			],
 			"language": {
 				"sProcessing":     "Procesando...",
@@ -559,7 +567,8 @@ function NotifiFalse(Mensaje) {
 				"oAria": {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				}
+				},
+				"colvis": 'Ajouté au presse-papiers',
 			}
 		});
 	});
@@ -592,11 +601,18 @@ function NotifiFalse(Mensaje) {
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){
-			var buttonsubmit = $(this).find('button[type="submit"]');
+			var buttonsubmit = $(this).find('[type="submit"]');
+			var idbutton = buttonsubmit[0].id;
 			if(buttonsubmit.hasClass('disabled')){
 				return false;
 			}
 			else{
+				if(idbutton != ''){
+					var label = $('label[for="'+idbutton+'"]');
+					$(label).empty();
+					$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$(label).attr('disabled', true);
+				}
 				buttonsubmit.prop('disabled', true);
 				buttonsubmit.empty();
 				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
@@ -604,18 +620,6 @@ function NotifiFalse(Mensaje) {
 					return false;
 				});
 				return true;
-			}
-		});
-		
-		$('label.btn').on('click', function(){
-			var idsubmit = $(this).attr('for');
-			if($('#'+idsubmit).hasClass('disabled')){
-				return false;
-			}
-			else{
-				$(this).empty();
-				$(this).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-				$(this).attr('disabled', true);
 			}
 		});
 	}
@@ -695,6 +699,11 @@ var currentScrollPos = window.pageYOffset;
 	$(document).ready(function(){
 		$('input[type="email"]').prop('pattern', '[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?');
 		$('input[type="email"]').attr('data-error', 'No es un e-mail valido');
-	})
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("form").attr("lang", "es");
+	});
 </script>
 @yield('NewScript')

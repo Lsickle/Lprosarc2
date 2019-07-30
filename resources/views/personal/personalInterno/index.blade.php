@@ -39,7 +39,7 @@
 									<td>{{$Personal->PersCellphone}}</td>
 									<td>{{$Personal->CargName}}</td>
 									<td>{{$Personal->AreaName}}</td>
-									<td><a method='get' href='/personalInterno/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
+									<td><a method='get' href='/personalInterno/{{$Personal->PersSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>

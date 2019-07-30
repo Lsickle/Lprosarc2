@@ -119,7 +119,6 @@ class PersonalController extends Controller
 			}
 		}
 		else{
-			return "Cargo ".$NuevoCargo." Request ".$request->input('NewCargo');
 			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 
@@ -156,6 +155,9 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug',$id)
 			->get();
+		if (!$Personas) {
+			abort(404);
+		}
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 		return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
@@ -214,10 +216,15 @@ class PersonalController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'Sede'          => 'required',
 			'CargArea'      => 'required',
-			'FK_PersCargo'  => 'required',
+			'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
+            'NewArea'       => 'required_if:CargArea,NewArea',
+            'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
 			'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
 			'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
 			'PersFirstName' => 'required|max:64',
@@ -291,6 +298,9 @@ class PersonalController extends Controller
 	 */
 	public function destroy($id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$Cargo = Cargo::where('ID_Carg', $Persona->FK_PersCargo)->first();
 		$Area = Area::where('ID_Area', $Cargo->CargArea)->first();
 		if ($Persona->PersDelete == 0){

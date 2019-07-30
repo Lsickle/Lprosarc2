@@ -11,15 +11,24 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header">
-					<center>
-						<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
+					<div class="col-sm-16 text-center">
+						<div class="{{!isset($Gener) ? 'col-xs-12 col-sm-4' : 'col-xs-6'}}">
+							<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
+						</div>
 						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							@if (!isset($Gener))
-								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
+							<div class="col-xs-6 col-sm-4">
+								<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
+									@csrf
+									<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
+								</form>
+							</div>
 							@endif
-							<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+							<div class=" {{!isset($Gener) ? 'col-sm-4' : ''}} col-xs-6">
+								<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
+							</div>
 						@endif
-					</center>
+					</div>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -39,10 +48,7 @@
 							</thead>
 							<tbody id="readyTable">
 							@foreach($Generadors as $Gener)
-								<tr @if($Gener->GenerDelete === 1)
-									style="color: red;" 
-								@endif
-								>
+								<tr {{$Gener->GenerDelete === 1 ? 'style="color: red;"' : ''}}>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
 									@endif
@@ -52,7 +58,7 @@
 									<td>{{$Gener->GenerShortname}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>
-										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 									</td>
 								</tr>
 							@endforeach

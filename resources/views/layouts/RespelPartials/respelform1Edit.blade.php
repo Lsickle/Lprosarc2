@@ -91,7 +91,7 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->RespelHojaSeguridad !== 'RespelHojaDefault.pdf')
 				<div class="input-group">
-					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
@@ -99,14 +99,14 @@
 				@else
 					@if($Respels->RespelIgrosidad !== 'No peligroso')
 					<div class="input-group">
-						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
 					</div>
 					@else
 					<div class="input-group">
-						<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+						<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
@@ -120,14 +120,14 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
 				<div class="input-group">
-					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="hoja0" name="RespelTarj" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -142,14 +142,14 @@
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span> --}}
 				@if($Respels->RespelFoto!=='RespelFotoDefault.png')
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="2048" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -166,14 +166,24 @@
 					<option value="1" onclick="setControlada(0)" {{ ($Respels->SustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
 				<label style="margin-bottom: 0">Tipo de sustancia</label><br>
-				<a class="btn btn-success" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
-				<a class="btn btn-default" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
+					@include('layouts.RespelPartials.layoutsRes.ControladaEditName')
+				@else
+					@include('layouts.RespelPartials.layoutsRes.MasivoEditName')
+				@endif
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" hidden="">
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
+					@include('layouts.RespelPartials.layoutsRes.ControladaEditDoc')
+				@else
+					@include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')
+				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
@@ -184,8 +194,6 @@
 					<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			
-			
 			{{--
 		</div> --}}
 	</div>

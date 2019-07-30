@@ -168,6 +168,9 @@ class PersonalInternoController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug',$id)
 			->get();
+		if (!$Personas) {
+			abort(404);
+		}
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 		 return view('personal.personalInterno.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
@@ -181,6 +184,9 @@ class PersonalInternoController extends Controller
 	public function edit($id){
 		if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
 			$Persona = Personal::where('PersSlug', $id)->first();
+			if (!$Persona) {
+				abort(404);
+			}
 			$Sede = DB::table('sedes')
 				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('cargos', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -218,10 +224,15 @@ class PersonalInternoController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'Sede'          => 'required',
 			'CargArea'      => 'required',
-			'FK_PersCargo'  => 'required',
+			'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
+            'NewArea'       => 'required_if:CargArea,NewArea',
+            'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
 			'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
 			'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
 			'PersFirstName' => 'required|max:64',
@@ -304,6 +315,9 @@ class PersonalInternoController extends Controller
 	 */
 	public function destroy($id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$Cargo = Cargo::where('ID_Carg', $Persona->FK_PersCargo)->first();
 		$Area = Area::where('ID_Area', $Cargo->CargArea)->first();
 		if ($Persona->PersDelete == 0){

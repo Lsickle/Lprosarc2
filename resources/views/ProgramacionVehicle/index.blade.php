@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehiclist') }}</h3>
-					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 						<a href="/vehicle-programacion/create" class="btn btn-info pull-right"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
 					@endif
 				</div>
@@ -57,6 +57,19 @@
 											}
 										}
 									}
+									elseif($programacion->ProgVehtipo == 2){
+										foreach($personals as $personal){
+											if($programacion->FK_ProgAyudante == $personal->ID_Pers){
+												$ayudante = $personal->PersFirstName.' '.$personal->PersLastName;
+											}
+										}
+										$conductor = 'No aplica';
+										foreach ($vehiculos as $vehiculo) {
+											if($programacion->FK_ProgVehiculo == $vehiculo->ID_Vehic){
+												$vehiculoPlaca = $vehiculo->VehicPlaca;
+											}
+										}
+									}
 									else{
 										$ayudante = 'No aplica';
 										$conductor = $programacion->SolSerConductor;
@@ -67,7 +80,7 @@
 									<td>{{$programacion->CliShortname}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$vehiculoPlaca}}</td>
-									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
 									<td>{{$ayudante}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
@@ -76,7 +89,7 @@
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
-										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'>{{ trans('adminlte_lang::message.edit') }}</a></td>
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
 								</tr>
 								@endforeach

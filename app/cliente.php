@@ -18,11 +18,15 @@ class Cliente extends Model
 	 */
 	public function getRouteKeyName()
 	{
-	    return 'CliSlug';
+		return 'CliSlug';
 	}
 
 	public function sedes()
-    {
-        return $this->hasMany('App\sede', 'ID_Sede', 'ID_Cli');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
-    }
+	{
+		return $this->hasMany('App\sede', 'ID_Sede', 'ID_Cli');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+	}
+	public function contratos()
+	{
+		return $this->hasMany('App\Contrato', 'ID_Contra', 'ID_Cli');//como cliente tiene muchos contratos
+	}
 }

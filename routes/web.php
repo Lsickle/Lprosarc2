@@ -15,7 +15,6 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('/noscriptpage', function () {
@@ -28,6 +27,10 @@ Route::get('/profile/{id}/edit', 'userController@edit');
 Route::put('/profile/{id}','userController@update');
 Route::get('/profile/{id}/passwordreset', 'userController@viewchangepassword')->name('profile.changepassword');
 Route::patch('/profile/{id}', 'userController@changepassword');
+
+Route::get('/preguntas-frecuentes', function () {
+    return view('preguntas.index');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
@@ -42,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
 	Route::resource('/clientes', 'clientcontoller');
+	Route::post('/clientes/{id}/changeComercial', 'clientcontoller@changeComercial');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
@@ -53,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
 	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
 	Route::resource('/generadores', 'genercontroller');
-	Route::get('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
+	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
@@ -77,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
+	Route::resource('/pretratamiento','PretratamientoController');
 	Route::resource('/asistencia', 'AssistancesController');
 	Route::resource('/compra/orden','OrdenCompraController');
 	// Route::resource('/compra/cotizacion','QuotationController');
@@ -91,6 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
+	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
@@ -107,6 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
 	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
+	Route::resource('/contratos', 'ContratoController');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
@@ -117,9 +124,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/contacto-vehiculos/{id}', 'AjaxController@VehiculosContacto');
 	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
 	Route::get('/vehicle-transport/{id}', 'AjaxController@VehicTransport');
+	Route::get('/preTratamientoDinamico/{id}', 'AjaxController@preTratamientoDinamico');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
-	Route::get('/email/{slug}', 'EmailController@sendemail')->name('email');
+	Route::get('/email-solser/{slug}', 'EmailController@sendemail')->name('email-solser');
+	Route::get('/email-respel/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 

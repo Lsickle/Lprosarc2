@@ -5,26 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\ResiduosGener;
-use App\audit;
 use Illuminate\Support\Facades\Hash;
-
-
+use App\ResiduosGener;
+use App\GenerSede;
+use App\Respel;
+use App\audit;
 
 class RespelSedeGenerController extends Controller
 {
     public function storeGener(Request $request){
         
         $Validate = $request->validate([
-            'FK_SGener' => 'required|numeric',
+            'FK_SGener' => 'required',
             'FK_Respel' => 'required',
         ]);
 
         if($request->input('FK_Respel') !== null){
-            foreach($request->FK_Respel as $Respel){ 
+            $SGener = GenerSede::select('ID_GSede')->where('GSedeSlug', $request->input('FK_SGener'))->first();
+            foreach($request->FK_Respel as $Respel1){ 
+                $Respel2 = Respel::select('ID_Respel')->where('RespelSlug', $Respel1)->first();
                 $RespelSedeGener = new ResiduosGener;
-                $RespelSedeGener->FK_SGener = $request->input('FK_SGener');
-                $RespelSedeGener->FK_Respel = $Respel;
+                $RespelSedeGener->FK_SGener = $SGener->ID_GSede;
+                $RespelSedeGener->FK_Respel = $Respel2->ID_Respel;
                 $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_SGener);
                 $RespelSedeGener->DeleteSGenerRes = 0;
                 $RespelSedeGener->save();
@@ -43,8 +45,10 @@ class RespelSedeGenerController extends Controller
     }
 
     public function destroyGener($id){
-        $RespelSedeGener = ResiduosGener::where('SlugSGenerRes', $id)->first();
-        
+        $RespelSedeGener = ResiduosGener::select('FK_SGener', 'FK_Respel')->where('SlugSGenerRes', $id)->first();
+        if (!$RespelSedeGener) {
+            abort(404);
+        }
         $Gener = DB::table('generadors')
             ->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
             ->select('generadors.GenerSlug', 'generadors.ID_Gener')
@@ -93,12 +97,13 @@ class RespelSedeGenerController extends Controller
             ->select('gener_sedes.GSedeSlug', 'gener_sedes.ID_GSede')
             ->where('gener_sedes.GSedeSlug', '=', $request->input('FK_SGener'))
             ->first();
-
+            
         if($request->input('FK_Respel') !== null){
-            foreach($request->FK_Respel as $Respel){ 
+            foreach($request->FK_Respel as $Respel1){ 
+                $Respel2 = Respel::select('ID_Respel')->where('RespelSlug', $Respel1)->first();
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $SGener->ID_GSede;
-                $RespelSedeGener->FK_Respel = $Respel;
+                $RespelSedeGener->FK_Respel = $Respel2->ID_Respel;
                 $RespelSedeGener->DeleteSGenerRes = 0;
                 $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_Respel);
                 $RespelSedeGener->save();
@@ -112,7 +117,9 @@ class RespelSedeGenerController extends Controller
 
     public function destroySGener($id){
         $RespelSedeGener = ResiduosGener::where('SlugSGenerRes', $id)->first();
-
+        if (!$RespelSedeGener) {
+            abort(404);
+        }
         $SGener = DB::table('gener_sedes')
             ->select('gener_sedes.GSedeSlug')
             ->where('gener_sedes.ID_GSede', '=', $RespelSedeGener->FK_SGener)

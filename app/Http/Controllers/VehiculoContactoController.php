@@ -27,6 +27,9 @@ class VehiculoContactoController extends Controller
             ->where('sedes.SedeSlug', '=', $id)
             ->select('sedes.ID_Sede', 'clientes.CliSlug')
             ->first();
+        if (!$Cliente) {
+            abort(404);
+        }
 
         $Vehiculo = new Vehiculo();
         $Vehiculo->VehicPlaca = $request->input('CreateVehicPlaca');
@@ -44,7 +47,9 @@ class VehiculoContactoController extends Controller
     public function update(Request $request, $id)
     {
         $Vehiculo = Vehiculo::where('ID_Vehic', $id)->first();
-
+        if (!$Vehiculo) {
+            abort(404);
+        }
         $rule = [
             'VehicPlaca'     => 'required|max:7|min:7|unique:vehiculos,VehicPlaca,'.$Vehiculo->VehicPlaca.',VehicPlaca',
             'VehicTipo'      => 'required|max:64',
@@ -79,7 +84,9 @@ class VehiculoContactoController extends Controller
     public function destroy(Request $request, $id)
     {
         $Vehiculo = Vehiculo::where('ID_Vehic', $id)->first();
-
+        if (!$Vehiculo) {
+            abort(404);
+        }
         $Cliente = DB::table('clientes')
             ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
             ->where('sedes.ID_Sede', '=', $Vehiculo->FK_VehiSede)

@@ -44,7 +44,7 @@
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center textolargo col-12">{{$Generador->GenerShortname}}</h3>
+					<h3 class="profile-username text-center textolargo">{{$Generador->GenerShortname}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 							<li class="list-group-item">
@@ -72,6 +72,8 @@
 							<b>{{ trans('adminlte_lang::message.genercode') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
 						</li>
+						{{-- @if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) --}}
+
 							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.sedesgener') }}</i></h4>
 							<div style='overflow-y:auto; max-height:200px;'>
 								@php
@@ -92,6 +94,7 @@
 									@endphp
 								@endforeach
 							</div>
+						{{-- @endif --}}
 					</ul>
 				</div>
 			</div>
@@ -125,7 +128,7 @@
 								<select class="form-control select" id="FK_SGener" name="FK_SGener" required>
 									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($GenerSedes as $GenerSede)	
-										<option value="{{$GenerSede->ID_GSede}}" {{ old('FK_SGener') == $GenerSede->ID_GSede ? 'selected' : '' }}>{{$GenerSede->GSedeName}}</option>
+										<option value="{{$GenerSede->GSedeSlug}}">{{$GenerSede->GSedeName}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -134,7 +137,7 @@
 								<select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
 									@if(isset($Residuos))
 										@foreach ($Residuos as $Residuo)
-											<option value="{{$Residuo->ID_Respel}}" {{ $old == $Residuo->ID_Respel ? 'selected' : '' }}>{{$Residuo->RespelName}}</option>
+											<option value="{{$Residuo->RespelSlug}}">{{$Residuo->RespelName}}</option>
 										@endforeach 
 									@endif 
 								</select>
@@ -152,9 +155,9 @@
 		<div class="col-md-6">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
-						{{-- Barra de navegacion --}}
-						<li class="active box-info" ><a href="#residuos" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
-						<li><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
+					{{-- Barra de navegacion --}}
+					<li class="active box-info" ><a href="#residuos" data-toggle="tab">{{ trans('adminlte_lang::message.MenuRespel') }}</a></li>
+					<li><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
 				</ul>
 				<div class="tab-content">
 					<div class="active tab-pane" id="residuos">
@@ -230,7 +233,7 @@
 					var respel = new Array();
 					for (var i = res.length - 1; i >= 0; i--) {
 						if ($.inArray(res[i].ID_Respel, respel) < 0) {
-							$("#FK_Respel").append(`<option value="${res[i].ID_Respel}">${res[i].RespelName}</option>`);
+							$("#FK_Respel").append(`<option value="${res[i].RespelSlug}">${res[i].RespelName}</option>`);
 							respel.push(res[i].ID_Mun);
 						}
 					}

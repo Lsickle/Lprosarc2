@@ -41,12 +41,12 @@
 										<td>{{$Sede->SedeCelular}}</td>
 										<td>{{$Sede->SedeEmail}}</td>
 										<td>
-											<a method='get' href='/sclientes/{{$Sede->SedeSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
+											<a method='get' href='/sclientes/{{$Sede->SedeSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 										</td>
 									</tr>
 									@endforeach
 							</tbody>
-							<tfoot>
+							{{-- <tfoot>
 								<tr>
 									<th>{{ trans('adminlte_lang::message.sclientnamesede') }}</th>
 									<th>{{ trans('adminlte_lang::message.address') }}</th>
@@ -54,7 +54,7 @@
 									<th>{{ trans('adminlte_lang::message.emailaddress') }}</th>
 									<th>{{ trans('adminlte_lang::message.seemore')}}</th>
 								</tr>
-							</tfoot>
+							</tfoot> --}}
 						</table>
 					</div>
 				</div>

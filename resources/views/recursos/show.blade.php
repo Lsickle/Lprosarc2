@@ -12,7 +12,7 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<div class="col-md-12" >
-						@if(($SolSer->SolSerStatus <> 'Pendiente' && $SolSer->SolSerStatus <> 'Aprobado') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+						@if(($SolSer->SolSerStatus <> 'Pendiente' && $SolSer->SolSerStatus <> 'Aprobado' && $SolSer->SolSerStatus <> 'Aceptado') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 							<h4 class="col-md-6">{{trans('adminlte_lang::message.solrestitleclientepart1')}} <b>{{trans('adminlte_lang::message.update')}}</b> {{trans('adminlte_lang::message.o')}} <b>{{trans('adminlte_lang::message.delete')}}</b> {{trans('adminlte_lang::message.solrestitleclientepart2')}}
 								@switch($SolSer->SolSerStatus)
 									@case('Programado')
@@ -36,7 +36,7 @@
 								@endswitch
 							</h4>
 						@endif
-						@if(($SolSer->SolSerStatus === 'Pendiente' || $SolSer->SolSerStatus === 'Aprobado') || (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+						@if(($SolSer->SolSerStatus === 'Pendiente' || $SolSer->SolSerStatus === 'Aprobado' || $SolSer->SolSerStatus === 'Aceptado') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 							<a href="/solicitud-residuo/{{$SolRes->SolResSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 						@endif
 						@php
@@ -184,7 +184,7 @@
 				<div id="deleteRecurso">
 				</div>
 				<div class="row">
-					@if(((($SolSer->SolSerStatus <> 'Pendiente' && $SolSer->SolSerStatus <> 'Aprobado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null))
+					@if(((($SolSer->SolSerStatus <> 'Pendiente' && $SolSer->SolSerStatus <> 'Aprobado' && $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null))
 						<tbody hidden onload="renderTable()" id="readyTable">
 							<div class="col-md-12">
 								<center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -322,7 +322,7 @@
 				Tratamiento();
 			};
 			$('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
-			$('#recursoinputext').attr('data-filessizemultiple', '2048');
+			$('#recursoinputext').attr('data-filessizemultiple', '5120');
 		});
 
 		$("#addVideo").click(function(e){

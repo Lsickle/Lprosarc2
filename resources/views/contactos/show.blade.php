@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientcontacto') }}
+	{{ trans('adminlte_lang::message.clientcontacto') }}
 @endsection
 @section('contentheader_title')
 	{{ trans('adminlte_lang::message.clientcontacto') }}

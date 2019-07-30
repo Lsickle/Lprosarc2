@@ -30,7 +30,7 @@
 								<input type="submit" id="Eliminar{{$Cliente->ID_Cli}}" style="display: none;">
 							</form>
 						@else
-							@if((in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) && $Cliente->CliDelete === 1)
+							@if((in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)) && ($Cliente->CliDelete === 1))
 								<form action='/contactos/{{$Cliente->CliSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf

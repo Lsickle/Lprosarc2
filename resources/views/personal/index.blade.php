@@ -45,7 +45,7 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<td>{{$Personal->CliShortname}}</td>
 									@endif
-									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.see') }}</a></td>
+									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>

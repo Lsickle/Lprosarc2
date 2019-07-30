@@ -128,6 +128,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'g-recaptcha-response' => [
+            'required' => 'Este campo es requerido.',
+        ],
     ],
 
     /*
@@ -158,6 +161,11 @@ return [
         'CliName'       => '"Razón Social"',
         'CliShortname'  => '"Nombre Corto"',
         'CliCategoria'  => '"Categoría"',
+        'CliRut'        => '"Rut"',
+        'CliCamaraComercio'         => '"Camara de Comercio"',
+        'CliRepresentanteLegal'     => '"Representante Legal"',
+        'CliCertificaionBancaria'   => '"Certificacion Bancaria"',
+        'CliCertificaionComercial'  => '"CertificacionComercial"',
 
         'SedeEmail'     => '"Email de la Sede"',
         'SedeName'      => '"Nombre de la Sede"',

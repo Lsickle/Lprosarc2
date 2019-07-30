@@ -35,7 +35,7 @@
 								<small class="help-block with-errors">*</small>
 								<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
 									@foreach($Sedes as $Sede)
-									<option value="{{$Sede->ID_Sede}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+									<option value="{{$Sede->SedeSlug}}" {{$Generador->FK_GenerCli== $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
 									@endforeach
 								</select>
 							</div>

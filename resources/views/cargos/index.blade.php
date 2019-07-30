@@ -29,7 +29,7 @@
 								<tr style="{{$Cargo->CargDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$Cargo->CargName}}</td>
 									<td>{{$Cargo->AreaName}}</td>
-									<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'>{{trans('adminlte_lang::message.edit')}}</a></td>
+									<td><a href='/cargos/{{$Cargo->CargSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 								</tr>
 								@endforeach
 							</tbody>

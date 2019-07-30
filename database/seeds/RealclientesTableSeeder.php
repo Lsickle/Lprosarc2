@@ -15,7 +15,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente = new Cliente();
 		$cliente->CliNit = '900.079.188-0';
 		$cliente->CliName = 'PROTECCIÓN SERVICIOS AMBIENTALES RESPEL DE COLOMBIA S.A. ESP.';
-		$cliente->CliShortname = 'cliente S.A. ESP.';
+		$cliente->CliShortname = 'Prosarc S.A. ESP.';
 		$cliente->CliCategoria = 'Proveedor';
 		$cliente->CliSlug = hash('sha256', rand().time().$cliente->CliNit);
 		$cliente->CliDelete = 0;

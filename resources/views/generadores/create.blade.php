@@ -33,7 +33,7 @@
 										<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br/><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
 										<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br/><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>
 									</ul>
-									<div class="row">
+									<div>
 										<div id="step-1" class="tab-pane step-content">
 											<div id="form-step-0" role="form" data-toggle="validator">
 												<div class="col-md-12 form-group">
@@ -45,7 +45,7 @@
 													<select name="FK_GenerCli" class="form-control select" id="GenerInputTipo" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach($Sedes as $Sede)
-															<option value="{{$Sede->ID_Sede}}" {{ old('FK_GenerCli') == $Sede->ID_Sede ? 'selected' : '' }}>{{$Sede->SedeName}}</option>
+															<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 														@endforeach()
 													</select>
 												</div>
@@ -80,11 +80,9 @@
 														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 														{{ trans('adminlte_lang::message.MenuRespel') }}
 													</label>
-													{{-- <label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
-													<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a> --}}
 													<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
 														@foreach ($Respels as $Respel)
-															<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
+															<option value="{{$Respel->RespelSlug}}">{{$Respel->RespelName}}</option>
 														@endforeach
 													</select>
 												</div>
@@ -92,78 +90,78 @@
 										</div>
 										<div id="step-2" class="tab-pane step-content">
 											<div id="form-step-1" role="form" data-toggle="validator">
-												<div class="box-body">
-												<h2>{{ trans('adminlte_lang::message.SGenertitle') }}</h2>
-												<div class="form-group col-md-6">
-													<label for="GSedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label>
-													<small class="help-block with-errors">*</small>
-													<input type="text" class="form-control" id="GSedeinputname" name="GSedeName" value="{{ old('GSedeName') }}" required>
-												</div>
-												<div class="col-md-6 form-group">
-													<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label>
-													<small class="help-block with-errors">*</small>
-													<input type="email" name="GSedeEmail" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{ old('GSedeEmail') }}" required>
-												</div>
-												<div class="col-md-6 form-group">
-													<label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label>
-													<small class="help-block with-errors">*</small>
-													<select class="form-control select" id="departamento" name="departamento" required>
-														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-														@foreach ($Departamentos as $Departamento)		
-															<option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
-														@endforeach
-													</select>
-												</div>
-												<div class="col-md-6 form-group">
-													<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><a class="load"></a>
-													<select class="form-control select" id="municipio" name="FK_GSedeMun">
-														@if (isset($Municipios))
-															@foreach ($Municipios as $Municipio)
-																<option value="{{$Municipio->ID_Mun}}" {{ old('FK_GSedeMun') == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+												<div class="col-md-12">
+													<h2>{{ trans('adminlte_lang::message.SGenertitle') }}</h2>
+													<div class="form-group col-md-6">
+														<label for="GSedeinputname">{{ trans('adminlte_lang::message.sclientnamesede') }}</label>
+														<small class="help-block with-errors">*</small>
+														<input type="text" class="form-control" id="GSedeinputname" name="GSedeName" value="{{ old('GSedeName') }}" required>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label>
+														<small class="help-block with-errors">*</small>
+														<input type="email" name="GSedeEmail" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" value="{{ old('GSedeEmail') }}" required>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label>
+														<small class="help-block with-errors">*</small>
+														<select class="form-control select" id="departamento" name="departamento" required>
+															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+															@foreach ($Departamentos as $Departamento)
+																<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
 															@endforeach
-														@endif
-													</select>
-												</div>
-												<div class="col-md-6 form-group">
-													<label for="GSedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label>
-													<small class="help-block with-errors">*</small>
-													<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{ old('GSedeAddress') }}" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" required>
-												</div>
-												<div class="col-md-6 form-group">
-													<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
-													<small class="help-block with-errors">*</small>
-													<div class="input-group">
-														<span class="input-group-addon">(+57)</span>
-														<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
+														</select>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="municipio">{{ trans('adminlte_lang::message.municipio') }}</label><a class="load"></a>
+														<select class="form-control select" id="municipio" name="FK_GSedeMun">
+															@if (isset($Municipios))
+																@foreach ($Municipios as $Municipio)
+																	<option value="{{$Municipio->ID_Mun}}">{{$Municipio->MunName}}</option>
+																@endforeach
+															@endif
+														</select>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="GSedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label>
+														<small class="help-block with-errors">*</small>
+														<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{ old('GSedeAddress') }}" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" required>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label>
+														<small class="help-block with-errors">*</small>
+														<div class="input-group">
+															<span class="input-group-addon">(+57)</span>
+															<input type="text" class="form-control mobile" id="GSedeinputcelular" name="GSedeCelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('GSedeCelular') }}" required>
+														</div>
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="GSedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label>
+														<small class="help-block with-errors"></small>
+														<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
+													</div>
+													<div class="col-md-6 form-group">
+														<label for="GSedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label>
+														<small class="help-block with-errors"></small>
+														<input type="text" class="form-control extension ext" id="GSedeinputext1" name="GSedeExt1" data-minlength="2" maxlength="5" value="{{ old('GSedeExt1') }}" disabled>
+													</div>
+													<div id="telefono2" class="col-md-6 form-group" style="display: none;">
+														<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
+														<small class="help-block with-errors"></small>
+														<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
+													</div>
+													<div id="extension2" class="col-md-6 form-group" style="display: none;">
+														<label for="GSedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label> 
+														<small class="help-block with-errors"></small>
+														<input type="text" class="form-control extension ext2" id="GSedeinputext2" name="GSedeExt2" data-minlength="2" maxlength="5" value="{{ old('GSedeExt2') }}" disabled>
+													</div>
+													<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
+														<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
 													</div>
 												</div>
-												<div class="col-md-6 form-group">
-													<label for="GSedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label>
-													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
+												<div class="box-footer">
+													<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 												</div>
-												<div class="col-md-6 form-group">
-													<label for="GSedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label>
-													<small class="help-block with-errors"></small>
-													<input type="text" class="form-control extension ext" id="GSedeinputext1" name="GSedeExt1" data-minlength="2" maxlength="5" value="{{ old('GSedeExt1') }}" disabled>
-												</div>
-												<div id="telefono2" class="col-md-6 form-group" style="display: none;">
-													<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
-													<small class="help-block with-errors"></small>
-													<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
-												</div>
-												<div id="extension2" class="col-md-6 form-group" style="display: none;">
-													<label for="GSedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label> 
-													<small class="help-block with-errors"></small>
-													<input type="text" class="form-control extension ext2" id="GSedeinputext2" name="GSedeExt2" data-minlength="2" maxlength="5" value="{{ old('GSedeExt2') }}" disabled>
-												</div>
-												<div class="col-md-12" id="tel" style="display:flex; justify-content:center">
-													<a onclick="Tel()"class="btn btn-info">{{ trans('adminlte_lang::message.scliotrotelefono') }}</a>
-												</div>
-											</div>
-											</div>
-											<div class="box-footer">
-												<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
 											</div>
 										</div>
 									</div>

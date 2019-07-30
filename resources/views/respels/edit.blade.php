@@ -46,9 +46,10 @@
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 									@include('layouts.RespelPartials.Respelform1Edit')
 								</div>
-								<div class="box-footer">
-									<button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-									{{-- <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a> --}}
+								<div class="box box-info">
+									<div class="box-footer">
+										<button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -71,7 +72,7 @@
 		{{$Respels->ID_Respel}}
 	@endslot
 	@slot('textModal')
-		la solicitud <b>N° {{$Respels->ID_Respel}}</b>
+		El residuo <b>N° {{$Respels->ID_Respel}}</b>
 	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
@@ -80,7 +81,6 @@
 		@method('PUT')
 		@csrf
 		{{-- <input hidden type="text" name="updated_by" value="{{Auth::user()->email}}"> --}}
-		<!-- row -->
 			<!-- col md3 -->
 			<div class="col-md-3">
 				<!-- box -->
@@ -198,6 +198,9 @@
 					<!-- box header -->
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
+						<div class="box-tools pull-right">
+						 <button onclick="AgregarOption()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+						</div>
 					</div>
 					<!-- /.box header -->
 					<!-- box body -->
@@ -210,6 +213,9 @@
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.pretrattabtittle') }}</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
@@ -227,17 +233,22 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade " id="Tratamientospane">
-									@include('layouts.respel-comercial.respel-tratamiento')
+									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
+								</div>
+								<!-- tab-pane fade -->
+								<!-- tab-pane fade -->
+								<div class="tab-pane fade " id="Pretratamientospane">
+									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
-									@include('layouts.respel-comercial.respel-requerimiento')
+									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="tarifaspane">
-									@include('layouts.respel-comercial.respel-tarifas')
+									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<!-- /.tab-pane fade -->
 							</div>
@@ -246,10 +257,10 @@
 					</div>
 					<!-- /.box body -->
 					<div class="box-footer">
-						 <button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
-						 <a class="btn btn-default btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-backspace" color="red"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
+						<button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
+						<a class="btn btn-danger btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-times"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
-						<!-- /.nav-tabs-custom -->
+					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
 			</div>
@@ -258,5 +269,88 @@
 	</form>
 	<!-- /.form  -->
 </div>
+@section('NewScript')
+	<script type="text/javascript">
+	    var contador = 1;
+	    function attachPopover(){
+	        $(document).ready(function(){
+	            $('[data-toggle="popover"]').popover({
+	                html: true,
+	                trigger: 'hover',
+	                placement: 'auto',
+	            });
+	        });
+	    }
+	    function validarSwitch(){
+	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
+	       		Switch1();
+	            $('.testswitch').bootstrapSwitch('disabled', true);
+	        }else{
+	        	Switch1();
+	        }
+	    }
+	    function recargarAjaxTratamiento(){
+	    	$(".tratamientoEspecial").change(function(e){
+	    		id=$(".tratamientoEspecial").val();
+	    		console.log(id);
+	    		e.preventDefault();
+	    		$.ajaxSetup({
+	    		  headers: {
+	    			  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+	    		  }
+	    		});
+	    		$.ajax({
+	    			url: "{{url('/preTratamientoDinamico')}}/"+id,
+	    			method: 'GET',
+	    			data:{},
+	    			beforeSend: function(){
+	    				$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+	    				$("#pretratamiento").prop('disabled', true);
+	    			},
+	    			success: function(res){
+	    				$("#pretratamiento"+contador).empty();
+	    				var pretrataOption = new Array();
+	    				for(var i = res.length -1; i >= 0; i--){
+	    					if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
+	    						$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
+	    						pretrataOption.push(res[i].ID_PreTrat);
+	    					}
+	    				}
+	    			},
+	    			complete: function(){
+	    				$(".load").empty();
+	    				$("#municipio").prop('disabled', false);
+	    			}
+	    		})
+	    	});
+	    };
+	    function AgregarOption(){
+	        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
+	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+	        var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
+	        var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
+	        $("#Tratamientospane").append(tratamiento);
+	        $("#Pretratamientospane").append(pretratamiento);
+	        $("#Requerimientospane").append(requerimiento);
+	        $("#tarifaspane").append(tarifas);
+	        $("#evaluacioncomercial").validator('update');
+	        contador = parseInt(contador)+1;
+	        attachPopover();
+	        validarSwitch();
+	        recargarAjaxTratamiento();
+	    }
+	    function EliminarOption(id){
+	        $("#tratamientoContainer"+id).remove();
+	        $("#pretratname"+id).remove();
+	        $("#pretratdescription"+id).remove();
+	        $("#pretratsparator"+id).remove();
+	        $("#createtratamientoForm").validator('update');
+	    }
+	    $(document).ready(function(){
+	        validarSwitch();
+	    });
+	</script>
 @endsection
 @endif
+@endsection
+

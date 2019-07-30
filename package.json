@@ -52,7 +52,7 @@
     "jquery-slimscroll": "^1.3.8",
     "jszip": "^3.2.1",
     "laravel-mix": "^4.0.15",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "pdfmake": "^0.1.56",
     "popper.js": "^1.15.0",
@@ -60,7 +60,9 @@
     "smartwizard": "^4.3.1",
     "toastr": "^2.1.4",
     "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "bootstrap-daterangepicker": "^3.0.5"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }
