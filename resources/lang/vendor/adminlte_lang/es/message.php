@@ -706,6 +706,8 @@ return [
     'solsershowtransempre'    => 'Empresa Transportadora:',
     'solsershowtranscity'     => 'Ciudad de la Transportadora:',
     'solsershowcantitotal'    => 'Cantidad Total:',
+    'solsersupportpay'        => 'Soporte de pago',
+    'solsersupportpaydescript' => 'Adjunte el soporte de pago ya que su solicitud es inferior de <b>500kg</b>',
     
     //Status Solicitud de Servicio
     'solserstatusaprobado'    => 'Aprobar',

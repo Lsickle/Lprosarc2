@@ -171,6 +171,12 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
 		}
+		if(isset($request['SupportPay'])){
+			$fileSupport = $request['SupportPay'];
+			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
+		}
 		$SolicitudServicio->SolSerTipo = $tipo;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;
 		$SolicitudServicio->SolSerNitTrans = $transportadornit;
@@ -546,7 +552,15 @@ class SolicitudServicioController extends Controller
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes'));
+			$KGenviados = DB::table('solicitud_residuos')
+				->select('SolResKgEnviado')
+				->where('FK_SolResSolSer', $Solicitud->ID_SolSer)
+				->get();
+			$totalenviado = 0;
+			foreach ($KGenviados as $KGenviado) {
+				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado'));
 		}
 		else{
 			abort(403);
@@ -675,6 +689,15 @@ class SolicitudServicioController extends Controller
 				$direccioncollect = $request->input('AddressCollect');
 				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
+		}
+		if(isset($request['SupportPay'])){
+			if($SolicitudServicio->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport)){
+				unlink(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport);
+			}
+			$fileSupport = $request['SupportPay'];
+			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;

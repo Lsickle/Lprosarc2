@@ -14,12 +14,12 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitleedit') }}</h3>
 				</div>
 				<div class="box box-info">
-					<form role="form" id="EditSolSer" action="/solicitud-servicio/{{$Solicitud->SolSerSlug}}" method="POST" data-toggle="validator">
+					<form role="form" id="EditSolSer" action="/solicitud-servicio/{{$Solicitud->SolSerSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PATCH')
 						@csrf
 						<div class="box-body">
 							<div class="col-md-12" style="margin-bottom: 1.5em;">
-								<div class="form-group col-md-12">
+								<div class="form-group col-md-{{$Solicitud->SolSerSupport == null ? '12' : '6'}}">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
@@ -29,6 +29,18 @@
 										@endforeach
 									</select>
 								</div>
+								@if($Solicitud->SolSerSupport <> null)
+								<div class="form-group col-md-6">
+									<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
+										<small class="help-block with-errors"></small>
+									<div class="input-group">
+										<input type="file" name="SupportPay" data-validate="true" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+										<div class="input-group-btn">
+											<a href="/img/SupportPay/{{$Solicitud->SolSerSupport}}" class="btn btn-info" target="_blank"> <i class="fas fa-file-pdf fa-lg"></i> </a>
+										</div>
+									</div>
+								</div>
+								@endif
 								<div class="form-group col-md-6">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 									<small class="help-block with-errors">*</small>
@@ -217,8 +229,10 @@
 								<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-primary" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b> {{ trans('adminlte_lang::message.add') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddgenerdescrit2') }}"><i class="fas fa-plus-circle"></i> {{ trans('adminlte_lang::message.add') }}</a>
 							</div>
 						</div>
+						<div id="ModalSupport"></div>
 						<div class="box-footer">
-							<button type="submit" class="btn btn-success pull-right" form="EditSolSer">{{ trans('adminlte_lang::message.update') }}</button>
+							<a href="#" onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</a>
+							<button type="submit" id="Submit" style="display: none;"></button>
 						</div>
 					</form>
 				</div>
@@ -334,6 +348,65 @@
 	$("#AddGenerador").remove();
 	$('form[data-toggle="validator"]').validator('update');
 @endif
+function submitverify(){
+	var CantidadTotalkg = {{$totalenviado}};
+	for (var i = 0; i < contadorGenerador; i++) {
+		for (var y = 0; y <= contadorRespel[i]; y++) {
+			if($("#SolResKgEnviado"+i+y).val() != null){
+				CantidadTotalkg = parseInt(CantidadTotalkg)+parseInt($("#SolResKgEnviado"+i+y).val());
+			}
+		}
+	}
+	if(CantidadTotalkg != 0){
+		if(CantidadTotalkg >= 500){
+			$("#Submit2").empty();
+			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+			$("#Submit2").attr('disabled', true);
+			$('#Submit').click();
+		}
+		else{
+			@if($Solicitud->SolSerSupport == null)
+			$('#ModalSupport').empty();
+			$('#ModalSupport').append(`
+				<div class="modal modal-default fade in" id="SupportPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;"><p>Su solicitud es inferior a 500kg adjunte el soporte de pago</p></span>
+									<span style="font-size: 0.3em; color: black;"><p>Su solicitud es de <b>`+CantidadTotalkg+` kg</b></p></span>
+								</div>
+							</div>
+							<div class="modal-header">
+								<div class="form-group col-md-12">
+									<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
+									<small class="help-block with-errors"></small>
+									<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+								</div>
+							</div> 
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+								<label for="Submit" class='btn btn-success'>Enviar</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			popover();
+			$('#CreateSolSer').validator('update');
+			envsubmit();
+			$('#SupportPay').modal();
+			@else
+			$("#Submit2").empty();
+			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+			$("#Submit2").attr('disabled', true);
+			$('#Submit').click();
+			@endif
+		}
+	}
+}
 </script>
 @include('solicitud-serv.layaoutsSolSer.functionsSolSer')
 @endsection
