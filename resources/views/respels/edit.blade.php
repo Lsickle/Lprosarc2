@@ -289,11 +289,9 @@
 	        	Switch1();
 	        }
 	    }
-	    function recargarAjaxTratamiento(){
-	    	$(".tratamientoEspecial").change(function(e){
-	    		id=$(".tratamientoEspecial").val();
-	    		console.log(id);
-	    		e.preventDefault();
+	    function recargarAjaxTratamiento(contador){
+	    	selector = $("#tratamiento"+contador);
+	    	id = selector.val();
 	    		$.ajaxSetup({
 	    		  headers: {
 	    			  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -308,6 +306,7 @@
 	    				$("#pretratamiento").prop('disabled', true);
 	    			},
 	    			success: function(res){
+	    				alert(res);
 	    				$("#pretratamiento"+contador).empty();
 	    				var pretrataOption = new Array();
 	    				for(var i = res.length -1; i >= 0; i--){
@@ -321,9 +320,9 @@
 	    				$(".load").empty();
 	    				$("#municipio").prop('disabled', false);
 	    			}
-	    		})
-	    	});
-	    };
+	    		});
+	    	
+	    }
 	    function AgregarOption(){
 	        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
 	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
@@ -337,17 +336,20 @@
 	        contador = parseInt(contador)+1;
 	        attachPopover();
 	        validarSwitch();
-	        recargarAjaxTratamiento();
+	        ChangeSelect();
+	        Selects();
 	    }
 	    function EliminarOption(id){
 	        $("#tratamientoContainer"+id).remove();
 	        $("#pretratname"+id).remove();
 	        $("#pretratdescription"+id).remove();
 	        $("#pretratsparator"+id).remove();
-	        $("#createtratamientoForm").validator('update');
+	        $("#evaluacioncomercial").validator('update');
 	    }
 	    $(document).ready(function(){
 	        validarSwitch();
+	        Selects();
+	        ChangeSelect();
 	    });
 	</script>
 @endsection

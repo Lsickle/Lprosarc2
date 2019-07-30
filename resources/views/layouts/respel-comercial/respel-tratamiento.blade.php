@@ -1,26 +1,26 @@
 <div id="tratamiento`+contador+`Container">
     <div class="col-md-8">
     <label for="tratamiento`+contador+`">tratamiento</label>
-    <select class="form-control tratamientoEspecial" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
+    <select class="form-control" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
         <option>seleccione...</option>
         <optgroup label="Tratamientos Viables">
             @foreach($tratamientosViables as $tratamientoviable)
                 @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
-                    <option value="{{$tratamientoviable1->ID_Trat}}"><b><b>{{"$tratamientoviable1->TratName"}}</b></b> - {{"$tratamientoviable1->CliName"}}</option>
+                    <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamientoviable1->ID_Trat}}"><b><b>{{"$tratamientoviable1->TratName"}}</b></b> - {{"$tratamientoviable1->CliName"}}</option>
                 @endforeach
             @endforeach
         </optgroup>
         <optgroup label="Interno">
             @foreach($tratamientos as $tratamiento)
                 @if($tratamiento->TratTipo == 0)
-                <option value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
+                <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
                 @endif
             @endforeach
         </optgroup>
         <optgroup label="Externo">
             @foreach($tratamientos as $tratamiento)
                 @if($tratamiento->TratTipo == 1)
-                <option value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
+                <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}"><b><b>{{"$tratamiento->TratName"}}</b></b> - {{"$tratamiento->CliName"}}</option>
                 @endif
             @endforeach 
         </optgroup>
