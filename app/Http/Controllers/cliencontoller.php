@@ -388,22 +388,38 @@ class clientcontoller extends Controller
     public function destroy($slug){
         if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $Cliente = Cliente::where('CliSlug', $slug)->first();
-            
+
+            function OnCascade($ValueOnCascade, $Cliente){
+                DB::table('clientes')->orderBy('ID_Cli')->chunk(100, function ($clientes) use($Cliente, $ValueOnCascade) {
+                    foreach ($clientes as $cliente) {
+                        DB::table('clientes')
+                        ->join('sedes', 'sedes.FK_SedeCli', 'clientes.ID_Cli')
+                        ->join('generadors', 'generadors.FK_GenerCli', 'sedes.ID_Sede')
+                        ->join('gener_sedes', 'gener_sedes.FK_GSede', 'generadors.ID_Gener')
+                        ->join('residuos_geners', 'residuos_geners.FK_SGener', 'gener_sedes.ID_GSede')
+                        ->where('clientes.ID_Cli', $Cliente->ID_Cli)
+                        ->update(array(
+                            'residuos_geners.DeleteSGenerRes' => $ValueOnCascade,
+                            'gener_sedes.GSedeDelete' => $ValueOnCascade,
+                            'generadors.GenerDelete' => $ValueOnCascade,
+                            'sedes.SedeDelete' => $ValueOnCascade,
+                            'clientes.CliDelete' => $ValueOnCascade,
+                        ));
+                    }
+                }); 
+            }
+
             if ($Cliente->CliDelete == 0) {
-                    // $Data = DB::table('clientes')->where('CliSlug', $slug)
-                        // ->chunkById(100, function ($users) {
-                        //     foreach ($users as $user) {
-                        //         DB::table('users')
-                        //             ->where('id', $user->id)
-                        //             ->update(['active' => true]);
-                        //     }
-                        // });
-                    $Cliente->CliDelete = 1;
-                }
-                else{
-                    $Cliente->CliDelete = 0;
-                }
-            $Cliente->save();
+                $ValueOnCascade = 1;
+                OnCascade($ValueOnCascade, $Cliente);
+                // $Cliente->CliDelete = 1;
+            }
+            else{
+                $ValueOnCascade = 0;
+                OnCascade($ValueOnCascade, $Cliente);
+                // $Cliente->CliDelete = 0;
+            }
+            // $Cliente->save();
 
             $log = new audit();
             $log->AuditTabla="clientes";

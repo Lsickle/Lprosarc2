@@ -52,7 +52,7 @@
 							@endif
 						@endif
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1))
-							@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show'))
+							@if((Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')) && $cliente->CliDelete === 0)
 								<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@endif
 						@endif
