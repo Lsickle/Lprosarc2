@@ -306,7 +306,6 @@
 	    				$("#pretratamiento").prop('disabled', true);
 	    			},
 	    			success: function(res){
-	    				alert(res);
 	    				$("#pretratamiento"+contador).empty();
 	    				var pretrataOption = new Array();
 	    				for(var i = res.length -1; i >= 0; i--){
@@ -325,7 +324,7 @@
 	    }
 	    function AgregarOption(){
 	        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
-	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 	        var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
 	        var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
 	        $("#Tratamientospane").append(tratamiento);
