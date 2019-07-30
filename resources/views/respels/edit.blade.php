@@ -305,7 +305,7 @@
 	    			data:{},
 	    			beforeSend: function(){
 	    				$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
-	    				$("#municipio").prop('disabled', true);
+	    				$("#pretratamiento").prop('disabled', true);
 	    			},
 	    			success: function(res){
 	    				$("#pretratamiento"+contador).empty();

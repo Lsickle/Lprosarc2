@@ -1,4 +1,4 @@
-<div id="tratamientoContainer`+contador+`">
+<div id="tratamiento`+contador+`Container">
     <div class="col-md-8">
     <label for="tratamiento`+contador+`">tratamiento</label>
     <select class="form-control tratamientoEspecial" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
