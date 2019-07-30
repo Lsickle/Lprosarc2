@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /*$Vehiculos = Vehiculo::select('VehicPlaca', 'ID_Vehic', 'VehicKmActual')->where('FK_VehiSede', 1)->get();
+        $Vehiculos = Vehiculo::select('VehicPlaca', 'ID_Vehic', 'VehicKmActual')->where('FK_VehiSede', 1)->get();
 
         $SolicitudServicios = SolicitudServicio::select('SolSerStatus')->get();
         $Pendientes = 0;
@@ -68,12 +68,12 @@ class HomeController extends Controller
             ->where('SolSerStatus', 'Aprobado')
             ->orderBy('updated_at', 'asc')
             ->limit(5)
-            ->get();*/
+            ->get();
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
                 return redirect()->route('clientes.create');
             }else{
-                return view('home'/*, compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados')*/);
+                return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
             }
         }else{
             return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'Vehiculos', 'serviciosnoprogramados'));
