@@ -1,4 +1,10 @@
 @php
+$SolicitudServicios = DB::table('solicitud_servicios')
+	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+	->join('progvehiculos', 'solicitud_servicios.ID_SolSer', '=', 'progvehiculos.FK_ProgServi')
+	->where('SolSerDelete', 0)
+	->where('ProgVehDelete', 0)
+	->get();
 $Pendientes = count($SolicitudServicios->where('SolSerStatus', 'Pendiente'));
 $Aprobadas = count($SolicitudServicios->where('SolSerStatus', 'Aprobado'));
 $Programadas = count($SolicitudServicios->where('SolSerStatus', 'Programado'));
@@ -7,10 +13,14 @@ $Concialiadas = count($SolicitudServicios->where('SolSerStatus', 'Conciliado'));
 $Tratadas = count($SolicitudServicios->where('SolSerStatus', 'Tratado'));
 $Certificadas = count($SolicitudServicios->where('SolSerStatus', 'Certificacion'));
 
+$ProgramacionesHoy = $SolicitudServicios->where('ProgVehFecha', '=', date('Y-m-d', strtotime(now())));
+$ProgramacionesMañana = $SolicitudServicios->where('ProgVehFecha', '=', date('Y-m-d', strtotime(now()."+1 day")));
+
 $serviciosnoprogramados = DB::table('solicitud_servicios')
+	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
 	->where('SolSerDelete', 0)
 	->where('SolSerStatus', 'Aprobado')
-	->orderBy('updated_at', 'asc')
+	->orderBy('solicitud_servicios.updated_at', 'asc')
 	->limit(5)
 	->get();
 @endphp
@@ -18,7 +28,6 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 	<div class="container-fluid spark-screen">
 		<div class="row">
 			<div class="col-md-12">
-
 				<div class="col-md-6">
 					<div class="box box-info">
 						<div class="box-header with-border">
@@ -76,13 +85,48 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 						<div class="box-body">
 							@foreach($serviciosnoprogramados as $servicionoprogramado)
 								<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">
-									<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{date('Y/m/d', strtotime($servicionoprogramado->updated_at)).' - N°'.$servicionoprogramado->ID_SolSer}}</a>
+									<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{$servicionoprogramado->CliShortname.' - N°'.$servicionoprogramado->ID_SolSer.' - '.date('Y/m/d', strtotime($servicionoprogramado->updated_at))}}</a>
 								</p>
 							@endforeach
 						</div>
 					</div>
 				</div>
 
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Servicios programados para hoy</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							@foreach($ProgramacionesHoy as $ProgramacionHoy)
+								<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">
+									<a href="/solicitud-servicio/{{$ProgramacionHoy->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{$ProgramacionHoy->CliShortname.' - N°'.$ProgramacionHoy->ID_SolSer.' - '.date('Y/m/d', strtotime($ProgramacionHoy->updated_at))}}</a>
+								</p>
+							@endforeach
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Servicios programados para mañana</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							@foreach($ProgramacionesMañana as $ProgramacionMañana)
+								<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12">
+									<a href="/solicitud-servicio/{{$ProgramacionMañana->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{$ProgramacionMañana->CliShortname.' - N°'.$ProgramacionMañana->ID_SolSer.' - '.date('Y/m/d', strtotime($ProgramacionMañana->updated_at))}}</a>
+								</p>
+							@endforeach
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

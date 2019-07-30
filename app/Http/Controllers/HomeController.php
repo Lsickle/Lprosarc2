@@ -29,15 +29,14 @@ class HomeController extends Controller
     public function index()
     {
         $Vehiculos = Vehiculo::where('FK_VehiSede', 1)->get();
-        $SolicitudServicios = SolicitudServicio::where('SolSerDelete', 0)->get();
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
                 return redirect()->route('clientes.create');
             }else{
-                return view('home', compact('SolicitudServicios'));
+                return view('home', compact('Vehiculos'));
             }
         }else{
-            return view('home', compact('SolicitudServicios', 'Vehiculos'));
+            return view('home', compact('Vehiculos'));
         }
     }
 }
