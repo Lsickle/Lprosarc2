@@ -150,46 +150,46 @@ class sgenercontroller extends Controller
      */
     public function show($id)
     {
-            $SedeGener = GenerSede::where('GSedeSlug', $id)->first();
-            if (!$SedeGener) {
-                abort(404);
-            }
-            $Generador = generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
-            $Municipio = Municipio::where('ID_Mun', $SedeGener->FK_GSedeMun)->first();
-            $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-            $Cliente = DB::table('gener_sedes')
-                ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-                ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
-                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->select('clientes.CliShortname', 'clientes.ID_Cli')
-                ->where('GSedeSlug', $id)
-                ->first();
+        $SedeGener = GenerSede::where('GSedeSlug', $id)->first();
+        if (!$SedeGener) {
+            abort(404);
+        }
+        $Generador = generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
+        $Municipio = Municipio::where('ID_Mun', $SedeGener->FK_GSedeMun)->first();
+        $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+        $Cliente = DB::table('gener_sedes')
+            ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('clientes.CliShortname', 'clientes.ID_Cli')
+            ->where('GSedeSlug', $id)
+            ->first();
 
-            $Respels = DB::table('residuos_geners')
-                ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-                ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
-                ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
-                ->where('residuos_geners.DeleteSGenerRes', '=', 0)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
-                ->where('respels.RespelDelete', '=', 0)
-                ->get();
+        $Respels = DB::table('residuos_geners')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
+            ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
+            ->where('residuos_geners.DeleteSGenerRes', '=', 0)
+            ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+            ->where('respels.RespelDelete', '=', 0)
+            ->get();
 
-            $Residuos = DB::table('respels')
-                ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-                ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-                ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->select('respels.ID_Respel', 'respels.RespelName','respels.RespelSlug')
-                ->where('clientes.ID_Cli', '=', $Cliente->ID_Cli)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
-                ->where('cotizacions.CotiStatus', '=', 'Aprobada')
-                ->where('respels.RespelDelete', '=', 0)
-                ->where(function ($query) use ($Respels){
-                    foreach ($Respels as $Respel) {
-                        $query->where('respels.ID_Respel', '<>', $Respel->ID_Respel);
-                    }
-                })
-                ->get();
+        $Residuos = DB::table('respels')
+            ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+            ->select('respels.ID_Respel', 'respels.RespelName','respels.RespelSlug')
+            ->where('clientes.ID_Cli', '=', $Cliente->ID_Cli)
+            ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+            ->where('cotizacions.CotiStatus', '=', 'Aprobada')
+            ->where('respels.RespelDelete', '=', 0)
+            ->where(function ($query) use ($Respels){
+                foreach ($Respels as $Respel) {
+                    $query->where('respels.ID_Respel', '<>', $Respel->ID_Respel);
+                }
+            })
+            ->get();
 
         return view('sgeneradores.show', compact('SedeGener', 'Generador', 'Cliente', 'Respels', 'Residuos', 'Municipio', 'Departamento'));
     }
