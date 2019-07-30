@@ -15,6 +15,7 @@
 				</div>
                 <div class="box box-info">
                     <form role="form" id="formCliente " action="/clientes" method="POST" enctype="multipart/form-data" data-toggle="validator" class="form">
+                        {{csrf_field()}}
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger" role="alert">
@@ -27,7 +28,6 @@
                         @endif
                         <div class="box-body" id="readyTable">
                             <div class="tab-pane" id="addRowWizz">
-                                
                                 <div class="smartwizard">
                                     <ul>
                                         <li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br /><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
@@ -39,21 +39,69 @@
                                     <div class="row">
                                         <div id="step-1" class="tab-pane step-content">
                                             <div id="form-step-0" role="form" data-toggle="validator">
-                                                <div class="form-group col-md-12">
+                                                <div class="col-md-6 form-group ">
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
                                                 </div>
-                                                <div class="col-md-12 form-group">
-                                                    <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
-                                                </div>
-                                                <div class="col-md-12 form-group">
+                                                <div class="col-md-6 form-group">
                                                     <label for="ClienteInputNombre" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.clientnombrecorto') }}
                                                     </label>
                                                     <small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" maxlength="100" required value="{{ old('CliShortname') }}">
+                                                </div>
+                                                <div class="col-md-12 form-group">
+                                                    <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
+                                                    <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliRut" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientrut') }}</b>" data-content="{{ trans('adminlte_lang::message.clientrut-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientrut') }}
+                                                    </label>
+                                                    <small class="help-block with-errors">*</small>
+                                                    <input type="file" name="CliRut" class="form-control" id="CliRut" accept=".pdf" data-accept="pdf" data-filesize="5120" required>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliCamaraComercio" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcamaracomercio') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcamaracomercio-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientcamaracomercio') }}
+                                                    </label>
+                                                    <small class="help-block with-errors">*</small>
+                                                    <input type="file" name="CliCamaraComercio" class="form-control" id="CliCamaraComercio" accept=".pdf" data-accept="pdf" data-filesize="5120" required>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliRepresentanteLegal" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientlegalrepresentative') }}</b>" data-content="{{ trans('adminlte_lang::message.clientlegalrepresentative-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientlegalrepresentative') }}
+                                                    </label>
+                                                    <small class="help-block with-errors">*</small>
+                                                    <input type="file" name="CliRepresentanteLegal" class="form-control" id="CliRepresentanteLegal" accept=".pdf" data-accept="pdf" data-filesize="5120" required>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliCertificaionBancaria" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientbankcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientbankcertification-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientbankcertification') }}
+                                                    </label>
+                                                    <small class="help-block with-errors"></small>
+                                                    <input type="file" name="CliCertificaionBancaria" class="form-control" id="CliCertificaionBancaria" accept=".pdf" data-accept="pdf" data-filesize="5120">
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliCertificaionComercial" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcommercialcertification-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientcommercialcertification') }}
+                                                    </label>
+                                                    <small class="help-block with-errors"></small>
+                                                    <input type="file" name="CliCertificaionComercial" class="form-control" id="CliCertificaionComercial" accept=".pdf" data-accept="pdf" data-filesize="5120">
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="CliCertificaionComercial2" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientcommercialcertification') }} 2</b>" data-content="{{ trans('adminlte_lang::message.clientcommercialcertification-info') }}">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        {{ trans('adminlte_lang::message.clientcommercialcertification') }} 2
+                                                    </label>
+                                                    <small class="help-block with-errors"></small>
+                                                    <input type="file" name="CliCertificaionComercial2" class="form-control" id="CliCertificaionComercial2" accept=".pdf" data-accept="pdf" data-filesize="5120">
                                                 </div>
                                             </div>
                                         </div>
