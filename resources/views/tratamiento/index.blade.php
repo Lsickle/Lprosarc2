@@ -38,7 +38,7 @@
 									@endif
 									>
 									<td>{{$tratamiento->ID_Trat}}</td>
-									@if($tratamiento->TratTipo=='1')
+									@if($tratamiento->TratTipo == 0)
 									<td>Interno</td>
 									@else
 									<td>Externo</td>
