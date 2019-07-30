@@ -93,7 +93,7 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 		var ChartSolSer = new Chart(CSolSer, {
 			type: 'doughnut',
 			data: {
-				labels: ['Pendientes {{$Aprobadas}}', 'Programadas {{$Programadas}}'],
+				labels: ['Pendientes', 'Programadas'],
 				datasets: [{
 					label: 'N° Solicitudes',
 					data: [{{$Aprobadas}}, {{$Programadas}}],

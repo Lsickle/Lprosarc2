@@ -9,7 +9,7 @@
 @section('contentheader_title')
 <div class="text-center"><h2> Bienvenido {{ Auth::user()->name }}</h4></div>
 @endsection
-@if(Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol === "JefeLogistica")
+@if(Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol2 === "JefeLogistica")
 	@include('layouts.homeroles.jefelogistica')
 @endif
 <!-- Default box -->
