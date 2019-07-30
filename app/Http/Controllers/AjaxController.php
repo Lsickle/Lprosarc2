@@ -7,6 +7,7 @@ use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
 use App\Area;
+use App\GenerSede;
 
 class AjaxController extends Controller
 {
@@ -65,21 +66,29 @@ class AjaxController extends Controller
 	public function SGenerRespel(Request $request, $id)
 	{
 		if ($request->ajax()) {
+			$SGener = GenerSede::select('ID_GSede')->where('GSedeSlug', $id)->first();
 			$ID_Cli = userController::IDClienteSegunUsuario();
 			$ResSGeners = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('respels.ID_Respel')
-				->where('FK_SGener', '=', $id)
+				->where('FK_SGener', '=', $SGener->ID_GSede)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->get();
-                
+
+			$Cliente = DB::table('gener_sedes')
+				->join('generadors','generadors.ID_Gener','=', 'gener_sedes.FK_GSede')
+				->join('sedes','sedes.ID_Sede','=', 'generadors.FK_GenerCli')
+				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+				->where('gener_sedes.ID_GSede', '=', $SGener->ID_GSede)
+				->select('clientes.ID_Cli')
+				->first();
+
 			$Respels = DB::table('respels')
 				->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
 				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
 				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->select('respels.ID_Respel', 'respels.RespelName', 'respels.RespelSlug')
-				->where('clientes.ID_Cli', '=', $ID_Cli)
 				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
 				->where('cotizacions.CotiStatus', '=', 'Aprobada')
 				->where('respels.RespelDelete', '=', 0)
@@ -88,8 +97,16 @@ class AjaxController extends Controller
 						$query->where('respels.ID_Respel', '<>', $ResSGener->ID_Respel);
 					}
 				})
+				->where(function ($query) use ($ID_Cli, $Cliente){
+					if(Auth::user()->UsRol === 'Programador'){
+						$query->where('clientes.ID_Cli', $Cliente->ID_Cli);
+					}
+					if(Auth::user()->UsRol === 'Cliente'){ 
+						$query->where('clientes.ID_Cli', $ID_Cli);
+					}
+				})
 				->get();
-				
+
 			return response()->json($Respels);
 		}
 	}
