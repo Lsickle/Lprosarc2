@@ -178,7 +178,10 @@ class Permisos{
 		pretratamientos/edit
 		pretratamientocontoller::destroy
 	*/
-
+	const CONDUCTOR = ['Conductor'];
+	/* Using->
+		VehicProgController::index
+	 */
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];

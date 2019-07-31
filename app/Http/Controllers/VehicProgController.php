@@ -34,6 +34,9 @@ class VehicProgController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
 					}
+					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)){
+						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
+					}
 				})
 				->get();
 			$personals = DB::table('personals')
