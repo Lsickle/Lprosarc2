@@ -211,7 +211,7 @@
 											<div id="deleteSede"></div>
 										@endif
 									@else
-										<form action='/sclientes/{{$Sede->SedeSlug}}' method='POST' class="pull-left">
+										<form action='{{Route::currentRouteName() === 'cliente-show' ? "/sedes/$Sede->SedeSlug/destroy" : "/sclientes/$Sede->SedeSlug"}}' method='POST' class="pull-left">
 											@method('DELETE')
 											@csrf
 											<button type="submit" class='btn btn-success btn-block' title="{{ trans('adminlte_lang::message.add') }}">
@@ -251,25 +251,27 @@
 </div>
 @endsection
 @section('NewScript')
-	<script>
-		function DeleteSede(slug, name){
-			$('#deleteSede').empty();
-			$('#deleteSede').append(`
-				@component('layouts.partials.modal')
-					@slot('slug')
-						`+slug+`
-					@endslot
-					@slot('textModal')
-						la sede <b>`+name+`</b>
-					@endslot
-				@endcomponent
-				
-				<form action='{{Route::currentRouteName() === 'cliente-show' ? '/sede/`+slug+`/destroy' : '/sclientes/`+slug+`'}}' method='POST'>
-					@method('DELETE')
-					@csrf
-					<input type="submit" id="Eliminar`+slug+`" style="display: none;">
-				</form>
-			`);
-		}
-	</script>
+	@if(count($Sedes) > 1)
+		<script>
+			function DeleteSede(slug, name){
+				$('#deleteSede').empty();
+				$('#deleteSede').append(`
+					@component('layouts.partials.modal')
+						@slot('slug')
+							`+slug+`
+						@endslot
+						@slot('textModal')
+							la sede <b>`+name+`</b>
+						@endslot
+					@endcomponent
+					
+					<form action='{{Route::currentRouteName() === 'cliente-show' ? '/sedes/`+slug+`/destroy' : '/sclientes/`+slug+`'}}' method='POST'>
+						@method('DELETE')
+						@csrf
+						<input type="submit" id="Eliminar`+slug+`" style="display: none;">
+					</form>
+				`);
+			}
+		</script>
+	@endif
 @endsection

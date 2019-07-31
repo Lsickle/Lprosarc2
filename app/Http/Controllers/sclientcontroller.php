@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
+use App\AuditRequest;
 use App\Sede;
 use App\cliente;
 use App\audit;
@@ -17,6 +18,10 @@ use App\Permisos;
 
 class sclientcontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->table = 'sedes';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -138,13 +143,7 @@ class sclientcontroller extends Controller
         $Sede->fill($request->all());
         $Sede->save();
 
-        $log = new audit();
-        $log->AuditTabla="sedes";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro=$Sede->ID_Sede;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
+        AuditRequest::auditUpdate($this->table, $Sede->ID_Sede, $request->all());
         
         return redirect()->route('clientes.show', [$Cliente->CliSlug]);
     }
@@ -171,15 +170,9 @@ class sclientcontroller extends Controller
                 $Sede->SedeDelete = 0;
                 $Sede->save();
             }
-            return redirect()->route('cliente-show', [$Cliente->CliSlug]);
 
-            $log = new audit();
-            $log->AuditTabla="sedes";
-            $log->AuditType="Eliminado";
-            $log->AuditRegistro=$Sede->ID_Sede;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog = $Sede->SedeDelete;
-            $log->save();
+            AuditRequest::auditDelete($this->table, $Sede->ID_Sede,$Sede->SedeDelete);
+            return redirect()->route('clientes.show', [$Cliente->CliSlug]);
         }else{
             abort(403);
         }

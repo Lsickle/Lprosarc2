@@ -69,7 +69,7 @@ class SedesAllController extends Controller
             }
 
             AuditRequest::auditDelete($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
-            return redirect()->route('clientes.show', [$Cliente->CliSlug]);
+            return redirect()->route('cliente-show', [$Cliente->CliSlug]);
         }else{
             abort(403);
         }
