@@ -9,6 +9,14 @@ $Concialiadas = count($SolicitudServicios->where('SolSerStatus', 'Conciliado'));
 $serviciosnoconciliados = DB::table('solicitud_servicios')
 	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
 	->where('SolSerDelete', 0)
+	->where('SolSerStatus', 'No Conciliado')
+	->orderBy('solicitud_servicios.updated_at', 'asc')
+	->limit(5)
+	->get();
+
+$serviciosnoprocesados = DB::table('solicitud_servicios')
+	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+	->where('SolSerDelete', 0)
 	->where('SolSerStatus', 'Completado')
 	->orderBy('solicitud_servicios.updated_at', 'asc')
 	->limit(5)
@@ -65,6 +73,25 @@ $serviciosnoconciliados = DB::table('solicitud_servicios')
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-6">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Servicios sin procesar</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							@foreach($serviciosnoprocesados as $servicionoprocesado)
+								<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprocesado col-md-12 form-group col-xs-12">
+									<a href="/solicitud-servicio/{{$servicionoprocesado->SolSerSlug}}" class="col-md-12 form-group" style="color: white; text-align: center;">{{$servicionoprocesado->CliShortname.' - N°'.$servicionoprocesado->ID_SolSer.' - '.date('Y/m/d', strtotime($servicionoprocesado->updated_at))}}</a>
+								</p>
+							@endforeach
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
