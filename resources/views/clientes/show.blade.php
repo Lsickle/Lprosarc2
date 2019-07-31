@@ -118,7 +118,7 @@
 										<div class="input-group">
 											<input type="text" value="{{$cliente->CliRepresentanteLegal === null ? 'No adjunto' : 'Ver archivo adjunto'}}" class="form-control" disabled>
 											<div class="input-group-btn ">
-												<a href="{{$cliente->CliRepresentanteLegal === null ? '#' : "/img/DatosClientes/$cliente->CliRepresentanteLegal"}}" target="_blank" class="{{$cliente->CliRepresentanteLegal === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliRepresentanteLegal === null ? '' : 'target="_blank"'}}>
+												<a href="{{$cliente->CliRepresentanteLegal === null ? '#' : "/img/DatosClientes/$cliente->CliRepresentanteLegal"}}" class="{{$cliente->CliRepresentanteLegal === null ? 'btn btn-default' : 'btn btn-success'}} pull-right" {{$cliente->CliRepresentanteLegal === null ? '' : 'target="_blank"'}}>
 													<i class='{{$cliente->CliRepresentanteLegal === null ? 'fas fa-ban' : 'fas fa-file-pdf'}}'></i>
 												</a>
 											</div>
