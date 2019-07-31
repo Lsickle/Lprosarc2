@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
 use App\Sede;
@@ -11,9 +13,7 @@ use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
-use Illuminate\Support\Facades\Hash;
 use App\Permisos;
-
 
 class sclientcontroller extends Controller
 {
@@ -24,26 +24,7 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        // if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-        //     $Sedes = DB::table('sedes')
-        //         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-        //         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-        //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-        //         ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
-        //         ->where(function($query){
-        //             $id = userController::IDClienteSegunUsuario();
-        //             if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-        //                 $query->where('FK_SedeCli', '=', $id);
-        //             }else{
-        //                 $query->where('FK_SedeCli', '=', $id);
-        //                 $query->where('sedes.SedeDelete',  '=', 0);
-        //             }
-        //         })
-        //         ->get();
-        //         return view('sclientes.index', compact('Sedes'));
-        // }else{
-        //     abort(403);
-        // }
+        //
     }
 
     /**
@@ -105,7 +86,6 @@ class sclientcontroller extends Controller
         $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
 
         return redirect()->route('cliente-show', compact('id'));
-        // return redirect()->route('sclientes.index');
     }
 
     /**
@@ -116,18 +96,7 @@ class sclientcontroller extends Controller
      */
     public function show($id)
     {
-        // $Sede = Sede::where('SedeSlug',$id)->first();
-        // $Sedes = Sede::where('FK_SedeCli', $Sede->FK_SedeCli)->get();
-
-        // if($Sede->ID_Sede === $Sedes[0]->ID_Sede){
-        //    $Verify = 0;
-        // }
-
-        // $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
-        // $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
-        // $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-
-        // return view('sclientes.show', compact('Sede', 'Cliente', 'Municipio', 'Departamento', 'Verify'));
+        //
     }
 
     /**
@@ -169,10 +138,11 @@ class sclientcontroller extends Controller
         if (!$Sede) {
             abort(404);
         }
-        $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
-        $Sede->fill($request->except('FK_SedeCli'));
-        $ID_Cli = userController::IDClienteSegunUsuario();
-        $Sede->FK_SedeCli = $ID_Cli;
+        $Cliente = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Sede->fill($request->all());
+        // $Sede->fill($request->except('FK_SedeCli'));
+        // $ID_Cli = userController::IDClienteSegunUsuario();
+        // $Sede->FK_SedeCli = $ID_Cli;
         $Sede->save();
 
         $log = new audit();
@@ -183,9 +153,7 @@ class sclientcontroller extends Controller
         $log->Auditlog=$request->all();
         $log->save();
         
-        // return redirect()->route('sclientes.show', compact('id'));
-
-        return redirect()->route('cliente-show', compact('id'));
+        return redirect()->route('clientes.show', [$Cliente->CliSlug]);
     }
 
     /**

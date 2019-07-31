@@ -12,8 +12,7 @@
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
-						@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
-							{{--  Modal Delete de Cliente--}}
+						{{-- @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
 							<div class="modal modal-default fade in" id="myModalCliente{{$cliente->CliSlug}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
@@ -32,8 +31,6 @@
 									</div>
 								</div>
 							</div>
-							{{-- END Modal --}}
-
 							<form action='/clientes/{{$cliente->CliSlug}}' method='POST'>
 								@method('DELETE')
 								@csrf
@@ -50,10 +47,13 @@
 									</button>
 								</form>
 							@endif
-						@endif
+						@endif --}}
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1))
-							@if((Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')) && $cliente->CliDelete === 0)
+							@if(Route::currentRouteName() === 'cliente-show')
 								<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+							@endif
+							@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
+								<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@endif
 						@endif
 					</div>
@@ -202,9 +202,13 @@
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
-								@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show'))
+								@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() === 'clientes.show'))
 									@if($Sede->SedeDelete == 0 )
-										<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
+										@if (Route::currentRouteName() === 'cliente-show')
+											<a href="/sedes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
+										@else
+											<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
+										@endif
 										@if(count($Sedes) > 1)
 											<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->SedeSlug}}' class='btn btn-danger pull-left' title="{{ trans('adminlte_lang::message.delete') }}" onclick="DeleteSede(`{{$Sede->SedeSlug}}`, `{{$Sede->SedeName}}`)"><i class="fas fa-trash-alt"></i></a>
 											<div id="deleteSede"></div>
