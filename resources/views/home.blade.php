@@ -12,6 +12,9 @@
 @if(Auth::user()->UsRol === "JefeLogistica" || Auth::user()->UsRol2 === "JefeLogistica")
 	@include('layouts.homeroles.jefelogistica')
 @endif
+@if(Auth::user()->UsRol === "AsistenteLogistica" || Auth::user()->UsRol2 === "AsistenteLogistica")
+	@include('layouts.homeroles.asistentelogistica')
+@endif
 <!-- Default box -->
 {{-- <div class="box">
 	<div class="box-header with-border">
