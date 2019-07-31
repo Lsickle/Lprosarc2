@@ -28,6 +28,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->UsRol === "Conductor"){
+            return redirect()->route('vehicle-programacion.index');
+        }
         $Vehiculos = Vehiculo::where('FK_VehiSede', 1)->get();
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
