@@ -15,11 +15,7 @@
 				</div>
 				<div class="box box-info">
 					<!-- form start -->
-					@if (Route::currentRouteName() === 'sedes-edit')
-						<form role="form" action="/sedes/{{$Sede->SedeSlug}}/update" method="POST" enctype="multipart/form-data" data-toggle="validator">
-					@else
-						<form role="form" action="/sclientes/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
-					@endif
+					<form role="form" action="{{Route::currentRouteName() === 'sedes-edit' ? "/sedes/$Sede->SedeSlug/update" : "/sclientes/$Sede->SedeSlug"}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -94,11 +90,10 @@
 							</div>
 						</div>
 					</form>
+					<!-- form end -->
 				</div>
 			</div>
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
 @endsection

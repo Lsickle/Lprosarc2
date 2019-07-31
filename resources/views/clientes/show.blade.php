@@ -204,11 +204,8 @@
 							<div class="col-md-12 col-xs-12">
 								@if(Route::currentRouteName() === 'cliente-show' || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() === 'clientes.show'))
 									@if($Sede->SedeDelete == 0 )
-										@if (Route::currentRouteName() === 'cliente-show')
-											<a href="/sedes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
-										@else
-											<a href="/sclientes/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
-										@endif
+										{{-- Boton de edit --}}
+										<a href="{{Route::currentRouteName() === 'cliente-show' ? '/sede' : '/sclientes'}}/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
 										@if(count($Sedes) > 1)
 											<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->SedeSlug}}' class='btn btn-danger pull-left' title="{{ trans('adminlte_lang::message.delete') }}" onclick="DeleteSede(`{{$Sede->SedeSlug}}`, `{{$Sede->SedeName}}`)"><i class="fas fa-trash-alt"></i></a>
 											<div id="deleteSede"></div>
@@ -266,7 +263,8 @@
 						la sede <b>`+name+`</b>
 					@endslot
 				@endcomponent
-				<form action='/sclientes/`+slug+`' method='POST'>
+				
+				<form action='{{Route::currentRouteName() === 'cliente-show' ? '/sede/`+slug+`/destroy' : '/sclientes/`+slug+`'}}' method='POST'>
 					@method('DELETE')
 					@csrf
 					<input type="submit" id="Eliminar`+slug+`" style="display: none;">

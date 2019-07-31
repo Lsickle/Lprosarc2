@@ -9,13 +9,11 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientregister') }}</h3>
 				</div>
 				<div class="box box-info">
-					<!-- form start -->
 					<form role="form" action="/sclientes" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
