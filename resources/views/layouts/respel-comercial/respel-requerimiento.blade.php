@@ -1,21 +1,27 @@
-{{-- ingreso de inputs para el pretratamiento --}}
-<div id="requerimiento`+contador+`Container">
-	<hr class="col-md-10 col-md-offset-1 align-self-center"  id="pretratsparator`+contador+`" />
-	<div class="col-md-6" id="pretratname`+contador+`">
-		{{-- input oculto para llevar el control y conteo de los ids --}}
-		<input id="ID_Propo`+contador+`" class="form-control" type="hidden" name="ID_PreTrat[]">
-		<label for="input[]">{{ trans('adminlte_lang::LangTratamiento.pretratname') }} </label>
-		<div class="input-group">
-			<input maxlength="60" id="input[]" class="form-control" type="text" name="PreTratName[]" required>
-			<a onclick="EliminarOption(`+contador+`)" class="input-group-addon" style=" color: red;" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.pretratname') }}" data-content="{{ trans('adminlte_lang::LangTratamiento.popoverdescript1') }}"><i class="fas fa-backspace"></i></a>
-		</div><br>		
+<div class="col-md-12">
+	<div class="col-md-2">
+		<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+			<input type="checkbox" class="fotoswitch" name="ReqFotoDescargue"/> Descargue Pesaje
+		</label>
 	</div>
-	<div class="col-md-6" id="pretratdescription`+contador+`">
-		<label for="inputdescript[]">{{ trans('adminlte_lang::LangTratamiento.pretratdescript') }} </label>
-		<div class="input-group">
-			<input maxlength="250" id="inputdescript[]" class="form-control" type="text" name="PreTratDescription[]">
-			<a class="input-group-addon" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.popovertittle2') }}" data-content="<p style='width: 50%'>{{ trans('adminlte_lang::LangTratamiento.popoverdescript2') }}</p>"><i class="fas fa-info-circle"></i></a>
-		</div>
+	<div class="col-md-2">
+		<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+			<input type="checkbox" class="fotoswitch" name="ReqFotoDestruccion"/> Tratamiento
+		</label>
+	</div>
+	<div class="col-md-2">
+		<label data-trigger="hover" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+			<input type="checkbox" class="videoswitch" name="ReqVideoDescargue"/> Descargue Pesaje
+		</label>
+	</div>
+	<div class="col-md-2">
+		<label data-trigger="hover" data-toggle="popover" title="<b>Video-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>">
+			<input type="checkbox" class="videoswitch" name="ReqVideoDestruccion"/> Tratamiento
+		</label>
+	</div>
+	<div class="col-md-2">
+		<label data-trigger="hover" data-toggle="popover" title="<b>Devolución de embalaje</b>" data-content="<p> Se requiere que los embalajes sean devueltos al cliente/generador</p>">
+			<input type="checkbox" class="embalajeswitch" name="ReqDevolucion"/> Devolver embalaje
+		</label>
 	</div>
 </div>
-{{-- fin de ingreso de inputs para el pretratamiento --}}

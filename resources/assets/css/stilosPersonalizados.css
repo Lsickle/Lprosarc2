@@ -45,7 +45,7 @@ a.textpopover{
 	word-break: break-all;
 }
 .popover{
-	max-width: 100%;
+	max-width: 40%;
 	background-color: #d2d6de;
 	color: #000;
 }

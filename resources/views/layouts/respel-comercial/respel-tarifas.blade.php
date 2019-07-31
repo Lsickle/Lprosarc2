@@ -1,7 +1,9 @@
 <div id="tarifa`+contador+`Container">
 	<div class="col-md-6">
 		<label>tarifa</label>
-		<input name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$Respels->RespelName}}" disabled>
+		<span id="ex18-label-2a" class="hidden">Example low value</span>
+		<span id="ex18-label-2b" class="hidden">Example high value</span>
+		<input id="ex18b" type="text"/>
 	</div>
 	<div class="col-md-6">
 		<label>rango</label>

@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <label for="tratamiento`+contador+`">tratamiento</label>
         <select class="form-control" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
-            <option>seleccione...</option>
+            <option disabled="true">seleccione...</option>
             <optgroup label="Tratamientos Viables">
                 @foreach($tratamientosViables as $tratamientoviable)
                     @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
@@ -28,13 +28,13 @@
     </div>
     <div class="col-md-2">
         <div class="col-md-12">
-            <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tratamiento Ofertado</b>" data-content="<p style='width: 50%'> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
+            <label data-trigger="hover" data-toggle="popover" title="<b>Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
             <input  type="checkbox" class="testswitch" id="ofert`+contador+`" name="TratOfertado[]"/>  
         </div>
     </div>
     <div class="col-md-2">
         <div class="col-md-12">
-            <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Tratamiento</b>" data-content="<p style='width: 50%'> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>"> Eliminar</label>
+            <label data-trigger="hover" data-toggle="popover" title="<b>Eliminar Tratamiento</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>"> Eliminar</label>
             <button class="btn btn-danger" {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? 'Disabled' : '' }} onclick="EliminarOption(`+contador+`)"><i class="fas fa-trash"></i></button> 
         </div>
     </div>

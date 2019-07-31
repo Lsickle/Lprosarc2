@@ -199,7 +199,7 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
 						<div class="box-tools pull-right">
-						 <button onclick="AgregarOption()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+						 <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
 						</div>
 					</div>
 					<!-- /.box header -->
@@ -247,7 +247,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="tarifaspane">
+								<div class="tab-pane fade" id="Tarifaspane">
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<!-- /.tab-pane fade -->
@@ -272,15 +272,10 @@
 @section('NewScript')
 	<script type="text/javascript">
 	    var contador = 1;
-	    function attachPopover(){
-	        $(document).ready(function(){
-	            $('[data-toggle="popover"]').popover({
-	                html: true,
-	                trigger: 'hover',
-	                placement: 'auto',
-	            });
-	        });
-	    }
+	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
+	    $("#addOptionButton").click(function(event) {
+	      event.preventDefault();
+	    });
 	    function validarSwitch(){
 	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
 	       		Switch1();
@@ -292,6 +287,7 @@
 	    function recargarAjaxTratamiento(contador){
 	    	selector = $("#tratamiento"+contador);
 	    	id = selector.val();
+	    	selector
 	    		$.ajaxSetup({
 	    		  headers: {
 	    			  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -312,12 +308,17 @@
 	    					if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
 	    						$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
 	    						pretrataOption.push(res[i].ID_PreTrat);
+	    					}else{
+	    						$("#pretratamiento"+contador).append(`<option value="">el Tratamiento elegido no tiene Pretratamientos relacionados</option>`);
 	    					}
 	    				}
 	    			},
 	    			complete: function(){
 	    				$(".load").empty();
-	    				$("#municipio").prop('disabled', false);
+	    				$("#pretratamiento").prop('disabled', false);
+	    			},
+	    			error: function (jqXHR, textStatus, errorThrown) {
+	    				NotifiFalse("No se pudo conectar a la base de datos");
 	    			}
 	    		});
 	    	
@@ -330,13 +331,17 @@
 	        $("#Tratamientospane").append(tratamiento);
 	        $("#Pretratamientospane").append(pretratamiento);
 	        $("#Requerimientospane").append(requerimiento);
-	        $("#tarifaspane").append(tarifas);
+	        $("#Tarifaspane").append(tarifas);
 	        $("#evaluacioncomercial").validator('update');
 	        contador = parseInt(contador)+1;
-	        attachPopover();
+	        popover();
 	        validarSwitch();
 	        ChangeSelect();
 	        Selects();
+	        Switch2();
+	        Switch3();
+	        Switch6();
+	        atachtslider();
 	    }
 	    function EliminarOption(id){
 	        $("#tratamientoContainer"+id).remove();
@@ -350,6 +355,15 @@
 	        Selects();
 	        ChangeSelect();
 	    });
+	    function atachtslider(){
+	        $("#ex18b").slider({
+	    	min: 0,
+	    	max: 10,
+	    	value: [3, 6],
+	    	labelledby: ['ex18-label-2a', 'ex18-label-2b']
+	    	});
+	    }
+	    
 	</script>
 @endsection
 @endif
