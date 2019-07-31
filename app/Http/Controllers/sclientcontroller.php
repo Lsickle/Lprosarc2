@@ -171,7 +171,7 @@ class sclientcontroller extends Controller
                 $Sede->save();
             }
 
-            AuditRequest::auditDelete($this->table, $Sede->ID_Sede,$Sede->SedeDelete);
+            AuditRequest::auditDelete($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
             return redirect()->route('clientes.show', [$Cliente->CliSlug]);
         }else{
             abort(403);
