@@ -14,6 +14,15 @@ $serviciosnoconciliados = DB::table('solicitud_servicios')
 	->limit(5)
 	->get();
 
+$Km = DB::table('progvehiculos')
+	->select('FK_ProgVehiculo', 'progVehKm', 'ProgVehFecha')
+	->where('ProgVehDelete', 0)
+	->where('progVehKm', '<>', null)
+	->whereBetween('ProgVehFecha', [date('Y-m-d', strtotime("first day of last month")), date('Y-m-d', strtotime("last day of last month"))])
+	->orderBy('ProgVehFecha', 'asc')
+	->get();
+setlocale(LC_ALL, "es_CO.UTF-8");
+	
 $serviciosnoprocesados = DB::table('solicitud_servicios')
 	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
 	->where('SolSerDelete', 0)
@@ -52,6 +61,21 @@ $serviciosnoprocesados = DB::table('solicitud_servicios')
 						</div>
 						<div class="box-body">
 							<canvas id="ChartKilometraje"></canvas>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Kilometraje Mes Pasado</h3>
+
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							<canvas id="ChartKilometrajeOld"></canvas>
 						</div>
 					</div>
 				</div>
@@ -131,6 +155,59 @@ $serviciosnoprocesados = DB::table('solicitud_servicios')
 						fontSize: 11
 					}
 				}
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		var KilometrajeOld = $('#ChartKilometrajeOld');
+		var ChartKilometrajeOld1 = new Chart(KilometrajeOld, {
+			type: 'line',
+			data: {
+				labels: [
+						@for($i = 0; $i < date('t', strtotime('last month')); $i++)
+							{{($i+1)}},
+						@endfor
+				],
+				datasets: [
+				@foreach($Vehiculos as $Vehiculo)
+					@php
+						$Kr = $Km->where('FK_ProgVehiculo', $Vehiculo->ID_Vehic);
+						$r = rand(0, 256);
+						$g = rand(0, 256);
+						$b = rand(0, 256);
+					@endphp
+					{
+						label: '{{$Vehiculo->VehicPlaca}}',
+						borderColor: 'rgb({{$r}},{{$g}},{{$b}})',
+						backgroundColor: 'rgb({{$r}},{{$g}},{{$b}})',
+						fill: false,
+						data: [
+							@foreach($Kr as $Kv)
+								{x: ({{date('d', strtotime($Kv->ProgVehFecha))}}), y: ({{$Kv->progVehKm}})},
+							@endforeach
+						],
+						steppedLine: true,
+						pointRadius: 5,
+						pointHoverRadius: 7,
+					},
+				@endforeach
+				],
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					fontSize: 20,
+					text: '{{strftime("%B", strtotime($Km[0]->ProgVehFecha))}}'
+				},
+				legend: {
+					position: 'top',
+					display: true,
+					labels: {
+						usePointStyle: true,
+						fontSize: 11
+					},
+				},
 			}
 		});
 	</script>
