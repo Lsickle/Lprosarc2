@@ -20,7 +20,8 @@
 <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
 
 {{-- bootstrap slider --}}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="{{ url (mix('/js/bootstrap-slider.js')) }}"></script>
+
 {{-- Moment --}}
 {{-- <script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script> --}}
 

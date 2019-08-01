@@ -48,6 +48,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/chart.js/dist/Chart.css'
 		], 'public/css/chart.css')
 	 .combine([
+				'node_modules/bootstrap-slider/dist/css/bootstrap-slider.css'
+		], 'public/css/bootstrap-slider.css')
+	 .combine([
 				'node_modules/@fullcalendar/core/main.css',
 				'node_modules/@fullcalendar/daygrid/main.css',
 				'node_modules/@fullcalendar/timegrid/main.css'
@@ -95,6 +98,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/chart.js/dist/Chart.bundle.js',
 				'node_modules/chart.js/dist/Chart.js'
 		], 'public/js/chart.js')
+	 .scripts([
+				'node_modules/bootstrap-slider/dist/bootstrap-slider.js'
+		], 'public/js/bootstrap-slider.js')
 	 .scripts([
 			'node_modules/@fullcalendar/core/main.js',
 			'node_modules/@fullcalendar/daygrid/main.js',

@@ -13,9 +13,9 @@
 
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
-    
+
     {{-- bootstrap slider --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ mix('/css/bootstrap-slider.css') }}" rel="stylesheet" type="text/css" />
 
 
     @if(Route::currentRouteName()=='vehicle-programacion.create')
