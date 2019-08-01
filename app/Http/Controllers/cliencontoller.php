@@ -31,6 +31,7 @@ class clientcontoller extends Controller
     {
         $this->table = 'clientes';
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +40,6 @@ class clientcontoller extends Controller
     public function index()
     {
         switch (true) {
-
             case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
                 $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
                  $personals = DB::table('personals')
@@ -165,7 +165,6 @@ class clientcontoller extends Controller
             $Sede->SedeAddress = $request->input('SedeAddress');
             $Sede->SedePhone1 = $request->input('SedePhone1');
             if($request->input('SedePhone1') === null && $request->input('SedePhone2') !== null){
-
                 $Sede->SedeExt1 = $request->input('SedeExt2');
                 $Sede->SedePhone1 = $request->input('SedePhone2');
             }else{
@@ -222,7 +221,6 @@ class clientcontoller extends Controller
             $user->FK_UserPers = $Personal->ID_Pers;
             $user->save();
 
-            $Cliente = Cliente::select('CliSlug')->where('ID_Cli', $Cliente->ID_Cli)->first();
             return redirect()->route('cliente-show', [$Cliente->CliSlug]);
         }
     }
@@ -308,7 +306,7 @@ class clientcontoller extends Controller
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|sometimes',
             'CliCertificaionBancaria'   => 'mimes:pdf|max:5120|sometimes',
             'CliCertificaionComercial'  => 'mimes:pdf|max:5120|sometimes',
-            'CliCertificaionComercial2'  => 'mimes:pdf|max:5120|sometimes',
+            'CliCertificaionComercial2' => 'mimes:pdf|max:5120|sometimes',
         ]);
             
         $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();

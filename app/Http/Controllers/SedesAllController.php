@@ -63,12 +63,15 @@ class SedesAllController extends Controller
             if ($Sede->SedeDelete == 0) {
                 $Sede->SedeDelete = 1;
                 $Sede->save();
+
+                AuditRequest::auditDelete($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
             }else{
                 $Sede->SedeDelete = 0;
                 $Sede->save();
+
+                AuditRequest::auditRestored($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
             }
 
-            AuditRequest::auditDelete($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
             return redirect()->route('cliente-show', [$Cliente->CliSlug]);
         }else{
             abort(403);

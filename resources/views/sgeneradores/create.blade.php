@@ -35,7 +35,7 @@
 										<select class="form-control select" id="FK_GSede" name="FK_GSede" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach ($Generadores as $Generador)
-												<option value="{{$Generador->ID_Gener}}" {{ old('FK_GSede') == $Generador->ID_Gener ? 'selected' : '' }}>{{$Generador->GenerName}}</option>
+												<option value="{{$Generador->GenerSlug}}" {{ old('FK_GSede') == $Generador->GenerSlug ? 'selected' : '' }}>{{$Generador->GenerName}}</option>
 											@endforeach
 										</select>
 									</div>

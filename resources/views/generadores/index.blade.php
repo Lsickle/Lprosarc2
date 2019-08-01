@@ -17,12 +17,12 @@
 						</div>
 						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							@if (!isset($Gener))
-							<div class="col-xs-6 col-sm-4">
-								<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
-									@csrf
-									<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
-								</form>
-							</div>
+								<div class="col-xs-6 col-sm-4">
+									<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
+										@csrf
+										<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
+									</form>
+								</div>
 							@endif
 							<div class=" {{!isset($Gener) ? 'col-sm-4' : ''}} col-xs-6">
 								<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
@@ -48,7 +48,7 @@
 							</thead>
 							<tbody id="readyTable">
 							@foreach($Generadors as $Gener)
-								<tr {{$Gener->GenerDelete === 1 ? 'style="color: red;"' : ''}}>
+								<tr style="{{$Gener->GenerDelete == 1 ? "color:red;"  : ''}}">
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
 									@endif
