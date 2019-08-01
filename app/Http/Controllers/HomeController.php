@@ -28,6 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $Km = DB::table('progvehiculos')
+            ->select('FK_ProgVehiculo', 'progVehKm', 'ProgVehFecha')
+            ->where('ProgVehDelete', 0)
+            ->where('progVehKm', '<>', null)
+            ->where('FK_ProgVehiculo', 1)
+            ->whereBetween('ProgVehFecha', [date('Y-m-d', strtotime("first day of last month")), date('Y-m-d', strtotime("last day of last month"))])
+            ->get();
+            // date('m', strtotime('2019-07-31'."+1 day"))
+        // return $Km;
+        // return date('Y-m-d', strtotime("first day of last month"))." - ".date('Y-m-d', strtotime("last day of last month"));
         if(Auth::user()->UsRol === "Conductor"){
             return redirect()->route('vehicle-programacion.index');
         }
