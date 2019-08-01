@@ -253,10 +253,10 @@ return [
     'persingreso'             => 'Fecha de Entrada',
     'perssalida'              => 'Fecha de Salida',
     //info personal
-    'persinfosede'            => 'Seleccione una de sus sedes la cual sera asignada a su personal',
-    'persinfoarea'            => 'Seleccione una de sus áreas la cual sera asignada al personal <br> Puede crea una nueva área y sera asignada a la sede seleccionada',
-    'persinfocargo'           => 'Seleccione uno de sus cargo el cual sera asignado al personal <br> Puede crear un cargo nuevo y sera asignado al área seleccionada',
-    'persinfonewarea'         => 'Escriba el nombre del área a crear, esta quedara asignada a la sede seleccionada <br> Recuerde que debe tener mínimo <b>5</b> caracteres',
+    'persinfosede'            => 'Seleccione una de sus sedes la cual sera asignada a su personal.',
+    'persinfoarea'            => 'Seleccione una de sus áreas la cual sera asignada al personal <br> Puede crea una nueva área y sera asignada a la sede seleccionada.',
+    'persinfocargo'           => 'Seleccione uno de sus cargo el cual sera asignado al personal <br> Puede crear un cargo nuevo y sera asignado al área seleccionada.',
+    'persinfonewarea'         => 'Escriba el nombre del área a crear, esta quedara asignada a la sede seleccionada <br> Recuerde que debe tener mínimo <b>5</b> carácteres.',
     'persinfonewcarg'         => 'Escriba el nombre del cargo a crear, este quedara asignado a la área seleccionada o registrada previamente <br> Recuerde que debe tener mínimo <b>5</b> caracteres',
     'persinfotypedoc'         => 'Seleccione el tipo de documento con el cual se identifica su personal',
     'persinfodoc'             => 'Escriba el numero de documento de su personal',
@@ -309,6 +309,8 @@ return [
     'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses. <b>(opcional)</b>',
     'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal.',
     'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial. <b>(opcional)</b>',
+    'clientarea-info'         => 'Escriba el nombre del área en la que esta la persona de contacto.',
+    'clientcargo-info'        => 'Escriba el nombre del cargo que ocupa la persona de contacto.',
 
     // contactos
     'clientcategoría'         => 'Categoría',
