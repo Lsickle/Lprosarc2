@@ -70,7 +70,7 @@
 									<input type="text" name="ContratoTypeVigencia" id="ContratoTypeVigencia" hidden="" value="{{$Contrato->COntratoTypeVigencia}}">
 									<div class="input-group-btn">
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btndma">
-											{{$Contrato->COntratoTypeVigencia}} <span class="caret"></span>
+											{{$Contrato->ContratoTypeVigencia}} <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu dropdown-menu-right">
 											<li><a onclick="changedma('Día(s)')">Día(s)</a></li>
