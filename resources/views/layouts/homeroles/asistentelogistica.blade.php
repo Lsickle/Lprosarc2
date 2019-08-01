@@ -22,7 +22,7 @@ $Km = DB::table('progvehiculos')
 	->orderBy('ProgVehFecha', 'asc')
 	->get();
 setlocale(LC_ALL, "es_CO.UTF-8");
-	
+
 $serviciosnoprocesados = DB::table('solicitud_servicios')
 	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
 	->where('SolSerDelete', 0)
@@ -75,7 +75,7 @@ $serviciosnoprocesados = DB::table('solicitud_servicios')
 							</div>
 						</div>
 						<div class="box-body">
-							<canvas id="ChartKilometrajeOld"></canvas>
+							<canvas id="ChartKilometrajeOld" height="100"></canvas>
 						</div>
 					</div>
 				</div>
