@@ -126,3 +126,7 @@ ul.list-unstyled li:not(:first-child) {
 	width: 20rem;
 	height: 20rem !important;
 }
+/*aumentar la longitud del slider*/
+.slider.slider-horizontal{
+  width:100% !important;
+}
