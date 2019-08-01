@@ -88,7 +88,7 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 							</div>
 						</div>
 						<div class="box-body">
-							<canvas id="prueba"></canvas>
+							<canvas id="ChartKilometrajeOld"></canvas>
 						</div>
 					</div>
 				</div>
@@ -204,8 +204,8 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 		});
 	</script>
 	<script type="text/javascript">
-		var prueba = $('#prueba');
-		var prueba1 = new Chart(prueba, {
+		var KilometrajeOld = $('#ChartKilometrajeOld');
+		var ChartKilometrajeOld1 = new Chart(KilometrajeOld, {
 			type: 'line',
 			data: {
 				labels: [
