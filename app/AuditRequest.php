@@ -7,25 +7,32 @@ use App\audit;
 
 class AuditRequest
 {
-    static public function auditUpdate($AuditTabla, $AuditRegistro, $Auditlog)
+    public static function auditUpdate($AuditTabla, $AuditRegistro, $Auditlog)
+    {
+        AuditRegister::audit($AuditTabla, "Modificado", $AuditRegistro, $Auditlog);
+    }
+
+    public static function auditDelete($AuditTabla, $AuditRegistro, $Auditlog)
+    {
+        AuditRegister::audit($AuditTabla, "Eliminado", $AuditRegistro, $Auditlog);
+    }
+
+    public static function auditRestored($AuditTabla, $AuditRegistro, $Auditlog)
+    {
+        AuditRegister::audit($AuditTabla, "Restaurado", $AuditRegistro, $Auditlog);
+    }
+}
+class AuditRegister
+{
+    public static function audit($AuditTabla, $AuditType, $AuditRegistro, $Auditlog)
     {
         $log = new audit();
         $log->AuditTabla = $AuditTabla;
-        $log->AuditType = "Modificado";
+        $log->AuditType = $AuditType;
         $log->AuditRegistro = $AuditRegistro;
         $log->AuditUser = Auth::user()->email;
         $log->Auditlog = $Auditlog;
         $log->save();
     }
 
-    static public function auditDelete($AuditTabla, $AuditRegistro, $Auditlog)
-    {
-        $log = new audit();
-        $log->AuditTabla = $AuditTabla;
-        $log->AuditType = "Eliminado";
-        $log->AuditRegistro = $AuditRegistro;
-        $log->AuditUser = Auth::user()->email;
-        $log->Auditlog = $Auditlog;
-        $log->save();
-    }
 }
