@@ -331,7 +331,7 @@ class VehicProgController extends Controller
 	public function destroy($id)
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
-		if (!$programacions) {
+		if (!$programacion) {
 			abort(404);
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
