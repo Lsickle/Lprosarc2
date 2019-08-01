@@ -88,7 +88,7 @@ $serviciosnoprogramados = DB::table('solicitud_servicios')
 							</div>
 						</div>
 						<div class="box-body">
-							<canvas id="ChartKilometrajeOld"></canvas>
+							<canvas id="ChartKilometrajeOld" height="100"></canvas>
 						</div>
 					</div>
 				</div>
