@@ -83,7 +83,7 @@ class ContratoController extends Controller
 		$Cliente = Cliente::select('ID_Cli')->where('CliSlug', $request->input('Fk_ContraCli'))->first()->ID_Cli;
 		$file = $request['ContraPdf'];
 		$ContraPdf = hash('sha256', rand().time().$file->getClientOriginalName()).'.pdf';
-		$file->move(public_path().'\img\Contratos/',$ContraPdf);
+		$file->move(public_path().'/img/Contratos/',$ContraPdf);
 		$Contrato = new Contrato();
 		$Contrato->ContraPdf = $ContraPdf;
 		$Contrato->ContraVigencia = $request->input('ContraVigencia');
@@ -162,7 +162,7 @@ class ContratoController extends Controller
 			}
 			$file = $request['ContraPdf'];
 			$ContraPdf = hash('sha256', rand().time().$file->getClientOriginalName()).'.pdf';
-			$file->move(public_path().'\img\Contratos/',$ContraPdf);
+			$file->move(public_path().'/img/Contratos/',$ContraPdf);
 		}
 		else{
 			$ContraPdf = $Contrato->ContraPdf;
