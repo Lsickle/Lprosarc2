@@ -304,11 +304,11 @@ return [
     'clientbankcertification' => 'Certificación Bancaria',
     'clientlegalrepresentative'     => 'Representante Legal',
     'clientcommercialcertification' => 'Certificación Comercial',
-    'clientrut-info'                => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> del Rut',
-    'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio',
-    'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>',
-    'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal',
-    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(optional)</b>',
+    'clientrut-info'                => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> del Rut.',
+    'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio.',
+    'clientbankcertification-info'          => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses. <b>(opcional)</b>',
+    'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal.',
+    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>pdf</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial. <b>(opcional)</b>',
 
     // contactos
     'clientcategoría'         => 'Categoría',
@@ -319,7 +319,7 @@ return [
     'contacvehiccapacidadmessage'   => 'Kilogramos que logra llevar el vehículo.',
     'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP o una empresa que brinda el transporte a la planta.',
     'contacclientcategoríamessage2' => 'Después podra registrar más vehículos del traportador.',
-    'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social',
+    'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social.',
 
     // sede
     'csedeindex'              => 'Lista de sedes',
