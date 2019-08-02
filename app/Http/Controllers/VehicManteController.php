@@ -60,7 +60,7 @@ class VehicManteController extends Controller
 		];
 		$validation = Validator::make($request->all(), [
 			'FK_VehMan'        => 'required',
-			'MvKm'             => 'required|numeric',
+			'MvKm'             => 'numeric|nullable',
 			'HoraMavInicio1'   => 'required|date',
 			'HoraMavInicio'    => 'required',
 			'HoraMavFin1'      => 'required|date|after_or_equal:HoraMavInicio1',
