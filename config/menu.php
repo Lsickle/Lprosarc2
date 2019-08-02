@@ -57,15 +57,15 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE LISTA DE CLIENTES*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTACLIENTES) || in_array(Auth::user()->UsRol2, Permisos::LISTACLIENTES), (Link::toUrl('/clientes', '<i class="fa fa-list-ul"></i> <span>'. trans('adminlte_lang::message.MenuClien').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTAGENERADORES) || in_array(Auth::user()->UsRol2, Permisos::LISTAGENERADORES),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> '. trans('adminlte_lang::message.MenuGenerClien'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTAGENERADORES) || in_array(Auth::user()->UsRol2, Permisos::LISTAGENERADORES),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClien').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTARESIDUOS) || in_array(Auth::user()->UsRol2, Permisos::LISTARESIDUOS),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> '. trans('adminlte_lang::message.MenuRespelList'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTARESIDUOS) || in_array(Auth::user()->UsRol2, Permisos::LISTARESIDUOS),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
 				/*PESTAÑA DE TRATAMIENTOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::TRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> '.trans('adminlte_lang::message.MenuTrataRespel'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::TRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> <span>'.trans('adminlte_lang::message.MenuTrataRespel').'</span>')))
 				/*PESTAÑA DE PRETRATAMIENTOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::PRETRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> '.trans('adminlte_lang::message.MenuPreTrataRespel'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::PRETRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> <span>'.trans('adminlte_lang::message.MenuPreTrataRespel').'</span>')))
 				/*PESTAÑA DE PERSONAL DEL CLIENTE*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE),(Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>')))
 				/*PESTAÑA DE SOLICITUDES DE SERVICIO*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 			/*FIN DEL MENU1 PARA PROSARC*/
