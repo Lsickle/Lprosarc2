@@ -44,10 +44,14 @@ class SolicitudServicioController extends Controller
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
-					$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					}
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-					$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					}
 				}
 			})
 			->get();
