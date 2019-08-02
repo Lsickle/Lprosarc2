@@ -30,7 +30,7 @@ class VehicManteController extends Controller
 					}
 				})
 				->get();
-			return view('manteniVehicle.index', compact('MantVehicles'));
+			return view('ManteniVehicle.index', compact('MantVehicles'));
 		}
 		/*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -115,7 +115,7 @@ class VehicManteController extends Controller
 				->select('ID_Vehic', 'VehicPlaca')
 				->get();
 
-			return view('manteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
+			return view('ManteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
 		}
 		/*Validacion para usuarios no permitidos en esta vista*/
 		else{
