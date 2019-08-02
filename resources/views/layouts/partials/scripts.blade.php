@@ -159,7 +159,8 @@ $(document).ready(function() {
 		placeholder: "00:00 AM"
 	});
 	$('.number').inputmask({ mask: "[9{0,40}]" });
-
+	numeroDimension();
+	numeroKg();
 });
 	function numeroDimension(){
 		$('.numberDimension').inputmask({ alias: 'numeric', max:20, rightAlign:false});

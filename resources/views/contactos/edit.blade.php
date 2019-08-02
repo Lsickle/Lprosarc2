@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientcontact') }}
+{{ trans('adminlte_lang::message.clientcontact0') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.clientcontact') }}
+{{ trans('adminlte_lang::message.clientcontacto') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

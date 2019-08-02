@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::message.clientcontact') }}
+    {{ trans('adminlte_lang::message.clientcontacto') }}
 @endsection
 @section('contentheader_title')
-    {{ trans('adminlte_lang::message.clientcontact') }}
+    {{ trans('adminlte_lang::message.clientcontacto') }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -83,7 +83,7 @@
                                                         {{ trans('adminlte_lang::message.vehiccapacidad') }}
                                                     </label>
                                                     <small class="help-block with-errors">*</small>
-                                                    <input type="text" name="VehicCapacidad" class="form-control numberKg" id="VehicCapacidad" min="0" value="{{ old('VehicCapacidad') }}">
+                                                    <input type="text" name="VehicCapacidad" class="form-control numberKg" id="VehicCapacidad">
                                                 </div>
                                             </div>
                                         </div>
