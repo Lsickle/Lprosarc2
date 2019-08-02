@@ -83,7 +83,7 @@
                                                         {{ trans('adminlte_lang::message.vehiccapacidad') }}
                                                     </label>
                                                     <small class="help-block with-errors">*</small>
-                                                    <input type="number" name="VehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" min="0" value="{{ old('VehicCapacidad') }}">
+                                                    <input type="text" name="VehicCapacidad" class="form-control numberKg" id="VehicCapacidad" min="0" value="{{ old('VehicCapacidad') }}">
                                                 </div>
                                             </div>
                                         </div>
