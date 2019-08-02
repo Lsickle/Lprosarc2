@@ -82,7 +82,7 @@
 								@foreach ($GenerSedes as $GenerSede)
 									<li class="list-group-item col-md-12 col-xs-12">
 										<div class="col-md-6 col-xs-6">
-											<b class="textolargo">{{$GenerSede->GSedeName}}</b> 
+											<b class="textolargo" style="{{in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && $GenerSede->GSedeDelete == 1 ? 'color:red;': ''}}">{{$GenerSede->GSedeName}}</b> 
 											<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
 										</div>
 										<div>
@@ -195,11 +195,11 @@
 						</div>
 						<div style='overflow-y:auto; max-height:503px;'>
 							@foreach ($GenerSedes as $GenerSede)
-							<ul class="list-group" style="list-style:none; margin-top:10px;">
-								<li class="col-md-11 col-xs-12 col-12">
-									<h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$GenerSede->GSedeName}}</a></h4>
-								</li>
-							</ul>
+								<ul class="list-group" style="list-style:none; margin-top:10px; ">
+									<li class="col-md-11 col-xs-12 col-12">
+										<h4><a href="/sgeneradores/{{$GenerSede->GSedeSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center; {{in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && $GenerSede->GSedeDelete == 1 ? 'color:red;': ''}}" target="_blank" >{{$GenerSede->GSedeName}}</a></h4>
+									</li>
+								</ul>
 							@endforeach
 						</div>
 					</div>
