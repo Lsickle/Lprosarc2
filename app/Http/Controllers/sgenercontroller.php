@@ -273,7 +273,7 @@ class sgenercontroller extends Controller
             $Gsede->GSedeDelete = 0;
             $Gsede->save();    
 
-            AuditRequest::auditRestored($this->tableSedeGener, $Gsede->ID_Gener, $Gsede->GSedeDelete);
+            AuditRequest::auditRestored($this->tableSedeGener, $Gsede->ID_GSede, 0);
 
             // No se restauran los ResiduosSedeGener porque podria trerlos duplicados si antes se habian eliminado individualmente  
             return redirect()->route('generadores.show', [$Generador->GenerSlug]);

@@ -73,7 +73,6 @@
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
 						</li>
 						{{-- @if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) --}}
-
 							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.generaddresssgener') }}</i></h4>
 							<div style='overflow-y:auto; max-height:200px;'>
 								@php
@@ -86,7 +85,7 @@
 											<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
 										</div>
 										<div>
-											<a href="#" class="pull-right textpopover" id="SGeneraddress{{$i}}" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$GenerSede->GSedeAddress}}</p>">{{$GenerSede->GSedeAddress}}</a>
+											<a href="#" class="pull-right textpopover" id="SGeneraddress{{$i}}" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</p>">{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</a>
 										</div>
 									</li>
 									@php

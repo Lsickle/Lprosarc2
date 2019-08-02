@@ -229,9 +229,12 @@ class genercontroller extends Controller
         $Generador = generador::where('GenerSlug',$id)->first();
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
         $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
-
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
+
+            ->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
+            ->join('departamentos', 'departamentos.ID_Depart', 'municipios.FK_MunCity')
+
             ->where('gener_sedes.FK_GSede', $Generador->ID_Gener)
             ->where(function($query){
                 if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
@@ -239,7 +242,7 @@ class genercontroller extends Controller
                     $query->where('GSedeDelete', 0);
                 }
             })
-            ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress', 'gener_sedes.GSedeDelete')
+            ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress', 'gener_sedes.GSedeDelete', 'municipios.MunName', 'departamentos.DepartName')
             ->get();
 
         $Respels = DB::table('residuos_geners')

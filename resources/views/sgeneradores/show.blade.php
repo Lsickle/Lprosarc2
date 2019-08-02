@@ -23,7 +23,7 @@
 								@endslot
 							@endcomponent
 						@endif
-						@if($SedeGener->GSedeDelete == 0 && in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+						@if($SedeGener->GSedeDelete == 0 && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 							@if (count($CountSedeGener) > 1 )
 								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
 								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
@@ -33,7 +33,7 @@
 								</form>
 							@endif 	
 						@else
-							@if ($SedeGener->GSedeDelete == 1 && in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+							@if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf
