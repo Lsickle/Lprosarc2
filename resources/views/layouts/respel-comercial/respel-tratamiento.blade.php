@@ -1,5 +1,5 @@
-<div id="tratamiento`+contador+`Container">
-    <div class="col-md-8">
+<div id="tratamiento`+contador+`Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
+    <div class="col-md-8" style="margin-bottom: 0.25em;">
         <label for="tratamiento`+contador+`">tratamiento</label>
         <select class="form-control" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
             <option disabled="true">seleccione...</option>

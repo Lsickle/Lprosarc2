@@ -368,7 +368,7 @@
 	    }
 	    function AgregarRango(id){
 	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
-	        $("#tarifa"+contador+"Container").append(rango);
+	        $("#tarifa"+id+"Container").append(rango);
 	        $("#evaluacioncomercial").validator('update');
 	        contadorRango = parseInt(contadorRango)+1;
 	    }

@@ -1,7 +1,7 @@
 {{-- ingreso de inputs para el pretratamiento --}}
-<div id="pretratamiento`+contador+`Container">
+<div id="pretratamiento`+contador+`Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
 	{{-- <hr class="col-md-10 col-md-offset-1 align-self-center"  id="pretratsparator`+contador+`" /> --}}
-	<div class="col-md-12">
+	<div class="col-md-12" style="margin-bottom: 0.25em;">
 	    <label for="pretratamiento`+contador+`">Pretratamiento</label>
 	    <select multiple="multiple" class="form-control" id="pretratamiento`+contador+`" name="FK_ReqTrata[]">
 	        <option disabled="true">primero elija un tratamiento...</option>
