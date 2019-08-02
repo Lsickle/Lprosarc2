@@ -22,7 +22,7 @@
 							<thead>
 								<tr>
 									<th>{{ trans('adminlte_lang::message.mantvehivehic') }}</th>
-									<th>{{ trans('adminlte_lang::message.mantvehikm') }}</th>
+									{{-- <th>{{ trans('adminlte_lang::message.mantvehikm') }}</th> --}}
 									<th>{{ trans('adminlte_lang::message.mantvehistatus') }}</th>
 									<th>{{ trans('adminlte_lang::message.mantvehitype') }}</th>
 									<th>{{ trans('adminlte_lang::message.mantvehiinicio1') }}</th>
@@ -38,7 +38,7 @@
 								@foreach ($MantVehicles as $MantVehicle)
 								<tr style="{{$MantVehicle->MvDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$MantVehicle->VehicPlaca}}</td>
-									<td>{{$MantVehicle->MvKm}}</td>
+									{{-- <td>{{$MantVehicle->MvKm}}</td> --}}
 									@if($MantVehicle->HoraMavFin >= now())
 									<td>{{ trans('adminlte_lang::message.mantvehistatustrue') }}</td>
 									@else

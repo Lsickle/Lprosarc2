@@ -30,6 +30,7 @@ return [
     'tratcreate'            => 'Crear Tratamiento',
     'pretratcreate'         => 'Guardar',
     'pretratadd'            => 'Añadir Pretratamiento',
+    'optionadd'             => 'Añadir Opción',
     'pretrat'               => 'Pretratamiento',
     'tratlist'              => 'Lista de Tratamientos',
     'pretratlist'           => 'Lista de PreTratamientos',

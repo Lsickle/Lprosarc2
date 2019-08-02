@@ -41,7 +41,7 @@ Registro del Tratamiento
 										<input type="text" class="form-control" id="tratamientoinputext2" placeholder="Bayer" name="provehedor">
 									</div>
 									<div class="col-md-6">
-										<label for="tratamientoinputext3">Tipo de resudio</label>
+										<label for="tratamientoinputext3">Tipo de residio</label>
 										<input type="text" class="form-control" id="tratamientoinputext3" placeholder="Medicamentos" name="tipo">
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">

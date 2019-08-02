@@ -7,6 +7,8 @@ use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Sede;
 use App\Area;
+use App\Tratamiento;
+use App\Pretratamientos;
 use App\GenerSede;
 
 class AjaxController extends Controller
@@ -155,4 +157,17 @@ class AjaxController extends Controller
 			return response()->json($Vehiculos);
 		}
 	}
+
+	/*Funcion para ver por medio de Ajax los pretratamietnos que le competen a un tratamiento*/
+	public function preTratamientoDinamico(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$pretrataOption = Tratamientos::with('pretratamientos')
+				->where($id, 'ID_Trat')
+				->get();
+			return response()->json($pretrataOption->pretratamientos);
+		}
+	}
+
+
 }

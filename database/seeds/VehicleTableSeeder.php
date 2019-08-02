@@ -24,21 +24,21 @@ class VehicleTableSeeder extends Seeder
         
         $vehicle = new Vehiculo();
         $vehicle->VehicPlaca = "HTS-098";
-        $vehicle->VehicInternExtern = "0";
+        $vehicle->VehicInternExtern = "1";
         $vehicle->VehicTipo = "Turbo";
         $vehicle->VehicCapacidad = "10000";
         $vehicle->VehicKmActual = "100";
-        $vehicle->FK_VehiSede = "4";
+        $vehicle->FK_VehiSede = "1";
         $vehicle->VehicDelete = 0;
         $vehicle->save();
 
         $vehicle = new Vehiculo();
         $vehicle->VehicPlaca = "CSS-131";
-        $vehicle->VehicInternExtern = "0";
+        $vehicle->VehicInternExtern = "1";
         $vehicle->VehicTipo = "Camion";
         $vehicle->VehicCapacidad = "464650";
         $vehicle->VehicKmActual = "7597";
-        $vehicle->FK_VehiSede = "10";
+        $vehicle->FK_VehiSede = "1";
         $vehicle->VehicDelete = 0;
         $vehicle->save();
 
@@ -48,7 +48,7 @@ class VehicleTableSeeder extends Seeder
         $vehicle->VehicTipo = "Mula";
         $vehicle->VehicCapacidad = "728983837";
         $vehicle->VehicKmActual = "100034";
-        $vehicle->FK_VehiSede = "8";
+        $vehicle->FK_VehiSede = "1";
         $vehicle->VehicDelete = 0;
         $vehicle->save();
 
