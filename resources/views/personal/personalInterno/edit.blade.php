@@ -128,7 +128,10 @@
 													<div class="form-group col-md-6">
 														<label for="PersCellphone" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.mobile') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotel') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.mobile') }}</label>
 														<small class="help-block with-errors">*</small>
-														<input data-minlength="12" required name="PersCellphone" autofocus="true" type="text" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{$Persona->PersCellphone}}">
+														<div class="input-group">
+															<span class="input-group-addon">(+57)</span>
+															<input data-minlength="12" required name="PersCellphone" autofocus="true" type="tel" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{$Persona->PersCellphone}}">
+														</div>
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersAddress" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodir') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.address') }}</label>
