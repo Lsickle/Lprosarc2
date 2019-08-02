@@ -170,7 +170,7 @@ class RecursoController extends Controller
             abort(404);
         }
 
-        unlink(public_path("img/Recursos/$Recursos->RecSrc")."/$Recursos->RecRmSrc");
+        unlink(public_path("/img/Recursos/$Recursos->RecSrc")."/$Recursos->RecRmSrc");
         Recurso::destroy($Recursos->ID_Rec);
         $id = $SolRes->SolResSlug;
         return redirect()->route('recurso.show', compact('id'));

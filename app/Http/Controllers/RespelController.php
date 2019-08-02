@@ -124,7 +124,7 @@ class RespelController extends Controller
                 $file1 = $request['RespelHojaSeguridad'][$x];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
 
-                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = 'RespelHojaDefault.pdf';
@@ -134,7 +134,7 @@ class RespelController extends Controller
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
             }
@@ -143,7 +143,7 @@ class RespelController extends Controller
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
             }
@@ -152,7 +152,7 @@ class RespelController extends Controller
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
             }
@@ -320,7 +320,7 @@ class RespelController extends Controller
                 }
                 $file1 = $request['RespelHojaSeguridad'];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
-                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = $respel->RespelHojaSeguridad;
@@ -333,7 +333,7 @@ class RespelController extends Controller
                 }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = $respel->RespelTarj;
             }
@@ -345,7 +345,7 @@ class RespelController extends Controller
                 }
                 $file3 = $request['RespelFoto'];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
             }else{
                 $foto = $respel->RespelFoto;
             }
@@ -357,7 +357,7 @@ class RespelController extends Controller
                 }
                 $file4 = $request['SustanciaControladaDocumento'];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = $respel->SustanciaControladaDocumento;
             }

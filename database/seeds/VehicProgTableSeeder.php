@@ -16,7 +16,7 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->ProgVehFecha = "2019-02-20";
         $vehicleprog->progVehKm = "100";
         $vehicleprog->ProgVehTurno = "1";
-        $vehicleprog->ProgVehtipo = "0";
+        $vehicleprog->ProgVehtipo = "1";
         $vehicleprog->ProgVehEntrada = "2018-02-20 1:38:02";
         $vehicleprog->ProgVehSalida = "2018-02-20 16:40:02";
         $vehicleprog->FK_ProgVehiculo = "3";

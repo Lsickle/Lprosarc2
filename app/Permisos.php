@@ -142,13 +142,13 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['AdministradorPlanta'];
+	const SolSerCertifi = ['AdministradorPlanta','Programador'];
 	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
-	const SOLSERACEPTADO = ['Tesorería'];
+	const SOLSERACEPTADO = ['Tesorería','Programador'];
 	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
@@ -178,7 +178,10 @@ class Permisos{
 		pretratamientos/edit
 		pretratamientocontoller::destroy
 	*/
-
+	const CONDUCTOR = ['Conductor'];
+	/* Using->
+		VehicProgController::index
+	 */
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];
