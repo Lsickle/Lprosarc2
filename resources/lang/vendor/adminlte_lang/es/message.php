@@ -782,7 +782,7 @@ return [
     'contractclien'           => 'Clientes',
     'contractcliendescript'   => 'Seleccione el cliente al cual le adjuntara el contrato.',
     'contractpdf'             => 'Contrato',
-    'contractpdfdescript'     => 'Adjunte el archivo del contrato en formato <b>PDF</b> y que no pase de <b>5 mb</b>',
+    'contractpdfdescript'     => 'Adjunte el archivo del contrato en formato <b>PDF</b> y que no pase de <b>5 mb</b>.',
     'contractvigencia'        => 'Fecha de vigencia',
     'contractvigenciadescript' => 'Seleccione la fecha de vencimiento y/o vigencia del documento anteriormente adjuntado.',
     'contractnotify'          => '¿Cuando notificar?',
