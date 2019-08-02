@@ -20,6 +20,7 @@ use App\Departamento;
 use App\Municipio;
 use App\ResiduosGener;
 use App\Permisos;
+use App\Respel;
 
 
 
@@ -47,7 +48,7 @@ class genercontroller extends Controller
         ->where(function($query)use($ID_Cli){
             if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
                 if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                    $query->where('ID_Cli', '<>', $ID_Cli);
+                    // $query->where('ID_Cli', '<>', $ID_Cli);
                 }else{
                     $query->where('GenerDelete', 0);
                     $query->where('ID_Cli', '<>', $ID_Cli);  
@@ -77,13 +78,7 @@ class genercontroller extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'SedeSlug')
-                ->where(function($query) use ($ID_Cli){
-                        if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                            $query->where('FK_SedeCli','<>', $ID_Cli);
-                        }else{
-                            $query->where('FK_SedeCli', $ID_Cli);
-                        }
-                    })
+                ->where('FK_SedeCli', $ID_Cli)
                 ->where('SedeDelete', 0)
                 ->get();
             $Cliente = Sede::where('SedeDelete', 0)->get();
@@ -187,14 +182,14 @@ class genercontroller extends Controller
             ->select('sedes.*')
             ->where('FK_SedeCli', '=', $ID_Cli)
             ->where('SedeDelete', '=', 0)
-            ->first();
+            ->get();
 
         $Gener = new generador();
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
         $Gener->GenerShortname = $Cliente->CliShortname;
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
-        $Gener->FK_GenerCli = $Sedes->ID_Sede;
+        $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
         $Gener->GenerDelete = $Cliente->CliDelete;
         $Gener->save();
 
@@ -228,13 +223,11 @@ class genercontroller extends Controller
     {
         $Generador = generador::where('GenerSlug',$id)->first();
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-        $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
+        $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
-
             ->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
             ->join('departamentos', 'departamentos.ID_Depart', 'municipios.FK_MunCity')
-
             ->where('gener_sedes.FK_GSede', $Generador->ID_Gener)
             ->where(function($query){
                 if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
@@ -271,16 +264,7 @@ class genercontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
-            $Sedes = Sede::select('SedeName', 'ID_Sede', 'SedeSlug')
-                ->where(function($query) use ($ID_Cli){
-                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                        $query->where('FK_SedeCli','<>', $ID_Cli);
-                    }else{
-                        $query->where('FK_SedeCli', $ID_Cli);
-                    }
-                })
-                ->where('SedeDelete', 0)
-                ->get();
+            $Sedes = Sede::select('SedeName', 'ID_Sede', 'SedeSlug')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
             $Generador = generador::where('GenerSlug',$id)->first();
             return view('generadores.edit', compact('Sedes', 'Generador'));
         }else{

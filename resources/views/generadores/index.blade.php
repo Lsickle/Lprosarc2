@@ -12,21 +12,19 @@
 			<div class="box">
 				<div class="box-header">
 					<div class="col-sm-16 text-center">
-						<div class="{{!isset($Gener) ? 'col-xs-12 col-sm-4' : 'col-xs-6'}}">
-							<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
-						</div>
-						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
+						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							@if (!isset($Gener))
-								<div class="col-xs-6 col-sm-4">
+								<div class="col-xs-6 col-md-8">
 									<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
 										@csrf
-										<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
+										<label for="" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
+											<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
+										</label>
 									</form>
 								</div>
 							@endif
-							<div class=" {{!isset($Gener) ? 'col-sm-4' : ''}} col-xs-6">
-								<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
-							</div>
+							<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
 					</div>
 				</div>

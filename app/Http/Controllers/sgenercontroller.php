@@ -44,7 +44,7 @@ class sgenercontroller extends Controller
      */
     public function create()
     {   
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $Departamentos = Departamento::all();
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Generadores = DB::table('generadors')
@@ -188,17 +188,17 @@ class sgenercontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-            $ID_Cli = userController::IDClienteSegunUsuario();
+        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $Generadores = DB::table('generadors')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
-                ->where('FK_SedeCli', '=', $ID_Cli)
+                ->join('gener_sedes', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+                ->where('gener_sedes.GSedeSlug', '=', $slug)
                 ->where('SedeDelete', '=', 0)
                 ->get();
 
-            $GSede = GenerSede::where('GSedeSlug',$id)->first();
+            $GSede = GenerSede::where('GSedeSlug',$slug)->first();
             if (!$GSede) {
                 abort(404);
             }

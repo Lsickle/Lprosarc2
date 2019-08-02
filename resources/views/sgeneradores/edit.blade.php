@@ -33,10 +33,10 @@
 									<div class="col-md-12 form-group">
 										<label for="clientname">{{ trans('adminlte_lang::message.gener') }}</label><small class="help-block with-errors">*</small>
 										<select class="form-control select" id="clientname" name="FK_GSede" required>
-												<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 											@foreach($Generadores as $Generador)
 												<option value="{{$Generador->GenerSlug}}"  {{$GSede->FK_GSede == $Generador->ID_Gener ? 'selected' : '' }}>{{$Generador->GenerShortname}}</option>
-											@endforeach()
+											@endforeach
 										</select>
 									</div>
 									<div class="col-md-6 form-group">
