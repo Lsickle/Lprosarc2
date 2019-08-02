@@ -350,7 +350,7 @@ return [
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualización de la Sede del Generador',
-    'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'SGenerregistertittle'    => 'Registro de la sede del Generador',
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
     'sgenerlist'              => 'Lista de las Sedes del Generador',
@@ -593,7 +593,8 @@ return [
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social',
     'code-gener'              => 'Código con el que usted tiene registrado este Generador',
-    'respels-gener'           => 'Residuos pertenecientes a este Generador',
+    'respels-gener'           => 'Seleccione los residuos que le pertenecen a este generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en Aprobado o Incompleto.',
+    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en Aprobado o Incompleto.',
 
     // info-contacto
     'nameCorto-contacto'      => 'Nombre corto del Contacto sino tiene coloque la Razón Social',
