@@ -1,7 +1,7 @@
 <div class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
 	<div id="tarifa`+contador+`Container" class="col-md-10" style="margin-bottom: 0.25em;">
 		<div class="col-md-3" id="rango`+contadorRango+`">
-			<label>rango 1</label>
+			<label>Desde 0</label>
 			<input name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->RespelDescrip}}" disabled>
 		</div>
 	</div>
