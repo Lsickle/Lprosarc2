@@ -74,7 +74,7 @@
 						</li>
 						{{-- @if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) --}}
 
-							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.sedesgener') }}</i></h4>
+							<h4 class="text-center"><i>{{ trans('adminlte_lang::message.generaddresssgener') }}</i></h4>
 							<div style='overflow-y:auto; max-height:200px;'>
 								@php
 									$i = 0;
@@ -144,7 +144,7 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+							<button type="submit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.add') }}</b></button>
 						</div>
 					</div>
 				</div>
@@ -163,7 +163,7 @@
 					<div class="active tab-pane" id="residuos">
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							{{-- BOTONES DE CREAR RESIDUOS Y ASIGNARLOS --}}
-							<a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
+							<a href="/respels/create" class="btn btn-primary mx-auto"><i class="fas fa-plus-square"></i> <b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
 							<a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-success mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
 						@endif
 						<div style='overflow-y:auto; max-height:503px;'>
@@ -190,7 +190,7 @@
 					<div class="tab-pane" id="sedes">
 						<div class="text-center">
 							@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-								<a href="/sgeneradores/create" class="btn btn-success"><i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.addsedegener') }}</b></a>
+								<a href="/sgeneradores/create" class="btn btn-primary"><i class="fas fa-plus-square"></i><b> {{ trans('adminlte_lang::message.addsedegener') }}</b></a>
 							@endif
 						</div>
 						<div style='overflow-y:auto; max-height:503px;'>

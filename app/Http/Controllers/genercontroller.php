@@ -187,14 +187,14 @@ class genercontroller extends Controller
             ->select('sedes.*')
             ->where('FK_SedeCli', '=', $ID_Cli)
             ->where('SedeDelete', '=', 0)
-            ->get();
+            ->first();
 
         $Gener = new generador();
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
         $Gener->GenerShortname = $Cliente->CliShortname;
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
-        $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
+        $Gener->FK_GenerCli = $Sedes->ID_Sede;
         $Gener->GenerDelete = $Cliente->CliDelete;
         $Gener->save();
 
@@ -226,43 +226,43 @@ class genercontroller extends Controller
      */
     public function show($id)
     {
-            $Generador = generador::where('GenerSlug',$id)->first();
-            $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-            $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
+        $Generador = generador::where('GenerSlug',$id)->first();
+        $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
+        $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', userController::IDClienteSegunUsuario())->first();
 
-            $GenerSedes = DB::table('gener_sedes')
-                ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
-                ->where('gener_sedes.FK_GSede', $Generador->ID_Gener)
-                ->where('GSedeDelete', 0)
-                ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
-                ->get();
+        $GenerSedes = DB::table('gener_sedes')
+            ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
+            ->where('gener_sedes.FK_GSede', $Generador->ID_Gener)
+            ->where('GSedeDelete', 0)
+            ->select('gener_sedes.GSedeName', 'gener_sedes.ID_GSede', 'gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
+            ->get();
 
-            $Respels = DB::table('residuos_geners')
-                ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-                ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-                ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
-                ->where('gener_sedes.FK_GSede', '=', $Generador->ID_Gener)
-                ->where('gener_sedes.GSedeDelete', '=', 0)
-                ->where('respels.RespelDelete', '=', 0)
+        $Respels = DB::table('residuos_geners')
+            ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+            ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+            ->select('respels.RespelSlug', 'respels.RespelName', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes', 'gener_sedes.GSedeName', 'residuos_geners.FK_Respel')
+            ->where('gener_sedes.FK_GSede', '=', $Generador->ID_Gener)
+            ->where('gener_sedes.GSedeDelete', '=', 0)
+            ->where('respels.RespelDelete', '=', 0)
+            ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+            ->where('residuos_geners.DeleteSGenerRes', '=', 0)
+            ->groupBy('respels.ID_Respel')
+            ->get();
+
+        $old = old('FK_Respel');
+        if (is_array($old)) {
+            $Residuos = DB::table('respels')
+                ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
+                ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
+                ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+                ->select('respels.ID_Respel', 'respels.RespelName')
+                ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
+                ->where('respels.RespelDelete', 0)
                 ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
-                ->where('residuos_geners.DeleteSGenerRes', '=', 0)
                 ->groupBy('respels.ID_Respel')
                 ->get();
-
-            $old = old('FK_Respel');
-            if (is_array($old)) {
-                $Residuos = DB::table('respels')
-                    ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
-                    ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-                    ->join('generadors', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-                    ->select('respels.ID_Respel', 'respels.RespelName')
-                    ->where('generadors.ID_Gener', '=', $Generador->ID_Gener)
-                    ->where('respels.RespelDelete', 0)
-                    ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
-                    ->groupBy('respels.ID_Respel')
-                    ->get();
-            }
-            return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos', 'old'));
+        }
+        return view('generadores.show', compact('Generador', 'Sede', 'Cliente', 'Respels', 'GenerSedes', 'Residuos', 'old'));
         
     }
 
@@ -355,11 +355,6 @@ class genercontroller extends Controller
             ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
             ->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
             ->where('gener_sedes.FK_GSede', '=', $Generador->ID_Gener)
-            ->where(function($query)use($Generador){
-                    if($Generador->GenerDelete == 1){
-                        $query->where('respels.RespelDelete', '=', 0);
-                    }
-                })
             ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
             ->select('residuos_geners.DeleteSGenerRes', 'residuos_geners.ID_SGenerRes')
             ->get();
@@ -400,14 +395,6 @@ class genercontroller extends Controller
                 
                 AuditRequest::auditRestored($this->tableSedeGener, $SedeGener->ID_GSede, $SedeGener->GSedeDelete);
             }
-
-            foreach($ResiduosSedesGeners as $ResiduoSGener){
-                DB::table('residuos_geners')
-                ->where('residuos_geners.ID_SGenerRes', '=', $ResiduoSGener->ID_SGenerRes)
-                ->select('residuos_geners.DeleteSGenerRes')
-                ->update(['DeleteSGenerRes' => 0]);
-            }
-
             return redirect()->route('generadores.show', [$Generador->GenerSlug]);
         }
     }

@@ -346,6 +346,7 @@ return [
     'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
+    'generaddresssgener'      => 'Dirrecciones de las Sedes del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',

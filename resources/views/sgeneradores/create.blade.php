@@ -65,18 +65,20 @@
 									</div>
 									<div class="col-md-6 form-group ">
 										<label for="GSedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
-										<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{old('GSedeAddress')}}" required>
+										<input type="text" class="form-control" id="GSedeinputaddress" name="GSedeAddress" value="{{old('GSedeAddress')}}" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" required>
 									</div>
 									<div class="col-md-6 form-group ">
 										<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
 										<input type="email" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="GSedeEmail" value="{{old('GSedeEmail')}}" >
 									</div>
 									<div class="col-md-6 form-group">
-										<label for="Respels">{{ trans('adminlte_lang::message.MenuRespel') }}</label>
-										<a href="#" class="textpopover" title="{{ trans('adminlte_lang::message.departamento') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{ trans('adminlte_lang::message.respels-gener') }}</p>"><i class="far fa-question-circle" ></i></a>
+										<label for="Respels" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.MenuRespel') }}</b>" data-content="{{ trans('adminlte_lang::message.respels-sede-gener') }}">
+											<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+											{{ trans('adminlte_lang::message.MenuRespel') }}
+										</label>
 										<select class="form-control select-multiple" id="Respels" name="FK_Respel[]" multiple>
 											@foreach ($Respels as $Respel)
-												<option value="{{$Respel->ID_Respel}}" {{ old('FK_Respel') == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
+												<option value="{{$Respel->RespelSlug}}">{{$Respel->RespelName}}</option>
 											@endforeach
 										</select>
 									</div>
@@ -91,7 +93,7 @@
 									<div class="col-md-6 form-group">
 										<label for="GSedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label>
 										<small class="help-block with-errors"></small>
-										<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}">
+										<input type="tel" class="form-control phone tel" id="GSedeinputphone1" name="GSedePhone1" data-minlength="11" maxlength="11" value="{{ old('GSedePhone1') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 									</div>
 									<div class="col-md-6 form-group">
 										<label for="GSedeinputext1">{{ trans('adminlte_lang::message.ext') }}</label>
@@ -101,7 +103,7 @@
 									<div id="telefono2" class="col-md-6 form-group" style="display: none;">
 										<label for="GSedeinputphone2">{{ trans('adminlte_lang::message.phone') }} 2</label>
 										<small class="help-block with-errors"></small>
-										<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}">
+										<input type="tel" class="form-control phone tel2" id="GSedeinputphone2" name="GSedePhone2" data-minlength="11" maxlength="11" value="{{ old('GSedePhone2') }}" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}">
 									</div>
 									<div id="extension2" class="col-md-6 form-group" style="display: none;">
 										<label for="GSedeinputext2">{{ trans('adminlte_lang::message.ext') }} 2</label> 
