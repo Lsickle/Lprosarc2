@@ -22,6 +22,7 @@ class VehicleController extends Controller
 			$Vehicles = DB::table('vehiculos')
 				->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
 				->select('vehiculos.*', 'sedes.SedeName')
+				->where('vehiculos.FK_VehiSede', 1)
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('VehicDelete', 0);

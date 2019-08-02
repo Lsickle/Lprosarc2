@@ -67,10 +67,10 @@
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.contractnotify') }}" data-content="{{ trans('adminlte_lang::message.contractnotifydescript') }}" for="CargoSalary"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.contractnotify')}}</label>
 								<div class="input-group">
 									<input type="text" class="form-control number" maxlength="2" name="ContratoNumVigencia"value="{{$Contrato->ContratoNumVigencia}}">
-									<input type="text" name="ContratoTypeVigencia" id="ContratoTypeVigencia" hidden="" value="{{$Contrato->COntratoTypeVigencia}}">
+									<input type="text" name="ContratoTypeVigencia" id="ContratoTypeVigencia" hidden="" value="{{$Contrato->ContratoTypeVigencia}}">
 									<div class="input-group-btn">
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btndma">
-											{{$Contrato->COntratoTypeVigencia}} <span class="caret"></span>
+											{{$Contrato->ContratoTypeVigencia}} <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu dropdown-menu-right">
 											<li><a onclick="changedma('Día(s)')">Día(s)</a></li>

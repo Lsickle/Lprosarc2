@@ -28,55 +28,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $Vehiculos = Vehiculo::select('VehicPlaca', 'ID_Vehic', 'VehicKmActual')->where('FK_VehiSede', 1)->get();
-
-        $SolicitudServicios = SolicitudServicio::select('SolSerStatus')->get();
-        $Pendientes = 0;
-        $Aprobadas = 0;
-        $Programadas = 0;
-        $Recibidas = 0;
-        $Concialiadas = 0;
-        $Tratadas = 0;
-        $Certificadas = 0;
-        foreach($SolicitudServicios as $SolicitudServicio){
-            switch ($SolicitudServicio->SolSerStatus) {
-                case 'Pendiente':
-                    $Pendientes++;
-                    break;
-                case 'Aprobado':
-                    $Aprobadas++;
-                    break;
-                case 'Programado':
-                    $Programadas++;
-                    break;
-                case 'Completado':
-                    $Recibidas++;
-                    break;
-                case 'Conciliado':
-                    $Concialiadas++;
-                    break;
-                case 'Tratado':
-                    $Tratadas++;
-                    break;
-                case 'Certificacion':
-                    $Certificadas++;
-                    break;
-            }
-        }
-        $serviciosnoprogramados = DB::table('solicitud_servicios')
-            ->where('SolSerDelete', 0)
-            ->where('SolSerStatus', 'Aprobado')
-            ->orderBy('updated_at', 'asc')
-            ->limit(5)
+        $Km = DB::table('progvehiculos')
+            ->select('FK_ProgVehiculo', 'progVehKm', 'ProgVehFecha')
+            ->where('ProgVehDelete', 0)
+            ->where('progVehKm', '<>', null)
+            ->where('FK_ProgVehiculo', 1)
+            ->whereBetween('ProgVehFecha', [date('Y-m-d', strtotime("first day of last month")), date('Y-m-d', strtotime("last day of last month"))])
             ->get();
+            // date('m', strtotime('2019-07-31'."+1 day"))
+        // return $Km;
+        // return date('Y-m-d', strtotime("first day of last month"))." - ".date('Y-m-d', strtotime("last day of last month"));
+        if(Auth::user()->UsRol === "Conductor"){
+            return redirect()->route('vehicle-programacion.index');
+        }
+        $Vehiculos = Vehiculo::where('FK_VehiSede', 1)->get();
         if(Auth::user()->UsRol === "Cliente"){
             if(Auth::user()->FK_UserPers === NULL){
                 return redirect()->route('clientes.create');
             }else{
-                return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'serviciosnoprogramados'));
+                return view('home', compact('Vehiculos'));
             }
         }else{
-            return view('home', compact('Pendientes','Aprobadas','Programadas','Recibidas','Concialiadas','Tratadas','Certificadas', 'Vehiculos', 'serviciosnoprogramados'));
+            return view('home', compact('Vehiculos'));
         }
     }
 }

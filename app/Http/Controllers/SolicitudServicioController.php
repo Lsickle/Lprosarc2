@@ -44,10 +44,14 @@ class SolicitudServicioController extends Controller
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
-					$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					}
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-					$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					}
 				}
 			})
 			->get();
@@ -355,7 +359,7 @@ class SolicitudServicioController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug')
+			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 		$Residuos = DB::table('solicitud_residuos')
