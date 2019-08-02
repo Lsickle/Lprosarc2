@@ -77,9 +77,9 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE MI CLIENTE*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl(route('cliente-show',  Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first()->CliSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> '. trans('adminlte_lang::message.MenuGenerClientitle'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> '. trans('adminlte_lang::message.MenuRespelList'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
 				/*PESTAÑA DE PERSONAL*/
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/areas', '<i class="fas fa-archive"></i> <span>'.trans('adminlte_lang::message.MenuPersAreas').'</span>'))
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/cargos', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').'</span>'))
