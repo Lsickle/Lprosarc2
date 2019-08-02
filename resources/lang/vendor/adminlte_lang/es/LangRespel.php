@@ -20,7 +20,7 @@ return [
     'Respeleditmenu'        => 'Edición del Residuo',
     'Respeledittag'         => 'Respel-Edición',
     'Respelevaluatetag'     => 'Respel-Evaluar',
-    'Respelevaluetemenu'    => 'Evaluación de Residuo',
+    'Respelevaluetemenu'    => 'Evaluación',
     'Respelasig'            => 'Asignación de tratamientos para Residuos',
     'RespelName'            => 'Nombre',
     'Respelclas'            => 'Clasificación 4741',
