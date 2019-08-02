@@ -208,7 +208,7 @@
 						<!-- nav-tabs-custom -->
 						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -220,14 +220,14 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 								</li>
 							</ul>
 							<!-- nav-content -->
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Residuopane">
+								<div class="tab-pane fade" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
@@ -247,7 +247,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="Tarifaspane">
+								<div class="tab-pane fade in active" id="Tarifaspane">
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<!-- /.tab-pane fade -->
@@ -272,10 +272,26 @@
 @section('NewScript')
 	<script type="text/javascript">
 	    var contador = 1;
+	    var contadorRango = 1;
+	    
 	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
 	    $("#addOptionButton").click(function(event) {
 	      event.preventDefault();
 	    });
+	    $("#addrangeButton").click(function(event) {
+	      event.preventDefault();
+	    });
+	    $("#minusrangeButton").click(function(event) {
+	      event.preventDefault();
+	    });
+	    function validarprevent(){
+	        $(".addrangeButton").click(function(event) {
+	          event.preventDefault();
+	        });
+	        $(".minusrangeButton").click(function(event) {
+	          event.preventDefault();
+	        });
+	    }
 	    function validarSwitch(){
 	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
 	       		Switch1();
@@ -341,9 +357,22 @@
 	        Switch2();
 	        Switch3();
 	        Switch6();
-	        atachtslider();
+	        validarprevent();
 	    }
-	    function EliminarOption(id){
+	   	function EliminarOption(id){
+	        $("#tratamientoContainer"+id).remove();
+	        $("#pretratname"+id).remove();
+	        $("#pretratdescription"+id).remove();
+	        $("#pretratsparator"+id).remove();
+	        $("#evaluacioncomercial").validator('update');
+	    }
+	    function AgregarRango(id){
+	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
+	        $("#tarifa"+contador+"Container").append(rango);
+	        $("#evaluacioncomercial").validator('update');
+	        contadorRango = parseInt(contadorRango)+1;
+	    }
+	    function EliminarRango(id){
 	        $("#tratamientoContainer"+id).remove();
 	        $("#pretratname"+id).remove();
 	        $("#pretratdescription"+id).remove();
@@ -355,15 +384,6 @@
 	        Selects();
 	        ChangeSelect();
 	    });
-	    function atachtslider(){
-	        $("#ex18b").slider({
-	    	min: 0,
-	    	max: 10,
-	    	value: [3, 6],
-	    	labelledby: ['ex18-label-2a', 'ex18-label-2b']
-	    	});
-	    }
-	    
 	</script>
 @endsection
 @endif

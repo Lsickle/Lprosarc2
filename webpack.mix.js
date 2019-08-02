@@ -99,9 +99,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/chart.js/dist/Chart.js'
 		], 'public/js/chart.js')
 	 .scripts([
-				'node_modules/bootstrap-slider/dist/bootstrap-slider.js'
-		], 'public/js/bootstrap-slider.js')
-	 .scripts([
 			'node_modules/@fullcalendar/core/main.js',
 			'node_modules/@fullcalendar/daygrid/main.js',
 			'node_modules/@fullcalendar/timegrid/main.js',

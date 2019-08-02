@@ -14,10 +14,6 @@
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
 
-    {{-- bootstrap slider --}}
-    <link href="{{ mix('/css/bootstrap-slider.css') }}" rel="stylesheet" type="text/css" />
-
-
     @if(Route::currentRouteName()=='vehicle-programacion.create')
         {{-- Full Calendar --}}
          <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
@@ -25,6 +21,7 @@
 
      {{-- Chart --}}
      <link href="{{ mix('/css/chart.css') }}" rel="stylesheet" type="text/css">
+
      {{-- Moment --}}
      {{-- <link href="{{ mix('/css/moment.css') }}" rel="stylesheet" type="text/css"> --}}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
