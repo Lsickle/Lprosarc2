@@ -130,7 +130,7 @@
 									{{ trans('adminlte_lang::message.vehiccapacidad') }}
 								</label>
 								<small class="help-block with-errors">*</small>
-								<input type="number" name="CreateVehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" min="0" value="{{old('CreateVehicCapacidad')}}" required>
+								<input type="number" name="CreateVehicCapacidad" class="form-control numberKg" id="VehicCapacidad" value="{{old('CreateVehicCapacidad')}}" required>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -227,7 +227,7 @@
 								</div>
 								<div class="col-md-12 form-group">
 									<label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-									<input type="number" name="VehicCapacidad" maxlength="7" min="0" class="form-control" id="VehicCapacidad" maxlength="64" value="`+capacidad+`" required>
+									<input type="number" name="VehicCapacidad" class="form-control numberKg" id="VehicCapacidad" value="`+capacidad+`" required>
 								</div>
 							</div>
 							<input type="text" name="validate" hidden value="`+id+`">
@@ -239,6 +239,7 @@
 				</div>
 			</form>
 			`);
+			numberKg();
 			$('#formedit').validator('update');
 		}
 		function deletevehiculo(id, placa){
