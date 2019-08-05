@@ -69,7 +69,7 @@
 									</div>
 									<div class="col-md-6 form-group ">
 										<label for="GSedeinputemail">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
-										<input type="email" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="GSedeEmail" value="{{old('GSedeEmail')}}" >
+										<input type="email" class="form-control" id="GSedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="GSedeEmail" value="{{old('GSedeEmail')}}" required>
 									</div>
 									<div class="col-md-6 form-group">
 										<label for="Respels" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.MenuRespel') }}</b>" data-content="{{ trans('adminlte_lang::message.respels-sede-gener') }}">
@@ -87,7 +87,7 @@
 										<label for="GSedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
 										<div class="input-group">
 											<span class="input-group-addon">(+57)</span>
-											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" required>
+											<input type="text" class="form-control mobile" name="GSedeCelular" id="GSedeinputcelular" data-minlength="12" value="{{old('GSedeCelular')}}" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" required>
 										</div>
 									</div>
 									<div class="col-md-6 form-group">
