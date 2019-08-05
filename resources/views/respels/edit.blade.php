@@ -271,26 +271,17 @@
 </div>
 @section('NewScript')
 	<script type="text/javascript">
-	    var contador = 1;
-	    var contadorRango = 1;
+	    var contador = 0;
+	    var contadorRango = 0;
 	    
 	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
 	    $("#addOptionButton").click(function(event) {
 	      event.preventDefault();
 	    });
-	    $("#addrangeButton").click(function(event) {
-	      event.preventDefault();
-	    });
-	    $("#minusrangeButton").click(function(event) {
-	      event.preventDefault();
-	    });
-	    function validarprevent(){
-	        $(".addrangeButton").click(function(event) {
-	          event.preventDefault();
-	        });
-	        $(".minusrangeButton").click(function(event) {
-	          event.preventDefault();
-	        });
+	    function validarprevent(id){
+	    	$("#droOptionButton"+id).click(function(event) {
+	    	  event.preventDefault();
+	    	});
 	    }
 	    function validarSwitch(){
 	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
@@ -349,7 +340,6 @@
 	        $("#Requerimientospane").append(requerimiento);
 	        $("#Tarifaspane").append(tarifas);
 	        $("#evaluacioncomercial").validator('update');
-	        contador = parseInt(contador)+1;
 	        popover();
 	        validarSwitch();
 	        ChangeSelect();
@@ -357,20 +347,23 @@
 	        Switch2();
 	        Switch3();
 	        Switch6();
-	        validarprevent();
+	        validarprevent(contador);
+	        contador = parseInt(contador)+1;
 	    }
 	   	function EliminarOption(id){
-	        $("#tratamientoContainer"+id).remove();
-	        $("#pretratname"+id).remove();
-	        $("#pretratdescription"+id).remove();
-	        $("#pretratsparator"+id).remove();
+	        $("#tratamiento"+id+"Container").remove();
+	        $("#pretratamiento"+id+"Container").remove();
+	        $("#requerimiento"+id+"Container").remove();
+	        $("#tarifa"+id+"Container").remove();
 	        $("#evaluacioncomercial").validator('update');
 	    }
 	    function AgregarRango(id){
 	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
 	        $("#tarifa"+id+"Container").append(rango);
 	        $("#evaluacioncomercial").validator('update');
+	        validarprevent(id);
 	        contadorRango = parseInt(contadorRango)+1;
+
 	    }
 	    function EliminarRango(id){
 	        $("#tratamientoContainer"+id).remove();

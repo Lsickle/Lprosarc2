@@ -37,7 +37,7 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Eliminar Tratamiento</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>"> Eliminar</label>
-            <button class="btn btn-danger" {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? 'Disabled' : '' }} onclick="EliminarOption(`+contador+`)"><i class="fas fa-trash"></i></button> 
+            <button class="btn btn-danger droOptionButton" {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? 'Disabled' : '' }} onclick="EliminarOption(`+contador+`)" id="droOptionButton`+contador+`"><i class="fas fa-trash"></i></button> 
         </div>
     </div>
 </div>
