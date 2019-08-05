@@ -17,7 +17,7 @@
 						@endif
 						@component('layouts.partials.modal')
 							@slot('slug')
-								{{$Generador->ID_Gener}}
+								{{$Generador->GenerSlug}}
 							@endslot
 							@slot('textModal')
 								el generador <b>{{$Generador->GenerShortname}}</b>
@@ -25,11 +25,11 @@
 						@endcomponent
 						@if($Generador->GenerDelete == 0)
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->ID_Gener}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Generador->GenerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
 								<form action='/generadores/{{$Generador->GenerSlug}}' method='POST'  class="col-12 pull-right">
 									@method('DELETE')
 									@csrf
-									<input type="submit" id="Eliminar{{$Generador->ID_Gener}}" style="display: none;">
+									<input type="submit" id="Eliminar{{$Generador->GenerSlug}}" style="display: none;">
 								</form>
 							@endif
 						@else

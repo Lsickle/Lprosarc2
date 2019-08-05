@@ -16,7 +16,7 @@
 							<a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@component('layouts.partials.modal')
 								@slot('slug')
-									{{$SedeGener->ID_GSede}}
+									{{$SedeGener->GSedeSlug}}
 								@endslot
 								@slot('textModal')
 									la sede <b>{{$SedeGener->GSedeName}}</b> del generador <b>{{$Generador->GenerName}}</b>
@@ -25,11 +25,11 @@
 						@endif
 						@if($SedeGener->GSedeDelete == 0 && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 							@if (count($CountSedeGener) > 1 )
-								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->GSedeSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
 								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
 									@method('DELETE')
 									@csrf
-									<input type="submit" id="Eliminar{{$SedeGener->ID_GSede}}" style="display: none;">
+									<input type="submit" id="Eliminar{{$SedeGener->GSedeSlug}}" style="display: none;">
 								</form>
 							@endif 	
 						@else
