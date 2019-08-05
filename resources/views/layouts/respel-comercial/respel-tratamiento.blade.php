@@ -1,9 +1,10 @@
 <div id="tratamiento`+contador+`Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
     <div class="col-md-8" style="margin-bottom: 0.25em;">
         <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento</b>" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento`+contador+`">
-        tratamiento
-        <select class="form-control" id="tratamiento`+contador+`" name="FK_ReqTrata[]">
-            <option disabled="true" selected="true">seleccione...</option>
+        Tratamiento
+        </label>
+        <select class="selecttrat" id="tratamiento`+contador+`" name="FK_ReqTrata[]" style="width:100%;">
+            <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)
                     @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
@@ -26,7 +27,6 @@
                 @endforeach 
             </optgroup>
         </select>
-        </label>
     </div>
     <div class="col-md-2">
         <div class="col-md-12">

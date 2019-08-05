@@ -272,14 +272,26 @@
 @section('NewScript')
 	<script type="text/javascript">
 	    var contador = 0;
-	    var contadorRango = 0;
-	    
+	    var contadorRango = 1;
+
+	    function SelectsRangoTipo(id){
+	    	$('#typerangeSelect'+id).select2({
+	    		allowClear: true,
+				tags: true,
+				width: 'resolve',
+	    		width: '100%',
+	    		theme: "classic"
+	    	});
+	    }
 	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
 	    $("#addOptionButton").click(function(event) {
 	      event.preventDefault();
 	    });
 	    function validarprevent(id){
 	    	$("#droOptionButton"+id).click(function(event) {
+	    	  event.preventDefault();
+	    	});
+	    	$("#addrangeButton"+id).click(function(event) {
 	    	  event.preventDefault();
 	    	});
 	    }
@@ -343,6 +355,7 @@
 	        popover();
 	        validarSwitch();
 	        ChangeSelect();
+	        SelectsRangoTipo(contador);
 	        Selects();
 	        Switch2();
 	        Switch3();
@@ -359,17 +372,14 @@
 	    }
 	    function AgregarRango(id){
 	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
-	        $("#tarifa"+id+"Container").append(rango);
+	        $("#rango"+id+"Container").append(rango);
 	        $("#evaluacioncomercial").validator('update');
 	        validarprevent(id);
 	        contadorRango = parseInt(contadorRango)+1;
 
 	    }
 	    function EliminarRango(id){
-	        $("#tratamientoContainer"+id).remove();
-	        $("#pretratname"+id).remove();
-	        $("#pretratdescription"+id).remove();
-	        $("#pretratsparator"+id).remove();
+	        $("#rango"+id).remove();
 	        $("#evaluacioncomercial").validator('update');
 	    }
 	    $(document).ready(function(){

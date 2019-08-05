@@ -66,6 +66,7 @@ $('form[data-toggle="validator"]').validator({
 		$('select').select2({
 			placeholder: "Seleccione...",
 			allowClear: true,
+			tags: true,
 			width: 'resolve',
 			width: '100%',
 			theme: "classic"
@@ -76,13 +77,16 @@ $(document).ready(function() {
 });
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
+function SelectsMultiple(){
 	$('.select-multiple').select2({
 		allowClear: true,
 		width: 'resolve',
 		width: '100%',
 		theme: "classic"
 	});
+}
+$(document).ready(function() {
+	SelectsMultiple();
 });
 </script>
 {{-- script para formulario en smart-wizzard --}}
