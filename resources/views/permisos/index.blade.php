@@ -31,34 +31,28 @@
                             </thead>
                             <tbody id="readyTable">
                             @foreach($Users as $User)
-                            <tr 	@if($User->DeleteUser === 1)
-                                        style="color: red;" 
-                                    @endif
-                            >
-                            <td>{{$User->name}}</td>
-                                <td>{{$User->PersFirstName}} {{$User->PersLastName}}</td>
-                                <td>{{$User->email}}</td>
-                                <td>{{$User->UsRolDesc}}</td>
-                                <td>{{$User->UsRolDesc2}}</td>
-                                <td>
-                                    <a method='get' href='/permisos/{{$User->UsSlug}}' class='btn btn-info btn-block'><i class="fas fa-search"></i></a>
-                                </td>
-                            </tr>
+                                <tr style="{{$User->DeleteUser == 1 ? "color:red;"  : ''}}">
+                                    <td>{{$User->name}}</td>
+                                    <td>{{$User->PersFirstName}} {{$User->PersLastName}}</td>
+                                    <td>{{$User->email}}</td>
+                                    <td>{{$User->UsRolDesc}}</td>
+                                    <td>{{$User->UsRolDesc2}}</td>
+                                    <td>
+                                        <a method='get' href='/permisos/{{$User->UsSlug}}' class='btn btn-info btn-block'><i class="fas fa-search"></i></a>
+                                    </td>
+                                </tr>
                             @endforeach
                             @foreach($UsersSinPersonal as $UserSinPersonal)
-                            <tr 	@if($UserSinPersonal->DeleteUser === 1)
-                                        style="color: red;" 
-                                    @endif
-                            >
-                                <td>{{$UserSinPersonal->name}}</td>
-                                <td></td>
-                                <td>{{$UserSinPersonal->email}}</td>
-                                <td>{{$UserSinPersonal->UsRolDesc}}</td>
-                                <td>{{$UserSinPersonal->UsRolDesc2}}</td>
-                                <td>
-                                    <a method='get' href='/permisos/{{$UserSinPersonal->UsSlug}}' class='btn btn-primary btn-block'>{{ trans('adminlte_lang::message.see') }}</a>
-                                </td>
-                            </tr>
+                                <tr style="{{$UserSinPersonal->DeleteUser == 1 ? "color:red;"  : ''}}">
+                                    <td>{{$UserSinPersonal->name}}</td>
+                                    <td></td>
+                                    <td>{{$UserSinPersonal->email}}</td>
+                                    <td>{{$UserSinPersonal->UsRolDesc}}</td>
+                                    <td>{{$UserSinPersonal->UsRolDesc2}}</td>
+                                    <td>
+                                        <a method='get' href='/permisos/{{$UserSinPersonal->UsSlug}}' class='btn btn-info btn-block'><i class="fas fa-search"></i></a>
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
