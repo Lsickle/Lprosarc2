@@ -247,7 +247,9 @@ class clientcontoller extends Controller
                 })
                 ->get();
 
-            return view('clientes.show', compact('cliente', 'Sedes'));
+            $SedeSlug = userController::IDSedeSegunUsuario();
+
+            return view('clientes.show', compact('cliente', 'Sedes', 'SedeSlug'));
         }else{
             abort(403);
         }

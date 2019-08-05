@@ -206,7 +206,7 @@
 									@if($Sede->SedeDelete == 0 )
 										{{-- Boton de edit --}}
 										<a href="{{Route::currentRouteName() === 'cliente-show' ? '/sede' : '/sclientes'}}/{{$Sede->SedeSlug}}/edit" class="btn btn-warning pull-right" title="{{ trans('adminlte_lang::message.edit') }}"><i class="fas fa-edit"></i></a>
-										@if(count($Sedes) > 1)
+										@if($SedeSlug !== $Sede->SedeSlug)
 											<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Sede->SedeSlug}}' class='btn btn-danger pull-left' title="{{ trans('adminlte_lang::message.delete') }}" onclick="DeleteSede(`{{$Sede->SedeSlug}}`, `{{$Sede->SedeName}}`)"><i class="fas fa-trash-alt"></i></a>
 											<div id="deleteSede"></div>
 										@endif
