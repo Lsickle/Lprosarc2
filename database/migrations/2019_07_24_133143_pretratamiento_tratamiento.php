@@ -20,9 +20,6 @@ class PretratamientoTratamiento extends Migration
             $table->unsignedInteger('FK_Trat');
             $table->foreign('FK_Trat')->references('ID_Trat')->on('tratamientos')->onDelete('cascade');
             $table->timestamps();
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
         });
     }
 

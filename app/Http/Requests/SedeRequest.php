@@ -25,8 +25,8 @@ class SedeRequest extends FormRequest
     public function rules()
     {
         return [
-            'SedeName'      => 'required|max:128|min:1',
-            'SedeAddress'   => 'required|max:255|min:1',
+            'SedeName'      => 'required|max:128',
+            'SedeAddress'   => 'required|max:255',
             'SedePhone1'    => 'max:11|min:11|nullable',
             'SedeExt1'      => 'min:2|max:5|nullable',
             'SedePhone2'    => 'max:11|min:11|nullable',

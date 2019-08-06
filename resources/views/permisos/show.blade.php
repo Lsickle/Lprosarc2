@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('htmlheader_title')
 	{{ trans('adminlte_lang::message.user') }}
 @endsection
@@ -14,14 +13,14 @@
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
 						@if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1))
-						<a href="/permisos/{{$User->UsSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+							<a href="/permisos/{{$User->UsSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$User->id}}
 							@endslot
 							@slot('textModal')
-								al usuario <b>{{$User->id}}</b>
+								al usuario <b>{{$User->name}}</b>
 							@endslot
 						@endcomponent
 						@if ($User->FK_UserPers === null)
@@ -48,8 +47,9 @@
 						@endif
 
 					</div>
-					<p><img class="profile-user-img img-responsive img-circle size-img" src="../../../img/ImagesProfile/{{$User->UsAvatar}}" alt="User profile picture"></p>
-
+					<p>
+						<img class="profile-user-img img-responsive img-circle" src="{{file_exists(public_path()."/img/ImagesProfile/$User->UsAvatar") && $User->UsAvatar <> null ? "../../../img/ImagesProfile/$User->UsAvatar" : '../../../img/defaultuser.png'}}" alt="User profile picture">
+					</p>
 					<h3 class="profile-username text-center">{{$User->name}}</h3>
 
 					<ul class="list-group list-group-unbordered">

@@ -199,7 +199,7 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
 						<div class="box-tools pull-right">
-						 <button onclick="AgregarOption()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+						 <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
 						</div>
 					</div>
 					<!-- /.box header -->
@@ -208,7 +208,7 @@
 						<!-- nav-tabs-custom -->
 						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -220,14 +220,14 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 								</li>
 							</ul>
 							<!-- nav-content -->
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Residuopane">
+								<div class="tab-pane fade" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
@@ -247,7 +247,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="tarifaspane">
+								<div class="tab-pane fade in active" id="Tarifaspane">
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<!-- /.tab-pane fade -->
@@ -271,15 +271,29 @@
 </div>
 @section('NewScript')
 	<script type="text/javascript">
-	    var contador = 1;
-	    function attachPopover(){
-	        $(document).ready(function(){
-	            $('[data-toggle="popover"]').popover({
-	                html: true,
-	                trigger: 'hover',
-	                placement: 'auto',
-	            });
-	        });
+	    var contador = 0;
+	    var contadorRango = 1;
+
+	    function SelectsRangoTipo(id){
+	    	$('#typerangeSelect'+id).select2({
+	    		allowClear: true,
+				tags: true,
+				width: 'resolve',
+	    		width: '100%',
+	    		theme: "classic"
+	    	});
+	    }
+	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
+	    $("#addOptionButton").click(function(event) {
+	      event.preventDefault();
+	    });
+	    function validarprevent(id){
+	    	$("#droOptionButton"+id).click(function(event) {
+	    	  event.preventDefault();
+	    	});
+	    	$("#addrangeButton"+id).click(function(event) {
+	    	  event.preventDefault();
+	    	});
 	    }
 	    function validarSwitch(){
 	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
@@ -289,11 +303,10 @@
 	        	Switch1();
 	        }
 	    }
-	    function recargarAjaxTratamiento(){
-	    	$(".tratamientoEspecial").change(function(e){
-	    		id=$(".tratamientoEspecial").val();
-	    		console.log(id);
-	    		e.preventDefault();
+	    function recargarAjaxTratamiento(contador){
+	    	selector = $("#tratamiento"+contador);
+	    	id = selector.val();
+	    	selector
 	    		$.ajaxSetup({
 	    		  headers: {
 	    			  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -314,40 +327,65 @@
 	    					if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
 	    						$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
 	    						pretrataOption.push(res[i].ID_PreTrat);
+	    					}else{
+	    						$("#pretratamiento"+contador).append(`<option value="">el Tratamiento elegido no tiene Pretratamientos relacionados</option>`);
 	    					}
 	    				}
 	    			},
 	    			complete: function(){
 	    				$(".load").empty();
-	    				$("#municipio").prop('disabled', false);
+	    				$("#pretratamiento").prop('disabled', false);
+	    			},
+	    			error: function (jqXHR, textStatus, errorThrown) {
+	    				NotifiFalse("No se pudo conectar a la base de datos");
 	    			}
-	    		})
-	    	});
-	    };
+	    		});
+	    	
+	    }
 	    function AgregarOption(){
 	        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
-	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
+	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 	        var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
 	        var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
 	        $("#Tratamientospane").append(tratamiento);
 	        $("#Pretratamientospane").append(pretratamiento);
 	        $("#Requerimientospane").append(requerimiento);
-	        $("#tarifaspane").append(tarifas);
+	        $("#Tarifaspane").append(tarifas);
 	        $("#evaluacioncomercial").validator('update');
-	        contador = parseInt(contador)+1;
-	        attachPopover();
+	        popover();
 	        validarSwitch();
-	        recargarAjaxTratamiento();
+	        ChangeSelect();
+	        SelectsRangoTipo(contador);
+	        Selects();
+	        Switch2();
+	        Switch3();
+	        Switch6();
+	        validarprevent(contador);
+	        contador = parseInt(contador)+1;
 	    }
-	    function EliminarOption(id){
-	        $("#tratamientoContainer"+id).remove();
-	        $("#pretratname"+id).remove();
-	        $("#pretratdescription"+id).remove();
-	        $("#pretratsparator"+id).remove();
-	        $("#createtratamientoForm").validator('update');
+	   	function EliminarOption(id){
+	        $("#tratamiento"+id+"Container").remove();
+	        $("#pretratamiento"+id+"Container").remove();
+	        $("#requerimiento"+id+"Container").remove();
+	        $("#tarifa"+id+"Container").remove();
+	        $("#evaluacioncomercial").validator('update');
+	    }
+	    function AgregarRango(id){
+	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
+	        $("#rango"+id+"Container").append(rango);
+	        $("#evaluacioncomercial").validator('update');
+	        validarprevent(id);
+	        contadorRango = parseInt(contadorRango)+1;
+
+	    }
+	    function EliminarRango(id){
+	        $("#rango"+id).remove();
+	        $("#evaluacioncomercial").validator('update');
 	    }
 	    $(document).ready(function(){
 	        validarSwitch();
+	        Selects();
+	        ChangeSelect();
 	    });
 	</script>
 @endsection

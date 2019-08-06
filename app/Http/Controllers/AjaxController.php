@@ -162,9 +162,9 @@ class AjaxController extends Controller
 	public function preTratamientoDinamico(Request $request, $id)
 	{
 		if ($request->ajax()) {
-			$pretrataOption = Tratamientos::with('pretratamientos')
-				->where($id, 'ID_Trat')
-				->get();
+			$pretrataOption = Tratamiento::with('pretratamientos')
+				->where('ID_Trat', $id)
+				->first();
 			return response()->json($pretrataOption->pretratamientos);
 		}
 	}

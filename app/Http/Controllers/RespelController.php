@@ -444,6 +444,7 @@ class RespelController extends Controller
      */
     public function updateStatusRespel(Request $request, $id)
     {
+        return $request;
         $respel = Respel::where('RespelSlug', $id)->first();
 
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {

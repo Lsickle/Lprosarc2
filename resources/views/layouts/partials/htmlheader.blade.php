@@ -14,7 +14,6 @@
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
 
-
     @if(Route::currentRouteName()=='vehicle-programacion.create')
         {{-- Full Calendar --}}
          <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
@@ -22,6 +21,7 @@
 
      {{-- Chart --}}
      <link href="{{ mix('/css/chart.css') }}" rel="stylesheet" type="text/css">
+
      {{-- Moment --}}
      {{-- <link href="{{ mix('/css/moment.css') }}" rel="stylesheet" type="text/css"> --}}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
 
     {{-- fuentes de google --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> --}}
     
     {{-- script de idioma --}}
     <script>
