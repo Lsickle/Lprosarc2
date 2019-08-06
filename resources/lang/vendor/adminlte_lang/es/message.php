@@ -304,6 +304,8 @@ return [
     'clientbankcertification' => 'Certificación Bancaria',
     'clientlegalrepresentative'     => 'Representante Legal',
     'clientcommercialcertification' => 'Certificación Comercial',
+    'clientarea-info'         => 'Escriba el nombre del área en la que esta la persona de contacto.',
+    'clientcargo-info'        => 'Escriba el nombre del cargo que ocupa la persona de contacto.',
     'clientrut-info'                => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> del Rut.',
     'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio.',
     'clientbankcertification-info'          => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>.',
@@ -344,11 +346,13 @@ return [
     'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
+    'soygener-info'           => 'Al dar clic podrá tener los datos que ya a registrado respecto a su empresa y sus sedes, estos datos crearán un nuevo generador. <br><br><b>NOTA:</b> Este botón aparecera una sola vez así que le aconsejamos que le de clic una vez tenga todos sus datos adecuadamente.',
+    'generaddresssgener'      => 'Dirrecciones de las Sedes del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
     'gsedeupdate'             => 'Actualización de la Sede del Generador',
-    'SGenerregistertittle'    => 'Registro de sede del Generador',
+    'SGenerregistertittle'    => 'Registro de la sede del Generador',
     'SGenertitle'             => 'Sede del Generador',
     'sedesgener'              => 'Sedes del Generador',
     'sgenerlist'              => 'Lista de las Sedes del Generador',
@@ -588,6 +592,7 @@ return [
     'MenuQr'                  => 'Código Qr',
 
     // info-gener
+    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en Aprobado o Incompleto.',
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador.',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social.',
     'code-gener'              => 'Código con el que usted tiene registrado este Generador.',

@@ -28,7 +28,8 @@
 						@endif
 						<div class="box-body" id="readyTable">
 							<div class="tab-pane" id="addRowWizz">
-								<div class="smartwizard" style="box-shadow:3px 3px 5px grey;">
+								{{-- <div class="smartwizard" style="box-shadow:jg3px 3px 5px grey;"> --}}
+								<div class="smartwizard" >
 									<ul>
 										<li><a href="#step-1"><b>{{ trans('adminlte_lang::message.Paso 1') }}</b><br/><small>{{ trans('adminlte_lang::message.client') }}</small></a></li>
 										<li><a href="#step-2"><b>{{ trans('adminlte_lang::message.Paso 2') }}</b><br/><small>{{ trans('adminlte_lang::message.clientsede') }}</small></a></li>

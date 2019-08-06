@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use Illuminate\Validation\Rule;
+use App\AuditRequest;
 use App\Permisos;
 use App\Cliente;
 use App\Departamento;
@@ -34,7 +35,9 @@ class ClienteController extends Controller
             })
             ->get();
 
-        return view('clientes.show', compact('cliente', 'Sedes'));
+        $SedeSlug = userController::IDSedeSegunUsuario();
+
+        return view('clientes.show', compact('cliente', 'Sedes', 'SedeSlug'));
     }
 
     public function edit($slug)
@@ -118,7 +121,8 @@ class ClienteController extends Controller
             $cliente->CliCertificaionBancaria = $Folder.'/'.$CertificacionBancaria;
         }
         $cliente->save();
-        $slug = $cliente->CliSlug;
-        return redirect()->route('cliente-show', compact('slug'));
+
+        AuditRequest::auditUpdate('clientes', $cliente->ID_Cli, json_encode($request->all()));
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
     }
 }
