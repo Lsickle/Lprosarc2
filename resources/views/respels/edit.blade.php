@@ -250,6 +250,7 @@
 								<div class="tab-pane fade in active" id="Tarifaspane">
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
+								<div id="modalrango"></div>
 								<!-- /.tab-pane fade -->
 							</div>
 							<!-- /.tab-content -->
@@ -271,122 +272,132 @@
 </div>
 @section('NewScript')
 	<script type="text/javascript">
-	    var contador = 0;
-	    var contadorRango = 1;
+		var contador = 0;
+		var contadorRango = 1;
 
-	    function SelectsRangoTipo(id){
-	    	$('#typerangeSelect'+id).select2({
-	    		allowClear: true,
+		function SelectsRangoTipo(id){
+			$('#typerangeSelect'+id).select2({
+				allowClear: true,
 				tags: true,
 				width: 'resolve',
-	    		width: '100%',
-	    		theme: "classic"
-	    	});
-	    }
-	    /*desactivar el envio de formulario al usar el boton de agregar opcion*/
-	    $("#addOptionButton").click(function(event) {
-	      event.preventDefault();
-	    });
-	    function validarprevent(id){
-	    	$("#droOptionButton"+id).click(function(event) {
-	    	  event.preventDefault();
-	    	});
-	    	$("#addrangeButton"+id).click(function(event) {
-	    	  event.preventDefault();
-	    	});
-	    }
-	    function validarSwitch(){
-	        if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
-	       		Switch1();
-	            $('.testswitch').bootstrapSwitch('disabled', true);
-	        }else{
-	        	Switch1();
-	        }
-	    }
-	    function recargarAjaxTratamiento(contador){
-	    	selector = $("#tratamiento"+contador);
-	    	id = selector.val();
-	    	selector
-	    		$.ajaxSetup({
-	    		  headers: {
-	    			  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-	    		  }
-	    		});
-	    		$.ajax({
-	    			url: "{{url('/preTratamientoDinamico')}}/"+id,
-	    			method: 'GET',
-	    			data:{},
-	    			beforeSend: function(){
-	    				$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
-	    				$("#pretratamiento").prop('disabled', true);
-	    			},
-	    			success: function(res){
-	    				$("#pretratamiento"+contador).empty();
-	    				var pretrataOption = new Array();
-	    				for(var i = res.length -1; i >= 0; i--){
-	    					if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
-	    						$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
-	    						pretrataOption.push(res[i].ID_PreTrat);
-	    					}else{
-	    						$("#pretratamiento"+contador).append(`<option value="">el Tratamiento elegido no tiene Pretratamientos relacionados</option>`);
-	    					}
-	    				}
-	    			},
-	    			complete: function(){
-	    				$(".load").empty();
-	    				$("#pretratamiento").prop('disabled', false);
-	    			},
-	    			error: function (jqXHR, textStatus, errorThrown) {
-	    				NotifiFalse("No se pudo conectar a la base de datos");
-	    			}
-	    		});
-	    	
-	    }
-	    function AgregarOption(){
-	        var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
-	        var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
-	        var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
-	        var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
-	        $("#Tratamientospane").append(tratamiento);
-	        $("#Pretratamientospane").append(pretratamiento);
-	        $("#Requerimientospane").append(requerimiento);
-	        $("#Tarifaspane").append(tarifas);
-	        $("#evaluacioncomercial").validator('update');
-	        popover();
-	        validarSwitch();
-	        ChangeSelect();
-	        SelectsRangoTipo(contador);
-	        Selects();
-	        Switch2();
-	        Switch3();
-	        Switch6();
-	        validarprevent(contador);
-	        contador = parseInt(contador)+1;
-	    }
-	   	function EliminarOption(id){
-	        $("#tratamiento"+id+"Container").remove();
-	        $("#pretratamiento"+id+"Container").remove();
-	        $("#requerimiento"+id+"Container").remove();
-	        $("#tarifa"+id+"Container").remove();
-	        $("#evaluacioncomercial").validator('update');
-	    }
-	    function AgregarRango(id){
-	    	var rango = `@include('layouts.respel-comercial.respel-rango')`;
-	        $("#rango"+id+"Container").append(rango);
-	        $("#evaluacioncomercial").validator('update');
-	        validarprevent(id);
-	        contadorRango = parseInt(contadorRango)+1;
+				width: '100%',
+				theme: "classic"
+			});
+		}
+		/*desactivar el envio de formulario al usar el boton de agregar opcion*/
+		$("#addOptionButton").click(function(event) {
+		  event.preventDefault();
+		});
+		function validarprevent(id){
+			$("#droOptionButton"+id).click(function(event) {
+			  event.preventDefault();
+			});
+			$("#addrangeButton"+id).click(function(event) {
+			  event.preventDefault();
+			});
+		}
+		function validarSwitch(){
+			if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
+				Switch1();
+				$('.testswitch').bootstrapSwitch('disabled', true);
+			}else{
+				Switch1();
+			}
+		}
+		function recargarAjaxTratamiento(contador){
+			selector = $("#tratamiento"+contador);
+			id = selector.val();
+			selector
+				$.ajaxSetup({
+				  headers: {
+					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				  }
+				});
+				$.ajax({
+					url: "{{url('/preTratamientoDinamico')}}/"+id,
+					method: 'GET',
+					data:{},
+					beforeSend: function(){
+						$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+						$("#pretratamiento").prop('disabled', true);
+					},
+					success: function(res){
+						$("#pretratamiento"+contador).empty();
+						var pretrataOption = new Array();
+						for(var i = res.length -1; i >= 0; i--){
+							if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
+								$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
+								pretrataOption.push(res[i].ID_PreTrat);
+							}else{
+								$("#pretratamiento"+contador).append(`<option value="">el Tratamiento elegido no tiene Pretratamientos relacionados</option>`);
+							}
+						}
+					},
+					complete: function(){
+						$(".load").empty();
+						$("#pretratamiento").prop('disabled', false);
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						NotifiFalse("No se pudo conectar a la base de datos");
+					}
+				});
+			
+		}
+		function AgregarOption(){
+			var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
+			var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
+			var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
+			var tarifas = `@include('layouts.respel-comercial.respel-tarifas')`;
+			$("#Tratamientospane").append(tratamiento);
+			$("#Pretratamientospane").append(pretratamiento);
+			$("#Requerimientospane").append(requerimiento);
+			$("#Tarifaspane").append(tarifas);
+			$("#evaluacioncomercial").validator('update');
+			popover();
+			validarSwitch();
+			ChangeSelect();
+			SelectsRangoTipo(contador);
+			Selects();
+			Switch2();
+			Switch3();
+			Switch6();
+			validarprevent(contador);
+			contador = parseInt(contador)+1;
+		}
+		function EliminarOption(id){
+			$("#tratamiento"+id+"Container").remove();
+			$("#pretratamiento"+id+"Container").remove();
+			$("#requerimiento"+id+"Container").remove();
+			$("#tarifa"+id+"Container").remove();
+			$("#evaluacioncomercial").validator('update');
+		}
+		function AgregarRango(id){
+			var modalrango = `@include('layouts.respel-comercial.modal-rango')`;
+			$("#modalrango").empty();
+			$("#modalrango").append(modalrango);
+			popover();
+			$("#createrank").modal();
+			$("#createrank").on("hidden.bs.modal", function () {
+				var rango = $("#ranktarifa").val();
+				if(rango != ''){
+					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
+					$("#rango"+id+"Container").append(tarifa);
+					$("#evaluacioncomercial").validator('update');
+					validarprevent(id);
+					contadorRango = parseInt(contadorRango)+1;
+				}
+			});
 
-	    }
-	    function EliminarRango(id){
-	        $("#rango"+id).remove();
-	        $("#evaluacioncomercial").validator('update');
-	    }
-	    $(document).ready(function(){
-	        validarSwitch();
-	        Selects();
-	        ChangeSelect();
-	    });
+		}
+		function EliminarRango(id){
+			$("#rango"+id).remove();
+			$("#evaluacioncomercial").validator('update');
+		}
+		$(document).ready(function(){
+			validarSwitch();
+			Selects();
+			ChangeSelect();
+		});
 	</script>
 @endsection
 @endif
