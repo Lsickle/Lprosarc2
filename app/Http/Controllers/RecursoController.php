@@ -59,7 +59,9 @@ class RecursoController extends Controller
     public function show(Request $request, $id)
     {
         $SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
-
+        if (!$SolRes) {
+            abort(404);
+        }
         $Respel = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
             ->join('respels', 'respels.ID_Respel', 'residuos_geners.FK_Respel')
@@ -125,7 +127,9 @@ class RecursoController extends Controller
             ->select('solicitud_residuos.ID_SolRes', 'solicitud_residuos.FK_SolResSolSer', 'clientes.CliName', 'generadors.GenerName')
             ->where('solicitud_residuos.SolResSlug', $id)
             ->first();
-            
+        if (!$SolRes) {
+            abort(404);
+        }
         if ($request->hasfile('RecSrc')){
             foreach($request->RecSrc as $file){
                 $Recurso = new Recurso();
@@ -162,8 +166,11 @@ class RecursoController extends Controller
     {   
         $Recursos = Recurso::where('SlugRec', $request->input('DeleteRec'))->first();
         $SolRes = SolicitudResiduo::select('SolResSlug')->where('ID_SolRes', $Recursos->FK_RecSolRes)->first();
+        if (!$SolRes) {
+            abort(404);
+        }
 
-        unlink(public_path("img/Recursos/$Recursos->RecSrc")."/$Recursos->RecRmSrc");
+        unlink(public_path("/img/Recursos/$Recursos->RecSrc")."/$Recursos->RecRmSrc");
         Recurso::destroy($Recursos->ID_Rec);
         $id = $SolRes->SolResSlug;
         return redirect()->route('recurso.show', compact('id'));

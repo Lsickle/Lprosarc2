@@ -63,8 +63,8 @@
     focus: true,
     custom: {},
     errors: {
-      match: 'Does not match',
-      minlength: 'Not long enough'
+      match: 'El campo no coincide',
+      minlength: 'No cumple con la longitud requerida'
     },
     feedback: {
       success: 'glyphicon-ok',

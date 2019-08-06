@@ -23,15 +23,6 @@
 								</ul>
 							</div>
 						@endif
-						@if (session('Menssage'))
-							<div class="alert alert-danger" role="alert">
-								{{session('Menssage')}}
-							</div>
-						@endif
-						<div class="form-group col-md-12 col-xs-12">
-							<label for="oldpassword">{{ trans('adminlte_lang::message.oldpassword') }}</label><small class="help-block with-errors">*</small>
-							<input required name="oldpassword" class="form-control" type="password" id="oldpassword" data-minlength="6" maxlength="255">
-						</div>
 						<div class="form-group col-md-12 col-xs-12">
 							<label for="newpassword">{{ trans('adminlte_lang::message.newpassword') }}</label><small class="help-block with-errors">*</small>
 							<input required name="newpassword" class="form-control" type="password" id="newpassword" data-minlength="6" maxlength="255">

@@ -143,7 +143,9 @@ class TratamientoController extends Controller
         $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
             ->where('ID_Trat', $id)
             ->first();
-
+        if (!$tratamiento) {
+            abort(404);
+        }
         $respels = DB::table('respels')
             ->join('cotizacions', 'respels.FK_RespelCoti', '=', 'cotizacions.ID_Coti')
             ->join('sedes', 'cotizacions.FK_Cotisede', '=', 'sedes.ID_Sede')
@@ -197,7 +199,10 @@ class TratamientoController extends Controller
     public function update(Request $request, $id)
     {   
         // return $request;
+
         $tratamiento = Tratamiento::find($id);
+
+
 
         $tratamiento->TratName = $request->input('TratName');
         /*determinar el tipo de tratamiento segun el gestor*/
@@ -267,6 +272,7 @@ class TratamientoController extends Controller
             $pretratamientoRelated = Pretratamiento::withCount(['tratamientos'])
                 ->where('ID_PreTrat', $key)
                 ->first();
+            /*si los pretratamietnos estan relacionados con mas de un tratamiento No se eliminan*/
             if ($pretratamientoRelated->tratamientos_count > 1) {
                 $tratamiento->pretratamientos()->detach($key);
             }else{

@@ -63,16 +63,16 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="UsAvatar">{{ trans('adminlte_lang::message.useravatar') }}</label></label><small class="help-block with-errors"></small>
-								<input type="file" class="form-control" id="UsAvatar" name="UsAvatar" accept="image/*" value="{{ old('UsAvatar') }}">
+								<input type="file" class="form-control" id="UsAvatar" name="UsAvatar" accept=".jpg, .png, .svg,.gif" data-accept="jpg, jpeg, png, svg, gif" data-filesize="5120" value="{{ old('UsAvatar') }}">
                             </div>
 							<div class="form-group col-md-6">
 								<label for="password">{{ trans('adminlte_lang::message.password') }}</label></label><small class="help-block with-errors">*</small>
-                                <input type="password" class="form-control" id="password" name="password" data-minlength="6" maxlength="255"  value="{{ old('password') }}" required>
+                                <input type="password" class="form-control" id="password" name="password" data-minlength="8" maxlength="255"  value="{{ old('password') }}" required>
 							</div>
 							
 							<div class="form-group col-md-6 col-xs-12">
 								<label for="newpassword_confirmation">{{ trans('adminlte_lang::message.confirmpassword') }}</label><small class="help-block with-errors">*</small>
-								<input required name="password_confirmation" data-minlength="6" maxlength="255" data-match="#password" class="form-control" type="password" id="newpassword_confirmation">
+								<input required name="password_confirmation" data-minlength="8" maxlength="255" data-match="#password" class="form-control" type="password" id="newpassword_confirmation">
 							</div>
 						</div>
 						<div class="box box-info">

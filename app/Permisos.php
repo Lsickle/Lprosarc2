@@ -7,7 +7,6 @@ class Permisos{
 	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
 	/* Using ->
 		partials/controlsidebar
-		Menu.php
 		PersonalInternoController::Index
 		ContactoController::create
 		ContactoController::edit
@@ -143,24 +142,26 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['AdministradorPlanta'];
-	/*
+	const SolSerCertifi = ['AdministradorPlanta','Programador'];
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
-	const SOLSERACEPTADO = ['Tesorería'];
-	/*
+	const SOLSERACEPTADO = ['Tesorería','Programador'];
+	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
-
-
+	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
+	/* Using ->
+		contratos/index
+		ContratoController::create, edit
+	 */
 	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
-	/*
+	/* Using ->
 		respel/edit
-		
 	 */
 	
 	const COMERCIAL = ['Comercial'];
@@ -177,7 +178,10 @@ class Permisos{
 		pretratamientos/edit
 		pretratamientocontoller::destroy
 	*/
-
+	const CONDUCTOR = ['Conductor'];
+	/* Using->
+		VehicProgController::index
+	 */
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];

@@ -12,27 +12,42 @@ use App\User;
 class userController extends Controller
 {
 	public function verify($code)
-{
-	$user = User::where('confirmation_code', $code)->first();
+	{
+		$user = User::where('confirmation_code', $code)->first();
 
-	if (! $user)
-		return redirect('/');
+		if (! $user)
+			return redirect('/');
 
-	$user->confirmed = true;
-	$user->confirmation_code = null;
-	$user->save();
-	return redirect('/home')->with('notification', 'Has confirmado correctamente tu correo!');
-}
+		$user->confirmed = true;
+		$user->confirmation_code = null;
+		$user->save();
+		return redirect('/home')->with('notification', 'Has confirmado correctamente tu correo!');
+	}
+	
 	public static function IDClienteSegunUsuario(){
-		$Cliente = DB::table('personals')
+		if(isset(Auth::user()->FK_UserPers)){
+			$Cliente = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('clientes.ID_Cli')
 				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-				->get();
-		return $Cliente[0]->ID_Cli;
+				->first();
+			return $Cliente->ID_Cli;
+		}
+	}
+
+	public static function IDSedeSegunUsuario(){
+		$Sede = DB::table('personals')
+			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->select('sedes.SedeSlug')
+			->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+			->first();
+
+		return $Sede->SedeSlug;
 	}
 
 	/**
@@ -76,12 +91,15 @@ class userController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$user = User::where('UsSlug', $id)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'name'          => 'required',
 			'email'         => 'required|unique:users,email,'.$user->id.',id',
 			'UsAvatar'      => 'max:1536|mimes:jpeg,jpg,png,gif,web',
 		]);
-		// return $request;
+
 		if($request->hasfile('UsAvatar')){
 			if($user->UsAvatar <> null && file_exists(public_path().'/img/ImagesProfile/'.$user->UsAvatar)){
 				unlink(public_path().'/img/ImagesProfile/'.$user->UsAvatar);
@@ -121,6 +139,9 @@ class userController extends Controller
 
 	public function changepassword(Request $request, $id){
 		$user = User::where('UsSlug', $id)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'oldpassword'          => 'required',
 			'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
@@ -148,6 +169,9 @@ class userController extends Controller
 
 	public function changeRol(Request $request, $slug){
 		$user = User::where('UsSlug', $slug)->first();
+		if (!$user) {
+			abort(404);
+		}
 		$user->UsRol = $request->input('UsRol1');
 		$user->UsRol2 = $request->input('UsRol2');
 		$user->save();

@@ -8,12 +8,19 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\PermisoUserRequest;
+use App\AuditRequest;
 use App\Personal;
+use App\Sede;
 use App\User;
 use App\audit;
+use App\Permisos;
 
 class PermisoUsuarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->table = 'users';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,14 +28,14 @@ class PermisoUsuarioController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')) {
-            
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
             // usuarios sin personal
             $UsersSinPersonal = DB::table('users')
                 ->where('users.UsRol', '<>', 'Cliente')
                 ->where('FK_UserPers', null)
                 ->where(function ($query){
-                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                    }else{
                         $query->where('DeleteUser', 0);
                     }
                 })
@@ -41,14 +48,8 @@ class PermisoUsuarioController extends Controller
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->where(function ($query){
-                    $query->where('personals.ID_Pers', Auth::user()->FK_UserPers);
-                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
-                        $query->select('sedes.ID_Sede');
-                    }else{
-                        $query->select('clientes.ID_Cli');
-                    }
-                })
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->select('sedes.ID_Sede', 'clientes.ID_Cli')
                 ->first();
 
             // usuarios con personal de la sede
@@ -59,12 +60,11 @@ class PermisoUsuarioController extends Controller
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where(function ($query) use ($Personal){
-                    if(Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')){
+                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+                        $query->where('clientes.ID_Cli', $Personal->ID_Cli);
+                    }else{
                         $query->where('sedes.ID_Sede', $Personal->ID_Sede);
                         $query->where('DeleteUser', 0);
-                    }else{
-                        $query->where('clientes.ID_Cli', $Personal->ID_Cli);
-                        
                     }
                 })
                 ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
@@ -74,7 +74,6 @@ class PermisoUsuarioController extends Controller
         } else {
             abort(403);
         }
-        
     }
 
     /**
@@ -84,7 +83,7 @@ class PermisoUsuarioController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->UsRol == trans('adminlte_lang::message.Programador') || Auth::user()->UsRol == trans('adminlte_lang::message.Administrador')) {
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
 
             $Roles = DB::table('users')
                 ->select('users.UsRolDesc')
@@ -93,13 +92,8 @@ class PermisoUsuarioController extends Controller
                 ->get();
 
              // Sede del usuario
-             $Sede = DB::table('personals')
-                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                ->select('sedes.ID_Sede')
-                ->first();
+            $SedeSlug = userController::IDSedeSegunUsuario();
+            $Sede = Sede::select('ID_Sede')->where('SedeSlug', $SedeSlug)->first();
 
             // Usuarios que tienen personal
             $Users = DB::table('users')
@@ -197,10 +191,18 @@ class PermisoUsuarioController extends Controller
      */
     public function show($id)
     {
-        $User = User::where('UsSlug', $id)->first();
-        $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
 
-        return view('permisos.show', compact('User', 'Personal'));
+            $User = User::where('UsSlug', $id)->first();
+            if (!$User) {
+                abort(404);
+            }
+            $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
+
+            return view('permisos.show', compact('User', 'Personal'));
+        }else{
+            abort(404);
+        }
     }
 
     /**
@@ -211,51 +213,53 @@ class PermisoUsuarioController extends Controller
      */
     public function edit($id)
     {
-        $User = User::where('UsSlug', $id)->first();
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
 
-        $Personal = Personal::select('PersFirstName', 'PersLastName', 'PersSlug', 'ID_Pers')->where('ID_Pers', $User->FK_UserPers)->first();
-        
-         // Sede del usuario
-         $Sede = DB::table('personals')
-         ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-         ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-         ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-         ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-         ->select('sedes.ID_Sede')
-         ->first();
+            $User = User::where('UsSlug', $id)->first();
+            if (!$User) {
+                abort(404);
+            }
+            $Personal = Personal::select('PersFirstName', 'PersLastName', 'PersSlug', 'ID_Pers')->where('ID_Pers', $User->FK_UserPers)->first();
+            
+            // Sede del usuario
+            $SedeSlug = userController::IDSedeSegunUsuario();
+            $Sede = Sede::select('ID_Sede')->where('SedeSlug', $SedeSlug)->first();
+            
+            // Usuarios que tienen personal
+            $Users = DB::table('users')
+                ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+                ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->where('sedes.ID_Sede', $Sede->ID_Sede)
+                ->where('DeleteUser', 0)
+                ->select('users.FK_UserPers')
+                ->get();
 
-         // Usuarios que tienen personal
-        $Users = DB::table('users')
-            ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+            // personal de una sede en concreto
+            $Personals = DB::table('personals')
             ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
             ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
             ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
             ->where('sedes.ID_Sede', $Sede->ID_Sede)
-            ->where('DeleteUser', 0)
-            ->select('users.FK_UserPers')
+            ->where(function ($query) use($Users, $User){
+                foreach($Users as $User){
+                    $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
+                }
+            })
+            ->select('personals.PersFirstName', 'personals.PersLastName', 'personals.PersSlug', 'personals.ID_Pers')
             ->get();
-
-        // personal de una sede en concreto
-        $Personals = DB::table('personals')
-        ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-        ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-        ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-        ->where('sedes.ID_Sede', $Sede->ID_Sede)
-        ->where(function ($query) use($Users, $User){
-            foreach($Users as $User){
-                $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
-            }
-        })
-        ->select('personals.PersFirstName', 'personals.PersLastName', 'personals.PersSlug', 'personals.ID_Pers')
-        ->get();
-        
-        $Roles = DB::table('users')
-            ->select('users.UsRolDesc')
-            ->where('users.UsRol', '<>', 'Cliente')
-            ->groupBy('users.UsRol')
-            ->get();
-        
-        return view('permisos.edit', compact('User', 'Personals', 'Roles', 'Personal'));
+            
+            $Roles = DB::table('users')
+                ->select('users.UsRolDesc')
+                ->where('users.UsRol', '<>', 'Cliente')
+                ->groupBy('users.UsRol')
+                ->get();
+            
+            return view('permisos.edit', compact('User', 'Personals', 'Roles', 'Personal'));
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -268,99 +272,86 @@ class PermisoUsuarioController extends Controller
     public function update(PermisoUserRequest $request, $id)
     {
         $User = User::where('UsSlug', $id)->first();
+        if (!$User) {
+            abort(404);
+        }
+        $Validate = $request->validate([
+            'email'     => 'required|max:255|unique:users,email,'.$User->email.',email',
+        ]);
+        $Rol = DB::table('users')
+            ->select('UsRol')
+            ->where('UsRolDesc', $request->input('UsRolDesc'))
+            ->first();
 
-        if(isset($User)){
+        $Rol2 = DB::table('users')
+            ->select('UsRol')
+            ->where('UsRolDesc', $request->input('UsRolDesc2'))
+            ->first();
+        
+        $User->fill($request->except('UsAvatar', 'UsRol', 'UsRol2', 'FK_UserPers', 'UsStatus'));
+        $User->UsRol = $Rol->UsRol;
 
-            $Validate = $request->validate([
-                'email'     => 'required|max:255|unique:users,email,'.$User->email.',email',
-            ]);
-            $Rol = DB::table('users')
-                ->select('UsRol')
-                ->where('UsRolDesc', $request->input('UsRolDesc'))
-                ->first();
-
-            $Rol2 = DB::table('users')
-                ->select('UsRol')
-                ->where('UsRolDesc', $request->input('UsRolDesc2'))
-                ->first();
-            
-            $User->fill($request->except('UsAvatar', 'UsRol', 'UsRol2', 'FK_UserPers', 'UsStatus'));
-            $User->UsRol = $Rol->UsRol;
-
-            if(isset($Rol2)){
-                $User->UsRol2 = $Rol2->UsRol;
-            }else{
-                $User->UsRol2 = null;
-            }
-
-            if($request->input('FK_UserPers') !== null){
-                $Personal = Personal::where('PersSlug', $request->input('FK_UserPers'))->first();
-                $User->FK_UserPers = $Personal->ID_Pers;
-                $User->UsStatus = trans('adminlte_lang::message.userstatusactive');
-            }else{
-                $User->FK_UserPers = null;
-                $User->UsStatus = trans('adminlte_lang::message.userstatusinactive');
-            }
-
-            if ($request->hasfile('UsAvatar')){
-
-                // Verifica si existe la imagen en la carpeta para eliminarla
-                $image = public_path('/img/ImagesProfile/'.$User->UsAvatar);
-                if(@getimagesize($image)){
-                    unlink(public_path()."/img/ImagesProfile/".$User->UsAvatar);
-                };
-
-                $file = $request->file('UsAvatar');
-                $name = time().$file->getClientOriginalName();
-                $file->move(public_path('/img/ImagesProfile/'),$name);
-                $User->UsAvatar = $name;
-            }
-
-            $User->save();
-
-            $log = new audit();
-            $log->AuditTabla="users";
-            $log->AuditType="Modificado";
-            $log->AuditRegistro=$User->id;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog=json_encode($request->all());
-            $log->save();
-
-            return redirect()->route('permisos.show', compact('id'));
+        if(isset($Rol2->UsRol)){
+            $User->UsRol2 = $Rol2->UsRol;
         }else{
-            abort(500);
+            $User->UsRol2 = null;
         }
 
+        if($request->input('FK_UserPers') !== null){
+            $Personal = Personal::where('PersSlug', $request->input('FK_UserPers'))->first();
+            $User->FK_UserPers = $Personal->ID_Pers;
+            $User->UsStatus = trans('adminlte_lang::message.userstatusactive');
+        }else{
+            $User->FK_UserPers = null;
+            $User->UsStatus = trans('adminlte_lang::message.userstatusinactive');
+        }
+
+        if ($request->hasfile('UsAvatar')){
+
+            // Verifica si existe la imagen en la carpeta para eliminarla
+            $image = public_path('/img/ImagesProfile/'.$User->UsAvatar);
+            if(@getimagesize($image)){
+                unlink(public_path()."/img/ImagesProfile/".$User->UsAvatar);
+            };
+
+            $file = $request->file('UsAvatar');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path('/img/ImagesProfile/'),$name);
+            $User->UsAvatar = $name;
+        }
+
+        $User->save();
+
+        AuditRequest::auditUpdate($this->table, $User->id, json_encode($request->all()));
+
+        return redirect()->route('permisos.show', compact('id'));
     }
 
     public function editpassword($id){
-        $User = User::select('UsSlug')->where('UsSlug', $id)->first();
-        
-        return view('permisos.editpassword', compact('User'));
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
+
+            $User = User::select('UsSlug')->where('UsSlug', $id)->first();
+            if (!$User) {
+                abort(404);
+            }
+            return view('permisos.editpassword', compact('User'));
+        }else{
+            abort(403);
+        }
     }
 
     public function updatepassword(Request $request, $id){
         $User = User::where('UsSlug', $id)->first();
-
+        if (!$User) {
+            abort(404);
+        }
         $validate = $request->validate([
-            'oldpassword'          => 'required|min:8',
             'newpassword'          => 'required|confirmed:confirmnewpassword|min:8',
         ]);
-        if(Hash::check($request->input('oldpassword'), $User->password)){
-        	$User->password = bcrypt($request->input('newpassword'));
-        	$User->save();
-        }else{
-        	$Menssage = trans('adminlte_lang::message.passwordchangefalse');
-        	return redirect()->route('permisos-edit', ['id' => $User->UsSlug])->with('Menssage', $Menssage)->with('Error', 'Error');
-        }
+        $User->password = bcrypt($request->input('newpassword'));
+        $User->save();
 
-        $log = new audit();
-        $log->AuditTabla = "user";
-        $log->AuditType = "Modificado";
-        $log->AuditRegistro = $User->id;
-        $log->AuditUser = Auth::user()->email;
-        $log->Auditlog = json_encode($request->all());
-        $log->save();
+        AuditRequest::auditUpdate($this->table, $User->id, json_encode($request->all()));
         
         return redirect()->route('permisos.show', compact('id'));
     }
@@ -372,15 +363,29 @@ class PermisoUsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $User = User::where('UsSlug', $id)->first();
-        if($User->DeleteUser == 0){
-            $User->DeleteUser = 1;
-            $User->save();
-            return redirect()->route('permisos.index');
+        if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
+
+            $User = User::where('UsSlug', $id)->first();
+            if (!$User) {
+                abort(404);
+            }
+            if($User->DeleteUser == 0){
+                $User->DeleteUser = 1;
+                $User->save();
+
+                AuditRequest::auditDelete($this->table, $User->id, 1);
+
+                return redirect()->route('permisos.index');
+            }else{
+                $User->DeleteUser = 0;
+                $User->save();
+
+                AuditRequest::auditRestored($this->table, $User->id, 0);
+
+                return redirect()->route('permisos.show', compact('id'));
+            }
         }else{
-            $User->DeleteUser = 0;
-            $User->save();
-            return redirect()->route('permisos.show', compact('id'));
+            abot(403);
         }
     }
 }

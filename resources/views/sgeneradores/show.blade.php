@@ -12,26 +12,28 @@
 			<div class="box box-primary">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							<a href="/sgeneradores/{{$SedeGener->GSedeSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 							@component('layouts.partials.modal')
 								@slot('slug')
-									{{$SedeGener->ID_GSede}}
+									{{$SedeGener->GSedeSlug}}
 								@endslot
 								@slot('textModal')
 									la sede <b>{{$SedeGener->GSedeName}}</b> del generador <b>{{$Generador->GenerName}}</b>
 								@endslot
 							@endcomponent
 						@endif
-						@if($SedeGener->GSedeDelete == 0 && in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->ID_GSede}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
-							<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
-								@method('DELETE')
-								@csrf
-								<input type="submit" id="Eliminar{{$SedeGener->ID_GSede}}" style="display: none;">
-							</form>
+						@if($SedeGener->GSedeDelete == 0 && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
+							@if (count($CountSedeGener) > 1 )
+								<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SedeGener->GSedeSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{ trans('adminlte_lang::message.delete') }}</b></a>
+								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST'  class="col-12 pull-right">
+									@method('DELETE')
+									@csrf
+									<input type="submit" id="Eliminar{{$SedeGener->GSedeSlug}}" style="display: none;">
+								</form>
+							@endif 	
 						@else
-							@if ($SedeGener->GSedeDelete == 1 && in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+							@if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 								<form action='/sgeneradores/{{$SedeGener->GSedeSlug}}' method='POST' class="pull-left">
 									@method('DELETE')
 									@csrf
@@ -82,7 +84,7 @@
 			</div>
 		</div>
 		{{--  Modal Agregar un Residuo a una SedeGener--}}
-		@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+		@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
 			<form role="form" action="/respelSGener" method="POST" enctype="multipart/form-data" data-toggle="validator">
 				@csrf
 				<div class="modal modal-default fade in" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -116,7 +118,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+								<button type="submit" class="btn btn-success pull-right"><b>{{ trans('adminlte_lang::message.add') }}</b></button>
 							</div>
 						</div>
 					</div>
@@ -131,23 +133,23 @@
 				</ul>
 				<div class="tab-content">
 					<div class="active tab-pane" id="residuos">
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							{{-- Barra de Navegacion --}}
-							<a href="/respels/create" class="btn btn-primary mx-auto"><b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
+							<a href="/respels/create" class="btn btn-primary mx-auto"><i class="fas fa-plus-square"></i> <b>{{ trans('adminlte_lang::message.respelscreate') }}</b></a>
 							<a method='get' href='#' data-toggle='modal' data-target='#add'  class="btn btn-success mx-auto pull-right"><i class="fas fa-plus-circle"></i><b> {{ trans('adminlte_lang::message.assignrespels') }}</b></a>
 						@endif
 						<div style='overflow-y:auto; max-height:400px;'>
 							@foreach ($Respels as $Respel)
 								<ul class="list-group" style="list-style:none; margin-top:10px;">
 									<li class="col-md-11 col-xs-12 col-12">
-										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$Generador->GenerShortname}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$SedeGener->GSedeName}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
 										@endif
 										<h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
 									</li>
 									<li class="col-md-12 col-xs-12 col-12">
 										{{--  Modal Eliminar un Residuo de una SedeGener--}}
-										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 											<div class="deleterespelgener"></div>
 										@endif
 										{{-- END Modal --}}

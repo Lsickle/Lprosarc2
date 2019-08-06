@@ -18,6 +18,8 @@ try {
 require('admin-lte')
 require('icheck')
 
+var RangeBar = require('elessar');
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -48,18 +50,18 @@ if (token) {
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue')
+// window.Vue = require('vue')
 
 // Use trans function in Vue (equivalent to trans() Laravel Translations helper). See htmlheader.balde.php partial.
-Vue.prototype.trans = (key) => {
-  return _.get(window.trans, key, key)
-}
+// Vue.prototype.trans = (key) => {
+//   return _.get(window.trans, key, key)
+// }
 
 // Laravel AdminLTE vue components
-Vue.component('register-form', require('./components/auth/RegisterForm.vue'))
-Vue.component('login-form', require('./components/auth/LoginForm.vue'))
-Vue.component('email-reset-password-form', require('./components/auth/EmailResetPasswordForm.vue'))
-Vue.component('reset-password-form', require('./components/auth/ResetPasswordForm.vue'))
+// Vue.component('register-form', require('./components/auth/RegisterForm.vue'))
+// Vue.component('login-form', require('./components/auth/LoginForm.vue'))
+// Vue.component('email-reset-password-form', require('./components/auth/EmailResetPasswordForm.vue'))
+// Vue.component('reset-password-form', require('./components/auth/ResetPasswordForm.vue'))
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

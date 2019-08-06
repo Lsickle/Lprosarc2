@@ -11,15 +11,22 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header">
-					<center>
+					<div class="col-sm-16 text-center">
 						<h3 class="box-title pull-left">{{ trans('adminlte_lang::message.generindex') }}</h3>
-						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							@if (!isset($Gener))
-								<a href="/Soy-Gener/{{Auth::user()->UsSlug}}" class="btn btn-info" >{{ trans('adminlte_lang::message.soygener') }}</a>
+								<div class="col-xs-6 col-md-8">
+									<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
+										@csrf
+										<label for="" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
+											<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
+										</label>
+									</form>
+								</div>
 							@endif
 							<a href="/generadores/create" class="btn btn-primary pull-right" >{{ trans('adminlte_lang::message.create') }}</a>
 						@endif
-					</center>
+					</div>
 				</div>
 				<div class="box box-info">
 					<div class="box-body">
@@ -39,10 +46,7 @@
 							</thead>
 							<tbody id="readyTable">
 							@foreach($Generadors as $Gener)
-								<tr @if($Gener->GenerDelete === 1)
-									style="color: red;" 
-								@endif
-								>
+								<tr style="{{$Gener->GenerDelete == 1 ? "color:red;"  : ''}}">
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
 									@endif

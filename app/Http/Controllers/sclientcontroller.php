@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
+use App\AuditRequest;
 use App\Sede;
 use App\cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
-use Illuminate\Support\Facades\Hash;
 use App\Permisos;
-
 
 class sclientcontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->table = 'sedes';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,26 +29,7 @@ class sclientcontroller extends Controller
      */
     public function index()
     {
-        // if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-        //     $Sedes = DB::table('sedes')
-        //         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-        //         ->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-        //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
-        //         ->select('sedes.*', 'clientes.ID_Cli', 'clientes.CliShortname','municipios.MunName', 'departamentos.DepartName')
-        //         ->where(function($query){
-        //             $id = userController::IDClienteSegunUsuario();
-        //             if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-        //                 $query->where('FK_SedeCli', '=', $id);
-        //             }else{
-        //                 $query->where('FK_SedeCli', '=', $id);
-        //                 $query->where('sedes.SedeDelete',  '=', 0);
-        //             }
-        //         })
-        //         ->get();
-        //         return view('sclientes.index', compact('Sedes'));
-        // }else{
-        //     abort(403);
-        // }
+        //
     }
 
     /**
@@ -105,7 +91,6 @@ class sclientcontroller extends Controller
         $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
 
         return redirect()->route('cliente-show', compact('id'));
-        // return redirect()->route('sclientes.index');
     }
 
     /**
@@ -116,18 +101,7 @@ class sclientcontroller extends Controller
      */
     public function show($id)
     {
-        // $Sede = Sede::where('SedeSlug',$id)->first();
-        // $Sedes = Sede::where('FK_SedeCli', $Sede->FK_SedeCli)->get();
-
-        // if($Sede->ID_Sede === $Sedes[0]->ID_Sede){
-        //    $Verify = 0;
-        // }
-
-        // $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
-        // $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
-        // $Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-
-        // return view('sclientes.show', compact('Sede', 'Cliente', 'Municipio', 'Departamento', 'Verify'));
+        //
     }
 
     /**
@@ -140,14 +114,13 @@ class sclientcontroller extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $Sede = Sede::where('SedeSlug',$id)->first();
-            if(Auth::user()->UsRol === trans('adminlte_lang::message.Administrador') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')){
-                $Clientes = Cliente::select('ID_Cli','CliShortname')->get();
-                $Cliente = Cliente::where('ID_Cli', $Sede->FK_SedeCli)->first();
+            if (!$Sede) {
+                abort(404);
             }
             $Municipio = Municipio::where('ID_Mun', $Sede->FK_SedeMun)->first();
             $Municipios = Municipio::where('FK_MunCity', $Municipio->FK_MunCity)->get();
             $Departamentos = Departamento::all();
-            return view('sclientes.edit', compact('Sede', 'Clientes', 'Cliente', 'Departamentos', 'Municipios', 'Municipio'));
+            return view('sclientes.edit', compact('Sede', 'Departamentos', 'Municipios', 'Municipio'));
         }else{
             abort(403);
         }
@@ -163,23 +136,16 @@ class sclientcontroller extends Controller
     public function update(SedeRequest $request, $id)
     {
         $Sede = Sede::where('SedeSlug',$id)->first();
-        $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
-        $Sede->fill($request->except('FK_SedeCli'));
-        $ID_Cli = userController::IDClienteSegunUsuario();
-        $Sede->FK_SedeCli = $ID_Cli;
+        if (!$Sede) {
+            abort(404);
+        }
+        $Cliente = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Sede->fill($request->all());
         $Sede->save();
 
-        $log = new audit();
-        $log->AuditTabla="sedes";
-        $log->AuditType="Modificado";
-        $log->AuditRegistro=$Sede->ID_Sede;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$request->all();
-        $log->save();
+        AuditRequest::auditUpdate($this->table, $Sede->ID_Sede, $request->all());
         
-        // return redirect()->route('sclientes.show', compact('id'));
-
-        return redirect()->route('cliente-show', compact('id'));
+        return redirect()->route('clientes.show', [$Cliente->CliSlug]);
     }
 
     /**
@@ -188,33 +154,28 @@ class sclientcontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
-            $Sede = Sede::where('SedeSlug', $id)->first();
-            $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
-                if ($Sede->SedeDelete == 0) {
-                    $Sede->SedeDelete = 1;
-                    $Sede->save();
-                    
-                    // return redirect()->route('sclientes.index');
-                }
-                else{
-                    $Sede->SedeDelete = 0;
-                    $Sede->save();
+            $Sede = Sede::where('SedeSlug', $slug)->first();
+            if (!$Sede) {
+                abort(404);
+            }
+            $Cliente = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+            if ($Sede->SedeDelete == 0) {
+                $Sede->SedeDelete = 1;
+                $Sede->save();
 
-                    // $id = $Sede->SedeSlug;
-                    // return redirect()->route('sede-show', compact('id'));
-                }
-                return redirect()->route('cliente-show', compact('id'));
+                AuditRequest::auditDelete($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
+            }
+            else{
+                $Sede->SedeDelete = 0;
+                $Sede->save();
 
-            $log = new audit();
-            $log->AuditTabla="sedes";
-            $log->AuditType="Eliminado";
-            $log->AuditRegistro=$Sede->ID_Sede;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog = $Sede->SedeDelete;
-            $log->save();
+                AuditRequest::auditRestored($this->table, $Sede->ID_Sede, $Sede->SedeDelete);
+            }
+
+            return redirect()->route('clientes.show', [$Cliente->CliSlug]);
         }else{
             abort(403);
         }

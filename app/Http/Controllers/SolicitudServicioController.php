@@ -44,10 +44,14 @@ class SolicitudServicioController extends Controller
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
-					$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+					}
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-					$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+					}
 				}
 			})
 			->get();
@@ -170,6 +174,12 @@ class SolicitudServicioController extends Controller
 				$direccioncollect = $request->input('AddressCollect');
 				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
+		}
+		if(isset($request['SupportPay'])){
+			$fileSupport = $request['SupportPay'];
+			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
 		}
 		$SolicitudServicio->SolSerTipo = $tipo;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;
@@ -297,6 +307,9 @@ class SolicitudServicioController extends Controller
 			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
 			->where('solicitud_servicios.SolSerSlug', $id)
 			->first();
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
@@ -346,7 +359,7 @@ class SolicitudServicioController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug')
+			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 		$Residuos = DB::table('solicitud_residuos')
@@ -362,6 +375,9 @@ class SolicitudServicioController extends Controller
 	public function changestatus(Request $request)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			if($request->input('solserstatus') == 'No Deacuerdo'){
 				$Solicitud->SolSerStatus = 'No Conciliado';
@@ -433,6 +449,9 @@ class SolicitudServicioController extends Controller
 	public function repeat($slug)
 	{
 		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
+		if (!$SolicitudOld) {
+			abort(404);
+		}
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
@@ -500,6 +519,9 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if (!$Solicitud) {
+				abort(404);
+			}
 			if($Solicitud->SolSerStatus === 'Tratado' || $Solicitud->SolSerStatus === 'Certificacion' || $Solicitud->SolSerStatus === 'Completado'){
 				abort(403);
 			}
@@ -534,7 +556,15 @@ class SolicitudServicioController extends Controller
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes'));
+			$KGenviados = DB::table('solicitud_residuos')
+				->select('SolResKgEnviado')
+				->where('FK_SolResSolSer', $Solicitud->ID_SolSer)
+				->get();
+			$totalenviado = 0;
+			foreach ($KGenviados as $KGenviado) {
+				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado'));
 		}
 		else{
 			abort(403);
@@ -552,7 +582,9 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		if($SolicitudServicio->SolSerStatus === 'Programado'){
 			if($request->input('SolSerTransportador') <> null){
 				if($request->input('SolSerTransportador') <> 98){
@@ -662,6 +694,15 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
 				break;
 		}
+		if(isset($request['SupportPay'])){
+			if($SolicitudServicio->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport)){
+				unlink(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport);
+			}
+			$fileSupport = $request['SupportPay'];
+			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+			$SolicitudServicio->SolSerSupport = $nameSupport;
+		}
 		$SolicitudServicio->SolSerTipo = $tipo;
 		$SolicitudServicio->SolSerNameTrans = $transportadorname;
 		$SolicitudServicio->SolSerNitTrans = $transportadornit;
@@ -737,6 +778,9 @@ class SolicitudServicioController extends Controller
 	public function destroy($id)
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
 		SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
 
 		$log = new audit();

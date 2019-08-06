@@ -19,6 +19,10 @@
 {{-- Chart --}}
 <script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
 
+{{-- Moment --}}
+{{-- <script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script> --}}
+
+
 <script type="text/javascript">
 	window.onload =function(){
 		$('#contenedor_carga').css('opacity', '0');
@@ -62,6 +66,7 @@ $('form[data-toggle="validator"]').validator({
 		$('select').select2({
 			placeholder: "Seleccione...",
 			allowClear: true,
+			tags: true,
 			width: 'resolve',
 			width: '100%',
 			theme: "classic"
@@ -72,13 +77,16 @@ $(document).ready(function() {
 });
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
+function SelectsMultiple(){
 	$('.select-multiple').select2({
 		allowClear: true,
 		width: 'resolve',
 		width: '100%',
 		theme: "classic"
 	});
+}
+$(document).ready(function() {
+	SelectsMultiple();
 });
 </script>
 {{-- script para formulario en smart-wizzard --}}
@@ -238,6 +246,17 @@ $(document).ready(function Switch6() {
 	});
 });
 
+</script>
+<script type="text/javascript">
+function Switch6() {
+	$(".embalajeswitch").bootstrapSwitch({
+		animate: true,
+		labelText: '<i class="fas fa-trash"></i>',
+		onText: '<i class="fas fa-check"></i>',
+		offText: '<i class="fas fa-times"></i>',
+	});
+}
+$(document).ready(Switch6());
 </script>
 @if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
@@ -435,7 +454,11 @@ $(document).ready(function() {
 	popover();
 });
 function popover(){
-	$('[data-toggle="popover"]').popover();
+	$('[data-toggle="popover"]').popover({
+        container: 'body',
+        html: true,
+        placement: 'auto',
+    });
 }
 </script>
 <script type="text/javascript">
@@ -490,21 +513,14 @@ function NotifiFalse(Mensaje) {
 @if(Route::currentRouteName()=='tratamiento.edit')
 	<script>
 		var contador = 0;
-		function attachPopover() {
-			$('[data-toggle="popover"]').popover({
-				html: true,
-				trigger: 'hover',
-				placement: 'auto'
-			});
-			$("#edittratamientoForm").validator('update');
-			// alert('popover actualizados');
-		}
+		$("#edittratamientoForm").validator('update');
+		popover();
 		function AgregarPreTrat() {
 			var pretratamiento = `@include('layouts.respel-comercial.respel-pretrat')`;
 			$("#pretratamientosPanel").append(pretratamiento);
 			$("#edittratamientoForm").validator('update');
 			contador = parseInt(contador) + 1;
-			attachPopover();
+			popover();
 		}
 		function EliminarPreTrat(id) {
 			$("#pretratname" + id).remove();
@@ -630,7 +646,7 @@ function NotifiFalse(Mensaje) {
 	function ChangeSelect(){
 		$('select').on('change', function(){
 				var option="";
-				option = $(this).children("option:selected");
+				option = $(this).find("option:selected");
 				option.click();
 			});
 	}

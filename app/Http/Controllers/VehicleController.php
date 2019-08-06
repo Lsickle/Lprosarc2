@@ -22,6 +22,7 @@ class VehicleController extends Controller
 			$Vehicles = DB::table('vehiculos')
 				->Join('sedes', 'vehiculos.FK_VehiSede', '=', 'sedes.ID_Sede')
 				->select('vehiculos.*', 'sedes.SedeName')
+				->where('vehiculos.FK_VehiSede', 1)
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('VehicDelete', 0);
@@ -97,6 +98,9 @@ class VehicleController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)){
 			$Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
+			if (!$Vehicle) {
+				abort(404);
+			}
 			$Sedes = DB::table('sedes')
 				->select('ID_Sede', 'SedeName')
 				->where('FK_SedeCli', userController::IDClienteSegunUsuario())
@@ -119,6 +123,9 @@ class VehicleController extends Controller
 	public function update(Request $request, $id)
 	{
 		$Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
+		if (!$Vehicle) {
+			abort(404);
+		}
 		$Vehicle->fill($request->all());
 		$Vehicle->VehicInternExtern = 1;
 		$Vehicle->save();
@@ -143,6 +150,9 @@ class VehicleController extends Controller
 	public function destroy($id)
 	{
 		$Vehicle = Vehiculo::where('VehicPlaca', $id)->first();
+		if (!$Vehicle) {
+			abort(404);
+		}
 			if ($Vehicle->VehicDelete == 0) {
 				$Vehicle->VehicDelete = 1;
 			}

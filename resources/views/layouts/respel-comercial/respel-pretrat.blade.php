@@ -7,9 +7,8 @@
 	<div class="input-group">
 		<input maxlength="60" id="input[]" class="form-control" type="text" name="PreTratName[]" required>
 		<a onclick="EliminarPreTrat(`+contador+`)" class="input-group-addon" style=" color: red;" data-toggle="popover" title="{{ trans('adminlte_lang::LangTratamiento.pretratname') }}" data-content="{{ trans('adminlte_lang::LangTratamiento.popoverdescript1') }}"><i class="fas fa-backspace"></i></a>
-	</div><br>		
+	</div><br>
 </div>
-
 <div class="col-md-6" id="pretratdescription`+contador+`">
 	<label for="inputdescript[]">{{ trans('adminlte_lang::LangTratamiento.pretratdescript') }} </label>
 	<div class="input-group">

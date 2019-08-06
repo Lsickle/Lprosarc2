@@ -65,7 +65,7 @@
                                         <div class="panel-heading">
                                           <h3 class="panel-title">Pretratamientos Nuevos</h3>
                                         </div>
-                                        <div class="panel-body" id="pretratamientosPanel" onload="attachPopover()">
+                                        <div class="panel-body" id="pretratamientosPanel" >
                                           {{-- /*lista de pretratamientos*/ --}}
                                           
                                         </div>

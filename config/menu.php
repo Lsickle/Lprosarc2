@@ -53,19 +53,19 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE LOS CONTACTOS DE PROSARC*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CONTACTOS) || in_array(Auth::user()->UsRol2, Permisos::CONTACTOS), (Link::toUrl('/contactos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
 				/*PESTAÑA DE LOS CONTRATOS*/
-				// ->addIf(in_array(Auth::user()->UsRol, Permisos::CONTRATOS) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOS), (Link::toUrl('/contratos', '<i class="fas fa-address-book"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'Contratos</span>')))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CONTRATOS) || in_array(Auth::user()->UsRol2, Permisos::CONTRATOS), (Link::toUrl('/contratos', '<i class="fas fa-file-contract"></i> <span>'. /*trans('adminlte_lang::message.MenuContactos')*/'Contratos'.'</span>')))
 				/*PESTAÑA DE LISTA DE CLIENTES*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTACLIENTES) || in_array(Auth::user()->UsRol2, Permisos::LISTACLIENTES), (Link::toUrl('/clientes', '<i class="fa fa-list-ul"></i> <span>'. trans('adminlte_lang::message.MenuClien').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTAGENERADORES) || in_array(Auth::user()->UsRol2, Permisos::LISTAGENERADORES),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> '. trans('adminlte_lang::message.MenuGenerClien'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTAGENERADORES) || in_array(Auth::user()->UsRol2, Permisos::LISTAGENERADORES),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClien').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTARESIDUOS) || in_array(Auth::user()->UsRol2, Permisos::LISTARESIDUOS),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> '. trans('adminlte_lang::message.MenuRespelList'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::LISTARESIDUOS) || in_array(Auth::user()->UsRol2, Permisos::LISTARESIDUOS),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
 				/*PESTAÑA DE TRATAMIENTOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::TRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> '.trans('adminlte_lang::message.MenuTrataRespel'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::TRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> <span>'.trans('adminlte_lang::message.MenuTrataRespel').'</span>')))
 				/*PESTAÑA DE PRETRATAMIENTOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::PRETRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> '.trans('adminlte_lang::message.MenuPreTrataRespel'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::PRETRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> <span>'.trans('adminlte_lang::message.MenuPreTrataRespel').'</span>')))
 				/*PESTAÑA DE PERSONAL DEL CLIENTE*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE), Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>'))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE),(Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>')))
 				/*PESTAÑA DE SOLICITUDES DE SERVICIO*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS),(Link::toUrl('/solicitud-servicio', '<i class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 			/*FIN DEL MENU1 PARA PROSARC*/
@@ -77,9 +77,9 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE MI CLIENTE*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl(route('cliente-show',  Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first()->CliSlug), '<i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.MenuClien2').'</span>')))
 				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> '. trans('adminlte_lang::message.MenuGenerClientitle'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> '. trans('adminlte_lang::message.MenuRespelList'))))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
 				/*PESTAÑA DE PERSONAL*/
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/areas', '<i class="fas fa-archive"></i> <span>'.trans('adminlte_lang::message.MenuPersAreas').'</span>'))
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/cargos', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').'</span>'))
@@ -95,9 +95,11 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 		return Menu::adminlteMenu()
 			/*ECABEZAMIENTO TITULO*/
 			->add(Html::raw(trans('adminlte_lang::message.header'))->addParentClass('header'))
-
 			/*PESTAÑA DE INICIO / HOME*/
 			->action('HomeController@index', '<i class="fa fa-home"></i> <span>'.trans('adminlte_lang::message.home').'</span>')
+			// PREGUNTAS FRECUENTES
+			// ->add(Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
+			
 			->setActiveFromRequest();
 	}
 });

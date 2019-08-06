@@ -34,6 +34,9 @@ class VehicProgController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
 					}
+					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)){
+						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
+					}
 				})
 				->get();
 			$personals = DB::table('personals')
@@ -87,6 +90,7 @@ class VehicProgController extends Controller
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
+				->where('vehiculos.FK_VehiSede', 1)
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
@@ -199,6 +203,9 @@ class VehicProgController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
 			$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+			if (!$programacion) {
+				abort(404);
+			}
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
 				->get();
@@ -246,6 +253,9 @@ class VehicProgController extends Controller
 	public function update(Request $request, $id)
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacion) {
+			abort(404);
+		}
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
 		$llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
@@ -322,6 +332,9 @@ class VehicProgController extends Controller
 	public function destroy($id)
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacion) {
+			abort(404);
+		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
 		if ($programacion->ProgVehDelete == 0){

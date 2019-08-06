@@ -155,6 +155,9 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug',$id)
 			->get();
+		if (!$Personas) {
+			abort(404);
+		}
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 		return view('personal.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
@@ -213,6 +216,9 @@ class PersonalController extends Controller
 	 */
 	public function update(Request $request, $id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$validate = $request->validate([
 			'Sede'          => 'required',
 			'CargArea'      => 'required',
@@ -292,6 +298,9 @@ class PersonalController extends Controller
 	 */
 	public function destroy($id){
 		$Persona = Personal::where('PersSlug', $id)->first();
+		if (!$Persona) {
+			abort(404);
+		}
 		$Cargo = Cargo::where('ID_Carg', $Persona->FK_PersCargo)->first();
 		$Area = Area::where('ID_Area', $Cargo->CargArea)->first();
 		if ($Persona->PersDelete == 0){
