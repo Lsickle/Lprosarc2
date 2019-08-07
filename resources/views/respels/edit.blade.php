@@ -274,7 +274,7 @@
 @section('NewScript')
 	<script type="text/javascript">
 		var contador = 0;
-		var contadorRango = 1;
+		var contadorRango = [];
 
 		function SelectsRangoTipo(id){
 			$('#typerangeSelect'+id).select2({
@@ -307,15 +307,14 @@
 		}
 		function recargarAjaxTratamiento(contador){
 			selector = $("#tratamiento"+contador);
-			id = selector.val();
-			selector
+			contador = selector.val();
 				$.ajaxSetup({
 				  headers: {
 					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 				  }
 				});
 				$.ajax({
-					url: "{{url('/preTratamientoDinamico')}}/"+id,
+					url: "{{url('/preTratamientoDinamico')}}/"+contador,
 					method: 'GET',
 					data:{},
 					beforeSend: function(){
@@ -365,14 +364,14 @@
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
 		}
-		function EliminarOption(id){
-			$("#tratamiento"+id+"Container").remove();
-			$("#pretratamiento"+id+"Container").remove();
-			$("#requerimiento"+id+"Container").remove();
-			$("#tarifa"+id+"Container").remove();
+		function EliminarOption(contador){
+			$("#tratamiento"+contador+"Container").remove();
+			$("#pretratamiento"+contador+"Container").remove();
+			$("#requerimiento"+contador+"Container").remove();
+			$("#tarifa"+contador+"Container").remove();
 			$("#evaluacioncomercial").validator('update');
 		}
-		function AgregarRango(id){
+		function AgregarRango(contador){
 			var modalrango = `@include('layouts.respel-comercial.modal-rango')`;
 			$("#modalrango").empty();
 			$("#modalrango").append(modalrango);
@@ -382,16 +381,16 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+id+"Container").append(tarifa);
+					$("#rango"+contador+"Container").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
-					validarprevent(id);
-					contadorRango = parseInt(contadorRango)+1;
+					validarprevent(contador);
+					contadorRango[contador] = contadorRango[contador]+1;
 				}
 			});
 
 		}
-		function EliminarRango(id){
-			$("#rango"+id).remove();
+		function EliminarRango(contador){
+			$("#rango"+contador).remove();
 			$("#evaluacioncomercial").validator('update');
 		}
 		$(document).ready(function(){

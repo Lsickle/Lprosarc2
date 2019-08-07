@@ -62,6 +62,5 @@
     "toastr": "^2.1.4",
     "vue-template-compiler": "^2.6.10"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

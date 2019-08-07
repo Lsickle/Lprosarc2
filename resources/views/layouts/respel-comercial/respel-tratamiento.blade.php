@@ -40,8 +40,4 @@
             <button class="btn btn-danger droOptionButton" {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? 'Disabled' : '' }} onclick="EliminarOption(`+contador+`)" id="droOptionButton`+contador+`"><i class="fas fa-trash"></i></button> 
         </div>
     </div>
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> master
