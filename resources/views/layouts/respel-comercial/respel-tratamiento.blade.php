@@ -1,9 +1,9 @@
 <div id="tratamiento`+contador+`Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
     <div class="col-md-8" style="margin-bottom: 0.25em;">
-        <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento</b>" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento`+contador+`">
+        <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento`+contador+`">
         Tratamiento
         </label>
-        <select class="selecttrat" id="tratamiento`+contador+`" name="Tratamiento[`+contador+`]" style="width:100%;">
+        <select class="selecttrat" id="opciontratamiento`+contador+`" name="Tratamiento[`+contador+`]" style="width:100%;">
             <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)

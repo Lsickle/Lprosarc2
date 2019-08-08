@@ -306,15 +306,15 @@
 			}
 		}
 		function recargarAjaxTratamiento(contador){
-			selector = $("#tratamiento"+contador);
-			contador = selector.val();
+			selector = $("#opciontratamiento"+contador);
+			id = selector.val();
 				$.ajaxSetup({
 				  headers: {
 					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 				  }
 				});
 				$.ajax({
-					url: "{{url('/preTratamientoDinamico')}}/"+contador,
+					url: "{{url('/preTratamientoDinamico')}}/"+id,
 					method: 'GET',
 					data:{},
 					beforeSend: function(){
