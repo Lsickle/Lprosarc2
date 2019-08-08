@@ -344,6 +344,8 @@
 			
 		}
 		function AgregarOption(){
+			contadorRango[contador] = [];
+			contadorRango[contador][0]= 0;
 			var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
 			var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 			var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
@@ -363,6 +365,7 @@
 			Switch6();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
+
 		}
 		function EliminarOption(contador){
 			$("#tratamiento"+contador+"Container").remove();
@@ -371,7 +374,12 @@
 			$("#tarifa"+contador+"Container").remove();
 			$("#evaluacioncomercial").validator('update');
 		}
-		function AgregarRango(contador){
+		function AgregarRango(opcion){
+			if (contadorRango[opcion].length>1) {
+				last=contadorRango[opcion].length-1;
+			}else{
+				last=1;
+			}
 			var modalrango = `@include('layouts.respel-comercial.modal-rango')`;
 			$("#modalrango").empty();
 			$("#modalrango").append(modalrango);
@@ -386,16 +394,17 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+contador+"Container").append(tarifa);
+					$("#rango"+opcion+"Container").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
-					validarprevent(contador);
-					contadorRango[contador] = contadorRango[contador]+1;
+					validarprevent(opcion);
+					last=last+1
+					contadorRango[opcion][last] = last;
 				}
 			});
-
 		}
-		function EliminarRango(contador){
-			$("#rango"+contador).remove();
+		function EliminarRango(opcion,rango){
+			console.log(opcion,rango);
+			$("#rango"+opcion+rango).remove();
 			$("#evaluacioncomercial").validator('update');
 		}
 		$(document).ready(function(){
