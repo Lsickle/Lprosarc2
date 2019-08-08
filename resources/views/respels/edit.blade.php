@@ -375,6 +375,11 @@
 			var modalrango = `@include('layouts.respel-comercial.modal-rango')`;
 			$("#modalrango").empty();
 			$("#modalrango").append(modalrango);
+			window.addEventListener("keypress", function(event){
+				if (event.keyCode == 13){
+					event.preventDefault();
+				}
+			}, false);
 			popover();
 			$("#createrank").modal();
 			$("#createrank").on("hidden.bs.modal", function () {
