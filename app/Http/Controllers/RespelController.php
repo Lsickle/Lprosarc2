@@ -20,6 +20,8 @@ use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
 use App\Permisos;
+use App\Tarifa;
+use Illuminate\Support\Arr;
 
 class RespelController extends Controller
 {
@@ -445,11 +447,34 @@ class RespelController extends Controller
     public function updateStatusRespel(Request $request, $id)
     {      
         // return $request->Opcion[0]['TarifaFrecuencia'];
-        return $request;
-
         $respel = Respel::where('RespelSlug', $id)->first();
+        $opciones = $request->Opcion;
+        $tratlist = [];
+        foreach ($opciones as $key => $value) {
+            if ($opciones[$key]) {
+                // $tratlist = Arr::prepend($tratlist, $opciones[$key]['Tratamiento']);
+                $respel->tratamientos()->attach($opciones[$key]['Tratamiento']);
+                $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
+                    $tarifa = new Tarifa();
+                    $tarifa->TarifaPrecio1=$value2;
+                    $tarifa->TarifaPesoinicial1=$opciones[$key]['TarifaDesde'][$key2];
+                    $tarifa->TarifaDelete=0;
+                    $tarifa->TarifaTipounidad1=$opciones[$key]['Tarifatipo'];
+                    $tarifa->save();
+
+                    $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                }
+                
+            }
+        }
+        return $opciones;
+        // $respel->tratamientos()->sync($tratlist);
 
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            for ($i=0; $i < count($opciones); $i++) { 
+                # code...
+            }
             $respel->RespelStatus = $request['RespelStatus'];
             $respel->RespelStatusDescription = $request['RespelStatusDescription'];
             $respel->save();
