@@ -37,4 +37,9 @@ class Respel extends Model
     public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
+    public function tratamientos()
+    {
+        return $this->belongsToMany('App\Tratamiento','respel_tratamiento', 'FK_Respel', 'FK_Trat');
+        //lista las pretratamientos relacionados usando muchos a muchos
+    }
 }
