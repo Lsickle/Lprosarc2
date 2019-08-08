@@ -443,8 +443,10 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateStatusRespel(Request $request, $id)
-    {
+    {      
+        // return $request->Opcion[0]['TarifaFrecuencia'];
         return $request;
+
         $respel = Respel::where('RespelSlug', $id)->first();
 
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {

@@ -300,7 +300,7 @@
 		function validarSwitch(){
 			if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
 				Switch1();
-				$('.testswitch').bootstrapSwitch('disabled', true);
+				$('.testswitch').bootstrapSwitch();
 			}else{
 				Switch1();
 			}

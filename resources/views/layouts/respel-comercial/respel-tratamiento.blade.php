@@ -3,7 +3,7 @@
         <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento`+contador+`">
         Tratamiento
         </label>
-        <select class="selecttrat" id="opciontratamiento`+contador+`" name="Tratamiento[`+contador+`]" style="width:100%;">
+        <select class="selecttrat" id="opciontratamiento`+contador+`" name="Opcion[`+contador+`][Tratamiento]" style="width:100%;">
             <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)
@@ -31,7 +31,7 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input  type="checkbox" class="testswitch" id="ofert`+contador+`" name="TratOfertado[]"/>  
+            <input type="radio" class="testswitch" id="ofert`+contador+`" name="TratOfertado" value="`+contador+`" />  
         </div>
     </div>
     <div class="col-md-2">
