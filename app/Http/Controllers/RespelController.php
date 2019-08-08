@@ -465,7 +465,6 @@ class RespelController extends Controller
 
                     $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                 }
-                
             }
         }
         return $opciones;
