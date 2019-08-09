@@ -255,7 +255,7 @@ class RespelController extends Controller
                 $deleteButton = 'borrable';
             } 
 
-            $tratamientosViables = Clasificacion::with(['tratamientos'])
+            $tratamientosViables = Clasificacion::with(['tratamientosConGestor'])
             ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
             ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
             ->get();

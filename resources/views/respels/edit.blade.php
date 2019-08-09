@@ -202,6 +202,7 @@
 						 <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
 						</div>
 					</div>
+
 					<!-- /.box header -->
 					<!-- box body -->
 					<div class="box-body">
@@ -273,7 +274,7 @@
 @section('NewScript')
 	<script type="text/javascript">
 		var contador = 0;
-		var contadorRango = 1;
+		var contadorRango = [];
 
 		function SelectsRangoTipo(id){
 			$('#typerangeSelect'+id).select2({
@@ -305,9 +306,8 @@
 			}
 		}
 		function recargarAjaxTratamiento(contador){
-			selector = $("#tratamiento"+contador);
+			selector = $("#opciontratamiento"+contador);
 			id = selector.val();
-			selector
 				$.ajaxSetup({
 				  headers: {
 					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -344,6 +344,8 @@
 			
 		}
 		function AgregarOption(){
+			contadorRango[contador] = [];
+			contadorRango[contador][0]= 0;
 			var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
 			var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 			var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
@@ -363,15 +365,21 @@
 			Switch6();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
+
 		}
-		function EliminarOption(id){
-			$("#tratamiento"+id+"Container").remove();
-			$("#pretratamiento"+id+"Container").remove();
-			$("#requerimiento"+id+"Container").remove();
-			$("#tarifa"+id+"Container").remove();
+		function EliminarOption(contador){
+			$("#tratamiento"+contador+"Container").remove();
+			$("#pretratamiento"+contador+"Container").remove();
+			$("#requerimiento"+contador+"Container").remove();
+			$("#tarifa"+contador+"Container").remove();
 			$("#evaluacioncomercial").validator('update');
 		}
-		function AgregarRango(id){
+		function AgregarRango(opcion){
+			if (contadorRango[opcion].length>1) {
+				last=contadorRango[opcion].length-1;
+			}else{
+				last=1;
+			}
 			var modalrango = `@include('layouts.respel-comercial.modal-rango')`;
 			$("#modalrango").empty();
 			$("#modalrango").append(modalrango);
@@ -386,16 +394,17 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+id+"Container").append(tarifa);
+					$("#rango"+opcion+"Container").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
-					validarprevent(id);
-					contadorRango = parseInt(contadorRango)+1;
+					validarprevent(opcion);
+					last=last+1
+					contadorRango[opcion][last] = last;
 				}
 			});
-
 		}
-		function EliminarRango(id){
-			$("#rango"+id).remove();
+		function EliminarRango(opcion,rango){
+			console.log(opcion,rango);
+			$("#rango"+opcion+rango).remove();
 			$("#evaluacioncomercial").validator('update');
 		}
 		$(document).ready(function(){
