@@ -9,13 +9,11 @@
 <div class="container-fluid spark-screen">
 	<div class="row">
 		<div class="col-md-16 col-md-offset-0">
-			<!-- Default box -->
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.sclientregister') }}</h3>
 				</div>
 				<div class="box box-info">
-					<!-- form start -->
 					<form role="form" action="/sclientes" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@if ($errors->any())
@@ -63,7 +61,7 @@
 								<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label></label><small class="help-block with-errors">*</small>
 								<div class="input-group">
 									<span class="input-group-addon">(+57)</span>
-									<input type="text" class="form-control mobile" id="sedeinputcelular" name="SedeCelular" data-minlength="12" data-maxlength="12" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{ old('SedeCelular') }}" required>
+									<input type="text" class="form-control mobile" id="sedeinputcelular" name="SedeCelular" data-minlength="12" maxlength="12" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{ old('SedeCelular') }}" required>
 								</div>
 							</div>
 							<div class="col-md-6 form-group">

@@ -218,11 +218,16 @@
 										</select>
 										<small class="help-block with-errors"></small>
 									</div>
-									<div class="form-group col-xs-12 col-md-6">
+									<div class="form-group col-xs-6 col-md-6">
+										<label for="MvType">{{ trans('adminlte_lang::message.mantvehitype') }}</label>
+										<input type="text" class="form-control" required maxlength="255" id="MvType" name="MvType" value="{{old('MvType')}}">
+										<small class="help-block with-errors"></small>
+									</div>
+									{{-- <div class="form-group col-xs-12 col-md-6">
 										<label for="MvKm">{{ trans('adminlte_lang::message.mantvehikm') }}</label>
 										<input maxlength="11" class="form-control number" required type="text" id="MvKm" name="MvKm" value="{{old('MvKm')}}">
 										<small class="help-block with-errors"></small>
-									</div>
+									</div> --}}
 								</div>
 								<div class="col-xs-12 col-md-12">
 									<div class="form-group col-xs-12 col-md-6">
@@ -248,13 +253,9 @@
 										<small class="help-block with-errors"></small>
 									</div>
 								</div>
-								<div class="col-xs-12 col-md-12">
-									<div class="form-group col-xs-12 col-md-12">
-										<label for="MvType">{{ trans('adminlte_lang::message.mantvehitype') }}</label>
-										<input type="text" class="form-control" required maxlength="255" id="MvType" name="MvType" value="{{old('MvType')}}">
-										<small class="help-block with-errors"></small>
-									</div>
-								</div>
+								{{-- <div class="col-xs-12 col-md-12">
+									
+								</div> --}}
 								<input type="submit" hidden="true" id="submit3" name="submit3">
 							</div>
 						</form>

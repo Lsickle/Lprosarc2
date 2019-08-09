@@ -15,7 +15,7 @@
 				</div>
 				<div class="box box-info">
 					<!-- form start -->
-					<form role="form" action="/sclientes/{{$Sede->SedeSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="{{Route::currentRouteName() === 'sedes-edit' ? "/sedes/$Sede->SedeSlug/update" : "/sclientes/$Sede->SedeSlug"}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -60,7 +60,7 @@
 								<label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
 								<div class="input-group">
 									<span class="input-group-addon">(+57)</span>
-									<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" value="{{$Sede->SedeCelular}}" required>
+									<input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" name="SedeCelular" value="{{$Sede->SedeCelular}}" required>
 								</div>
 							</div>
 							<div class="col-md-6 form-group">
@@ -90,11 +90,10 @@
 							</div>
 						</div>
 					</form>
+					<!-- form end -->
 				</div>
 			</div>
 		</div>
-		<!-- /.box-body -->
 	</div>
-	<!-- /.box -->
 </div>
 @endsection

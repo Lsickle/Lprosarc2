@@ -15,7 +15,7 @@ class CreateMantenimitoVehiculoTable extends Migration
     {
         Schema::create('mantenvehics', function (Blueprint $table) {
             $table->increments('ID_Mv');
-            $table->integer('MvKm');
+            $table->integer('MvKm')->nullable();
             $table->boolean('MvStatus');
             $table->string('MvType');
             $table->dateTime('HoraMavInicio');

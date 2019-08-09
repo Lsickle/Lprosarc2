@@ -15,16 +15,16 @@
 					</div>
 					<div class="box box-info">
 						<form role="form" action="/personal" method="POST" enctype="multipart/form-data" data-toggle="validator">
-								@csrf
-								@if ($errors->any())
-									<div class="alert alert-danger" role="alert">
-										<ul>
-											@foreach ($errors->all() as $error)
-												<p>{{$error}}</p>
-											@endforeach
-										</ul>
-									</div>
-								@endif
+							@csrf
+							@if ($errors->any())
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										@foreach ($errors->all() as $error)
+											<p>{{$error}}</p>
+										@endforeach
+									</ul>
+								</div>
+							@endif
 							<div class="box-body" id="readyTable">
 								<div class="tab-pane" id="addRowWizz">
 									<p>{{ trans('adminlte_lang::message.smartwizzardtitle') }}</p>

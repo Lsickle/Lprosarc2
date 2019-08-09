@@ -54,8 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
 	Route::delete('/contacto-vehiculo-delete/{id}', 'VehiculoContactoController@destroy');
 	Route::resource('/sclientes', 'sclientcontroller');
-	Route::get('/sedes', 'SedesAllController@index')->name('sedes');
-	Route::get('/sedes/{id}', 'SedesAllController@show')->name('sede-show');
+	Route::get('/sede/{slug}/edit', 'SedesAllController@edit')->name('sedes-edit');
+	Route::put('/sedes/{slug}/update', 'SedesAllController@update')->name('sedes-update');
+	Route::delete('/sedes/{slug}/destroy', 'SedesAllController@destroy')->name('sedes-destroy');
 	Route::resource('/generadores', 'genercontroller');
 	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
@@ -114,6 +115,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	Route::resource('/contratos', 'ContratoController');
+	Route::resource('/requeri-client', 'RequerimientosClienteController');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');

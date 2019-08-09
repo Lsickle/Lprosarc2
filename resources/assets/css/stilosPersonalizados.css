@@ -45,7 +45,7 @@ a.textpopover{
 	word-break: break-all;
 }
 .popover{
-	max-width: 100%;
+	max-width: 40%;
 	background-color: #d2d6de;
 	color: #000;
 }
@@ -55,6 +55,9 @@ a.textpopover{
 .form-control{
 	height: auto;
 	max-height: 2.4em;
+}
+textarea.form-control{
+	max-height: none;
 }
 select.form-control{
 	background-color: #fff;
@@ -125,4 +128,8 @@ ul.list-unstyled li:not(:first-child) {
 	z-index: 1050;
 	width: 20rem;
 	height: 20rem !important;
+}
+/*aumentar la longitud del slider*/
+.slider.slider-horizontal{
+  width:100% !important;
 }

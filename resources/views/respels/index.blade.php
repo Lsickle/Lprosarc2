@@ -121,11 +121,11 @@
 												@break
 											{{-- información del residuo incompleta --}}
 											@case('Incompleto')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>0
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- Residuo Revisado --}}
 											@case('Revisado')
-												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>0
+												<td><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default

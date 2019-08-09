@@ -20,6 +20,8 @@ use App\User;
 use App\Requerimiento;
 use App\ResiduosGener;
 use App\Permisos;
+use App\Tarifa;
+use Illuminate\Support\Arr;
 
 class RespelController extends Controller
 {
@@ -124,7 +126,7 @@ class RespelController extends Controller
                 $file1 = $request['RespelHojaSeguridad'][$x];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
 
-                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = 'RespelHojaDefault.pdf';
@@ -134,7 +136,7 @@ class RespelController extends Controller
             if (isset($request['RespelTarj'][$x])) {
                 $file2 = $request['RespelTarj'][$x];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = 'RespelTarjetaDefault.pdf';
             }
@@ -143,7 +145,7 @@ class RespelController extends Controller
             if (isset($request['RespelFoto'][$x])) {
                 $file3 = $request['RespelFoto'][$x];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
             }else{
                 $foto = 'RespelFotoDefault.png';
             }
@@ -152,7 +154,7 @@ class RespelController extends Controller
             if (isset($request['SustanciaControladaDocumento'][$x])) {
                 $file4 = $request['SustanciaControladaDocumento'][$x];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = 'SustanciaControlDocDefault.pdf';
             }
@@ -240,22 +242,21 @@ class RespelController extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
             $Respels = Respel::where('RespelSlug', $id)->first();
-    
+        
             if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
                 abort(404);
             }
-    
+        
             /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
             $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
             $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-    
             if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
                 $deleteButton = 'No borrable';
             }else{
                 $deleteButton = 'borrable';
             } 
 
-            $tratamientosViables = Clasificacion::with(['tratamientos'])
+            $tratamientosViables = Clasificacion::with(['tratamientosConGestor'])
             ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
             ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
             ->get();
@@ -267,7 +268,7 @@ class RespelController extends Controller
                 ->get();
             // se verifica el rol y el status del residuo para devolver a la vista correspondiente
                 $statusRespel = $Respels->RespelStatus;
-    
+        
             if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                 $Sede = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
@@ -291,9 +292,16 @@ class RespelController extends Controller
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
-                    ->where('clientes.ID_Cli', '<>', 1) 
+                    ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
-    
+                $tratamientosAsignados = Respel::with(['tratamientos'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+
+                $tarifasAsignados = Respel::with(['tarifasAsignadas'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+                // return $tratamientosAsignados;
                 return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{
@@ -320,7 +328,7 @@ class RespelController extends Controller
                 }
                 $file1 = $request['RespelHojaSeguridad'];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
-                $file1->move(public_path().'\img\HojaSeguridad/',$hoja);
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
             }
             else{
                 $hoja = $respel->RespelHojaSeguridad;
@@ -333,7 +341,7 @@ class RespelController extends Controller
                 }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-                $file2->move(public_path().'\img\TarjetaEmergencia/',$tarj);
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
             }else{
                 $tarj = $respel->RespelTarj;
             }
@@ -345,7 +353,7 @@ class RespelController extends Controller
                 }
                 $file3 = $request['RespelFoto'];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-                $file3->move(public_path().'\img\fotoRespelCreate/',$foto);
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
             }else{
                 $foto = $respel->RespelFoto;
             }
@@ -357,7 +365,7 @@ class RespelController extends Controller
                 }
                 $file4 = $request['SustanciaControladaDocumento'];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-                $file4->move(public_path().'\img\SustanciaControlDoc/',$ctrlDoc);
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
             }else{
                 $ctrlDoc = $respel->SustanciaControladaDocumento;
             }
@@ -443,17 +451,63 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateStatusRespel(Request $request, $id)
-    {
+    {      
+        // return $request->Opcion[0]['TarifaFrecuencia'];
         $respel = Respel::where('RespelSlug', $id)->first();
+        $opciones = $request->Opcion;
+        // return $request;
 
+        foreach ($opciones as $key => $value) {
+            if ($opciones[$key]) {
+                if ($key == $request->TratOfertado) {
+                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 0]);
+                }else{
+                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 1]);
+
+                }
+                
+                $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
+                    $tarifa = new Tarifa();
+                    $tarifa->TarifaPrecio1=$value2;
+                    $tarifa->TarifaPesoinicial1=$opciones[$key]['TarifaDesde'][$key2];
+                    $tarifa->TarifaDelete=0;
+                    $tarifa->TarifaTipounidad1=$opciones[$key]['Tarifatipo'];
+                    $tarifa->save();
+
+                    $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                }
+               $requerimiento = new Requerimiento();
+               if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                   $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+               }
+               if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                   $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+               }
+               if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                   $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+               }
+               if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                    $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+               }
+               if (isset($opciones[$key]['ReqDevolucion'])) {
+                   $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+               }
+               $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+               $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+               $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+               $requerimiento->save();
+
+            }
+        }
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $respel->RespelStatus = $request['RespelStatus'];
             $respel->RespelStatusDescription = $request['RespelStatusDescription'];
             $respel->save();
 
             $log = new audit();
-            $log->AuditTabla="respels";
-            $log->AuditType="Modificado";
+            $log->AuditTabla="respels requerimiento y tarifas";
+            $log->AuditType="Evaluacion Updated";
             $log->AuditRegistro=$respel->ID_Respel;
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=json_encode($request->all());

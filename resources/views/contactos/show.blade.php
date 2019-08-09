@@ -109,7 +109,7 @@
 						@endif
 						<div class="modal-header">
 							<div class="form-group col-md-12">
-								<label for="VehicPlaca" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehicplaca') }}</b>" data-content="Placa de un vehiculo del Tranportador">
+								<label for="VehicPlaca" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehicplaca') }}</b>" data-content="Placa de un vehiculo del Tranportador.">
 									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 									{{ trans('adminlte_lang::message.vehicplaca') }}
 								</label>
@@ -130,7 +130,7 @@
 									{{ trans('adminlte_lang::message.vehiccapacidad') }}
 								</label>
 								<small class="help-block with-errors">*</small>
-								<input type="number" name="CreateVehicCapacidad" class="form-control" id="VehicCapacidad" maxlength="64" min="0" value="{{old('CreateVehicCapacidad')}}" required>
+								<input type="text" name="CreateVehicCapacidad" class="form-control numberKg" id="VehicCapacidad" value="{{old('CreateVehicCapacidad')}}" required>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -218,16 +218,28 @@
 							<div id="errors"></div>
 							<div class="modal-header">
 								<div class="form-group col-md-12">
-									<label for="VehicPlaca">{{ trans('adminlte_lang::message.vehicplaca') }}</label><small class="help-block with-errors">*</small>
+									<label for="VehicPlaca" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehicplaca') }}</b>" data-content="Placa de un vehiculo del Tranportador.">
+										<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+										{{ trans('adminlte_lang::message.vehicplaca') }}
+									</label>
+									<small class="help-block with-errors">*</small>
 									<input type="text" name="VehicPlaca" class="form-control placa" id="VehicPlaca" data-minlength="7" maxlength="7" placeholder="{{ trans('adminlte_lang::message.placaplaceholder') }}" value="`+placa+`" required>
 								</div>
 								<div class="col-md-12 form-group">
-									<label for="VehicTipo"> {{ trans('adminlte_lang::message.vehictipo') }}</label><small class="help-block with-errors">*</small>
+									<label for="VehicTipo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehictipo') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehictipomessage') }}">
+										<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+										{{ trans('adminlte_lang::message.vehictipo') }}
+									</label>
+									<small class="help-block with-errors">*</small>
 									<input type="text" name="VehicTipo" class="form-control" id="VehicTipo" maxlength="64" value="`+tipo+`" required>
 								</div>
 								<div class="col-md-12 form-group">
-									<label for="VehicCapacidad">{{ trans('adminlte_lang::message.vehiccapacidad') }}</label><small class="help-block with-errors">*</small>
-									<input type="number" name="VehicCapacidad" maxlength="7" min="0" class="form-control" id="VehicCapacidad" maxlength="64" value="`+capacidad+`" required>
+									<label for="VehicCapacidad" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.vehiccapacidad') }}</b>" data-content="{{ trans('adminlte_lang::message.contacvehiccapacidadmessage') }}">
+										<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+										{{ trans('adminlte_lang::message.vehiccapacidad') }}
+									</label>
+									<small class="help-block with-errors">*</small>
+									<input type="text" name="VehicCapacidad" class="form-control numberKg" id="VehicCapacidad" value="`+capacidad+`" required>
 								</div>
 							</div>
 							<input type="text" name="validate" hidden value="`+id+`">
@@ -239,6 +251,8 @@
 				</div>
 			</form>
 			`);
+			numeroKg();
+			popover();
 			$('#formedit').validator('update');
 		}
 		function deletevehiculo(id, placa){

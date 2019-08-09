@@ -27,15 +27,27 @@ class userController extends Controller
 	public static function IDClienteSegunUsuario(){
 		if(isset(Auth::user()->FK_UserPers)){
 			$Cliente = DB::table('personals')
-					->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-					->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-					->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-					->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-					->select('clientes.ID_Cli')
-					->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-					->first();
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('clientes.ID_Cli')
+				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+				->first();
 			return $Cliente->ID_Cli;
 		}
+	}
+
+	public static function IDSedeSegunUsuario(){
+		$Sede = DB::table('personals')
+			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->select('sedes.SedeSlug')
+			->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+			->first();
+
+		return $Sede->SedeSlug;
 	}
 
 	/**
