@@ -43,7 +43,8 @@ class SendMailContrato extends Command
      */
     public function handle()
     {
-        $Users = User::where('UsRol', 'Programador')->orwhere('UsRol2', 'Programador')->get();
+        $Users = User::where('UsRol', 'Tesoreía')->orwhere('UsRol2', 'Tesoreía')->get();
+        // $Users = User::where('UsRol', 'Programador')->orwhere('UsRol2', 'Programador')->get();
         $Contratos = DB::table('contratos')
             ->join('clientes', 'clientes.ID_Cli', 'contratos.Fk_ContraCli')
             ->select('clientes.CliShortname', 'contratos.*')
