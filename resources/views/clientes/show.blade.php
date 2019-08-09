@@ -255,7 +255,7 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 										<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
 										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch" id="RequeCliBascula" name="RequeCliBascula">
+											<input type="checkbox" class="testswitch disabled" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
 										</div>
 									</label>
 								</div>
@@ -263,7 +263,7 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
 										<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
 										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch" id="RequeCliCapacitacion" name="RequeCliCapacitacion">
+											<input type="checkbox" class="testswitch disabled" id="RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
 										</div>
 									</label>
 								</div>
@@ -271,7 +271,7 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
 										<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
 										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch" id="RequeCliMasPerson" name="RequeCliMasPerson">
+											<input type="checkbox" class="testswitch disabled" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
 										</div>
 									</label>
 								</div>
@@ -279,7 +279,7 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
 										<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
 										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive">
+											<input type="checkbox" class="testswitch disabled" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
 										</div>
 									</label>
 								</div>
@@ -287,7 +287,7 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
 										<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
 										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch" id="RequeCliPlatform" name="RequeCliPlatform">
+											<input type="checkbox" class="testswitch disabled" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
 										</div>
 									</label>
 								</div>
@@ -367,6 +367,9 @@
 {{-- End Modal Create Requerimientos--}}
 @endsection
 @section('NewScript')
+	<script>
+		$('.disabled').bootstrapSwitch('disabled',true);
+	</script>
 	@if(count($Sedes) > 1)
 		<script>
 			function DeleteSede(slug, name){
