@@ -356,6 +356,7 @@
 							</label>
 						</div>
 					</div>
+					<input type="text" hidden value="{{$cliente->ID_Cli}}" name="FK_RequeClient">
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
 					</div>
