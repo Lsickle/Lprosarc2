@@ -129,6 +129,7 @@ class Permisos{
 		Menu.php
 		VehicProgController::create
 		ProgramacionVehicle/index
+		clientes/show
 	*/
 	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
 	/* Using ->

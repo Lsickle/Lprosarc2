@@ -246,6 +246,7 @@
 						</div>
 						@endforeach
 					</div>
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 					{{-- requerimientos --}}
 					<div class="tab-pane" id="requerimientos">
 						<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
@@ -297,11 +298,13 @@
 							@endif
 						</div>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 {{-- Start Modal Create Requerimientos--}}
 	<div class="modal modal-default fade in create" id="createReque" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -372,8 +375,8 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-						<i class="fas fa-plus-circle"></i>
+					<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+						<i class="fas fa-exclamation-triangle"></i>
 						<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
 					</div> 
 				</div>
@@ -431,6 +434,7 @@
 		</div>
 	</div>
 {{-- End Modal Edit Requerimientos--}}
+@endif
 @endsection
 @section('NewScript')
 	<script>
