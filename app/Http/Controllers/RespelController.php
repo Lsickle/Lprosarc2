@@ -449,6 +449,7 @@ class RespelController extends Controller
         // return $request->Opcion[0]['TarifaFrecuencia'];
         $respel = Respel::where('RespelSlug', $id)->first();
         $opciones = $request->Opcion;
+        return $request;
         $tratlist = [];
         foreach ($opciones as $key => $value) {
             if ($opciones[$key]) {
@@ -465,15 +466,21 @@ class RespelController extends Controller
 
                     $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                 }
+               $requerimiento = new Requerimiento();
+               $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+               $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+               $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+               $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];
+               $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+               $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+               $requerimiento->ReqSlug=$respel->ID_Respel;
+               $requerimiento->save();
+
             }
         }
-        return $opciones;
         // $respel->tratamientos()->sync($tratlist);
 
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
-            for ($i=0; $i < count($opciones); $i++) { 
-                # code...
-            }
             $respel->RespelStatus = $request['RespelStatus'];
             $respel->RespelStatusDescription = $request['RespelStatusDescription'];
             $respel->save();
