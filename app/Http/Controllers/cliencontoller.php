@@ -23,6 +23,7 @@ use App\Cargo;
 use App\Personal;
 use App\User;
 use App\Permisos;
+use App\RequerimientosCliente;
 
 
 class clientcontoller extends Controller
@@ -248,8 +249,8 @@ class clientcontoller extends Controller
                 ->get();
 
             $SedeSlug = userController::IDSedeSegunUsuario();
-
-            return view('clientes.show', compact('cliente', 'Sedes', 'SedeSlug'));
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $cliente->ID_Cli)->first();
+            return view('clientes.show', compact('cliente', 'Sedes', 'SedeSlug', 'Requerimientos'));
         }else{
             abort(403);
         }
