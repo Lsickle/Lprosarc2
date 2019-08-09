@@ -3,7 +3,7 @@
 	{{-- <hr class="col-md-10 col-md-offset-1 align-self-center"  id="pretratsparator`+contador+`" /> --}}
 	<div class="col-md-12" style="margin-bottom: 0.25em;">
 	    <label for="pretratamiento`+contador+`">Pretratamiento</label>
-	    <select multiple="multiple" class="form-control" id="pretratamiento`+contador+`" name="Tratamiento[Pretratamientos[`+contador+`][]]">
+	    <select multiple="multiple" class="form-control" id="pretratamiento`+contador+`" name="Opcion[`+contador+`][Pretratamientos][]">
 	        <option disabled="true">primero elija un tratamiento...</option>
 	    </select>
 	</div>
