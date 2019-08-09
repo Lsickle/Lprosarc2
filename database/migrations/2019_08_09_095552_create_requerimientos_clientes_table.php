@@ -20,6 +20,8 @@ class CreateRequerimientosClientesTable extends Migration
             $table->boolean('RequeCliMasPerson')->nullable();
             $table->boolean('RequeCliVehicExclusive')->nullable();
             $table->boolean('RequeCliPlatform')->nullable();
+            $table->unsignedInteger('FK_RequeClient')->nullable();
+            $table->foreign('FK_RequeClient')->references('ID_Cli')->on('clientes')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
