@@ -48,9 +48,7 @@
 						</li>
 						<li class="list-group-item">
 							<label>Observaciones</label>
-							<div class="input-group">
-								<textarea disabled name="RespelStatusDescription" id="taid" rows ="5" cols="24" wrap="soft">{{$Respels->RespelStatusDescription}}</textarea>
-							</div>	
+							<p>{{$Respels->RespelStatusDescription}}</p>
 						</li>
 						<li class="list-group-item" style="display: block; overflow: auto";>
 							{{-- hoja de seguridad --}}
