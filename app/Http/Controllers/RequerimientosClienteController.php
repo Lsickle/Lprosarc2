@@ -68,7 +68,7 @@ class RequerimientosClienteController extends Controller
 		}
 		$requerimiento->FK_RequeClient = $request->input('FK_RequeClient');
 		$requerimiento->save();
-		
+
 		return back();
 	}
 
@@ -103,7 +103,7 @@ class RequerimientosClienteController extends Controller
 	 */
 	public function update(Request $request, RequerimientosCliente $requerimientosCliente)
 	{
-		//
+		return $request;
 	}
 
 	/**
