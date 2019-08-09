@@ -190,15 +190,17 @@
 		</div>
 		{{-- sedes --}}
 		<div class="col-md-6">
-			<div class="box box-info">
-				<div class="box-body box-profile">
-					<div style="border-bottom:#dddddd 1px solid; padding-bottom:16px;">
-						<span style="font-size: 21px;">Sedes</span>
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					{{-- Barra de navegación --}}
+					<li class="active box-info"><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
+					<li><a href="#requerimientos" data-toggle="tab">Requerimientos</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="active tab-pane" id="sedes" style='overflow-y:auto; max-height:485px;'>
 						@if (Route::currentRouteName() === 'cliente-show')
 							<a href="/sclientes/create" class="btn btn-primary pull-right"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
 						@endif
-					</div>
-					<div style='overflow-y:auto; max-height:485px;'>
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
@@ -243,6 +245,9 @@
 							</li>
 						</div>
 						@endforeach
+					</div>
+					<div class="tab-pane" id="requerimientos">
+						<h3 class="profile-username text-center textolargo">{{$Sede->SedeName}}</h3>
 					</div>
 				</div>
 			</div>
