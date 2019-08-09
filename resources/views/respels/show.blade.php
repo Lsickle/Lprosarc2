@@ -31,7 +31,7 @@
 							<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Peligrosidad</b> <a class="pull-right">{{$Respels->RespelIgrosidad}}</a>
+							<b>Peligrosidad</b> <a href="#" title="" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Respels->RespelIgrosidad}}</p>" class="pull-right textpopover" data-original-title="Peligrosidad" style="width: 50%;">{{$Respels->RespelIgrosidad}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>Estado Físico</b> <a class="pull-right">{{$Respels->RespelEstado}}</a>
@@ -48,9 +48,7 @@
 						</li>
 						<li class="list-group-item">
 							<label>Observaciones</label>
-							<div class="input-group">
-								<textarea disabled name="RespelStatusDescription" id="taid" rows ="5" cols="24" wrap="soft">{{$Respels->RespelStatusDescription}}</textarea>
-							</div>	
+							<p>{{$Respels->RespelStatusDescription}}</p>
 						</li>
 						<li class="list-group-item" style="display: block; overflow: auto";>
 							{{-- hoja de seguridad --}}
