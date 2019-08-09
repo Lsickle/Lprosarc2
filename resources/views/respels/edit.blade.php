@@ -272,6 +272,7 @@
 	</form>
 	<!-- /.form  -->
 </div>
+@endsection
 @section('NewScript')
 	<script type="text/javascript">
 		var contador = 0;
@@ -301,7 +302,7 @@
 		function validarSwitch(){
 			if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
 				Switch1();
-				$('.testswitch').bootstrapSwitch();
+				// $('.testswitch').bootstrapSwitch('disabled',true);
 			}else{
 				Switch1();
 			}
@@ -416,5 +417,3 @@
 	</script>
 @endsection
 @endif
-@endsection
-

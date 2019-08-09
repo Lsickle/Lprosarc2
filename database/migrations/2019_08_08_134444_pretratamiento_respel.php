@@ -21,6 +21,7 @@ class PretratamientoRespel extends Migration
             $table->foreign('FK_PreTrat')->references('ID_PreTrat')->on('pretratamientos');
             $table->unsignedInteger('FK_Trat');
             $table->foreign('FK_Trat')->references('ID_Trat')->on('tratamientos');
+            $table->boolean('Ofertado');
             $table->timestamps();
         });
     }

@@ -19,9 +19,9 @@
 			return $this->belongsTo('App\Respel','FK_ReqRespel', 'ID_Respel');
 		}
 		
-		public function tratamientos()
+		public function tratamientoElegido()
 		{
-			return $this->hasMany('App\Tratamiento', 'FK_ReqTrata', 'ID_Trat');
+			return $this->hasOne('App\Tratamiento', 'FK_ReqTrat', 'ID_Trat');
 		}
 
 	}

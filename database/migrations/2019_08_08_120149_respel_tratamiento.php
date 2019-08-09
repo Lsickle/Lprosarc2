@@ -19,6 +19,7 @@ class RespelTratamiento extends Migration
             $table->foreign('FK_Respel')->references('ID_Respel')->on('respels');
             $table->unsignedInteger('FK_Trat');
             $table->foreign('FK_Trat')->references('ID_Trat')->on('tratamientos');
+            $table->boolean('Ofertado');
             $table->timestamps();
         });
     }

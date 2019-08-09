@@ -26,7 +26,7 @@
 		</div>
 		<div class="col-md-3" id="rango`+contador+`0">
 			<label style="font-size: 0.8em;" for="rangopriceinput`+contador+`0">Desde 0 </label>
-			<input id="rangopriceinput`+contador+`0" name="Opcion[`+contador+`][TarifaPrecio][]" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->RespelDescrip}}">
+			<input id="rangopriceinput`+contador+`0" name="Opcion[`+contador+`][TarifaPrecio][]" type="text" class="form-control" placeholder="Precio">
 			<input name="Opcion[`+contador+`][TarifaDesde][]" hidden value="0">
 		</div>
 	</div>

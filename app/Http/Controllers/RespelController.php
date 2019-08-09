@@ -242,15 +242,14 @@ class RespelController extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
             $Respels = Respel::where('RespelSlug', $id)->first();
-    
+        
             if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
                 abort(404);
             }
-    
+        
             /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
             $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
             $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-    
             if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
                 $deleteButton = 'No borrable';
             }else{
@@ -269,7 +268,7 @@ class RespelController extends Controller
                 ->get();
             // se verifica el rol y el status del residuo para devolver a la vista correspondiente
                 $statusRespel = $Respels->RespelStatus;
-    
+        
             if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                 $Sede = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
@@ -293,9 +292,16 @@ class RespelController extends Controller
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
-                    ->where('clientes.ID_Cli', '<>', 1) 
+                    ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
-    
+                $tratamientosAsignados = Respel::with(['tratamientos'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+
+                $tarifasAsignados = Respel::with(['tarifasAsignadas'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+                // return $tratamientosAsignados;
                 return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{
@@ -449,12 +455,17 @@ class RespelController extends Controller
         // return $request->Opcion[0]['TarifaFrecuencia'];
         $respel = Respel::where('RespelSlug', $id)->first();
         $opciones = $request->Opcion;
-        return $request;
-        $tratlist = [];
+        // return $request;
+
         foreach ($opciones as $key => $value) {
             if ($opciones[$key]) {
-                // $tratlist = Arr::prepend($tratlist, $opciones[$key]['Tratamiento']);
-                $respel->tratamientos()->attach($opciones[$key]['Tratamiento']);
+                if ($key == $request->TratOfertado) {
+                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 0]);
+                }else{
+                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 1]);
+
+                }
+                
                 $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                 foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
                     $tarifa = new Tarifa();
@@ -467,27 +478,36 @@ class RespelController extends Controller
                     $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                 }
                $requerimiento = new Requerimiento();
-               $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
-               $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
-               $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
-               $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];
-               $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+               if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                   $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+               }
+               if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                   $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+               }
+               if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                   $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+               }
+               if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                    $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+               }
+               if (isset($opciones[$key]['ReqDevolucion'])) {
+                   $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+               }
                $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-               $requerimiento->ReqSlug=$respel->ID_Respel;
+               $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+               $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
                $requerimiento->save();
 
             }
         }
-        // $respel->tratamientos()->sync($tratlist);
-
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $respel->RespelStatus = $request['RespelStatus'];
             $respel->RespelStatusDescription = $request['RespelStatusDescription'];
             $respel->save();
 
             $log = new audit();
-            $log->AuditTabla="respels";
-            $log->AuditType="Modificado";
+            $log->AuditTabla="respels requerimiento y tarifas";
+            $log->AuditType="Evaluacion Updated";
             $log->AuditRegistro=$respel->ID_Respel;
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=json_encode($request->all());
