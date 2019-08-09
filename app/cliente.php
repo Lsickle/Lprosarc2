@@ -29,4 +29,8 @@ class Cliente extends Model
 	{
 		return $this->hasMany('App\Contrato', 'ID_Contra', 'ID_Cli');//como cliente tiene muchos contratos
 	}
+	public function requerimientos()
+	{
+		return $this->hasOne('App\RequerimientosCliente', 'ID_RequeCli', 'ID_Cli');//como cliente tiene solo unos requerimientos
+	}
 }

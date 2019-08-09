@@ -56,6 +56,9 @@ a.textpopover{
 	height: auto;
 	max-height: 2.4em;
 }
+textarea.form-control{
+	max-height: none;
+}
 select.form-control{
 	background-color: #fff;
 	border: 1px solid #aaa;
