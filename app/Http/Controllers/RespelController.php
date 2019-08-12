@@ -281,6 +281,10 @@ class RespelController extends Controller
                 ->where('ID_Respel', '=', $Respels->ID_Respel)
                 ->get();
 
+            // consulta de respel con sus requerimientos con pivot de tratamiento
+            $respelConRequerimientos = Respel::with(['requerimientos'])
+                ->where('ID_Respel', '=', $Respels->ID_Respel)
+                ->get();
             //se crea array para conteo de tratamientos
             $idTratamientoArray = [];
             
@@ -329,9 +333,9 @@ class RespelController extends Controller
                 $pretratamientosAsignados = Respel::with(['pretratamientosActivados'])
                 ->where('ID_respel', '=', $Respels->ID_Respel)
                 ->get();
-                // return $respelConPretratamientos;
+                // return $respelConRequerimientos[0]->requerimientos;
                 // return $respelConPretratamientos[0]->pretratamientosActivados[0]->pivot['FK_Trat'];
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos', 'respelConRequerimientos'));
             }
         }else{
             abort(403);

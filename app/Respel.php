@@ -67,4 +67,8 @@ class Respel extends Model
         return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat')
         ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
     }
+    public function requerimientos(){
+        return $this->hasMany('App\Requerimiento', 'FK_ReqRespel', 'ID_Respel');
+        //como residuos tiene muchos requerimientos
+    }
 }
