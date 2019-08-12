@@ -211,10 +211,10 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.pretrattabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -232,7 +232,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Tratamientospane">
+								<div class="tab-pane fade" id="Tratamientospane">
 									@foreach($tratamientosAsignados as $respelcontratamiento)
 										@php
 										$contadorphp = 0;
@@ -248,7 +248,18 @@
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="Pretratamientospane">
+								<div class="tab-pane fade in active" id="Pretratamientospane">
+									@foreach($tratamientosAsignados as $respelcontratamiento)
+										@php
+										$contadorphp = 0;
+										@endphp	
+										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+											@include('layouts.respel-comercial.respel-pretratEvaluacion-edit')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endforeach
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
@@ -430,8 +441,8 @@
 		$(document).ready(function(){
 			validarSwitch();
 			validarSwitchActivos();
-			Selects();
 			ChangeSelect();
+			Selects();
 		});
 	</script>
 @endsection

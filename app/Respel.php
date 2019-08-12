@@ -60,4 +60,11 @@ class Respel extends Model
         ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
         //lista las pretratamientos elegidos y relacionados usando muchos a muchos
     }
+
+    //lista las tratamientos relacionados usando muchos a muchos
+    public function tratamientosConPretratamientos()
+    {
+        return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat')
+        ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
+    }
 }

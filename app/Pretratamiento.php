@@ -20,4 +20,11 @@ class Pretratamiento extends Model
         //lista los tratamientos relacionados usando muchos a muchos
     }
 
+    public function respels()
+    {
+        return $this->belongsToMany('App\Respel','pretratamiento_respel', 'FK_PreTrat', 'FK_Respel')
+        ->withPivot('FK_Trat');
+        //lista los tratamientos relacionados usando muchos a muchos
+    }
+
 }

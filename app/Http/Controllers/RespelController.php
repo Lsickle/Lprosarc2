@@ -15,6 +15,7 @@ use App\Respel;
 use App\Sede;
 use App\Cotizacion;
 use App\Tratamiento;
+use App\Pretratamiento;
 use App\Clasificacion;
 use App\User;
 use App\Requerimiento;
@@ -274,8 +275,24 @@ class RespelController extends Controller
             $tratamientosAprobados = Respel::with(['tratamientos'])
                 ->where('ID_respel', '=', $Respels->ID_Respel)
                 ->get();
-            // return $tratamientosAprobados[0]->tratamientos[0]->pivot['Ofertado'];
-        
+
+            /*consulta de los pretratamientos elegidos para el respel con pivot de tratamiento*/
+            $respelConPretratamientos = Respel::with(['pretratamientosActivados'])
+                ->where('ID_Respel', '=', $Respels->ID_Respel)
+                ->get();
+
+            //se crea array para conteo de tratamientos
+            $idTratamientoArray = [];
+            
+            foreach ($tratamientosAprobados[0]->tratamientos as $tratamiento) {
+                $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
+            }
+
+            // se consulta los tratamientos contados con sus pretratamientos
+            $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
+                ->whereIn('ID_Trat', $idTratamientoArray)
+                ->get();
+            
             if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                 $Sede = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
@@ -308,8 +325,13 @@ class RespelController extends Controller
                 $tarifasAsignados = Respel::with(['tarifasAsignadas'])
                 ->where('ID_respel', '=', $Respels->ID_Respel)
                 ->get();
-                // return $tratamientosAsignados;
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables'));
+
+                $pretratamientosAsignados = Respel::with(['pretratamientosActivados'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+                // return $respelConPretratamientos;
+                // return $respelConPretratamientos[0]->pretratamientosActivados[0]->pivot['FK_Trat'];
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos'));
             }
         }else{
             abort(403);
