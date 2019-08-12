@@ -15,7 +15,7 @@
             <optgroup label="----------Prosarc S.A. ESP----------">
                 @foreach($tratamientos as $tratamiento)
                     @if($tratamiento->TratTipo == 0)
-                    <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
+                    <option  onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
                     @endif
                 @endforeach
             </optgroup>

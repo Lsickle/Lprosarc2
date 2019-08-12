@@ -37,11 +37,14 @@ class Respel extends Model
     public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
+    
+    //lista las tratamientos relacionados usando muchos a muchos
     public function tratamientos()
     {
-        return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat');
-        //lista las tratamientos relacionados usando muchos a muchos
+        return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat')
+        ->withPivot('Ofertado');
     }
+
     public function pretratamientosActivados()
     {
         return $this->belongsToMany('App\Pretratamiento', 'pretratamiento_respel', 'FK_Respel', 'FK_PreTrat')
@@ -49,6 +52,7 @@ class Respel extends Model
         ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
         //lista las pretratamientos elegidos y relacionados usando muchos a muchos
     }
+
     public function tarifasAsignadas()
     {
         return $this->belongsToMany('App\Tarifa', 'respel_tarifa', 'FK_Respel', 'FK_Tarifa')

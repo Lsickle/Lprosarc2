@@ -211,7 +211,7 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -220,7 +220,7 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 								</li>
 							</ul>
@@ -232,12 +232,23 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade " id="Tratamientospane">
+								<div class="tab-pane fade in active" id="Tratamientospane">
+									@foreach($tratamientosAsignados as $respelcontratamiento)
+										@php
+										$contadorphp = 0;
+										@endphp										
+										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+											@include('layouts.respel-comercial.respel-tratamiento-edit')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endforeach
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade " id="Pretratamientospane">
+								<div class="tab-pane fade" id="Pretratamientospane">
 									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
@@ -247,7 +258,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Tarifaspane">
+								<div class="tab-pane fade" id="Tarifaspane">
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<div id="modalrango"></div>
@@ -273,7 +284,7 @@
 @endsection
 @section('NewScript')
 	<script type="text/javascript">
-		var contador = 0;
+		var contador = {{$contadorphp?$contadorphp:0}};
 		var contadorRango = [];
 
 		function SelectsRangoTipo(id){
@@ -304,6 +315,15 @@
 			}else{
 				Switch1();
 			}
+		}
+		function validarSwitchActivos(){
+			$(".testswitchselected").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-arrows-alt-h"></i>',
+				onText: 'Si',
+				offText: 'No',
+				checked: true,
+			});
 		}
 		function recargarAjaxTratamiento(contador){
 			selector = $("#opciontratamiento"+contador);
@@ -409,6 +429,7 @@
 		}
 		$(document).ready(function(){
 			validarSwitch();
+			validarSwitchActivos();
 			Selects();
 			ChangeSelect();
 		});

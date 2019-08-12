@@ -267,7 +267,14 @@ class RespelController extends Controller
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
                 ->get();
             // se verifica el rol y el status del residuo para devolver a la vista correspondiente
-                $statusRespel = $Respels->RespelStatus;
+            $statusRespel = $Respels->RespelStatus;
+
+
+            //consultar cuales son los tratamientos viabiizados por jefe de operaciones
+            $tratamientosAprobados = Respel::with(['tratamientos'])
+                ->where('ID_respel', '=', $Respels->ID_Respel)
+                ->get();
+            // return $tratamientosAprobados[0]->tratamientos[0]->pivot['Ofertado'];
         
             if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
                 $Sede = DB::table('personals')
@@ -302,7 +309,7 @@ class RespelController extends Controller
                 ->where('ID_respel', '=', $Respels->ID_Respel)
                 ->get();
                 // return $tratamientosAsignados;
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosViables'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables'));
             }
         }else{
             abort(403);
