@@ -182,6 +182,7 @@ function Switch1() {
 		labelText: '<i class="fas fa-arrows-alt-h"></i>',
 		onText: 'Si',
 		offText: 'No',
+		radioAllOff:true,
 	});
 }
 $(document).ready(Switch1());

@@ -160,7 +160,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqPlatform = "1"; 
         $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user05";
-        $Requerimiento->FK_ReqRespel = "4";      
+        $Requerimiento->FK_ReqRespel = "5";      
         $Requerimiento->FK_ReqTrata = "1";      
         $Requerimiento->FK_ReqTarifa = "4";     
         $Requerimiento->save(); 

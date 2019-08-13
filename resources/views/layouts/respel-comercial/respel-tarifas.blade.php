@@ -12,8 +12,8 @@
 			<label style="font-size: 0.9em;" data-trigger="hover" data-toggle="popover" title="<b>Frecuencia</b>" data-content="<p> se tomara en cuenta para la aplicación de la tarifa respectiva y el calculo del precio según la frecuencia de la cantidad puesta en planta Prosarc S.A. ESP</p>" for="frecrangeSelect`+contador+`">Frec.</label>
 			<select id="frecrangeSelect`+contador+`" name="Opcion[`+contador+`][TarifaFrecuencia]">
 				<option>N/A</option>
-				<option>mensual</option>
-				<option>servicio</option>
+				<option>Mensual</option>
+				<option>Servicio</option>
 			</select>
 		</div>
 		<div class="pull-left col-md-2">

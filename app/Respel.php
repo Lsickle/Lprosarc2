@@ -56,8 +56,7 @@ class Respel extends Model
     public function tarifasAsignadas()
     {
         return $this->belongsToMany('App\Tarifa', 'respel_tarifa', 'FK_Respel', 'FK_Tarifa')
-        ->withPivot('FK_Trat')
-        ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
+        ->withPivot('FK_Trat');
         //lista las pretratamientos elegidos y relacionados usando muchos a muchos
     }
 

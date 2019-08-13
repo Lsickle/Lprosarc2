@@ -31,7 +31,7 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input {{$tratamientoelegido->pivot->Ofertado == 1 ? "checked" : ""}} type="radio" class="testswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}" />  
+            <input {{$tratamientoelegido->pivot->Ofertado == 1 ? "checked=true" : ""}} type="radio" class="testswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}"/>  
         </div>
     </div>
     <div class="col-md-2">

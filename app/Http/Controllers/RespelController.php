@@ -19,6 +19,7 @@ use App\Pretratamiento;
 use App\Clasificacion;
 use App\User;
 use App\Requerimiento;
+use App\Rango;
 use App\ResiduosGener;
 use App\Permisos;
 use App\Tarifa;
@@ -285,6 +286,14 @@ class RespelController extends Controller
             $respelConRequerimientos = Respel::with(['requerimientos'])
                 ->where('ID_Respel', '=', $Respels->ID_Respel)
                 ->get();
+
+            // consulta de respel con sus tarifas con pivot de tratamiento
+            $tarifasConRangos = Respel::with(['tarifasAsignadas', 'tarifasAsignadas.rangos'])
+                ->where('ID_Respel', '=', $Respels->ID_Respel)
+                ->get();
+
+            // return $tarifasConRangos;
+
             //se crea array para conteo de tratamientos
             $idTratamientoArray = [];
             
@@ -335,7 +344,7 @@ class RespelController extends Controller
                 ->get();
                 // return $respelConRequerimientos[0]->requerimientos;
                 // return $respelConPretratamientos[0]->pretratamientosActivados[0]->pivot['FK_Trat'];
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos', 'respelConRequerimientos'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos', 'respelConRequerimientos', 'tarifasConRangos'));
             }
         }else{
             abort(403);
@@ -500,15 +509,20 @@ class RespelController extends Controller
                 }
                 
                 $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
-                foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
-                    $tarifa = new Tarifa();
-                    $tarifa->TarifaPrecio1=$value2;
-                    $tarifa->TarifaPesoinicial1=$opciones[$key]['TarifaDesde'][$key2];
+                 $tarifa = new Tarifa();
+                    $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
+                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                    $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                     $tarifa->TarifaDelete=0;
-                    $tarifa->TarifaTipounidad1=$opciones[$key]['Tarifatipo'];
                     $tarifa->save();
 
-                    $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
+                    $rango = new Rango();
+                    $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                    $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                    $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                    $rango->save();                    
                 }
                $requerimiento = new Requerimiento();
                if (isset($opciones[$key]['ReqFotoDescargue'])) {

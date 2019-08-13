@@ -15,4 +15,8 @@ class Tarifa extends Model
     public function Requerimiento(){
     	return $this->hasOne('App\Requerimiento', 'ID_Req');
     }
+
+    public function rangos(){
+    	return $this->hasMany('App\Rango', 'FK_RangoTarifa', 'ID_Tarifa');
+    }
 }

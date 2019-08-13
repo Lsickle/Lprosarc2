@@ -285,6 +285,10 @@
 										@php
 										$contadorphp = 0;
 										@endphp	
+										@php
+										$contadorRango = array();
+										$last = 0;
+										@endphp	
 										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
 											@include('layouts.respel-comercial.respel-tarifas-edit')
 											@php
@@ -317,8 +321,9 @@
 @endsection
 @section('NewScript')
 	<script type="text/javascript">
-		var contador = {{$contadorphp?$contadorphp:0}};
-		var contadorRango = [];
+		var contador = {{$contadorphp?$contadorphp:"0"}};
+
+		var contadorRango = {{$contadorRango?"JSON.parse(".$contadorRango.")":"[]"}};
 
 		function SelectsRangoTipo(id){
 			$('#typerangeSelect'+id).select2({
@@ -326,7 +331,7 @@
 				tags: true,
 				width: 'resolve',
 				width: '100%',
-				theme: "classic"
+				theme: "classic",
 			});
 		}
 		/*desactivar el envio de formulario al usar el boton de agregar opcion*/
@@ -355,7 +360,6 @@
 				labelText: '<i class="fas fa-arrows-alt-h"></i>',
 				onText: 'Si',
 				offText: 'No',
-				checked: true,
 			});
 		}
 		function recargarAjaxTratamiento(contador){
@@ -398,7 +402,7 @@
 		}
 		function AgregarOption(){
 			contadorRango[contador] = [];
-			contadorRango[contador][0]= 0;
+			contadorRango[contador][0] = 0;
 			var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
 			var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 			var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
