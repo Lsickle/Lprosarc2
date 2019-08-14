@@ -498,53 +498,84 @@ class RespelController extends Controller
         $respel = Respel::where('RespelSlug', $id)->first();
         $opciones = $request->Opcion;
         // return $request;
+        // return $tarifasparaBorrar;
 
-        foreach ($opciones as $key => $value) {
-            if ($opciones[$key]) {
-                if ($key == $request->TratOfertado) {
-                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 0]);
-                }else{
-                   $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => 1]);
+        /*se eliminan los rangos relacionados*/
+        $tarifasparaBorrar = Tarifa::whereHas('respel', function($q) use($id) {
+               // Query the name field in respel table
+               $q->where('RespelSlug', '=', $id); // '=' is optional
+        })->get('ID_Tarifa');
+
+        $respel->tarifasAsignadas()->detach();
+
+        foreach ($tarifasparaBorrar as $key => $value) {
+            $deletedRangos = Rango::where('FK_RangoTarifa', $value['ID_Tarifa'])->delete();
+            $deletedTarifa = Tarifa::find($value['ID_Tarifa'])->delete();
+        }
+
+        /*se eliminan los requerimientos relacionados*/
+        $requerimientosparaBorrar = Requerimiento::whereHas('respel', function($q) use($id) {
+               // Query the name field in respel table
+               $q->where('RespelSlug', '=', $id); // '=' is optional
+        })->get('ID_Req');
+        foreach ($requerimientosparaBorrar as $key => $value) {
+            $deletedRangos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
+        }
+
+        
+
+        /*se elimina la relacion entre las tarifas tratamientos y pretratamientos*/
+        $respel->tratamientos()->detach();
+        $respel->pretratamientosActivados()->detach();
+        if ($opciones) {
+            foreach ($opciones as $key => $value) {
+                if ($opciones[$key]) {
+                    if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
+                       $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => "1"]);
+                    }else{
+                        $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => "0"]);
+                    }
+                    
+                    $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                     $tarifa = new Tarifa();
+                        $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
+                        $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                        $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
+                        $tarifa->TarifaDelete=0;
+                        $tarifa->save();
+
+                    $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                    foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
+                        if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
+                            $rango = new Rango();
+                            $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                            $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                            $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                            $rango->save(); 
+                        }               
+                    }
+                   $requerimiento = new Requerimiento();
+                   if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                       $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+                   }
+                   if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                       $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+                   }
+                   if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                       $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+                   }
+                   if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                        $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+                   }
+                   if (isset($opciones[$key]['ReqDevolucion'])) {
+                       $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+                   }
+                   $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                   $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                   $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                   $requerimiento->save();
 
                 }
-                
-                $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
-                 $tarifa = new Tarifa();
-                    $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
-                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
-                    $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
-                    $tarifa->TarifaDelete=0;
-                    $tarifa->save();
-
-                $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
-                foreach ($opciones[$key]['TarifaPrecio'] as $key2 => $value2) {
-                    $rango = new Rango();
-                    $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
-                    $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
-                    $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
-                    $rango->save();                    
-                }
-               $requerimiento = new Requerimiento();
-               if (isset($opciones[$key]['ReqFotoDescargue'])) {
-                   $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
-               }
-               if (isset($opciones[$key]['ReqFotoDestruccion'])) {
-                   $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
-               }
-               if (isset($opciones[$key]['ReqVideoDescargue'])) {
-                   $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
-               }
-               if (isset($opciones[$key]['ReqVideoDestruccion'])) {
-                    $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
-               }
-               if (isset($opciones[$key]['ReqDevolucion'])) {
-                   $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
-               }
-               $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-               $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
-               $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
-               $requerimiento->save();
-
             }
         }
         if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {

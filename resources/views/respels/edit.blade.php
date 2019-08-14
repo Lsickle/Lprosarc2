@@ -285,8 +285,11 @@
 										@php
 										$contadorphp = 0;
 										@endphp	
+										<script type="text/javascript">
+											var contadorRango = [];
+										</script>
 										@php
-										$contadorRango = array();
+										$contadorRango = [];
 										$last = 0;
 										@endphp	
 										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
@@ -309,6 +312,13 @@
 						<button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
 						<a class="btn btn-danger btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-times"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
+					@php
+					foreach ($contadorRango as $key => $value) {
+						foreach ($value as $key2 => $value2) {
+							echo $value2;
+						}
+					}
+					@endphp
 					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
@@ -322,9 +332,9 @@
 @section('NewScript')
 	<script type="text/javascript">
 		var contador = {{$contadorphp?$contadorphp:"0"}};
+		console.log(contadorRango);
 
-		var contadorRango = {{$contadorRango?"JSON.parse(".$contadorRango.")":"[]"}};
-
+		
 		function SelectsRangoTipo(id){
 			$('#typerangeSelect'+id).select2({
 				allowClear: true,
@@ -456,6 +466,9 @@
 					validarprevent(opcion);
 					last=last+1
 					contadorRango[opcion][last] = last;
+				}else{
+					$("#modalrango").empty();
+					$("#evaluacioncomercial").validator('update');
 				}
 			});
 		}
@@ -463,6 +476,7 @@
 			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
 			$("#evaluacioncomercial").validator('update');
+			validarprevent(opcion);
 		}
 		$(document).ready(function(){
 			validarSwitch();

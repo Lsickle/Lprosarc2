@@ -14,7 +14,7 @@
 	
 		public $primaryKey = 'ID_Req';
 	
-		public function Respel()
+		public function respel()
 		{
 			return $this->belongsTo('App\Respel','FK_ReqRespel', 'ID_Respel');
 		}

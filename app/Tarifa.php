@@ -19,4 +19,9 @@ class Tarifa extends Model
     public function rangos(){
     	return $this->hasMany('App\Rango', 'FK_RangoTarifa', 'ID_Tarifa');
     }
+    public function respel()
+	{
+	    return $this->belongsToMany('App\Respel', 'respel_tarifa', 'FK_Tarifa', 'FK_Respel')
+	    ->withPivot('FK_Respel');
+	}
 }
