@@ -3,7 +3,7 @@
 	{{-- <hr class="col-md-10 col-md-offset-1 align-self-center"  id="pretratsparator{{$contadorphp}}" /> --}}
 	<div class="col-md-12" style="margin-bottom: 0.25em;">
 	    <label for="pretratamiento{{$contadorphp}}">Pretratamiento</label>
-	    <select multiple="multiple" class="form-control" id="pretratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Pretratamientos][]">
+	    <select {{in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones) ? '' : 'disabled' }} multiple="multiple" class="form-control" id="pretratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Pretratamientos][]">
 	    	@foreach($PretratamientosSeleccionables as $tratamientoSelecionable)
 	    		@if($tratamientoSelecionable->ID_Trat == $tratamientoelegido->ID_Trat)
 	    			@foreach($tratamientoSelecionable->pretratamientos as $pretratamiento)

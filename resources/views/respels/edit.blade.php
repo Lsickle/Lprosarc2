@@ -356,22 +356,6 @@
 			  event.preventDefault();
 			});
 		}
-		function validarSwitch(){
-			if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
-				Switch1();
-				// $('.testswitch').bootstrapSwitch('disabled',true);
-			}else{
-				Switch1();
-			}
-		}
-		function validarSwitchActivos(){
-			$(".testswitchselected").bootstrapSwitch({
-				animate: true,
-				labelText: '<i class="fas fa-arrows-alt-h"></i>',
-				onText: 'Si',
-				offText: 'No',
-			});
-		}
 		function recargarAjaxTratamiento(contador){
 			selector = $("#opciontratamiento"+contador);
 			id = selector.val();
@@ -423,13 +407,13 @@
 			$("#Tarifaspane").append(tarifas);
 			$("#evaluacioncomercial").validator('update');
 			popover();
-			validarSwitch();
 			ChangeSelect();
 			SelectsRangoTipo(contador);
 			Selects();
 			Switch2();
 			Switch3();
 			Switch6();
+			Switch7();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
 
@@ -479,8 +463,6 @@
 			validarprevent(opcion);
 		}
 		$(document).ready(function(){
-			validarSwitch();
-			validarSwitchActivos();
 			ChangeSelect();
 			Selects();
 		});

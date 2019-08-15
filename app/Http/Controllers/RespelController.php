@@ -545,24 +545,28 @@ class RespelController extends Controller
                     if (isset($opciones[$key]['Pretratamientos'])) {
                         $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                     }
-                    
-                     $tarifa = new Tarifa();
+                    /*se verifica que las tarifas no esten disabled en la vista*/
+                    if (isset($opciones[$key]['TarifaFrecuencia'])) {
+                        $tarifa = new Tarifa();
                         $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
                         $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
                         $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                         $tarifa->TarifaDelete=0;
                         $tarifa->save();
 
-                    $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
-                    foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
-                        if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
-                            $rango = new Rango();
-                            $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
-                            $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
-                            $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
-                            $rango->save(); 
-                        }               
+                        $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+
+                        foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
+                           if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
+                               $rango = new Rango();
+                               $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                               $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                               $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                               $rango->save(); 
+                           }               
+                        }
                     }
+
                    $requerimiento = new Requerimiento();
                    if (isset($opciones[$key]['ReqFotoDescargue'])) {
                        $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];

@@ -31,7 +31,7 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input type="radio" class="testswitch" id="ofert`+contador+`" name="TratOfertado" value="`+contador+`" />  
+            <input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} type="radio" class="ofertaswitch" id="ofert`+contador+`" name="TratOfertado" value="`+contador+`" />  
         </div>
     </div>
     <div class="col-md-2">
