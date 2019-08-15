@@ -183,6 +183,11 @@ class Permisos{
 	/* Using->
 		VehicProgController::index
 	 */
+
+	const GrupoEvaluacionRespel = ['Cliente', 'Programador', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial', 'Comercial'];
+	/* Using->
+		VehicProgController::index
+	 */
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];

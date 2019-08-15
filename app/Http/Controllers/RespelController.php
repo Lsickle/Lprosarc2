@@ -242,7 +242,7 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||  in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
+        if(in_array(Auth::user()->UsRol, Permisos::GrupoEvaluacionRespel) || in_array(Auth::user()->UsRol2, Permisos::GrupoEvaluacionRespel)){
             $Respels = Respel::where('RespelSlug', $id)->first();
         
             if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
