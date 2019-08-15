@@ -15,6 +15,7 @@ class DropSomeColumnsToTratamientosTable extends Migration
     {
         Schema::table('tratamientos', function (Blueprint $table) {
             $table->dropColumn('TratPretratamiento');
+            $table->dropColumn('TratOfertado');
         });
     }
 
@@ -27,6 +28,7 @@ class DropSomeColumnsToTratamientosTable extends Migration
     {
         Schema::table('tratamientos', function (Blueprint $table) {
             $table->string('TratPretratamiento')->nullable();
+            $table->boolean('TratOfertado');
         });
     }
 }
