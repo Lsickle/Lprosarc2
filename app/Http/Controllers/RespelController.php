@@ -242,71 +242,36 @@ class RespelController extends Controller
      */
     public function edit($id)
     {
-        if(in_array(Auth::user()->UsRol, Permisos::GrupoEvaluacionRespel) || in_array(Auth::user()->UsRol2, Permisos::GrupoEvaluacionRespel)){
-            $Respels = Respel::where('RespelSlug', $id)->first();
-        
-            if ($Respels->RespelDelete == 1 && in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
-                abort(404);
-            }
-        
-            /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
-            $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
-            $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
-            if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
-                $deleteButton = 'No borrable';
-            }else{
-                $deleteButton = 'borrable';
-            } 
+        /*se verifican el rol del usuario para dar acceso a la edicion de respel o evaluacion de respel*/
+        if(in_array(Auth::user()->UsRol, Permisos::GrupoEdicionRespel) || in_array(Auth::user()->UsRol2, Permisos::GrupoEvaluacionRespel)){
 
-            $tratamientosViables = Clasificacion::with(['tratamientosConGestor'])
-            ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
-            ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
-            ->get();
-            // return $tratamientosViables;
+            $Respels = Respel::where('RespelSlug', $id)->first();
+
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
                 ->get();
-            // se verifica el rol y el status del residuo para devolver a la vista correspondiente
-            $statusRespel = $Respels->RespelStatus;
 
 
-            //consultar cuales son los tratamientos viabiizados por jefe de operaciones
-            $tratamientosAprobados = Respel::with(['tratamientos'])
-                ->where('ID_respel', '=', $Respels->ID_Respel)
-                ->get();
-
-            /*consulta de los pretratamientos elegidos para el respel con pivot de tratamiento*/
-            $respelConPretratamientos = Respel::with(['pretratamientosActivados'])
-                ->where('ID_Respel', '=', $Respels->ID_Respel)
-                ->get();
-
-            // consulta de respel con sus requerimientos con pivot de tratamiento
-            $respelConRequerimientos = Respel::with(['requerimientos'])
-                ->where('ID_Respel', '=', $Respels->ID_Respel)
-                ->get();
-
-            // consulta de respel con sus tarifas con pivot de tratamiento
-            $tarifasConRangos = Respel::with(['tarifasAsignadas', 'tarifasAsignadas.rangos'])
-                ->where('ID_Respel', '=', $Respels->ID_Respel)
-                ->get();
-
-            // return $tarifasConRangos;
-
-            //se crea array para conteo de tratamientos
-            $idTratamientoArray = [];
-            
-            foreach ($tratamientosAprobados[0]->tratamientos as $tratamiento) {
-                $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
-            }
-
-            // se consulta los tratamientos contados con sus pretratamientos
-            $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
-                ->whereIn('ID_Trat', $idTratamientoArray)
-                ->get();
-            
             if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+                /*se valida que el residuo no este eliminado*/
+                if ($Respels->RespelDelete == 1) {
+                    abort(404);
+                }
+                // se verifica el rol y el status del residuo para saber si se puede editar
+                $statusRespel = $Respels->RespelStatus;
+
+                /*se  verifica si el residuo tiene alguna registro hijo o dependiente*/
+                $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
+                $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
+
+                if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+                    $deleteButton = 'No borrable';
+                }else{
+                    $deleteButton = 'borrable';
+                } 
+
                 $Sede = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                     ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
@@ -314,6 +279,8 @@ class RespelController extends Controller
                     ->select('sedes.ID_Sede')
                     ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                     ->get();
+
+                /*el Cliente solo puede editar pendientes e incompletos*/
                 switch ($statusRespel) {
                     case 'Pendiente':
                         return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
@@ -326,6 +293,46 @@ class RespelController extends Controller
                         break;
                 }
             }else{
+                $tratamientosViables = Clasificacion::with(['tratamientosConGestor'])
+                ->where('ClasfCode', '=', $Respels['ARespelClasf4741'])
+                ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
+                ->get();
+
+
+                //consultar cuales son los tratamientos viabiizados por jefe de operaciones
+                $tratamientosAprobados = Respel::with(['tratamientos'])
+                    ->where('ID_respel', '=', $Respels->ID_Respel)
+                    ->get();
+
+                /*consulta de los pretratamientos elegidos para el respel con pivot de tratamiento*/
+                $respelConPretratamientos = Respel::with(['pretratamientosActivados'])
+                    ->where('ID_Respel', '=', $Respels->ID_Respel)
+                    ->get();
+
+                // consulta de respel con sus requerimientos con pivot de tratamiento
+                $respelConRequerimientos = Respel::with(['requerimientos'])
+                    ->where('ID_Respel', '=', $Respels->ID_Respel)
+                    ->get();
+
+                // consulta de respel con sus tarifas con pivot de tratamiento
+                $tarifasConRangos = Respel::with(['tarifasAsignadas', 'tarifasAsignadas.rangos'])
+                    ->where('ID_Respel', '=', $Respels->ID_Respel)
+                    ->get();
+
+                // return $tarifasConRangos;
+
+                //se crea array para conteo de tratamientos
+                $idTratamientoArray = [];
+                
+                foreach ($tratamientosAprobados[0]->tratamientos as $tratamiento) {
+                    $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
+                }
+
+                // se consulta los tratamientos contados con sus pretratamientos
+                $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
+                    ->whereIn('ID_Trat', $idTratamientoArray)
+                    ->get();
+
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
@@ -578,24 +585,22 @@ class RespelController extends Controller
                 }
             }
         }
-        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
-            $respel->RespelStatus = $request['RespelStatus'];
-            $respel->RespelStatusDescription = $request['RespelStatusDescription'];
-            $respel->save();
+        $respel->RespelStatus = $request['RespelStatus'];
+        $respel->RespelStatusDescription = $request['RespelStatusDescription'];
+        $respel->save();
 
-            $log = new audit();
-            $log->AuditTabla="respels requerimiento y tarifas";
-            $log->AuditType="Evaluacion Updated";
-            $log->AuditRegistro=$respel->ID_Respel;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog=json_encode($request->all());
-            $log->save();
+        $log = new audit();
+        $log->AuditTabla="respels requerimiento y tarifas";
+        $log->AuditType="Evaluacion Updated";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
 
-            if($respel->RespelStatus === "Aprobado"){
-                // new  RespelMail($slug);
-                return redirect()->route('email-respel', [$respel->RespelSlug]);
-            }
-            return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        if($respel->RespelStatus === "Aprobado"){
+            // new  RespelMail($slug);
+            return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
+        return redirect()->route('respels.edit', [$respel->RespelSlug]);
     }
 }
