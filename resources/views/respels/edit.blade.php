@@ -208,13 +208,13 @@
 						<!-- nav-tabs-custom -->
 						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#Tratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.trattabtittle') }}</a>
 								</li>
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Pretratamientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.pretrattabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -227,7 +227,7 @@
 							<!-- nav-content -->
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="Residuopane">
+								<div class="tab-pane fade in active" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
@@ -248,7 +248,7 @@
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Pretratamientospane">
+								<div class="tab-pane fade" id="Pretratamientospane">
 									@foreach($tratamientosAsignados as $respelcontratamiento)
 										@php
 										$contadorphp = 0;
