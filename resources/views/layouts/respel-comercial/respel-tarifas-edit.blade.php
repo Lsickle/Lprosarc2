@@ -30,22 +30,36 @@
 					<script type="text/javaScript">
 						    contadorRango[{{$contadorphp}}] = [];
 					</script>
-					@foreach($tarifa->rangos as $rango)
-					<script type="text/javaScript">
-							contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
-					</script>
-						@php
-						$last = $last+1;
-						@endphp
-						<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
-							<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$rango->TarifaDesde}} </label>
-							@if($rango->TarifaDesde != 0)
-							<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
-							@endif
-							<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10" value="{{$rango->TarifaPrecio}}">
-							<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
-						</div>
-		    		@endforeach
+					@if(count($tarifa->rangos) > 0)
+						@foreach($tarifa->rangos as $rango)
+						<script type="text/javaScript">
+								contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
+						</script>
+							@php
+							$last = $last+1;
+							@endphp
+							<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
+								<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$rango->TarifaDesde}} </label>
+								@if($rango->TarifaDesde != 0)
+								<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
+								@endif
+								<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10" value="{{$rango->TarifaPrecio}}">
+								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
+							</div>
+			    		@endforeach
+			    	@else
+			    		<script type="text/javaScript">
+			    				contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
+			    		</script>
+		    			<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
+		    				<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$last}} </label>
+		    				<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10">
+		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
+		    			</div>
+		    			@php
+		    			$last = $last+1;
+		    			@endphp
+					@endif
 	    		@endif
 	    	@endforeach
     	@endforeach

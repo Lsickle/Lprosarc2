@@ -542,8 +542,10 @@ class RespelController extends Controller
                     }else{
                         $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => "0"]);
                     }
+                    if (isset($opciones[$key]['Pretratamientos'])) {
+                        $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                    }
                     
-                    $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
                      $tarifa = new Tarifa();
                         $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
                         $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
