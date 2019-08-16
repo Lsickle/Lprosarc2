@@ -3,6 +3,9 @@
 		<div class="pull-left col-md-3" style="max-height: 2.3em;">
 			<label for="expireRange`+contador+`" style="font-size: 0.9em;">Vencimiento</label>
 			<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="expireRange`+contador+`" name="Opcion[`+contador+`][TarifaVencimiento]" type="date" class="form-control" value="<?php echo date('Y-m-d', strtotime('+1 year')); ?>">
+			@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+		   		<input type="date" hidden name="Opcion[`+contador+`][TarifaVencimiento]" value="<?php echo date('Y-m-d', strtotime('+1 year')); ?>">
+		    @endif
 		</div>
 		<div class="pull-right col-md-1">
 			<label for="addrangeButton`+contador+`">Más</label>
@@ -15,6 +18,9 @@
 				<option>Mensual</option>
 				<option>Servicio</option>
 			</select>
+			@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+		   		<input hidden name="Opcion[`+contador+`][TarifaFrecuencia]" value="N/A">
+		    @endif
 		</div>
 		<div class="pull-left col-md-2">
 			<label style="font-size: 0.9em;" for="typerangeSelect`+contador+`">Tipo</label>
@@ -23,11 +29,17 @@
 				<option>Lt</option>
 				<option>Unid</option>
 			</select>
+			@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+		   		<input hidden name="Opcion[`+contador+`][Tarifatipo]" value="Kg">
+		    @endif
 		</div>
 		<div class="col-md-3" id="rango`+contador+`0">
 			<label style="font-size: 0.8em;" for="rangopriceinput`+contador+`0">Desde 0 </label>
 			<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput`+contador+`0" name="Opcion[`+contador+`][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10">
 			<input name="Opcion[`+contador+`][TarifaDesde][]" hidden value="0">
+			@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+		   		<input hidden name="Opcion[`+contador+`][TarifaPrecio]">
+		    @endif
 		</div>
 	</div>
 	

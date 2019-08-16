@@ -269,12 +269,21 @@
 										@php
 										$contadorphp = 0;
 										@endphp	
-										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+										{{-- @foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
 											@include('layouts.respel-comercial.respel-requerimiento-edit')
 											@php
 												$contadorphp = $contadorphp+1;
 											@endphp
-										@endforeach
+										@endforeach --}}
+										@for ($i = 0; $i < count($respelcontratamiento->tratamientos); $i++)
+											@php
+											$tratamientoelegido=$respelcontratamiento->tratamientos[$i];
+											@endphp
+											@include('layouts.respel-comercial.respel-requerimiento-edit')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endfor
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
 								</div>
@@ -292,12 +301,21 @@
 										$contadorRango = [];
 										$last = 0;
 										@endphp	
-										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+										{{-- @foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
 											@include('layouts.respel-comercial.respel-tarifas-edit')
 											@php
 												$contadorphp = $contadorphp+1;
 											@endphp
-										@endforeach
+										@endforeach --}}
+										@for ($i = 0; $i < count($respelcontratamiento->tratamientos); $i++)
+											@php
+											$tratamientoelegido=$respelcontratamiento->tratamientos[$i];
+											@endphp
+											@include('layouts.respel-comercial.respel-tarifas-edit')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endfor
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>

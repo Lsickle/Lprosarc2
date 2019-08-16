@@ -1,11 +1,17 @@
 <div id="tarifa{{$contadorphp}}Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
 	<div id="rango{{$contadorphp}}Container" class="col-md-12" style="margin-bottom: 0.25em;">
     	@foreach($tarifasConRangos as $tarifaConRangos)
+    	@php
+    		$x = 0;
+    	@endphp
 			@foreach($tarifaConRangos->tarifasAsignadas as $tarifa)
-				@if($tarifa->pivot['FK_Trat'] == $tratamientoelegido->ID_Trat)
+				@if(($tarifa->pivot['FK_Trat'] == $tratamientoelegido->ID_Trat)&&($x==$i))
 					<div class="pull-left col-md-3" style="max-height: 2.3em;">
 						<label for="expireRange{{$contadorphp}}" style="font-size: 0.9em;">Vencimiento</label>
 						<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="expireRange{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaVencimiento]" type="date" class="form-control" value="{{$tarifa->TarifaVencimiento}}">
+						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+					   		<input type="date" hidden name="Opcion[{{$contadorphp}}][TarifaVencimiento]" value="{{$tarifa->TarifaVencimiento}}">
+					    @endif
 					</div>
 					<div class="pull-right col-md-1">
 						<label for="addrangeButton{{$contadorphp}}">Más</label>
@@ -18,6 +24,9 @@
 							<option {{$tarifa->TarifaFrecuencia == 'Mensual' ? "selected" : ""}}>Mensual</option>
 							<option {{$tarifa->TarifaFrecuencia == 'Servicio' ? "selected" : ""}}>Servicio</option>
 						</select>
+						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+					   		<input hidden name="Opcion[{{$contadorphp}}][TarifaFrecuencia]" value="{{$tarifa->TarifaFrecuencia}}">
+					    @endif
 					</div>
 					<div class="pull-left col-md-2">
 						<label style="font-size: 0.9em;" for="typerangeSelect{{$contadorphp}}">Tipo</label>
@@ -26,6 +35,9 @@
 							<option {{$tarifa->Tarifatipo == "Lt" ? "selected" : "" }} >Lt</option>
 							<option {{$tarifa->Tarifatipo == "Unid" ? "selected" : "" }} >Unid</option>
 						</select>
+						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+					   		<input hidden name="Opcion[{{$contadorphp}}][Tarifatipo]" value="{{$tarifa->Tarifatipo}}">
+					    @endif
 					</div>
 					<script type="text/javaScript">
 						    contadorRango[{{$contadorphp}}] = [];
@@ -45,6 +57,9 @@
 								@endif
 								<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10" value="{{$rango->TarifaPrecio}}">
 								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
+								@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+							   		<input hidden name="Opcion[{{$contadorphp}}][TarifaPrecio][]" value="{{$tarifa->TarifaPrecio}}">
+							    @endif
 							</div>
 			    		@endforeach
 			    	@else
@@ -55,12 +70,18 @@
 		    				<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$last}} </label>
 		    				<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10">
 		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
+	    					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+	    				   		<input hidden name="Opcion[{{$contadorphp}}][TarifaPrecio][]">
+	    				    @endif
 		    			</div>
 		    			@php
 		    			$last = $last+1;
 		    			@endphp
 					@endif
 	    		@endif
+	    		@php
+	    			$x=$x+1;
+	    		@endphp
 	    	@endforeach
     	@endforeach
 		

@@ -310,16 +310,16 @@ class RespelController extends Controller
                     ->get();
 
                 // consulta de respel con sus requerimientos con pivot de tratamiento
-                $respelConRequerimientos = Respel::with(['requerimientos'])
+                $respelConRequerimientos = Respel::with(['requerimientos', 'requerimientos.tarifa',])
                     ->where('ID_Respel', '=', $Respels->ID_Respel)
                     ->get();
 
                 // consulta de respel con sus tarifas con pivot de tratamiento
-                $tarifasConRangos = Respel::with(['tarifasAsignadas', 'tarifasAsignadas.rangos'])
+                $tarifasConRangos = Respel::with(['requerimientos', 'requerimientos.tarifa', 'requerimientos.tarifa.rangos'])
                     ->where('ID_Respel', '=', $Respels->ID_Respel)
                     ->get();
 
-                // return $tarifasConRangos;
+                // return $respelConRequerimientos;
 
                 //se crea array para conteo de tratamientos
                 $idTratamientoArray = [];
@@ -585,6 +585,7 @@ class RespelController extends Controller
                    }
                    $requerimiento->FK_ReqRespel=$respel->ID_Respel;
                    $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                   $requerimiento->FK_ReqTarifa=$tarifa->ID_Tarifa;
                    $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
                    $requerimiento->save();
 
