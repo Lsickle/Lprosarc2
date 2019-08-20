@@ -22,14 +22,6 @@ class Respel extends Model
 	    return $this->belongsTo('App\Cotizacion', 'FK_RespelCoti', 'ID_Coti');
 	}
 
-    public function Requerimiento(){
-    	return $this->hasMany('App\Requerimiento','ID_Req', 'id');//como residuos tiene muchos requerimientos
-    }
-
-    // public function Tratamiento(){
-    // 	return $this->hasMany('App\Tratamiento','ID_Trat','id');//como residuos tiene muchos tratamientos
-    // }
-
     // public function SolicitudResiduo(){
     //     return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
     // }
@@ -37,35 +29,8 @@ class Respel extends Model
     public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
-    
-    //lista las tratamientos relacionados usando muchos a muchos
-    public function tratamientos()
-    {
-        return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat')
-        ->withPivot('Ofertado');
-    }
 
-    public function pretratamientosActivados()
-    {
-        return $this->belongsToMany('App\Pretratamiento', 'pretratamiento_respel', 'FK_Respel', 'FK_PreTrat')
-        ->withPivot('FK_Trat')
-        ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
-        //lista las pretratamientos elegidos y relacionados usando muchos a muchos
-    }
-
-    public function tarifasAsignadas()
-    {
-        return $this->belongsToMany('App\Tarifa', 'respel_tarifa', 'FK_Respel', 'FK_Tarifa')
-        ->withPivot('FK_Trat');
-        //lista las pretratamientos elegidos y relacionados usando muchos a muchos
-    }
-
-    //lista las tratamientos relacionados usando muchos a muchos
-    public function tratamientosConPretratamientos()
-    {
-        return $this->belongsToMany('App\Tratamiento', 'respel_tratamiento', 'FK_Respel', 'FK_Trat')
-        ->join('tratamientos', 'FK_Trat', 'tratamientos.ID_Trat');
-    }
+    // lista los requerimientos de un residuo 1 a muchos
     public function requerimientos(){
         return $this->hasMany('App\Requerimiento', 'FK_ReqRespel', 'ID_Respel');
         //como residuos tiene muchos requerimientos

@@ -14,6 +14,7 @@ class AddForeingTratamientosToRequerimientosTable extends Migration
     public function up()
     {
         Schema::table('requerimientos', function (Blueprint $table) {
+            $table->boolean('ofertado')->nullable();
             $table->unsignedInteger('FK_ReqTrata')->nullable();
             $table->foreign('FK_ReqTrata')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
         });
@@ -27,6 +28,7 @@ class AddForeingTratamientosToRequerimientosTable extends Migration
     public function down()
     {
         Schema::table('requerimientos', function (Blueprint $table) {
+            $table->dropColumn('ofertado');
             $table->unsignedInteger('FK_ReqTrata')->nullable();
             $table->foreign('FK_ReqTrata')->references('ID_Trat')->on('tratamientos');
         });

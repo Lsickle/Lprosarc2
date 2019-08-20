@@ -1,6 +1,6 @@
 
 @php
-    if ($tratamientoelegido->pivot->Ofertado == 1) {
+    if ($opcion['ofertado'] == 1) {
         $OpcionOfertada = 1;
     }else{
         $OpcionOfertada = 0;
@@ -24,27 +24,27 @@
             <optgroup label="----------Prosarc S.A. ESP----------">
                 @foreach($tratamientos as $tratamiento)
                     @if($tratamiento->TratTipo == 0)
-                    <option  {{ $tratamientoelegido->ID_Trat === $tratamiento->ID_Trat ? "selected" : "" }} onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
+                    <option  {{ $opcion->FK_ReqTrata === $tratamiento->ID_Trat ? "selected" : "" }} onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
                     @endif
                 @endforeach
             </optgroup>
             <optgroup label="-----------Otros Gestores-----------">
                 @foreach($tratamientos as $tratamiento)
                     @if($tratamiento->TratTipo == 1)
-                    <option {{ $tratamientoelegido->ID_Trat === $tratamiento->ID_Trat ? "selected" : "" }} onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
+                    <option {{ $opcion->FK_ReqTrata === $tratamiento->ID_Trat ? "selected" : "" }} onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
                     @endif
                 @endforeach 
             </optgroup>
         </select>
         @if(in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial)||$OpcionOfertada==1)
-            <input hidden name="Opcion[{{$contadorphp}}][Tratamiento]" value="{{$tratamientoelegido->ID_Trat}}"> 
+            <input hidden name="Opcion[{{$contadorphp}}][Tratamiento]" value="{{$opcion->FK_ReqTrata}}"> 
         @endif
     </div>
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} {{$tratamientoelegido->pivot->Ofertado == 1 ? "checked=true" : ""}} type="radio" class="ofertaswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}"/>
-            @if((in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && ($tratamientoelegido->pivot->Ofertado))
+            <input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} {{$opcion['ofertado'] == 1 ? "checked=true" : ""}} type="radio" class="ofertaswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}"/>
+            @if((in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && ($opcion['ofertado'] == 1))
                 <input hidden name="TratOfertado" value="{{$contadorphp}}"> 
             @endif
         </div>

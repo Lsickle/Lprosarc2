@@ -247,6 +247,7 @@ class RespelController extends Controller
 
             $Respels = Respel::where('RespelSlug', $id)->first();
 
+            //Tabla tratamientos con su respectivo gestor
             $tratamientos = DB::table('tratamientos')
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -300,33 +301,20 @@ class RespelController extends Controller
 
 
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
-                $tratamientosAprobados = Respel::with(['tratamientos'])
-                    ->where('ID_respel', '=', $Respels->ID_Respel)
+                $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+                    ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
                     ->get();
 
-                /*consulta de los pretratamientos elegidos para el respel con pivot de tratamiento*/
-                $respelConPretratamientos = Respel::with(['pretratamientosActivados'])
-                    ->where('ID_Respel', '=', $Respels->ID_Respel)
-                    ->get();
-
-                // consulta de respel con sus requerimientos con pivot de tratamiento
-                $respelConRequerimientos = Respel::with(['requerimientos', 'requerimientos.tarifa',])
-                    ->where('ID_Respel', '=', $Respels->ID_Respel)
-                    ->get();
-
-                // consulta de respel con sus tarifas con pivot de tratamiento
-                $tarifasConRangos = Respel::with(['requerimientos', 'requerimientos.tarifa', 'requerimientos.tarifa.rangos'])
-                    ->where('ID_Respel', '=', $Respels->ID_Respel)
-                    ->get();
-
-                // return $respelConRequerimientos;
+                $requerimientos = $requerimientos->tratamiento()->get();
+                
+                return $requerimientos;
 
                 //se crea array para conteo de tratamientos
                 $idTratamientoArray = [];
                 
-                foreach ($tratamientosAprobados[0]->tratamientos as $tratamiento) {
-                    $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
-                }
+                // foreach ($tratamientosAprobados->tratamientos as $tratamiento) {
+                //     $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
+                // }
 
                 // se consulta los tratamientos contados con sus pretratamientos
                 $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
@@ -338,20 +326,8 @@ class RespelController extends Controller
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
                     ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
-                $tratamientosAsignados = Respel::with(['tratamientos'])
-                ->where('ID_respel', '=', $Respels->ID_Respel)
-                ->get();
-
-                $tarifasAsignados = Respel::with(['tarifasAsignadas'])
-                ->where('ID_respel', '=', $Respels->ID_Respel)
-                ->get();
-
-                $pretratamientosAsignados = Respel::with(['pretratamientosActivados'])
-                ->where('ID_respel', '=', $Respels->ID_Respel)
-                ->get();
-                // return $respelConRequerimientos[0]->requerimientos;
-                // return $respelConPretratamientos[0]->pretratamientosActivados[0]->pivot['FK_Trat'];
-                return view('respels.edit', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'tratamientosAsignados', 'tratamientosViables', 'pretratamientosAsignados', 'PretratamientosSeleccionables', 'respelConPretratamientos', 'respelConRequerimientos', 'tarifasConRangos'));
+        
+                return view('respels.edit', compact('Respels', 'Sedes', 'requerimientos', 'tratamientos', 'tratamientosViables', 'PretratamientosSeleccionables'));
             }
         }else{
             abort(403);
@@ -507,19 +483,6 @@ class RespelController extends Controller
         // return $request;
         // return $tarifasparaBorrar;
 
-        /*se eliminan los rangos relacionados*/
-        $tarifasparaBorrar = Tarifa::whereHas('respel', function($q) use($id) {
-               // Query the name field in respel table
-               $q->where('RespelSlug', '=', $id); // '=' is optional
-        })->get('ID_Tarifa');
-
-        $respel->tarifasAsignadas()->detach();
-
-        foreach ($tarifasparaBorrar as $key => $value) {
-            $deletedRangos = Rango::where('FK_RangoTarifa', $value['ID_Tarifa'])->delete();
-            $deletedTarifa = Tarifa::find($value['ID_Tarifa'])->delete();
-        }
-
         /*se eliminan los requerimientos relacionados*/
         $requerimientosparaBorrar = Requerimiento::whereHas('respel', function($q) use($id) {
                // Query the name field in respel table
@@ -530,20 +493,39 @@ class RespelController extends Controller
         }
 
         
-
-        /*se elimina la relacion entre las tarifas tratamientos y pretratamientos*/
-        $respel->tratamientos()->detach();
-        $respel->pretratamientosActivados()->detach();
         if ($opciones) {
             foreach ($opciones as $key => $value) {
                 if ($opciones[$key]) {
+                    // se crea un requerimiento por cada opcion
+                    $requerimiento = new Requerimiento();
+                    if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                        $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+                    }
+                    if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                        $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+                    }
+                    if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                        $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+                    }
+                    if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                         $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+                    }
+                    if (isset($opciones[$key]['ReqDevolucion'])) {
+                        $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+                    }
+                    $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                    $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                    $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                    $requerimiento->save();
+
+                    /*se adjunta los elementos relacionados al requerimiento*/
                     if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
-                       $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => "1"]);
+                        $requerimiento->ofertado=1;
                     }else{
-                        $respel->tratamientos()->attach($opciones[$key]['Tratamiento'], ['Ofertado' => "0"]);
+                        $requerimiento->ofertado=0;
                     }
                     if (isset($opciones[$key]['Pretratamientos'])) {
-                        $respel->pretratamientosActivados()->attach($opciones[$key]['Pretratamientos'], ['FK_Trat' => $opciones[$key]['Tratamiento']]);
+                        $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
                     }
                     /*se verifica que las tarifas no esten disabled en la vista*/
                     if (isset($opciones[$key]['TarifaFrecuencia'])) {
@@ -552,9 +534,8 @@ class RespelController extends Controller
                         $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
                         $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                         $tarifa->TarifaDelete=0;
+                        $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
                         $tarifa->save();
-
-                        $respel->tarifasAsignadas()->attach($tarifa->ID_Tarifa, ['FK_Trat' => $opciones[$key]['Tratamiento']]);
 
                         foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
                            if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
@@ -566,29 +547,6 @@ class RespelController extends Controller
                            }               
                         }
                     }
-
-                   $requerimiento = new Requerimiento();
-                   if (isset($opciones[$key]['ReqFotoDescargue'])) {
-                       $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
-                   }
-                   if (isset($opciones[$key]['ReqFotoDestruccion'])) {
-                       $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
-                   }
-                   if (isset($opciones[$key]['ReqVideoDescargue'])) {
-                       $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
-                   }
-                   if (isset($opciones[$key]['ReqVideoDestruccion'])) {
-                        $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
-                   }
-                   if (isset($opciones[$key]['ReqDevolucion'])) {
-                       $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
-                   }
-                   $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-                   $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
-                   $requerimiento->FK_ReqTarifa=$tarifa->ID_Tarifa;
-                   $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
-                   $requerimiento->save();
-
                 }
             }
         }

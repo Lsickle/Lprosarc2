@@ -1,6 +1,6 @@
 
 @php
-    if ($tratamientoelegido->pivot->Ofertado == 1) {
+    if ($opcion['ofertado'] == 1) {
         $OpcionOfertada = 1;
     }else{
         $OpcionOfertada = 0;
@@ -14,15 +14,13 @@
 	    <label for="pretratamiento{{$contadorphp}}">Pretratamiento</label>
 	    <select {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && $OpcionOfertada==0 ? '' : 'disabled' }} multiple="multiple" class="form-control" id="pretratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Pretratamientos][]">
 	    	@foreach($PretratamientosSeleccionables as $tratamientoSelecionable)
-	    		@if($tratamientoSelecionable->ID_Trat == $tratamientoelegido->ID_Trat)
+	    		@if($tratamientoSelecionable->ID_Trat == $opcion['FK_ReqTrata'])
 	    			@foreach($tratamientoSelecionable->pretratamientos as $pretratamiento)
-	    				@foreach($respelConPretratamientos as $respelConPretratamiento)
+	    				@foreach($opcion->pretratamientosSelected as $pretratSelected)
 	    					<option
-	    					@foreach($respelConPretratamiento->pretratamientosActivados as $pA)
-			    				@if($pA->pivot['FK_Trat'] == $tratamientoelegido->ID_Trat && $pA->pivot['FK_PreTrat'] == $pretratamiento->ID_PreTrat)
-			    	    			 selected 
-			    	    		@endif
-	    	    			@endforeach
+		    				@if($pretratSelected->ID_PreTrat == $pretratamiento->ID_PreTrat)
+		    	    			 selected 
+			    	    	@endif
 	    	    			value="{{$pretratamiento->ID_PreTrat}}">{{$pretratamiento->PreTratName}}</option>
 	    	    		@endforeach
 	    	    	@endforeach
@@ -31,11 +29,10 @@
 	    </select>
 
     	@foreach($PretratamientosSeleccionables as $tratamientoSelecionable)
-    		@if($tratamientoSelecionable->ID_Trat == $tratamientoelegido->ID_Trat)
+    		@if($tratamientoSelecionable->ID_Trat == $opcion['FK_ReqTrata'])
     			@foreach($tratamientoSelecionable->pretratamientos as $pretratamiento)
-    				@foreach($respelConPretratamientos as $respelConPretratamiento)
-    					@foreach($respelConPretratamiento->pretratamientosActivados as $pA)
-							@if($pA->pivot['FK_Trat'] == $tratamientoelegido->ID_Trat && $pA->pivot['FK_PreTrat'] == $pretratamiento->ID_PreTrat)
+    				@foreach($opcion->pretratamientosSelected as $pretratSelected)
+							@if($pretratSelected->ID_PreTrat == $pretratamiento->ID_PreTrat)
 				    			 @if(in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial)||$OpcionOfertada==1)
 				    			     <input hidden name="Opcion[{{$contadorphp}}][Pretratamientos][]" value="{{$pretratamiento->ID_PreTrat}}"> 
 				    			 @endif

@@ -233,27 +233,25 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Tratamientospane">
-									@foreach($tratamientosAsignados as $respelcontratamiento)
-										@php
-										$contadorphp = 0;
-										@endphp										
-										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+									@foreach($requerimientos as $opcion)		
+									@php
+									$contadorphp = 0;
+									@endphp			
 											@include('layouts.respel-comercial.respel-tratamiento-edit')
 											@php
 												$contadorphp = $contadorphp+1;
 											@endphp
-										@endforeach
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Pretratamientospane">
-									@foreach($tratamientosAsignados as $respelcontratamiento)
+									@foreach($requerimientos as $opcion)
 										@php
 										$contadorphp = 0;
 										@endphp	
-										@foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+										
 											@include('layouts.respel-comercial.respel-pretratEvaluacion-edit')
 											@php
 												$contadorphp = $contadorphp+1;
@@ -265,19 +263,13 @@
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
-									@foreach($tratamientosAsignados as $respelcontratamiento)
-										@php
-										$contadorphp = 0;
-										@endphp	
-										{{-- @foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
-											@include('layouts.respel-comercial.respel-requerimiento-edit')
+									@foreach($requerimientos as $opcion)
+									@php
+									$contadorphp = 0;
+									@endphp	
+										@for ($i = 0; $i < count($requerimientos); $i++)
 											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
-										@endforeach --}}
-										@for ($i = 0; $i < count($respelcontratamiento->tratamientos); $i++)
-											@php
-											$tratamientoelegido=$respelcontratamiento->tratamientos[$i];
+											$opcion=$respelscontratamiento->tratamientos[$i];
 											@endphp
 											@include('layouts.respel-comercial.respel-requerimiento-edit')
 											@php
@@ -290,26 +282,26 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Tarifaspane">
-									@foreach($tratamientosAsignados as $respelcontratamiento)
+									<script type="text/javascript">
+										var contadorRango = [];
+									</script>
+									@foreach($requerimientos as $opcion)
 										@php
-										$contadorphp = 0;
+											$contadorphp = 0;
 										@endphp	
-										<script type="text/javascript">
-											var contadorRango = [];
-										</script>
 										@php
 										$contadorRango = [];
 										$last = 0;
 										@endphp	
-										{{-- @foreach($respelcontratamiento->tratamientos as $tratamientoelegido)
+										{{-- 
 											@include('layouts.respel-comercial.respel-tarifas-edit')
 											@php
 												$contadorphp = $contadorphp+1;
 											@endphp
 										@endforeach --}}
-										@for ($i = 0; $i < count($respelcontratamiento->tratamientos); $i++)
+										@for ($i = 0; $i < count($respelscontratamiento->tratamientos); $i++)
 											@php
-											$tratamientoelegido=$respelcontratamiento->tratamientos[$i];
+											$opcion=$respelscontratamiento->tratamientos[$i];
 											@endphp
 											@include('layouts.respel-comercial.respel-tarifas-edit')
 											@php
@@ -330,13 +322,13 @@
 						<button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
 						<a class="btn btn-danger btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-times"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
-					@php
+					{{-- @php
 					foreach ($contadorRango as $key => $value) {
 						foreach ($value as $key2 => $value2) {
 							echo $value2;
 						}
 					}
-					@endphp
+					@endphp --}}
 					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
@@ -350,7 +342,7 @@
 @section('NewScript')
 	<script type="text/javascript">
 		var contador = {{$contadorphp?$contadorphp:"0"}};
-		console.log(contadorRango);
+		// var contadorRango = [];
 
 		
 		function SelectsRangoTipo(id){

@@ -17,6 +17,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaFrecuencia = "Mensual";
         $tarifa->Tarifatipo = "Kg";
         $tarifa->TarifaDelete = 0;
+        $tarifa->FK_TarifaReq = 1;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -24,6 +25,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaFrecuencia = "Mensual";
         $tarifa->Tarifatipo = "Kg";
         $tarifa->TarifaDelete = 0;
+        $tarifa->FK_TarifaReq = 2;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -31,6 +33,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaFrecuencia = "Servicio";
         $tarifa->Tarifatipo = "Unid";
         $tarifa->TarifaDelete = 0;
+        $tarifa->FK_TarifaReq = 3;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -38,6 +41,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaFrecuencia = "Mensual";
         $tarifa->Tarifatipo = "Unid";
         $tarifa->TarifaDelete = 0;
+        $tarifa->FK_TarifaReq = 4;
         $tarifa->save();
 
         $tarifa = new Tarifa();
@@ -45,6 +49,7 @@ class TarifasTableSeder extends Seeder
         $tarifa->TarifaFrecuencia = "Mensual";
         $tarifa->Tarifatipo = "Lt";
         $tarifa->TarifaDelete = 0;
+        $tarifa->FK_TarifaReq = 5;
         $tarifa->save();
     }
 }

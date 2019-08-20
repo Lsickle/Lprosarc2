@@ -8,20 +8,20 @@ class Tarifa extends Model
 {
     protected $table = 'tarifas';
 
-    protected $fillable= ['TarifaTipounidad1', 'TarifaPesoinicial1', 'TarifaPesofinal1', 'TarifaPrecio1', 'TarifaTipounidad2', 'TarifaPesoinicial2', 'TarifaPesofinal2', 'TarifaPrecio2', 'TarifaTipounidad3', 'TarifaPesoinicial3', 'TarifaPesofinal3', 'TarifaPrecio3', ];
+    protected $fillable= ['TarifaVencimiento', 'TarifaFrecuencia', 'Tarifatipo', 'FK_TarifaReq'];
 
     protected $primaryKey = 'ID_Tarifa';
 
-    public function Requerimiento(){
-    	return $this->hasOne('App\Requerimiento', 'ID_Req');
+    public function requerimiento(){
+    	return $this->belongsTo('App\Requerimiento',  'FK_TarifaReq', 'ID_Req');
     }
 
     public function rangos(){
     	return $this->hasMany('App\Rango', 'FK_RangoTarifa', 'ID_Tarifa');
     }
-    public function respel()
-	{
-	    return $this->belongsToMany('App\Respel', 'respel_tarifa', 'FK_Tarifa', 'FK_Respel')
-	    ->withPivot('FK_Respel');
-	}
+ //    public function respel()
+	// {
+	//     return $this->belongsToMany('App\Respel', 'respel_tarifa', 'FK_Tarifa', 'FK_Respel')
+	//     ->withPivot('FK_Respel');
+	// }
 }

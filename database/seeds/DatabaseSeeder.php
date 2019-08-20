@@ -62,7 +62,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InventarioTechTableSeeder::class);
         $this->call(VehicleTableSeeder::class);
         $this->call(MantenVehicTableSeeder::class);
-        $this->call(TarifasTableSeder::class);
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
@@ -78,6 +77,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TratamientoTableSeeder::class);
         $this->call(SGeneradorResiduoTableSeeder::class);
         $this->call(RequerimientoTableSeeder::class);
+        $this->call(TarifasTableSeder::class);
         $this->call(SolicitudResiduoTableSeeder::class);
         $this->call(CertificadoTableSeeder::class);
         $this->call(RecursoTableSeeder::class);
