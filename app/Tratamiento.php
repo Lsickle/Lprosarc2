@@ -33,7 +33,7 @@ class Tratamiento extends Model
 
     public function requerimientos()
     {
-        return $this->hasMany('App\Requerimiento', 'FK_ReqTrata');
+        return $this->belongsTo('App\Requerimiento', 'FK_ReqTrata');
         // cada tratamiento esta relacionado con muchos residuos mediante de la tabla requerimientos
     }
 

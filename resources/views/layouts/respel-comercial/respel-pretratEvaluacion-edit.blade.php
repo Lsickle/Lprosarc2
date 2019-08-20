@@ -37,7 +37,6 @@
 				    			     <input hidden name="Opcion[{{$contadorphp}}][Pretratamientos][]" value="{{$pretratamiento->ID_PreTrat}}"> 
 				    			 @endif
 				    		@endif
-						@endforeach
     	    		@endforeach
     	    	@endforeach
     	    @endif

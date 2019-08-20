@@ -26,12 +26,12 @@
 
 		public function tarifa()
 		{
-			return $this->hasOne('App\Tarifa', 'ID_Tarifa', 'FK_ReqTarifa');
+			return $this->hasOne('App\Tarifa', 'FK_ReqTarifa', 'ID_Req');
 		}
 
 		public function tratamiento()
 		{
-			return $this->belongsTo('App\Tratamiento', 'FK_ReqTrat', 'ID_Trat');
+			return $this->hasMany('App\Tratamiento', 'FK_ReqTrat', 'ID_Trat');
 		}
 
 		//lista las pretratamientos relacionados usando muchos a muchos

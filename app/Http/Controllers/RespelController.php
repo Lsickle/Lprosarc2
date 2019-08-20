@@ -302,19 +302,23 @@ class RespelController extends Controller
 
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-                    ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+                ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+                // ->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
+                ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+                ->get();
+
+                
+                
+
+                // se crea array para conteo de tratamientos                
+                foreach ($requerimientos as $requerimiento) {
+                    $tarifas = Tarifa::with(['rangos'])
+                    ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
+                    $requerimientos = $requerimientos->concat($tarifas);
+                }
 
-                $requerimientos = $requerimientos->tratamiento()->get();
-                
                 return $requerimientos;
-
-                //se crea array para conteo de tratamientos
-                $idTratamientoArray = [];
-                
-                // foreach ($tratamientosAprobados->tratamientos as $tratamiento) {
-                //     $idTratamientoArray = Arr::prepend($idTratamientoArray, $tratamiento->ID_Trat);
-                // }
 
                 // se consulta los tratamientos contados con sus pretratamientos
                 $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])

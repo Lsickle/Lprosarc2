@@ -233,7 +233,7 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Tratamientospane">
-									@foreach($requerimientos as $opcion)		
+									@foreach($requerimientos as $requerimiento)		
 									@php
 									$contadorphp = 0;
 									@endphp			
@@ -247,7 +247,7 @@
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Pretratamientospane">
-									@foreach($requerimientos as $opcion)
+									@foreach($requerimientos as $requerimiento)
 										@php
 										$contadorphp = 0;
 										@endphp	
@@ -256,21 +256,18 @@
 											@php
 												$contadorphp = $contadorphp+1;
 											@endphp
-										@endforeach
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
-									@foreach($requerimientos as $opcion)
+									@foreach($requerimientos as $requerimiento)
 									@php
 									$contadorphp = 0;
 									@endphp	
 										@for ($i = 0; $i < count($requerimientos); $i++)
-											@php
-											$opcion=$respelscontratamiento->tratamientos[$i];
-											@endphp
+											
 											@include('layouts.respel-comercial.respel-requerimiento-edit')
 											@php
 												$contadorphp = $contadorphp+1;
@@ -285,7 +282,7 @@
 									<script type="text/javascript">
 										var contadorRango = [];
 									</script>
-									@foreach($requerimientos as $opcion)
+									@foreach($requerimientos as $requerimiento)
 										@php
 											$contadorphp = 0;
 										@endphp	
@@ -293,21 +290,12 @@
 										$contadorRango = [];
 										$last = 0;
 										@endphp	
-										{{-- 
-											@include('layouts.respel-comercial.respel-tarifas-edit')
-											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
-										@endforeach --}}
-										@for ($i = 0; $i < count($respelscontratamiento->tratamientos); $i++)
-											@php
-											$opcion=$respelscontratamiento->tratamientos[$i];
-											@endphp
-											@include('layouts.respel-comercial.respel-tarifas-edit')
-											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
-										@endfor
+										
+										@include('layouts.respel-comercial.respel-tarifas-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
+									
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
