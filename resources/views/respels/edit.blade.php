@@ -442,12 +442,13 @@
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
 					$("#rango"+opcion+"Container").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
-					validarprevent(opcion);
+					// validarprevent(opcion);
 					last=last+1
 					contadorRango[opcion][last] = last;
 				}else{
 					$("#modalrango").empty();
 					$("#evaluacioncomercial").validator('update');
+					// validarprevent(opcion);
 				}
 			});
 		}

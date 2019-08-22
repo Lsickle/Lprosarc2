@@ -39,6 +39,9 @@
 					</div>
 					<script type="text/javaScript">
 						    contadorRango[{{$contadorphp}}] = [];
+							document.getElementById("addrangeButton{{$contadorphp}}").addEventListener("click", function(event){
+							  event.preventDefault()
+							});
 					</script>
 					@if(count($tarifa->rangos) > 0)
 						@foreach($tarifa->rangos as $rango)
