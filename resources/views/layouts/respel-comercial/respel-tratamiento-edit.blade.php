@@ -16,8 +16,8 @@
             <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)
-                    @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
-                        <option onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamientoviable1->ID_Trat}}">{{"$tratamientoviable1->TratName"}} - {{"$tratamientoviable1->CliShortname"}}</option>
+                    @foreach($tratamientoviable->tratamientosConGestor as $tratamientoviable)
+                        <option onclick="recargarAjaxTratamiento({{$contadorphp}})" value="{{$tratamientoviable->ID_Trat}}">{{"$tratamientoviable->TratName"}} - {{"$tratamientoviable->CliShortname"}}</option>
                     @endforeach
                 @endforeach
             </optgroup>

@@ -302,8 +302,6 @@ class RespelController extends Controller
 
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-                // ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
-                // ->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
                 ->get();
 
@@ -319,8 +317,6 @@ class RespelController extends Controller
                     ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
                     ->get();
                 }
-
-                // return $requerimientos;
 
 
                 $Sedes = DB::table('clientes')
