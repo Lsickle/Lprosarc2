@@ -207,6 +207,9 @@
 											@endphp
 										@endif
 									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
 									{{-- @include('layouts.respel-cliente.respel-tratamiento') --}}
 								</div>
 								<!-- tab-pane fade -->
@@ -223,6 +226,9 @@
 											@endphp
 										@endif
 									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
 									{{-- @include('layouts.respel-cliente.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
@@ -239,6 +245,9 @@
 											@endphp
 										@endif
 									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
 									{{-- @include('layouts.respel-cliente.respel-requerimiento') --}}
 								</div>
 								<!-- /.tab-pane fade -->
@@ -263,6 +272,9 @@
 											@endphp
 										@endif
 									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
 									{{-- @include('layouts.respel-cliente.respel-tarifas') --}}
 								</div>
 							<!-- /.tab-pane fade -->
