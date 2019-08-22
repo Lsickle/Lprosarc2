@@ -315,10 +315,10 @@ class RespelController extends Controller
                     $tarifas = Tarifa::with(['rangos'])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
-                    $requerimientos = $requerimientos->concat($tarifas);
+                    $requerimiento['tarifas'] = $tarifas;
                 }
 
-                return $requerimientos;
+                // return $requerimientos;
 
                 // se consulta los tratamientos contados con sus pretratamientos
                 $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
