@@ -219,19 +219,24 @@ class RespelController extends Controller
             $editButton = 'Editable';
         }
 
-        $tratamientos = DB::table('tratamientos')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('sedes.*', 'clientes.*', 'tratamientos.*')
-            ->get();
+        //consultar cuales son los tratamientos viabiizados por jefe de operaciones
+        $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+        ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+        ->get();
 
-        $Sedes = DB::table('cotizacions')
-            ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
-            ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('sedes.*', 'clientes.*', 'cotizacions.*')
-            ->get();
+        
 
-        return view('respels.show', compact('Respels', 'Sedes', 'Requerimientos', 'tratamientos', 'editButton'));
+        // se incorporan las tarifas al array                
+        foreach ($requerimientos as $requerimiento) {
+            $tarifas = Tarifa::with(['rangos'])
+            ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
+            ->get();
+            $requerimiento['tarifas'] = $tarifas;
+            $requerimiento['tratamientos'] = Tratamiento::with(['pretratamientos'])
+            ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
+            ->get();
+        }
+        return view('respels.show', compact('Respels', 'requerimientos', 'editButton'));
     }
 
     /**
@@ -304,8 +309,6 @@ class RespelController extends Controller
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
                 ->get();
-
-                
 
                 // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
@@ -509,17 +512,17 @@ class RespelController extends Controller
                     if (isset($opciones[$key]['ReqDevolucion'])) {
                         $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
                     }
-                    $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-                    $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
-                    $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
-                    $requerimiento->save();
-
                     /*se adjunta los elementos relacionados al requerimiento*/
                     if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
                         $requerimiento->ofertado=1;
                     }else{
                         $requerimiento->ofertado=0;
                     }
+                    $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                    $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                    $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                    $requerimiento->save();
+
                     if (isset($opciones[$key]['Pretratamientos'])) {
                         $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
                     }
