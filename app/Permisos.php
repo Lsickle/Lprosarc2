@@ -160,12 +160,17 @@ class Permisos{
 		contratos/index
 		ContratoController::create, edit
 	 */
-	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
+	const ComercialYJefeComercial = ['AdministradorBogota', 'Comercial'];
 	/* Using ->
 		respel/edit
 	 */
 	
 	const COMERCIAL = ['Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+
+	const JefeComercial = ['Programador', 'JefeComercial', 'AdministradorBogota',];
 	/* Using ->
 		clientcontoller::index
 	*/
