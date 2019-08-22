@@ -26,7 +26,7 @@ return [
     'Respelclas'            => 'Clasificación 4741',
     'Respeligro'            => 'Peligrosidad',
     'Respelestado'          => 'Estado Físico',
-    'RespelStatus'          => 'Aprobación',
+    'RespelStatus'          => 'Status',
     'Respelcliente'         => 'Cliente',
     'Respelver'             => 'Ver Evaluación',
     'Respelevaluar'         => 'Evaluar',
