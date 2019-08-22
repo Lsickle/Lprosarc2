@@ -42,7 +42,7 @@ class CreateRequerimientosTable extends Migration
             $table->string('ReqSlug')->unique();
             $table->timestamps();
             $table->unsignedInteger('FK_ReqRespel')->nullable();
-            $table->foreign('FK_ReqRespel')->references('ID_Respel')->on('respels')->onDelete('cascade');
+            $table->foreign('FK_ReqRespel')->references('ID_Respel')->on('respels')->onDelete('SET NULL');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

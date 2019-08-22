@@ -198,7 +198,9 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
 						<div class="box-tools pull-right">
-						 <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+							@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+							    <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button> 
+							@endif
 						</div>
 					</div>
 
@@ -233,46 +235,42 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Tratamientospane">
-									@foreach($requerimientos as $requerimiento)		
 									@php
 									$contadorphp = 0;
-									@endphp			
-											@include('layouts.respel-comercial.respel-tratamiento-edit')
-											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
+									@endphp	
+									@foreach($requerimientos as $opcion)				
+										@include('layouts.respel-comercial.respel-tratamiento-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Pretratamientospane">
-									@foreach($requerimientos as $requerimiento)
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@include('layouts.respel-comercial.respel-pretratEvaluacion-edit')
 										@php
-										$contadorphp = 0;
-										@endphp	
-										
-											@include('layouts.respel-comercial.respel-pretratEvaluacion-edit')
-											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
+											$contadorphp = $contadorphp+1;
+										@endphp
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
-									@foreach($requerimientos as $requerimiento)
 									@php
 									$contadorphp = 0;
 									@endphp	
-										@for ($i = 0; $i < count($requerimientos); $i++)
-											
-											@include('layouts.respel-comercial.respel-requerimiento-edit')
-											@php
-												$contadorphp = $contadorphp+1;
-											@endphp
-										@endfor
+									@foreach($requerimientos as $opcion)
+										@include('layouts.respel-comercial.respel-requerimiento-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
 								</div>
@@ -282,10 +280,10 @@
 									<script type="text/javascript">
 										var contadorRango = [];
 									</script>
-									@foreach($requerimientos as $requerimiento)
-										@php
-											$contadorphp = 0;
-										@endphp	
+									@php
+										$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
 										@php
 										$contadorRango = [];
 										$last = 0;
@@ -295,7 +293,6 @@
 										@php
 											$contadorphp = $contadorphp+1;
 										@endphp
-									
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
@@ -329,7 +326,7 @@
 @endsection
 @section('NewScript')
 	<script type="text/javascript">
-		var contador = {{$contadorphp?$contadorphp:"0"}};
+		var contador = {{isset($contadorphp)?$contadorphp:"0"}};
 		// var contadorRango = [];
 
 		

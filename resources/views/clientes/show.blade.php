@@ -380,6 +380,7 @@
 						<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
 					</div> 
 				</div>
+				@if(isset($Requerimientos))
 				<form action="/requeri-client/{{$Requerimientos->ID_RequeCli}}" method="POST">
 					@csrf
 					@method('PUT')
@@ -430,6 +431,7 @@
 						<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
 					</div>
 				</form>
+				@endif
 			</div>
 		</div>
 	</div>

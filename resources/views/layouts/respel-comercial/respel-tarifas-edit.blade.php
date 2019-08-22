@@ -1,11 +1,9 @@
 <div id="tarifa{{$contadorphp}}Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
 	<div id="rango{{$contadorphp}}Container" class="col-md-12" style="margin-bottom: 0.25em;">
-    	@foreach($tarifasConRangos as $tarifaConRangos)
     	@php
     		$x = 0;
     	@endphp
-			@foreach($tarifaConRangos->tarifasAsignadas as $tarifa)
-				@if(($tarifa->pivot['FK_Trat'] == $tratamientoelegido->ID_Trat)&&($x==$i))
+			@foreach($opcion->tarifas as $tarifa)
 					<div class="pull-left col-md-3" style="max-height: 2.3em;">
 						<label for="expireRange{{$contadorphp}}" style="font-size: 0.9em;">Vencimiento</label>
 						<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="expireRange{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaVencimiento]" type="date" class="form-control" value="{{$tarifa->TarifaVencimiento}}">
@@ -78,12 +76,10 @@
 		    			$last = $last+1;
 		    			@endphp
 					@endif
-	    		@endif
 	    		@php
 	    			$x=$x+1;
 	    		@endphp
 	    	@endforeach
-    	@endforeach
 		
 	</div>
 </div>

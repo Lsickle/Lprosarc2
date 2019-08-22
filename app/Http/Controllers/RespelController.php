@@ -302,28 +302,26 @@ class RespelController extends Controller
 
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-                ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+                // ->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
                 // ->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
                 ->get();
 
                 
-                
 
-                // se crea array para conteo de tratamientos                
+                // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
                     $tarifas = Tarifa::with(['rangos'])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
                     $requerimiento['tarifas'] = $tarifas;
+                    $requerimiento['tratamientos'] = Tratamiento::with(['pretratamientos'])
+                    ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
+                    ->get();
                 }
 
                 // return $requerimientos;
 
-                // se consulta los tratamientos contados con sus pretratamientos
-                $PretratamientosSeleccionables = Tratamiento::with(['pretratamientos'])
-                    ->whereIn('ID_Trat', $idTratamientoArray)
-                    ->get();
 
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -331,7 +329,7 @@ class RespelController extends Controller
                     ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
         
-                return view('respels.edit', compact('Respels', 'Sedes', 'requerimientos', 'tratamientos', 'tratamientosViables', 'PretratamientosSeleccionables'));
+                return view('respels.edit', compact('Respels', 'Sedes', 'requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{
             abort(403);
@@ -488,12 +486,10 @@ class RespelController extends Controller
         // return $tarifasparaBorrar;
 
         /*se eliminan los requerimientos relacionados*/
-        $requerimientosparaBorrar = Requerimiento::whereHas('respel', function($q) use($id) {
-               // Query the name field in respel table
-               $q->where('RespelSlug', '=', $id); // '=' is optional
-        })->get('ID_Req');
+        $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
         foreach ($requerimientosparaBorrar as $key => $value) {
-            $deletedRangos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
+            $value->pretratamientosSelected()->detach();
+            $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
         }
 
         
