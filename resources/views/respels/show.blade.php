@@ -164,6 +164,30 @@
 							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
 						</div>
 					@endif
+					@if($Respels->RespelStatus == 'Aprobado')
+						<div class="btn-group-sm pull-right">
+							{{-- aceptar oferta --}}
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-success'>Aceptar Tarifa</a>
+
+							<form action='/respels/{{$Respels->RespelSlug}}/aceptarOferta' method='POST'>
+								@method('PUT')
+								@csrf
+								<button type="submit" id="Eliminar{{$Respels->RespelSlug}}/aceptarOferta" style="display: none;">
+									Aceptar la Tarifa de
+								</button>
+							</form>
+
+							{{-- rechazar oferta --}}
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>Rechazar Tarifa</a>
+							<form action='/respels/{{$Respels->RespelSlug}}/rechazarOferta' method='POST'>
+								@method('PUT')
+								@csrf
+								<button type="submit" id="Eliminar{{$Respels->RespelSlug}}/rechazarOferta" style="display: none;">
+									Rechazar la Tarifa de
+								</button>
+							</form>
+						</div>
+					@endif
 				</div>
 				<!-- /.box header -->
 				<!-- box body -->

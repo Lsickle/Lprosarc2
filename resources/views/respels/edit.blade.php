@@ -105,8 +105,12 @@
 								<select name="RespelStatus" class="form-control">
 									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuspendiente') }}</option>
 									<option {{$Respels->RespelStatus == 'Evaluado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusevaluated') }}</option>
+									<option {{$Respels->RespelStatus == 'Cotizado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuscotizado') }}</option>
 									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
+									<option {{$Respels->RespelStatus == 'Aceptado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaceptado') }}</option>
+									<option {{$Respels->RespelStatus == 'Revisado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrevisado') }}</option>
 									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
+									<option {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
 									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
 								</select>
