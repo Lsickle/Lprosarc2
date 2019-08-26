@@ -128,37 +128,37 @@ class clientcontoller extends Controller
             $Cliente->CliCategoria = 'Cliente';
             $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;
-            $Folder = $request->input('CliShortname');
-            if ($request->hasfile('CliRut')){
-                $Rut = 'Rut - '.date('j-m-y').hash('sha256', rand().time().$request->CliRut->getClientOriginalName()).'.'.$request->CliRut->extension();
-                $request->CliRut->move(public_path('/img/DatosClientes/').$Folder,$Rut);
-                $Cliente->CliRut = $Folder.'/'.$Rut;
-            }
-            if ($request->hasfile('CliCamaraComercio')){
-                $CamaraComercio = 'Camara de Comercio - '.date('j-m-y').hash('sha256', rand().time().$request->CliCamaraComercio->getClientOriginalName()).'.'.$request->CliCamaraComercio->extension();
-                $request->CliCamaraComercio->move(public_path('/img/DatosClientes/').$Folder,$CamaraComercio);
-                $Cliente->CliCamaraComercio = $Folder.'/'.$CamaraComercio;
-            }
-            if ($request->hasfile('CliRepresentanteLegal')){
-                $RepresentanteLegal = 'Representante Legal - '.date('j-m-y').hash('sha256', rand().time().$request->CliRepresentanteLegal->getClientOriginalName()).'.'.$request->CliRepresentanteLegal->extension();
-                $request->CliRepresentanteLegal->move(public_path('/img/DatosClientes/').$Folder,$RepresentanteLegal);
-                $Cliente->CliRepresentanteLegal = $Folder.'/'.$RepresentanteLegal;
-            }
-            if ($request->hasfile('CliCertificaionComercial')){
-                $CertificacionComercial = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial->getClientOriginalName()).'.'.$request->CliCertificaionComercial->extension();
-                $request->CliCertificaionComercial->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial);
-                $Cliente->CliCertificaionComercial = $Folder.'/'.$CertificacionComercial;
-            }
-            if ($request->hasfile('CliCertificaionComercial2')){
-                $CertificacionComercial2 = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial2->getClientOriginalName()).'.'.$request->CliCertificaionComercial2->extension();
-                $request->CliCertificaionComercial2->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial2);
-                $Cliente->CliCertificaionComercial2 = $Folder.'/'.$CertificacionComercial2;
-            }
-            if ($request->hasfile('CliCertificaionBancaria')){
-                $CertificacionBancaria = 'Certificacion Bancaria - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionBancaria->getClientOriginalName()).'.'.$request->CliCertificaionBancaria->extension();
-                $request->CliCertificaionBancaria->move(public_path('/img/DatosClientes/').$Folder,$CertificacionBancaria);
-                $Cliente->CliCertificaionBancaria = $Folder.'/'.$CertificacionBancaria;
-            }
+            // $Folder = $request->input('CliShortname');
+            // if ($request->hasfile('CliRut')){
+            //     $Rut = 'Rut - '.date('j-m-y').hash('sha256', rand().time().$request->CliRut->getClientOriginalName()).'.'.$request->CliRut->extension();
+            //     $request->CliRut->move(public_path('/img/DatosClientes/').$Folder,$Rut);
+            //     $Cliente->CliRut = $Folder.'/'.$Rut;
+            // }
+            // if ($request->hasfile('CliCamaraComercio')){
+            //     $CamaraComercio = 'Camara de Comercio - '.date('j-m-y').hash('sha256', rand().time().$request->CliCamaraComercio->getClientOriginalName()).'.'.$request->CliCamaraComercio->extension();
+            //     $request->CliCamaraComercio->move(public_path('/img/DatosClientes/').$Folder,$CamaraComercio);
+            //     $Cliente->CliCamaraComercio = $Folder.'/'.$CamaraComercio;
+            // }
+            // if ($request->hasfile('CliRepresentanteLegal')){
+            //     $RepresentanteLegal = 'Representante Legal - '.date('j-m-y').hash('sha256', rand().time().$request->CliRepresentanteLegal->getClientOriginalName()).'.'.$request->CliRepresentanteLegal->extension();
+            //     $request->CliRepresentanteLegal->move(public_path('/img/DatosClientes/').$Folder,$RepresentanteLegal);
+            //     $Cliente->CliRepresentanteLegal = $Folder.'/'.$RepresentanteLegal;
+            // }
+            // if ($request->hasfile('CliCertificaionComercial')){
+            //     $CertificacionComercial = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial->getClientOriginalName()).'.'.$request->CliCertificaionComercial->extension();
+            //     $request->CliCertificaionComercial->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial);
+            //     $Cliente->CliCertificaionComercial = $Folder.'/'.$CertificacionComercial;
+            // }
+            // if ($request->hasfile('CliCertificaionComercial2')){
+            //     $CertificacionComercial2 = 'Certificacion Comercial - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionComercial2->getClientOriginalName()).'.'.$request->CliCertificaionComercial2->extension();
+            //     $request->CliCertificaionComercial2->move(public_path('/img/DatosClientes/').$Folder,$CertificacionComercial2);
+            //     $Cliente->CliCertificaionComercial2 = $Folder.'/'.$CertificacionComercial2;
+            // }
+            // if ($request->hasfile('CliCertificaionBancaria')){
+            //     $CertificacionBancaria = 'Certificacion Bancaria - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionBancaria->getClientOriginalName()).'.'.$request->CliCertificaionBancaria->extension();
+            //     $request->CliCertificaionBancaria->move(public_path('/img/DatosClientes/').$Folder,$CertificacionBancaria);
+            //     $Cliente->CliCertificaionBancaria = $Folder.'/'.$CertificacionBancaria;
+            // }
             $Cliente->save();
 
             $Sede = new Sede();

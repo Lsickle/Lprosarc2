@@ -53,7 +53,7 @@
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
-                                                <div class="col-md-6 form-group">
+                                                {{-- <div class="col-md-6 form-group">
                                                     <label for="CliRut" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientrut') }}</b>" data-content="{{ trans('adminlte_lang::message.clientrut-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.clientrut') }}
@@ -100,7 +100,7 @@
                                                     </label>
                                                     <small class="help-block with-errors"></small>
                                                     <input type="file" name="CliCertificaionComercial2" class="form-control" id="CliCertificaionComercial2" accept=".pdf" data-accept="pdf" data-filesize="5120">
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div id="step-2" class="">
@@ -136,14 +136,14 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 form-group">
+                                                <div class="col-md-6">
                                                     <label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <span class="input-group-addon">(+57)</span>
                                                         <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
