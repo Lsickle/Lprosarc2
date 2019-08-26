@@ -487,75 +487,79 @@ class RespelController extends Controller
         // return $request;
         // return $tarifasparaBorrar;
 
-        /*se eliminan los requerimientos relacionados*/
-        $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
-        foreach ($requerimientosparaBorrar as $key => $value) {
-            $value->pretratamientosSelected()->detach();
-            $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
+        if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
+            /*se eliminan los requerimientos relacionados*/
+            $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
+            foreach ($requerimientosparaBorrar as $key => $value) {
+                $value->pretratamientosSelected()->detach();
+                $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
+            }
         }
 
-        
-        if ($opciones) {
-            foreach ($opciones as $key => $value) {
-                if ($opciones[$key]) {
-                    // se crea un requerimiento por cada opcion
-                    $requerimiento = new Requerimiento();
-                    if (isset($opciones[$key]['ReqFotoDescargue'])) {
-                        $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
-                    }
-                    if (isset($opciones[$key]['ReqFotoDestruccion'])) {
-                        $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
-                    }
-                    if (isset($opciones[$key]['ReqVideoDescargue'])) {
-                        $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
-                    }
-                    if (isset($opciones[$key]['ReqVideoDestruccion'])) {
-                         $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
-                    }
-                    if (isset($opciones[$key]['ReqDevolucion'])) {
-                        $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
-                    }
-                    /*se adjunta los elementos relacionados al requerimiento*/
-                    if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
-                        $requerimiento->ofertado=1;
-                    }else{
-                        $requerimiento->ofertado=0;
-                    }
-                    $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-                    $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
-                    $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
-                    $requerimiento->save();
+        if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
+            if ($opciones) {
+                foreach ($opciones as $key => $value) {
+                    if ($opciones[$key]) {
+                        // se crea un requerimiento por cada opcion
+                        $requerimiento = new Requerimiento();
+                        if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                            $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+                        }
+                        if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                            $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+                        }
+                        if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                            $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+                        }
+                        if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                             $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+                        }
+                        if (isset($opciones[$key]['ReqDevolucion'])) {
+                            $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+                        }
+                        /*se adjunta los elementos relacionados al requerimiento*/
+                        if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
+                            $requerimiento->ofertado=1;
+                        }else{
+                            $requerimiento->ofertado=0;
+                        }
+                        $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                        $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                        $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                        $requerimiento->save();
 
-                    if (isset($opciones[$key]['Pretratamientos'])) {
-                        $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
-                    }
-                    /*se verifica que las tarifas no esten disabled en la vista*/
-                    if (isset($opciones[$key]['TarifaFrecuencia'])) {
-                        $tarifa = new Tarifa();
-                        $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
-                        $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
-                        $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
-                        $tarifa->TarifaDelete=0;
-                        $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
-                        $tarifa->save();
+                        if (isset($opciones[$key]['Pretratamientos'])) {
+                            $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
+                        }
+                        /*se verifica que las tarifas no esten disabled en la vista*/
+                        if (isset($opciones[$key]['TarifaFrecuencia'])) {
+                            $tarifa = new Tarifa();
+                            $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
+                            $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                            $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
+                            $tarifa->TarifaDelete=0;
+                            $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                            $tarifa->save();
 
-                        foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
-                           if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
-                               $rango = new Rango();
-                               $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
-                               $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
-                               $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
-                               $rango->save(); 
-                           }               
+                            foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
+                               if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
+                                   $rango = new Rango();
+                                   $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                                   $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                                   $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                   $rango->save(); 
+                               }               
+                            }
                         }
                     }
                 }
-            }
+            }  
         }
         $respel->RespelStatus = $request['RespelStatus'];
         $respel->RespelStatusDescription = $request['RespelStatusDescription'];
         $respel->save();
 
+        /*auditoria de la actualizacion*/
         $log = new audit();
         $log->AuditTabla="respels requerimiento y tarifas";
         $log->AuditType="Evaluacion Updated";
