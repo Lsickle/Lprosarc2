@@ -37,7 +37,8 @@ class RespelController extends Controller
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('respels.*', 'clientes.CliName')
+            ->join('personals', 'personals.ID_Pers', '=', 'clientes.CliComercial')
+            ->select('respels.*', 'clientes.CliName', 'personals.PersEmail')
             ->where(function($query){
                 if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 
@@ -59,6 +60,8 @@ class RespelController extends Controller
                 }
             })
             ->get();
+
+            // return $Respels;
 
         return view('respels.index', compact('Respels')); 
     }
