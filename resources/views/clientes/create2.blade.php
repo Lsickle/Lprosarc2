@@ -174,7 +174,7 @@
                                                     <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientarea-info') }}">
+                                                    <label for="AreaName" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientarea-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.areaname') }}
                                                     </label>
@@ -182,7 +182,7 @@
                                                     <input type="text" class="form-control inputText" id="AreaName" name="AreaName" maxlength="128" required value="{{ old('AreaName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcargo-info') }}">
+                                                    <label for="AreaName" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcargo-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.cargoname') }}
                                                     </label>
