@@ -56,13 +56,13 @@
 
 
 									@if($respel->RespelHojaSeguridad!=="RespelHojaDefault.pdf")
-										<td class="text-center"><a method='get' href='/img/HojaSeguridad/{{$respel->RespelHojaSeguridad}}' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></a></td>
+										<td class="text-center"><a method='get' href='/img/HojaSeguridad/{{$respel->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></a></td>
 									@else
 										<td class="text-center"><a disabled method='get' href='/img/{{$respel->RespelHojaSeguridad}}' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
 									@endif
 
 									@if($respel->RespelTarj!=="RespelTarjetaDefault.pdf")
-										<td class="text-center"><a method='get' href='/img/TarjetaEmergencia/{{$respel->RespelTarj}}' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></a></td>
+										<td class="text-center"><a method='get' href='/img/TarjetaEmergencia/{{$respel->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></a></td>
 									@else
 										<td class="text-center"><a disabled method='get' href='/img/{{$respel->RespelTarj}}' class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></a></td>
 									@endif

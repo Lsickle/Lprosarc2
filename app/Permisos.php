@@ -193,7 +193,7 @@ class Permisos{
 		VehicProgController::index
 	 */
 
-	const GrupoEdicionRespel = ['Cliente', 'Programador', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial', 'Comercial'];
+	const GrupoEdicionRespel = ['Cliente', 'Programador', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial', 'Comercial', 'JefeLogistica', 'AsistenteLogistica'];
 	/* Using->
 		respelcontroller::edit
 	 */
