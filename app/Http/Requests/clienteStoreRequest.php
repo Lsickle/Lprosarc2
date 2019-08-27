@@ -46,7 +46,7 @@ class ClienteStoreRequest extends FormRequest
                 }
             })],
             'CliName'       => 'required|max:255|min:1',
-            'CliShortname'  => 'required|max:255|min:1',
+            'CliShortname'  => 'alpha_num|required|max:255|min:1',
             'CliCategoria'  => 'max:32|alpha|nullable',
             'CliRut'        => 'mimes:pdf|max:5120|nullable',
             'CliCamaraComercio'         => 'mimes:pdf|max:5120|nullable',

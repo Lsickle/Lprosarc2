@@ -42,7 +42,13 @@ class clientcontoller extends Controller
     {
         switch (true) {
             case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
-                $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
+                // $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
+                $clientes = DB::table('clientes')
+                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+                    ->where('CliDelete', 0)
+                    ->where('CliCategoria', 'Cliente')
+                    ->get();
                  $personals = DB::table('personals')
                         ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
                         ->select('personals.*')
@@ -86,6 +92,7 @@ class clientcontoller extends Controller
     public function changeComercial(Request $request, $id){
         $cliente = Cliente::where('CliSlug', $id)->first();
         $cliente->CliComercial = $request->input('Comercial');
+        $cliente->CliShortname = $request->input('CliShortname');
         $cliente->save();
         return back();
     }
@@ -303,7 +310,7 @@ class clientcontoller extends Controller
                 }
             })],
             'CliName'       => 'required|max:255',
-            'CliShortname'  => 'required|max:255',
+            'CliShortname'  => 'alpha_num|required|max:255',
             'CliRut'        => 'mimes:pdf|max:5120|sometimes',
             'CliCamaraComercio'         => 'mimes:pdf|max:5120|sometimes',
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|sometimes',
