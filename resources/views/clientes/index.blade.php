@@ -82,9 +82,10 @@
 										</select>
 									</div>
 									<div class="form-group has-feedback">
+										<span data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre Corto del Cliente</b>" data-content="el <b><i>Nombre Corto</i></b> es para facilitar el manejo interno de la informacion del cliente... en este campo solo debe escribir caracteres alfanumericos <b>(no se permiten espacios)</b>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>
 									    <label for="modalCliShortname" class="control-label">Nombre Corto</label>
 									    <small class="help-block with-errors">*</small>
-									      <input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control" placeholder="1000hz" required value="`+clishorname+`" name="CliShortname" id="modalCliShortname">
+									      <input type="text" pattern="^[_A-z0-9]{1,}$" data-pattern-error="solo se admiten letras y numeros" maxlength="15" class="form-control" placeholder="1000hz" required value="`+clishorname+`" name="CliShortname" id="modalCliShortname">
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -95,14 +96,16 @@
 					</div>
 				</form>
 			`);
-
+			// Selects();
 			personals.forEach(function(value, index) {
+			    personal[index] = value;
 				if (personal[index]['ID_Pers'] == idPers) {
 					$('#Comercial').append(`<option selected value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
 			    }else{
 			    	$('#Comercial').append(`<option value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
 			    }			    
 			});
+			popover();
 			$('form').validator('update');
 			$('#changeComercial').modal();
 		}
