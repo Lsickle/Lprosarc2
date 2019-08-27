@@ -57,16 +57,22 @@
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center textolargo">{{$cliente->CliShortname}}</h3>
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+						<h3 class="profile-username text-center textolargo">{{$cliente->CliShortname}}</h3>
+					@else
+						<h3 class="profile-username text-center textolargo">{{$cliente->CliName}}</h3>
+					@endif
 					<ul>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliName}}</p>">{{$cliente->CliName}}</a>
 						</li>
+						@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliShortname}}</p>">{{$cliente->CliShortname}}</a>
 						</li>
+						@endif
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> <a class="pull-right">{{$cliente->CliNit}}</a>
 						</li>

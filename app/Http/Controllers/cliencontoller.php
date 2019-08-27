@@ -131,7 +131,7 @@ class clientcontoller extends Controller
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
             $Cliente->CliName = $request->input('CliName');
-            $Cliente->CliShortname = $request->input('CliShortname');
+            $Cliente->CliShortname = $request->input('CliName');
             $Cliente->CliCategoria = 'Cliente';
             $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;

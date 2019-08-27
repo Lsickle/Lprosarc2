@@ -87,7 +87,7 @@
 												@break
 											{{-- residuo Cotizado --}}
 											@case('Cotizado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'> el Residuo ya posee un tarifas y tratamientos asignados, sin embargo, se debe esperar a que las tarifas sean aprobadas <br>Para mas detalles comuníquese con la <b>Asesor Comercial</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-money'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'> el Residuo ya posee un tarifas y tratamientos asignados, sin embargo, se debe esperar a que las tarifas sean aprobadas <br>Para mas detalles comuníquese con la <b>Asesor Comercial</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
@@ -129,7 +129,7 @@
 												@break
 											{{-- residuo Cotizado --}}
 											@case('Cotizado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'> el Residuo ya posee un tarifas y tratamientos asignados, sin embargo, se debe esperar a que sea aprobado por <b>Subgerencia</b> <br>Para mas detalles comuníquese con la <b>Subgerencia</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-money'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'> el Residuo ya posee un tarifas y tratamientos asignados, sin embargo, se debe esperar a que sea aprobado por <b>Subgerencia</b> <br>Para mas detalles comuníquese con la <b>Subgerencia</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
