@@ -158,6 +158,7 @@ class Permisos{
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
+		clientes::show
 	 */
 	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
 	/* Using ->

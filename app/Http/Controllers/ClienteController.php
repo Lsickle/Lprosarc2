@@ -53,6 +53,30 @@ class ClienteController extends Controller
         }
     }
 
+    public function updateCliStatus($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->CliStatus = "Autorizado";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
+    public function negarCliStatus($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->CliStatus = "Bloqueado";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
     public function update(Request $request, $slug)
     {
         $cliente = cliente::where('CliSlug', $slug)->first();

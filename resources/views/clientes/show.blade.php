@@ -48,13 +48,12 @@
 								</form>
 							@endif
 						@endif --}}
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1))
-							@if(Route::currentRouteName() === 'cliente-show')
-								<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
-							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
-								<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
-							@endif
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+						@endif
+						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
+								<a {{$cliente->CliSlug=='Autorizado'?'disabled':''}} href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-{{$cliente->CliSlug=='Autorizado'?'success':'default'}} pull-right"><i class="fas fa-edit"></i><b> Autorizar servicios</b></a>
+								<a {{$cliente->CliSlug=='Bloqueado'?'disabled':''}} href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-{{$cliente->CliSlug=='Bloqueado'?'danger':'default'}} pull-right"><i class="fas fa-edit"></i><b> Negar servicios</b></a>
 						@endif
 					</div>
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
