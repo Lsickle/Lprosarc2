@@ -117,7 +117,7 @@
 							</li>
 							<li class="list-group-item">
 								<label>Observaciones</label>
-								<textarea maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$Respels->RespelStatusDescription}}</textarea>
+								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$Respels->RespelStatusDescription}}</textarea>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								{{-- hoja de seguridad --}}
