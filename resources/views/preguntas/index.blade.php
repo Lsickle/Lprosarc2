@@ -123,7 +123,7 @@
                                 <div class="panel-body">
                                     <span>
                                         {{ trans('adminlte_lang::message.question-7-description') }}
-                                        <br><br><strong>NOTA: </strong>Si tiene una duda por favor comunicarse con su asesor comercial y no reenviar un correo electrónico porque no sera respondido. 
+                                        <br><br><strong>NOTA: </strong>Si tiene alguna duda por favor comuniquese directamente con su Asesor Comercial 
                                     </span>
                                 </div>
                             </div>
