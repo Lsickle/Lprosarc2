@@ -131,7 +131,7 @@
 						</a>
 						<div id="ContactComercial" class="dropdown-menu box box-solid box-info" style="padding-top: 0;">
 							<div class="box-header with-border" style="text-align: center;">
-								<p>Contacto</p>
+								<p><b>Asesor Comercial</b></p>
 							</div>
 							<div class="box-body" style="white-space: normal;text-align: center;">
 								@if($cliente->CliComercial <> null)
@@ -142,13 +142,13 @@
 										$correo = $personal->PersEmail;
 									@endphp
 								<label>Nombre:</label><br>
-								<a>{{$nombre}}</a><br>
+								{{$nombre}}<br>
 								<label>Telefono</label><br>
-								<a>{{$telefono}}</a><br>
+								{{$telefono}}<br>
 								<label>Correó Electronico</label><a title="Copiar" onclick="copiarAlPortapapeles('correocomercial')"> <i class="far fa-copy"></i></a><br>
 								<a id="correocomercial" href="mailto:{{$correo}}">{{$correo}}</a><br>
 								@else
-								<h4>Aun no tiene un comercial asignado</h4>
+								<h4>en breve se le asignara un <b>Asesor Comercial</b> y podra ver sus datos de contacto aqui</h4>
 								@endif
 							</div>
 						</div>
