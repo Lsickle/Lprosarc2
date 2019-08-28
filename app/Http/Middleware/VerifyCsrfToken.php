@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'CambioDeFechaProgVehic/*',
+        'login',
     ];
 
     protected function tokensMatch($request)
