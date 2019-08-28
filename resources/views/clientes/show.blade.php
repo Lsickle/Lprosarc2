@@ -52,8 +52,11 @@
 							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
 						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
-								<a {{$cliente->CliSlug=='Autorizado'?'disabled':''}} href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-{{$cliente->CliSlug=='Autorizado'?'success':'default'}} pull-right"><i class="fas fa-edit"></i><b> Autorizar servicios</b></a>
-								<a {{$cliente->CliSlug=='Bloqueado'?'disabled':''}} href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-{{$cliente->CliSlug=='Bloqueado'?'danger':'default'}} pull-right"><i class="fas fa-edit"></i><b> Negar servicios</b></a>
+							@if($cliente->CliStatus=='Autorizado')
+								<a href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-danger pull-right"><i class="fas fa-edit"></i><b>Bloquear</b></a>
+							@else
+								<a href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-success pull-right"><i class="fas fa-edit"></i><b>Autorizar</b></a>
+							@endif
 						@endif
 					</div>
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
