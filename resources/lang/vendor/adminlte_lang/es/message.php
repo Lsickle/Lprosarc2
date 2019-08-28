@@ -411,13 +411,13 @@ return [
     'question-4-title'        => 'Soy un generador y no quiero ingresar de nuevo mis datos del registro. ¿Hay otra forma de hacerlo?',
     'question-4-description'  => 'Al dar clic en "Lista de Generadores" aparece en la parte superior un botón que dice "Soy Generador", al pulsarlo todos los datos que usted lleno de su empresa al registrarse pasarán a ser como las de un nuevo generador, sin perder los de su empresa.',
     'question-5-title'        => '¿Para qué necesito ingresar datos de mi personal?',
-    'question-5-description'  => 'En la solicitud de Servicio los va a requerir para que Prosarc S.A. ESP pueda contactar con la persona que le asignó y así saber el proceso de sus residuos.',
+    'question-5-description'  => 'Se requieren para que Prosarc S.A. ESP pueda contactar con la persona que el Cliente asignó a la solicitud de Servicio y así mantenerlo al tanto sobre el proceso de sus residuos.',
     'question-6-title'        => '¿Por qué no puede marcar los requerimientos de los residuos?',
     'question-6-description'  => 'Los requerimientos los habilita Prosarc S.A. ESP dependiendo del residuo.',
     'question-7-title'        => '¿Cómo puedo saber en que paso va mi Solicitud de Servicio sin tener que llamar a Prosarc S.A. ESP?',
-    'question-7-description'  => 'Cada nuevo cambio que tenga su Solicitud de Servicio adentro de Prosarc S.A. ESP, se le notificará con un correo electrónico automático.',
+    'question-7-description'  => 'Cada nuevo cambio que haya con el proceso de su Solicitud de Servicio se le notificará mediante un correo electrónico automáticamente.',
     'question-8-title'        => '¿Dónde puedo ver las fotos y/o vídeos que pedí en la Solicitud de Servicio?',
-    'question-8-description'  => 'En la Solicitud de Servicio en "Ver más", luego yendo a la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o vídeos una vez que el residuos haya sido tratado.',
+    'question-8-description'  => 'En la lista de Solicitudes de Servicio debe hacer click en el botón "Ver más", luego en la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o vídeos una vez que el residuos haya sido tratados.',
 
     // departamento
     'departamento'            => 'Departamento',
