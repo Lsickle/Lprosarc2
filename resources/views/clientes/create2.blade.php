@@ -113,7 +113,7 @@
                                                     <input type="text" class="form-control" id="sedeinputname" name="SedeName" maxlength="128" value="{{ old('SedeName') }}" required>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="sedeinputemail">{{ trans('adminlte_lang::message.email') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="sedeinputemail">Correo electrónico de la Sede</label><small class="help-block with-errors">*</small>
                                                     <input type="email" class="form-control" id="sedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="SedeEmail" maxlength="128" value="{{ old('SedeEmail') }}" required>
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -216,7 +216,10 @@
                                                     <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="PersEmail">{{ trans('adminlte_lang::message.email') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="PersEmail" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Correo electrónico de la Persona de Contacto</b>" data-content="Este dato es importante para que la persona de contacto pueda recibir las novedades con relacion a sus residuos y solicitudes de servicio... <br>Si la persona de contacto no cuenta con una dirección de correo electrónico también puede escribir acá el correo electrónico con el que se registro al sistema <b>SiReS</b>.">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        Correo electrónico del Contacto
+                                                    </label><small class="help-block with-errors">*</small>
                                                     <input type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
                                                     
                                                 </div>

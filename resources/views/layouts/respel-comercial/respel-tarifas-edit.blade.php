@@ -59,7 +59,7 @@
 								<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10" value="{{$rango->TarifaPrecio}}">
 								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
 								@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-							   		<input hidden name="Opcion[{{$contadorphp}}][TarifaPrecio][]" value="{{$tarifa->TarifaPrecio}}">
+							   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden value="{{$rango->TarifaPrecio}}">
 							    @endif
 							</div>
 			    		@endforeach
@@ -72,7 +72,7 @@
 		    				<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10">
 		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
 	    					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-	    				   		<input hidden name="Opcion[{{$contadorphp}}][TarifaPrecio][]">
+	    				   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden>
 	    				    @endif
 		    			</div>
 		    			@php

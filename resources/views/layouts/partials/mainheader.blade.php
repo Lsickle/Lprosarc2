@@ -148,7 +148,7 @@
 								<label>Correó Electronico</label><a title="Copiar" onclick="copiarAlPortapapeles('correocomercial')"> <i class="far fa-copy"></i></a><br>
 								<a id="correocomercial" href="mailto:{{$correo}}">{{$correo}}</a><br>
 								@else
-								<h4>en breve se le asignara un <b>Asesor Comercial</b> y podra ver sus datos de contacto aqui</h4>
+								<h4>en breve se le asignara un <b>Asesor Comercial</b> y podrá ver sus datos de contacto aqui</h4>
 								@endif
 							</div>
 						</div>
