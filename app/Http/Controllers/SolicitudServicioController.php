@@ -55,6 +55,7 @@ class SolicitudServicioController extends Controller
 				}
 			})
 			->get();
+		$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
 			if($servicio->SolSerTypeCollect == 98){
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
@@ -62,7 +63,7 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		// return $Servicios;
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos'));
+		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
 	/**

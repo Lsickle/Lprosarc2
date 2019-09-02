@@ -131,6 +131,19 @@ class Permisos{
 		ProgramacionVehicle/index
 		clientes/show
 	*/
+	const TODOPROSARCMenosComercial = ['Programador','AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','JefeComercial','Tesorería','AsistenteComercial'];
+	/* Using ->
+		cliencontoller:index,show,edit
+		AreaInternoController::index
+		CargoInternoController::index
+		SolicitudServicioController::changestatus
+		VehicleController::index
+		VehicManteController::index
+		Menu.php
+		VehicProgController::create
+		ProgramacionVehicle/index
+		clientes/show
+	*/
 	const CLIENTEYADMINS = ['Programador','Cliente','AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
 		scliencontroller:create
