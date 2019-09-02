@@ -23,6 +23,7 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
+use App\RequerimientosCliente;
 use Permisos;
 
 
@@ -92,12 +93,13 @@ class SolicitudServicioController extends Controller
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
-				if ($Cliente->CliStatus=="Bloqueado") {
-					abort(403, 'Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio... Para mas detalles comuníquese con su Asesor Comercial');
-				}else{
-					return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
-
-				}
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
+            // return $Requerimientos[0]->RequeCliBascula;
+			if ($Cliente->CliStatus=="Bloqueado") {
+				abort(403, 'Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio... Para mas detalles comuníquese con su Asesor Comercial');
+			}else{
+				return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes', 'Requerimientos'));
+			}
 		}
 		else{
 			abort(403, 'Solo los Clientes registrados pueden realizar nuevas solicitudes de servicio');

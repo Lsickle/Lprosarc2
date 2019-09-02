@@ -150,7 +150,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 												<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" {{ old('SolSerBascula') == 'on' ? 'checked' : '' }} hidden="">
+													<input type="checkbox" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "" : "disabled"}} class="testswitch" id="SolSerBascula" name="SolSerBascula" {{ old('SolSerBascula') == 'on' ? 'checked' : '' }} hidden="">
 												</div>
 											</label>
 										</div>
@@ -158,7 +158,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
 												<label for="SolSerCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{ old('SolSerCapacitacion') == 'on' ? 'checked' : '' }} hidden="">
+													<input type="checkbox" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliCapacitacion'] === 1) ? "" : "disabled"}} class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{ old('SolSerCapacitacion') == 'on' ? 'checked' : '' }} hidden="">
 												</div>
 											</label>
 										</div>
@@ -166,7 +166,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
 												<label for="SolSerMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{ old('SolSerMasPerson') == 'on' ? 'checked' : '' }} hidden="">
+													<input type="checkbox" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "" : "disabled"}} class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{ old('SolSerMasPerson') == 'on' ? 'checked' : '' }} hidden="">
 												</div>
 											</label>
 										</div>
@@ -174,7 +174,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
 												<label for="SolSerVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerVehicExclusive" name="SolSerVehicExclusive" hidden="">
+													<input type="checkbox" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "" : "disabled"}} class="testswitch" id="SolSerVehicExclusive" name="SolSerVehicExclusive" hidden="">
 												</div>
 											</label>
 										</div>
@@ -182,11 +182,11 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
 												<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{ old('SolSerPlatform') == 'on' ? 'checked' : '' }} hidden="">
+													<input type="checkbox" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "" : "disabled"}} class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{ old('SolSerPlatform') == 'on' ? 'checked' : '' }} hidden="">
 												</div>
 											</label>
 										</div>
-										<div class="col-md-4" style="text-align: center;">
+										{{-- <div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
 												<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
 												<div style="width: 100%; height: 34px;">
@@ -200,7 +200,7 @@
 												<input maxlength="128" type="text" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ old('SolSerDevolucionTipo')}}">
 												<small class="help-block with-errors"></small>
 											</label>
-										</div>
+										</div> --}}
 									</div>
 								</div>
 							</div>
@@ -244,12 +244,12 @@
 @section('NewScript')
 <script>
 function Switch(){
-	$("#SolSerBascula").bootstrapSwitch('disabled',true);
-	$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
-	$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
-	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
-	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
-	$("#SolSerDevolucion").bootstrapSwitch('disabled',true);
+	$("#SolSerBascula").bootstrapSwitch();
+	$("#SolSerCapacitacion").bootstrapSwitch();
+	$("#SolSerMasPerson").bootstrapSwitch();
+	$("#SolSerVehicExclusive").bootstrapSwitch();
+	$("#SolSerPlatform").bootstrapSwitch();
+	$("#SolSerDevolucion").bootstrapSwitch();
 }
 Switch();
 function submitverify(){
