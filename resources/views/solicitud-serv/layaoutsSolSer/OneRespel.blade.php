@@ -108,10 +108,10 @@
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
 				<div class="form-group col-md-6">
-					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
-						<label for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">Devolución Embalaje</label>
+					<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos al Cliente/Generador</p>">
+						Devolución Embalaje
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="videoswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
+							<input type="checkbox" class="embalajeswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
 							<input type="text" id="SolResDevolucion1`+id_div+contadorRespel[id_div]+`" name="SolResDevolucion[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>

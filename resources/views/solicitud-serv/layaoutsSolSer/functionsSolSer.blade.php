@@ -268,10 +268,16 @@ function RequeRespel(id_div, contador, Id_Respel){
 				if(res.ReqDevolucion === 1){
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',false);
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
 				}
 				else{
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',true);
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
 				}
 			}
 			else{
@@ -296,6 +302,8 @@ function HiddenRequeRespel(id_div, contador){
 	$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
 	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',true);
 }
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);
