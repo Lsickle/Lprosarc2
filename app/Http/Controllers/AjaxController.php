@@ -132,8 +132,9 @@ class AjaxController extends Controller
 		if($request->ajax()){
 			$Requerimientos = DB::table('requerimientos')
 				->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
-				->select('requerimientos.ReqFotoDescargue', 'requerimientos.ReqFotoDestruccion', 'requerimientos.ReqVideoDescargue', 'requerimientos.ReqVideoDestruccion')
+				->select('requerimientos.ReqFotoDescargue', 'requerimientos.ReqFotoDestruccion', 'requerimientos.ReqVideoDescargue', 'requerimientos.ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo')
 				->where('respels.RespelSlug', $slug)
+				->where('requerimientos.ofertado', 1)
 				->first();
 			return response()->json($Requerimientos);
 		}

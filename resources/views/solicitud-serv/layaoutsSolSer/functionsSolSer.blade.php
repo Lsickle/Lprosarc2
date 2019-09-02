@@ -265,6 +265,14 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
+				if(res.ReqDevolucion === 1){
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',false);
+				}
+				else{
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',true);
+				}
 			}
 			else{
 				HiddenRequeRespel(id_div, contador);
