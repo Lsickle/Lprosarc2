@@ -108,7 +108,7 @@
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
 				<div class="form-group col-md-6">
-					<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos al Cliente/Generador</p>">
+					<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
 						Devolución Embalaje
 						<div style="width: 100%; height: 34px;">
 							<input type="checkbox" class="embalajeswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
@@ -120,7 +120,7 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientovideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientovideodescrit') }}</p>">
 						<label for="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiretratamientovideo') }}</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="videoswitch" id="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoTratamiento1`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" class="form-control" id="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoTratamiento1`+id_div+contadorRespel[id_div]+`"/>
 							<input type="text" id="SolResVideoTratamiento1`+id_div+contadorRespel[id_div]+`" name="SolResVideoTratamiento[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
