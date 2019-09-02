@@ -1,36 +1,3 @@
-@php
-$SolicitudServicios = DB::table('solicitud_servicios')
-	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-	->where('SolSerDelete', 0)
-	->get();
-$Recibidas = count($SolicitudServicios->where('SolSerStatus', 'Completado'));
-$Concialiadas = count($SolicitudServicios->where('SolSerStatus', 'Conciliado'));
-
-$serviciosnoconciliados = DB::table('solicitud_servicios')
-	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-	->where('SolSerDelete', 0)
-	->where('SolSerStatus', 'No Conciliado')
-	->orderBy('solicitud_servicios.updated_at', 'asc')
-	->limit(5)
-	->get();
-
-$Km = DB::table('progvehiculos')
-	->select('FK_ProgVehiculo', 'progVehKm', 'ProgVehFecha')
-	->where('ProgVehDelete', 0)
-	->where('progVehKm', '<>', null)
-	->whereBetween('ProgVehFecha', [date('Y-m-d', strtotime("first day of last month")), date('Y-m-d', strtotime("last day of last month"))])
-	->orderBy('ProgVehFecha', 'asc')
-	->get();
-setlocale(LC_ALL, "es_CO.UTF-8");
-
-$serviciosnoprocesados = DB::table('solicitud_servicios')
-	->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-	->where('SolSerDelete', 0)
-	->where('SolSerStatus', 'Completado')
-	->orderBy('solicitud_servicios.updated_at', 'asc')
-	->limit(5)
-	->get();
-@endphp
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">

@@ -7,15 +7,15 @@
             <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)
-                    @foreach($tratamientoviable->tratamientos as $tratamientoviable1)
-                        <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamientoviable1->ID_Trat}}">{{"$tratamientoviable1->TratName"}} - {{"$tratamientoviable1->CliShortname"}}</option>
+                    @foreach($tratamientoviable->tratamientosConGestor as $tratamientoviable)
+                        <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamientoviable->ID_Trat}}">{{"$tratamientoviable->TratName"}} - {{"$tratamientoviable->CliShortname"}}</option>
                     @endforeach
                 @endforeach
             </optgroup>
             <optgroup label="----------Prosarc S.A. ESP----------">
                 @foreach($tratamientos as $tratamiento)
                     @if($tratamiento->TratTipo == 0)
-                    <option onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
+                    <option  onclick="recargarAjaxTratamiento(`+contador+`)" value="{{$tratamiento->ID_Trat}}">{{"$tratamiento->TratName"}} - {{"$tratamiento->CliShortname"}}</option>
                     @endif
                 @endforeach
             </optgroup>
@@ -31,7 +31,7 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input type="radio" class="testswitch" id="ofert`+contador+`" name="TratOfertado" value="`+contador+`" />  
+            <input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} type="radio" class="ofertaswitch" id="ofert`+contador+`" name="TratOfertado" value="`+contador+`" />  
         </div>
     </div>
     <div class="col-md-2">

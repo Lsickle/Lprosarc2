@@ -53,6 +53,30 @@ class ClienteController extends Controller
         }
     }
 
+    public function updateCliStatus($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->CliStatus = "Autorizado";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
+    public function negarCliStatus($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->CliStatus = "Bloqueado";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
     public function update(Request $request, $slug)
     {
         $cliente = cliente::where('CliSlug', $slug)->first();
@@ -62,7 +86,7 @@ class ClienteController extends Controller
         $validate = $request->validate([
             'CliNit'        => ['required','min:13','max:13',Rule::unique('clientes')->ignore($cliente->CliNit, 'CliNit')],
             'CliName'       => 'required|max:255|min:1',
-            'CliShortname'  => 'required|max:255|min:1',
+            'CliShortname'  => 'alpha_num|required|max:255|min:1',
             'CliRut'        => 'mimes:pdf|max:5120|sometimes',
             'CliCamaraComercio'         => 'mimes:pdf|max:5120|sometimes',
             'CliRepresentanteLegal'     => 'mimes:pdf|max:5120|sometimes',

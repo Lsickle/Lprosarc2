@@ -13,12 +13,12 @@ class VehicProgTableSeeder extends Seeder
     public function run()
     {
         $vehicleprog = new ProgramacionVehiculo();
-        $vehicleprog->ProgVehFecha = "2019-02-20";
+        $vehicleprog->ProgVehFecha = "2019-07-20";
         $vehicleprog->progVehKm = "100";
         $vehicleprog->ProgVehTurno = "1";
         $vehicleprog->ProgVehtipo = "1";
-        $vehicleprog->ProgVehEntrada = "2018-02-20 1:38:02";
-        $vehicleprog->ProgVehSalida = "2018-02-20 16:40:02";
+        $vehicleprog->ProgVehEntrada = "2018-07-20 1:38:02";
+        $vehicleprog->ProgVehSalida = "2018-07-20 16:40:02";
         $vehicleprog->FK_ProgVehiculo = "3";
         $vehicleprog->FK_ProgConductor = "3";
         $vehicleprog->FK_ProgAyudante = "4";
@@ -29,12 +29,12 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
-        $vehicleprog->ProgVehFecha = "2019-02-15";
+        $vehicleprog->ProgVehFecha = "2019-07-15";
         $vehicleprog->progVehKm = "21214";
         $vehicleprog->ProgVehTurno = "0";
         $vehicleprog->ProgVehtipo = "1";
-        $vehicleprog->ProgVehEntrada = "2019-02-15 6:38:10";
-        $vehicleprog->ProgVehSalida = "2019-02-15 18:38:10";
+        $vehicleprog->ProgVehEntrada = "2019-07-15 6:38:10";
+        $vehicleprog->ProgVehSalida = "2019-07-15 18:38:10";
         $vehicleprog->FK_ProgVehiculo = "3";
         $vehicleprog->FK_ProgConductor = "3";
         $vehicleprog->FK_ProgAyudante = "5";
@@ -45,12 +45,12 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
-        $vehicleprog->ProgVehFecha = "2009-02-15";
+        $vehicleprog->ProgVehFecha = "2009-07-15";
         $vehicleprog->progVehKm = "278";
         $vehicleprog->ProgVehTurno = "1";
         $vehicleprog->ProgVehtipo = "1";
-        $vehicleprog->ProgVehEntrada = "2000-01-15 17:38:10";
-        $vehicleprog->ProgVehSalida = "2019-02-15 17:38:10";
+        $vehicleprog->ProgVehEntrada = "2000-07-15 17:38:10";
+        $vehicleprog->ProgVehSalida = "2019-07-15 17:38:10";
         $vehicleprog->FK_ProgVehiculo = "2";
         $vehicleprog->FK_ProgConductor = "1";
         $vehicleprog->FK_ProgAyudante = "2";
@@ -61,12 +61,12 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
-        $vehicleprog->ProgVehFecha = "2019-02-15";
+        $vehicleprog->ProgVehFecha = "2019-06-15";
         $vehicleprog->progVehKm = "322";
         $vehicleprog->ProgVehTurno = "0";
         $vehicleprog->ProgVehtipo = "0";
-        $vehicleprog->ProgVehEntrada = "2019-01-15 17:38:10";
-        $vehicleprog->ProgVehSalida = "2019-01-16 17:38:10";
+        $vehicleprog->ProgVehEntrada = "2019-06-15 17:38:10";
+        $vehicleprog->ProgVehSalida = "2019-06-16 17:38:10";
         $vehicleprog->FK_ProgVehiculo = "5";
         $vehicleprog->FK_ProgConductor = "1";
         $vehicleprog->FK_ProgAyudante = "3";
@@ -77,12 +77,12 @@ class VehicProgTableSeeder extends Seeder
         $vehicleprog->save();
 
         $vehicleprog = new ProgramacionVehiculo();
-        $vehicleprog->ProgVehFecha = "2019-02-15";
+        $vehicleprog->ProgVehFecha = "2019-07-15";
         $vehicleprog->progVehKm = "632324";
         $vehicleprog->ProgVehTurno = "0";
         $vehicleprog->ProgVehtipo = "1";
-        $vehicleprog->ProgVehEntrada = "2019-02-19 17:38:10";
-        $vehicleprog->ProgVehSalida = "2019-02-20 17:38:10";
+        $vehicleprog->ProgVehEntrada = "2019-07-19 17:38:10";
+        $vehicleprog->ProgVehSalida = "2019-07-20 17:38:10";
         $vehicleprog->FK_ProgVehiculo = "1";
         $vehicleprog->FK_ProgConductor = "2";
         $vehicleprog->FK_ProgAyudante = "4";

@@ -41,19 +41,19 @@
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
                                                 </div>
-                                                <div class="col-md-6 form-group">
+                                                {{-- <div class="col-md-6 form-group">
                                                     <label for="ClienteInputNombre" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.clientnombrecorto') }}
                                                     </label>
                                                     <small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliShortname" class="form-control" id="ClienteInputNombre" maxlength="100" required value="{{ old('CliShortname') }}">
-                                                </div>
-                                                <div class="col-md-12 form-group">
+                                                </div> --}}
+                                                <div class="col-md-6 form-group">
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
-                                                <div class="col-md-6 form-group">
+                                                {{-- <div class="col-md-6 form-group">
                                                     <label for="CliRut" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientrut') }}</b>" data-content="{{ trans('adminlte_lang::message.clientrut-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.clientrut') }}
@@ -100,7 +100,7 @@
                                                     </label>
                                                     <small class="help-block with-errors"></small>
                                                     <input type="file" name="CliCertificaionComercial2" class="form-control" id="CliCertificaionComercial2" accept=".pdf" data-accept="pdf" data-filesize="5120">
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div id="step-2" class="">
@@ -113,7 +113,7 @@
                                                     <input type="text" class="form-control" id="sedeinputname" name="SedeName" maxlength="128" value="{{ old('SedeName') }}" required>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="sedeinputemail">{{ trans('adminlte_lang::message.email') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="sedeinputemail">Correo electrónico de la Sede</label><small class="help-block with-errors">*</small>
                                                     <input type="email" class="form-control" id="sedeinputemail" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}" name="SedeEmail" maxlength="128" value="{{ old('SedeEmail') }}" required>
                                                 </div>
                                                 <div class="form-group col-md-6">
@@ -136,14 +136,14 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 form-group">
+                                                <div class="col-md-6">
                                                     <label for="sedeinputcelular">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <span class="input-group-addon">(+57)</span>
                                                         <input type="text" class="form-control mobile" id="sedeinputcelular" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" name="SedeCelular" data-minlength="12" value="{{ old('SedeCelular') }}" required>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
@@ -174,7 +174,7 @@
                                                     <h2>{{ trans('adminlte_lang::message.personaltitleh2') }}</h2>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientarea-info') }}">
+                                                    <label for="AreaName" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientarea-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.areaname') }}
                                                     </label>
@@ -182,7 +182,7 @@
                                                     <input type="text" class="form-control inputText" id="AreaName" name="AreaName" maxlength="128" required value="{{ old('AreaName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcargo-info') }}">
+                                                    <label for="AreaName" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.clientcargo-info') }}">
                                                         <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
                                                         {{ trans('adminlte_lang::message.cargoname') }}
                                                     </label>
@@ -216,7 +216,10 @@
                                                     <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="PersEmail">{{ trans('adminlte_lang::message.email') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="PersEmail" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Correo electrónico de la Persona de Contacto</b>" data-content="Este dato es importante para que la persona de contacto pueda recibir las novedades con relacion a sus residuos y solicitudes de servicio... <br>Si la persona de contacto no cuenta con una dirección de correo electrónico también puede escribir acá el correo electrónico con el que se registro al sistema <b>SiReS</b>.">
+                                                        <i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
+                                                        Correo electrónico del Contacto
+                                                    </label><small class="help-block with-errors">*</small>
                                                     <input type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
                                                     
                                                 </div>

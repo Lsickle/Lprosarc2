@@ -48,25 +48,33 @@
 								</form>
 							@endif
 						@endif --}}
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PersInter1))
-							@if(Route::currentRouteName() === 'cliente-show')
-								<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
-							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && Route::currentRouteName() !== 'cliente-show')
-								<a href="/clientes/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+						@endif
+						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
+							@if($cliente->CliStatus=='Autorizado')
+								<a href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-danger pull-right"><i class="fas fa-edit"></i><b>Bloquear</b></a>
+							@else
+								<a href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-success pull-right"><i class="fas fa-edit"></i><b>Autorizar</b></a>
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center textolargo">{{$cliente->CliShortname}}</h3>
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+						<h3 class="profile-username text-center textolargo">{{$cliente->CliShortname}}</h3>
+					@else
+						<h3 class="profile-username text-center textolargo">{{$cliente->CliName}}</h3>
+					@endif
 					<ul>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliName}}</p>">{{$cliente->CliName}}</a>
 						</li>
+						@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliShortname}}</p>">{{$cliente->CliShortname}}</a>
 						</li>
+						@endif
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> <a class="pull-right">{{$cliente->CliNit}}</a>
 						</li>
@@ -380,6 +388,7 @@
 						<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
 					</div> 
 				</div>
+				@if(isset($Requerimientos))
 				<form action="/requeri-client/{{$Requerimientos->ID_RequeCli}}" method="POST">
 					@csrf
 					@method('PUT')
@@ -430,6 +439,7 @@
 						<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
 					</div>
 				</form>
+				@endif
 			</div>
 		</div>
 	</div>

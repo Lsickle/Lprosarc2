@@ -61,7 +61,7 @@ return [
     'profileedit'             => 'Edición de Perfil',
     'signout'                 => 'Salir',
     'landingdescription'      => 'Un laravel 5 paquete que cambia de forma predeterminada Laravel scaffolding/boilerplate a la plantilla AdminLTE con Bootstrap 3.0 y la página de destino Pratt',
-    'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquet landing page - Uso de Pratt',
+    'landingdescriptionpratt' => 'Acacha AdminLTE laravel tema de paquete landing page - Uso de Pratt',
     'description'             => 'Descripción',
     'showcase'                => 'Escaparate',
     // 'contact'                 => 'Contacto',
@@ -299,13 +299,13 @@ return [
     'clientNIT'               => 'NIT',
     'clirazonsoc'             => 'Razón Social',
     'clientnombrecorto'       => 'Nombre Corto',
-    'clientcamaracomercio'    => 'Camara de Comercio',
+    'clientcamaracomercio'    => 'Cámara de Comercio',
     'clientrut'               => 'Rut',
     'clientbankcertification' => 'Certificación Bancaria',
     'clientlegalrepresentative'     => 'Representante Legal',
     'clientcommercialcertification' => 'Certificación Comercial',
-    'clientarea-info'         => 'Escriba el nombre del área en la que esta la persona de contacto.',
-    'clientcargo-info'        => 'Escriba el nombre del cargo que ocupa la persona de contacto.',
+    'clientarea-info'         => 'Escriba el nombre del área en la que esta la persona de contacto. <b>(</b><i> debe escribir solo letras en este campo</i><b>)</b>',
+    'clientcargo-info'        => 'Escriba el nombre del cargo que ocupa la persona de contacto. <b>(</b><i> debe escribir solo letras en este campo</i><b>)</b>',
     'clientrut-info'                => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> del Rut.',
     'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio.',
     'clientbankcertification-info'          => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>.',
@@ -320,7 +320,7 @@ return [
     'contacvehictipomessage'  => 'Tipo de vehículo que esta registrando por ejemplo: Camión, Turbo, Mula, etc...',
     'contacvehiccapacidadmessage'   => 'Kilogramos que logra llevar el vehículo.',
     'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP o una empresa que brinda el transporte a la planta.',
-    'contacclientcategoríamessage2' => 'Después podra registrar más vehículos del traportador.',
+    'contacclientcategoríamessage2' => 'Después podrá registrar más vehículos del transportador.',
     'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social.',
 
     // sede
@@ -346,8 +346,8 @@ return [
     'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
-    'soygener-info'           => 'Al dar clic podrá tener los datos que ya a registrado respecto a su empresa y sus sedes, estos datos crearán un nuevo generador. <br><br><b>NOTA:</b> Este botón aparecera una sola vez así que le aconsejamos que le de clic una vez tenga todos sus datos adecuadamente.',
-    'generaddresssgener'      => 'Dirrecciones de las Sedes del Generador',
+    'soygener-info'           => 'Al dar clic podrá tener los datos que ya a registrado respecto a su empresa y sus sedes, estos datos crearán un nuevo generador. <br><br><b>NOTA:</b> Este botón aparecerá una sola vez así que le aconsejamos que le de clic una vez tenga todos sus datos adecuadamente.',
+    'generaddresssgener'      => 'Direcciones de las Sedes del Generador',
 
     // generador sede
     'gsederegister'           => 'registro de sede',
@@ -407,17 +407,17 @@ return [
     'frequent questions'      => 'Preguntas Frecuentes',
     'question-1-description'  => 'Cada asterisco significa que el campo que lo tiene es de carácter obligatorio y no lo dejara avanzar hasta que lo complete.',
     'question-2-title'        => '¿Por qué no puedo asignar residuos a mi Generador?',
-    'question-2-description'  => 'Los residuos no se podran asignar hasta que hayan sido aprobados por Prosarc S.A. ESP.',
+    'question-2-description'  => 'Los residuos no se podrán asignar hasta que hayan sido aprobados por Prosarc S.A. ESP.',
     'question-4-title'        => 'Soy un generador y no quiero ingresar de nuevo mis datos del registro. ¿Hay otra forma de hacerlo?',
     'question-4-description'  => 'Al dar clic en "Lista de Generadores" aparece en la parte superior un botón que dice "Soy Generador", al pulsarlo todos los datos que usted lleno de su empresa al registrarse pasarán a ser como las de un nuevo generador, sin perder los de su empresa.',
     'question-5-title'        => '¿Para qué necesito ingresar datos de mi personal?',
-    'question-5-description'  => 'En la solicitud de Servicio los va a requerir para que Prosarc S.A. ESP pueda contactar con la persona que le asignó y así saber el futuro de sus residuos.',
-    'question-6-title'        => '¿Por qué no puede marcar los requerimientos de los reiduos?',
+    'question-5-description'  => 'Se requieren para que Prosarc S.A. ESP pueda contactar con la persona que el Cliente asignó a la solicitud de Servicio y así mantenerlo al tanto sobre el proceso de sus residuos.',
+    'question-6-title'        => '¿Por qué no puede marcar los requerimientos de los residuos?',
     'question-6-description'  => 'Los requerimientos los habilita Prosarc S.A. ESP dependiendo del residuo.',
     'question-7-title'        => '¿Cómo puedo saber en que paso va mi Solicitud de Servicio sin tener que llamar a Prosarc S.A. ESP?',
-    'question-7-description'  => 'Cada nuevo cambio que tenga su Solicitud de Servicio adentro de Prosarc S.A. ESP, se le notificará con un correo electrónico automatico.',
-    'question-8-title'        => '¿Dónde puedo ver las fotos y/o videos que requerí en la Solicitud de Servicio?',
-    'question-8-description'  => 'En la Solicitud de Sevicio en "Ver más", luego yendo a la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o videos una vez que el residuos haya sido tratado.',
+    'question-7-description'  => 'Cada nuevo cambio que haya con el proceso de su Solicitud de Servicio se le notificará mediante un correo electrónico automáticamente.',
+    'question-8-title'        => '¿Dónde puedo ver las fotos y/o vídeos que pedí en la Solicitud de Servicio?',
+    'question-8-description'  => 'En la lista de Solicitudes de Servicio debe hacer click en el botón "Ver más", luego en la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o vídeos una vez que el residuos haya sido tratados.',
 
     // departamento
     'departamento'            => 'Departamento',
@@ -602,7 +602,7 @@ return [
     'nameCorto-contacto'      => 'Nombre corto del Contacto sino tiene coloque la Razón Social.',
 
     // info-vehiculo
-    'vehicle-tipo'            =>'Tipo de vehículo que esta registrando Ejm: Volqueta,Furgón,Turbo, etc...',
+    'vehicle-tipo'            =>'Tipo de vehículo que esta registrando Ejm: Volqueta, Furgón, Turbo, etc...',
 
     //Solicitud residuos
     'solsertitle'             => 'Solicitudes de servicios',
@@ -766,17 +766,17 @@ return [
     'solresrespel'            => 'Residuo de la Solicitud de Servicio',
 
     // recursos
-    'recursostratamiento'     => 'En este espacio apareceran las Fotos y Videos que usted haya requerido, una vez que el tratamiento se haya efectuado',
+    'recursostratamiento'     => 'En este espacio aparecerán las Fotos y Vídeos que usted haya requerido, una vez que el tratamiento se haya efectuado',
     'recursos'                => 'Recursos',
     'recursoFoto'             => 'Fotos',
-    'recursoVideo'            => 'Videos',
+    'recursoVideo'            => 'Vídeos',
     'recampliarfoto'          => 'Ampliar Imagen',
     'recdowloadfoto'          => 'Descargar Imagen',
     'recdeletefoto'           => 'Eliminar Imagen',
     'recaddfoto'              => 'Agregar Foto',
-    'recdowloadvideo'         => 'Descargar Video',
+    'recdowloadvideo'         => 'Descargar Vídeo',
     'recdeletevideo'          => 'Eliminar Imagen',
-    'recaddvideo'             => 'Agregar Video',
+    'recaddvideo'             => 'Agregar Vídeo',
 
     //Contratos
     'contracttitle'           => 'Contratos',
@@ -794,5 +794,5 @@ return [
     'contractnotifydescript'  => 'Indique cuantos (días, semanas o meses) anteriores quiere recibir una notificación de la vigencia del documento.',
 
     // Name PDF
-    'generatemanicargpdf'     => 'Manifieto de Carga',
+    'generatemanicargpdf'     => 'Manifiesto de Carga',
 ];

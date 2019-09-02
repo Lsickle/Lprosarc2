@@ -18,9 +18,9 @@
 						<table id="clientesTable" class="table table-compact table-bordered table-striped">
 							<thead>
 							<tr>
+								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 								<th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
 								<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
-								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 								<th>Comercial Asignado</th>
 								@endif
@@ -30,15 +30,15 @@
 							<tbody onload="renderTable()" id="readyTable">
 							@foreach($clientes as $cliente)
 							<tr style="{{$cliente->CliDelete === 1 ? 'color: red;' : ''}}">
-							<td>{{$cliente->CliShortname}}</td>
-								<td>{{$cliente->CliName}}</td>
 								<td>{{$cliente->CliNit}}</td>
-								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
+								<td>{{$cliente->CliName}}</td>
+								<td>{{$cliente->CliShortname}}</td>
 								<td>
-									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, `{{$cliente->CliComercial}}`)"><i class="fas fa-marker"></i></a>
+								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
+									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, {{intval($cliente->CliComercial)}}, `{{$cliente->CliShortname}}`)"><i class="fas fa-marker"></i></a>
+								@endif
 									{{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
 								</td>
-								@endif
 								<td>
 									<a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 								</td>
@@ -57,8 +57,11 @@
 @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 @section('NewScript')
 	<script>
-		function changeComercial(slug, idPers){
-			var selected = '';
+		function changeComercial(slug, idPers, clishorname){
+			var selected = idPers;
+			var personal = [];
+			var personals = <?php echo json_encode($personals);  ?>;
+
 			$('#divchangeComercial').empty();
 			$('#divchangeComercial').append(`
 				<form role="form" action="/clientes/`+slug+`/changeComercial" method="POST" enctype="multipart/form-data" data-toggle="validator">
@@ -71,14 +74,18 @@
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
 								</div>
 								<div class="modal-body">
-									<div class="form-group">
+									<div class="form-group has-feedback">
 										<label>Seleccione el comercial</label><small class="help-block with-errors">*</small>
 										<select name="Comercial" id="Comercial" class="form-control" required>
 											<option value="">Seleccione...</option>
-											@foreach($personals as $personal)
-												<option value="{{$personal->ID_Pers}}">{{$personal->PersFirstName.' '.$personal->PersLastName}}</option>
-											@endforeach
+											
 										</select>
+									</div>
+									<div class="form-group has-feedback">
+										<span data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre Corto del Cliente</b>" data-content="el <b><i>Nombre Corto</i></b> es para facilitar el manejo interno de la informacion del cliente... en este campo solo debe escribir caracteres alfanumericos <b>(no se permiten espacios)</b>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>
+									    <label for="modalCliShortname" class="control-label">Nombre Corto</label>
+									    <small class="help-block with-errors">*</small>
+									      <input type="text" pattern="^[_A-z0-9]{1,}$" data-pattern-error="solo se admiten letras y numeros" maxlength="15" class="form-control" placeholder="1000hz" required value="`+clishorname+`" name="CliShortname" id="modalCliShortname">
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -90,6 +97,15 @@
 				</form>
 			`);
 			// Selects();
+			personals.forEach(function(value, index) {
+			    personal[index] = value;
+				if (personal[index]['ID_Pers'] == idPers) {
+					$('#Comercial').append(`<option selected value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
+			    }else{
+			    	$('#Comercial').append(`<option value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
+			    }			    
+			});
+			popover();
 			$('form').validator('update');
 			$('#changeComercial').modal();
 		}

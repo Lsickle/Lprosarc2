@@ -4,7 +4,7 @@ namespace App;
 
 class Permisos{
 
-	const Jefes = ['Programador', 'AdministradorPlanta', 'JefeLogistica', 'JefeOperaciones', 'AdministradorBogota', 'JefeComercial'];
+	const Jefes = ['Programador','AdministradorPlanta','JefeLogistica','JefeOperaciones','AdministradorBogota','JefeComercial'];
 	/* Using ->
 		partials/controlsidebar
 		PersonalInternoController::Index
@@ -15,7 +15,7 @@ class Permisos{
 		Contactos/showProveedor
 		partials/mainheader
 	*/
-	const ProgVehic1 = ['Programador', 'JefeLogistica'];
+	const ProgVehic1 = ['Programador','JefeLogistica'];
 	/* Using ->
 		ProgramacionVehicle/create
 		ProgramacionVehicle/edit
@@ -24,7 +24,7 @@ class Permisos{
 		VehicleController::create,edit
 		solicitud-serv/show
 	*/
-	const ProgVehic2 = ['Programador', 'JefeLogistica', 'AsistenteLogistica'];
+	const ProgVehic2 = ['Programador','JefeLogistica','AsistenteLogistica'];
 	/* Using ->
 		ProgramacionVehicle/index
 		ProgramacionVehicle/create
@@ -33,7 +33,7 @@ class Permisos{
 		solicitud-serv/show
 		SolicitudServicioController::changestatus
 	*/
-	const PersInter1 = ['Programador', 'AdministradorPlanta','AdministradorBogota'];
+	const PersInter1 = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
 		partials/controlsidebar
 		permisos/index
@@ -46,12 +46,12 @@ class Permisos{
 		CargoInternoController::create,edit
 		partials/controlsidebar
 	*/
-	const SolSer1 = ['Programador', 'JefeOperaciones', 'Supervisor'];
+	const SolSer1 = ['Programador','JefeOperaciones','Supervisor'];
 	/*Using ->
 		solicitud-serv/show
 		recursos/show
 	*/
-	const SolSer2 = ['Programador', 'JefeOperaciones', 'Supervisor', 'JefeLogistica', 'AsistenteLogistica'];
+	const SolSer2 = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica'];
 	/*Using ->
 		solicitud-serv/show
 	*/
@@ -118,7 +118,7 @@ class Permisos{
 		solicitud-serv/show
 		sclientes/sedes/show
 	*/
-	const TODOPROSARC = ['Programador', 'AdministradorPlanta', 'Hseq', 'JefeLogistica', 'AsistenteLogistica', 'Conductor', 'JefeOperaciones', 'Supervisor', 'AdministradorBogota', 'JefeComercial', 'Tesorería', 'Comercial', 'AsistenteComercial'];
+	const TODOPROSARC = ['Programador','AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','JefeComercial','Tesorería','Comercial','AsistenteComercial'];
 	/* Using ->
 		cliencontoller:index,show,edit
 		AreaInternoController::index
@@ -131,9 +131,13 @@ class Permisos{
 		ProgramacionVehicle/index
 		clientes/show
 	*/
-	const CLIENTEYADMINS = ['Programador', 'Cliente', 'AdministradorPlanta', 'AdministradorBogota'];
+	const CLIENTEYADMINS = ['Programador','Cliente','AdministradorPlanta','AdministradorBogota'];
 	/* Using ->
 		scliencontroller:create
+	*/
+	const AREALOGISTICA = ['AsistenteLogistica','JefeLogistica'];
+	/* Using ->
+		ProgramacionVehicle/edit
 	*/
 	const ASISTENTELOGISTICA = ['AsistenteLogistica'];
 	/* Using ->
@@ -154,13 +158,14 @@ class Permisos{
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
+		clientes::show
 	 */
 	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
 	/* Using ->
 		contratos/index
-		ContratoController::create, edit
+		ContratoController::create,edit
 	 */
-	const ComercialYJefeComercial = ['AdministradorBogota', 'JefeComercial', 'Comercial'];
+	const ComercialYJefeComercial = ['AdministradorBogota','Comercial'];
 	/* Using ->
 		respel/edit
 	 */
@@ -169,12 +174,17 @@ class Permisos{
 	/* Using ->
 		clientcontoller::index
 	*/
-	const AsigComercial = ['Programador', 'AdministradorBogota'];
+
+	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota',];
+	/* Using ->
+		clientcontoller::index
+	*/
+	const AsigComercial = ['Programador','AdministradorBogota'];
 	/* Using ->
 		clientes/index
 	*/
 
-	const JefeOperaciones = ['Programador', 'JefeOperaciones'];
+	const JefeOperaciones = ['Programador','JefeOperaciones'];
 	/*Using ->
 		pretratamientos/edit
 		pretratamientocontoller::destroy
@@ -183,21 +193,32 @@ class Permisos{
 	/* Using->
 		VehicProgController::index
 	 */
+
+	const GrupoEdicionRespel = ['Cliente','Programador','JefeOperaciones','AdministradorBogota','JefeComercial','Comercial','JefeLogistica','AsistenteLogistica'];
+	/* Using->
+		respelcontroller::edit
+	 */
+
+	const GrupoEvaluacionRespel = ['Programador','JefeOperaciones','AdministradorBogota','JefeComercial','Comercial'];
+	/* Using->
+		respelcontroller::edit
+	 */
+
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const PERSONAL = ['Programador','AdministradorPlanta','JefeLogistica','JefeOperaciones','AdministradorBogota'];
-	const PROGRAMACIONES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
-	const VEHICULOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','AdministradorBogota'];
-	const CONTACTOS = ['Programador','AdministradorPlanta','JefeLogistica','AdministradorBogota','JefeOperaciones'];
-	const CONTRATOS = ['Programador','AdministradorPlanta','AdministradorBogota','Comercial','AsistenteComercial'];
-	const LISTACLIENTES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
-	const LISTAGENERADORES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
-	const LISTARESIDUOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
-	const TRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
+	const PROGRAMACIONES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
+	const VEHICULOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','AdministradorBogota','JefeComercial'];
+	const CONTACTOS = ['Programador','AdministradorPlanta','JefeLogistica','AdministradorBogota','JefeOperaciones','JefeComercial'];
+	const CONTRATOS = ['Programador','AdministradorPlanta','AdministradorBogota','Comercial','AsistenteComercial','JefeComercial'];
+	const LISTACLIENTES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
+	const LISTAGENERADORES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
+	const LISTARESIDUOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
+	const TRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
 	const PERSONALCLIENTE = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
-	const SERVICIOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
-	const PRETRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial'];
+	const SERVICIOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
+	const PRETRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
 
 }
 

@@ -103,17 +103,21 @@
 							<li class="list-group-item">
 								<b>Estado de aprobación</b>
 								<select name="RespelStatus" class="form-control">
-									<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuspendiente') }}</option>
-									<option {{$Respels->RespelStatus == 'Evaluado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusevaluated') }}</option>
-									<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
-									<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
-									<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
-									<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Pendiente') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuspendiente') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Evaluado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Evaluado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusevaluated') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))||($Respels->RespelStatus == 'Cotizado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Cotizado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuscotizado') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeComercial)||in_array(Auth::user()->UsRol2, Permisos::JefeComercial))||($Respels->RespelStatus == 'Aprobado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
+									{{-- <option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Aceptado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Aceptado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaceptado') }}</option> --}}
+									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'Revisado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Revisado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrevisado') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Rechazado') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'Falta TDE') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Incompleto') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))||($Respels->RespelStatus == 'Vencido') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
 								</select>
 							</li>
 							<li class="list-group-item">
 								<label>Observaciones</label>
-								<textarea maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$Respels->RespelStatusDescription}}</textarea>
+								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$Respels->RespelStatusDescription}}</textarea>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								{{-- hoja de seguridad --}}
@@ -198,7 +202,9 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
 						<div class="box-tools pull-right">
-						 <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button>
+							@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+							    <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button> 
+							@endif
 						</div>
 					</div>
 
@@ -208,7 +214,7 @@
 						<!-- nav-tabs-custom -->
 						<div class="nav-tabs-custom" style="box-shadow:3px 3px 5px grey; margin-bottom: 0px;">
 							<ul class="nav nav-tabs">
-								<li class="nav-item">
+								<li class="nav-item active">
 									<a class="nav-link" href="#Residuopane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.respeltabtittle') }}</a>
 								</li>
 								<li class="nav-item">
@@ -220,34 +226,78 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 								</li>
 							</ul>
 							<!-- nav-content -->
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade" id="Residuopane">
+								<div class="tab-pane fade in active" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade " id="Tratamientospane">
+								<div class="tab-pane fade" id="Tratamientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)				
+										@include('layouts.respel-comercial.respel-tratamiento-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade " id="Pretratamientospane">
+								<div class="tab-pane fade" id="Pretratamientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@include('layouts.respel-comercial.respel-pretratEvaluacion-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Requerimientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@include('layouts.respel-comercial.respel-requerimiento-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
-								<div class="tab-pane fade in active" id="Tarifaspane">
+								<div class="tab-pane fade" id="Tarifaspane">
+									<script type="text/javascript">
+										var contadorRango = [];
+									</script>
+									@php
+										$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@php
+										$contadorRango = [];
+										$last = 0;
+										@endphp	
+										
+										@include('layouts.respel-comercial.respel-tarifas-edit')
+										@php
+											$contadorphp = $contadorphp+1;
+										@endphp
+									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
 								<div id="modalrango"></div>
@@ -261,6 +311,13 @@
 						<button class="btn btn-success" type="submit" style="margin-right:5em"><i class="fa fa-check"></i>{{ trans('adminlte_lang::LangRespel.updaterespelButton') }}</button>
 						<a class="btn btn-danger btn-close pull-right" style="margin-right: 2rem;" href="{{ route('respels.index') }}"><i class="fas fa-times"></i> {{ trans('adminlte_lang::LangTratamiento.cancel') }}</a>
 					</div>
+					{{-- @php
+					foreach ($contadorRango as $key => $value) {
+						foreach ($value as $key2 => $value2) {
+							echo $value2;
+						}
+					}
+					@endphp --}}
 					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->
@@ -273,16 +330,17 @@
 @endsection
 @section('NewScript')
 	<script type="text/javascript">
-		var contador = 0;
-		var contadorRango = [];
+		var contador = {{isset($contadorphp)?$contadorphp:"0"}};
+		// var contadorRango = [];
 
+		
 		function SelectsRangoTipo(id){
 			$('#typerangeSelect'+id).select2({
 				allowClear: true,
 				tags: true,
 				width: 'resolve',
 				width: '100%',
-				theme: "classic"
+				theme: "classic",
 			});
 		}
 		/*desactivar el envio de formulario al usar el boton de agregar opcion*/
@@ -296,14 +354,6 @@
 			$("#addrangeButton"+id).click(function(event) {
 			  event.preventDefault();
 			});
-		}
-		function validarSwitch(){
-			if ({{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial) ? '' : 'true' }}) {
-				Switch1();
-				// $('.testswitch').bootstrapSwitch('disabled',true);
-			}else{
-				Switch1();
-			}
 		}
 		function recargarAjaxTratamiento(contador){
 			selector = $("#opciontratamiento"+contador);
@@ -345,7 +395,7 @@
 		}
 		function AgregarOption(){
 			contadorRango[contador] = [];
-			contadorRango[contador][0]= 0;
+			contadorRango[contador][0] = 0;
 			var tratamiento = `@include('layouts.respel-comercial.respel-tratamiento')`;
 			var pretratamiento = `@include('layouts.respel-comercial.respel-pretratEvaluacion')`;
 			var requerimiento = `@include('layouts.respel-comercial.respel-requerimiento')`;
@@ -356,13 +406,13 @@
 			$("#Tarifaspane").append(tarifas);
 			$("#evaluacioncomercial").validator('update');
 			popover();
-			validarSwitch();
 			ChangeSelect();
 			SelectsRangoTipo(contador);
 			Selects();
 			Switch2();
 			Switch3();
 			Switch6();
+			Switch7();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
 
@@ -396,9 +446,13 @@
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
 					$("#rango"+opcion+"Container").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
-					validarprevent(opcion);
+					// validarprevent(opcion);
 					last=last+1
 					contadorRango[opcion][last] = last;
+				}else{
+					$("#modalrango").empty();
+					$("#evaluacioncomercial").validator('update');
+					// validarprevent(opcion);
 				}
 			});
 		}
@@ -406,11 +460,11 @@
 			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
 			$("#evaluacioncomercial").validator('update');
+			validarprevent(opcion);
 		}
 		$(document).ready(function(){
-			validarSwitch();
-			Selects();
 			ChangeSelect();
+			Selects();
 		});
 	</script>
 @endsection
