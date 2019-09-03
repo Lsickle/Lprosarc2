@@ -94,7 +94,7 @@ class SolicitudServicioController extends Controller
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
             $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
-            // return $Requerimientos[0]->RequeCliBascula;
+            // return $Requerimientos;
 			if ($Cliente->CliStatus=="Bloqueado") {
 				abort(403, 'Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio... Para mas detalles comuníquese con su Asesor Comercial');
 			}else{
@@ -243,13 +243,16 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
-				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
-					$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+				if (isset($request['SolResCantiUnidad'][$Generador][$y])&&(isset($request['SolResCantiUnidad'][$Generador][$y]))) {
+					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
+						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+					}
+					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
+						$SolicitudResiduo->SolResTypeUnidad = "Litros";
+					}
+					$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
 				}
-				else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
-					$SolicitudResiduo->SolResTypeUnidad = "Litros";
-				}
-				$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+				
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
 						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
@@ -295,6 +298,8 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResFotoTratamiento = $request['SolResFotoTratamiento'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoDescargue_Pesaje = $request['SolResVideoDescargue_Pesaje'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoTratamiento = $request['SolResVideoTratamiento'][$Generador][$y];
+				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
+				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
 				$SolicitudResiduo->save();
 			}

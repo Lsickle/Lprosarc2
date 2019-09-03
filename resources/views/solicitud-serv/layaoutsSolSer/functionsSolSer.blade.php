@@ -233,6 +233,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 		},
 		success: function(res){
 			if(res != ''){
+				// console.log(res);
 				if(res.ReqFotoDescargue === 1){
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
@@ -278,6 +279,37 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
+				}
+				switch (res.Tarifatipo) { 
+					case 'Kg': 
+						$('#RespelCantidadTipo'+id_div+contador).hide();
+						break;
+					case 'Unid': 
+						$('#RespelCantidadTipo'+id_div+contador).hide();
+						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
+						$('#SolResTypeUnidad'+id_div+contador).empty();
+						$('#SolResTypeUnidad'+id_div+contador).append('<option value="99">Unidad</option>');
+						Selects();
+						$('#RespelCantidadTipo'+id_div+contador).show();
+						break;
+					case 'Lt': 
+						$('#RespelCantidadTipo'+id_div+contador).hide();
+						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
+						$('#SolResTypeUnidad'+id_div+contador).empty();
+						$('#SolResTypeUnidad'+id_div+contador).append('<option value="98">Litros</option>');
+						Selects();
+						$('#RespelCantidadTipo'+id_div+contador).show();
+
+						break;		
+					default:
+						$('#RespelCantidadTipo'+id_div+contador).hide();
+						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
+						$('#SolResTypeUnidad'+id_div+contador).empty();
+						$('#SolResTypeUnidad'+id_div+contador).append('<option>Seleccione...</option>');
+						$('#SolResTypeUnidad'+id_div+contador).append('<option value="98">Litros</option>');
+						$('#SolResTypeUnidad'+id_div+contador).append('<option value="99">Unidad</option>');
+						Selects();
+						$('#RespelCantidadTipo'+id_div+contador).show();
 				}
 			}
 			else{
