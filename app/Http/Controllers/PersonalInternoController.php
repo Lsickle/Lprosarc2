@@ -25,7 +25,7 @@ class PersonalInternoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(){
-		if(in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes)){
+		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 			$Personals = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
@@ -59,7 +59,7 @@ class PersonalInternoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create(){
-		/*Validacion para personas autorisadas a crear una persona*/
+		/*Validacion para personas autorizadas a crear una persona*/
 		if(in_array(Auth::user()->UsRol, Permisos::PersInter1) || in_array(Auth::user()->UsRol2, Permisos::PersInter1)){
 			$Sedes = DB::table('sedes')
 				->select('SedeSlug', 'SedeName')
