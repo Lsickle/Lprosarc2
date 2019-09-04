@@ -150,6 +150,11 @@
 											<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
 									</select>
+									@foreach($vehiculos as $vehiculo)
+										@if($vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo)
+											<input name="FK_ProgVehiculo" hidden aria-hidden="true" value="{{$vehiculo->ID_Vehic}}">
+										@endif
+									@endforeach
 								</div>
 								<div class="form-group col-md-6">
 									<label for="progVehKm">{{ trans('adminlte_lang::message.progvehickm') }}</label>
@@ -164,6 +169,11 @@
 											<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
 									</select>
+									@foreach($conductors as $conductor)
+										@if($conductor->ID_Pers == $programacion->FK_ProgConductor)
+											<input name="FK_ProgConductor" hidden aria-hidden="true" value="{{$conductor->ID_Pers}}">
+										@endif
+									@endforeach
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>

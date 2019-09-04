@@ -34,7 +34,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						/*PESTAÑA DE CARGOS DE PROSARC*/
 						->addIf(in_array(Auth::user()->UsRol, Permisos::CARGOS) || in_array(Auth::user()->UsRol2, Permisos::CARGOS), Link::toUrl('/cargosInterno', '<i class="fas fa-tools"></i> <span>'.trans('adminlte_lang::message.MenuPersCarg').' </span>'))
 						/*PESTAÑA DE PERSONAL*/
-						->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONAL) || in_array(Auth::user()->UsRol2, Permisos::PERSONAL),(Link::toUrl('/personalInterno', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>')))
+						->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC),(Link::toUrl('/personalInterno', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal').'</span>')))
 						->addClass('treeview-menu')
 					)
 				)

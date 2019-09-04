@@ -8,18 +8,21 @@
 		</select>
 	</div>
 	<div id="RespelData`+id_div+contadorRespel[id_div]+`">
-		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypeunidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypeunidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypeunidad') }}</label>
-			<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
-				<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-				<option value="99">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
-				<option value="98">{{ trans('adminlte_lang::message.solserunidad2') }}</option>
-			</select>
+		<div id="RespelCantidadTipo`+id_div+contadorRespel[id_div]+`">
+			<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypeunidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypeunidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypeunidad') }}</label>
+				<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
+					<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+					<option value="99">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
+					<option value="98">{{ trans('adminlte_lang::message.solserunidad2') }}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }}</label>
+				<input type="text" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
+			</div>
 		</div>
-		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }}</label>
-			<input type="text" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
-		</div>
+		
 		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
 			<small class="help-block with-errors">*</small>
@@ -105,6 +108,26 @@
 						</div>
 					</label>
 				</div>
+			</div>
+			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
+				<div class="form-group col-md-6">
+					<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
+						Devolución Embalaje
+						<div style="width: 100%; height: 34px;">
+							<input type="checkbox" class="embalajeswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResDevolucion1`+id_div+contadorRespel[id_div]+`" name="SolResDevolucion[`+id_div+`][]" hidden value="0">
+						</div>
+					</label>
+				</div>
+				{{-- <div class="form-group col-md-6">
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Cantidad a devolver</b>" data-content="<p style='width: 50%'> Cantidad de embalajes enviados y que deben ser devueltos al respectivo cliente o viceversa</p>">
+						<label for="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`">Cantidad a devolver</label>
+						<div style="width: 100%; height: 34px;">
+							<input type="text" class="form-control" id="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolCantidad1`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResDevolCantidad1`+id_div+contadorRespel[id_div]+`" name="SolResDevolCantidad[`+id_div+`][]" hidden value="0">
+						</div>
+					</label>
+				</div> --}}
 			</div>
 		</div>
 		<br>

@@ -72,6 +72,75 @@
         #contenedor_carga{
             background-image: linear-gradient(#003152,#003152,#008eda);
         }
+
+        
+        .loader {
+          /*position: absolute;*/
+          margin-left: 1em;
+          float: right;
+          top: calc(50% - 12px);
+          left: calc(50% - 12px);
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          perspective: 800px;
+        }
+
+        .inner {
+          position: absolute;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;  
+        }
+
+        .one {
+          left: 0%;
+          top: 0%;
+          animation: rotate-one 1s linear infinite;
+          border-bottom: 3px solid #EAECFF;
+        }
+
+        .two {
+          right: 0%;
+          top: 0%;
+          animation: rotate-two 1s linear infinite;
+          border-right: 3px solid #85FF93;
+        }
+
+        .three {
+          right: 0%;
+          bottom: 0%;
+          animation: rotate-three 1s linear infinite;
+          border-top: 3px solid #0505FF;
+        }
+
+        @keyframes rotate-one {
+          0% {
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+          }
+          100% {
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+          }
+        }
+
+        @keyframes rotate-two {
+          0% {
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+          }
+          100% {
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+          }
+        }
+
+        @keyframes rotate-three {
+          0% {
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+          }
+          100% {
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+          }
+        }
     </style>
     {{-- script de idioma --}}
     <script>
@@ -151,7 +220,8 @@
         </main>
     </div>
     <script>
-        window.onload = function(){ 
+        window.onload = function(){
+            var loginButton = document.getElementById('mySubmitButton');
             $('#contenedor_carga').css('opacity', '0');
             $('#contenido').fadeIn(2000);
             setTimeout(function(){
@@ -162,8 +232,36 @@
             var scala = (ancho / (304));
             var capchita = document.getElementsByClassName('g-recaptcha')[0];
             capchita.style.transform = "scale("+scala+")";
+            loginButton.removeAttribute("disabled");
         };
     </script>
-
+    {{-- script para deshabilitar el boton submit cuando se envia el formaulario --}}
+    <script type="text/javascript">
+      var wasSubmitted = false;    
+        function checkBeforeSubmit(){
+          if(!wasSubmitted) {
+            wasSubmitted = true;
+            return wasSubmitted;
+          }
+          return false;
+        }
+        function disabledLoginButton() {
+            var loginButton = document.getElementById('mySubmitButton');
+            var a = document.forms["LoginForm"]["email"].value;
+            var b = document.forms["LoginForm"]["password"].value;
+            if (a !== null && a !== "", b !== null && b !== "") {
+                if (validateEmail(a)) {
+                    document.getElementById("mySubmitButton").innerHTML = "<div class='loader'><div class='inner one'></div><div class='inner two'></div><div class='inner three'></div></div> Iniciando";
+                    loginButton.setAttribute("disabled", true);
+                    /*se envia el formulario con js para que la funcion sirve en google chrome*/
+                    document.forms["LoginForm"].submit();
+                }
+            }
+        } 
+        function validateEmail(email) {
+          var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        }
+    </script>
 </body>
 </html>

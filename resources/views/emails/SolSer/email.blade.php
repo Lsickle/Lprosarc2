@@ -65,7 +65,7 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
 
 @if ($mail->SolSerStatus === 'Conciliado' || $mail->SolSerStatus === 'No Conciliado')
     @php
-        $end = 'Por favor dar clic en el botón "'.$nameButton.'" para ver más detalles.';
+        $end = 'Por favor dar clic en el botón para ver más detalles.';
     @endphp
 @else
     @php

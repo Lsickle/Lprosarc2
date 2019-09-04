@@ -21,7 +21,7 @@
 								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 								<th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
 								<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
-								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
+								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
 								<th>Comercial Asignado</th>
 								@endif
 								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
@@ -33,12 +33,15 @@
 								<td>{{$cliente->CliNit}}</td>
 								<td>{{$cliente->CliName}}</td>
 								<td>{{$cliente->CliShortname}}</td>
+								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
 								<td>
 								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, {{intval($cliente->CliComercial)}}, `{{$cliente->CliShortname}}`)"><i class="fas fa-marker"></i></a>
 								@endif
 									{{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
+
 								</td>
+								@endif
 								<td>
 									<a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
 								</td>

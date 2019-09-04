@@ -94,8 +94,50 @@ class HomeController extends Controller
                 return redirect()->route('vehicle-programacion.index');
                 break;
 
-            case 'value':
-                # code...
+            case 'JefeLogistica':
+                $SolicitudServicios = DB::table('solicitud_servicios')
+                    ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+                    ->where('SolSerDelete', 0)
+                    ->get();
+
+                $SolicitudServiciosProg = DB::table('solicitud_servicios')
+                    ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+                    ->join('progvehiculos', 'solicitud_servicios.ID_SolSer', '=', 'progvehiculos.FK_ProgServi')
+                    ->select('solicitud_servicios.SolSerSlug','solicitud_servicios.ID_SolSer','solicitud_servicios.updated_at','clientes.CliShortname', 'progvehiculos.ProgVehFecha')
+                    ->where('SolSerDelete', 0)
+                    ->where('ProgVehDelete', 0)
+                    ->where('ProgVehEntrada', null)
+                    ->get();
+
+                $Km = DB::table('progvehiculos')
+                    ->select('FK_ProgVehiculo', 'progVehKm', 'ProgVehFecha')
+                    ->where('ProgVehDelete', 0)
+                    ->where('progVehKm', '<>', null)
+                    ->whereBetween('ProgVehFecha', [date('Y-m-d', strtotime("first day of last month")), date('Y-m-d', strtotime("last day of last month"))])
+                    ->orderBy('ProgVehFecha', 'asc')
+                    ->get();
+                setlocale(LC_ALL, "es_CO.UTF-8");
+
+                $Pendientes = count($SolicitudServicios->where('SolSerStatus', 'Pendiente'));
+                $Aprobadas = count($SolicitudServicios->where('SolSerStatus', 'Aprobado'));
+                $Programadas = count($SolicitudServicios->where('SolSerStatus', 'Programado'));
+                $Recibidas = count($SolicitudServicios->where('SolSerStatus', 'Completado'));
+                $Concialiadas = count($SolicitudServicios->where('SolSerStatus', 'Conciliado'));
+                $Tratadas = count($SolicitudServicios->where('SolSerStatus', 'Tratado'));
+                $Certificadas = count($SolicitudServicios->where('SolSerStatus', 'Certificacion'));
+
+
+                $ProgramacionesHoy = $SolicitudServiciosProg->where('ProgVehFecha', '=', date('Y-m-d', strtotime(now())));
+                $ProgramacionesMañana = $SolicitudServiciosProg->where('ProgVehFecha', '=', date('Y-m-d', strtotime(now()."+1 day")));
+
+                $serviciosnoprogramados = DB::table('solicitud_servicios')
+                    ->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
+                    ->where('SolSerDelete', 0)
+                    ->where('SolSerStatus', 'Aprobado')
+                    ->orderBy('solicitud_servicios.updated_at', 'asc')
+                    ->limit(5)
+                    ->get();
+                return view('home', compact('SolicitudServicios', 'SolicitudServiciosProg', 'Km', 'Pendientes', 'Aprobadas', 'Programadas', 'Recibidas', 'Concialiadas', 'Tratadas', 'Certificadas', 'ProgramacionesHoy', 'ProgramacionesMañana', 'serviciosnoprogramados', 'Vehiculos'));
                 break;
 
             case 'value':

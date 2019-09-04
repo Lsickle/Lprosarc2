@@ -256,6 +256,7 @@ class VehicProgController extends Controller
 		if (!$programacion) {
 			abort(404);
 		}
+		// return $request;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
 		$llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
