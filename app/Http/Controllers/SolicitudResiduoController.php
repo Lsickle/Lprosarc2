@@ -118,7 +118,7 @@ class SolicitudResiduoController extends Controller
 		]);
 		switch($SolSer->SolSerStatus){
 			case 'Programado':
-				if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'){
+				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
 				}
@@ -127,14 +127,14 @@ class SolicitudResiduoController extends Controller
 				break;
 			case 'No Conciliado':
 			case 'Completado':
-				if($SolRes->SolResTypeUnidad === 'Litros' || $SolRes->SolResTypeUnidad === 'Unidad'){
-					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResKg');
+				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
 				break;
 			case 'Conciliado':
-				if( $request->input('ValorConciliado') === NULL){
+				if( $request->input('ValorConciliado') == NULL){
 					$SolRes->SolResKgTratado = $request->input('SolResKg');
 				}else{
 					$SolRes->SolResKgTratado = $request->input('ValorConciliado');

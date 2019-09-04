@@ -267,13 +267,17 @@
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 															@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
-																<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																@else
+																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																@endif
 															@else
 																<a style="color: black">
 															@endif
 															<i class="fas fa-marker"></i></a>
 														@endif
-														@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
+														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{-- {{' '.$Residuo->SolResCantiUnidadRecibida}} --}}
 															{{$Residuo->SolResCantiUnidadRecibida  === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 
@@ -285,13 +289,17 @@
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 															@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
-																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$Residuo->SolResKgRecibido}}`)"> 
+																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																@else
+																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																@endif
 															@else
 																<a style="color: black">
 															@endif
 															<i class="fas fa-marker"></i></a>
 														@endif
-														@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
+														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{$Residuo->SolResCantiUnidadConciliada  === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 														@else
 															{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
@@ -415,7 +423,9 @@
 @section('NewScript')
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
-		function addkg(slug, cantidad, cantidadmax){
+		function addkg(slug, cantidad, cantidadmax, tipo){
+			var inputUnid =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>';
+			var inputKg =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResKg" maxlength="5" value="'+cantidad+'" required>';
 			$('#addkgmodal').empty();
 			$('#addkgmodal').append(`
 				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
@@ -461,25 +471,13 @@
 												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
-											</div>
-												@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
-													<div class="form-group col-md-12">
-														<label for="SolResCantiUnidadRecibida">Cantidad Recibida {{$TypeUnidad}}</label>
-														<small class="help-block with-errors">*</small>
-														<input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="{{$Residuo->SolResCantiUnidadRecibida}}" required>
-													</div>
-												@endif
+												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
+									</div>
 												@break
 											@case('No Conciliado')
 											@case('Completado')
-													<label for="SolResKgConciliado">Cantidad Conciliada {{$TypeUnidad}}</label>
-													<small class="help-block with-errors">*</small>
-													@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
-														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="{{$Residuo->SolResCantiUnidadConciliada}}" required>
-													@else
-														<input type="text" class="form-control cantidadmax" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
-													@endif
-											</div>
+													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '<label for="SolResKgConciliado">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="'+cantidad+'" required>')+`
+									</div>
 												@break
 											@case('Conciliado')
 												<label for="SolResKgTratado">Cantidad Tratada</label>
@@ -487,11 +485,11 @@
 												<div class="input-group">
 													<input type="text" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
 													<div class="input-group-btn">
-														<label for="ValorConciliado"><a title="Lo consiliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`)">Tratado</a><label>
+														<label for="ValorConciliado"><a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`, `+tipo+`)">Tratado</a><label>
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
-											</div>
+									</div>
 												@break
 										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
@@ -510,18 +508,10 @@
 					break;
 				case('Completado'):
 				case('No Conciliado'):
-					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
-						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadRecibida}}', rightAlign:false});
-					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
-					@endif
 					break;
 				case('Conciliado'):
-					@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
-						$('.cantidadmax').inputmask({ alias: 'numeric', max:'{{$Residuo->SolResCantiUnidadConciliada}}', rightAlign:false});
-					@else
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
-					@endif
 					break;
 			};
 			$('#editkgResivido').modal();
@@ -530,7 +520,7 @@
 
 		function submit(cantidadmax){
 			$('#conciliadokg').append(`
-				@if($Residuo->SolResTypeUnidad === 'Litros' || $Residuo->SolResTypeUnidad === 'Unidad')
+				@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
 				@else
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
