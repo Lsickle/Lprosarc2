@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class PretratamientoRespel extends Migration
+class CreatePretratamientosRequerimientosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class PretratamientoRespel extends Migration
      */
     public function up()
     {
-        Schema::create('pretratamiento_respel', function (Blueprint $table){
-
-            $table->unsignedInteger('FK_Respel');
-            $table->foreign('FK_Respel')->references('ID_Respel')->on('respels');
+        Schema::create('pretratamientos_requerimientos', function (Blueprint $table) {
+            $table->bigIncrements('ID_RequeCli');
+            $table->unsignedInteger('FK_Req');
+            $table->foreign('FK_Req')->references('ID_Req')->on('requerimientos');
             $table->unsignedInteger('FK_PreTrat');
             $table->foreign('FK_PreTrat')->references('ID_PreTrat')->on('pretratamientos');
-            $table->unsignedInteger('FK_Trat');
-            $table->foreign('FK_Trat')->references('ID_Trat')->on('tratamientos');
-            $table->boolean('Ofertado');
+            $table->boolean('selected');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class PretratamientoRespel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pretratamiento_respel');
+        Schema::dropIfExists('pretratamientos_requerimientos');
     }
 }

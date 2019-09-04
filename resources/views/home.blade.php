@@ -9,12 +9,23 @@
 @section('contentheader_title')
 <div class="text-center"><h2> Bienvenido {{ Auth::user()->name }}</h4></div>
 @endsection
-@if(Auth::user()->UsRol === "JefeLogistica")
-	@include('layouts.homeroles.jefelogistica')
-@endif
-@if(Auth::user()->UsRol === "AsistenteLogistica")
-	@include('layouts.homeroles.asistentelogistica')
-@endif
+@switch(Auth::user()->UsRol)
+    @case('JefeLogistica')
+		@include('layouts.homeroles.jefelogistica')
+        @break
+
+    @case('AsistenteLogistica')
+		@include('layouts.homeroles.asistentelogistica')
+        @break
+
+    @case(2)
+        Second case...
+        @break
+
+    @default
+        Default case...
+@endswitch
+
 <!-- Default box -->
 {{-- <div class="box">
 	<div class="box-header with-border">

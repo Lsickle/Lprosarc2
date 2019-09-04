@@ -7,5 +7,8 @@
 <div style="background-image: url({{ asset('/svg/503.svg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
 </div>
 @endsection
-
-@section('message', __($exception->getMessage() ?: trans('adminlte_lang::message.wewillwork')))
+@if($exception->getMessage())
+	@section('message', $exception->getMessage())
+@else
+	@section('message', trans('adminlte_lang::message.wewillwork'))
+@endif

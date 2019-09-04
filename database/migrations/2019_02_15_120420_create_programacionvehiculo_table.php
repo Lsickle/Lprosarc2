@@ -25,8 +25,8 @@ class CreateProgramacionvehiculoTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('FK_ProgVehiculo')->nullable();
             $table->unsignedInteger('FK_ProgMan')->nullable();
-            $table->foreign('FK_ProgVehiculo')->references('ID_Vehic')->on('vehiculos')->onDelete('cascade');
-            $table->foreign('FK_ProgMan')->references('ID_Mv')->on('mantenvehics')->onDelete('cascade');
+            $table->foreign('FK_ProgVehiculo')->references('ID_Vehic')->on('vehiculos');
+            $table->foreign('FK_ProgMan')->references('ID_Mv')->on('mantenvehics');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

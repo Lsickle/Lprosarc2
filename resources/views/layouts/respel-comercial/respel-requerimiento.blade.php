@@ -21,7 +21,7 @@
 				</label>
 			</div>
 			<div class="col-md-2 col-xs-6 col-md-offset-1">
-				<label data-trigger="hover" data-toggle="popover" title="<b>Devolución de embalaje</b>" data-content="<p> Se requiere que los embalajes sean devueltos al cliente/generador</p>"> Devolver embalaje
+				<label data-trigger="hover" data-toggle="popover" title="<b>Devolución de embalaje</b>" data-content="<p> Se requiere que los embalajes sean devueltos al Cliente/Generador</p>"> Devolver embalaje
 				<input value="1" type="checkbox" class="pull-bottom embalajeswitch" name="Opcion[`+contador+`][ReqDevolucion]"/>
 				</label>
 			</div>

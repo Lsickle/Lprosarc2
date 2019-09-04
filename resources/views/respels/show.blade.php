@@ -36,20 +36,33 @@
 						<li class="list-group-item">
 							<b>Estado Físico</b> <a class="pull-right">{{$Respels->RespelEstado}}</a>
 						</li>
-						<li class="list-group-item">
+						@if($Respels->RespelStatus == 'Aprobado')
+							<li class="list-group-item">
 							<b>Estado de aprobación</b>
 							<select disabled name="RespelStatus" class="form-control">
 								<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
 								<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
+								<option {{$Respels->RespelStatus == 'Aceptado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
+							</select>
+						</li>
+						@else
+						<li class="list-group-item">
+							<b>Estado de aprobación</b>
+							<select disabled name="RespelStatus" class="form-control">
+								<option {{$Respels->RespelStatus == 'Aprobado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusaprovado') }}</option>
+								<option {{$Respels->RespelStatus == 'Evaluado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusevaluated') }}</option>
+								<option {{$Respels->RespelStatus == 'Rechazado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
 								<option {{$Respels->RespelStatus == 'Pendiente' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatuspendiente') }}</option>
 								<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 								<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
+								<option {{$Respels->RespelStatus == 'Aceptado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrechazado') }}</option>
 							</select>
 						</li>
-						<li class="list-group-item">
+						@endif
+						{{-- <li class="list-group-item">
 							<label>Observaciones</label>
 							<p>{{$Respels->RespelStatusDescription}}</p>
-						</li>
+						</li> --}}
 						<li class="list-group-item" style="display: block; overflow: auto";>
 							{{-- hoja de seguridad --}}
 							@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')
@@ -178,30 +191,92 @@
 						<div class="tab-content" style="display: block; overflow: auto;">
 							<!-- tab-pane fade -->
 							<div class="tab-pane fade in active" id="Residuopane">
-								@include('layouts.respel-cliente.respel-residuo')
-							</div>
-							<!-- /.tab-pane fade -->
-							<!-- tab-pane fade -->
-							<div class="tab-pane fade " id="Tratamientospane">
-								@include('layouts.respel-cliente.respel-tratamiento')
-							</div>
-							<!-- /.tab-pane fade -->
-							<!-- tab-pane fade -->
-							<div class="tab-pane fade " id="Pretratamientospane">
-								@include('layouts.respel-comercial.respel-pretrat')
-							</div>
-							<!-- /.tab-pane fade -->
-							<!-- tab-pane fade -->
-							<div class="tab-pane fade" id="Requerimientospane">
-								@include('layouts.respel-cliente.respel-requerimiento')
-							</div>
-							<!-- /.tab-pane fade -->
-							<!-- tab-pane fade -->
-							<div class="tab-pane fade" id="tarifaspane">
-								<div class="form-horizontal">
-									@include('layouts.respel-cliente.respel-tarifas')
+									@include('layouts.respel-cliente.respel-residuo')
 								</div>
-							</div>
+								<!-- /.tab-pane fade -->
+								<!-- tab-pane fade -->
+								<div class="tab-pane fade" id="Tratamientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@if($opcion['ofertado']==1)			
+											@include('layouts.respel-cliente.respel-tratamiento')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endif
+									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
+									{{-- @include('layouts.respel-cliente.respel-tratamiento') --}}
+								</div>
+								<!-- tab-pane fade -->
+								<!-- tab-pane fade -->
+								<div class="tab-pane fade" id="Pretratamientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@if($opcion['ofertado']==1)	
+											@include('layouts.respel-cliente.respel-pretrat')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endif
+									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
+									{{-- @include('layouts.respel-cliente.respel-pretrat') --}}
+								</div>
+								<!-- tab-pane fade -->
+								<!-- /.tab-pane fade -->
+								<div class="tab-pane fade" id="Requerimientospane">
+									@php
+									$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@if($opcion['ofertado']==1)	
+											@include('layouts.respel-cliente.respel-requerimiento')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endif
+									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
+									{{-- @include('layouts.respel-cliente.respel-requerimiento') --}}
+								</div>
+								<!-- /.tab-pane fade -->
+								<!-- tab-pane fade -->
+								<div class="tab-pane fade" id="Tarifaspane">
+									<script type="text/javascript">
+										var contadorRango = [];
+									</script>
+									@php
+										$contadorphp = 0;
+									@endphp	
+									@foreach($requerimientos as $opcion)
+										@if($opcion['ofertado']==1)	
+											@php
+											$contadorRango = [];
+											$last = 0;
+											@endphp	
+											
+											@include('layouts.respel-cliente.respel-tarifas')
+											@php
+												$contadorphp = $contadorphp+1;
+											@endphp
+										@endif
+									@endforeach
+									@if($contadorphp==0)
+										@include('layouts.respel-cliente.respel-noevaluated')
+									@endif
+									{{-- @include('layouts.respel-cliente.respel-tarifas') --}}
+								</div>
 							<!-- /.tab-pane fade -->
 						</div>
 						<!-- /.tab-content -->

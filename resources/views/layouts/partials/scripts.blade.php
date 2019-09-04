@@ -259,6 +259,18 @@ function Switch6() {
 }
 $(document).ready(Switch6());
 </script>
+<script type="text/javascript">
+function Switch7() {
+	$(".ofertaswitch").bootstrapSwitch({
+		animate: true,
+		labelText: '<i class="fas fa-arrows-alt-h"></i>',
+		onText: 'Si',
+		offText: 'No',
+		radioAllOff: true,
+	});
+}
+$(document).ready(Switch7());
+</script>
 @if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
 $(document).ready(function() {

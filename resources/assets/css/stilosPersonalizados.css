@@ -133,3 +133,18 @@ ul.list-unstyled li:not(:first-child) {
 .slider.slider-horizontal{
   width:100% !important;
 }
+/* estilos para los selects desabilitados*/
+.select2-container--disabled .select2-selection--single {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    cursor: not-allowed !important;
+}
+.select2-container--disabled .select2-selection--multiple {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    cursor: not-allowed !important;
+}
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

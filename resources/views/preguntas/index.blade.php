@@ -50,14 +50,14 @@
                             <div class="panel-heading" role="tab" id="question3">
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                        <span> ¿Qué significan <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>?</span>
+                                        <span> ¿Qué significa el icono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>?</span>
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="question3">
                                 <div class="panel-body">
                                     <span>
-                                        El ícono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra información adicional ya sea en un formulario para llenar correctamente un campo o en un lugar del aplicativo para brindar más detalles.
+                                        El ícono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra información adicional en los formularios que ayuda a llenar correctamente el campo o también permite brindar más detalles en otros partes del sistema <b>SiReS</b>.
                                     </span>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                 <div class="panel-body">
                                     <span>
                                         {{ trans('adminlte_lang::message.question-7-description') }}
-                                        <br><br><strong>NOTA: </strong>Si tiene una duda por favor comunicarse con su asesor comercial y no reenviar un correo electrónico porque no sera respondido. 
+                                        <br><br><strong>NOTA: </strong>Si tiene alguna duda por favor comuniquese directamente con su Asesor Comercial 
                                     </span>
                                 </div>
                             </div>

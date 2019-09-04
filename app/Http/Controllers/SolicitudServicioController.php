@@ -23,6 +23,7 @@ use App\Personal;
 use App\Departamento;
 use App\Municipio;
 use App\ProgramacionVehiculo;
+use App\RequerimientosCliente;
 use Permisos;
 
 
@@ -38,7 +39,7 @@ class SolicitudServicioController extends Controller
 		$Servicios = DB::table('solicitud_servicios')
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug','personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
+			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -55,14 +56,15 @@ class SolicitudServicioController extends Controller
 				}
 			})
 			->get();
+		$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
 			if($servicio->SolSerTypeCollect == 98){
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
 		}
-
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos'));
+		// return $Servicios;
+		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
 	/**
@@ -74,7 +76,7 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
-			$Cliente = Cliente::select('CliShortname','ID_Cli')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
@@ -91,10 +93,16 @@ class SolicitudServicioController extends Controller
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
-			return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes'));
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
+            // return $Requerimientos;
+			if ($Cliente->CliStatus=="Bloqueado") {
+				abort(403, 'Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio... Para mas detalles comuníquese con su Asesor Comercial');
+			}else{
+				return view('solicitud-serv.create', compact('Personals','Cliente', 'SGeneradors', 'Departamentos', 'Sedes', 'Requerimientos'));
+			}
 		}
 		else{
-			abort(403);
+			abort(403, 'Solo los Clientes registrados pueden realizar nuevas solicitudes de servicio');
 		}
 	}
 
@@ -235,13 +243,16 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
-				if($request['SolResTypeUnidad'][$Generador][$y] == 99){
-					$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+				if (isset($request['SolResCantiUnidad'][$Generador][$y])&&(isset($request['SolResTypeUnidad'][$Generador][$y]))){
+					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
+						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+					}
+					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
+						$SolicitudResiduo->SolResTypeUnidad = "Litros";
+					}
+					$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
 				}
-				else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
-					$SolicitudResiduo->SolResTypeUnidad = "Litros";
-				}
-				$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+				
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
 						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
@@ -287,6 +298,8 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResFotoTratamiento = $request['SolResFotoTratamiento'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoDescargue_Pesaje = $request['SolResVideoDescargue_Pesaje'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoTratamiento = $request['SolResVideoTratamiento'][$Generador][$y];
+				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
+				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
 				$SolicitudResiduo->save();
 			}
@@ -365,7 +378,7 @@ class SolicitudServicioController extends Controller
 		$Residuos = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug', 'respels.RespelStatus')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio'));

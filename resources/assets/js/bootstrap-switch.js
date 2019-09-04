@@ -79,7 +79,7 @@
         inverse = options.inverse;
 
     return [state ? 'on' : 'off', size, disabled ? 'disabled' : undefined, readonly ? 'readonly' : undefined, indeterminate ? 'indeterminate' : undefined, inverse ? 'inverse' : undefined, id ? 'id-' + id : undefined].filter(function (v) {
-      return v == null;
+      return v !== null;
     });
   }
 

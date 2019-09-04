@@ -29,10 +29,12 @@ class Tratamiento extends Model
         return $this->belongsToMany('App\Pretratamiento','pretratamiento_tratamiento', 'FK_Trat', 'FK_PreTrat');
         //lista las pretratamientos relacionados usando muchos a muchos
     }
-    public function respels()
+
+
+    public function requerimientos()
     {
-        return $this->belongsToMany('App\Respel','respel_tratamiento', 'FK_Trat', 'FK_Respel');
-        //lista las pretratamientos relacionados usando muchos a muchos
+        return $this->belongsTo('App\Requerimiento', 'FK_ReqTrata');
+        // cada tratamiento esta relacionado con muchos residuos mediante de la tabla requerimientos
     }
 
 }

@@ -1,7 +1,7 @@
-@php
+{{-- @php
     $url = url("/solicitud-servicio/{$mail->SolSerSlug}");
     $nameButton = 'Ver Solicitud de Servicio';
-@endphp
+@endphp --}}
 @component('mail::message')
 # Solicitud de Servicio N° {{$mail->ID_SolSer}}
 
@@ -59,13 +59,13 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
 ***@lang("E-mail: ")***{{$mail->PersEmail}}<br>
 @endif
 
-@component('mail::button', ['url' => $url])
+{{-- @component('mail::button', ['url' => $url])
 {{$nameButton}}
-@endcomponent
+@endcomponent --}}
 
 @if ($mail->SolSerStatus === 'Conciliado' || $mail->SolSerStatus === 'No Conciliado')
     @php
-        $end = 'Por favor dar clic en el botón "'.$nameButton.'" para ver más detalles.';
+        $end = 'Por favor dar clic en el botón para ver más detalles.';
     @endphp
 @else
     @php
@@ -75,7 +75,7 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
 
 {{$end}}
 
-@component('mail::subcopy')
+{{-- @component('mail::subcopy')
 @lang(
     "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL \nen su navegador web: [:actionURL](:actionURL)",
     [
@@ -83,5 +83,5 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
         'actionURL' => $url,
     ]
 )
-@endcomponent
+@endcomponent --}}
 @endcomponent
