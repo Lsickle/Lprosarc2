@@ -103,7 +103,7 @@
 												@break
 											{{-- Informacion Revisado --}}
 											@case('Revisado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Revisado</b>" data-content="<p style='width: 50%'> su residuo ha sido revisado por el area de logistica y cuenta con la documentacion necesaia para ser transportado por nuestros vehiculos... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-check-double'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Revisado</b>" data-content="<p style='width: 50%'> su residuo ha sido revisado por el area de logistica y cuenta con la documentacion necesaia para ser transportado por nuestros vehiculos... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
 												@break
 											{{-- Informacion Revisado --}}
 											@case('Falta TDE')
@@ -147,7 +147,7 @@
 											@case('Revisado')
 												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Revisado</b>" data-content="<p style='width: 50%'> el residuo ha sido revisado por el area de logistica y cuenta con la documentacion necesaria para ser transportado por nuestros vehiculos... <br>Para mas detalles comuníquese con el <b>Area de Logistica</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
 												@break
-											{{-- Informacion Revisado --}}
+											{{-- falta la TDE --}}
 											@case('Falta TDE')
 												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada no corresponde con la información del residuo, el cliente debe adjuntar la tarjeta de emergencia correcta para que las solicitudes de servicio puedan ser programadas con los vehiculos de <b>Prosarc.ESP.S.A.</b> ... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
