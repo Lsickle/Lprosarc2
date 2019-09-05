@@ -28,7 +28,9 @@
 								<tr>
 									<th>{{trans('adminlte_lang::message.solsershowdate')}}</th>
 									<th>{{trans('adminlte_lang::message.solserindexnumber')}}</th>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+									<th>Status</th>
+
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
 									@endif
 									<th>{{trans('adminlte_lang::message.solserpersonal')}}</th>
@@ -48,6 +50,7 @@
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
 										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
+										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
 										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
 										@endif
