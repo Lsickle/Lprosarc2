@@ -39,7 +39,7 @@ class SolicitudServicioController extends Controller
 		$Servicios = DB::table('solicitud_servicios')
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
+			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
