@@ -201,14 +201,18 @@
 				<ul class="nav nav-tabs">
 					{{-- Barra de navegación --}}
 					<li class="active box-info"><a href="#sedes" data-toggle="tab">{{ trans('adminlte_lang::message.sclientsedes') }}</a></li>
-					<li><a href="#requerimientos" data-toggle="tab">Requerimientos</a></li>
+					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+						<li><a href="#requerimientos" data-toggle="tab">Requerimientos</a></li>
+					@endif
+					@if (Route::currentRouteName() === 'cliente-show')
+						<a href="/sclientes/create" class="btn btn-primary pull-right" style="margin-top: 0.5em; margin-right: 0.5em;"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
+					@endif
 				</ul>
+
 				<div class="tab-content">
 					{{-- sedes --}}
-					<div class="active tab-pane" id="sedes" style='overflow-y:auto; max-height:485px;'>
-						@if (Route::currentRouteName() === 'cliente-show')
-							<a href="/sclientes/create" class="btn btn-primary pull-right"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
-						@endif
+					<div class="active tab-pane" id="sedes" style='overflow-y:auto; max-height:305px;'>
+						
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
@@ -256,56 +260,56 @@
 					</div>
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 					{{-- requerimientos --}}
-					<div class="tab-pane" id="requerimientos">
-						<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
-						<h3 class="profile-username text-center textolargo">Requerimientos a solicitar</h3>
-						<div style='overflow-y:auto; max-height:503px;'>
-							@if(isset($Requerimientos))
-								<div class="col-md-6" style="text-align: center;">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
-										<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
-										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch disabled" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
-										</div>
-									</label>
-								</div>
-								<div class="col-md-6" style="text-align: center;">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
-										<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
-										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch disabled" id="RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
-										</div>
-									</label>
-								</div>
-								<div class="col-md-6" style="text-align: center;">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
-										<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
-										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch disabled" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
-										</div>
-									</label>
-								</div>
-								<div class="col-md-6" style="text-align: center;">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
-										<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
-										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch disabled" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
-										</div>
-									</label>
-								</div>
-								<div class="col-md-12" style="text-align: center;">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
-										<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
-										<div style="width: 100%; height: 34px;">
-											<input type="checkbox" class="testswitch disabled" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
-										</div>
-									</label>
-								</div>
-							@else
-								<center><a href='#' data-toggle='modal' data-target='#createReque' class="btn btn-success"><i class="fas fa-plus"></i> Agregar Requerimientos</a></center>
-							@endif
+						<div class="tab-pane" id="requerimientos">
+							<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
+							<h3 class="profile-username text-center textolargo">Requerimientos a solicitar</h3>
+							<div style='overflow-y:auto; max-height:503px;'>
+								@if(isset($Requerimientos))
+									<div class="col-md-6" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+											<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch disabled" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
+											</div>
+										</label>
+									</div>
+									<div class="col-md-6" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+											<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch disabled" id="RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
+											</div>
+										</label>
+									</div>
+									<div class="col-md-6" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+											<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch disabled" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
+											</div>
+										</label>
+									</div>
+									<div class="col-md-6" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
+											<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch disabled" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
+											</div>
+										</label>
+									</div>
+									<div class="col-md-12" style="text-align: center;">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+											<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+											<div style="width: 100%; height: 34px;">
+												<input type="checkbox" class="testswitch disabled" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
+											</div>
+										</label>
+									</div>
+								@else
+									<center><a href='#' data-toggle='modal' data-target='#createReque' class="btn btn-success"><i class="fas fa-plus"></i> Agregar Requerimientos</a></center>
+								@endif
+							</div>
 						</div>
-					</div>
 					@endif
 				</div>
 			</div>
