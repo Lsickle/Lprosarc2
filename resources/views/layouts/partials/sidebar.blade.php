@@ -16,7 +16,7 @@
                     <div class="pull-left info" style="overflow:hidden; max-width: 10em; max-height: 3.1em; height: auto; width: auto; position: absolute; top: 0.5em;">
                         <p style=" overflow:hidden; text-overflow: ellipsis;" data-toggle="tooltip" title="{{ Auth::user()->name }}"><span>{{ Auth::user()->name }}</span></p>
                         <!-- Status -->
-                        <a href="#"><i class="fa fa-circle text-success" class="treeview-menu"></i><span>{{ Auth::user()->UsRol }}</span></a>
+                        <a href="#"><i class="fa fa-circle text-success" class="treeview-menu"></i><span> {{ Auth::user()->UsRol }}</span></a>
                     </div>
                 </div>         
             @endif
