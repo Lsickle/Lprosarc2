@@ -37,7 +37,9 @@
 										<th>Facturación</th>
 										<th>Nuevas Solicitudes</th>
 									@endif
-									<th>{{trans('adminlte_lang::message.solserpersonal')}}</th>
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+										<th>Comercial Asignado</th>
+									@endif
 									<th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
 									<th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
 									<th>{{trans('adminlte_lang::message.seemore')}}</th>
@@ -56,13 +58,15 @@
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
+												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul>" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliShortname}}</td>
 										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 											<th>{{$Servicio->TipoFacturacion}}</th>
 											<th>{{$Servicio->CliStatus}}</th>
 										@endif
-										<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+											<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$Servicio->ComercialPersFirstName}} {{$Servicio->ComercialPersLastName}}</li><li>{{$Servicio->ComercialPersEmail}}</li><li>{{$Servicio->ComercialPersCellphone}}</li></ul>" href="/personal/{{$Servicio->ComercialPersSlug}}" target="_blank"><i class="fas fa-user-tie" style="color:green;"></i></a> {{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
+										@endif
 										<td>{{$Servicio->SolSerNameTrans}}</td>
 										<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
 										<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>

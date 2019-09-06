@@ -68,7 +68,12 @@
 									@endif
 
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<td class="text-center">{{$respel->CliName}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL))
+											<td class="text-center">{{$respel->CliName}}</td>
+										@else
+											<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$respel->PersFirstName}} {{$respel->PersLastName}}</li><li>{{$respel->PersEmail}}</li><li>{{$respel->PersCellphone}}</li></ul>"><i class="fas fa-user"></i></a> {{$respel->CliName}}</td>
+										@endif
+									@else
 									@endif
 									<td class="text-center">{{$respel->RespelStatus}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))

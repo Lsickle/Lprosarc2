@@ -33,30 +33,41 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        /*los residuos de clientes sin comercial asignado no apareceran en el index de respel*/
         $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->join('personals', 'personals.ID_Pers', '=', 'clientes.CliComercial')
-            ->select('respels.*', 'clientes.CliName', 'personals.PersEmail')
+            ->select('respels.*', 'clientes.CliName', 'clientes.CliComercial', 'personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersCellphone')
             ->where(function($query){
-                if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+                switch (Auth::user()->UsRol) {
+                    case 'Cliente':
+                        /*se define la sede del usuario actual*/
+                        $UserSedeID = DB::table('personals')
+                        ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                        ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                        ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                        ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                        ->value('sedes.ID_Sede');
 
-                    /*se define la sede del usuario actual*/
-                    $UserSedeID = DB::table('personals')
-                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                    ->value('sedes.ID_Sede');
+                        $query->where('respels.RespelDelete',0);
+                        $query->where('sedes.ID_Sede', $UserSedeID);
+                        break;
 
-                    $query->where('respels.RespelDelete',0);
-                    $query->where('sedes.ID_Sede', $UserSedeID);
+                    case 'Comercial':
+                        /*se define la sede del usuario actual*/
+                        $ComercialAsignado = DB::table('personals')
+                        ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                        ->value('personals.ID_Pers');
 
-                }elseif (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR)){
-                
-                }else{
-                    $query->where('respels.RespelDelete',0);
+                        $query->where('respels.RespelDelete',0);
+                        $query->where('clientes.CliComercial', $ComercialAsignado);
+                        break;
+                    
+                    default:
+                        $query->where('respels.RespelDelete',0);
+                        break;
                 }
             })
             ->get();

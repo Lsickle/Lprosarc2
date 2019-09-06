@@ -39,7 +39,8 @@ class SolicitudServicioController extends Controller
 		$Servicios = DB::table('solicitud_servicios')
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
+			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
+			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -64,6 +65,14 @@ class SolicitudServicioController extends Controller
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
 		}
+		// $Comerciales = DB::table('personals')
+  //                       ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+  //                       ->select('personals.*')
+  //                       ->where('personals.PersDelete', 0)
+  //                       ->where('users.UsRol', 'Comercial')
+  //                       ->orWhere('users.UsRol2', 'Comercial')
+  //                       ->get();
+		
 		// return $Servicios;
 		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
