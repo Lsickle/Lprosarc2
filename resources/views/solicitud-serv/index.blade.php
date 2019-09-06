@@ -33,6 +33,10 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
 									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
+										<th>Facturación</th>
+										<th>Nuevas Solicitudes</th>
+									@endif
 									<th>{{trans('adminlte_lang::message.solserpersonal')}}</th>
 									<th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
 									<th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
@@ -51,8 +55,12 @@
 										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
+										@endif
+										@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
+											<th>{{$Servicio->TipoFacturacion}}</th>
+											<th>{{$Servicio->CliStatus}}</th>
 										@endif
 										<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
 										<td>{{$Servicio->SolSerNameTrans}}</td>

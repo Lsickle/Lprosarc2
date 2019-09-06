@@ -300,33 +300,23 @@
 				$('#ProgVehColor1').val("#0000f6");
 			});
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+				$(".select2-container--disabled").css("background-color", "#EEE");
 				$("#ProgVehEntrada").prop('required', true);
 				$("#progVehKm").prop('required', true);
 				$("#ProgVehEntrada").prop('disabled', false);
 				$("#progVehKm").prop('disabled', false);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
-				$(".select2-selection").css("background-image", "none");
+				// $(".select2-selection").css("background-image", "none");
 				$("#ProgVehFecha").prop('disabled', false);
 				$("#ProgVehSalida").prop('disabled', false);
 				$("#FK_ProgVehiculo").prop('disabled', false);
 				$("#FK_ProgConductor").prop('disabled', false);
 				$("#FK_ProgAyudante").prop('disabled', false);
 				$("#ProgVehColor").prop("disabled", false);
-			@endif
-			@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
-				$("#ProgVehFecha").prop('disabled', false);
-				$("#ProgVehSalida").prop('disabled', false);
-				$("#ProgVehEntrada").prop('disabled', false);
-				$("#progVehKm").prop('disabled', false);
-				$("#FK_ProgVehiculo").prop('disabled', false);
-				$("#FK_ProgConductor").prop('disabled', false);
-				$("#FK_ProgAyudante").prop('disabled', false);
-				$("#ProgVehColor").prop("disabled", false);
-				$("#ProgVehEntrada").prop('required', false);
 			@endif
 			@if($programacion->ProgVehEntrada <> null)
-				$(".select2-selection").css("background-image", "none");
+				// $(".select2-selection").css("background-image", "none");
 				$("#ProgVehFecha").prop("disabled", true);
 				$("#ProgVehSalida").prop("disabled", true);
 				$("#FK_ProgVehiculo").prop("disabled", true);
@@ -336,6 +326,18 @@
 				$("#progVehKm").prop("disabled", true);
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
+			@endif
+			@if(((in_array(Auth::user()->UsRol, Permisos::ProgVehic2))&&(in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)))||(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
+				$("#ProgVehFecha").prop('disabled', false);
+				$("#ProgVehSalida").prop('disabled', false);
+				$("#ProgVehEntrada").prop('disabled', false);
+				$("#progVehKm").prop('disabled', false);
+				$("#FK_ProgVehiculo").prop('disabled', false);
+				$("#FK_ProgConductor").prop('disabled', false);
+				$("#FK_ProgAyudante").prop('disabled', false);
+				$("#ProgVehColor").prop("disabled", false);
+				$("#ProgVehEntrada").prop('required', false);
+				$("#progVehKm").prop('required', false);
 			@endif
 			});
 	@elseif($programacion->ProgVehtipo == 0)
