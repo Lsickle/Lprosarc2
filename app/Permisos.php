@@ -173,6 +173,13 @@ class Permisos{
 		SolicitudServicioController::index
 		clientes::show
 	 */
+	const SEDECOMERCIAL = ['Programador','Tesorería','AsistenteComercial','AdministradorBogota','Comercial','JefeComercial'];
+	/* Using ->
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
+		clientes::show
+	 */
 	const CONTRATOSCRUD = ['Programador','AsistenteComercial'];
 	/* Using ->
 		contratos/index
@@ -188,7 +195,7 @@ class Permisos{
 		clientcontoller::index
 	*/
 
-	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota',];
+	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota'];
 	/* Using ->
 		clientcontoller::index
 	*/

@@ -253,6 +253,7 @@ function Switch(){
 }
 Switch();
 function submitverify(){
+	var tipoFacturacion = '{{$Cliente->TipoFacturacion}}';
 	var CantidadTotalkg = 0;
 	for (var i = 0; i < contadorGenerador; i++) {
 		for (var y = 0; y <= contadorRespel[i]; y++) {
@@ -262,7 +263,7 @@ function submitverify(){
 		}
 	}
 	if(CantidadTotalkg != 0){
-		if(CantidadTotalkg >= 500){
+		if((CantidadTotalkg >= 500)||(tipoFacturacion=='Credito')){
 			$("#Submit2").empty();
 			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 			$("#Submit2").attr('disabled', true);

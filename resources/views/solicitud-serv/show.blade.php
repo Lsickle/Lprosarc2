@@ -133,13 +133,16 @@
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 								<a style="{{$SolicitudServicio->SolSerStatus <> 'Conciliado' ? 'display: none;' : ''}} margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
 							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 								@if($SolicitudServicio->SolSerSupport <> null)
-									<a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info pull-left" target="_blank" style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a>
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Haga click para visualizar el PDF del soporte de pago, que adjuntó, para esta solicitud de servicio' : 'Haga click para visualizar el PDF del soporte de pago, adjuntado por el cliente, para esta solicitud de servicio'}}"><a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info pull-left" target="_blank" style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
+									
 								@else
-									<a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a>
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
 								@endif
-								<a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info pull-right">Repetir <i class="fas fa-redo-alt"></i></a>
+								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
+								@endif
 							@endif
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>

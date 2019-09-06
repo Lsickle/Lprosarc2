@@ -77,7 +77,7 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
-			$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')

@@ -77,6 +77,30 @@ class ClienteController extends Controller
         return redirect()->route('cliente-show', [$cliente->CliSlug]);
     }
 
+    public function facturacionContado($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->TipoFacturacion = "Contado";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
+    public function facturacionCredito($slug)
+    {
+        $cliente = cliente::where('CliSlug', $slug)->first();
+        if (!$cliente) {
+            abort(404);
+        }
+        $cliente->TipoFacturacion = "Credito";
+        $cliente->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
+    }
+
     public function update(Request $request, $slug)
     {
         $cliente = cliente::where('CliSlug', $slug)->first();

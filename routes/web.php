@@ -51,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
 	Route::get('/cliente/{slug}/updateCliStatus', 'ClienteController@updateCliStatus')->name('cliente-updateCliStatus');
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
+	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
+	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
