@@ -51,11 +51,17 @@
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
+						{{-- <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label> --}}
 						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
 							@if($cliente->CliStatus=='Autorizado')
-								<a href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-danger pull-right"><i class="fas fa-edit"></i><b>Bloquear</b></a>
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Bloquear Solicitudes de Servicio</b>" data-content="Al presionar el boton el cliente quedara <b>Bloqueado</b> para realizar nuevas solicitudes de servicio"><a href="/cliente/{{$cliente->CliSlug}}/negarCliStatus" class="btn btn-danger pull-right"><i class="fas fa-ban"></i><b> Bloquear</b></a></label>
 							@else
-								<a href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-success pull-right"><i class="fas fa-edit"></i><b>Autorizar</b></a>
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Autorizar Solicitudes de Servicio</b>" data-content="Al presionar el boton el cliente quedara <b>Autorizado</b> para realizar nuevas solicitudes de servicio"><a href="/cliente/{{$cliente->CliSlug}}/updateCliStatus" class="btn btn-success pull-right"><i class="fas fa-thumbs-up"></i><b> Autorizar</b></a></label>
+							@endif
+							@if($cliente->TipoFacturacion=='Credito')
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Tipo de facturación</b>" data-content="Al presionar el boton el tipo de facturación del cliente cambiara a <b>Contado</b> y el cliente, obligatoriamente, tendra  que adjuntar los pdf con el <b>Soporte de Pago</b> para poder crear nuevas solicitudes de servicio"><a href="/cliente/{{$cliente->CliSlug}}/TipoFacturacionContado" class="btn btn-danger pull-right"><i class="fas fa-wallet"></i><b> Cobrar de Contado</b></a></label>
+							@else
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Tipo de facturación</b>" data-content="Al presionar el boton el tipo de facturación del cliente cambiara a <b>Credito</b> y el cliente no tendra que adjuntar el <b>Soportes de Pago</b> para poder crear nuevas solicitudes de servicio"><a href="/cliente/{{$cliente->CliSlug}}/TipoFacturacionCredito" class="btn btn-primary pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Cobrar a Credito</b></a></label>
 							@endif
 						@endif
 					</div>
@@ -453,6 +459,7 @@
 @section('NewScript')
 	<script>
 		$('.disabled').bootstrapSwitch('disabled',true);
+		popover();
 	</script>
 	@if(count($Sedes) > 1)
 		<script>
