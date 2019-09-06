@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.solsertitle') }}
+Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 @endsection
 @section('contentheader_title')
 {{ trans('adminlte_lang::message.solsertitle')}}

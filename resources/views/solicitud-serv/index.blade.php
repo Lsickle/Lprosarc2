@@ -27,7 +27,7 @@
 							<thead>
 								<tr>
 									<th>{{trans('adminlte_lang::message.solsershowdate')}}</th>
-									<th>{{trans('adminlte_lang::message.solserindexnumber')}}</th>
+									<th>N°</th>
 									<th>Status</th>
 
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
@@ -52,7 +52,7 @@
 							<tbody>
 								@foreach ($Servicios as $Servicio)
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
+										<td style="text-align: center;">{{date('d-m-y', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
