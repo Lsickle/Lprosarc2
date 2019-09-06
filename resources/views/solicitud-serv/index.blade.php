@@ -58,14 +58,14 @@
 										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul>" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliShortname}}</td>
+												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..." href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliShortname}}</td>
 										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 											<th>{{$Servicio->TipoFacturacion}}</th>
 											<th>{{$Servicio->CliStatus}}</th>
 										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-											<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$Servicio->ComercialPersFirstName}} {{$Servicio->ComercialPersLastName}}</li><li>{{$Servicio->ComercialPersEmail}}</li><li>{{$Servicio->ComercialPersCellphone}}</li></ul>" href="/personal/{{$Servicio->ComercialPersSlug}}" target="_blank"><i class="fas fa-user-tie" style="color:green;"></i></a> {{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
+											<td><i data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$Servicio->ComercialPersFirstName}} {{$Servicio->ComercialPersLastName}}</li><li>{{$Servicio->ComercialPersEmail}}</li><li>{{$Servicio->ComercialPersCellphone}}</li></ul>" class="fas fa-user-tie" style="color:green;"></i> {{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
 										@endif
 										<td>{{$Servicio->SolSerNameTrans}}</td>
 										<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>

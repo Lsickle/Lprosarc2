@@ -25,7 +25,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE MI EMPRESA*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC),
 					(Menu::new()
-						->prepend('<a href="#"><i class="fas fa-user-shield"></i> <span>'.trans('adminlte_lang::message.MenuClien2').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+						->prepend('<a href="#"><i class="fas fa-user-shield"></i> <span>Prosarc</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
 						->addParentClass('treeview')
 						/*PESTAÑA DE LAS SEDES DE PROSARC*/
 						->add(Link::toUrl(route('cliente-show', Cliente::where('ID_Cli', userController::IDClienteSegunUsuario())->first()->CliSlug), '<i class="fas fa-building"></i> <span>'. trans('adminlte_lang::message.MenuSedes').'</span>'))
