@@ -14,7 +14,7 @@ class CreateRequerimientopublicTable extends Migration
     public function up()
     {
         Schema::create('requerimientopublic', function (Blueprint $table) {
-            $table->bigIncrements('ID_PReq');
+            $table->increments('ID_PReq');
             $table->boolean('PReqFotoCargue')->nullable();
             $table->boolean('PReqFotoDescargue')->nullable();
             $table->boolean('PReqFotoPesaje')->nullable();
@@ -37,7 +37,7 @@ class CreateRequerimientopublicTable extends Migration
             $table->string('PReqSlug')->unique()->nullable();
             $table->boolean('Pofertado')->nullable();
             $table->unsignedInteger('FK_PReqTrata')->nullable();
-            $table->foreign('FK_PRespel')->references('ID_PRespel')->on('respelpublic');
+            $table->foreign('FK_PReqTrata')->references('ID_Trat')->on('tratamientos');
             $table->unsignedInteger('FK_PRespel')->nullable();
             $table->foreign('FK_PRespel')->references('ID_PRespel')->on('respelpublic');
             $table->timestamps();

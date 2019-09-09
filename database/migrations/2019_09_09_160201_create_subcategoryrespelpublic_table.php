@@ -14,10 +14,10 @@ class CreateSubcategoryrespelpublicTable extends Migration
     public function up()
     {
         Schema::create('subcategoryrespelpublic', function (Blueprint $table) {
-            $table->bigIncrements('ID_SubCategoryRP');
+            $table->increments('ID_SubCategoryRP');
             $table->string('SubCategoryRpName', 64);
             $table->unsignedInteger('FK_CategoryRP');
-            $table->foreign('FK_CategoryRP')->references('ID_CategoryRP')->on('categoryrespelpublic')->onDelete('restrict');
+            $table->foreign('FK_CategoryRP')->references('ID_CategoryRP')->on('categoryrespelpublic');
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

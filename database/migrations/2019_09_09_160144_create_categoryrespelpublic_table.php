@@ -14,7 +14,7 @@ class CreateCategoryrespelpublicTable extends Migration
     public function up()
     {
         Schema::create('categoryrespelpublic', function (Blueprint $table) {
-            $table->bigIncrements('ID_CategoryRP');
+            $table->increments('ID_CategoryRP');
             $table->string('CategoryRpName', 64);
             $table->timestamps();
             $table->engine = 'InnoDB';

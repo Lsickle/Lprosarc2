@@ -14,7 +14,7 @@ class CreateRespelpublicTable extends Migration
     public function up()
     {
         Schema::create('respelpublic', function (Blueprint $table) {
-            $table->bigIncrements('ID_PRespel');
+            $table->increments('ID_PRespel');
             $table->string('PRespelName', 128);
             $table->string('PRespelDescrip')->nullable();
             $table->string('PYRespelClasf4741', 12)->nullable();
