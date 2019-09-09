@@ -775,7 +775,7 @@ return [
     'recdeletefoto'           => 'Eliminar Imagen',
     'recaddfoto'              => 'Agregar Foto',
     'recdowloadvideo'         => 'Descargar Vídeo',
-    'recdeletevideo'          => 'Eliminar Imagen',
+    'recdeletevideo'          => 'Eliminar Vídeo',
     'recaddvideo'             => 'Agregar Vídeo',
 
     //Contratos

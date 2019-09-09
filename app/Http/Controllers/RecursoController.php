@@ -62,6 +62,7 @@ class RecursoController extends Controller
         if (!$SolRes) {
             abort(404);
         }
+        // return $SolRes;
         $Respel = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
             ->join('respels', 'respels.ID_Respel', 'residuos_geners.FK_Respel')
@@ -85,7 +86,8 @@ class RecursoController extends Controller
             ->where('recursos.RecCarte', 'Foto')
             ->orderBy('recursos.RecTipo')
             ->get();
-
+        // return $SolRes;
+            
         $Videos = DB::table('recursos')
             ->join('solicitud_residuos', 'solicitud_residuos.ID_SolRes', '=', 'recursos.FK_RecSolRes')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', '=', 'solicitud_residuos.FK_SolResSolSer')

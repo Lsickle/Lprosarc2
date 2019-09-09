@@ -222,6 +222,7 @@
 																		@endif
 																		@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
 																			<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																		@endif
 																	</ul>
 																</div>
@@ -250,10 +251,11 @@
 															<ul class="nav nav-pills">
 																<li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
 																@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
-																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
+																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
 																@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
 																	<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
 															</ul>
 														</div>
@@ -285,17 +287,13 @@
 </div>
 
 @section('NewScript')
-@if(in_array(Auth::user()->UsRol, Permisos::SolSer1))
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer1)||in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 	<script>
 		function Pesaje(){
-			$("#tipo").append(`
-				<option>Pesaje-Descargue</option>
-			`);
+			$("#tipo").append(`<option>Pesaje-Descargue</option>`);
 		}
 		function Tratamiento(){
-			$("#tipo").append(`
-				<option>Tratamiento</option>
-			`);
+			$("#tipo").append(`<option>Tratamiento</option>`);
 		}
 		function modalrecursos(){
 			$('#addRecursoForm').validator('destroy');
@@ -303,8 +301,7 @@
 			$("#categoria").empty();
 			$("#tipo").empty();
 			$("#recursoinputext").val('');
-			$("#tipo").append(`
-				<option value="">Seleccione...</option>
+			$("#tipo").append(`<option value="">Seleccione...</option>
 			`);
 		}
 	</script>
@@ -315,12 +312,12 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Foto" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResFotoDescargue_Pesaje}}' === '1'){
+			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '1'){
 				Pesaje();
-			};
-			if('{{$SolRes->SolResFotoTratamiento}}' === '1'){
+			}
+			if('{{$SolRes->SolResFotoTratamiento}}' == '1'){
 				Tratamiento();
-			};
+			}		
 			$('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
 			$('#recursoinputext').attr('data-filessizemultiple', '5120');
 		});
@@ -331,12 +328,12 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Video" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' === '1'){
+			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' == '1'){
 				Pesaje();
-			};
-			if('{{$SolRes->SolResVideoTratamiento}}' === '1'){
+			}
+			if('{{$SolRes->SolResVideoTratamiento}}' == '1'){
 				Tratamiento();
-			};
+			}
 			$('#recursoinputext').attr('accept', '.mp4');
 			$('#recursoinputext').attr('data-filessizemultiple', '10240');
 		});
