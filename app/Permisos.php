@@ -51,6 +51,11 @@ class Permisos{
 		solicitud-serv/show
 		recursos/show
 	*/
+	const RESPELPUBLIC = ['Programador','JefeOperaciones'];
+	/*Using ->
+		solicitud-serv/show
+		recursos/show
+	*/
 	const SolSer2 = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica'];
 	/*Using ->
 		solicitud-serv/show

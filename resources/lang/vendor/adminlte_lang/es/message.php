@@ -793,6 +793,12 @@ return [
     'contractnotify'          => '¿Cuando notificar?',
     'contractnotifydescript'  => 'Indique cuantos (días, semanas o meses) anteriores quiere recibir una notificación de la vigencia del documento.',
 
+    //RespelPublic texts
+    'RPMenu'                    => 'Residuos Comunes',
+    'RPList'                    => 'Lista de Residuos Comunes',
+    'CategoryRPMenu'            => 'Categorías',
+    
+
     // Name PDF
     'generatemanicargpdf'     => 'Manifiesto de Carga',
 ];

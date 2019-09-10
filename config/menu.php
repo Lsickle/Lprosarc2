@@ -64,6 +64,17 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->addIf(in_array(Auth::user()->UsRol, Permisos::TRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/tratamiento', '<i class="fas fa-vial"></i> <span>'.trans('adminlte_lang::message.MenuTrataRespel').'</span>')))
 				/*PESTAÑA DE PRETRATAMIENTOS*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::PRETRATAMIENTOS) || in_array(Auth::user()->UsRol2, Permisos::TRATAMIENTOS),(Link::toUrl('/pretratamiento', '<i class="fab fa-stack-overflow"></i> <span>'.trans('adminlte_lang::message.MenuPreTrataRespel').'</span>')))
+				->addIf(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC),
+					(Menu::new()
+						->prepend('<a href="#"><i class="fas fa-user-shield"></i> <span>'. trans('adminlte_lang::message.RPMenu').'</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+						->addParentClass('treeview')
+						/*PESTAÑA DE LISTA DE RESIDUOS COMUNES*/
+						->add(Link::toUrl('/respelspublic', '<i class="fas fa-globe-americas"></i> <span>'. trans('adminlte_lang::message.RPList').'</span>'))
+						/*PESTAÑA DE CATEGORIAS DE RESIDUOS COMUNES*/
+						->addIf(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC), Link::toUrl('/categorypublic', '<i class="fas fa-object-group"></i> <span>'.trans('adminlte_lang::message.CategoryRPMenu').' </span>'))
+						->addClass('treeview-menu')
+					)
+				)
 				/*PESTAÑA DE PERSONAL DEL CLIENTE*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE),(Link::toUrl('/personal', '<i class="fas fa-users"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>')))
 				/*PESTAÑA DE SOLICITUDES DE SERVICIO*/
