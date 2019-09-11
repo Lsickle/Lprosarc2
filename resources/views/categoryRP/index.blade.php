@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Lista de Categorias
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Categorias para Residuos Comunes
 @endsection
 @section('main-content')
 	<div class="container-fluid spark-screen">
@@ -11,25 +11,31 @@
 			<div class="col-md-16 col-md-offset-0">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">{{ trans('adminlte_lang::message.listarea') }}</h3>
-						<a href="/areas/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+						<h3 class="box-title">Lista de Categorias</h3>
+						<a href="/categorypublic/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 					</div>
 					<div class="box box-info">
 						<div class="box-body">
 							<table id="AreaTable" class="table table-compact table-bordered table-striped">
 								<thead>
 									<tr>
-										<th>{{ trans('adminlte_lang::message.areaname') }}</th>
-										<th>{{ trans('adminlte_lang::message.sclientsede') }}</th>
-										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+										<th>Categoria</th>
+										<th>SubCategoria</th>
+										<th>Editar</th>
 									</tr>
 								</thead>
 								<tbody id="readyTable">
-									@foreach($Areas as $Area)
-									<tr style="{{$Area->AreaDelete === 1 ? 'color: red' : ''}}">
-										<td>{{$Area->AreaName}}</td>
-										<td>{{$Area->SedeName}}</td>
-										<td><a href='/areas/{{$Area->AreaSlug}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
+									@foreach($CategoriesRP as $CateroryRP)
+									<tr>
+										<td>{{$CateroryRP->CategoryRpName}}</td>
+										<td>{{$CateroryRP->SedeName}}
+											<ul>
+											@foreach($CateroryRP->SubCategoryRP as $SubCateroryRP)
+												<li>{{$SubCateroryRP->SubCategoryRpName}}</li>
+											@endforeach
+											</ul>
+										</td>
+										<td><a href='/categorypublic/{{$CateroryRP->ID_CategoryRP}}/edit' class='btn btn-warning'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									</tr>
 									@endforeach
 								</tbody>

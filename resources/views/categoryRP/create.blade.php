@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Crear Categoria
 @endsection
 
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Crear Categoria
 @endsection
 
 @section('main-content')
@@ -14,10 +14,10 @@
 			<div class="col-md-16 col-md-offset-0">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">{{ trans('adminlte_lang::message.createarea') }}</h3>
+						<h3 class="box-title">Crear Categoria</h3>
 					</div>
 					<div class="box box-info">
-						<form role="form" action="/areas" method="POST" enctype="multipart/form-data" data-toggle="validator">
+						<form role="form" action="/categorypublic" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
 							@if ($errors->any())
 								<div class="alert alert-danger" role="alert">
@@ -29,19 +29,11 @@
 								</div>
 							@endif
 							<div class="box-body">
+								
 								<div class="form-group col-xs-12 col-md-12">
-									<label for="SedeSelect">{{ trans('adminlte_lang::message.sclientsede') }}</label><small class="help-block with-errors">*</small>
-									<select name="FK_AreaSede" id="SedeSelect" class="form-control select" required>
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach($Sedes as $Sede)
-											<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group col-xs-12 col-md-12">
-									<label for="AreaName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.areaname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.areaname') }}</label>
+									<label for="CategoryRpName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.CategoryName') }}</b>" data-content="{{ trans('adminlte_lang::message.CategoryNameInfo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.CategoryName') }}</label>
 									<small class="help-block with-errors">*</small>
-									<input data-minlength="5" required name="AreaName" autofocus="true" type="text" class="form-control inputText" id="AreaName" value="{{old('AreaName')}}">
+									<input data-minlength="5" required name="CategoryRpName" autofocus="true" type="text" class="form-control inputText" id="CategoryRpName" value="{{old('CategoryRpName')}}">
 								</div>
 							</div>	
 							<div class="box box-info">

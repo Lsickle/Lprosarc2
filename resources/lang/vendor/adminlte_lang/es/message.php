@@ -797,6 +797,13 @@ return [
     'RPMenu'                    => 'Residuos Comunes',
     'RPList'                    => 'Lista de Residuos Comunes',
     'CategoryRPMenu'            => 'Categorías',
+    'CategoryName'              => 'Nombre de la categoría',
+    'SubCategoryName'           => 'Nombre de la Subcategoría',
+    'CategoryNameInfo'          => 'Escriba el nombre del categoría a crear <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
+    'SubCategoryNameInfo'       => 'Escriba el nombre del Subcategoría a crear <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
+
+
+
     
 
     // Name PDF

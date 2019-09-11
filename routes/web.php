@@ -66,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
 	Route::resource('/respelspublic', 'RespelPublicController');
+	Route::resource('/categorypublic', 'CategoryRPController');
+	Route::resource('/subcategorypublic', 'CategoryRPController');
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');

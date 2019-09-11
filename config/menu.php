@@ -72,6 +72,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->add(Link::toUrl('/respelspublic', '<i class="fas fa-globe-americas"></i> <span>'. trans('adminlte_lang::message.RPList').'</span>'))
 						/*PESTAÑA DE CATEGORIAS DE RESIDUOS COMUNES*/
 						->addIf(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC), Link::toUrl('/categorypublic', '<i class="fas fa-object-group"></i> <span>'.trans('adminlte_lang::message.CategoryRPMenu').' </span>'))
+						/*PESTAÑA DE SUBCATEGORIAS DE RESIDUOS COMUNES*/
+						->addIf(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC), Link::toUrl('/subcategorypublic', '<i class="fas fa-object-group"></i> <span> SubCategorías</span>'))
 						->addClass('treeview-menu')
 					)
 				)
