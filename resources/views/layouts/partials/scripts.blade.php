@@ -733,4 +733,41 @@ var currentScrollPos = window.pageYOffset;
 		$("form").attr("lang", "es");
 	});
 </script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$("#selectCategory").change(function(e){
+				id=$("#selectCategory").val();
+				e.preventDefault();
+				$.ajaxSetup({
+				  headers: {
+					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				  }
+				});
+				$.ajax({
+					url: "{{url('/SubcategoriaDinamico')}}/"+id,
+					method: 'GET',
+					data:{},
+					beforeSend: function(){
+						$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+						$("#subcategorycontainer").prop('disabled', true);
+					},
+					success: function(res){
+						console.log(res);
+						$("#subcategorycontainer").empty();
+						var subcat = new Array();
+						for(var i = res.length -1; i >= 0; i--){
+							if ($.inArray(res[i].ID_SubCategoryRP, subcat) < 0) {
+								$("#subcategorycontainer").append(`<option value="${res[i].ID_SubCategoryRP}">${res[i].SubCategoryRpName}</option>`);
+								subcat.push(res[i].ID_SubCategoryRP);
+							}
+						}
+					},
+					complete: function(){
+						$(".load").empty();
+						$("#subcategorycontainer").prop('disabled', false);
+					}
+				})
+			});
+		});
+	</script>
 @yield('NewScript')

@@ -23,6 +23,7 @@ use App\Rango;
 use App\ResiduosGener;
 use App\Permisos;
 use App\Tarifa;
+use App\Categoryrespelpublic;
 use App\Respelpublic;
 use Illuminate\Support\Arr;
 
@@ -37,10 +38,8 @@ class RespelPublicController extends Controller
     {
         if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
          /*se accede a la lista de residuos comunes unicamente para prosarc*/
-        $PublicRespels = Respelpublic::all();
-
-        // return $PublicRespels;
-
+        $PublicRespels = Respelpublic::with('SubcategoryRespelpublic.CategoryRP')->get();
+        // return $PublicRespels[0]->SubcategoryRespelpublic->CategoryRP->CategoryRpName;
         return view('publicrespel.index', compact('PublicRespels')); 
         }else{
             abort(403);
@@ -64,12 +63,15 @@ class RespelPublicController extends Controller
                 ->get();
             return view('respels.create', compact('Sede'));
         }elseif(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
+
+            $categories = Categoryrespelpublic::all();
+
             $Sedes = DB::table('clientes')
                 ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('sedes.ID_Sede', 'clientes.CliName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
-            return view('publicrespel.create', compact('Sedes'));
+            return view('publicrespel.create', compact('Sedes', 'categories'));
         }else{
             abort(403);
         }
@@ -159,13 +161,13 @@ class RespelPublicController extends Controller
             $prespel->PRespelHojaSeguridad = $hoja;
             $prespel->PRespelTarj = $tarj;
             $prespel->PRespelFoto = $foto;
-            $prespel->FK_SubCategoryRP = $Cotizacion->ID_Coti;
+            $prespel->FK_SubCategoryRP = $request['FK_SubCategoryRP'];
             $prespel->PRespelSlug = hash('sha256', rand().time().$prespel->PRespelName);
             $prespel->PRespelDelete = 0;
             $prespel->PRespelDeclaracion = $request['RespelDeclaracion'][$x];
             $prespel->save();
         }
-        return redirect()->route('publicrespel.index');
+        return redirect()->route('respelspublic.index');
     }
 
     /**
@@ -187,7 +189,22 @@ class RespelPublicController extends Controller
      */
     public function edit($id)
     {
-        //
+        /*se verifican el rol del usuario para dar acceso a la edicion de respel o evaluacion de respel*/
+        if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
+
+            $Respels = Respel::where('ID_PRespel', $id)->first();
+
+            /*se valida que el residuo no este eliminado*/
+            if ($Respels->PRespelDelete == 1) {
+                abort(404);
+            }
+
+            $categories = Categoryrespelpublic::all();
+            
+            return view('publicrespel.edit', compact('Respels'));
+        }else{
+            abort(403);
+        }
     }
 
     /**

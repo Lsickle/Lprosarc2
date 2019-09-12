@@ -11,6 +11,7 @@ use App\audit;
 use App\Respel;
 use App\Permisos;
 use App\Categoryrespelpublic;
+use App\Subcategoryrespelpublic;
 use Illuminate\Support\Arr;
 
 class CategoryRPController extends Controller
@@ -92,8 +93,9 @@ class CategoryRPController extends Controller
             if (!$categoria) {
                 abort(404);
             }
-            // return $categoria->SubCategoryRP;
-            return view('categoryRP.edit', compact('categoria'));
+            $Subcategorias = Subcategoryrespelpublic::where('FK_CategoryRP', $id)->count();
+
+            return view('categoryRP.edit', compact('categoria', 'Subcategorias'));
         }
         else{
             abort(403);
@@ -109,7 +111,22 @@ class CategoryRPController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        $validate = $request->validate([
+            'CategoryRpName'       => 'required|min:5|max:128',
+        ]);
+        $categoria = Categoryrespelpublic::find($id);
+        $categoria->CategoryRpName = $request->input('CategoryRpName');
+        $categoria->save();
+
+        $log = new audit();
+        $log->AuditTabla="categoryrespelpublic";
+        $log->AuditType="Actualizado";
+        $log->AuditRegistro=$Subcategory->ID_CategoryRP ;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->input('CategoryRpName');
+        $log->save();
+
+        return redirect()->route('categorypublic.index');
     }
 
     /**
@@ -120,6 +137,16 @@ class CategoryRPController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Categoryrespelpublic::destroy($id);
+
+        $log = new audit();
+        $log->AuditTabla="categoryrespelpublic";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$id ;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog='registro con id '.$id.' eliminado';
+        $log->save();
+
+        return redirect()->route('categorypublic.index');
     }
 }

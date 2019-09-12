@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+Residuos Comunes
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
+Residuos Comunes
 @endsection	
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,10 +12,10 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelcreate') }}</h3>
+					<h3 class="box-title">Registro de Residuo Común</h3>
 				</div>
 					<div class="box box-info">
-						<form role="form" action="/publicrespel" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
+						<form role="form" action="/respelspublic" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator" >
 							@csrf
 							@if ($errors->any())
 							<div class="alert alert-danger" role="alert">
@@ -41,6 +41,24 @@
 								@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 								@endif
+
+								{{-- Categoria --}}
+								<div class="col-md-6 form-group has-feedback">
+									<label>Categoría</label><small class="help-block with-errors">*</small>
+									<select id="selectCategory" class="form-control" data-dependent="FK_SubCategoryRP">
+										<option disabled>seleccione una categoria...</option>
+										@foreach($categories as $category)
+										<option value="{{$category->ID_CategoryRP}}">{{$category->CategoryRpName}}</option>
+										@endforeach
+									</select>
+								</div>
+
+								{{-- SubCategoria --}}
+								<div class="col-md-6 form-group has-feedback">
+									<label>SubCategoría</label><a class="load"></a><small class="help-block with-errors">*</small>
+									<select id="subcategorycontainer" name="FK_SubCategoryRP" class="form-control" required>
+									</select>
+								</div>
 								@include('layouts.RespelPartials.respelform1')
 							</div>
 							<!-- /.box-body -->
@@ -57,4 +75,7 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+	
 @endsection

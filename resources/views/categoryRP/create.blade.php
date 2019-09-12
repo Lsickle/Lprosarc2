@@ -5,7 +5,7 @@ Crear Categoria
 @endsection
 
 @section('contentheader_title')
-Crear Categoria
+Categorias para Residuos Comunes
 @endsection
 
 @section('main-content')

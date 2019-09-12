@@ -15,7 +15,7 @@ class Categoryrespelpublic extends Model
 
 	public function SubCategoryRP()
     {
-        return $this->hasMany('App\Subcategoryrespelpublic', 'ID_SubCategoryRP', 'ID_CategoryRP');//como categoria de activo tiene muchas sub categorias 
+        return $this->hasMany('App\Subcategoryrespelpublic', 'FK_CategoryRP', 'ID_CategoryRP');//como categoria de activo tiene muchas sub categorias 
     }
 
 }

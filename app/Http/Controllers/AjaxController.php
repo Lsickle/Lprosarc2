@@ -172,4 +172,18 @@ class AjaxController extends Controller
 	}
 
 
+	/*Funcion para ver por medio de Ajax los subcategorias que le corresponden a una categoria de respel public*/
+	public function SubcategoriaDinamico(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$subcategories = DB::table('subcategoryrespelpublic')
+				->select('*')
+				->where('FK_CategoryRP', $id)
+				->orderBy('SubCategoryRpName', 'desc')
+				->get();
+			return response()->json($subcategories);
+		}
+	}
+
+
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Categorías
 @endsection
 
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.areatitle') }}
+Categorias para Residuos Comunes
 @endsection
 
 @section('main-content')
@@ -22,9 +22,14 @@
 								la Categoria <b>{{$categoria->CategoryRpName}}</b>
 							@endslot
 						@endcomponent
-						<h3 class="box-title">{{ trans('adminlte_lang::message.editarea') }}</h3>
-						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$categoria->ID_CategoryRP}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-						<a style="margin-right: 1em;" onclick="addSubcategory()" id="addsubcategorybutton" class="btn btn-primary pull-right"><i class='fas fa-plus fa-lg'></i> Añadir Subcategoria</a>
+						<h3 class="box-title">Edicion de Categoría</h3>
+						@if($Subcategorias == 0)
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$categoria->ID_CategoryRP}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+						@else
+							<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Categoria</b>" data-content="Para eliminar esta categoria primero elimine todas las <b>SubCategorias</b> relacionadas... " class='btn btn-default pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
+						@endif
+						{{-- <a method='get' href='#' data-toggle='modal' data-target='#myModal{{$categoria->ID_CategoryRP}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a> --}}
+						{{-- <a style="margin-right: 1em;" onclick="addSubcategory()" id="addsubcategorybutton" class="btn btn-primary pull-right"><i class='fas fa-plus fa-lg'></i> Añadir Subcategoria</a> --}}
 						<form action='/categorypublic/{{$categoria->ID_CategoryRP}}' method='POST'>
 							@method('DELETE')
 							@csrf
@@ -61,7 +66,7 @@
 									<div class="form-group col-xs-12 col-md-6">
 										<label for="SubCategoryRpName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nombre de la Subcategoria</b>" data-content="{{ trans('adminlte_lang::message.SubCategoryNameInfo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Nombre de la Subcategoria</label>
 										<small class="help-block with-errors">*</small>
-										<input data-minlength="5" required="true" name="SubCategoryRp[]name" autofocus="true" type="text" class="form-control inputText" id="SubCategoryRpName" value="{{$SubCategory->SubCategoryRpName}}">
+										<input disabled data-minlength="5" required="true" name="SubCategoryRp[]name" autofocus="true" type="text" class="form-control inputText" id="SubCategoryRpName" value="{{$SubCategory->SubCategoryRpName}}">
 										<input hidden name="ID_SubCategoryRP[]" value="{{$SubCategory->ID_SubCategoryRP}}">
 									</div>
 									@endforeach
