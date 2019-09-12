@@ -13,7 +13,7 @@ class Subcategoryrespelpublic extends Model
 	protected $primaryKey = 'ID_SubCategoryRP';
 
 
-	public function SubcategoryRespelpublic()
+	public function CategoryRP()
     {
         return $this->belongsTo('App\Categoryrespelpublic', 'FK_CategoryRP', 'ID_CategoryRP');//como categoria de activo tiene muchas sub categorias 
     }

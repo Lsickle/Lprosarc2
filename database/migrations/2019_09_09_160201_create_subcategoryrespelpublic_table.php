@@ -16,7 +16,7 @@ class CreateSubcategoryrespelpublicTable extends Migration
         Schema::create('subcategoryrespelpublic', function (Blueprint $table) {
             $table->increments('ID_SubCategoryRP');
             $table->string('SubCategoryRpName', 64);
-            $table->unsignedInteger('FK_CategoryRP');
+            $table->unsignedInteger('FK_CategoryRP')->nullable();
             $table->foreign('FK_CategoryRP')->references('ID_CategoryRP')->on('categoryrespelpublic');
             $table->timestamps();
             $table->engine = 'InnoDB';
