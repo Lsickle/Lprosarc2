@@ -3,15 +3,15 @@
 		{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::message.name') }}</label>
-				<input maxlength="128" name="PRespelName" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{$Respels->PRespelName}}">
+				<input maxlength="128" name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{$Respels->PRespelName}}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label>
-				<input required maxlength="512" name="PRespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->PRespelDescrip}}">
+				<input required maxlength="512" name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->PRespelDescrip}}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
-				<select name="PRespelEstado" class="form-control" required>
+				<select name="RespelEstado" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
 					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
 					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico2') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
@@ -21,7 +21,7 @@
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::LangRespel.danger') }}</label>
-				<select id="selectDanger0" name="PRespelIgrosidad" class="form-control" required>
+				<select id="selectDanger0" name="RespelIgrosidad" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
 					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->PRespelIgrosidad === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
@@ -91,7 +91,7 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->PRespelHojaSeguridad !== 'RespelHojaDefault.pdf')
 				<div class="input-group">
-					<input id="hoja0" name="PRespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
+					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/HojaSeguridad/{{$Respels->PRespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
@@ -99,14 +99,14 @@
 				@else
 					@if($Respels->PRespelIgrosidad !== 'No peligroso')
 					<div class="input-group">
-						<input required id="hoja0" name="PRespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
+						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
 					</div>
 					@else
 					<div class="input-group">
-						<input id="hoja0" name="PRespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
+						<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
 							<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 						</div>
@@ -120,14 +120,14 @@
 				<small class="help-block with-errors">*</small>
 				@if($Respels->PRespelTarj!=='RespelTarjetaDefault.pdf')
 				<div class="input-group">
-					<input name="PRespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->PRespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input name="PRespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -138,18 +138,18 @@
 			<div class="col-md-6 form-group has-feedback">
 				<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.fotolabel') }}</label>
 				<small class="help-block with-errors"></small>
-				{{-- <input id="foto0" name="PRespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
+				{{-- <input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span> --}}
 				@if($Respels->PRespelFoto!=='RespelFotoDefault.png')
 				<div class="input-group">
-					<input id="foto0" name="PRespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' href='/img/fotoRespelCreate/{{$Respels->PRespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 					</div>
 				</div>
 				@else
 				<div class="input-group">
-					<input id="foto0" name="PRespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
+					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -189,7 +189,7 @@
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">
 					<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.aceptacionlabel') }}
 				</label>
-				<select id="selectDdeclaracion0" name="PRespelDeclaracion" class="form-control" required>
+				<select id="selectDdeclaracion0" name="RespelDeclaracion" class="form-control" required>
 					<option value="" selected>{{ trans('adminlte_lang::LangRespel.select')}}</option>
 					<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>

@@ -24,6 +24,7 @@ use App\ResiduosGener;
 use App\Permisos;
 use App\Tarifa;
 use App\Categoryrespelpublic;
+use App\Subcategoryrespelpublic;
 use App\Respelpublic;
 use Illuminate\Support\Arr;
 
@@ -192,16 +193,18 @@ class RespelPublicController extends Controller
         /*se verifican el rol del usuario para dar acceso a la edicion de respel o evaluacion de respel*/
         if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
 
-            $Respels = Respel::where('ID_PRespel', $id)->first();
-
+            $Respels = Respelpublic::where('PRespelSlug', $id)->first();
+            // return $Respels;
             /*se valida que el residuo no este eliminado*/
             if ($Respels->PRespelDelete == 1) {
                 abort(404);
             }
 
             $categories = Categoryrespelpublic::all();
-            
-            return view('publicrespel.edit', compact('Respels'));
+
+            $Subcategory = Subcategoryrespelpublic::where('ID_SubCategoryRP', $Respels->FK_SubCategoryRP)->first();
+            // return $Subcategory;
+            return view('publicrespel.edit', compact('Respels', 'categories', 'Subcategory'));
         }else{
             abort(403);
         }
