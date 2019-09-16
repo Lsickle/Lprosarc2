@@ -167,7 +167,16 @@ class RespelPublicController extends Controller
             $prespel->PRespelDelete = 0;
             $prespel->PRespelDeclaracion = $request['RespelDeclaracion'][$x];
             $prespel->save();
+
+            $log = new audit();
+            $log->AuditTabla="respelpublic";
+            $log->AuditType="creado";
+            $log->AuditRegistro=$prespel->ID_Respel;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=json_encode($request['RespelName'][$x]);
+            $log->save();
         }
+
         return redirect()->route('respelspublic.index');
     }
 
@@ -199,7 +208,7 @@ class RespelPublicController extends Controller
             if ($Respels->PRespelDelete == 1) {
                 abort(404);
             }
-            
+
             $categories = Categoryrespelpublic::all();
 
             $Subcategory = Subcategoryrespelpublic::where('ID_SubCategoryRP', $Respels->FK_SubCategoryRP)->first();
@@ -219,7 +228,85 @@ class RespelPublicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $respel = Respelpublic::where('ID_PRespel', $id)->first();
+        if (!$respel) {
+            abort(404);
+        }
+            if (isset($request['RespelHojaSeguridad'])) {
+                if($respel->PRespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$respel->PRespelHojaSeguridad)){
+                    unlink(public_path().'/img/HojaSeguridad/'.$respel->PRespelHojaSeguridad);
+                }
+                $file1 = $request['RespelHojaSeguridad'];
+                $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
+                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
+            }
+            else{
+                $hoja = $respel->PRespelHojaSeguridad;
+            }
+
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelTarj'])) {
+                if($respel->PRespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->PRespelTarj)){
+                    unlink(public_path().'/img/TarjetaEmergencia/'.$respel->PRespelTarj);
+                }
+                $file2 = $request['RespelTarj'];
+                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+            }else{
+                $tarj = $respel->PRespelTarj;
+            }
+
+             /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelFoto'])) {
+                if($respel->PRespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$respel->PRespelFoto)){
+                    unlink(public_path().'/img/fotoRespelCreate/'.$respel->PRespelFoto);
+                }
+                $file3 = $request['RespelFoto'];
+                $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
+                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
+            }else{
+                $foto = $respel->PRespelFoto;
+            }
+            
+            /*verificar si se cargo un documento en este campo*/
+            if (isset($request['SustanciaControladaDocumento'])) {
+                if($respel->PSustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$respel->PSustanciaControladaDocumento)){
+                    unlink(public_path().'/img/SustanciaControlDoc/'.$respel->PSustanciaControladaDocumento);
+                }
+                $file4 = $request['SustanciaControladaDocumento'];
+                $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
+                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
+            }else{
+                $ctrlDoc = $respel->PSustanciaControladaDocumento;
+            }
+            $respel->PRespelStatus = "Pendiente";
+            // $respel->PRespelStatus = $request['RespelStatus'];
+            $respel->PRespelName = $request['RespelName'];
+            $respel->PRespelDescrip = $request['RespelDescrip'];
+            $respel->PRespelIgrosidad = $request['RespelIgrosidad'];
+            $respel->PYRespelClasf4741 = $request['YRespelClasf4741'];
+            $respel->PARespelClasf4741 = $request['ARespelClasf4741'];
+            $respel->PRespelEstado = $request['RespelEstado'];
+            $respel->PSustanciaControlada = $request['SustanciaControlada'];
+            $respel->PSustanciaControladaTipo = $request['SustanciaControladaTipo'];
+            $respel->PSustanciaControladaNombre = $request['SustanciaControladaNombre'];
+            $respel->PRespelHojaSeguridad = $hoja;
+            $respel->PRespelTarj = $tarj;
+            $respel->PRespelFoto = $foto;
+            $respel->PSustanciaControladaDocumento = $ctrlDoc;
+            $respel->PRespelDeclaracion = $request['RespelDeclaracion'];
+            $respel->FK_SubCategoryRP = $request['FK_SubCategoryRP'];
+            $respel->update();
+
+            $log = new audit();
+            $log->AuditTabla="respelpublic";
+            $log->AuditType="Modificado";
+            $log->AuditRegistro=$respel->ID_PRespel;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=json_encode($request->all());
+            $log->save();
+            
+            return redirect()->route('respelspublic.index');
     }
 
     /**
