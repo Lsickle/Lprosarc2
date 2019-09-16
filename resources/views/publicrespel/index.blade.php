@@ -39,7 +39,7 @@
 									<td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td>
 
 									<td class="text-center">{{$respel->SubcategoryRespelpublic->CategoryRP->CategoryRpName}}</td>
-									<td class="text-center">{{$respel->SubcategoryRespelpublic->CategoryRP->CategoryRpName}}</td>
+									<td class="text-center">{{$respel->SubcategoryRespelpublic->SubCategoryRpName}}</td>
 
 									<td class="text-center">{{$respel->PRespelName}}</td>
 
