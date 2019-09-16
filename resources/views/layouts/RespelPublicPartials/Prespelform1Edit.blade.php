@@ -24,35 +24,35 @@
 				<select id="selectDanger0" name="RespelIgrosidad" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->PRespelIgrosidad === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->PRespelIgrosidad == 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger1') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger2') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger3') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger4') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger5') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger6') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger6') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger7') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->PRespelIgrosidad === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger8') }}
 					</option>
 
@@ -162,24 +162,24 @@
 				</label>
 				<select id="selectControl0" name="SustanciaControlada" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
-					<option value="0" onclick="setNoControlada(0)" {{ ($Respels->SustanciaControlada === 0 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.no') }}</option>
-					<option value="1" onclick="setControlada(0)" {{ ($Respels->SustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+					<option value="0" onclick="setNoControlada(0)" {{ ($Respels->PSustanciaControlada === 0 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.no') }}</option>
+					<option value="1" onclick="setControlada(0)" {{ ($Respels->PSustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
 				<label style="margin-bottom: 0">Tipo de sustancia</label><br>
-				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
-				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
+				<a class="btn btn-{{$Respels->PSustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
+				<a class="btn btn-{{$Respels->PSustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
-				@if($Respels->SustanciaControladaTipo === 0)
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->PSustanciaControladaTipo === 0)
 					@include('layouts.RespelPublicPartials.layoutsRes.ControladaEditName')
 				@else
 					@include('layouts.RespelPublicPartials.layoutsRes.MasivoEditName')
 				@endif
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
-				@if($Respels->SustanciaControladaTipo === 0)
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->PSustanciaControladaTipo === 0)
 					@include('layouts.RespelPublicPartials.layoutsRes.ControladaEditDoc')
 				@else
 					@include('layouts.RespelPublicPartials.layoutsRes.MasivoEditDoc')
@@ -200,9 +200,9 @@
 </div>
 <script>
 var contador = 1;
-@if(!is_null($Respels->SustanciaControladaNombre))
+@if(!is_null($Respels->PSustanciaControladaNombre))
 		setControlada(0);
-		@if($Respels->SustanciaControladaTipo == 0)
+		@if($Respels->PSustanciaControladaTipo == 0)
 			AgregarControlada(0);
 		@else
 			AgregarMasivo(0);

@@ -199,7 +199,7 @@ class RespelPublicController extends Controller
             if ($Respels->PRespelDelete == 1) {
                 abort(404);
             }
-
+            
             $categories = Categoryrespelpublic::all();
 
             $Subcategory = Subcategoryrespelpublic::where('ID_SubCategoryRP', $Respels->FK_SubCategoryRP)->first();

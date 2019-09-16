@@ -2,11 +2,11 @@
 <small class="help-block with-errors">*</small>
 @if($Respels->SustanciaControladaTipo === 1)
 <div class="input-group">
-	<input value="{{$Respels->SustanciaControladaDocumento}}" name="SustanciaControladaDocumento" type="file" class="form-control" id="sustanciaFormFile0" data-filesize="2048" accept=".pdf">
+	<input value="{{$Respels->PSustanciaControladaDocumento}}" name="SustanciaControladaDocumento" type="file" class="form-control" id="sustanciaFormFile0" data-filesize="2048" accept=".pdf">
 	<div class="input-group-btn">
-		<a method='get' href='/img/SustanciaControlDoc/{{$Respels->SustanciaControladaDocumento}}' target='_blank' class='btn btn-success'> <i class="fas fa-file-pdf fa-lg"></i></a>
+		<a method='get' href='/img/SustanciaControlDoc/{{$Respels->PSustanciaControladaDocumento}}' target='_blank' class='btn btn-success'> <i class="fas fa-file-pdf fa-lg"></i></a>
 	</div>
 </div>
 @else
-	<input value="{{$Respels->SustanciaControladaDocumento}}" name="SustanciaControladaDocumento" type="file" class="form-control" id="sustanciaFormFile0" data-filesize="2048" accept=".pdf">
+	<input value="{{$Respels->PSustanciaControladaDocumento}}" name="SustanciaControladaDocumento" type="file" class="form-control" id="sustanciaFormFile0" data-filesize="2048" accept=".pdf">
 @endif
