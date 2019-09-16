@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/categorypublic', 'CategoryRPController');
 	Route::resource('/subcategorypublic', 'SubCategoryRPController');
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
+	Route::put('/respels/{id}/makePublicRespel', 'RespelController@makePublicRespel');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');

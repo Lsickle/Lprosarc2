@@ -7,11 +7,14 @@
 		<div class="col-md-12 col-md-offset-0">
 			<!-- /.box -->
 			<div class="box">
+				<div class="box-header">
 				@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
-					<div class="box-header">
 						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
-					</div>
 				@endif
+				@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
+						<a href="respels/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
+				@endif
+				</div>
 				<!-- /.box-header -->
 				<div class="box box-info">
 					<div class="box-body">

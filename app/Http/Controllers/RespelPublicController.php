@@ -39,8 +39,11 @@ class RespelPublicController extends Controller
     {
         if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
          /*se accede a la lista de residuos comunes unicamente para prosarc*/
-        $PublicRespels = Respelpublic::with('SubcategoryRespelpublic.CategoryRP')->get();
+        $PublicRespels = Respel::with('SubcategoryRespelpublic.CategoryRP')
+        ->where('RespelPublic', 1)
+        ->get();
         // return $PublicRespels[0]->SubcategoryRespelpublic->CategoryRP->CategoryRpName;
+        // return $PublicRespels;
         return view('publicrespel.index', compact('PublicRespels')); 
         }else{
             abort(403);

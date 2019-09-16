@@ -8,7 +8,7 @@ class Respel extends Model
 {
     protected $table='respels';
 
-    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741', 'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus','RespelDelete', 'RespelSlug', 'FK_RespelCoti', 'RespelStatusDescription'];
+    protected $fillable=['RespelName', 'RespelDescrip', 'YRespelClasf4741', 'ARespelClasf4741', 'RespelIgrosidad', 'RespelEstado',' RespelHojaSeguridad', 'RespelTarj', 'RespelStatus','RespelDelete', 'RespelSlug', 'FK_RespelCoti', 'RespelStatusDescription', 'RespelPublic', 'FK_SubCategoryRP'];
 
     protected $primaryKey = 'ID_Respel';
 
@@ -34,5 +34,10 @@ class Respel extends Model
     public function requerimientos(){
         return $this->hasMany('App\Requerimiento', 'FK_ReqRespel', 'ID_Respel');
         //como residuos tiene muchos requerimientos
+    }
+
+    public function SubcategoryRespelpublic()
+    {
+        return $this->belongsTo('App\Subcategoryrespelpublic', 'FK_SubCategoryRP', 'ID_SubCategoryRP');
     }
 }

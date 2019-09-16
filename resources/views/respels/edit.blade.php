@@ -92,6 +92,9 @@
 						<p class="text-muted text-center">{{$Respels->RespelDescrip}}</p>
 						<ul class="list-group list-group-unbordered">
 							<li class="list-group-item">
+								<b>Publico</b> <a href="/respels/{{$Respels->RespelSlug}}/makePublicRespel" class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
+							</li>
+							<li class="list-group-item">
 								<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
 							</li>
 							<li class="list-group-item">
