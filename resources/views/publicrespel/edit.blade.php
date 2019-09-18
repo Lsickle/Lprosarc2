@@ -5,16 +5,16 @@
 @endsection
 
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+Residuo Común
 @endsection
 
 @section('main-content')
 	@component('layouts.partials.modal')
 		@slot('slug')
-			{{$Respels->ID_PRespel}}
+			{{$Respels->ID_Respel}}
 		@endslot
 		@slot('textModal')
-			el residuo <b>N° {{$Respels->PRespelName}}</b>
+			el residuo <b>N° {{$Respels->RespelName}}</b>
 		@endslot
 	@endcomponent
 	<div class="container-fluid spark-screen">
@@ -22,11 +22,11 @@
 			<div class="col-md-12 col-md-offset-0">
 				<!-- Default box -->
 				<div class="box">
-					<form role="form" action="/respelspublic/{{$Respels->ID_PRespel}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/respelspublic/{{$Respels->ID_Respel}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
 						@csrf
 						<div class="box-header">
-							<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
+							<h3 class="box-title">Edición del Residuo Común</h3>
 						</div>
 							<!-- left column -->
 							<!-- general form elements -->
@@ -48,7 +48,11 @@
 									<select id="selectCategory" class="form-control" data-dependent="FK_SubCategoryRP">
 										<option disabled>seleccione una categoria...</option>
 										@foreach($categories as $category)
+										@if($Respels->FK_SubCategoryRP != null)
 											<option {{$Subcategory->FK_CategoryRP == $category->ID_CategoryRP ? 'selected' : ''}} value="{{$category->ID_CategoryRP}}">{{$category->CategoryRpName}}</option>
+										@else
+										<option value="{{$category->ID_CategoryRP}}">{{$category->CategoryRpName}}</option>
+										@endif
 										@endforeach
 									</select>
 								</div>
@@ -57,7 +61,9 @@
 								<div class="col-md-6 form-group has-feedback">
 									<label>SubCategoría</label><a class="load"></a><small class="help-block with-errors">*</small>
 									<select id="subcategorycontainer" name="FK_SubCategoryRP" class="form-control" required>
+										@if($Respels->FK_SubCategoryRP != null)
 										<option value="{{$Subcategory->ID_SubCategoryRP}}">{{$Subcategory->SubCategoryRpName}}</option>	
+										@endif
 									</select>
 								</div>
 								@include('layouts.RespelPublicPartials.PRespelform1Edit')

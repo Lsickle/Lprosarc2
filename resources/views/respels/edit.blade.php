@@ -92,9 +92,6 @@
 						<p class="text-muted text-center">{{$Respels->RespelDescrip}}</p>
 						<ul class="list-group list-group-unbordered">
 							<li class="list-group-item">
-								<b>Publico</b> <a href="/respels/{{$Respels->RespelSlug}}/makePublicRespel" class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
-							</li>
-							<li class="list-group-item">
 								<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
 							</li>
 							<li class="list-group-item">
@@ -206,7 +203,26 @@
 						<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}</h3>
 						<div class="box-tools pull-right">
 							@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-							    <button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button> 
+							<button onclick="AgregarOption()" class="btn btn-primary pull-right" id="addOptionButton"> <i class="fa fa-plus"></i> {{ trans('adminlte_lang::LangTratamiento.optionadd') }}</button> 
+							@endif
+							@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+								@switch($Respels->RespelStatus)
+									@case('Revisado')
+									@case('Evaluado')
+									@case('Cotizado')
+									@case('Aprobado')
+									@case('Vencido')
+										<a method='get' style="margin-right: 1em;" href='/clientToRp/{{$Respels->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Haga click en este boton para copiar la información de este residuo y crear uno nuevo, el cual quedara disponible en la lista de residuos comunes para que otros clientes puedan utilizarlo </p>" class='btn btn-primary'><i class='fas fa-lg fa-copy'></i> Copiar</a>
+										@break
+									@case('Falta TDE')
+									@case('Pendiente')
+									@case('Incompleto')
+									@case('Rechazado')
+										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Copiar</a>
+										@break
+									@default
+										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Copiar</a>
+								@endswitch
 							@endif
 						</div>
 					</div>

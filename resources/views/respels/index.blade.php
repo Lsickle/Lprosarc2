@@ -46,7 +46,8 @@
 									@else
 										<tr>
 									@endif
-									<td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td>
+									{{-- <td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td> --}}
+									<td>{{ $respel->updated_at }}</td>
 									<td class="text-center">{{$respel->RespelName}}</td>
 
 									@if($respel->YRespelClasf4741 <> null)

@@ -34,7 +34,7 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        /*los residuos de clientes sin comercial asignado no apareceran en el index de respel*/
+
         $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
@@ -51,10 +51,10 @@ class RespelController extends Controller
                         ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
                         ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                         ->value('sedes.ID_Sede');
-
+                        // return $UserSedeID;
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
-                        $query->where('sedes.ID_Sede', $UserSedeID);
+                        $query->where('sedes.ID_Sede',$UserSedeID);
                         break;
 
                     case 'Comercial':
@@ -273,7 +273,9 @@ class RespelController extends Controller
             ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
             ->get();
         }
+
         return view('respels.show', compact('Respels', 'requerimientos', 'editButton'));
+
     }
 
     /**

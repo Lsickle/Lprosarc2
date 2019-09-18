@@ -3,20 +3,20 @@
 		{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::message.name') }}</label>
-				<input maxlength="128" name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{$Respels->PRespelName}}">
+				<input maxlength="128" name="RespelName" type="text" class="form-control" placeholder="Nombre del Residuo" required value="{{$Respels->RespelName}}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label>
-				<input required maxlength="512" name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->PRespelDescrip}}">
+				<input required maxlength="512" name="RespelDescrip" type="text" class="form-control" placeholder="Descripcion del Residuo" value="{{$Respels->RespelDescrip}}">
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label>{{ trans('adminlte_lang::LangRespel.estadofisico') }}</label>
 				<select name="RespelEstado" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
-					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
-					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico2') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
-					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico3') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
-					<option {{ ($Respels->PRespelEstado === trans('adminlte_lang::LangRespel.estadofisico4') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
+					<option {{ ($Respels->RespelEstado === trans('adminlte_lang::LangRespel.estadofisico1') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico1') }}">{{ trans('adminlte_lang::LangRespel.estadofisico1') }}</option>
+					<option {{ ($Respels->RespelEstado === trans('adminlte_lang::LangRespel.estadofisico2') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico2') }}">{{ trans('adminlte_lang::LangRespel.estadofisico2') }}</option>
+					<option {{ ($Respels->RespelEstado === trans('adminlte_lang::LangRespel.estadofisico3') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico3') }}">{{ trans('adminlte_lang::LangRespel.estadofisico3') }}</option>
+					<option {{ ($Respels->RespelEstado === trans('adminlte_lang::LangRespel.estadofisico4') ? "selected" : "" )}} value="{{ trans('adminlte_lang::LangRespel.estadofisico4') }}">{{ trans('adminlte_lang::LangRespel.estadofisico4') }}</option>
 				</select>
 			</div>
 			<div class="col-md-6 form-group has-feedback">
@@ -24,41 +24,41 @@
 				<select id="selectDanger0" name="RespelIgrosidad" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->PRespelIgrosidad == 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->RespelIgrosidad == 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger1') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger2')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger2') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger2') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger3')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger3') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger3') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger4')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger4') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger4') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger5') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger6') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger6') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger6') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger7') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->PRespelIgrosidad == trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->RespelIgrosidad == trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger8') }}
 					</option>
 
 				</select>
 			</div>
-			@if($Respels->PRespelIgrosidad !== 'No peligroso')
+			@if($Respels->RespelIgrosidad !== 'No peligroso')
 			<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;" id="danger0">
 				<label>Tipo de clasificación</label><br>
 				@if(is_null($Respels->ARespelClasf4741))
@@ -89,15 +89,15 @@
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.hojapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.hojadeseguridad') }}</label>
 				<small class="help-block with-errors">*</small>
-				@if($Respels->PRespelHojaSeguridad !== 'RespelHojaDefault.pdf')
+				@if($Respels->RespelHojaSeguridad !== 'RespelHojaDefault.pdf')
 				<div class="input-group">
 					<input id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
-						<a method='get' href='/img/HojaSeguridad/{{$Respels->PRespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+						<a method='get' href='/img/HojaSeguridad/{{$Respels->RespelHojaSeguridad}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>
 				@else
-					@if($Respels->PRespelIgrosidad !== 'No peligroso')
+					@if($Respels->RespelIgrosidad !== 'No peligroso')
 					<div class="input-group">
 						<input required id="hoja0" name="RespelHojaSeguridad" type="file" data-filesize="10240" class="form-control" data-accept="pdf" accept=".pdf">
 						<div class="input-group-btn">
@@ -118,11 +118,11 @@
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</label>
 				<small class="help-block with-errors">*</small>
-				@if($Respels->PRespelTarj!=='RespelTarjetaDefault.pdf')
+				@if($Respels->RespelTarj!=='RespelTarjetaDefault.pdf')
 				<div class="input-group">
 					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
-						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->PRespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+						<a method='get' href='/img/TarjetaEmergencia/{{$Respels->RespelTarj}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 					</div>
 				</div>
 				@else
@@ -140,11 +140,11 @@
 				<small class="help-block with-errors"></small>
 				{{-- <input id="foto0" name="RespelFoto" type="file" class="form-control" accept=".jpg,.png" data-filesize="2048" data-filetype="png">
 				<span class="form-control-feedback fa fa-camera" style="margin-right: 1.8em;" aria-hidden="true"><span> --}}
-				@if($Respels->PRespelFoto!=='RespelFotoDefault.png')
+				@if($Respels->RespelFoto!=='RespelFotoDefault.png')
 				<div class="input-group">
 					<input id="foto0" name="RespelFoto" type="file" class="form-control" data-accept="jpg, jpeg, png" accept=".jpg,.jpeg,.png" data-filesize="5120" data-filetype="png">
 					<div class="input-group-btn">
-						<a method='get' href='/img/fotoRespelCreate/{{$Respels->PRespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
+						<a method='get' href='/img/fotoRespelCreate/{{$Respels->RespelFoto}}' target='_blank' class='btn btn-success'><i class='fas fa-image fa-lg'></i></a>
 					</div>
 				</div>
 				@else
@@ -162,24 +162,24 @@
 				</label>
 				<select id="selectControl0" name="SustanciaControlada" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select') }}</option>
-					<option value="0" onclick="setNoControlada(0)" {{ ($Respels->PSustanciaControlada === 0 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.no') }}</option>
-					<option value="1" onclick="setControlada(0)" {{ ($Respels->PSustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
+					<option value="0" onclick="setNoControlada(0)" {{ ($Respels->SustanciaControlada === 0 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.no') }}</option>
+					<option value="1" onclick="setControlada(0)" {{ ($Respels->SustanciaControlada === 1 ? 'selected' : '') }}>{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 				</select>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormtype0" style="text-align: center;" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
 				<label style="margin-bottom: 0">Tipo de sustancia</label><br>
-				<a class="btn btn-{{$Respels->PSustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
-				<a class="btn btn-{{$Respels->PSustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 0 ? 'success' : 'default'}}" id="Controlada0" onclick="AgregarControlada(0)"> Controlada</a>
+				<a class="btn btn-{{$Respels->SustanciaControladaTipo === 1 ? 'success' : 'default'}}" id="Masivo0" onclick="AgregarMasivo(0)">Uso masivo</a>
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
-				@if($Respels->PSustanciaControladaTipo === 0)
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormName0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
 					@include('layouts.RespelPublicPartials.layoutsRes.ControladaEditName')
 				@else
 					@include('layouts.RespelPublicPartials.layoutsRes.MasivoEditName')
 				@endif
 			</div>
-			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->PSustanciaControlada === 1 ? '' : 'hidden'}}>
-				@if($Respels->PSustanciaControladaTipo === 0)
+			<div class="col-md-6 form-group has-feedback" id="sustanciaFormDoc0" {{$Respels->SustanciaControlada === 1 ? '' : 'hidden'}}>
+				@if($Respels->SustanciaControladaTipo === 0)
 					@include('layouts.RespelPublicPartials.layoutsRes.ControladaEditDoc')
 				@else
 					@include('layouts.RespelPublicPartials.layoutsRes.MasivoEditDoc')
@@ -200,9 +200,9 @@
 </div>
 <script>
 var contador = 1;
-@if(!is_null($Respels->PSustanciaControladaNombre))
+@if(!is_null($Respels->SustanciaControladaNombre))
 		setControlada(0);
-		@if($Respels->PSustanciaControladaTipo == 0)
+		@if($Respels->SustanciaControladaTipo == 0)
 			AgregarControlada(0);
 		@else
 			AgregarMasivo(0);
