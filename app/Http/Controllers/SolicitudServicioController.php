@@ -22,6 +22,7 @@ use App\Generador;
 use App\Personal;
 use App\Departamento;
 use App\Municipio;
+use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use Permisos;
@@ -385,12 +386,33 @@ class SolicitudServicioController extends Controller
 			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
-		$Residuos = DB::table('solicitud_residuos')
+		// $Residuos = DB::table('solicitud_residuos')
+		// 	->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+		// 	->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+		// 	->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug', 'respels.RespelStatus')
+		// 	->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
+		// 	->get();
+		$Residuosoriginal = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug', 'respels.RespelStatus')
+			->join('requerimientos' , 'respels.ID_Respel', '=', 'Requerimientos.FK_ReqRespel')
+			->join('tratamientos' , 'Requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
+			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.*', 'tratamientos.*', 'sedes.*', 'clientes.*')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
+			->where('requerimientos.ofertado', 1)
 			->get();
+		
+		$Residuos = $Residuosoriginal->map(function ($item) {
+		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('ID_Req', $item->ID_Req)
+	        ->first();
+	        
+	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+		  	return $item;
+		});
+		// return $Residuos;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio'));
 	}
 

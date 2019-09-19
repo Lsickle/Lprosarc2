@@ -218,6 +218,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<thead>
 										<tr>
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
+											<th>Tratamiento</th>
+											<th>Pretratamientos</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
@@ -261,9 +263,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@endphp
 											<tr>
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} ><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
+												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortname : ''}}</td>
+												<td>
+													<ul>
+													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
+													    <li>{{$pretratamientoSelected->PreTratName}}</li>
+													@endforeach
+													</ul>
+												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}}<br>{{$TypeUnidad}}</td>
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} {{$TypeUnidad}}</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
 												@else
@@ -287,7 +297,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@else
 															{{' '.$Residuo->SolResKgRecibido}}
 														@endif
-														<br>{{$TypeUnidad}}
+														{{$TypeUnidad}}
 													</td>
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
@@ -307,7 +317,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@else
 															{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
 														@endif
-														<br>{{$TypeUnidad}}
+														{{$TypeUnidad}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
@@ -318,7 +328,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															@endif
 															<i class="fas fa-marker"></i></a>
 															{{$Residuo->SolResKgTratado  === null ? 'N/A' : $Residuo->SolResKgTratado }} 
-															<br> {{$TypeUnidad}}
+															 {{$TypeUnidad}}
 														</td>
 													@endif
 													<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-info btn-block'> <i class="fas fa-search"></i> </a></td>
