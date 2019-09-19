@@ -399,7 +399,7 @@ class SolicitudServicioController extends Controller
 			->join('tratamientos' , 'Requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
 			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.*', 'tratamientos.*', 'sedes.*', 'clientes.*')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliShortname')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->where('requerimientos.ofertado', 1)
 			->get();
