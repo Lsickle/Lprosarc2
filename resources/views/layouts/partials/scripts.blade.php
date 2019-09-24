@@ -271,6 +271,17 @@ function Switch7() {
 }
 $(document).ready(Switch7());
 </script>
+<script type="text/javascript">
+function Switch8() {
+	$(".auditoriaswitch").bootstrapSwitch({
+		animate: true,
+		labelText: '<i class="fas fa-eye"></i>',
+		onText: '<i class="fas fa-check"></i>',
+		offText: '<i class="fas fa-times"></i>',
+	});
+}
+$(document).ready(Switch8());
+</script>
 @if(Route::currentRouteName()=='tarifas.index')
 <script type="text/javascript">
 $(document).ready(function() {

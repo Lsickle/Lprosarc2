@@ -432,6 +432,7 @@
 			Switch3();
 			Switch6();
 			Switch7();
+			Switch8();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
 
