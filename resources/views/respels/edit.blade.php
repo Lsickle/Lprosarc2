@@ -377,7 +377,6 @@
 		function recargarAjaxTratamiento(contador){
 			selector = $("#opciontratamiento"+contador);
 			id = selector.val();
-			nombredelTrat = selector.val();
 				$.ajaxSetup({
 				  headers: {
 					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

@@ -51,7 +51,7 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliShortname}}</option>
+										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliName}}</option>
 										<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
 									</select>
 								</div>

@@ -122,6 +122,15 @@
 						</div>
 					</label>
 				</div>
+				<div class="form-group col-md-6">
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tratamiento Auditable</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador ">
+						<label for="SolResAuditoria`+id_div+contadorRespel[id_div]+`">Devolución Embalaje</label>
+						<div style="width: 100%; height: 34px;">
+							<input type="checkbox" class="auditoriaswitch" id="SolResAuditoria`+id_div+contadorRespel[id_div]+`" data-name="SolResAuditoria`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResAuditoria`+id_div+contadorRespel[id_div]+`" name="SolResAuditoria[`+id_div+`][]" hidden value="0">
+						</div>
+					</label>
+				</div>
 				{{-- <div class="form-group col-md-6">
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Cantidad a devolver</b>" data-content="<p style='width: 50%'> Cantidad de embalajes enviados y que deben ser devueltos al respectivo cliente o viceversa</p>">
 						<label for="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`">Cantidad a devolver</label>

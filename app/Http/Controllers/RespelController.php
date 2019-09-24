@@ -555,6 +555,9 @@ class RespelController extends Controller
                             if (isset($opciones[$key]['ReqDevolucion'])) {
                                 $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
                             }
+                            if (isset($opciones[$key]['ReqAuditoria'])) {
+                                $requerimiento->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
+                            }
                             /*se adjunta los elementos relacionados al requerimiento*/
                             if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
                                 $requerimiento->ofertado=1;
