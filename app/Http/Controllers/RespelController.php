@@ -366,7 +366,7 @@ class RespelController extends Controller
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
                     ->where('clientes.ID_Cli', '<>', 1)
                     ->get();
-        
+                // return $requerimientos;
                 return view('respels.edit', compact('Respels', 'Sedes', 'requerimientos', 'tratamientos', 'tratamientosViables'));
             }
         }else{

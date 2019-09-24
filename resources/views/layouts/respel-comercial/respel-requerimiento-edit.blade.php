@@ -7,7 +7,10 @@
 @endphp
 
 <div id="requerimiento{{$contadorphp}}Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
-	<div style="margin-top: 0.25em;">
+	<div style="padding: 0.25em; background-color: #222d32; color: #b8c7ce" class="panel-heading">
+	  <h5 class="panel-title">Tratamiento:<b style="color: #E8E8E8" id="requerimiento{{$contadorphp}}TratName"> {{$opcion->tratamientos[0]->TratName}}</b>{{-- 	<small>Subtext for header</small> --}}</h5>
+	</div>
+	<div>
 		<div class="col-md-2 col-xs-6">
 			<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>"> Foto Descargue
 			<input id="ReqFotoDescargue{{$contadorphp}}" {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && ($OpcionOfertada==0) ? '' : 'disabled=true' }} {{$opcion['ReqFotoDescargue'] == 1 ? 'checked' : ""}} value="1" type="checkbox" class="fotoswitch" name="Opcion[{{$contadorphp}}][ReqFotoDescargue]"/>

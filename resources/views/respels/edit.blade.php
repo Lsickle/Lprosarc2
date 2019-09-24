@@ -377,6 +377,7 @@
 		function recargarAjaxTratamiento(contador){
 			selector = $("#opciontratamiento"+contador);
 			id = selector.val();
+			nombredelTrat = selector.val();
 				$.ajaxSetup({
 				  headers: {
 					  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -393,14 +394,21 @@
 					success: function(res){
 						$("#pretratamiento"+contador).empty();
 						var pretrataOption = new Array();
-						for(var i = res.length -1; i >= 0; i--){
-							if ($.inArray(res[i].ID_PreTrat, pretrataOption) < 0) {
-								$("#pretratamiento"+contador).append(`<option value="${res[i].ID_PreTrat}">${res[i].PreTratName}</option>`);
-								pretrataOption.push(res[i].ID_PreTrat);
+						for(var i = res.pretratamientos.length -1; i >= 0; i--){
+							if ($.inArray(res.pretratamientos[i].ID_PreTrat, pretrataOption) < 0) {
+								$("#pretratamiento"+contador).append(`<option value="${res.pretratamientos[i].ID_PreTrat}">${res.pretratamientos[i].PreTratName}</option>`);
+								pretrataOption.push(res.pretratamientos[i].ID_PreTrat);
 							}else{
 								$("#pretratamiento"+contador).append(`<option value="">el Tratamiento elegido no tiene Pretratamientos relacionados</option>`);
 							}
 						}
+						$("#pretratamiento"+contador+"TratName").empty();
+						$("#tarifa"+contador+"TratName").empty();
+						$("#requerimiento"+contador+"TratName").empty();
+						$("#pretratamiento"+contador+"TratName").append(" "+res.TratName);
+						$("#tarifa"+contador+"TratName").append(" "+res.TratName);
+						$("#requerimiento"+contador+"TratName").append(" "+res.TratName);
+
 					},
 					complete: function(){
 						$(".load").empty();

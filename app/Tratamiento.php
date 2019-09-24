@@ -15,7 +15,7 @@ class Tratamiento extends Model
 
     public function gestor()
 	{
-	 return $this->belongsTo('App\Cliente', 'FK_TratProv', 'ID_Sede');
+	 return $this->belongsTo('App\Sede', 'FK_TratProv', 'ID_Sede');
 	 //como tratamiento pertenece a un gestor/sede de cliente
 	}
 

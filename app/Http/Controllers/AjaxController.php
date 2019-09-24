@@ -167,7 +167,7 @@ class AjaxController extends Controller
 			$pretrataOption = Tratamiento::with('pretratamientos')
 				->where('ID_Trat', $id)
 				->first();
-			return response()->json($pretrataOption->pretratamientos);
+			return response()->json($pretrataOption);
 		}
 	}
 
