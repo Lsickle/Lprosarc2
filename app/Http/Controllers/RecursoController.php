@@ -11,7 +11,11 @@ use App\Http\Requests\RecursosStoreRequest;
 use Illuminate\Support\Facades\Hash;
 use App\audit;
 use App\Recurso;
+use App\Respel;
 use App\cliente;
+use App\Requerimiento;
+use App\Tarifa;
+use App\Tratamiento;
 use App\SolicitudResiduo;
 use App\ProgramacionVehiculo;
 use Permisos;
@@ -66,9 +70,32 @@ class RecursoController extends Controller
         $Respel = DB::table('solicitud_residuos')
             ->join('residuos_geners', 'residuos_geners.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
             ->join('respels', 'respels.ID_Respel', 'residuos_geners.FK_Respel')
-            ->select('respels.RespelName')
             ->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
+            // ->select('respels.*')
             ->first();
+
+
+
+        $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+        ->where('FK_ReqRespel', $Respel->ID_Respel)
+        ->where('ofertado', 1)
+        ->get();
+
+        // return $requerimientos;
+        foreach ($requerimientos as $requerimiento) {
+            $tarifas = Tarifa::with(['rangos'])
+            ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
+            ->get();
+            $requerimiento['tarifas'] = $tarifas;
+            $requerimiento['tratamientos'] = Tratamiento::with(['pretratamientos'])
+            ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
+            ->get();
+        }
+
+        $Respel->requerimientos = $requerimientos;
+
+        // return response()->json($Respel);
+
 
         $SolSer = DB::table('solicitud_residuos')
             ->join('solicitud_servicios', 'solicitud_servicios.ID_SolSer', 'solicitud_residuos.FK_SolResSolSer')

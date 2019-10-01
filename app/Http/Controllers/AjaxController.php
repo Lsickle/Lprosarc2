@@ -133,7 +133,7 @@ class AjaxController extends Controller
 			$Requerimientos = DB::table('requerimientos')
 				->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
 				->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
-				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo')
+				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo', 'ReqAuditoria')
 				->where('respels.RespelSlug', $slug)
 				->where('requerimientos.ofertado', 1)
 				->first();

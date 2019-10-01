@@ -396,18 +396,25 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 																<label>{{$Residuo->RespelName.' - '.$Residuo->SolResEmbalaje}}</label>
 															</div>
 															<div class="col-md-12 col-xs-12">
-																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black; border-right: 1px solid black;">
-																	<label>{{trans('adminlte_lang::message.requeredescargue')}}</label>
+																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-right: 1px solid black;">
+																	<label style="text-align: center;"	>Descargue</label>
 																	<div style="width: 100%;">
 																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
 																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
 																	</div>
 																</div>
-																<div class="col-md-6 col-xs-6" style="border-bottom: 2px solid black; border-left: 1px solid black;">
+																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;border-right: 1px solid black;">
 																	<label style="text-align: center;">{{trans('adminlte_lang::message.requeretratamiento')}}</label>
 																	<div style="width: 100%;">
 																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }}/>
 																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }}/>
+																	</div>
+																</div>
+																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;">
+																	<label style="text-align: center;">Devolución/Auditoria</label>
+																	<div style="width: 100%;">
+																		<input type="checkbox" class="embalajeswitch" data-size="small" {{ $Residuo->SolResDevolucion == 1 ? 'checked' : '' }} disabled/>
+																		<input type="checkbox" class="auditoriaswitch" data-size="small" {{ $Residuo->SolResAuditoria == 1 ? 'checked' : '' }} disabled/>
 																	</div>
 																</div>
 															</div>

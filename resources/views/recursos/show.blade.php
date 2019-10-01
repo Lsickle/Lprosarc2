@@ -114,30 +114,49 @@
 							</div>
 							<div class="col-md-12 border-gray">
 								<center><h4>{{trans('adminlte_lang::message.requirements')}}</h4><center>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiredescarguephoto')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResFotoDescargue_Pesaje">Foto Descargue
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="fotoswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiretratamientophoto')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResFotoTratamiento">Foto Tratamiento
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="fotoswitch" id="SolResFotoTratamiento" name="SolResFotoTratamiento" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiredescarguevideo')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResVideoDescargue_Pesaje">Video Descargue
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="videoswitch" id="SolResVideoDescargue_Pesaje" name="SolResVideoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin: 20px 0px 20px 0px; ">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiretratamientovideo')}}</label>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Video-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResVideoTratamiento">Video Tratamiento
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="videoswitch" id="SolResVideoTratamiento" name="SolResVideoTratamiento" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Devolución de embalaje</b>" data-content="<p> Se requiere que los embalajes sean devueltos al cliente/generador</p>" for="SolResDevolucion">Devolución Embalaje
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" disabled="" class="embalajeswitch" id="SolResDevolucion" name="SolResDevolucion" {{$SolRes->SolResDevolucion  === 1 ? 'checked' : '' }} hidden="">
+									</div>
+									</label>
+								</div>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label  data-trigger="hover" data-toggle="popover" title="<b>Tratamiento Auditable</b>" data-content="<p> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador </p>" for="SolResAuditoria">Requiere auditoria
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" disabled="" class="auditoriaswitch" id="SolResAuditoria" name="SolResAuditoria" {{$SolRes->SolResAuditoria  === 1 ? 'checked' : '' }} hidden="">
+									</div>
+									</label>
+								</div>
+
 							</div>
 						</div>
 					</div>
