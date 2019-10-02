@@ -515,7 +515,7 @@ return [
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
-    'Appname'                 => 'SiReS',
+    'Appname'                 => 'SisPro',
 
     //Data error menssage
     'data-error-minlength2'   => 'Use mínimo 2 caracteres',
@@ -537,7 +537,7 @@ return [
 
     'MenuProsarcCliTitle'     => 'CLIENTES',
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
-    'MenuClienTitle'          => 'MENU SiReS',
+    'MenuClienTitle'          => 'MENU SisPro',
 
     'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',

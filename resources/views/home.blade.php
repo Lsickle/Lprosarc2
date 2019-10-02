@@ -15,7 +15,7 @@
         @break
 
     @case('AsistenteLogistica')
-		@include('layouts.homeroles.asistentelogistica')
+		{{-- @include('layouts.homeroles.asistentelogistica') --}}
         @break
 
 	@default
