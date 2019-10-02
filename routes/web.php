@@ -51,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
 	Route::get('/cliente/{slug}/updateCliStatus', 'ClienteController@updateCliStatus')->name('cliente-updateCliStatus');
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
+	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
+	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
@@ -63,7 +65,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	Route::resource('/respelspublic', 'RespelPublicController');
+	Route::get('/clientToRp/{id}', 'RespelPublicController@clientToRp');
+	Route::get('/rpToClient/{id}', 'RespelPublicController@rpToClient');
+	Route::resource('/categorypublic', 'CategoryRPController');
+	Route::resource('/subcategorypublic', 'SubCategoryRPController');
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
+	Route::put('/respels/{id}/makePublicRespel', 'RespelController@makePublicRespel');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
@@ -129,6 +137,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/RequeRespel/{id}', 'AjaxController@RequeRespel');
 	Route::get('/vehicle-transport/{id}', 'AjaxController@VehicTransport');
 	Route::get('/preTratamientoDinamico/{id}', 'AjaxController@preTratamientoDinamico');
+	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */

@@ -41,6 +41,25 @@
 								@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
 								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC)||in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
+								{{-- Categoria --}}
+								<div class="col-md-6 form-group has-feedback">
+									<label>Categoría</label><small class="help-block with-errors">*</small>
+									<select id="selectCategory" class="form-control" data-dependent="FK_SubCategoryRP">
+										<option disabled>seleccione una categoria...</option>
+										@foreach($categories as $category)
+										<option value="{{$category->ID_CategoryRP}}">{{$category->CategoryRpName}}</option>
+										@endforeach
+									</select>
+								</div>
+
+								{{-- SubCategoria --}}
+								<div class="col-md-6 form-group has-feedback">
+									<label>SubCategoría</label><a class="load"></a><small class="help-block with-errors">*</small>
+									<select id="subcategorycontainer" name="FK_SubCategoryRP" class="form-control" required>
+									</select>
+								</div>
+								@endif
 								@include('layouts.RespelPartials.respelform1')
 							</div>
 							<!-- /.box-body -->

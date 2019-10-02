@@ -114,30 +114,49 @@
 							</div>
 							<div class="col-md-12 border-gray">
 								<center><h4>{{trans('adminlte_lang::message.requirements')}}</h4><center>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiredescarguephoto')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Descargue</b>" data-content="<p> Se requiere registro fotografico del proceso de descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResFotoDescargue_Pesaje">Foto Descargue
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="fotoswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoDescargue_Pesaje === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiretratamientophoto')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Foto-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResFotoTratamiento">Foto Tratamiento
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="fotoswitch" id="SolResFotoTratamiento" name="SolResFotoTratamiento" {{$SolRes->SolResFotoTratamiento  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin-top: 20px;">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiredescarguevideo')}}</label>
+								<div class="col-md-2" style="text-align: center; margin-top: 20px;">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Video-Descargue</b>" data-content="<p> Se requiere video del proceso de Descargue de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResVideoDescargue_Pesaje">Video Descargue
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="videoswitch" id="SolResVideoDescargue_Pesaje" name="SolResVideoDescargue_Pesaje" {{$SolRes->SolResVideoDescargue_Pesaje  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
-								<div class="col-md-3" style="text-align: center; margin: 20px 0px 20px 0px; ">
-									<label for="SolResFotoDescargue_Pesaje">{{trans('adminlte_lang::message.requiretratamientovideo')}}</label>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Video-Tratamiento</b>" data-content="<p> Se requiere registro fotografico del Tratamiento de los residuos en las instalaciones de Prosarc S.A. ESP</p>" for="SolResVideoTratamiento">Video Tratamiento
 									<div style="width: 100%; height: 34px;">
-										<input type="checkbox" disabled="" class="testswitch" id="SolResFotoDescargue_Pesaje" name="SolResFotoDescargue_Pesaje" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }} hidden="">
+										<input type="checkbox" disabled="" class="videoswitch" id="SolResVideoTratamiento" name="SolResVideoTratamiento" {{$SolRes->SolResVideoTratamiento  === 1 ? 'checked' : '' }} hidden="">
 									</div>
+									</label>
 								</div>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label data-trigger="hover" data-toggle="popover" title="<b>Devolución de embalaje</b>" data-content="<p> Se requiere que los embalajes sean devueltos al cliente/generador</p>" for="SolResDevolucion">Devolución Embalaje
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" disabled="" class="embalajeswitch" id="SolResDevolucion" name="SolResDevolucion" {{$SolRes->SolResDevolucion  === 1 ? 'checked' : '' }} hidden="">
+									</div>
+									</label>
+								</div>
+								<div class="col-md-2" style="text-align: center; margin: 20px 0px 20px 0px; ">
+									<label  data-trigger="hover" data-toggle="popover" title="<b>Tratamiento Auditable</b>" data-content="<p> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador </p>" for="SolResAuditoria">Requiere auditoria
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" disabled="" class="auditoriaswitch" id="SolResAuditoria" name="SolResAuditoria" {{$SolRes->SolResAuditoria  === 1 ? 'checked' : '' }} hidden="">
+									</div>
+									</label>
+								</div>
+
 							</div>
 						</div>
 					</div>
@@ -222,6 +241,7 @@
 																		@endif
 																		@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
 																			<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																		@endif
 																	</ul>
 																</div>
@@ -250,10 +270,11 @@
 															<ul class="nav nav-pills">
 																<li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
 																@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
-																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
+																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
 																@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
 																	<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
+																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
 															</ul>
 														</div>
@@ -285,17 +306,13 @@
 </div>
 
 @section('NewScript')
-@if(in_array(Auth::user()->UsRol, Permisos::SolSer1))
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer1)||in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 	<script>
 		function Pesaje(){
-			$("#tipo").append(`
-				<option>Pesaje-Descargue</option>
-			`);
+			$("#tipo").append(`<option>Pesaje-Descargue</option>`);
 		}
 		function Tratamiento(){
-			$("#tipo").append(`
-				<option>Tratamiento</option>
-			`);
+			$("#tipo").append(`<option>Tratamiento</option>`);
 		}
 		function modalrecursos(){
 			$('#addRecursoForm').validator('destroy');
@@ -303,8 +320,7 @@
 			$("#categoria").empty();
 			$("#tipo").empty();
 			$("#recursoinputext").val('');
-			$("#tipo").append(`
-				<option value="">Seleccione...</option>
+			$("#tipo").append(`<option value="">Seleccione...</option>
 			`);
 		}
 	</script>
@@ -315,12 +331,12 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Foto" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResFotoDescargue_Pesaje}}' === '1'){
+			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '1'){
 				Pesaje();
-			};
-			if('{{$SolRes->SolResFotoTratamiento}}' === '1'){
+			}
+			if('{{$SolRes->SolResFotoTratamiento}}' == '1'){
 				Tratamiento();
-			};
+			}		
 			$('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
 			$('#recursoinputext').attr('data-filessizemultiple', '5120');
 		});
@@ -331,12 +347,12 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Video" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' === '1'){
+			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' == '1'){
 				Pesaje();
-			};
-			if('{{$SolRes->SolResVideoTratamiento}}' === '1'){
+			}
+			if('{{$SolRes->SolResVideoTratamiento}}' == '1'){
 				Tratamiento();
-			};
+			}
 			$('#recursoinputext').attr('accept', '.mp4');
 			$('#recursoinputext').attr('data-filessizemultiple', '10240');
 		});

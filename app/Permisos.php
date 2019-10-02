@@ -51,6 +51,11 @@ class Permisos{
 		solicitud-serv/show
 		recursos/show
 	*/
+	const RESPELPUBLIC = ['Programador','JefeOperaciones'];
+	/*Using ->
+		solicitud-serv/show
+		recursos/show
+	*/
 	const SolSer2 = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica'];
 	/*Using ->
 		solicitud-serv/show
@@ -160,13 +165,20 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['AdministradorPlanta','Programador'];
+	const SolSerCertifi = ['Programador','Tesorería'];
 	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
-	const SOLSERACEPTADO = ['Tesorería','Programador'];
+	const SOLSERACEPTADO = ['Programador','Tesorería'];
+	/* Using ->
+		solicitud-serv/index
+		SolicitudServicioController::changestatus
+		SolicitudServicioController::index
+		clientes::show
+	 */
+	const SEDECOMERCIAL = ['Programador','Tesorería','AsistenteComercial','AdministradorBogota','Comercial','JefeComercial'];
 	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
@@ -188,7 +200,7 @@ class Permisos{
 		clientcontoller::index
 	*/
 
-	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota',];
+	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota'];
 	/* Using ->
 		clientcontoller::index
 	*/

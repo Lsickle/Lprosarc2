@@ -24,7 +24,6 @@
 									<th>{{ trans('adminlte_lang::message.progvehicclient') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicfech') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicvehic') }}</th>
-									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor'))
@@ -35,6 +34,7 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
+									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
 								</tr>
 							</thead>
 							<tbody id="readyTable">
@@ -80,7 +80,6 @@
 									<td>{{$programacion->CliShortname}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$vehiculoPlaca}}</td>
-									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
 									<td>{{$ayudante}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
@@ -91,6 +90,7 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> {{$programacion->ID_SolSer}}</a></td>
 								</tr>
 								@endforeach
 							</tbody>
