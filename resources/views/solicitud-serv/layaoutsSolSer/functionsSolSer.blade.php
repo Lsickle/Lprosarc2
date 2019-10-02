@@ -280,6 +280,20 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
 				}
+				if(res.ReqAuditoria === 1){
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',false);
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-eye"></i>');
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
+				}
+				else{
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',true);
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-eye"></i>');
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
+					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
+				}
 				switch (res.Tarifatipo) { 
 					case 'Kg': 
 						$('#RespelCantidadTipo'+id_div+contador).hide();
@@ -336,6 +350,8 @@ function HiddenRequeRespel(id_div, contador){
 	$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 	$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
 	$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',true);
+	$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);
+	$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',true);
 }
 function AgregarGenerador() {
 	$("#AddGenerador").before(`@include('solicitud-serv.layaoutsSolSer.NewGener')`);

@@ -51,7 +51,7 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliShortname}}</option>
+										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliName}}</option>
 										<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
 									</select>
 								</div>
@@ -253,6 +253,7 @@ function Switch(){
 }
 Switch();
 function submitverify(){
+	var tipoFacturacion = '{{$Cliente->TipoFacturacion}}';
 	var CantidadTotalkg = 0;
 	for (var i = 0; i < contadorGenerador; i++) {
 		for (var y = 0; y <= contadorRespel[i]; y++) {
@@ -262,7 +263,7 @@ function submitverify(){
 		}
 	}
 	if(CantidadTotalkg != 0){
-		if(CantidadTotalkg >= 500){
+		if((CantidadTotalkg >= 500)||(tipoFacturacion=='Credito')){
 			$("#Submit2").empty();
 			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 			$("#Submit2").attr('disabled', true);

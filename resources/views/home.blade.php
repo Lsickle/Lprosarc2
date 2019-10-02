@@ -18,12 +18,8 @@
 		@include('layouts.homeroles.asistentelogistica')
         @break
 
-    @case(2)
-        Second case...
-        @break
-
-    @default
-        Default case...
+	@default
+         
 @endswitch
 
 <!-- Default box -->
