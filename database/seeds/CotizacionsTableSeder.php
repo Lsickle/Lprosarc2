@@ -20,7 +20,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiVencida = "1";
         $cotizacion->CotiPrecioTotal = "650000";
         $cotizacion->CotiPrecioSubtotal = "350000";
-        $cotizacion->FK_CotiSede = "2";
+        $cotizacion->FK_CotiSede = "1";
         $cotizacion->CotiDelete = '0';
         $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();

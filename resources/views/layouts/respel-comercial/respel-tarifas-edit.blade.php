@@ -1,4 +1,7 @@
 <div id="tarifa{{$contadorphp}}Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
+	<div style="padding: 0.25em; background-color: #222d32; color: #b8c7ce" class="panel-heading">
+	  <h5 class="panel-title">Tratamiento:<b style="color: #E8E8E8" id="tarifa{{$contadorphp}}TratName"> {{$opcion->tratamientos[0]->TratName}}</b>{{-- 	<small>Subtext for header</small> --}}</h5>
+	</div>
 	<div id="rango{{$contadorphp}}Container" class="col-md-12" style="margin-bottom: 0.25em;">
     	@php
     		$x = 0;

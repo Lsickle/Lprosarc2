@@ -51,6 +51,11 @@ class Permisos{
 		solicitud-serv/show
 		recursos/show
 	*/
+	const RESPELPUBLIC = ['Programador','JefeOperaciones'];
+	/*Using ->
+		solicitud-serv/show
+		recursos/show
+	*/
 	const SolSer2 = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica'];
 	/*Using ->
 		solicitud-serv/show
@@ -165,8 +170,11 @@ class Permisos{
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
+		clientes::show
 	 */
 	const SOLSERACEPTADO = ['Programador','Tesorería'];
+
+	const SEDECOMERCIAL = ['Programador','Tesorería','AsistenteComercial','AdministradorBogota','Comercial','JefeComercial'];
 	/* Using ->
 		solicitud-serv/index
 		SolicitudServicioController::changestatus
@@ -188,7 +196,7 @@ class Permisos{
 		clientcontoller::index
 	*/
 
-	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota',];
+	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota'];
 	/* Using ->
 		clientcontoller::index
 	*/

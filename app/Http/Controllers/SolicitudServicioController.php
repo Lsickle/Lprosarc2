@@ -22,6 +22,7 @@ use App\Generador;
 use App\Personal;
 use App\Departamento;
 use App\Municipio;
+use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use Permisos;
@@ -39,7 +40,8 @@ class SolicitudServicioController extends Controller
 		$Servicios = DB::table('solicitud_servicios')
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug')
+			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
+			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -64,6 +66,14 @@ class SolicitudServicioController extends Controller
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
 		}
+		// $Comerciales = DB::table('personals')
+  //                       ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+  //                       ->select('personals.*')
+  //                       ->where('personals.PersDelete', 0)
+  //                       ->where('users.UsRol', 'Comercial')
+  //                       ->orWhere('users.UsRol2', 'Comercial')
+  //                       ->get();
+		
 		// return $Servicios;
 		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
@@ -77,7 +87,7 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
-			$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Cliente = Cliente::select('CliName', 'CliShortname','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
@@ -299,6 +309,8 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResFotoTratamiento = $request['SolResFotoTratamiento'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoDescargue_Pesaje = $request['SolResVideoDescargue_Pesaje'][$Generador][$y];
 				$SolicitudResiduo->SolResVideoTratamiento = $request['SolResVideoTratamiento'][$Generador][$y];
+				$SolicitudResiduo->SolResAuditoria = $request['SolResAuditoria'][$Generador][$y];
+				// $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
@@ -376,12 +388,33 @@ class SolicitudServicioController extends Controller
 			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
-		$Residuos = DB::table('solicitud_residuos')
+		// $Residuos = DB::table('solicitud_residuos')
+		// 	->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
+		// 	->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+		// 	->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug', 'respels.RespelStatus')
+		// 	->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
+		// 	->get();
+		$Residuosoriginal = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.RespelName','respels.RespelSlug', 'respels.RespelStatus')
+			->join('requerimientos' , 'respels.ID_Respel', '=', 'Requerimientos.FK_ReqRespel')
+			->join('tratamientos' , 'Requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
+			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliShortname')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
+			->where('requerimientos.ofertado', 1)
 			->get();
+		
+		$Residuos = $Residuosoriginal->map(function ($item) {
+		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('ID_Req', $item->ID_Req)
+	        ->first();
+	        
+	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+		  	return $item;
+		});
+		// return $Residuos;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio'));
 	}
 

@@ -20,7 +20,7 @@
 						<table id="tratamientosTable" class="table table-bordered table-striped" width="100%">
 							<thead>
 								<tr>
-									<th>#</th>
+									<th>N°</th>
 									<th>{{ trans('adminlte_lang::LangTratamiento.type') }}</th>
 									<th>{{ trans('adminlte_lang::LangTratamiento.tratprovee') }}</th>
 									<th>{{ trans('adminlte_lang::LangTratamiento.sede') }}</th>
@@ -37,7 +37,7 @@
 									style="color: red;"
 									@endif
 									>
-									<td>{{$tratamiento->ID_Trat}}</td>
+									<td>#{{$tratamiento->ID_Trat}}</td>
 									@if($tratamiento->TratTipo == 0)
 									<td>Interno</td>
 									@else

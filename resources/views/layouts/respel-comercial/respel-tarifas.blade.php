@@ -1,4 +1,7 @@
 <div id="tarifa`+contador+`Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
+	<div style="padding: 0.25em; background-color: #222d32; color: #b8c7ce" class="panel-heading">
+	  <h5 class="panel-title">Tratamiento:<b style="color: #E8E8E8" id="tarifa`+contador+`TratName"> Seleccione un Tratamiento...</b>{{-- 	<small>Subtext for header</small> --}}</h5>
+	</div>
 	<div id="rango`+contador+`Container" class="col-md-12" style="margin-bottom: 0.25em;">
 		<div class="pull-left col-md-3" style="max-height: 2.3em;">
 			<label for="expireRange`+contador+`" style="font-size: 0.9em;">Vencimiento</label>

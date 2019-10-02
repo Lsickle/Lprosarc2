@@ -27,13 +27,19 @@
 							<thead>
 								<tr>
 									<th>{{trans('adminlte_lang::message.solsershowdate')}}</th>
-									<th>{{trans('adminlte_lang::message.solserindexnumber')}}</th>
+									<th>N°</th>
 									<th>Status</th>
 
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th>{{trans('adminlte_lang::message.clientcliente')}}</th>
 									@endif
-									<th>{{trans('adminlte_lang::message.solserpersonal')}}</th>
+									@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
+										<th>Facturación</th>
+										<th>Nuevas Solicitudes</th>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+										<th>Comercial Asignado</th>
+									@endif
 									<th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
 									<th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
 									<th>{{trans('adminlte_lang::message.seemore')}}</th>
@@ -48,13 +54,19 @@
 							<tbody>
 								@foreach ($Servicios as $Servicio)
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-										<td style="text-align: center;">{{date('Y-m-d', strtotime($Servicio->created_at))}}</td>
-										<td style="text-align: center;">{{$Servicio->ID_SolSer}}</td>
+										<td style="text-align: center;">{{date('d-m-y', strtotime($Servicio->created_at))}}</td>
+										<td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
-										@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-											<td><a title="Ver Cliente" href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->CliShortname}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..." href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliShortname}}</td>
 										@endif
-										<td><a title="Ver Personal" href="/personal/{{$Servicio->PersSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$Servicio->PersFirstName.' '.$Servicio->PersLastName}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
+											<th>{{$Servicio->TipoFacturacion}}</th>
+											<th>{{$Servicio->CliStatus}}</th>
+										@endif
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+											<td><i data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$Servicio->ComercialPersFirstName}} {{$Servicio->ComercialPersLastName}}</li><li>{{$Servicio->ComercialPersEmail}}</li><li>{{$Servicio->ComercialPersCellphone}}</li></ul>" class="fas fa-user-tie" style="color:green;"></i> {{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
+										@endif
 										<td>{{$Servicio->SolSerNameTrans}}</td>
 										<td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}</td>
 										<td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>

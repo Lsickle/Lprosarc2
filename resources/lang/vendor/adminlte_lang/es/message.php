@@ -515,7 +515,7 @@ return [
     // 
     'prosarccorto'            => 'Prosarc S.A ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
-    'Appname'                 => 'SiReS',
+    'Appname'                 => 'SisPro',
 
     //Data error menssage
     'data-error-minlength2'   => 'Use mínimo 2 caracteres',
@@ -537,7 +537,7 @@ return [
 
     'MenuProsarcCliTitle'     => 'CLIENTES',
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
-    'MenuClienTitle'          => 'MENU SiReS',
+    'MenuClienTitle'          => 'MENU SisPro',
 
     'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',
@@ -775,7 +775,7 @@ return [
     'recdeletefoto'           => 'Eliminar Imagen',
     'recaddfoto'              => 'Agregar Foto',
     'recdowloadvideo'         => 'Descargar Vídeo',
-    'recdeletevideo'          => 'Eliminar Imagen',
+    'recdeletevideo'          => 'Eliminar Vídeo',
     'recaddvideo'             => 'Agregar Vídeo',
 
     //Contratos
@@ -792,6 +792,19 @@ return [
     'contractvigenciadescript' => 'Seleccione la fecha de vencimiento y/o vigencia del documento anteriormente adjuntado.',
     'contractnotify'          => '¿Cuando notificar?',
     'contractnotifydescript'  => 'Indique cuantos (días, semanas o meses) anteriores quiere recibir una notificación de la vigencia del documento.',
+
+    //RespelPublic texts
+    'RPMenu'                    => 'Residuos Comunes',
+    'RPList'                    => 'Lista de Residuos Comunes',
+    'CategoryRPMenu'            => 'Categorías',
+    'CategoryName'              => 'Nombre de la categoría',
+    'SubCategoryName'           => 'Nombre de la Subcategoría',
+    'CategoryNameInfo'          => 'Escriba el nombre del categoría a crear <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
+    'SubCategoryNameInfo'       => 'Escriba el nombre del Subcategoría a crear <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
+
+
+
+    
 
     // Name PDF
     'generatemanicargpdf'     => 'Manifiesto de Carga',

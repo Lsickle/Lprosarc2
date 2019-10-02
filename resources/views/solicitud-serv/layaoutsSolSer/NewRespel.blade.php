@@ -114,11 +114,20 @@
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
 				<div class="form-group col-md-6">
-					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
-						<label for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">Devolución Embalaje</label>
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>" for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">
+						Devolución Embalaje
 						<div style="width: 100%; height: 34px;">
 							<input type="checkbox" class="videoswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
 							<input type="text" id="SolResDevolucion1`+id_div+contadorRespel[id_div]+`" name="SolResDevolucion[`+id_div+`][]" hidden value="0">
+						</div>
+					</label>
+				</div>
+				<div class="form-group col-md-6">
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tratamiento Auditable</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador " for="SolResAuditoria`+id_div+contadorRespel[id_div]+`">
+						Requiere Auditoria
+						<div style="width: 100%; height: 34px;">
+							<input type="checkbox" class="auditoriaswitch" id="SolResAuditoria`+id_div+contadorRespel[id_div]+`" data-name="SolResAuditoria1`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResAuditoria1`+id_div+contadorRespel[id_div]+`" name="SolResAuditoria[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>

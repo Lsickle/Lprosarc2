@@ -133,7 +133,7 @@ class AjaxController extends Controller
 			$Requerimientos = DB::table('requerimientos')
 				->join('respels', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
 				->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
-				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo')
+				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo', 'ReqAuditoria')
 				->where('respels.RespelSlug', $slug)
 				->where('requerimientos.ofertado', 1)
 				->first();
@@ -167,7 +167,21 @@ class AjaxController extends Controller
 			$pretrataOption = Tratamiento::with('pretratamientos')
 				->where('ID_Trat', $id)
 				->first();
-			return response()->json($pretrataOption->pretratamientos);
+			return response()->json($pretrataOption);
+		}
+	}
+
+
+	/*Funcion para ver por medio de Ajax los subcategorias que le corresponden a una categoria de respel public*/
+	public function SubcategoriaDinamico(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			$subcategories = DB::table('subcategoryrespelpublic')
+				->select('*')
+				->where('FK_CategoryRP', $id)
+				->orderBy('SubCategoryRpName', 'desc')
+				->get();
+			return response()->json($subcategories);
 		}
 	}
 
