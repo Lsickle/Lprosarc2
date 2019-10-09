@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@if(Auth::user()->UsRol == "Programador"||Auth::user()->UsRol == "JefeOperacion"||Auth::user()->UsRol == "admin")
 @section('htmlheader_title')
 {{ trans('adminlte_lang::LangTratamiento.tratdetaillong') }}
 @endsection
@@ -199,4 +198,3 @@
     <!-- /.row -->
 </div>
 @endsection
-@endif

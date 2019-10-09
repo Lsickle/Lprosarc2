@@ -12,7 +12,11 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangTratamiento.tratlist') }}</h3>
+					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 					<a href="/tratamiento/create" class="btn btn-primary" style="float: right;">{{ trans('adminlte_lang::message.create') }}</a>
+					@else
+					<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Crear Tratamiento</b>" data-content="<p style='width: 50%'> Unicamente el jefe de operaciones cuenta con la autorizacion para crear tratamientos">{{ trans('adminlte_lang::message.create') }}</a>
+					@endif
 				</div>
 				<!-- /.box-header -->
 				<div class="box box-info">
