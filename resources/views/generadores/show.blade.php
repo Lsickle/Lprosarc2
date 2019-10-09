@@ -20,7 +20,7 @@
 								{{$Generador->GenerSlug}}
 							@endslot
 							@slot('textModal')
-								el generador <b>{{$Generador->GenerShortname}}</b>
+								el generador <b>{{$Generador->GenerName}}</b>
 							@endslot
 						@endcomponent
 						@if($Generador->GenerDelete == 0)
@@ -44,7 +44,7 @@
 							@endif
 						@endif
 					</div>
-					<h3 class="profile-username text-center textolargo">{{$Generador->GenerShortname}}</h3>
+					<h3 class="profile-username text-center textolargo">{{$Generador->GenerName}}</h3>
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 							<li class="list-group-item">
@@ -64,10 +64,10 @@
 							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
 						</li>
-						<li class="list-group-item">
+						{{-- <li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerShortname}}</p>">{{$Generador->GenerShortname}}</a>
-						</li>
+						</li> --}}
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.genercode') }}</b> 
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
@@ -170,7 +170,7 @@
 								<ul class="list-group" style="list-style:none; margin-top:10px;">
 									<li class="col-md-11 col-xs-12 col-12">
 										@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$Generador->GenerShortname}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
+											<a method='get' href='#' data-toggle='modal' data-target='#eliminar{{$Respel->SlugSGenerRes}}' onclick="deleteRespelGener(`{{$Respel->SlugSGenerRes}}`, `{{$Respel->RespelName}}`, `{{$Generador->GenerName}}`)" style="font-size: 1.5em; color: red; margin-bottom:-2px;" class="pull-right" ><i class="fas fa-times-circle"></i></a>
 										@endif
 										<h4><a href="/respels/{{$Respel->RespelSlug}}" class="list-group-item list-group-item-action list-group-item-light textolargo col-md-offset-1" style="display:flex; justify-content:center;" target="_blank">{{$Respel->RespelName}}</a></h4>
 									</li>

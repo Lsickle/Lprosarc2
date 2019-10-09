@@ -47,14 +47,14 @@
 								<label for="GenerInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
 								<input type="text" name="GenerName" class="form-control" id="GenerInputRazon" value="{{$Generador->GenerName}}" maxlength="255" required>
 							</div>
-							<div class="col-xs-12 form-group">
+							{{-- <div class="col-xs-12 form-group">
 								<label for="GenerShortname" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
 									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 									{{ trans('adminlte_lang::message.clientnombrecorto') }}
 								</label>
 								<small class="help-block with-errors">*</small>
 								<input type="text" name="GenerShortname" class="form-control" id="GenerInputNombre" value="{{$Generador->GenerShortname}}" maxlength="64">
-							</div>
+							</div> --}}
 							<div class="col-md-12 form-group">
 								<label for="GenerCode" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.genercode') }}</b>" data-content="{{ trans('adminlte_lang::message.code-gener') }}">
 									<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>

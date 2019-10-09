@@ -115,7 +115,7 @@ class genercontroller extends Controller
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
-        $Gener->GenerShortname = $request->input('GenerShortname');
+        // $Gener->GenerShortname = $request->input('GenerShortname');
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $Sede->ID_Sede;
         $Gener->GenerDelete = 0;
@@ -187,7 +187,7 @@ class genercontroller extends Controller
         $Gener = new generador();
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
-        $Gener->GenerShortname = $Cliente->CliShortname;
+        // $Gener->GenerShortname = $Cliente->CliShortname;
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
         $Gener->GenerDelete = $Cliente->CliDelete;
@@ -304,7 +304,7 @@ class genercontroller extends Controller
                     }
             })],
             'GenerName'     => 'required|max:255',
-            'GenerShortname'=> 'required|max:64',
+            // 'GenerShortname'=> 'required|max:64',
             'GenerCode'     => 'max:32|nullable',  
             'FK_GenerCli'   => 'required',
         ]);

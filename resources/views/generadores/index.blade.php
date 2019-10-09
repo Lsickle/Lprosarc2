@@ -53,7 +53,7 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<td>{{$Gener->SedeName}}</td>
 									@endif
-									<td>{{$Gener->GenerShortname}}</td>
+									<td>{{$Gener->GenerName}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>
 										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>

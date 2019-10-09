@@ -60,14 +60,14 @@
 													<small class="help-block with-errors">*</small>
 													<input name="GenerName" type="text" class="form-control" id="GenerInputRazon" value="{{ old('GenerName') }}" required>
 												</div>
-												<div class="col-md-12 form-group">
+												{{-- <div class="col-md-12 form-group">
 													<label for="GenerShortname" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>" data-content="{{ trans('adminlte_lang::message.contacclientnombrecortomessage') }}">
 														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>
 														{{ trans('adminlte_lang::message.clientnombrecorto') }}
 													</label>
 													<small class="help-block with-errors">*</small>
 													<input name="GenerShortname" type="text" id="GenerInputNombre" class="form-control" value="{{ old('GenerShortname') }}" required>
-												</div>
+												</div> --}}
 												<div class="col-md-6 form-group">
 													<label for="GenerCode" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.genercode') }}</b>" data-content="{{ trans('adminlte_lang::message.code-gener') }}">
 														<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>

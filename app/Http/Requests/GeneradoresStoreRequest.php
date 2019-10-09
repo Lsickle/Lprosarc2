@@ -49,7 +49,7 @@ class GeneradoresStoreRequest extends FormRequest
                 })],
 
             'GenerName'     => 'required|max:255',
-            'GenerShortname'=> 'required|max:64',
+            // 'GenerShortname'=> 'required|max:64',
             'FK_GenerCli'   => 'required', 
 
             'GSedeAddress'  => 'required|max:255',
