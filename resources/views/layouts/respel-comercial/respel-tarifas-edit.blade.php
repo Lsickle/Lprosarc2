@@ -59,7 +59,7 @@
 								@if(($rango->TarifaDesde != 0)&&(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)))
 								<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
 								@endif
-								<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10" value="{{$rango->TarifaPrecio}}">
+								<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
 								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
 								@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 							   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden value="{{$rango->TarifaPrecio}}">
@@ -72,7 +72,7 @@
 			    		</script>
 		    			<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
 		    				<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$last}} </label>
-		    				<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="10">
+		    				<input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0">
 		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
 	    					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 	    				   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden>

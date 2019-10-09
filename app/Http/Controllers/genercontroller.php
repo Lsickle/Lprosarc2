@@ -44,7 +44,7 @@ class genercontroller extends Controller
         $Generadors = DB::table('generadors')
         ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        ->select('generadors.*', 'sedes.SedeName','clientes.CliShortname')
+        ->select('generadors.*', 'sedes.SedeName','clientes.CliName')
         ->where(function($query)use($ID_Cli){
             if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
                 if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
@@ -223,7 +223,7 @@ class genercontroller extends Controller
     {
         $Generador = generador::where('GenerSlug',$id)->first();
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-        $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Cliente = Cliente::select('clientes.CliName', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
             ->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
