@@ -34,7 +34,13 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
+        // $UserSedeID = DB::table('personals')
+        //                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+        //                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+        //                 ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+        //                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+        //                 ->value('sedes.ID_Sede');
+        //                 return $UserSedeID;
         $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
@@ -54,7 +60,7 @@ class RespelController extends Controller
                         // return $UserSedeID;
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
-                        $query->where('sedes.ID_Sede',$UserSedeID);
+                        $query->where('sedes.ID_Sede', $UserSedeID);
                         break;
 
                     case 'Comercial':
