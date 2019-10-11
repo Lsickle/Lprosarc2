@@ -138,8 +138,7 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelinfotag') }}</h3>
 					@if($editButton == 'Editable')
 						<div class="btn-group-sm pull-right">
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
-							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 							<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
 								@method('DELETE')
 								@csrf
@@ -147,6 +146,11 @@
 									{{ trans('adminlte_lang::message.delete') }}
 								</button>
 							</form>
+							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
+							@else
+							<a method='get' disabled href='#' class='btn btn-default'>{{ trans('adminlte_lang::message.delete') }}</a>
+							@endif
+							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
 						</div>
 					@else
 						<div class="btn-group-sm pull-right">

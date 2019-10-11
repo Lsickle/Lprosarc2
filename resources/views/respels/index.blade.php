@@ -40,7 +40,8 @@
 										<li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li>
 										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleto</b> </li>
 										<li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li>
-										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Falta TDE</b> </li>
+										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Falta TDE</b> </li>
+										<li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>TDE actualizada</b> </li>
 										<li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li>
 									</ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
 									@else
@@ -53,7 +54,8 @@
 										<li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li>
 										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleto</b> </li>
 										<li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li>
-										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Falta TDE</b> </li>
+										<li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Falta TDE</b> </li>
+										<li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>TDE actualizada</b> </li>
 										<li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li>
 									</ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelver')}}</th>
 									@endif
@@ -138,7 +140,11 @@
 												@break
 											{{-- Informacion Revisado --}}
 											@case('Falta TDE')
-												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada no corresponde con la información de su residuo, debe adjuntar la tarjeta de emergencia correcta para que sus solicitudes de servicio puedan ser programadas con los vehiculos de <b>Prosarc.ESP.S.A.</b> ... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada no corresponde con la información de su residuo, debe adjuntar la tarjeta de emergencia correcta para que sus solicitudes de servicio puedan ser programadas con los vehiculos de <b>Prosarc S.A. ESP.</b> ... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												@break
+											{{-- TDE actualizada --}}
+											@case('TDE actualizada')
+												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia actualizada</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada debe ser revisada por <b>Prosarc S.A. ESP.</b>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default
@@ -180,7 +186,11 @@
 												@break
 											{{-- falta la TDE --}}
 											@case('Falta TDE')
-												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada no corresponde con la información del residuo, el cliente debe adjuntar la tarjeta de emergencia correcta para que las solicitudes de servicio puedan ser programadas con los vehiculos de <b>Prosarc.ESP.S.A.</b> ... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada no corresponde con la información del residuo, el cliente debe adjuntar la tarjeta de emergencia correcta para que las solicitudes de servicio puedan ser programadas con los vehiculos de <b>Prosarc S.A. ESP.</b> ... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												@break
+											{{-- TDE actualizada --}}
+											@case('TDE actualizada')
+												<td class="text-center"><a method='get' target="_blank" href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia actualizada</b>" data-content="<p style='width: 50%'> la tarjeta de emergencia adjuntada debe ser revisada por  el area de <b>Logistica</b> quienes determinaran si la TDE es valida y cambiaran el estatus del residuo a revisado ... <br>Para mas detalles comuníquese con el <b>Area de Logistica</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default

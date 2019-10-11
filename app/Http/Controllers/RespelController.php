@@ -252,11 +252,17 @@ class RespelController extends Controller
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
 
+        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+            $deleteButton = 'No borrable';
+        }else{
+            $deleteButton = 'borrable';
+        }
+
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-            if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
-                $editButton = 'No editable';
-            }else{
+            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente') {
                 $editButton = 'Editable';
+            }else{
+                $editButton = 'No editable';
             }
         else{
             $editButton = 'Editable';
@@ -280,7 +286,7 @@ class RespelController extends Controller
             ->get();
         }
 
-        return view('respels.show', compact('Respels', 'requerimientos', 'editButton'));
+        return view('respels.show', compact('Respels', 'requerimientos', 'editButton', 'deleteButton'));
 
     }
 
@@ -338,6 +344,9 @@ class RespelController extends Controller
                         break;
                     case 'Incompleto':
                         return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
+                    case 'Falta TDE':
+                        return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
                     default:
                         abort(403);
@@ -729,5 +738,46 @@ class RespelController extends Controller
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
         return redirect()->route('respels.edit', [$respel->RespelSlug]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTDE(Request $request, $id)
+    {
+        $respel = Respel::where('RespelSlug', $id)->first();
+        if (!$respel) {
+            abort(404);
+        }
+        // return $request;
+        /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelTarj'])) {
+                if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
+                    unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
+                }
+                $file2 = $request['RespelTarj'];
+                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+                $newTDE = "TDE actualizada";
+            }else{
+                $tarj = $respel->RespelTarj;
+                $newTDE = $respel->RespelStatus;
+            }   
+        $respel->RespelTarj = $tarj;
+        $respel->RespelStatus = $newTDE;
+        $respel->save();
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog="actualizada la tarjeta de emergencia";
+        $log->save();
+
+        return redirect()->route('respels.index');
     }
 }
