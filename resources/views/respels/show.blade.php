@@ -47,6 +47,7 @@
 								<option {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 								<option {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
 								<option {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
+								<option {{$Respels->RespelStatus == 'TDE actualizada' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatustdeupdated') }}</option>
 								<option {{$Respels->RespelStatus == 'Revisado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrevisado') }}</option>
 							</select>
 						</li>

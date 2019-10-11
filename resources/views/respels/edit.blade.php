@@ -113,6 +113,7 @@
 									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'Falta TDE') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Incompleto') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))||($Respels->RespelStatus == 'Vencido') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'TDE actualizada') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'TDE actualizada' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatustdeupdated') }}</option>
 								</select>
 							</li>
 							<li class="list-group-item">
