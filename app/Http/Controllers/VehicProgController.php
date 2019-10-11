@@ -29,7 +29,7 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliShortname')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName')
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
@@ -65,11 +65,11 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliShortname')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName')
 				->where('progvehiculos.ProgVehDelete', 0)
 				->get();
 			$transportadores = DB::table('clientes')
-				->select('CliShortname', 'CliSlug')
+				->select('CliName', 'CliSlug')
 				->where('CliCategoria', 'Transportador')
 				->where('CliDelete', 0)
 				->get();
@@ -94,7 +94,7 @@ class VehicProgController extends Controller
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliShortname')
+				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName')
 				->where('SolSerDelete', 0)
 				->where('SolSerStatus', 'Aprobado')
 				->orderBy('solicitud_servicios.updated_at', 'asc')

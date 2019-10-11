@@ -77,7 +77,7 @@
 									}
 								@endphp
 								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
-									<td>{{$programacion->CliShortname}}</td>
+									<td>{{$programacion->CliName}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$vehiculoPlaca}}</td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
