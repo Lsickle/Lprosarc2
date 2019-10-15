@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('htmlheader_title', trans('adminlte_lang::LangRespel.Respellist'))
-@section('contentheader_title', trans('adminlte_lang::LangRespel.Respellist'))
+@section('contentheader_title')
+<span style="background-color:#ff4444; padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::LangRespel.Respellist') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
