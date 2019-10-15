@@ -55,12 +55,13 @@ class RespelController extends Controller
                         ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                         ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
                         ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                        ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
                         ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                        ->value('sedes.ID_Sede');
+                        ->value('clientes.ID_Cli');
                         // return $UserSedeID;
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
-                        $query->where('sedes.ID_Sede', $UserSedeID);
+                        $query->where('clientes.ID_Cli', $UserSedeID);
                         break;
 
                     case 'Comercial':
