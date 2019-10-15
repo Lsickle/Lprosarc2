@@ -43,7 +43,7 @@
 									<td>{{$Personal->CargName}}</td>
 									<td>{{$Personal->AreaName}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										<td>{{$Personal->CliShortname}}</td>
+										<td>{{$Personal->CliName}}</td>
 									@endif
 									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>

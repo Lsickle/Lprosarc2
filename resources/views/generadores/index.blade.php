@@ -18,7 +18,7 @@
 								<div class="col-xs-6 col-md-8">
 									<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
 										@csrf
-										<label for="" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
 											<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
 										</label>
 									</form>
@@ -48,7 +48,7 @@
 							@foreach($Generadors as $Gener)
 								<tr style="{{$Gener->GenerDelete == 1 ? "color:red;"  : ''}}">
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
+										<td>{{$Gener->CliName}} - {{$Gener->SedeName}}</td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<td>{{$Gener->SedeName}}</td>
