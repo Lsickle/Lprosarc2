@@ -3,7 +3,17 @@
   {{ trans('adminlte_lang::message.genermenu') }}
 @endsection
 @section('contentheader_title')
-  {{ trans('adminlte_lang::message.genermenu') }}
+@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+<span style="background-image: linear-gradient(40deg, rgb(69, 202, 252), rgb(48, 63, 159)); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.gener') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@else
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.gener') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endif
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -18,7 +28,7 @@
 								<div class="col-xs-6 col-md-8">
 									<form action='/Soy-Gener/{{Auth::user()->UsSlug}}' method='POST'>
 										@csrf
-										<label for="" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.soygener') }}</b>" data-content="{{ trans('adminlte_lang::message.soygener-info') }}">
 											<input type="submit" class="btn btn-info" value="{{ trans('adminlte_lang::message.soygener') }}">
 										</label>
 									</form>
@@ -48,12 +58,12 @@
 							@foreach($Generadors as $Gener)
 								<tr style="{{$Gener->GenerDelete == 1 ? "color:red;"  : ''}}">
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<td>{{$Gener->CliShortname}} - {{$Gener->SedeName}}</td>
+										<td>{{$Gener->CliName}} - {{$Gener->SedeName}}</td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 									<td>{{$Gener->SedeName}}</td>
 									@endif
-									<td>{{$Gener->GenerShortname}}</td>
+									<td>{{$Gener->GenerName}}</td>
 									<td>{{$Gener->GenerNit}}</td>
 									<td>
 										<a method='get' href='/generadores/{{$Gener->GenerSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>

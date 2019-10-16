@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.progvehictitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="row">
@@ -25,7 +28,7 @@
 							}
 						@endphp
 						<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12" data-tipo="{{$servicionoprogramado->SolSerTipo}}" data-id="{{$servicionoprogramado->ID_SolSer}}">
-							<span class="col-md-12 form-group col-xs-12">N° {{$servicionoprogramado->ID_SolSer.' - '.$servicionoprogramado->CliShortname}}</span>
+							<span class="col-md-12 form-group col-xs-12">N° {{$servicionoprogramado->ID_SolSer.' - '.$servicionoprogramado->CliName}}</span>
 							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='{{$color}} col-md-12 form-group col-xs-12' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
 						</p>
 					@endforeach
@@ -83,7 +86,7 @@
 									<select name="transport" id="transport" class="form-control">
 										<option value="">Seleccione...</option>
 										@foreach($transportadores as $transportador)
-											<option value="{{$transportador->CliSlug}}">{{$transportador->CliShortname}}</option>
+											<option value="{{$transportador->CliSlug}}">{{$transportador->CliName}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -367,7 +370,7 @@
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
 							color: '{{$programacion->ProgVehColor}}',
-							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliName." - ".$programacion->ID_SolSer}}',
 							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
 						},
@@ -378,7 +381,7 @@
 							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
-							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliName." - ".$programacion->ID_SolSer}}',
 							color: '#00a65a',
 							start: '{{$programacion->ProgVehSalida}}',
 							end: '{{$programacion->ProgVehEntrada}}',

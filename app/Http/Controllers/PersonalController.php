@@ -30,7 +30,7 @@ class PersonalController extends Controller
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliShortname')
+			->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliName')
 			->where(function($query){
 				$id = userController::IDClienteSegunUsuario();
 				/*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/

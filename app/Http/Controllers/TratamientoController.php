@@ -16,6 +16,7 @@ use App\Pretratamiento;
 use App\Clasificacion;
 use App\Respel;
 use App\Requerimiento;
+use App\Permisos;
 
 class TratamientoController extends Controller
 {
@@ -54,18 +55,23 @@ class TratamientoController extends Controller
         //         ->join('departamentos', 'municipios.FK_MunCity', '=', 'departamentos.ID_Depart')
         //         ->select('respels.*', 'cotizacions.*', 'sedes.*', 'clientes.*', 'municipios.*', 'departamentos.*')
         //         ->get();
+        if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)){
+            $sedes = DB::table('sedes')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->where('CliCategoria', '=', 'proveedor')
+                    ->select('sedes.*', 'clientes.*')
+                    ->get();
 
-        $sedes = DB::table('sedes')
-                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->where('CliCategoria', '=', 'proveedor')
-                ->select('sedes.*', 'clientes.*')
-                ->get();
+            $clasificaciones = Clasificacion::All();
 
-        $clasificaciones = Clasificacion::All();
-
-        $pretratamientos = Pretratamiento::All();
-                
-        return view('tratamiento.create', compact('sedes', 'clasificaciones', 'pretratamientos'));
+            $pretratamientos = Pretratamiento::All();
+                    
+            return view('tratamiento.create', compact('sedes', 'clasificaciones', 'pretratamientos'));
+        }
+         /*Validacion para usuarios no permitidos en esta vista*/
+        else{
+            abort(403);
+        }
     }
 
     /**
@@ -172,21 +178,28 @@ class TratamientoController extends Controller
      */
     public function edit($id)
     {
-        $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
-            ->where('ID_Trat', $id)
-            ->first();
-        if (!$tratamiento) {
-            abort(404);
+        if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)){
+
+            $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
+                ->where('ID_Trat', $id)
+                ->first();
+            if (!$tratamiento) {
+                abort(404);
+            }
+            $sedes = DB::table('sedes')
+                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+                    ->where('CliCategoria', '=', 'proveedor')
+                    ->select('sedes.*', 'clientes.*')
+                    ->get();
+            $clasificacionesAll = Clasificacion::All();
+            $pretratamientosAll = Pretratamiento::All(); 
+     
+            return view('tratamiento.edit', compact('tratamiento', 'sedes', 'clasificacionesAll', 'pretratamientosAll'));
         }
-        $sedes = DB::table('sedes')
-                ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                ->where('CliCategoria', '=', 'proveedor')
-                ->select('sedes.*', 'clientes.*')
-                ->get();
-        $clasificacionesAll = Clasificacion::All();
-        $pretratamientosAll = Pretratamiento::All(); 
- 
-        return view('tratamiento.edit', compact('tratamiento', 'sedes', 'clasificacionesAll', 'pretratamientosAll'));
+         /*Validacion para usuarios no permitidos en esta vista*/
+        else{
+            abort(403);
+        }
     }
 
     /**

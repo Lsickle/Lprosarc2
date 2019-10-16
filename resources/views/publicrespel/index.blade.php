@@ -1,10 +1,15 @@
 @extends('layouts.app')
 @section('htmlheader_title', trans('adminlte_lang::LangRespel.Respellist'))
-@section('contentheader_title', trans('adminlte_lang::LangRespel.Respellist'))
+@section('contentheader_title')
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+	Residuos Comunes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-12 col-md-offset-0">
+		<div class="col-md-16 col-md-offset-0">
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">

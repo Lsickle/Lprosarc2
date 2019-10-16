@@ -17,7 +17,7 @@ class CreateGeneradorsTable extends Migration
             $table->increments('ID_Gener');
             $table->string('GenerNit', 20);
             $table->string('GenerName', 255);
-            $table->string('GenerShortname', 64);
+            $table->string('GenerShortname', 64)>nullable();
             $table->string('GenerCode', 32)->nullable();
             $table->string('GenerType', 32)->nullable();
             $table->boolean('GenerAuditable');
