@@ -31,11 +31,31 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class=" pull-left btn btn-primary" href="/profile/{{Auth::user()->UsSlug}}/edit">Editar Correo</a>
-                    <a class=" pull-right btn btn-success" href="{{ route('verification.resend') }}">reenviar</a>
+                    <a class="pull-left btn btn-primary" href="/profile/{{Auth::user()->UsSlug}}/edit">Editar Correo</a>
+                    <a id="resendLinkButton" class="pull-right btn btn-success" onclick="disableResendButton()" href="{{ route('verification.resend') }}">reenviar</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{{-- script para deshabilitar el boton de reenvio de link para validacion --}}
+<script>
+    function disableResendButton(){
+        var resendLinkButton=document.getElementById("resendLinkButton");
+        var status=resendLinkButton.getAttribute("disabled");
+        if (status=="true") {
+            resendLinkButton.style.pointerEvents="none";
+            // console.log("nada");
+            return false;
+        }else{
+            // resendLinkButton.disabled = true;
+            resendLinkButton.setAttribute("disabled", true);
+            // resendLinkButton.style.pointerEvents="none";
+            // resendLinkButton.style.cursor="default";
+            resendLinkButton.innerHTML= "<i class='fas fa-sync fa-spin'></i>Enviando...";
+            // console.log("boton disabled");
+            return true;
+        }
+    }
+</script>
 @endsection
