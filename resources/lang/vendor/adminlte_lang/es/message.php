@@ -310,7 +310,7 @@ return [
     'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio.',
     'clientbankcertification-info'          => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>.',
     'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal.',
-    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(optional)</b>.',
+    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(opcional)</b>.',
 
     // contactos
     'clientcategoría'         => 'Categoría',
@@ -592,7 +592,7 @@ return [
     'MenuQr'                  => 'Código Qr',
 
     // info-gener
-    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en Aprobado o Incompleto.',
+    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en status Aprobado o Revisado.',
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador.',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social.',
     'code-gener'              => 'Código con el que usted tiene registrado este Generador.',

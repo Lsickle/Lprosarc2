@@ -91,7 +91,7 @@ class AjaxController extends Controller
 				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
 				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->select('respels.ID_Respel', 'respels.RespelName', 'respels.RespelSlug')
-				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
 				->where('cotizacions.CotiStatus', '=', 'Aprobada')
 				->where('respels.RespelDelete', '=', 0)
 				->where(function ($query) use ($ResSGeners){
