@@ -3,7 +3,10 @@
 Subcategorías
 @endsection
 @section('contentheader_title')
-
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+    Subcategorías
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -12,7 +15,7 @@ Subcategorías
             <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">crear SubCategoría</h3>
+                    <h3 class="box-title">Crear SubCategoría</h3>
                     <div class="box-tools pull-right">
                      <button onclick="AgregarSubCat()" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Agregar SubCategoria</button>
                     </div>

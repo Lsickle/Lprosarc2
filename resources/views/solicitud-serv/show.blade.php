@@ -3,7 +3,10 @@
 Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.solsertitle')}}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

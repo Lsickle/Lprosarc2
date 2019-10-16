@@ -5,7 +5,10 @@ Categorías
 @endsection
 
 @section('contentheader_title')
-Categorias para Residuos Comunes
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+	Categorias
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 
 @section('main-content')

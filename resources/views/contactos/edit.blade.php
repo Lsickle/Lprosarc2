@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.clientcontacto') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.clientcontacto') }}
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+    {{ trans('adminlte_lang::message.clientcontacto') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
