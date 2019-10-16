@@ -346,7 +346,7 @@ return [
     'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
-    'soygener-info'           => 'Al dar clic podrá tener los datos que ya a registrado respecto a su empresa y sus sedes, estos datos crearán un nuevo generador. <br><br><b>NOTA:</b> Este botón aparecerá una sola vez así que le aconsejamos que le de clic una vez tenga todos sus datos adecuadamente.',
+    'soygener-info'           => 'Use este botón si desea que los datos de su empresa estén en la lista de Generadores. <br><br><b>ATENCIÓN!:</b> Este botón aparecerá una sola vez, así que le aconsejamos dar click unicamente cuando tenga todos los datos de las sedes de su empresa completamente registrados... <br><br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p',
     'generaddresssgener'      => 'Direcciones de las Sedes del Generador',
 
     // generador sede
