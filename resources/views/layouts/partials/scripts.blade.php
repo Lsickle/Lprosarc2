@@ -636,6 +636,7 @@ function NotifiFalse(Mensaje) {
 	}
 	$(document).ready(function() {Checkboxs();});
 </script>
+{{-- script para deshabilitar los botones de los formularios al hacer submit --}}
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){

@@ -13,7 +13,7 @@ return [
     */
 
     // home
-    'descriptionpackage'      => 'Aplicación para administrar la información de los residuos peligrosos(Respel) en la Planta de tratamiento de Prosarc S.A ESP. ',
+    'descriptionpackage'      => 'Aplicación para administrar la información de los residuos peligrosos(Respel) en la Planta de tratamiento de Prosarc S.A. ESP. ',
     'createdby'               => 'Desarrollado por',
     'search'                  => 'Buscar',
     'header'                  => 'ENCABEZAMIENTO',
@@ -264,7 +264,7 @@ return [
     'persinfosecondname'      => 'Escriba el segundo nombre de su personal <b>(Opcional)</b>.',
     'persinfolastname'        => 'Escriba los apellidos de su personal.',
     'persinfoemailprosarc'    => 'Escriba el correo electrónico de su personal.',
-    'persinfoemailextr'       => 'Escriba el correo electrónico de su personal, tenga en cuenta que ha este correo electrónico el personal de Prosarc S.A. ESP se comunicara (Si llega ser necesario).',
+    'persinfoemailextr'       => 'Escriba el correo electrónico de su personal, tenga en cuenta que ha este correo electrónico el personal de Prosarc S.A. ESP. se comunicara (Si llega ser necesario).',
     'persinfotel'             => 'Escriba el número de celular de su personal.',
     'persinfodir'             => 'Escriba la dirección de residencia de su personal.',
     'persinfobirthday'        => 'Escriba o seleccione la fecha de nacimiento de su personal <b>(Opcional)</b>.',
@@ -310,7 +310,7 @@ return [
     'clientcamaracomercio-info'     => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cámara del Comercio.',
     'clientbankcertification-info'          => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Bancario no más de tres (3) meses <b>(optional)</b>.',
     'clientlegalrepresentative-info'        => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Cédula de Cidadanía del Representante Legal.',
-    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(optional)</b>.',
+    'clientcommercialcertification-info'    => 'Añada un archivo tipo <strong>PDF</strong> con un peso máximo de <strong>5 mb</strong> de la Certificación Comercial <b>(opcional)</b>.',
 
     // contactos
     'clientcategoría'         => 'Categoría',
@@ -319,7 +319,7 @@ return [
     'clicontactedit'          => 'Editar el Contacto',
     'contacvehictipomessage'  => 'Tipo de vehículo que esta registrando por ejemplo: Camión, Turbo, Mula, etc...',
     'contacvehiccapacidadmessage'   => 'Kilogramos que logra llevar el vehículo.',
-    'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP o una empresa que brinda el transporte a la planta.',
+    'contacclientcategoríamessage1' => 'Proveedor de Prosarc S.A. ESP. o una empresa que brinda el transporte a la planta.',
     'contacclientcategoríamessage2' => 'Después podrá registrar más vehículos del transportador.',
     'contacclientnombrecortomessage'=> 'Nombre Corto de la empresa sino posee entonces colocar la Razón Social.',
 
@@ -346,7 +346,7 @@ return [
     'addsedegener'            => 'Crear Sede',
     'assignrrespelssedegener' => 'Asignar Residuos a la Sede del Generador',
     'soygener'                => 'Soy Generador',
-    'soygener-info'           => 'Al dar clic podrá tener los datos que ya a registrado respecto a su empresa y sus sedes, estos datos crearán un nuevo generador. <br><br><b>NOTA:</b> Este botón aparecerá una sola vez así que le aconsejamos que le de clic una vez tenga todos sus datos adecuadamente.',
+    'soygener-info'           => 'Use este botón si desea que los datos de su empresa estén en la lista de Generadores. <br><br><b>ATENCIÓN!:</b> Este botón aparecerá una sola vez, así que le aconsejamos dar click unicamente cuando tenga todos los datos de las sedes de su empresa completamente registrados... <br><br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p',
     'generaddresssgener'      => 'Direcciones de las Sedes del Generador',
 
     // generador sede
@@ -411,10 +411,10 @@ return [
     'question-4-title'        => 'Soy un generador y no quiero ingresar de nuevo mis datos del registro. ¿Hay otra forma de hacerlo?',
     'question-4-description'  => 'Al dar clic en "Lista de Generadores" aparece en la parte superior un botón que dice "Soy Generador", al pulsarlo todos los datos que usted lleno de su empresa al registrarse pasarán a ser como las de un nuevo generador, sin perder los de su empresa.',
     'question-5-title'        => '¿Para qué necesito ingresar datos de mi personal?',
-    'question-5-description'  => 'Se requieren para que Prosarc S.A. ESP pueda contactar con la persona que el Cliente asignó a la solicitud de Servicio y así mantenerlo al tanto sobre el proceso de sus residuos.',
+    'question-5-description'  => 'Se requieren para que Prosarc S.A. ESP. pueda contactar con la persona que el Cliente asignó a la solicitud de Servicio y así mantenerlo al tanto sobre el proceso de sus residuos.',
     'question-6-title'        => '¿Por qué no puede marcar los requerimientos de los residuos?',
-    'question-6-description'  => 'Los requerimientos los habilita Prosarc S.A. ESP dependiendo del residuo.',
-    'question-7-title'        => '¿Cómo puedo saber en que paso va mi Solicitud de Servicio sin tener que llamar a Prosarc S.A. ESP?',
+    'question-6-description'  => 'Los requerimientos los habilita Prosarc S.A. ESP. dependiendo del residuo.',
+    'question-7-title'        => '¿Cómo puedo saber en que paso va mi Solicitud de Servicio sin tener que llamar a Prosarc S.A. ESP.?',
     'question-7-description'  => 'Cada nuevo cambio que haya con el proceso de su Solicitud de Servicio se le notificará mediante un correo electrónico automáticamente.',
     'question-8-title'        => '¿Dónde puedo ver las fotos y/o vídeos que pedí en la Solicitud de Servicio?',
     'question-8-description'  => 'En la lista de Solicitudes de Servicio debe hacer click en el botón "Ver más", luego en la parte inferior donde aparecen los residuos y tras esto dar clic en "Ver Detalles", aparecerán los datos de los residuos en la parte superior y en la parte inferior estarán las fotos y/o vídeos una vez que el residuos haya sido tratados.',
@@ -513,9 +513,9 @@ return [
     'userchangepassword'      => 'Cambiar contraseña',
     
     // 
-    'prosarccorto'            => 'Prosarc S.A ESP.',
+    'prosarccorto'            => 'Prosarc S.A. ESP.',
     'prosarclargo'            => 'Protección, Servicios Ambientales, Respel de Colombia S.A. ESP.',
-    'Appname'                 => 'SisPro',
+    'Appname'                 => 'SisPRO',
 
     //Data error menssage
     'data-error-minlength2'   => 'Use mínimo 2 caracteres',
@@ -537,7 +537,7 @@ return [
 
     'MenuProsarcCliTitle'     => 'CLIENTES',
     'MenuProsarcTitle'        => 'PROSARC S.A. ESP.',
-    'MenuClienTitle'          => 'MENU SisPro',
+    'MenuClienTitle'          => 'MENU SisPRO',
 
     'MenuClien'               => 'Lista de Clientes',
     'MenuClien2'              => 'Mi Empresa',
@@ -592,7 +592,7 @@ return [
     'MenuQr'                  => 'Código Qr',
 
     // info-gener
-    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en Aprobado o Incompleto.',
+    'respels-sede-gener'      => 'Seleccione los residuos que le pertenecen a esta sede del generador.<b>(opcional)</b> <br><br><b>NOTA: </b>Aquí solo aparecerán los residuos que usted tenga en status Aprobado o Revisado.',
     'misSedes-gener'          => 'Una de sus sedes a la que le va a asignar el generador.',
     'nameCorto-gener'         => 'Nombre corto del generador sino tiene coloque la Razón Social.',
     'code-gener'              => 'Código con el que usted tiene registrado este Generador.',
@@ -748,7 +748,7 @@ return [
     'o'                       => 'o',
     'solrestitleclientepart2' => 'este residuo porque',
     'solresProgramador'       => 'ha sido programado',
-    'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP',
+    'solresCompletado'        => 'ha llegado a la planta de Prosarc S.A ESP.',
     'solresConciliadotext'    => 'ha sido Conciliado',
     'solresNoConciliadotext'    => 'esta en proceso de Conciliación',
     'solresTratado'           => 'ha sido tratado',

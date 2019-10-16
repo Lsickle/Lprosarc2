@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.SGenertitle') }}
 @endsection
 @section('contentheader_title')
- {{ trans('adminlte_lang::message.SGenertitle') }}
+ <span style="background-image: linear-gradient(40deg, rgb(69, 202, 252), rgb(48, 63, 159)); padding-right:30vw; position:relative; overflow:hidden;">
+ 	{{ trans('adminlte_lang::message.SGenertitle') }}
+   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+ </span>
 @endsection 
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -50,34 +53,34 @@
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.clientcliente') }}</b> 
-								<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliShortname}}</p>">{{$Cliente->CliShortname}}</a>
+								<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliName}}</p>">{{$Cliente->CliName}}</a>
 							</li>
 						@endif
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.gener') }}</b> 
-							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.gener') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.gener') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.address') }}</b> 
 							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.adddress') }}')"><i class="far fa-copy"></i></a>
-							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.adddress') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</p>">{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</a>
+							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.adddress') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</p>">{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.mobile') }}</b> 
-							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeCelular}}</p>">{{$SedeGener->GSedeCelular}}</a>
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.mobile') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeCelular}}</p>">{{$SedeGener->GSedeCelular}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.phone') }}</b> 
-							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone1}}{{' - '.$SedeGener->GSedeExt1}}</p>">{{$SedeGener->GSedePhone1}}{{" - ".$SedeGener->GSedeExt1}}</a>
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone1}}{{' - '.$SedeGener->GSedeExt1}}</p>">{{$SedeGener->GSedePhone1}}{{" - ".$SedeGener->GSedeExt1}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.phone') }} 2</b> 
-							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }} 2" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone2}}{{' - '.$SedeGener->GSedeExt2}}</p>">{{$SedeGener->GSedePhone2}}{{" - ".$SedeGener->GSedeExt2}}</a>
+							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.phone') }} 2" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedePhone2}}{{' - '.$SedeGener->GSedeExt2}}</p>">{{$SedeGener->GSedePhone2}}{{" - ".$SedeGener->GSedeExt2}}</a>
 						</li>
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.emailaddress') }}</b>
 							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
-							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeEmail}}</p>">{{$SedeGener->GSedeEmail}}</a>
+							<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeEmail}}</p>">{{$SedeGener->GSedeEmail}}</a>
 						</li>
 					</ul>
 				</div>

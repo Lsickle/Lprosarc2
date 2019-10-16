@@ -149,7 +149,7 @@ class sgenercontroller extends Controller
             ->join('generadors', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
             ->join('sedes', 'sedes.ID_Sede', '=', 'generadors.FK_GenerCli')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-            ->select('clientes.CliShortname', 'clientes.ID_Cli')
+            ->select('clientes.CliName', 'clientes.ID_Cli')
             ->where('GSedeSlug', $id)
             ->first();
 

@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::LangTratamiento.pretratMenu') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::LangTratamiento.pretratnew') }}
+<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+    {{ trans('adminlte_lang::LangTratamiento.pretratnew') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">

@@ -6,7 +6,10 @@
 	@endsection
 	
 	@section('contentheader_title')
-	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+	  <span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+	  	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+	    <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+	  </span>
 	@endsection
 
 	@section('main-content')
@@ -113,6 +116,7 @@
 									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'Falta TDE') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Incompleto') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))||($Respels->RespelStatus == 'Vencido') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'TDE actualizada') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'TDE actualizada' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatustdeupdated') }}</option>
 								</select>
 							</li>
 							<li class="list-group-item">
@@ -246,7 +250,9 @@
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
 								<li class="nav-item">
+								@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
+								@endif
 								</li>
 							</ul>
 							<!-- nav-content -->

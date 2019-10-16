@@ -3,7 +3,10 @@
 Tratamiento
 @endsection
 @section('contentheader_title')
-Registro del Tratamiento
+<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+    Registro del Tratamiento
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -41,7 +44,7 @@ Registro del Tratamiento
 										<input type="text" class="form-control" id="tratamientoinputext2" placeholder="Bayer" name="provehedor">
 									</div>
 									<div class="col-md-6">
-										<label for="tratamientoinputext3">Tipo de residio</label>
+										<label for="tratamientoinputext3">Tipo de residuo</label>
 										<input type="text" class="form-control" id="tratamientoinputext3" placeholder="Medicamentos" name="tipo">
 									</div>
 									<div class="form-group" style="float:left; margin-top:3%; margin-left: 1%;">

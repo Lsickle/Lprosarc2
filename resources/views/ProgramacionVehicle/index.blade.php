@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.progvehictitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -77,7 +80,7 @@
 									}
 								@endphp
 								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
-									<td>{{$programacion->CliShortname}}</td>
+									<td>{{$programacion->CliName}}</td>
 									<td>{{$programacion->ProgVehFecha}}</td>
 									<td>{{$vehiculoPlaca}}</td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>

@@ -58,6 +58,7 @@ return [
     'respelstatuscotizado'  => 'Cotizado',
     'respelstatusrevisado'  => 'Revisado',
     'respelstatusfaltatde'  => 'Falta TDE',
+    'respelstatustdeupdated'=> 'TDE actualizada',
     'createcliente'         => 'Sede del cliente',
     'selecthem'             => 'Seleccione',
     'foto'                  => 'Fotografía del residuo',
