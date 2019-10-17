@@ -13,7 +13,13 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<a href="respelspublic/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC)||in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
+						<a href="respelspublic/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+						
+					@else
+						<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Agregar nuevo Residuo Común</b>" data-content="<p style='width: 50%'>Su cuenta no posee los permisos necesarios para agregar nuevos residuos comunes </p>">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					@endif
 				</div>
 				<!-- /.box-header -->
 				<div class="box box-info">
