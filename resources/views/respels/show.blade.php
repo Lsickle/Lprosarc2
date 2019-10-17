@@ -154,13 +154,18 @@
 							@else
 							<a method='get' disabled href='#' class='btn btn-default'>{{ trans('adminlte_lang::message.delete') }}</a>
 							@endif
-							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+								<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+							@else
+								<a disabled href="#" class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
+							@endif
+							
 						</div>
 					@else
 						<div class="btn-group-sm pull-right">
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i> o <i><b>'Incompleto'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
 
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>, <i><b>'Incompleto'</b></i> o <i><b>'Rechazado'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
 						</div>
 					@endif
 				</div>

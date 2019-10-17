@@ -130,10 +130,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->addClass('treeview-menu')
 					)
 				)
-				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i style="font-size: 1.2em; color: #33b5e5;" class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i style="font-size: 1.2em; color: ff4444;" class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
+				/*PESTAÑA DE GENERADORES*/
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i style="font-size: 1.2em; color: #33b5e5;" class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS COMUNES*/
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respelspublic', '<i style="font-size: 1.2em; color: #00C851;" class="fas fa-globe-americas"></i> <span>'.trans('adminlte_lang::message.RPList').'</span>')))
 				/*PESTAÑA DE PERSONAL*/
