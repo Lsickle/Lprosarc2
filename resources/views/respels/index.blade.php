@@ -2,7 +2,7 @@
 @section('htmlheader_title', trans('adminlte_lang::LangRespel.Respellist'))
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
-	{{ trans('adminlte_lang::LangRespel.Respellist') }}
+	{{ trans('adminlte_lang::LangRespel.respelmenu') }}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -13,6 +13,7 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
+					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3 class="pull-left">
 				@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 				@endif
