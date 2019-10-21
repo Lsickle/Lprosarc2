@@ -503,7 +503,7 @@
 		$('.vehiculoAlquilado').attr('hidden', false);
 		$('.ambos').attr('hidden', false);
 		$('#transport').attr('required', true);
-		$('#vehicalqui').attr('required', true);
+		$('#vehicalqui').attr('required', false);
 		$('#FK_ProgVehiculo').attr('required', false);
 		$('#FK_ProgConductor').attr('required', false);
 		$('#FK_ProgAyudante').attr('required', true);
