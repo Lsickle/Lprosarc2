@@ -162,7 +162,7 @@
 													<div class="form-group col-md-6">
 														<label for="PersARL" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persarl') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoarl') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persarl') }}</label>
 														<small class="help-block with-errors dir">*</small>
-														<input data-minlength="5" name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required value="{{$Persona->PersARL}}">
+														<input data-minlength="4" name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required value="{{$Persona->PersARL}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersLibreta" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perslibreta') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfolibreta') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perslibreta') }}</label>

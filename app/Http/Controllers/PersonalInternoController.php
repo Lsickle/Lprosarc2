@@ -243,7 +243,7 @@ class PersonalInternoController extends Controller
 			'PersAddress'   => 'max:255|nullable',
 			'PersPhoneNumber' => 'max:20|min:10|nullable',
 			'PersEPS'       => 'max:255|min:5|nullable',
-			'PersARL'       => 'max:255|min:5|nullable',
+			'PersARL'       => 'max:255|min:4|nullable',
 			'PersLibreta'   => 'max:25',
 			'PersPase'      => 'max:25',
 			'PersBank'      => 'max:255',
