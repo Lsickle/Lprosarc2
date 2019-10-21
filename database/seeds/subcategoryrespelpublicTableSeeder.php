@@ -14,7 +14,7 @@ class subcategoryrespelpublicTableSeeder extends Seeder
     public function run()
     {
         $categRP = new Subcategoryrespelpublic();
-        $categRP->SubCategoryRpName = "General";
+        $categRP->SubCategoryRpName = "No Definida";
         $categRP->FK_CategoryRP = 1;
         $categRP->save();
     }
