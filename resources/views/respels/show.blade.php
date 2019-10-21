@@ -1,4 +1,4 @@
-@extends('layouts.app')
+	@extends('layouts.app')
 @section('htmlheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelinfotag') }}
 @endsection
@@ -154,7 +154,7 @@
 							@else
 							<a method='get' disabled href='#' class='btn btn-default'>{{ trans('adminlte_lang::message.delete') }}</a>
 							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 								<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
 							@else
 								<a disabled href="#" class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
