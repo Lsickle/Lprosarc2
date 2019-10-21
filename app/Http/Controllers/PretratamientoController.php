@@ -34,7 +34,12 @@ class PretratamientoController extends Controller
      */
     public function create()
     {                
-        return view('pretratamientos.create');
+        if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)){
+            return view('pretratamientos.create');
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**
@@ -90,8 +95,12 @@ class PretratamientoController extends Controller
             abort(404);
         }
         
-        // return $pretratamiento;  
-        return view('pretratamientos.edit', compact('pretratamiento'));
+        if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones) || in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)){
+            return view('pretratamientos.edit', compact('pretratamiento'));
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**
