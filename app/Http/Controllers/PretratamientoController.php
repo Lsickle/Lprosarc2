@@ -38,7 +38,7 @@ class PretratamientoController extends Controller
             return view('pretratamientos.create');
         }
         else{
-            abort(403);
+            abort(403, "No posee los permisos necesarios para poder crear pretratamientos...");
         }
     }
 
@@ -99,7 +99,7 @@ class PretratamientoController extends Controller
             return view('pretratamientos.edit', compact('pretratamiento'));
         }
         else{
-            abort(403);
+            abort(403, "No posee los permisos necesarios para poder crear pretratamientos...");
         }
     }
 
