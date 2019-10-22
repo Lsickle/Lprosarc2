@@ -439,8 +439,8 @@ return [
     'progvehicllegada'        => 'Hora de llegada a la planta',
     'progvehicsalida2'        => 'Hora Prevista',
     'progvehicllegada2'       => 'Hora de Llegada',
-    'progvehicconduc'         => 'Conductor Asignado',
-    'progvehicayudan'         => 'Ayudante Asignado',
+    'progvehicconduc'         => 'Conductor Asignado Prosarc',
+    'progvehicayudan'         => 'Auxiliar Asignado Prosarc',
     'progvehicclient'         => 'Cliente',
     'progvehickm'             => 'Kilometraje del vehículo',
     'progvehiccolor'          => 'Color de la programación',
@@ -452,6 +452,12 @@ return [
     'finishservice'           => 'Finalizar Servicio',
     'titleconducedit'         => 'Llegada',
     'progvehicconducedit'     => 'Marcar',
+    'progvehnameext'          => 'Nombre Conductor Externo',
+    'progvehnameauxext'       => 'Nombre Auxiliar Externo',
+    'progvehdocauxext'        => 'N° Documento Auxiliar Externo',
+    'progvehdocext'           => 'N° Documento Conductor Externo',
+    'progvehplacaext'         => 'Placa vehiculo Externo',
+    'progvehtipoext'          => 'Tipo vehiculo Externo',
 
     // mantenimiento de un vehículo
     'mantvehititle'           => 'Mantenimiento de Vehículos',

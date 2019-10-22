@@ -297,8 +297,14 @@ class VehicProgController extends Controller
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 			}
-			$nomConduct = null;
-			$vehiculo = null;
+			$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
+			$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
+			$programacion->ProgVehDocAuxiliarEXT = $request->input('ProgVehDocAuxiliarEXT');
+			$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
+			$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
+			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
+			$nomConduct = $programacion->ProgVehDocConductorEXT;
+			$vehiculo = $programacion->ProgVehPlacaEXT;
 		}
 		else{
 			if($request->input('ProgVehEntrada')){

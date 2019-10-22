@@ -91,6 +91,30 @@
 									</select>
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehDocConductorEXT">{{ trans('adminlte_lang::message.progvehdocext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocConductorEXT"  name="ProgVehDocConductorEXT">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" maxlength="30" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocAuxiliarEXT"  name="ProgVehDocAuxiliarEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" maxlength="30" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" class="form-control placa" id="ProgVehPlacaEXT"  name="ProgVehPlacaEXT" data-minlength="7">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label><small class="help-block with-errors">*</small>
+									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label>Vehiculo</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control">
@@ -503,7 +527,7 @@
 		$('.vehiculoAlquilado').attr('hidden', false);
 		$('.ambos').attr('hidden', false);
 		$('#transport').attr('required', true);
-		$('#vehicalqui').attr('required', false);
+		$('#vehicalqui').attr('required', true);
 		$('#FK_ProgVehiculo').attr('required', false);
 		$('#FK_ProgConductor').attr('required', false);
 		$('#FK_ProgAyudante').attr('required', true);
