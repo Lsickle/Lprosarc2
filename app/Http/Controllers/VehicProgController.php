@@ -147,6 +147,12 @@ class VehicProgController extends Controller
 				$programacion->ProgVehtipo = 2;
 				$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+				$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
+				$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
+				$programacion->ProgVehDocAuxiliarEXT = $request->input('ProgVehDocAuxiliarEXT');
+				$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
+				$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
+				$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 				$programacion->ProgVehColor = '#FFFF00';
 				if ($request->input('vehicalqui')!=null) {
 					$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
