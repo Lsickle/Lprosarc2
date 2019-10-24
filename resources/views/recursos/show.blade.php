@@ -162,6 +162,7 @@
 					</div>
 				</div>
 				@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+				{{-- @if(1 == 1) --}}
 					{{-- Modal Añadir Recurso  --}}
 					<form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm" class="form">
 						@method('PUT')
@@ -203,7 +204,8 @@
 				<div id="deleteRecurso">
 				</div>
 				<div class="row">
-					@if(((($SolSer->SolSerStatus <> 'Pendiente' && $SolSer->SolSerStatus <> 'Aprobado' && $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null))
+					{{-- @if(((($SolSer->SolSerStatus <> 'Pendiente' || $SolSer->SolSerStatus <> 'Aprobado' || $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null)) --}}
+					@if(((in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
 						<tbody hidden onload="renderTable()" id="readyTable">
 							<div class="col-md-12">
 								<center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -220,7 +222,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoFoto')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -236,10 +238,7 @@
 																	<ul class="nav nav-pills" style="padding-top: 2px; max-width:500px" max-width="500px">
 																		<li role="presentation" class="navbar-brand" style="color:white;"><i>{{$Foto->RecTipo}}</i></li>
 																		<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="{{trans('adminlte_lang::message.recampliarfoto')}}" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
-																		@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
-																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
-																		@endif
-																		@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
+																		@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 																			<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
 																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																		@endif
@@ -255,7 +254,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoVideo')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')|| $SolSer->SolSerStatus === 'Tratado') && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -269,10 +268,7 @@
 														<div class="container">
 															<ul class="nav nav-pills">
 																<li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
-																@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
-																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
-																@endif
-																@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'))
+																@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 																	<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
 																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
@@ -296,6 +292,73 @@
 								<center>
 									<h3 data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{trans('adminlte_lang::message.recursos')}}</b>" data-content="{{trans('adminlte_lang::message.recursostratamiento')}}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.recursos')}}</h3>
 								</center>
+								<div class="box box-warning">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+									<div class="col-md-6" style="margin-bottom:15px;">
+										<h4>
+											{{trans('adminlte_lang::message.recursoFoto')}}
+										</h4>
+										@if (!isset($Fotos[0]->RecTipo))
+											<img src="../../../img/defaultimage.png" height="300px" width="100%" max-width="1200px">
+										@else
+											<div style='overflow-y:auto; overflow-x:hidden; max-height:600px;'>
+												@foreach ($Fotos as $Foto)
+													<div class="col-md-12">
+														<div style="background-image: url('../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}');  background-repeat: no-repeat; height: 300px; width:100%; max-width:500px; background-size:100% 300px; margin-bottom:15px;">
+															<nav class="navbar navbar-inverse">
+																<div class="container">
+																	<ul class="nav nav-pills" style="padding-top: 2px; max-width:500px" max-width="500px">
+																		<li role="presentation" class="navbar-brand" style="color:white;"><i>{{$Foto->RecTipo}}</i></li>
+																		<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="{{trans('adminlte_lang::message.recampliarfoto')}}" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
+																		@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
+																		@endif
+																	</ul>
+																</div>
+															</nav>
+														</div>
+													</div>
+												@endforeach
+											</div>
+										@endif
+									</div>
+									<div class="col-md-6" style="margin-bottom:15px;">
+										<h4>
+											{{trans('adminlte_lang::message.recursoVideo')}}
+										</h4>
+										@if (!isset($Videos[0]->RecTipo))
+											<img src="../../../img/defaultvideo.jpg" height="auto" width="100%" max-width="1200">
+										@else
+										<div style='overflow-y:auto; overflow-x:hidden; max-height:600px;'>
+											@foreach ($Videos as $Video)
+												<div class="col-md-12" style="margin-bottom:10px;">
+													<nav class="navbar navbar-inverse">
+														<div class="container">
+															<ul class="nav nav-pills">
+																<li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
+																@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
+																@endif
+															</ul>
+														</div>
+													</nav>
+													<div class="col-md-12">
+														<video width="100%" height="auto" style="margin-top:-20px;" muted controls src="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}"></video>
+													</div>
+												</div>
+												@endforeach
+											</div>
+										@endif
+									</div>
+								</div>
 							</div>
 						@endif
 					@endif

@@ -276,7 +276,7 @@
 									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT" value="{{$programacion->ProgVehTipoEXT}}">
 								</div>
 								<div class="fomr-group col-md-6" style="margin-bottom: 30px;">
-									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control" required="" disabled="">
 										@foreach($Vehiculos2 as $Vehiculo)

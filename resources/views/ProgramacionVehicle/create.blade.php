@@ -115,7 +115,7 @@
 									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT">
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control">
 										<option value="">Seleccione...</option>

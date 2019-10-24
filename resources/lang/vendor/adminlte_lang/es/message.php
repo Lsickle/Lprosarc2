@@ -456,7 +456,7 @@ return [
     'progvehnameauxext'       => 'Nombre Auxiliar Externo',
     'progvehdocauxext'        => 'N° Documento Auxiliar Externo',
     'progvehdocext'           => 'N° Documento Conductor Externo',
-    'progvehplacaext'         => 'Placa vehiculo Externo',
+    'progvehplacaext'         => 'Placa vehiculo Externo Definitivo',
     'progvehtipoext'          => 'Tipo vehiculo Externo',
 
     // mantenimiento de un vehículo
