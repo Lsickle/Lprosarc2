@@ -14,8 +14,9 @@ class AddColumnsSolicitudResiduosTable extends Migration
     public function up()
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
-            $table->string('SolResCantiUnidadConciliada')->nullable();
-            $table->bigInteger('SolResCantiUnidadRecibida')->nullable();
+            $table->decimal('SolResCantiUnidadRecibida', 8, 2)->nullable();
+            $table->decimal('SolResCantiUnidadConciliada', 8, 2)->nullable();
+            $table->decimal('SolResCantiUnidadTratada', 8, 2)->nullable();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -31,6 +32,7 @@ class AddColumnsSolicitudResiduosTable extends Migration
         Schema::table('solicitud_residuos', function (Blueprint $table) {
             $table->dropColumn('SolResCantiUnidadConciliada');
             $table->dropColumn('SolResCantiUnidadRecibida');
+            $table->dropColumn('SolResCantiUnidadTratada');
         });
     }
 }
