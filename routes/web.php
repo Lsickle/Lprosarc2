@@ -106,6 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	// Route::resource('/respel-envios', 'RespelEnviosController');
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
+	Route::put('/solicitud-residuo/{id}/UpdatePrice', 'SolicitudResiduoController@updateSolResPrice');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');

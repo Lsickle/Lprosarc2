@@ -225,6 +225,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<th>Pretratamientos</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
+											@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+												<th>Tarifa</th>
+											@endif
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 												<th>{{trans('adminlte_lang::message.address')}}</th>
@@ -241,6 +244,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 												<th>Certificado</th>
 											@endif
+											
 										</tr>
 									</thead>
 									<tbody>
@@ -276,6 +280,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
+												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+													<td style="text-align: center;">
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado')
+														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
+														{{$Residuo->SolResPrecio}}
+														Pesos
+													</td>
+												@endif
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} {{$TypeUnidad}}</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
@@ -434,6 +450,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								{{-- Modal --}}
 									<div id="addkgmodal"></div>
 								{{-- END Modal --}}
+								{{-- Modal --}}
+									<div id="addprice"></div>
+								{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -444,6 +463,65 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 </div>
 @endsection
 @section('NewScript')
+{{-- funciones para el modal de precio --}}
+@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+	<script>
+		function addprice(slug, precio){
+			var inputprice =  '<label for="SolResPrice">Tarifa del Residuo</label><small class="help-block with-errors">*</small><input type="number" min="0" class="form-control numberKg" id="SolResPrice" name="SolResPrecio" value="'+precio+'" required>';
+			$('#addprice').empty();
+			$('#addprice').append(`
+				<form role="form" action="/solicitud-residuo/`+slug+`/UpdatePrice" method="POST" enctype="multipart/form-data" data-toggle="validator" id="Formprice">
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="asignarPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+										<i class="fas fa-plus-circle"></i>
+										<span style="font-size: 0.3em; color: black;"><p>
+											Precio
+										</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+									<div class="form-group col-md-12">
+										`+inputprice+`
+									</div>
+									<input type="text" hidden name="SolRes" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			$('#asignarPrecio').modal();
+			$('#Formprice').validator('update');
+		};
+	</script>
+	@if ($errors->any())
+		<script>
+			$(document).ready(function() {
+				$("#editkgResivido").modal("show");
+			});
+		</script>
+	@endif
+@endif
+
+{{-- funciones para el modal de kg --}}
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
 		function addkg(slug, cantidad, cantidadmax, tipo){
