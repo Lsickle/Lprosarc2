@@ -147,8 +147,19 @@ class VehicProgController extends Controller
 				$programacion->ProgVehtipo = 2;
 				$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+				$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
+				$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
+				$programacion->ProgVehDocAuxiliarEXT = $request->input('ProgVehDocAuxiliarEXT');
+				$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
+				$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
+				$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 				$programacion->ProgVehColor = '#FFFF00';
-				$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
+				if ($request->input('vehicalqui')!=null) {
+					$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
+				}else{
+					$vehiculo = null;
+				}
+				
 				$nomConduct = null;
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -292,8 +303,14 @@ class VehicProgController extends Controller
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 			}
-			$nomConduct = null;
-			$vehiculo = null;
+			$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
+			$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
+			$programacion->ProgVehDocAuxiliarEXT = $request->input('ProgVehDocAuxiliarEXT');
+			$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
+			$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
+			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
+			$nomConduct = $programacion->ProgVehDocConductorEXT;
+			$vehiculo = $programacion->ProgVehPlacaEXT;
 		}
 		else{
 			if($request->input('ProgVehEntrada')){

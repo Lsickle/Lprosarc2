@@ -193,7 +193,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 										</label>
 									</div>
-									<div class="col-md-4" style="text-align: center;">
+								{{-- 	<div class="col-md-4" style="text-align: center;">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
 											<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
 											<div style="width: 100%; height: 34px;">
@@ -207,7 +207,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ $SolicitudServicio->SolSerDevolucionTipo}}" disabled="">
 											<small class="help-block with-errors"></small>
 										</label>
-									</div>
+									</div> --}}
 								</div>
 							</div>
 							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
@@ -225,6 +225,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<th>Pretratamientos</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
+											@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+												<th>Tarifa</th>
+											@endif
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 												<th>{{trans('adminlte_lang::message.address')}}</th>
@@ -241,6 +244,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 												<th>Certificado</th>
 											@endif
+											
 										</tr>
 									</thead>
 									<tbody>
@@ -276,7 +280,19 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} {{$TypeUnidad}}</td>
+												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+													<td style="text-align: center;">
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado')
+														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
+														{{$Residuo->SolResPrecio}}
+														 Pesos
+													</td>
+												@endif
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
 												@else
@@ -284,9 +300,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 															@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
 																@else
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -300,15 +316,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@else
 															{{' '.$Residuo->SolResKgRecibido}}
 														@endif
-														{{$TypeUnidad}}
+														 {{$TypeUnidad}}
 													</td>
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 															@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
 																@else
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -320,12 +336,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@else
 															{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
 														@endif
-														{{$TypeUnidad}}
+														 {{$TypeUnidad}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
 															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
-																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">  --}}
+																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`)">
+																@else
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null)"> 
+																@endif
 															@else
 																<a style="color: black">
 															@endif
@@ -434,6 +455,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								{{-- Modal --}}
 									<div id="addkgmodal"></div>
 								{{-- END Modal --}}
+								{{-- Modal --}}
+									<div id="addprice"></div>
+								{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -444,9 +468,68 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 </div>
 @endsection
 @section('NewScript')
+{{-- funciones para el modal de precio --}}
+@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+	<script>
+		function addprice(slug, precio){
+			var inputprice =  '<label for="SolResPrice">Tarifa del Residuo</label><small class="help-block with-errors">*</small><input type="number" min="0" class="form-control numberKg" id="SolResPrice" name="SolResPrecio" value="'+precio+'" required>';
+			$('#addprice').empty();
+			$('#addprice').append(`
+				<form role="form" action="/solicitud-residuo/`+slug+`/UpdatePrice" method="POST" enctype="multipart/form-data" data-toggle="validator" id="Formprice">
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="asignarPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+										<i class="fas fa-plus-circle"></i>
+										<span style="font-size: 0.3em; color: black;"><p>
+											Precio
+										</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+									<div class="form-group col-md-12">
+										`+inputprice+`
+									</div>
+									<input type="text" hidden name="SolRes" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			$('#asignarPrecio').modal();
+			$('#Formprice').validator('update');
+		};
+	</script>
+	@if ($errors->any())
+		<script>
+			$(document).ready(function() {
+				$("#editkgResivido").modal("show");
+			});
+		</script>
+	@endif
+@endif
+
+{{-- funciones para el modal de kg --}}
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
-		function addkg(slug, cantidad, cantidadmax, tipo){
+		function addkg(slug, cantidad, cantidadmax, tipo, cantidadKG){
 			var inputUnid =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>';
 			var inputKg =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResKg" maxlength="5" value="'+cantidad+'" required>';
 			$('#addkgmodal').empty();
@@ -493,25 +576,27 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											@case('Programado')
 												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
-												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
-												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
+												<input type="number" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".01" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
 									</div>
 												@break
 											@case('No Conciliado')
 											@case('Completado')
-													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '<label for="SolResKgConciliado">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="'+cantidad+'" required>')+`
+													<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block wit11h-errors">*</small><input type="number" step=".01" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block wit11h-errors">*</small><input type="number" step=".01" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
 									</div>
 												@break
 											@case('Conciliado')
-												<label for="SolResKgTratado">Cantidad Tratada</label>
+												<label for="SolResKgTratado">Cantidad Tratada (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<div class="input-group">
-													<input type="text" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+													<input type="number" step=".01" min="0" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKgTratado" maxlength="5" value="`+cantidadKG+`" required>
 													<div class="input-group-btn">
 														<label for="ValorConciliado"><a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`, `+tipo+`)">Tratado</a><label>
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
+												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadTratada">Cantidad Tratada '+tipo+' </label><small class="help-block wit11h-errors">*</small><input type="number" step=".01" min="0" class="form-control" id="SolResCantiUnidadTratada" name="SolResCantiUnidadTratada" maxlength="5" value="'+cantidad+'" required>' : '')+`
 									</div>
 												@break
 										@endswitch
@@ -679,12 +764,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 				$('#titulo').append(`
-					<a href="/email-solser/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
+					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Notificar programacion de servicio</b>" data-content="<p style='width: 50%'>Este botón enviara una notificación al correo del cliente notificando la fecha de la programación de servicio... úselo únicamente cuando este seguro de los datos de la programación </p>" href="/email-solser/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
 				`);
 			@endif
 			@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($ProgramacionesActivas <= 0))
 				$('#titulo').append(`
-					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+					<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuniquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`

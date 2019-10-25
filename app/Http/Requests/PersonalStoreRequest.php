@@ -62,6 +62,7 @@ class PersonalStoreRequest extends FormRequest
             'PersBankAccaunt' => 'max:64',
             'PersIngreso'   => 'date',
             'PersSalida'    => 'date|after:PersIngreso|nullable',
+            'Persfactura'   => 'max:2|nullable',
         ];
     }
 

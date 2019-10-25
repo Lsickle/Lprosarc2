@@ -67,7 +67,10 @@
 	{{ trans('adminlte_lang::LangRespel.Respelevaluatetag') }}
 @endsection
 @section('contentheader_title')
-	{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
+	<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+		{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
+	  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+	</span>
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
