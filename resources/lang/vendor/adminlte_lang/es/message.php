@@ -256,6 +256,7 @@ return [
     'persinfosede'            => 'Seleccione una de sus sedes la cual sera asignada a su personal.',
     'persinfoarea'            => 'Seleccione una de sus áreas la cual sera asignada al personal. <br> Puede crea una nueva área y sera asignada a la sede seleccionada.',
     'persinfocargo'           => 'Seleccione uno de sus cargo el cual sera asignado al personal. <br> Puede crear un cargo nuevo y sera asignado al área seleccionada.',
+    'persfacturainfo'         => '¿Desea que los datos de esta persona sean utilizados para gestionar el proceso de facturación de sus solicitudes de servicio?',
     'persinfonewarea'         => 'Escriba el nombre del área a crear, esta quedara asignada a la sede seleccionada. <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
     'persinfonewcarg'         => 'Escriba el nombre del cargo a crear, este quedara asignado a la área seleccionada o registrada previamente. <br> Recuerde que debe tener mínimo <b>5</b> caracteres.',
     'persinfotypedoc'         => 'Seleccione el tipo de documento con el cual se identifica su personal.',
@@ -371,6 +372,7 @@ return [
     // cargo
     'cargotitle'              => 'Cargos',
     'cargoname'               => 'Nombre del Cargo',
+    'persfacturalabel'        => '¿Contacto para facturación?',
     'newcargo'                => 'Nuevo Cargo',
     'namenewcargo'            => '¿Cuál Cargo?',
     'listcargo'               => 'Lista de Cargos',

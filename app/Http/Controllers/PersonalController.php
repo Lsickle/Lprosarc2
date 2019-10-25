@@ -30,7 +30,7 @@ class PersonalController extends Controller
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliName')
+			->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'personals.PersFactura', 'areas.AreaName', 'clientes.ID_Cli', 'clientes.CliName')
 			->where(function($query){
 				$id = userController::IDClienteSegunUsuario();
 				/*Validacion del cliente que pueda ver solo el personal que tiene a cargo solo los que no esten eliminados*/
@@ -233,6 +233,7 @@ class PersonalController extends Controller
 			'PersEmail'     => 'required|email|max:255',
 			'PersCellphone' => 'required|min:12',
 			'PersAddress'   => 'max:255|nullable',
+			'Persfactura'   => 'max:2|nullable',
 		]);
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
@@ -277,6 +278,7 @@ class PersonalController extends Controller
 		
 		$Persona->fill($request->except('FK_PersCargo'));
 		$Persona->FK_PersCargo = $Cargo;
+		$Persona->Persfactura = $request->input('Persfactura');
 		$Persona->save();
 
 		$log = new audit();
