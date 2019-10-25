@@ -193,7 +193,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 										</label>
 									</div>
-									<div class="col-md-4" style="text-align: center;">
+								{{-- 	<div class="col-md-4" style="text-align: center;">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
 											<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
 											<div style="width: 100%; height: 34px;">
@@ -207,7 +207,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ $SolicitudServicio->SolSerDevolucionTipo}}" disabled="">
 											<small class="help-block with-errors"></small>
 										</label>
-									</div>
+									</div> --}}
 								</div>
 							</div>
 							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
