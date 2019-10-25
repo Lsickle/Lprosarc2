@@ -84,6 +84,15 @@
 															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>
 														</select>
 													</div>
+													<div class="form-group col-md-6" id="Persfacturacion" >
+														<label for="Persfactura" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persfacturalabel') }}</b>" data-content="{{ trans('adminlte_lang::message.persfacturainfo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persfacturalabel') }}</label><a class="loadFK_PersCargo"></a>
+														<small class="help-block with-errors">*</small>
+														<select name="Persfactura" id="Persfactura" class="form-control" required>
+															<option {{$Persona->PersFactura == 1 ? 'selected' : ''}} value="1">Si</option>
+															
+															<option {{$Persona->PersFactura == 0 ? 'selected' : ''}} value="0">No</option>
+														</select>
+													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">
 														<label for="NewInputA" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.namenewarea') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfonewarea') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.namenewarea') }}</label>
 														<small class="help-block with-errors">*</small>

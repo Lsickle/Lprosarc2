@@ -630,7 +630,8 @@ class RespelController extends Controller
             // new  RespelMail($slug);
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
-        return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        // return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        return redirect()->route('respels.index');
     }
 
       /**
@@ -646,7 +647,9 @@ class RespelController extends Controller
         $opciones = $request->Opcion;
         // return $request;
         // return $tarifasparaBorrar;
-
+        if (in_array(Auth::user()->UsRol, Permisos::SUPERVISOR)) {
+            return redirect()->route('respels.show', [$respel->RespelSlug]);
+        }
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             /*se eliminan los requerimientos relacionados*/
             $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();

@@ -1,16 +1,42 @@
 <script>
 function TransportadorProsarc() {
+	var SolSerBascula = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "true" : "false"}};
+	var SolSerCapacitacion = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliCapacitacion'] === 1) ? "true" : "false"}};
+	var SolSerMasPerson = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "true" : "false"}};
+	var SolSerVehicExclusive = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "true" : "false"}};
+	var SolSerPlatform = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "true" : "false"}};
+	
 	$("#transportador").attr('hidden', true);
 	$("#Conductor").attr('hidden', true);
 	$("#Vehiculo").attr('hidden', true);
 	$("#typeaditable").removeClass('col-md-12');
 	$("#typeaditable").addClass('col-md-6');
-	$("#SolSerBascula").bootstrapSwitch('disabled',false);
-	$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
-	$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
-	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',false);
-	$("#SolSerPlatform").bootstrapSwitch('disabled',false);
-	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
+	if (SolSerBascula) {
+		$("#SolSerBascula").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerBascula").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerCapacitacion) {
+		$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerMasPerson) {
+		$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerVehicExclusive) {
+		$("#SolSerVehicExclusive").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerPlatform) {
+		$("#SolSerPlatform").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerPlatform").bootstrapSwitch('disabled',true);
+	}
+	// $("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
 	$("#typecollect").removeClass('col-md-6');
@@ -87,7 +113,7 @@ function TransportadorExtr() {
 	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
 	$("#SolSerPlatform").bootstrapSwitch('state',false);
 	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
-	$("#SolSerDevolucion").bootstrapSwitch('disabled',false);
+	// $("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#typecollect").attr('hidden', true);
 	$("#SolSerTypeCollect").attr('required', false);
 	$("#municipio2").attr('required', false);
@@ -149,19 +175,19 @@ function HiddenResiduosGener(id_div){
 	$(icon).addClass('fa-plus');
 	$("#DivRepel"+id_div).empty();
 }
-$("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
-	if(state == true){
-		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', false);
-		$("#SolSerDevolucionTipo").attr('disabled', false);
-		$("#SolSerDevolucionTipo").attr('required', true);
-	}
-	else{
-		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', true);
-		$("#SolSerDevolucionTipo").attr('disabled', true);
-		$("#SolSerDevolucionTipo").attr('required', false);
-		$("#SolSerDevolucionTipo").val(null);
-	}
-});
+// $("#SolSerDevolucion").on('switchChange.bootstrapSwitch', function(event, state) {
+// 	if(state == true){
+// 		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', false);
+// 		$("#SolSerDevolucionTipo").attr('disabled', false);
+// 		$("#SolSerDevolucionTipo").attr('required', true);
+// 	}
+// 	else{
+// 		$("#SolSerDevolucionTipo").parent().parent().attr('hidden', true);
+// 		$("#SolSerDevolucionTipo").attr('disabled', true);
+// 		$("#SolSerDevolucionTipo").attr('required', false);
+// 		$("#SolSerDevolucionTipo").val(null);
+// 	}
+// });
 function ResiduosGener(id_div, ID_Gener){
 	contadorRespel[id_div] = 0;
 	$("#DivRepel"+id_div).empty();

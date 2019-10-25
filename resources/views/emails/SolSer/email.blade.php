@@ -25,22 +25,22 @@
         @break
     @case('Completado')
         @php
-            $text = 'esta lista para realizar una conciliación, por favor revise los pesos y/o cantidades de los residuos, para poder tratarlos';
+            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el boton (estoy de acuerdo) para dar inicio al tratamiento de los residuos';
         @endphp
         @break
     @case('No Conciliado')
         @php
-            $text = "la ha rechazado el cliente $mail->CliName";
+            $text = " ha sido rechazada por el cliente $mail->CliName, ya que no esta de acuerdo con algunas de las cantidades enviadas a conciliación... se deben verificar las cantidades y enviar de nuevo a conciliación";
         @endphp
         @break
     @case('Conciliado')
         @php
-            $text = "ha aceptado la conciliación satisfactoriamente el cliente $mail->CliName ";
+            $text = "ha sido aceptada satisfactoriamente por el cliente $mail->CliName, según las cantidades enviadas a conciliación... esto permite dar inicio al registro de las cantidades tratadas para cada residuo de la solicitud de servicio";
         @endphp
         @break
     @case('Certificacion')
         @php
-            $text = 'ha sido Certificada con éxito. Gracias por escogernos y esperamos que vuelva';
+            $text = 'ha sido Certificada con éxito. esperamos que el proceso haya sido realizado a su entera satisfaccion, ¡Gracias por su preferencia!';
         @endphp
         @break
 @endswitch

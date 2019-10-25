@@ -15,10 +15,10 @@ class CreateSolicitudResiduosTable extends Migration
     {
             Schema::create('solicitud_residuos', function (Blueprint $table) {
             $table->increments('ID_SolRes');
-            $table->Integer('SolResKgEnviado');
-            $table->Integer('SolResKgRecibido')->nullable();
-            $table->Integer('SolResKgConciliado')->nullable();
-            $table->Integer('SolResKgTratado')->nullable();
+            $table->decimal('SolResKgEnviado', 8, 2);
+            $table->decimal('SolResKgRecibido', 8, 2)->nullable();
+            $table->decimal('SolResKgConciliado', 8, 2)->nullable();
+            $table->decimal('SolResKgTratado', 8, 2)->nullable();
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

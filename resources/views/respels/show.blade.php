@@ -1,4 +1,4 @@
-@extends('layouts.app')
+	@extends('layouts.app')
 @section('htmlheader_title')
 {{ trans('adminlte_lang::LangRespel.Respelinfotag') }}
 @endsection
@@ -154,13 +154,18 @@
 							@else
 							<a method='get' disabled href='#' class='btn btn-default'>{{ trans('adminlte_lang::message.delete') }}</a>
 							@endif
-							<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+								<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
+							@else
+								<a disabled href="#" class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
+							@endif
+							
 						</div>
 					@else
 						<div class="btn-group-sm pull-right">
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i> o <i><b>'Incompleto'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
 
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>, <i><b>'Incompleto'</b></i> o <i><b>'Rechazado'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
 						</div>
 					@endif
 				</div>
@@ -183,7 +188,7 @@
 								<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 							</li>
 							<li class="nav-item">
-							@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
+							@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 								<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 							@endif
 							</li>

@@ -13,7 +13,14 @@
 			<!-- /.box -->
 			<div class="box">
 				<div class="box-header">
-					<a href="respelspublic/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3 class="pull-left">
+					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+						<a href="respelspublic/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+						
+					@else
+						<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Agregar nuevo Residuo Común</b>" data-content="<p style='width: 50%'>Su cuenta no posee los permisos necesarios para agregar nuevos residuos comunes </p>">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+					@endif
 				</div>
 				<!-- /.box-header -->
 				<div class="box box-info">
@@ -29,7 +36,7 @@
 									<th>{{trans('adminlte_lang::LangRespel.Respelhoja')}}</th>
 									<th>{{trans('adminlte_lang::LangRespel.Respeltarj')}}</th>
 									<th nowrap><span data-placement="left" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="<ul><li><a class='fixed_widthbtn btn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Pendiente</b> </li><li><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleta</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li><li><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Aprobado</b> </li><li><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li><li><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li></ul>"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Copiar</th>
-									@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC))
+									@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones))
 									<th>evaluar</th>
 									@endif
 									<th>{{trans('adminlte_lang::LangRespel.Respeligro')}}</th>
@@ -161,7 +168,7 @@
 												<td class="text-center"><a method='get' href='/respelspublic/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'> Residuo registrado por el cliente que debe ser evaluado por el area encargada para asignar tratamientos viables... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
 										@endswitch
 									@endif
-									@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC))
+									@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones))
 										@switch($respel->RespelStatus)
 											{{-- evaluación pendiente --}}
 											@case('Pendiente')

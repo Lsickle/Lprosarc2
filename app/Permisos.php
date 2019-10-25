@@ -196,6 +196,16 @@ class Permisos{
 		clientcontoller::index
 	*/
 
+	const SUPERVISOR = ['Supervisor'];
+	/* Using ->
+		respel/index
+	*/
+
+	const GrupoShowRespel = ['AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','Supervisor','Tesorería','AsistenteComercial'];
+	/* Using ->
+		
+	*/
+
 	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota'];
 	/* Using ->
 		clientcontoller::index

@@ -370,7 +370,7 @@ class RespelPublicController extends Controller
         $PublicRespel = Respel::where('RespelSlug', $id)->first();
 
         $PublicRespel->load('requerimientos');
-
+        // return $PublicRespel;
         $newRespel = $PublicRespel->replicate();
         $newRespel->RespelSlug = hash('sha256', rand().time().$PublicRespel->RespelName);
         $newRespel->RespelPublic = 1;

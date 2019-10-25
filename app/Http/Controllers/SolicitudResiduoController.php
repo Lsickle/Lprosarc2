@@ -170,6 +170,40 @@ class SolicitudResiduoController extends Controller
 		return redirect()->route('solicitud-servicio.show', compact('id'));
 	}
 
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	
+	public function updateSolResPrice(Request $request, $id){
+		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
+		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+
+		$Validate = $request->validate([
+			'SolResPrecio'  => 'required|numeric|nullable',
+		]);
+		$SolRes->SolResPrecio = $request->input('SolResPrecio');
+		$SolRes->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_residuos";
+		$log->AuditType="Modificado el precio";
+		$log->AuditRegistro=$SolRes->ID_SolRes;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		$idServicio = $SolSer->SolSerSlug;
+
+		return redirect()->route('solicitud-servicio.show', compact('idServicio'));
+	}
+
 	public function update(SolResUpdateRequest $request, $id)
 	{
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();

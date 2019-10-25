@@ -102,8 +102,8 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 					(Menu::new()
 						->prepend('<a href="#"><i style="font-size: 1.2em; color: #aa66cc;" class="fas fa-people-carry"></i> <span>Servicios</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
 						->addParentClass('treeview')
-						->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS), (Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-invoice"></i> <span>'. trans('adminlte_lang::message.MenuServTitle').'</span>')))
-						->addIf(in_array(Auth::user()->UsRol, Permisos::PROGRAMACIONES) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMACIONES), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> <span>'. trans('adminlte_lang::message.MenuPrograVehic').'</span>')))
+						->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS), (Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-invoice"></i> <span>'. trans('adminlte_lang::message.MenuServTitleSidebar').'</span>')))
+						->addIf(in_array(Auth::user()->UsRol, Permisos::PROGRAMACIONES) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMACIONES), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> <span>'. trans('adminlte_lang::message.MenuPrograVehicSidebar').'</span>')))
 						->addClass('treeview-menu')
 					)
 				)
@@ -130,10 +130,10 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->addClass('treeview-menu')
 					)
 				)
-				/*PESTAÑA DE GENERADORES*/
-				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i style="font-size: 1.2em; color: #33b5e5;" class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respels', '<i style="font-size: 1.2em; color: ff4444;" class="fa fa-biohazard"></i> <span>'. trans('adminlte_lang::message.MenuRespelList').'</span>')))
+				/*PESTAÑA DE GENERADORES*/
+				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/generadores', '<i style="font-size: 1.2em; color: #33b5e5;" class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClientitle').'</span>')))
 				/*PESTAÑA DE RESIDUOS COMUNES*/
 				->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/respelspublic', '<i style="font-size: 1.2em; color: #00C851;" class="fas fa-globe-americas"></i> <span>'.trans('adminlte_lang::message.RPList').'</span>')))
 				/*PESTAÑA DE PERSONAL*/
