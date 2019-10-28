@@ -18,7 +18,7 @@
 						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 				@endif
 				@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
-						<a href="respels/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
+						<a href="respelspublic/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
 				@endif
 				</div>
 				<!-- /.box-header -->
