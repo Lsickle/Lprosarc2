@@ -273,7 +273,7 @@ class RespelPublicController extends Controller
         }
             if (isset($request['RespelHojaSeguridad'])) {
                 if($prespel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad)){
-                    unlink(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad);
+                    // unlink(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad);
                 }
                 $file1 = $request['RespelHojaSeguridad'];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
@@ -286,7 +286,7 @@ class RespelPublicController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'])) {
                 if($prespel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj)){
-                    unlink(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj);
+                    // unlink(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj);
                 }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
@@ -298,7 +298,7 @@ class RespelPublicController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'])) {
                 if($prespel->RespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto)){
-                    unlink(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto);
+                    // unlink(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto);
                 }
                 $file3 = $request['RespelFoto'];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
@@ -310,7 +310,7 @@ class RespelPublicController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'])) {
                 if($prespel->SustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento)){
-                    unlink(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento);
+                    // unlink(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento);
                 }
                 $file4 = $request['SustanciaControladaDocumento'];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
