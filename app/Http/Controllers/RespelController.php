@@ -631,7 +631,11 @@ class RespelController extends Controller
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
         // return redirect()->route('respels.edit', [$respel->RespelSlug]);
-        return redirect()->route('respels.index');
+        if ($respel->RespelPublic === 1) {
+            return redirect()->route('respelspublic.index');
+        }else{
+            return redirect()->route('respels.index');
+        }
     }
 
       /**
