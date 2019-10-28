@@ -764,7 +764,7 @@ class RespelController extends Controller
         /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'])) {
                 if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
-                    unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
+                    // unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
                 }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
