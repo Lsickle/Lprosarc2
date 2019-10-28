@@ -15,11 +15,11 @@
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respellist') }}</h3 class="pull-left">
 					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-						<a href="respelspublic/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+						<a href="respelspublic/create" class="btn btn-primary" style="float: right;">Nuevo Residuo Común</a>
 					@elseif(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
 						
 					@else
-						<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Agregar nuevo Residuo Común</b>" data-content="<p style='width: 50%'>Su cuenta no posee los permisos necesarios para agregar nuevos residuos comunes </p>">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
+						<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Nuevo Residuo Común</b>" data-content="<p style='width: 50%'>Su cuenta no posee los permisos necesarios para agregar nuevos residuos comunes </p>">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 					@endif
 				</div>
 				<!-- /.box-header -->
@@ -45,6 +45,7 @@
 							</thead>
 							<tbody id="readyTable">
 								@foreach($PublicRespels as $respel)
+									@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE)&&($respel->RespelStatus == "Aprobado" || $respel->RespelStatus == "Revisado")||$respel->RespelStatus == "Evaluado"||$respel->RespelStatus == "Cotizado")||in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									@if($respel->RespelDelete == 1)
 										<tr style="color: red;">
 									@else
@@ -214,6 +215,7 @@
 									<td class="text-center">{{$respel->RespelIgrosidad}}</td>
 									<td class="text-center">{{$respel->RespelEstado}}</td>
 								</tr>
+								@endif
 								@endforeach
 							</tbody>
 							{{-- <tfoot>
