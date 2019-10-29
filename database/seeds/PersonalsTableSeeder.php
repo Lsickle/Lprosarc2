@@ -466,7 +466,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Comercial3@prosarc.com.co';
         $personal->save();
-.
+
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
