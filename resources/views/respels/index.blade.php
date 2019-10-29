@@ -18,7 +18,7 @@
 						<a href="respels/create" class="btn btn-primary" style="float: right;">{{trans('adminlte_lang::LangRespel.CreaterespelButton')}}</a>
 				@endif
 				@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
-						<a href="respels/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
+						<a href="respelspublic/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
 				@endif
 				</div>
 				<!-- /.box-header -->
@@ -181,11 +181,11 @@
 												@break
 											{{-- residuo Rechazado --}}
 											@case('Rechazado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Rechazado</b>" data-content="<p style='width: 50%'>La viabilización de su residuo ha sido rechazada y/o no se disponen de tratamientos acordes a sus necesidades... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Rechazado</b>" data-content="<p style='width: 50%'>La viabilización de su residuo ha sido rechazada y/o no se disponen de tratamientos acordes a sus necesidades... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
 												@break
 											{{-- residuo Evaluado --}}
 											@case('Evaluado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Evaluado</b>" data-content="<p style='width: 50%'>El Residuo ya posee un tratamiento viable asignados, sin embargo, el <b>Asesor Comercial</b> debe asignar las tarifas de acuerdo al tratamiento y ofertar alguna de las opciones... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Evaluado</b>" data-content="<p style='width: 50%'>El Residuo ya posee un tratamiento viable asignados, sin embargo, el <b>Asesor Comercial</b> debe asignar las tarifas de acuerdo al tratamiento y ofertar alguna de las opciones... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
 												@break
 											{{-- residuo Cotizado --}}
 											@case('Cotizado')
@@ -201,7 +201,7 @@
 												@break
 											{{-- información del residuo incompleta --}}
 											@case('Incompleto')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Incompleto</b>" data-content="<p style='width: 50%'>La información suministrada en el registro de su residuo no es suficiente para poder asignar un tratamiento viable... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Incompleto</b>" data-content="<p style='width: 50%'>La información suministrada en el registro del residuo no es suficiente para poder asignar un tratamiento viable... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- Residuo Revisado --}}
 											@case('Revisado')
