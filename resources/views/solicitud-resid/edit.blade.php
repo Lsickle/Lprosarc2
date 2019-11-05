@@ -121,47 +121,61 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requirements') }}</b>" data-content="{{ trans('adminlte_lang::message.requirementsdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.requirements') }}</label>
 								</div>
 								<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-									<div class="form-group col-md-12">
-										<label>{{ trans('adminlte_lang::message.recursoFoto') }}</label>
-									</div>
 									<div class="form-group col-md-6">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguephoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguephotodescrit') }}</p>">
-											<label for="SolResFotoDescargue_Pesaje">{{ trans('adminlte_lang::message.requeredescargue') }}</label>
+											<label for="SolResFotoDescargue_Pesaje">{{ trans('adminlte_lang::message.requiredescarguephoto') }}</label>
 											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="fotoswitch" id="SolResFotoDescargue_Pesaje" onclick="Checkboxs()" data-name="SolResFotoDescargue_Pesaje1" {{$SolRes->SolResFotoDescargue_Pesaje  == 1 ? 'checked' : '' }}/>
-												<input type="text" id="SolResFotoDescargue_Pesaje1" name="SolResFotoDescargue_Pesaje" hidden value="">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqFotoDescargue === 1) ? "" : "disabled"}} {{ $SolRes->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }} type="checkbox" class="fotoswitch" id="SolResFotoDescargue_Pesaje" data-name="SolResFotoDescargue_Pesaje1" value="1"/>
+												<input type="text" id="SolResFotoDescargue_Pesaje1" name="SolResFotoDescargue_Pesaje" hidden value="{{ $SolRes->SolResFotoDescargue_Pesaje == 1 ? 1 : 0 }}">
 											</div>
 										</label>
 									</div>
 									<div class="form-group col-md-6">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientophoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientophotodescrit') }}</p>">
-											<label for="SolResFotoTratamiento">{{ trans('adminlte_lang::message.requeretratamiento') }}</label>
+											<label for="SolResFotoTratamiento">{{ trans('adminlte_lang::message.requiretratamientophoto') }}</label>
 											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="fotoswitch" id="SolResFotoTratamiento" onclick="Checkboxs()" data-name="SolResFotoTratamiento1" {{$SolRes->SolResFotoTratamiento  == 1 ? 'checked' : '' }}/>
-												<input type="text" id="SolResFotoTratamiento1" name="SolResFotoTratamiento" hidden value="">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqFotoDestruccion === 1) ? "" : "disabled"}} {{ $SolRes->SolResFotoTratamiento == 1 ? 'checked' : '' }} type="checkbox" class="fotoswitch" id="SolResFotoTratamiento" value="1" data-name="SolResFotoTratamiento1"/>
+												<input type="text" id="SolResFotoTratamiento1" name="SolResFotoTratamiento" hidden value="{{ $SolRes->SolResFotoTratamiento == 1 ? 1 : 0 }}">
 											</div>
 										</label>
 									</div>
 								</div> 
 								<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
-									<div class="form-group col-md-12">
-										<label>{{ trans('adminlte_lang::message.recursoVideo') }}</label>
-									</div>
 									<div class="form-group col-md-6">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguevideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
-											<label for="SolResVideoDescargue_Pesaje">{{ trans('adminlte_lang::message.requeredescargue') }}</label>
+											<label for="SolResVideoDescargue_Pesaje">{{ trans('adminlte_lang::message.requiredescarguevideo') }}</label>
 											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="videoswitch" id="SolResVideoDescargue_Pesaje" onclick="Checkboxs()" data-name="SolResVideoDescargue_Pesaje1" {{$SolRes->SolResVideoDescargue_Pesaje  == 1 ? 'checked' : '' }}/>
-												<input type="text" id="SolResVideoDescargue_Pesaje1" name="SolResVideoDescargue_Pesaje" hidden value="">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqVideoDescargue === 1) ? "" : "disabled"}} {{ $SolRes->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }} type="checkbox" class="videoswitch" id="SolResVideoDescargue_Pesaje" value="1" data-name="SolResVideoDescargue_Pesaje1"/>
+												<input type="text" id="SolResVideoDescargue_Pesaje1" name="SolResVideoDescargue_Pesaje" hidden value="{{ $SolRes->SolResVideoDescargue_Pesaje == 1 ? 1 : 0 }}">
 											</div>
 										</label>
 									</div>
 									<div class="form-group col-md-6">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientovideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientovideodescrit') }}</p>">
-											<label for="SolResVideoTratamiento">{{ trans('adminlte_lang::message.requeretratamiento') }}</label>
+											<label for="SolResVideoTratamiento">{{ trans('adminlte_lang::message.requiretratamientovideo') }}</label>
 											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="videoswitch" id="SolResVideoTratamiento" onclick="Checkboxs()" data-name="SolResVideoTratamiento1" {{$SolRes->SolResVideoTratamiento  == 1 ? 'checked' : '' }}>
-												<input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqVideoDestruccion === 1) ? "" : "disabled"}} {{ $SolRes->SolResVideoTratamiento == 1 ? 'checked' : '' }} type="checkbox" class="videoswitch" id="SolResVideoTratamiento" value="1" data-name="SolResVideoTratamiento1"/>
+												<input type="text" id="SolResVideoTratamiento1" name="SolResVideoTratamiento" hidden value="{{ $SolRes->SolResVideoTratamiento == 1 ? 1 : 0 }}">
+											</div>
+										</label>
+									</div>
+								</div>
+								<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
+									<div class="form-group col-md-6">
+										<label for="SolResDevolucion" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
+											Devolución Embalaje
+											<div style="width: 100%; height: 34px;">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqAuditoria === 1) ? "" : "disabled"}} {{ $SolRes->SolResDevolucion == 1 ? 'checked' : '' }} type="checkbox" class="embalajeswitch" id="SolResDevolucion" value="1" data-name="SolResDevolucion1"/>
+												<input type="text" id="SolResDevolucion1" name="SolResDevolucion" hidden value="{{ $SolRes->SolResDevolucion == 1 ? 1 : 0 }}">
+											</div>
+										</label>
+									</div>
+									<div class="form-group col-md-6">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Requiere Auditoria</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador " for="SolResAuditoria">
+											Requiere Auditoria
+											<div style="width: 100%; height: 34px;">
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqDevolucion === 1) ? "" : "disabled"}} {{ $SolRes->SolResAuditoria == 1 ? 'checked' : '' }} type="checkbox" class="auditoriaswitch" id="SolResAuditoria" value="1" data-name="SolResAuditoria1"/>
+												<input type="text" id="SolResAuditoria1" name="SolResAuditoria" hidden value="{{ $SolRes->SolResAuditoria == 1 ? 1 : 0 }}">
 											</div>
 										</label>
 									</div>
