@@ -165,7 +165,7 @@
 										<label for="SolResDevolucion" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
 											Devolución Embalaje
 											<div style="width: 100%; height: 34px;">
-												<input {{(isset($Requerimientos))&&($Requerimientos->ReqAuditoria === 1) ? "" : "disabled"}} {{ $SolRes->SolResDevolucion == 1 ? 'checked' : '' }} type="checkbox" class="embalajeswitch" id="SolResDevolucion" value="1" data-name="SolResDevolucion1"/>
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqDevolucion === 1) ? "" : "disabled"}} {{ $SolRes->SolResDevolucion == 1 ? 'checked' : '' }} type="checkbox" class="embalajeswitch" id="SolResDevolucion" value="1" data-name="SolResDevolucion1"/>
 												<input type="text" id="SolResDevolucion1" name="SolResDevolucion" hidden value="{{ $SolRes->SolResDevolucion == 1 ? 1 : 0 }}">
 											</div>
 										</label>
@@ -174,7 +174,7 @@
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Requiere Auditoria</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador " for="SolResAuditoria">
 											Requiere Auditoria
 											<div style="width: 100%; height: 34px;">
-												<input {{(isset($Requerimientos))&&($Requerimientos->ReqDevolucion === 1) ? "" : "disabled"}} {{ $SolRes->SolResAuditoria == 1 ? 'checked' : '' }} type="checkbox" class="auditoriaswitch" id="SolResAuditoria" value="1" data-name="SolResAuditoria1"/>
+												<input {{(isset($Requerimientos))&&($Requerimientos->ReqAuditoria === 1) ? "" : "disabled"}} {{ $SolRes->SolResAuditoria == 1 ? 'checked' : '' }} type="checkbox" class="auditoriaswitch" id="SolResAuditoria" value="1" data-name="SolResAuditoria1"/>
 												<input type="text" id="SolResAuditoria1" name="SolResAuditoria" hidden value="{{ $SolRes->SolResAuditoria == 1 ? 1 : 0 }}">
 											</div>
 										</label>
