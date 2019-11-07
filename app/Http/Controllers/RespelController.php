@@ -635,6 +635,9 @@ class RespelController extends Controller
                                             if (isset($opciones[$key]['ID_Rango'][$key2])) {
                                                 // $rango = new Rango();
                                                $rango = Rango::where('ID_Rango', $opciones[$key]['ID_Rango'][$key2])->first();
+                                               // $rango->TarifaPrecio=0;
+                                               // $rango->TarifaDesde=0;
+                                               // $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
                                                $rango->delete(); 
                                             }
                                        }            
