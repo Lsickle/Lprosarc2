@@ -314,6 +314,13 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
+				/*validar el residuo para saber el tratamiento*/
+				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
+				/*asignar el requerimiento segun el tratamiento ofertado actualmente*/
+				$SolicitudResiduo->FK_SolResRequerimiento = Requerimiento::select('FK_ReqTrata')
+				->where('FK_ReqRespel', $respelref)
+				->where('ofertado', 1)
+				->first()->FK_ReqTrata;
 				$SolicitudResiduo->save();
 			}
 		}
@@ -397,13 +404,12 @@ class SolicitudServicioController extends Controller
 		$Residuosoriginal = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->join('requerimientos' , 'respels.ID_Respel', '=', 'requerimientos.FK_ReqRespel')
+			->join('requerimientos' , 'solicitud_residuos.FK_SolResRequerimiento', '=', 'requerimientos.ID_Req')
 			->join('tratamientos' , 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
 			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
-			->where('requerimientos.ofertado', 1)
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {

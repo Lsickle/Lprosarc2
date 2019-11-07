@@ -233,7 +233,7 @@
 						<div id="ModalSupport"></div>
 						<div class="box box-info">
 							<div class="box-footer">
-								<a href="#" onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.applyfor') }}</a>
+								<a onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.applyfor') }}</a>
 								<button type="submit" id="Submit" style="display: none;"></button>
 							</div>
 						</div>
