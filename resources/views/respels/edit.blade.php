@@ -495,6 +495,7 @@
 		function EliminarRango(opcion,rango){
 			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
+			$("#rangodefault"+opcion+rango).append(`<input hidden  type="text" name="Opcion[`+opcion+`][TarifaDesde][]" value=""><input hidden  type="text" name="Opcion[`+opcion+`][TarifaPrecio][]" value="">`);
 			$("#evaluacioncomercial").validator('update');
 			validarprevent(opcion);
 		}

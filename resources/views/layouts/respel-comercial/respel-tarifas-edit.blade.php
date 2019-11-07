@@ -54,6 +54,9 @@
 							@php
 							$last = $last+1;
 							@endphp
+							<input hidden type="text" name="Opcion[{{$contadorphp}}][ID_Rango][]" value="{{$rango->ID_Rango}}">
+							<div id="rangodefault{{$contadorphp}}{{$last}}">
+							</div>
 							<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
 								<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$rango->TarifaDesde}} </label>
 								@if(($rango->TarifaDesde != 0)&&(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)))
