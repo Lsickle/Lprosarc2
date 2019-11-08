@@ -848,4 +848,25 @@ class SolicitudServicioController extends Controller
 
 		return redirect()->route('solicitud-servicio.index');
 	}
+
+	/**
+	 * list the related documents for specific solserv.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function solservdocindex($id)
+	{
+		$SolicitudServicio = DB::table('solicitud_servicios')
+		->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+		->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
+		->where('solicitud_servicios.SolSerSlug', $id)
+		->first();
+		if (!$SolicitudServicio) {
+			abort(404);
+		}
+		
+		return view('solicitud-serv.documentos', compact('SolicitudServicio'));
+	}
+
 }
