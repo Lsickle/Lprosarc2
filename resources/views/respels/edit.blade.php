@@ -480,7 +480,7 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+opcion+"Container").append(tarifa);
+					$("#rango"+opcion+"row").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
 					// validarprevent(opcion);
 					last=last+1

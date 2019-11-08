@@ -7,14 +7,15 @@
     		$x = 0;
     	@endphp
 			@foreach($opcion->tarifas as $tarifa)
-					<div class="col-md-3 col-sm-6" style="max-height: 2.3em;">
+				<div class=row>
+					<div class="col-md-4 col-sm-6" {{-- style="max-height: 2.3em;" --}}>
 						<label for="expireRange{{$contadorphp}}" style="font-size: 0.9em;">Vencimiento</label>
 						<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="expireRange{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaVencimiento]" type="date" class="form-control" value="{{$tarifa->TarifaVencimiento}}">
 						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 					   		<input type="date" hidden name="Opcion[{{$contadorphp}}][TarifaVencimiento]" value="{{$tarifa->TarifaVencimiento}}">
 					    @endif
 					</div>
-					<div class="col-md-3 col-sm-6">
+					<div class="col-md-4 col-sm-6">
 						<label for="frecrangeSelect{{$contadorphp}}" style="font-size: 0.9em;" data-trigger="hover" data-toggle="popover" title="<b>Frecuencia</b>" data-content="<p> se tomara en cuenta para la aplicación de la tarifa respectiva y el calculo del precio según la frecuencia de la cantidad puesta en planta Prosarc S.A. ESP</p>" >Frec.</label>
 						<select {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="frecrangeSelect{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaFrecuencia]">
 							<option {{$tarifa->TarifaFrecuencia == 'N/A' ? "selected" : ""}}>N/A</option>
@@ -36,9 +37,9 @@
 					   		<input hidden name="Opcion[{{$contadorphp}}][Tarifatipo]" value="{{$tarifa->Tarifatipo}}">
 					    @endif
 					</div>
-					<div class="col-md-1 col-sm-6 pull-right">
-						<label for="addrangeButton{{$contadorphp}}">Más</label>
-						<button {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} style="cursor: cell;" onclick="AgregarRango({{$contadorphp}})" class="btn btn-primary addrangeButton" id="addrangeButton{{$contadorphp}}"> <i class="fa fa-plus"></i></button>
+					<div class="col-md-2 col-sm-6">
+						<label for="addrangeButton{{$contadorphp}}">Añadir Rango</label>
+						<button {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} style="cursor: cell;" onclick="AgregarRango({{$contadorphp}})" class="btn btn-primary btn-block addrangeButton" id="addrangeButton{{$contadorphp}}"> <i class="fa fa-plus"></i></button>
 					</div>
 					<script type="text/javaScript">
 						    contadorRango[{{$contadorphp}}] = [];
@@ -46,6 +47,8 @@
 							  event.preventDefault()
 							});
 					</script>
+				</div>
+				<div class="row" id="rango{{$contadorphp}}row">
 					@if(count($tarifa->rangos) > 0)
 						@foreach($tarifa->rangos as $rango)
 						<script type="text/javaScript">
@@ -57,7 +60,7 @@
 							<input hidden type="text" name="Opcion[{{$contadorphp}}][ID_Rango][]" value="{{$rango->ID_Rango}}">
 							<div id="rangodefault{{$contadorphp}}{{$last}}">
 							</div>
-							<div class="col-md-3 col-sm-6 {{$last > 1 ? "pull-left": "pull-right"}}" id="rango{{$contadorphp}}{{$last}}">
+							<div class="col-md-3 col-sm-6" {{-- {{$last > 1 ? "pull-left": "pull-right"}}" --}} id="rango{{$contadorphp}}{{$last}}">
 								<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{isset($rango->TarifaDesde) ? $rango->TarifaDesde : 0 }} </label>
 								@if(($rango->TarifaDesde != 0)&&(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)))
 								<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
@@ -76,7 +79,7 @@
 			    		<script type="text/javaScript">
 			    				contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
 			    		</script>
-		    			<div class="col-md-3" id="rango{{$contadorphp}}{{$last}}">
+		    			<div class="col-md-3 col-sm-6" id="rango{{$contadorphp}}{{$last}}">
 		    				<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$last}} </label>
 		    				<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0">
 		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
@@ -88,10 +91,10 @@
 		    			$last = $last+1;
 		    			@endphp
 					@endif
+				</div>
 	    		@php
 	    			$x=$x+1;
 	    		@endphp
-	    	@endforeach
-		
+	    	@endforeach		
 	</div>
 </div>
