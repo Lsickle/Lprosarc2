@@ -60,7 +60,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = 'Heidy';
         $personal->PersSecondName = 'Vanessa';
         $personal->PersLastName = 'Pastor Muñoz';
-        $personal->PersLibreta = ;
+        $personal->PersLibreta = '';
         $personal->PersBirthday = '23/08/2001';
         $personal->PersCellphone = 3222327520;
         $personal->PersAddress = 'Cll 14a #6a - 20';
@@ -247,7 +247,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocType = 'CC';
         $personal->PersDocNumber = 1198869084;
         $personal->PersFirstName = 'William';
-        $personal->PersLastName = 'Cendales';
+        $personal->PersLastName = 'Cendales Arevalo';
         $personal->PersLibreta = 1198869084;
         $personal->PersBirthday = '25/05/2005';
         $personal->PersCellphone = 3564546897;
