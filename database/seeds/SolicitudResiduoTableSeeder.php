@@ -20,7 +20,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResSolSer = '2';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        $Residuo->FK_SolResTratamiento = 1;
+        $Residuo->FK_SolResRequerimiento = 1;
         $Residuo->FK_SolResRg = 1;
         $Residuo->save();
         
@@ -32,7 +32,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResSolSer = '4';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        $Residuo->FK_SolResTratamiento = 2;
+        $Residuo->FK_SolResRequerimiento = 2;
         $Residuo->FK_SolResRg = 2;
         $Residuo->save();
 
@@ -44,7 +44,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResSolSer = '5';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        $Residuo->FK_SolResTratamiento = 3;
+        $Residuo->FK_SolResRequerimiento = 3;
         $Residuo->FK_SolResRg = 3;
         $Residuo->save();
 
@@ -56,7 +56,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResSolSer = '1';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        $Residuo->FK_SolResTratamiento = 4;
+        $Residuo->FK_SolResRequerimiento = 4;
         $Residuo->FK_SolResRg = 1;
         $Residuo->save();
 
@@ -68,7 +68,7 @@ class SolicitudResiduoTableSeeder extends Seeder
         $Residuo->FK_SolResSolSer = '3';
         $Residuo->SolResDelete = '0';
         $Residuo->SolResSlug = substr(md5(rand()), 0,32)."SiRes".substr(md5(rand()), 0,32)."Prosarc".substr(md5(rand()), 0,32);
-        $Residuo->FK_SolResTratamiento = 5;
+        $Residuo->FK_SolResRequerimiento = 5;
         $Residuo->FK_SolResRg = 5;
         $Residuo->save();
     }

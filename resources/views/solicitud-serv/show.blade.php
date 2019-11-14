@@ -4,7 +4,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	Servicios
+	Servicios->Solicitudes
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -133,6 +133,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
 								</div>
 							</div>
+							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+								<a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+							@endif
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
 							@endif
@@ -345,7 +348,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, {{$Residuo->SolResKgTratado}})"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -590,9 +593,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<label for="SolResKgTratado">Cantidad Tratada (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<div class="input-group">
-													<input type="number" step=".01" min="0" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKgTratado" maxlength="5" value="`+cantidadKG+`" required>
+													<input type="number" step=".01" min="0" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" max="`+cantidadmax+`" required>
 													<div class="input-group-btn">
-														<label for="ValorConciliado"><a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`, `+tipo+`)">Tratado</a><label>
+														<label for="ValorConciliado"><a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`)">Tratado</a><label>
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
@@ -627,6 +630,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		};
 
 		function submit(cantidadmax){
+			console.log(cantidadmax);
 			$('#conciliadokg').append(`
 				@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
@@ -634,6 +638,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
 				@endif
 			`);
+			$('#SolResKgTratado').val(cantidadmax);
+			$('#FormKg').validator('update');
 			$('#ValorConciliado').prop('type', "submit");
 		}
 	</script>

@@ -599,6 +599,9 @@ return [
     'MenuServlist'            => 'Lista de Servicios',
     'MenuServEviden'          => 'Evidencias de Servicios',
     'MenuArticu'              => 'Artículos',
+    'MenuCertificados'        => 'Certificados',
+    'MenuManifiestos'         => 'Manifiestos',
+    'MenuAnexos'              => 'Anexos',
     'MenuQr'                  => 'Código Qr',
 
     // info-gener

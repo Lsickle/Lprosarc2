@@ -79,6 +79,11 @@ class SolicitudResiduoController extends Controller
 				->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
 				->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
 				->first();
+			$Requerimientos = DB::table('requerimientos')
+				->where('requerimientos.FK_ReqRespel', $Respel->ID_Respel)
+				->where('requerimientos.ofertado', '=', 1)
+				->first();
+			// return $Requerimientos;
 			if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
 				abort(403);
 			}
@@ -91,7 +96,7 @@ class SolicitudResiduoController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion', 'totalenviado'));
+			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion', 'totalenviado', 'Requerimientos'));
 		}else{
 			abort(403);
 		}
@@ -206,6 +211,7 @@ class SolicitudResiduoController extends Controller
 
 	public function update(SolResUpdateRequest $request, $id)
 	{
+		// return $request;
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
@@ -222,6 +228,8 @@ class SolicitudResiduoController extends Controller
 		$SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
 		$SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
 		$SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		$SolRes->SolResDevolucion = $request->input('SolResDevolucion');
+		$SolRes->SolResAuditoria = $request->input('SolResAuditoria');
 		$SolRes->SolResTypeUnidad = $request->input('SolResTypeUnidad');
 
 		switch ($request->input('SolResEmbalaje')) {
