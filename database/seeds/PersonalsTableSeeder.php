@@ -60,7 +60,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersFirstName = 'Heidy';
         $personal->PersSecondName = 'Vanessa';
         $personal->PersLastName = 'Pastor Muñoz';
-        $personal->PersLibreta = ;
+        $personal->PersLibreta = '';
         $personal->PersBirthday = '23/08/2001';
         $personal->PersCellphone = 3222327520;
         $personal->PersAddress = 'Cll 14a #6a - 20';
