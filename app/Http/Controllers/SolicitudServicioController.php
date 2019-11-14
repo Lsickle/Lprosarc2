@@ -410,6 +410,7 @@ class SolicitudServicioController extends Controller
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
+			// ->where('requerimientos.ofertado', 1)
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
