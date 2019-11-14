@@ -124,7 +124,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
-	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
+	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA'); 
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	Route::resource('/contratos', 'ContratoController');
 	Route::resource('/requeri-client', 'RequerimientosClienteController');
