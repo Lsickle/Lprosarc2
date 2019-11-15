@@ -87,6 +87,7 @@ class EmailController extends Controller
             ->first();
             
         Mail::to($email->email)->send(new RespelMail($respel));
-        return back();
+        // return back();
+        return redirect()->route('respels.index');
     }
 }
