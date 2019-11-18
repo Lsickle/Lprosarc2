@@ -135,16 +135,23 @@ class SolicitudResiduoController extends Controller
 			case 'Completado':
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
 				break;
 			case 'Conciliado':
 				if( $request->input('ValorConciliado') == NULL){
-					$SolRes->SolResKgTratado = $request->input('SolResKg');
+					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
+						$SolRes->SolResKgTratado = $request->input('SolResKg');
+					}else{
+						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					}
 				}else{
 					$SolRes->SolResKgTratado = $request->input('ValorConciliado');
 				}
+
 				break;
 			default:
 				abort(500);
