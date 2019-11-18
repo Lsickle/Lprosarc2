@@ -273,6 +273,7 @@ class RespelController extends Controller
         //consultar cuales son los tratamientos viabiizados por jefe de operaciones
         $requerimientos = Requerimiento::with(['pretratamientosSelected'])
         ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+        ->where('forevaluation', '=', 1)
         ->get();
 
         
