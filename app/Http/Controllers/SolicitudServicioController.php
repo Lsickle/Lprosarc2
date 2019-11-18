@@ -98,6 +98,7 @@ class SolicitudServicioController extends Controller
 				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('generadors.GenerDelete', 0)
+				->where('gener_sedes.GSedeDelete', 0)
 				->get();
 			$Personals = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
