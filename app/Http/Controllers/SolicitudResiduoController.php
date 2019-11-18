@@ -12,6 +12,7 @@ use App\Respel;
 use App\Recurso;
 use App\ResiduosGener;
 use App\SolicitudServicio;
+use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use Permisos;
 
@@ -224,12 +225,54 @@ class SolicitudResiduoController extends Controller
 		$SolRes->SolResAlto = $request->input('SolResAlto');
 		$SolRes->SolResAncho = $request->input('SolResAncho');
 		$SolRes->SolResProfundo = $request->input('SolResProfundo');
-		$SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
-		$SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
-		$SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
-		$SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
-		$SolRes->SolResDevolucion = $request->input('SolResDevolucion');
-		$SolRes->SolResAuditoria = $request->input('SolResAuditoria');
+		/*se verifica el requerimiento actualmente ofertado para el residuo*/
+		$respelgener= ResiduosGener::find($SolRes->FK_SolResRg);
+
+		$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
+	        ->where('ofertado', '=', 1)
+	        ->first();
+		if ($requerimientoOfertado->ReqFotoDescargue==0) {
+			$SolRes->SolResFotoDescargue_Pesaje = 0;
+		}else{
+			$SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+		}
+
+		if ($requerimientoOfertado->ReqFotoDestruccion==0) {
+			$SolRes->SolResFotoTratamiento = 0;
+		}else{
+			$SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+		}
+
+		if ($requerimientoOfertado->ReqVideoDescargue==0) {
+			$SolRes->SolResVideoDescargue_Pesaje = 0;
+		}else{
+			$SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+		}
+
+		if ($requerimientoOfertado->ReqVideoDestruccion==0) {
+			$SolRes->SolResVideoTratamiento = 0;
+		}else{
+			$SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		}
+
+		if ($requerimientoOfertado->ReqDevolucion==0) {
+			$SolRes->SolResDevolucion = 0;
+		}else{
+			$SolRes->SolResDevolucion = $request->input('SolResDevolucion');
+		}
+
+		if ($requerimientoOfertado->ReqAuditoria==0) {
+			$SolRes->SolResAuditoria = 0;
+		}else{
+			$SolRes->SolResAuditoria = $request->input('SolResAuditoria');
+		}
+		// $SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+		// $SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+		// $SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+		// $SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		// $SolRes->SolResDevolucion = $request->input('SolResDevolucion');
+		// $SolRes->SolResAuditoria = $request->input('SolResAuditoria');
 		$SolRes->SolResTypeUnidad = $request->input('SolResTypeUnidad');
 
 		switch ($request->input('SolResEmbalaje')) {

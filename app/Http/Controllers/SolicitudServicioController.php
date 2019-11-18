@@ -616,40 +616,40 @@ class SolicitudServicioController extends Controller
 			        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
 			        ->where('ofertado', '=', 1)
 			        ->first();
-				if ($$requerimientoOfertado->ReqFotoDescargue==0) {
+				if ($requerimientoOfertado->ReqFotoDescargue==0) {
 					$SolResNew->SolResFotoDescargue_Pesaje = 0;
 				}else{
 					$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
 				}
 
-				if ($$requerimientoOfertado->ReqFotoDestruccion==0) {
+				if ($requerimientoOfertado->ReqFotoDestruccion==0) {
 					$SolResNew->SolResFotoTratamiento = 0;
 				}else{
 					$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
 				}
 
-				if ($$requerimientoOfertado->ReqVideoDescargue==0) {
+				if ($requerimientoOfertado->ReqVideoDescargue==0) {
 					$SolResNew->SolResVideoDescargue_Pesaje = 0;
 				}else{
 					$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
 				}
 
-				if ($$requerimientoOfertado->ReqVideoDestruccion==0) {
-					$SolicitudNew->SolSerPlatform = 0;
+				if ($requerimientoOfertado->ReqVideoDestruccion==0) {
+					$SolResNew->SolResVideoTratamiento = 0;
 				}else{
-					$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+					$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
 				}
 
-				if ($$requerimientoOfertado->ReqDevolucion==0) {
-					$SolicitudNew->SolSerPlatform = 0;
+				if ($requerimientoOfertado->ReqDevolucion==0) {
+					$SolResNew->SolResDevolucion = 0;
 				}else{
-					$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+					$SolResNew->SolResDevolucion = $SolResOld->SolResDevolucion;
 				}
 
-				if ($$requerimientoOfertado->ReqAuditoria==0) {
-					$SolicitudNew->SolSerPlatform = 0;
+				if ($requerimientoOfertado->ReqAuditoria==0) {
+					$SolResNew->SolResAuditoria = 0;
 				}else{
-					$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+					$SolResNew->SolResAuditoria = $SolResOld->SolResAuditoria;
 				}
 				$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
 				$SolResNew->SolResDevolucion = $SolResOld->SolResVideoTratamiento;
