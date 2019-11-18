@@ -64,7 +64,9 @@ class EmailController extends Controller
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }
-        return back();
+        // return back();
+        return redirect()->route('solicitud-servicio.index');
+
     }
 
     protected function sendEmailRespel($slug){
