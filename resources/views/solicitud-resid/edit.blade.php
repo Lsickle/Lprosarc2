@@ -47,12 +47,16 @@
 									<option value="{{$Respel->RespelSlug}}" {{ $SolRes->FK_SolResSolSer == $Respel->ID_Respel ? 'selected' : '' }}>{{$Respel->RespelName}}</option>
 								</select>
 							</div>
+							@if($TypeUnidad != 'Kilogramos')
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypeunidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypeunidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypeunidad') }}</label>
 								<select name="SolResTypeUnidad" id="SolResTypeUnidad" class="form-control">
 									<option value="" onclick="NoSolResCantiUnidad()">{{ trans('adminlte_lang::message.select') }}</option>
+									@if($TypeUnidad != 'Unidad')
 									<option value="Unidad" {{$SolRes->SolResTypeUnidad  === "Unidad" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
+									@else
 									<option value="Litros" {{$SolRes->SolResTypeUnidad  === "Litros" ? 'selected' : '' }} onclick="SolResCantiUnidad()">{{ trans('adminlte_lang::message.solserunidad2') }}</option>
+									@endif
 								</select>
 							</div>
 							<div class="form-group col-md-6">
@@ -60,6 +64,7 @@
 								<small class="help-block with-errors"></small>
 								<input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" maxlength="5" value="{{$SolRes->SolResCantiUnidad}}" disabled="">
 							</div>
+							@endif
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
 								<small class="help-block with-errors">*</small>
