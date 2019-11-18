@@ -140,34 +140,29 @@
 				<!-- box header -->
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respelinfotag') }}</h3>
-					@if($editButton == 'Editable')
 						<div class="btn-group-sm pull-right">
-							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-							<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
-								@method('DELETE')
-								@csrf
-								<button type="submit" id="Eliminar{{$Respels->RespelSlug}}" style="display: none;">
-									{{ trans('adminlte_lang::message.delete') }}
-								</button>
-							</form>
-							<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
-							@else
-							<a method='get' disabled href='#' class='btn btn-default'>{{ trans('adminlte_lang::message.delete') }}</a>
-							@endif
+					@if(($deleteButton == 'borrable')&&(in_array(Auth::user()->UsRol, Permisos::CLIENTE)))
+						<form action='/respels/{{$Respels->RespelSlug}}' method='POST'>
+							@method('DELETE')
+							@csrf
+							<button type="submit" id="Eliminar{{$Respels->RespelSlug}}" style="display: none;">
+								{{ trans('adminlte_lang::message.delete') }}
+							</button>
+						</form>
+						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
+					@else
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si aun no ha sido evaluado por <b>Prosarc S.A. ESP</b>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
+					@endif
+					@if($editButton == 'Editable')
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 								<a href="/respels/{{$Respels->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>
 							@else
 								<a disabled href="#" class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
 							@endif
-							
-						</div>
 					@else
-						<div class="btn-group-sm pull-right">
 							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Edicion Deshabilitada</b>" data-content="<p style='width: 50%'> Editar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i> o <i><b>'Incompleto'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.edit') }}</a>
-
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si su estatus se encuentra en <i><b>'Pendiente'</b></i>, <i><b>'Incompleto'</b></i> o <i><b>'Rechazado'</b></i>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
-						</div>
 					@endif
+						</div>
 				</div>
 				<!-- /.box header -->
 				<!-- box body -->
