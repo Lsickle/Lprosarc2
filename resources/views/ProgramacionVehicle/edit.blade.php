@@ -394,12 +394,36 @@
 			$("#ProgVehEntrada").prop('required', true);
 			$("#ProgVehEntrada").prop('disabled', false);
 			$("#FK_ProgAyudante").prop('disabled', true);
+			$("#ProgVehDocConductorEXT").prop('required', true);
+			$("#ProgVehDocConductorEXT").prop('disabled', false);
+			$("#ProgVehNameConductorEXT").prop('required', true);
+			$("#ProgVehNameConductorEXT").prop('disabled', false);
+			$("#ProgVehDocAuxiliarEXT").prop('required', false);
+			$("#ProgVehDocAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehNameAuxiliarEXT").prop('required', false);
+			$("#ProgVehNameAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehPlacaEXT").prop('required', true);
+			$("#ProgVehPlacaEXT").prop('disabled', false);
+			$("#ProgVehTipoEXT").prop('required', true);
+			$("#ProgVehTipoEXT").prop('disabled', false);
 		@endif
 		@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 			$("#ProgVehFecha").prop("disabled", false);
 			$("#vehicalqui").prop("disabled", false);
 			$("#ProgVehSalida").prop("disabled", false);
 			$("#FK_ProgAyudante").prop('disabled', false);
+			$("#ProgVehDocConductorEXT").prop('required', false);
+			$("#ProgVehDocConductorEXT").prop('disabled', false);
+			$("#ProgVehNameConductorEXT").prop('required', false);
+			$("#ProgVehNameConductorEXT").prop('disabled', false);
+			$("#ProgVehDocAuxiliarEXT").prop('required', false);
+			$("#ProgVehDocAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehNameAuxiliarEXT").prop('required', false);
+			$("#ProgVehNameAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehPlacaEXT").prop('required', false);
+			$("#ProgVehPlacaEXT").prop('disabled', false);
+			$("#ProgVehTipoEXT").prop('required', false);
+			$("#ProgVehTipoEXT").prop('disabled', false);
 		@endif
 		@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic2) && in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)) || (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)))
 			$("#ProgVehEntrada").prop('disabled', false);
@@ -416,6 +440,12 @@
 			$("#ProgVehSalida").prop("disabled", true);
 			$("#ProgVehEntrada").prop("disabled", true);
 			$("#update").prop("disabled", true);
+			$("#ProgVehDocConductorEXT").prop('disabled', true);
+			$("#ProgVehNameConductorEXT").prop('disabled', true);
+			$("#ProgVehDocAuxiliarEXT").prop('disabled', true);
+			$("#ProgVehNameAuxiliarEXT").prop('disabled', true);
+			$("#ProgVehPlacaEXT").prop('disabled', true);
+			$("#ProgVehTipoEXT").prop('disabled', true);
 		@endif
 	@endif
 	</script>
