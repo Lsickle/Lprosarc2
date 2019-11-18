@@ -151,7 +151,7 @@
 						</form>
 						<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$Respels->RespelSlug}}' class='btn btn-danger'>{{ trans('adminlte_lang::message.delete') }}</a>
 					@else
-							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> Eliminar la información del Residuo solo es permitido si aun no ha sido evaluado por <b>Prosarc S.A. ESP</b>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
+							<a data-placement="bottom" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Deshabilitado</b>" data-content="<p style='width: 50%'> el <b>Cliente</b> solo puede Eliminar la información del Residuo cuando aun no ha sido evaluado por <b>Prosarc S.A. ESP</b>... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" disabled class="btn btn-default">{{ trans('adminlte_lang::message.delete') }}</a>
 					@endif
 					@if($editButton == 'Editable')
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
