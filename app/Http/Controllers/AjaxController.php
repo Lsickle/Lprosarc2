@@ -136,6 +136,7 @@ class AjaxController extends Controller
 				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo', 'ReqAuditoria')
 				->where('respels.RespelSlug', $slug)
 				->where('requerimientos.ofertado', 1)
+				->where('requerimientos.forevaluation', 1)
 				->first();
 			return response()->json($Requerimientos);
 		}
