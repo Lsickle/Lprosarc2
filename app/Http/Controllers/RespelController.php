@@ -261,7 +261,7 @@ class RespelController extends Controller
         }
 
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente') {
+            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente'||$Respels->RespelStatus=='TDE actualizada') {
                 $editButton = 'Editable';
             }else{
                 $editButton = 'No editable';
@@ -349,6 +349,9 @@ class RespelController extends Controller
                         return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
                     case 'Falta TDE':
+                        return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
+                    case 'TDE actualizada':
                         return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
                     default:
