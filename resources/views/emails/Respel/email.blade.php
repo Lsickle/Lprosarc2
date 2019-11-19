@@ -7,6 +7,7 @@
 
 En estos momentos el residuo {{$respel->RespelName}} ha sido aprobado 
 y ahora podra utilizarlo para sus Solicitudes de Servicios.<br><br>
+Por favor revise el tratamiento, pretratamientos y requerimientos aprobados para su residuo usando el siguiente botón<br><br>
 
 @component('mail::button', ['url' => url('/respels', [$respel->RespelSlug])])
 {{-- {{$nameButton}} --}}
