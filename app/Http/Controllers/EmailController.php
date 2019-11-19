@@ -31,10 +31,10 @@ class EmailController extends Controller
                 ->select('users.email')
                 ->get();
                 
-            $Roles2 = DB::table('users')
-                ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
-                ->select('users.email')
-                ->get();
+            // $Roles2 = DB::table('users')
+            //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
+            //     ->select('users.email')
+            //     ->get();
 
                 foreach($Roles1 as $Rol1){
                     //SE ENVIA UN CORREO A CADA USUARIO DE ACUERDO AL ARRAY ROLES 1
