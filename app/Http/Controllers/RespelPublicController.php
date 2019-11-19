@@ -381,17 +381,20 @@ class RespelPublicController extends Controller
 
         foreach($PublicRespel->requerimientos as $requerimiento)
         {
-            $requerimiento->load('pretratamientosSelected');
-            $newrequerimiento = $requerimiento->replicate();
-            $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
-            $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
-            $newrequerimiento->ofertado = 0;
-            $newrequerimiento->save();
+            if ($requerimiento->forevaluation == 1) {
+                $requerimiento->load('pretratamientosSelected');
+                $newrequerimiento = $requerimiento->replicate();
+                $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
+                $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
+                $newrequerimiento->ofertado = 0;
+                $newrequerimiento->save();
 
-            foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
-            {
-                $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
+                {
+                    $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                }
             }
+            
         }
 
         $log = new audit();
@@ -450,17 +453,20 @@ class RespelPublicController extends Controller
 
         foreach($PublicRespel->requerimientos as $requerimiento)
         {
-            $requerimiento->load('pretratamientosSelected');
-            $newrequerimiento = $requerimiento->replicate();
-            $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
-            $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
-            $newrequerimiento->ofertado = 0;
-            $newrequerimiento->save();
+            if ($requerimiento->forevaluation == 1) {
+                $requerimiento->load('pretratamientosSelected');
+                $newrequerimiento = $requerimiento->replicate();
+                $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
+                $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
+                $newrequerimiento->ofertado = 0;
+                $newrequerimiento->save();
 
-            foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
-            {
-                $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
+                {
+                    $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                }
             }
+            
         }
 
         $log = new audit();
