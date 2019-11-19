@@ -37,11 +37,13 @@ class EmailController extends Controller
                 ->get();
 
                 foreach($Roles1 as $Rol1){
+                    //SE ENVIA UN CORREO A CADA USUARIO DE ACUERDO AL ARRAY ROLES 1
                     Mail::to($Rol1->email)->send(new SolSerEmail($email));
                 }
-                foreach($Roles2 as $Rol2){
-                    Mail::to($Rol2->email)->send(new SolSerEmail($email));
-                }
+                // validacion del rol2 para el envio de correo
+                // foreach($Roles2 as $Rol2){
+                //     Mail::to($Rol2->email)->send(new SolSerEmail($email));
+                // }
 
                 // para no enviar a logistica los email
                 // Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
