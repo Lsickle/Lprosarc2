@@ -583,16 +583,16 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
-									</div>
+											</div>
 												@break
 											@case('No Conciliado')
 											@case('Completado')
 											<div class="form-group col-md-12">	
-													<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
-													</div>
+												<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+											</div>
 											<div class="form-group col-md-12">	
 													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
-									</div>
+											</div>
 												@break
 											@case('Conciliado')
 											<div class="form-group col-md-12">	
@@ -606,10 +606,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													</div>
 												</div>
 
-												</div>
+											</div>
 											<div class="form-group col-md-12">	
 												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadTratada">Cantidad Tratada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadTratada" name="SolResCantiUnidadTratada" maxlength="5" max="'+cantidadmax+'" value="'+cantidad+'" required>' : '')+`
-									</div>
+											</div>
 												@break
 										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
