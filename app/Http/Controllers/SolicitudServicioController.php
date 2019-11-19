@@ -330,10 +330,12 @@ class SolicitudServicioController extends Controller
 				$requerimientoparacopiar = Requerimiento::with(['pretratamientosSelected'])
 				->where('FK_ReqRespel', $respelref)
 				->where('ofertado', 1)
+				->where('forevaluation', 1)
 				->first();
 				$nuevorequerimiento = $requerimientoparacopiar->replicate();
                 $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelref);
                 $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
                 $nuevorequerimiento->save();
                 $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoparacopiar['pretratamientosSelected']);
 
@@ -447,7 +449,7 @@ class SolicitudServicioController extends Controller
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
 		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-	        ->where('ID_Req', $item->ID_Req)
+	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 	        ->first();
 	        

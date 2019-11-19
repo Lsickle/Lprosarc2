@@ -146,7 +146,7 @@ class SolicitudResiduoController extends Controller
 						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
 						$SolRes->SolResKgTratado = $request->input('SolResKg');
 					}else{
-						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+						$SolRes->SolResKgTratado = $request->input('SolResKg');
 					}
 				}else{
 					$SolRes->SolResKgTratado = $request->input('ValorConciliado');

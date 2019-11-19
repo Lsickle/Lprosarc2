@@ -261,10 +261,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													// $TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
 													switch ($Residuo->SolResTypeUnidad) {
 														case 'Unidad':
-															$TypeUnidad = 'Unidad(es)';
+															$TypeUnidad = 'Unidades';
 															break;
 														case 'Litros':
-															$TypeUnidad = 'Litro(s)';
+															$TypeUnidad = 'Litros';
 															break;
 														default:
 															$TypeUnidad = 'Kilogramos';
@@ -314,7 +314,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@endif
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{-- {{' '.$Residuo->SolResCantiUnidadRecibida}} --}}
-															{{$Residuo->SolResCantiUnidadRecibida  === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
+															{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 
 														@else
 															{{' '.$Residuo->SolResKgRecibido}}
@@ -335,9 +335,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															<i class="fas fa-marker"></i></a>
 														@endif
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-															{{$Residuo->SolResCantiUnidadConciliada  === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
+															{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 														@else
-															{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
+															{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}
 														@endif
 														 {{$TypeUnidad}}
 													</td>
@@ -348,13 +348,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, {{$Residuo->SolResKgTratado}})"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
 																@endif
 															@else
 																<a style="color: black">
 															@endif
 															<i class="fas fa-marker"></i></a>
-															{{$Residuo->SolResKgTratado  === null ? 'N/A' : $Residuo->SolResKgTratado }} 
+															@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
+															@else
+																{{$Residuo->SolResKgTratado === null ? 'N/A' : $Residuo->SolResKgTratado }}
+															@endif
 															 {{$TypeUnidad}}
 														</td>
 													@endif
@@ -523,7 +527,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	@if ($errors->any())
 		<script>
 			$(document).ready(function() {
-				$("#editkgResivido").modal("show");
+				$("#editkgRecibido").modal("show");
 			});
 		</script>
 	@endif
@@ -540,7 +544,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
 					@method('PUT')
 					@csrf
-					<div class="modal modal-default fade in" id="editkgResivido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal modal-default fade in" id="editkgRecibido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -601,7 +605,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<div class="input-group">
 													<input type="number" step=".1" min="0" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" max="`+KgConciliado+`" required>
 													<div class="input-group-btn">
-														<a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`)">Tratado</a>
+														<a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" `+(tipo != 'Kilogramos' ? 'onclick="submit('+cantidadmax+','+KgConciliado+',\''+tipo+'\')"' : 'onclick="submit('+null+','+KgConciliado+',\''+tipo+'\')"')+`>Tratado</a>
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
@@ -634,28 +638,33 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 					break;
 			};
-			$('#editkgResivido').modal();
+			$('#editkgRecibido').modal();
 			$('#FormKg').validator('update');
 		};
 
-		function submit(cantidadmax){
-			console.log(cantidadmax);
-			$('#conciliadokg').append(`
-				@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
-				@else
-					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
-				@endif
-			`);
-			$('#SolResKgTratado').val(cantidadmax);
+		function submit(cantidadmax, kgConciliado){
+			// console.log(cantidadmax);
+			// console.log(kgConciliado);
+			// console.log(tipo);
+			var ValorConciliadokg = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+kgConciliado+`">`;
+			var ValorConciliadounid = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">`;
+			// if (tipopeso != 'Kilogramos') {
+			// 	$('#conciliadokg').append(ValorConciliadounid);
+			// }else{
+			// 	$('#conciliadokg').append(ValorConciliadokg);
+			// }
+			$('#conciliadokg').append(ValorConciliadokg);
+			$('#SolResCantiUnidadTratada').val(cantidadmax);
+			$('#SolResKgTratado').val(kgConciliado);
 			$('#FormKg').validator('update');
 			$('#ValorConciliado').prop('type', "submit");
+
 		}
 	</script>
 	@if ($errors->any())
 		<script>
 			$(document).ready(function() {
-				$("#editkgResivido").modal("show");
+				$("#editkgRecibido").modal("show");
 			});
 		</script>
 	@endif
