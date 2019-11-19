@@ -8,9 +8,10 @@
 En estos momentos el residuo {{$respel->RespelName}} ha sido aprobado 
 y ahora podra utilizarlo para sus Solicitudes de Servicios.<br><br>
 
-{{-- @component('mail::button', ['url' => $url])
-{{$nameButton}}
-@endcomponent --}}
+@component('mail::button', ['url' => url('/respels', [$respel->RespelSlug])])
+{{-- {{$nameButton}} --}}
+Ver Residuo
+@endcomponent
 
 Si tiene alguna duda no olvide comunicarse con su asesor comercial.<br>
 Saludos, Prosarc S.A. ESP.

@@ -25,7 +25,7 @@ class EmailController extends Controller
                 ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'solicitud_servicios.*')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
-           
+           // {{ $message->embed(base_path() . '/img/logo.png') }}
             $Roles1 = DB::table('users')
                 ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
                 ->select('users.email')
