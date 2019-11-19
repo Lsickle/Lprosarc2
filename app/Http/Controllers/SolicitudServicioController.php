@@ -618,6 +618,7 @@ class SolicitudServicioController extends Controller
 				$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
 			        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
 			        ->where('ofertado', '=', 1)
+			        ->where('forevaluation', '=', 1)
 			        ->first();
 				if ($requerimientoOfertado->ReqFotoDescargue==0) {
 					$SolResNew->SolResFotoDescargue_Pesaje = 0;
@@ -659,6 +660,28 @@ class SolicitudServicioController extends Controller
 				$SolResNew->SolResDevolCantidad = $SolResOld->SolResVideoTratamiento;
 				$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
 				$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
+				/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
+				
+				$nuevorequerimiento = $requerimientoOfertado->replicate();
+                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
+                $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
+                $nuevorequerimiento->save();
+                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoOfertado['pretratamientosSelected']);
+
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimientoOfertado->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                	$rangoparacopiar = Rango::find($rango->ID_Rango);
+                	$nuevarango = $rangoparacopiar->replicate();
+                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                	$nuevarango->save();
+                }
+                $SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
 				$SolResNew->save();
 			}
 
