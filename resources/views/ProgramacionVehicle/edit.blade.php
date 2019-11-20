@@ -257,7 +257,7 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label><small class="help-block with-errors">*</small>
-									<input type="text" maxlength="30" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" value="{{$programacion->ProgVehNameConductorEXT}}">
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" value="{{$programacion->ProgVehNameConductorEXT}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label><small class="help-block with-errors">*</small>
@@ -265,7 +265,7 @@
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label><small class="help-block with-errors">*</small>
-									<input type="text" maxlength="30" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" value="{{$programacion->ProgVehNameAuxiliarEXT}}">
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" value="{{$programacion->ProgVehNameAuxiliarEXT}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label><small class="help-block with-errors">*</small>
