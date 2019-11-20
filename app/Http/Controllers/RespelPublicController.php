@@ -393,6 +393,19 @@ class RespelPublicController extends Controller
                 {
                     $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
                 }
+                /*se copian las tarifas y los rangos relacionados*/
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimiento->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$newrequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                    $rangoparacopiar = Rango::find($rango->ID_Rango);
+                    $nuevarango = $rangoparacopiar->replicate();
+                    $nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                    $nuevarango->save();
+                }
             }
             
         }
@@ -464,6 +477,19 @@ class RespelPublicController extends Controller
                 foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
                 {
                     $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                }
+                /*se copian las tarifas y requerimientos*/
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimiento->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$newrequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                    $rangoparacopiar = Rango::find($rango->ID_Rango);
+                    $nuevarango = $rangoparacopiar->replicate();
+                    $nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                    $nuevarango->save();
                 }
             }
             
