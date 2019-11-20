@@ -22,13 +22,13 @@
 			</div>
 			<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }}</label>
-				<input type="number" step=".01" min="0" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
+				<input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidad`+id_div+contadorRespel[id_div]+`" name="SolResCantiUnidad[`+id_div+`][]">
 			</div>
 		</div>
 		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
 			<small class="help-block with-errors">*</small>
-			<input type="number" step=".01" min="0" class="form-control numberKg" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]" required="">
+			<input type="number" step=".1" min="0" class="form-control numberKg" id="SolResKgEnviado`+id_div+contadorRespel[id_div]+`" name="SolResKgEnviado[`+id_div+`][]" required="">
 		</div>
 		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserembaja') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserembaja') }}</label>
@@ -55,15 +55,15 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="SolResAlto`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.solserdimension1') }}</label>
-				<input type="number" step=".01" max="30" min="0" class="form-control numberDimension" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
+				<input type="number" step=".1" max="30" min="0" class="form-control numberDimension" id="SolResAlto`+id_div+contadorRespel[id_div]+`" name="SolResAlto[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="SolResAncho`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.solserdimension2') }}</label>
-				<input type="number" step=".01" max="30" min="0" class="form-control numberDimension" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
+				<input type="number" step=".1" max="30" min="0" class="form-control numberDimension" id="SolResAncho`+id_div+contadorRespel[id_div]+`" name="SolResAncho[`+id_div+`][]">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="SolResProfundo`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.solserdimension3') }}</label>
-				<input type="number" step=".01" max="30" min="0" class="form-control numberDimension" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
+				<input type="number" step=".1" max="30" min="0" class="form-control numberDimension" id="SolResProfundo`+id_div+contadorRespel[id_div]+`" name="SolResProfundo[`+id_div+`][]">
 			</div>
 		</div>
 		<div class="form-group col-md-12 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`" style="text-align: center;">

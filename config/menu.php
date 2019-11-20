@@ -107,6 +107,16 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->addClass('treeview-menu')
 					)
 				)
+				/*PESTAÑA DE DOCUMENTOS*/
+				// ->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC),
+				// 	(Menu::new()
+				// 		->prepend('<a href="#"><i style="font-size: 1.2em; color: #A34B1F;" class="fas fa-file-pdf"></i> <span>Documentos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				// 		->addParentClass('treeview')
+				// 		->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC), (Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-contract"></i> <span>'. trans('adminlte_lang::message.MenuCertificados').'</span>')))
+				// 		->addIf(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-file-invoice"></i> <span>'. trans('adminlte_lang::message.MenuManifiestos').'</span>')))
+				// 		->addClass('treeview-menu')
+				// 	)
+				// )
 				/*PESTAÑA DE SOLICITUDES DE SERVICIO*/
 				// ->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS),(Link::toUrl('/solicitud-servicio', '<i style="font-size: 1.2em; color: #aa66cc;" class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 			/*FIN DEL MENU1 PARA PROSARC*/
@@ -143,6 +153,16 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				/*PESTAÑA DE SOLICITUD*/
 				->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE),(Link::toUrl('/solicitud-servicio', '<i style="font-size: 1.2em; color: #aa66cc;" class="fas fa-people-carry"></i> <span>'.trans('adminlte_lang::message.MenuServTitle').'<span>')))
 				// ->addif(in_array(Auth::user()->UsRol, Permisos::CLIENTE), Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
+				/*PESTAÑA DE DOCUMENTOS*/
+				// ->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE),
+				// 	(Menu::new()
+				// 		->prepend('<a href="#"><i style="font-size: 1.2em; color: #A34B1F;" class="fas fa-file-pdf"></i> <span>Documentos</span><i class="fas fa-angle-left pull-right" style="color:#FFFFFF;" width="18" height="18"></i></a>')
+				// 		->addParentClass('treeview')
+				// 		->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE), (Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-contract"></i> <span>'. trans('adminlte_lang::message.MenuCertificados').'</span>')))
+				// 		->addIf(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-file-invoice"></i> <span>'. trans('adminlte_lang::message.MenuManifiestos').'</span>')))
+				// 		->addClass('treeview-menu')
+				// 	)
+				// )
 			/*FIN DEL MENU PARA EL CLIENTE*/
 
 		->setActiveFromRequest();

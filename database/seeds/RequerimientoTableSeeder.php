@@ -39,6 +39,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user01";
         $Requerimiento->FK_ReqRespel = "5";
+        $Requerimiento->forevaluation = 1;
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -68,6 +69,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = "1"; 
         $Requerimiento->ReqSlug = "user02";
         $Requerimiento->FK_ReqRespel = "3";
+        $Requerimiento->forevaluation = 1;
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -98,6 +100,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqSlug = "user03";
         $Requerimiento->FK_ReqRespel = "1";
         $Requerimiento->FK_ReqTrata = "2";
+        $Requerimiento->forevaluation = 1;
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -128,6 +131,7 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqSlug = "user04";
         $Requerimiento->FK_ReqRespel = "2";
         $Requerimiento->FK_ReqTrata = "3";
+        $Requerimiento->forevaluation = 1;
         $Requerimiento->save(); 
 
         $Requerimiento = new Requerimiento();
@@ -157,7 +161,8 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqCertiEspecial = NULL; 
         $Requerimiento->ReqSlug = "user05";
         $Requerimiento->FK_ReqRespel = "5";      
-        $Requerimiento->FK_ReqTrata = "1";      
-        $Requerimiento->save(); 
+        $Requerimiento->FK_ReqTrata = "1";
+        $Requerimiento->forevaluation = 1;
+        $Requerimiento->save();
     }
 }

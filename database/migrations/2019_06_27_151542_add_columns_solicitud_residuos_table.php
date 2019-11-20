@@ -14,9 +14,9 @@ class AddColumnsSolicitudResiduosTable extends Migration
     public function up()
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
-            $table->decimal('SolResCantiUnidadRecibida', 8, 2)->nullable();
-            $table->decimal('SolResCantiUnidadConciliada', 8, 2)->nullable();
-            $table->decimal('SolResCantiUnidadTratada', 8, 2)->nullable();
+            $table->decimal('SolResCantiUnidadRecibida', 8, 1)->nullable();
+            $table->decimal('SolResCantiUnidadConciliada', 8, 1)->nullable();
+            $table->decimal('SolResCantiUnidadTratada', 8, 1)->nullable();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

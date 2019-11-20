@@ -62,7 +62,7 @@ class UserTableSeeder extends Seeder
         $user->save();
 
         $user = new User();
-        $user->name = 'Duvan';
+        $user->name = 'Heidy';
         $user->email = 'Sistemas2@prosarc.com.co';
         $user->email_verified_at = now();
         $user->password = bcrypt('secret');

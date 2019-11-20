@@ -299,7 +299,7 @@ class VehicProgController extends Controller
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$programacion->ProgVehColor = $request->input('ProgVehColor');
 		}
-		else if($programacion->ProgVehtipo == 0){
+		else if($programacion->ProgVehtipo == 2){
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 			}
@@ -309,6 +309,7 @@ class VehicProgController extends Controller
 			$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
 			$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
 			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
+			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
 		}
@@ -318,7 +319,7 @@ class VehicProgController extends Controller
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
-			$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
+			// $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
 		$programacion->save();

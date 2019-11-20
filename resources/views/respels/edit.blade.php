@@ -480,7 +480,7 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+opcion+"Container").append(tarifa);
+					$("#rango"+opcion+"row").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
 					// validarprevent(opcion);
 					last=last+1
@@ -495,6 +495,7 @@
 		function EliminarRango(opcion,rango){
 			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
+			$("#rangodefault"+opcion+rango).append(`<input hidden  type="text" name="Opcion[`+opcion+`][TarifaDesde][]" value=""><input hidden  type="text" name="Opcion[`+opcion+`][TarifaPrecio][]" value="">`);
 			$("#evaluacioncomercial").validator('update');
 			validarprevent(opcion);
 		}

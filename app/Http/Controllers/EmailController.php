@@ -25,23 +25,25 @@ class EmailController extends Controller
                 ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'solicitud_servicios.*')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
-           
+           // {{ $message->embed(base_path() . '/img/logo.png') }}
             $Roles1 = DB::table('users')
                 ->whereIn('users.UsRol', ['JefeLogistica', 'AsistenteLogistica'])
                 ->select('users.email')
                 ->get();
                 
-            $Roles2 = DB::table('users')
-                ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
-                ->select('users.email')
-                ->get();
+            // $Roles2 = DB::table('users')
+            //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
+            //     ->select('users.email')
+            //     ->get();
 
-                foreach($Roles1 as $Rol1){
-                    Mail::to($Rol1->email)->send(new SolSerEmail($email));
-                }
-                foreach($Roles2 as $Rol2){
-                    Mail::to($Rol2->email)->send(new SolSerEmail($email));
-                }
+            foreach($Roles1 as $Rol1){
+                //SE ENVIA UN CORREO A CADA USUARIO DE ACUERDO AL ARRAY ROLES 1
+                Mail::to($Rol1->email)->send(new SolSerEmail($email));
+            }
+                // validacion del rol2 para el envio de correo
+                // foreach($Roles2 as $Rol2){
+                //     Mail::to($Rol2->email)->send(new SolSerEmail($email));
+                // }
 
                 // para no enviar a logistica los email
                 // Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
@@ -64,7 +66,9 @@ class EmailController extends Controller
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
         }
-        return back();
+        // return back();
+        return redirect()->route('solicitud-servicio.index');
+
     }
 
     protected function sendEmailRespel($slug){
@@ -87,6 +91,7 @@ class EmailController extends Controller
             ->first();
             
         Mail::to($email->email)->send(new RespelMail($respel));
-        return back();
+        // return back();
+        return redirect()->route('respels.index');
     }
 }

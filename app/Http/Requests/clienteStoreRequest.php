@@ -82,6 +82,7 @@ class ClienteStoreRequest extends FormRequest
     {
         return [
             'PersEmail.unique' => 'El campo "Correo Electrónico de la Persona de Contacto" ya esta en uso.',
+            'CliShortname.required' => 'Esto es un error del programador',
         ];
     }
 }

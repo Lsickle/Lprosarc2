@@ -25,7 +25,7 @@
         @break
     @case('Completado')
         @php
-            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el boton (estoy de acuerdo) para dar inicio al tratamiento de los residuos';
+            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el boton (Conciliado) para dar inicio al tratamiento de los residuos';
         @endphp
         @break
     @case('No Conciliado')
@@ -59,13 +59,14 @@ En estos momentos la Solicitud de Servicio N° {{$mail->ID_SolSer}} {{$text}}.<b
 ***@lang("E-mail: ")***{{$mail->PersEmail}}<br>
 @endif
 
-{{-- @component('mail::button', ['url' => $url])
-{{$nameButton}}
-@endcomponent --}}
+@component('mail::button', ['url' => url('/solicitud-servicio', [$mail->SolSerSlug])])
+{{-- {{$nameButton}} --}}
+Ver Solicitud
+@endcomponent
 
 @if ($mail->SolSerStatus === 'Conciliado' || $mail->SolSerStatus === 'No Conciliado')
     @php
-        $end = 'Por favor dar clic en el botón para ver más detalles.';
+        $end = 'Por favor dar click en el botón para ver más detalles.';
     @endphp
 @else
     @php

@@ -110,6 +110,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
+	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex');
+	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
