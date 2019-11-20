@@ -17,9 +17,7 @@
     @case('AsistenteLogistica')
 		{{-- @include('layouts.homeroles.asistentelogistica') --}}
         @break
-
 	@default
-         
 @endswitch
 
 <!-- Default box -->
