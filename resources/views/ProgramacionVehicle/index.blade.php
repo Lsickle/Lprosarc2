@@ -29,11 +29,11 @@
 									<th>{{ trans('adminlte_lang::message.progvehicvehic') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor'))
+									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor')) --}}
 										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
-									@endif
+									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
@@ -85,11 +85,11 @@
 									<td>{{$vehiculoPlaca}}</td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
 									<td>{{$ayudante}}</td>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor')) --}}
 										<td>{{$conductor}}</td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
-									@endif
+									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
