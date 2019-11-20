@@ -70,8 +70,8 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="VehicKmActual">{{trans('adminlte_lang::message.vehickm')}}</label>
-								<small class="help-block with-errors">*</small>
-								<input type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" required="true" max="999999" value="{{$Vehicle->VehicKmActual}}">
+								{{-- <small class="help-block with-errors">*</small> --}}
+								<input disabled type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" max="999999" value="{{$Vehicle->VehicKmActual}}">
 							</div>
 						</div>
 						<!-- /.box-body -->
