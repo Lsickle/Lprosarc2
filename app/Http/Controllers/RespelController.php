@@ -261,7 +261,7 @@ class RespelController extends Controller
         }
 
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente') {
+            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente'||$Respels->RespelStatus=='TDE actualizada') {
                 $editButton = 'Editable';
             }else{
                 $editButton = 'No editable';
@@ -273,6 +273,7 @@ class RespelController extends Controller
         //consultar cuales son los tratamientos viabiizados por jefe de operaciones
         $requerimientos = Requerimiento::with(['pretratamientosSelected'])
         ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+        ->where('forevaluation', '=', 1)
         ->get();
 
         
@@ -350,6 +351,9 @@ class RespelController extends Controller
                     case 'Falta TDE':
                         return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
+                    case 'TDE actualizada':
+                        return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
                     default:
                         abort(403);
                         break;
@@ -364,14 +368,14 @@ class RespelController extends Controller
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+                ->where('forevaluation', '=', 1)
                 ->get();
-
                 // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
                     // adjuntar tarifas relacionadas
                     $requerimiento['tarifas'] = Tarifa::with(['rangos'])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
-                    ->get();;
+                    ->get();
                     
                     // adjuntar tratamientos relacionadas
                     $requerimiento['tratamientos'] = Tratamiento::with(['pretratamientos'])
@@ -381,6 +385,8 @@ class RespelController extends Controller
                     // validar si el requerimiento se encuentra en uso
                     $usado = SolicitudResiduo::where('FK_SolResRequerimiento', '=', $requerimiento->ID_Req)
                     ->get('FK_SolResRequerimiento');
+                    // return $usado;
+                    
                     // if (count($usado)>0) {
                     //     return $usado;
                     // }
@@ -391,7 +397,7 @@ class RespelController extends Controller
                     }
                 }
 
-
+                // return $requerimientos;
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
@@ -554,20 +560,22 @@ class RespelController extends Controller
         // return $request;
         // return $tarifasparaBorrar;
 
-        // if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
-        //     /*se eliminan los requerimientos relacionados*/
-        //     $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
-        //     foreach ($requerimientosparaBorrar as $key => $value) {
-        //         $value->pretratamientosSelected()->detach();
-        //         $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
-        //     }
-        // }
+        if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
+            /*se eliminan los requerimientos relacionados*/
+            $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)
+            ->where('forevaluation', 1)
+            ->get();
+            foreach ($requerimientosparaBorrar as $key => $value) {
+                $value->pretratamientosSelected()->detach();
+                $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
+            }
+        }
 
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             if ($opciones) {
                 foreach ($opciones as $key => $value) {
                     if (isset($opciones[$key])) {
-                        if (isset($opciones[$key]['ReqSlug'])) {
+                        if (isset($opciones[$key]['ReqSlug'])&&($opciones[$key]['ReqSlug'])!="") {
                             // se actualiza el requerimiento segun corresponda
                             $requerimientoparaActualizar = Requerimiento::where('ReqSlug', $opciones[$key]['ReqSlug'])->first();
                             if (isset($opciones[$key]['Tratamiento'])) {
@@ -597,6 +605,7 @@ class RespelController extends Controller
                                     $requerimientoparaActualizar->ofertado=0;
                                 }
                                 $requerimientoparaActualizar->FK_ReqRespel=$respel->ID_Respel;
+                                $requerimientoparaActualizar->forevaluation=1;
                                 $requerimientoparaActualizar->FK_ReqTrata=$opciones[$key]['Tratamiento'];
                                 // $requerimientoparaActualizar->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
                                 $requerimientoparaActualizar->save();
@@ -674,6 +683,7 @@ class RespelController extends Controller
                                     $requerimiento->ofertado=0;
                                 }
                                 $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                                $requerimiento->forevaluation=1;
                                 $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
                                 $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
                                 $requerimiento->save();

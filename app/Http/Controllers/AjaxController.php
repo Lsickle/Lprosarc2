@@ -120,6 +120,7 @@ class AjaxController extends Controller
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug')
+				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $slug)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->get();
@@ -136,6 +137,7 @@ class AjaxController extends Controller
 				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo', 'ReqAuditoria')
 				->where('respels.RespelSlug', $slug)
 				->where('requerimientos.ofertado', 1)
+				->where('requerimientos.forevaluation', 1)
 				->first();
 			return response()->json($Requerimientos);
 		}

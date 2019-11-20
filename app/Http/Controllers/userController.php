@@ -164,7 +164,8 @@ class userController extends Controller
 		$log->Auditlog = $request->all();
 		$log->save();
 
-		return redirect()->route('profile.changepassword', ['id' => $user->UsSlug])->with('Menssage', $Menssage);
+		// return redirect()->route('profile.changepassword', ['id' => $user->UsSlug])->with('Menssage', $Menssage);
+		return redirect()->route('profile', ['id' => $user->UsSlug]);
 	}
 
 	public function changeRol(Request $request, $slug){

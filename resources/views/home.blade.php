@@ -11,15 +11,13 @@
 @endsection
 @switch(Auth::user()->UsRol)
     @case('JefeLogistica')
-		@include('layouts.homeroles.jefelogistica')
+		{{-- @include('layouts.homeroles.jefelogistica') --}}
         @break
 
     @case('AsistenteLogistica')
 		{{-- @include('layouts.homeroles.asistentelogistica') --}}
         @break
-
 	@default
-         
 @endswitch
 
 <!-- Default box -->

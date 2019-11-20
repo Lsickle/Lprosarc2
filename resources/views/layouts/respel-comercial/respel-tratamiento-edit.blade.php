@@ -9,7 +9,9 @@
 
 <div id="tratamiento{{$contadorphp}}Container" class="panel panel-default" style="display: inline-block; overflow: hidden; width:100%; background-color:#FAFAFF;">
     {{-- input de control para requerimiento --}}
+    @if($opcion['en_uso'] == 1)
     <input hidden type="text" name="Opcion[{{$contadorphp}}][ReqSlug]" value="{{$opcion['ReqSlug']}}">
+    @endif
     {{-- form start --}}
     <div class="col-md-8" style="margin-bottom: 0.25em;">
         <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento{{$contadorphp}}">
