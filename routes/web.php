@@ -91,6 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
+	Route::get('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/pretratamiento','PretratamientoController');

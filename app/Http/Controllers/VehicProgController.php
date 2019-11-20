@@ -409,4 +409,39 @@ class VehicProgController extends Controller
 			return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 		}
 	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateStatus($id)
+	{
+		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacion) {
+			abort(404);
+		}
+		// return $programacion;
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+		->where('ProgVehDelete', 0)
+		->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)
+		->get();
+		foreach ($programaciones as $vehiculo => $value) {
+			// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
+			$vehiculo->ProgVehStatus = "Autorizado";
+			$vehiculo->save();
+		}
+		$log = new audit();
+		$log->AuditTabla="progvehiculos";
+		$log->AuditType="Autorizado";
+		$log->AuditRegistro=$programacion->ID_ProgVeh;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$programacion->ID_ProgVeh;
+		$log->save();
+
+		return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
+		
+	}
 }
