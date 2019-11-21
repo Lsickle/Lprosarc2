@@ -33,6 +33,7 @@
 										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
+										<th>Autorización</th>
 									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
@@ -45,7 +46,6 @@
 							</thead>
 							<tbody id="readyTable">
 								@foreach($programacions as $programacion)
-								@if(!(in_array(Auth::user()->UsRol, Permisos::TESORERIA) && in_array(Auth::user()->UsRol2, Permisos::TESORERIA))&&($programacion->ProgVehStatus == 'Pendiente'))
 								@php
 									if($programacion->ProgVehtipo == 1){
 										foreach($personals as $personal){
@@ -93,16 +93,16 @@
 										<td>{{$conductor}}</td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
+										<td>{{$programacion->ProgVehStatus}}</td>
 									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
-									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> {{$programacion->ID_SolSer}}</a></td>
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> #{{$programacion->ID_SolSer}}</a></td>
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 									<td><a href="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" class='btn btn-success btn-block' title="{{ trans('adminlte_lang::message.progvehicserauth')}}"><i class="fas fa-sign-out-alt"></i></a></td>
 									@endif
 								</tr>
-								@endif
 								@endforeach
 							</tbody>
 						</table>

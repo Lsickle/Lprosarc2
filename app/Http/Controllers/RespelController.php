@@ -137,7 +137,7 @@ class RespelController extends Controller
         }else{
             $UserSedeID = $request->input('Sede');
         }
-        // return $request;
+        return $request;
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
             /*se crea un nueva cotizacion solo si el cliente no tiene cotizaciones pendientes*/
             $Cotizacion = new Cotizacion();
