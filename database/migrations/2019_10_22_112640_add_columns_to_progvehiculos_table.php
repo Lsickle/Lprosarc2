@@ -15,9 +15,9 @@ class AddColumnsToProgvehiculosTable extends Migration
     {
         Schema::table('progvehiculos', function (Blueprint $table) {
             $table->string('ProgVehDocConductorEXT', 16)->nullable();
-            $table->string('ProgVehNameConductorEXT', 32)->nullable();
+            $table->string('ProgVehNameConductorEXT', 64)->nullable();
             $table->string('ProgVehDocAuxiliarEXT', 16)->nullable();
-            $table->string('ProgVehNameAuxiliarEXT', 32)->nullable();
+            $table->string('ProgVehNameAuxiliarEXT', 64)->nullable();
             $table->string('ProgVehPlacaEXT', 16)->nullable();
             $table->string('ProgVehTipoEXT', 32)->nullable();
 

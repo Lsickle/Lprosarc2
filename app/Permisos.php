@@ -168,6 +168,7 @@ class Permisos{
 	const SolSerCertifi = ['Programador','Tesorería'];
 	/* Using ->
 		solicitud-serv/index
+		vehicle-programacion/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
@@ -204,6 +205,11 @@ class Permisos{
 	/* Using ->
 		respel/index
 	*/
+	const TESORERIA = ['Tesorería'];
+	/* Using ->
+		vehicle-programacion/index
+	*/
+
 
 	const GrupoShowRespel = ['AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','Supervisor','Tesorería','AsistenteComercial'];
 	/* Using ->
