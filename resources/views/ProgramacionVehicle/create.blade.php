@@ -96,7 +96,7 @@
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label for="ProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label>
-									<input type="text" maxlength="30" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label for="ProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label>
@@ -104,7 +104,7 @@
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label for="ProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label>
-									<input type="text" maxlength="30" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label for="ProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label>

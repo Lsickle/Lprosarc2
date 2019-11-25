@@ -34,8 +34,12 @@ class VehicProgController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
 					}
-					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)){
+					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)||in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR)){
 						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
+						$query->where('progvehiculos.ProgVehStatus', 'Autorizado');
+					}
+					if(in_array(Auth::user()->UsRol, Permisos::TESORERIA)||in_array(Auth::user()->UsRol2, Permisos::TESORERIA)){
+						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
 					}
 				})
 				->get();
@@ -126,8 +130,14 @@ class VehicProgController extends Controller
 		$programacion->ProgVehTurno = $turno;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
+		/*typetransportador = 0 -> transporte prosarc*/
+		/*typetransportador = 1 -> transporte alquilado*/
 		if(!is_null($request->input('typetransportador'))){
 			if($request->input('typetransportador') == 0){
+				/*ProgVehtipo = 0 -> transporte externo*/
+				/*ProgVehtipo = 1 -> transporte interno prosarc*/
+				/*ProgVehtipo = 2 -> transporte alquilado*/
+
 				$programacion->ProgVehtipo = 1;
 				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 				$programacion->ProgVehColor = $request->input('ProgVehColor');
@@ -246,7 +256,12 @@ class VehicProgController extends Controller
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Operario')
 				->get();
-			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2'));
+			$transportadores = DB::table('clientes')
+				->select('CliName', 'CliSlug')
+				->where('CliCategoria', 'Transportador')
+				->where('CliDelete', 0)
+				->get();
+			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -408,5 +423,41 @@ class VehicProgController extends Controller
 			$programacion->save();
 			return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 		}
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateStatus($id)
+	{
+		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		if (!$programacion) {
+			abort(404);
+		}
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+		->where('ProgVehDelete', 0)
+		->get();
+		// return $programaciones;
+		foreach ($programaciones as $vehiculo) {
+			// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
+			$vehiculo->ProgVehStatus = "Autorizado";
+			$vehiculo->save();
+
+			$log = new audit();
+			$log->AuditTabla="progvehiculos";
+			$log->AuditType="Autorizado";
+			$log->AuditRegistro=$vehiculo->ID_ProgVeh;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=$vehiculo->ProgVehStatus;
+			$log->save();
+		}
+
+
+		return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
+		
 	}
 }

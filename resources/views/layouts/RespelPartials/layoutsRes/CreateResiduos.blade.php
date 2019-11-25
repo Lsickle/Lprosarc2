@@ -96,4 +96,8 @@
 			<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 		</select>
 	</div>
+	<div id="NodangerNoclasf`+contador+`">
+	</div>
+	<div id="Nocontrol`+contador+`">
+	</div>
 </div>
