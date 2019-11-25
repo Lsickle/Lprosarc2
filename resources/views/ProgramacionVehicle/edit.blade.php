@@ -149,12 +149,12 @@
 											<input type="text" hidden name="FK_ProgServi" class="FK_ProgServi" id="FK_ProgServi">
 											<div class="box-body">
 												<div class="form-group col-xs-12 col-md-6">
-													<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-													<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
+													<label for="modalProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
+													<input  class="form-control ProgVehFecha" readonly type="date" id="modalProgVehFecha" name="ProgVehFecha" min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" value="{{old('ProgVehFecha')}}">
 												</div>
 												<div class="form-group col-xs-12 col-md-6">
-													<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
-													<input class="form-control" type="time" required id="ProgVehSalida" name="ProgVehSalida" value="{{old('ProgVehSalida')}}">
+													<label for="modalProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
+													<input class="form-control" type="time" required id="{{-- ProgVehSalida --}}" name="ProgVehSalida" value="{{old('ProgVehSalida')}}">
 													<small class="help-block with-errors"></small>
 												</div>
 												<div class="form-group col-md-12">
@@ -168,7 +168,7 @@
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 													<label>Transportador</label>
 													<small class="help-block with-errors">*</small>
-													<select name="transport" id="transport" class="form-control">
+													<select name="transport" id="modaltransport" class="form-control">
 														<option value="">Seleccione...</option>
 														@foreach($transportadores as $transportador)
 															<option value="{{$transportador->CliSlug}}">{{$transportador->CliName}}</option>
@@ -176,40 +176,40 @@
 													</select>
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehDocConductorEXT">{{ trans('adminlte_lang::message.progvehdocext') }}</label>
-													<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocConductorEXT"  name="ProgVehDocConductorEXT">
+													<label for="modalProgVehDocConductorEXT">{{ trans('adminlte_lang::message.progvehdocext') }}</label>
+													<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="modalProgVehDocConductorEXT"  name="ProgVehDocConductorEXT">
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label>
-													<input type="text" maxlength="50" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
+													<label for="modalProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label>
+													<input type="text" maxlength="50" class="form-control" id="modalProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label>
-													<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocAuxiliarEXT"  name="ProgVehDocAuxiliarEXT" >
+													<label for="modalProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label>
+													<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="modalProgVehDocAuxiliarEXT"  name="ProgVehDocAuxiliarEXT" >
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label>
-													<input type="text" maxlength="50" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
+													<label for="modalProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label>
+													<input type="text" maxlength="50" class="form-control" id="modalProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label>
-													<input type="text" class="form-control placa" id="ProgVehPlacaEXT"  name="ProgVehPlacaEXT" data-minlength="7">
+													<label for="modalProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label>
+													<input type="text" class="form-control placa" id="modalProgVehPlacaEXT"  name="ProgVehPlacaEXT" data-minlength="7">
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-													<label for="ProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label>
-													<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT">
+													<label for="modalProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label>
+													<input type="text" maxlength="16" class="form-control" id="modalProgVehTipoEXT"  name="ProgVehTipoEXT">
 												</div>
 												<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 													<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 													<small class="help-block with-errors">*</small>
-													<select name="vehicalqui" id="vehicalqui" class="form-control">
+													<select name="vehicalqui" id="modalvehicalqui" class="form-control">
 														<option value="">Seleccione...</option>
 													</select>
 												</div>
 												<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
-													<label for="FK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
+													<label for="modalFK_ProgVehiculo">{{ trans('adminlte_lang::message.progvehicvehic') }}</label>
 													<small class="help-block with-errors">*</small>
-													<select name="FK_ProgVehiculo" id="FK_ProgVehiculo" class="form-control" required>
+													<select name="FK_ProgVehiculo" id="modalFK_ProgVehiculo" class="form-control" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach($vehiculos as $vehiculo)
 															<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_ProgVehiculo') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
@@ -217,9 +217,9 @@
 													</select>
 												</div>
 												<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
-													<label for="FK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
+													<label for="modalFK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
 													<small class="help-block with-errors">*</small>
-													<select name="FK_ProgConductor" id="FK_ProgConductor" class="form-control" required>
+													<select name="FK_ProgConductor" id="modalFK_ProgConductor" class="form-control" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach($conductors as $conductor)
 															<option value="{{$conductor->ID_Pers}}" {{old('FK_ProgConductor') == $conductor->ID_Pers ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
@@ -227,9 +227,9 @@
 													</select>
 												</div>
 												<div class="form-group col-xs-12 col-md-12 ambos" hidden="true">
-													<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
+													<label for="modalFK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 													<small class="help-block with-errors">*</small>
-													<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control" required>
+													<select name="FK_ProgAyudante" id="modalFK_ProgAyudante" class="form-control" required>
 														<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 														@foreach($ayudantes as $ayudante)
 															<option value="{{$ayudante->ID_Pers}}" {{old('FK_ProgAyudante') == $ayudante->ID_Pers ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
@@ -237,8 +237,8 @@
 													</select>
 												</div>
 												<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
-													<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-													<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
+													<label for="modalProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
+													<input class="form-control" type="color" style="height: 34px;" id="modalProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
 												</div>
 												<input type="submit" hidden="true" id="submit1" name="submit1">
 											</div>
@@ -272,13 +272,13 @@
 							@endif
 							<div class="box-body">
 								<div class="form-group col-md-6">
-									<label for="ProgVehFecha">Servicio N°</label>
+									<label for="">Servicio N°</label>
 									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
 									<small class="help-block with-errors">*</small>
-									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha"  min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -342,7 +342,7 @@
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
-									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
 									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 									@endif
 									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
@@ -357,9 +357,13 @@
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6 col-md-offset-3">
+								<div class="form-group col-md-6">
+									<label for="">Servicio N°</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
-									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
@@ -472,7 +476,7 @@
 				$('#ProgVehColor1').val("#0000f6");
 			});
 			
-			@if($programacion->ProgVehEntrada <> null)
+			@if($programacion->ProgVehEntrada !== null)
 				console.log('no tiene fecha de entrada');
 				// $(".select2-selection").css("background-image", "none");
 				$("#ProgVehFecha").prop("disabled", true);
@@ -485,13 +489,6 @@
 				$("#ProgVehColor").prop("disabled", true);
 				$("#update").prop("disabled", true);
 			@else
-				@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
-					$(".select2-container--disabled").css("background-color", "#EEE");
-					$("#ProgVehEntrada").prop('required', true);
-					$("#progVehKm").prop('required', true);
-					$("#ProgVehEntrada").prop('disabled', false);
-					$("#progVehKm").prop('disabled', false);
-				@endif
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 					// $(".select2-selection").css("background-image", "none");
 					$("#ProgVehFecha").prop('disabled', false);
@@ -500,6 +497,13 @@
 					$("#FK_ProgConductor").prop('disabled', false);
 					$("#FK_ProgAyudante").prop('disabled', false);
 					$("#ProgVehColor").prop("disabled", false);
+				@endif
+				@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+					$(".select2-container--disabled").css("background-color", "#EEE");
+					$("#ProgVehEntrada").prop('required', true);
+					$("#progVehKm").prop('required', true);
+					$("#ProgVehEntrada").prop('disabled', false);
+					$("#progVehKm").prop('disabled', false);
 				@endif
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
@@ -603,21 +607,21 @@
 		$('.vehiculoAlquilado').attr('hidden', true);
 		$('.vehiculoProsarc').attr('hidden', false);
 		$('.ambos').attr('hidden', false);
-		$('#transport').attr('required', false);
-		$('#vehicalqui').attr('required', false);
-		$('#FK_ProgVehiculo').attr('required', true);
-		$('#FK_ProgConductor').attr('required', true);
-		$('#FK_ProgAyudante').attr('required', true);
+		$('#modaltransport').attr('required', false);
+		$('#modalvehicalqui').attr('required', false);
+		$('#modalFK_ProgVehiculo').attr('required', true);
+		$('#modalFK_ProgConductor').attr('required', true);
+		$('#modalFK_ProgAyudante').attr('required', true);
 	}
 	function TranspotadorAlquilado(){
 		$('.vehiculoProsarc').attr('hidden', true);
 		$('.vehiculoAlquilado').attr('hidden', false);
 		$('.ambos').attr('hidden', false);
-		$('#transport').attr('required', true);
-		$('#vehicalqui').attr('required', true);
-		$('#FK_ProgVehiculo').attr('required', false);
-		$('#FK_ProgConductor').attr('required', false);
-		$('#FK_ProgAyudante').attr('required', true);
+		$('#modaltransport').attr('required', true);
+		$('#modalvehicalqui').attr('required', true);
+		$('#modalFK_ProgVehiculo').attr('required', false);
+		$('#modalFK_ProgConductor').attr('required', false);
+		$('#modalFK_ProgAyudante').attr('required', true);
 	}
 	$('#transport').on('change', function() { 
 		var id = $('#transport').val();
@@ -633,29 +637,29 @@
 				data:{},
 				beforeSend: function(){
 					$(".loadvehicalqui").append('<i class="fas fa-sync-alt fa-spin"></i>');
-					$("#vehicalqui").prop('disabled', true);
+					$("#modalvehicalqui").prop('disabled', true);
 				},
 				success: function(res){
 					if(res != ''){
-						$("#vehicalqui").empty();
+						$("#modalvehicalqui").empty();
 						var vehiculos = new Array();
-						$("#vehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+						$("#modalvehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 						for(var i = res.length -1; i >= 0; i--){
 							if ($.inArray(res[i].ID_Vehic, vehiculos) < 0) {
-								$("#vehicalqui").append(`<option value="${res[i].ID_Vehic}">${res[i].VehicPlaca}</option>`);
+								$("#modalvehicalqui").append(`<option value="${res[i].ID_Vehic}">${res[i].VehicPlaca}</option>`);
 								vehiculos.push(res[i].ID_Vehic);
 							}
 						}
 					}
 					else{
-						$("#vehicalqui").empty();
-						$("#vehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+						$("#modalvehicalqui").empty();
+						$("#modalvehicalqui").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 						NotifiFalse('EL transportador no tiene vehiculos asignados');
 					}
 				},
 				complete: function(){
 					$(".loadvehicalqui").empty();
-					$("#vehicalqui").prop('disabled', false);
+					$("#modalvehicalqui").prop('disabled', false);
 				}
 			})
 		}

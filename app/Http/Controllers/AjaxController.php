@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
+use App\Http\Requests\CambiodefechaStoreRequest;
 use App\Sede;
 use App\Area;
 use App\Tratamiento;
@@ -52,7 +53,7 @@ class AjaxController extends Controller
 		}
 	}
 	/*Funcion para cambiar el dia y hora de la programacion de un Vehiculo*/
-	public function CambioDeFecha(Request $request, $id){
+	public function CambioDeFecha(CambiodefechaStoreRequest $request, $id){
 		if ($request->ajax()) {
 			$fecha = date('Y-m-d', strtotime(substr($request->Event, 0, -1)));
 			$hora = date('H:i:s', strtotime(substr($request->Event, 0, -1)));

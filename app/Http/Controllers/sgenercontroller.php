@@ -159,7 +159,7 @@ class sgenercontroller extends Controller
             ->select('respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'residuos_geners.ID_SGenerRes', 'residuos_geners.SlugSGenerRes') 
             ->where('residuos_geners.FK_SGener', $SedeGener->ID_GSede)
             ->where('residuos_geners.DeleteSGenerRes', '=', 0)
-            ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+            ->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'FaltaTDE', 'TDE actualizada'])
             ->where('respels.RespelDelete', '=', 0)
             ->get();
 
@@ -169,7 +169,7 @@ class sgenercontroller extends Controller
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->select('respels.ID_Respel', 'respels.RespelName','respels.RespelSlug')
             ->where('clientes.ID_Cli', '=', $Cliente->ID_Cli)
-            ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+            ->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada'])
             ->where('cotizacions.CotiStatus', '=', 'Aprobada')
             ->where('respels.RespelDelete', '=', 0)
             ->where(function ($query) use ($Respels){
@@ -178,7 +178,6 @@ class sgenercontroller extends Controller
                 }
             })
             ->get();
-
         return view('sgeneradores.show', compact('SedeGener', 'Generador', 'Cliente', 'Respels', 'Residuos', 'Municipio', 'Departamento', 'CountSedeGener'));
     }
 
