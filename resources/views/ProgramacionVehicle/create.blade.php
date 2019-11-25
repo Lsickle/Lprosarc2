@@ -345,10 +345,10 @@
 				month: 'Mes',
 				week: 'Semana'
 			},
-			validRange: {
-			    start: '2019-11-24',
-			    end: '2121-11-26'
-			 },
+			// validRange: {
+			//     start: '2019-11-24',
+			//     end: '2121-11-26'
+			//  },
 			defaultRangeSeparator: ' - ',
 			height: 'parent',
 			customButtons: {
@@ -509,7 +509,9 @@
 					NotifiTrue(msg);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					NotifiFalse("{{trans('adminlte_lang::message.progvehcediterror')}}");
+					for (var i = jqXHR.responseJSON.errors.Event.length - 1; i >= 0; i--) {
+						NotifiFalse(jqXHR.responseJSON.errors.Event[i]);
+					}
 				}
 			});
 		}

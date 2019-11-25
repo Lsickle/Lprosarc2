@@ -459,8 +459,8 @@ return [
     'progvehnameauxext'       => 'Nombre Auxiliar Externo',
     'progvehdocauxext'        => 'N° Documento Auxiliar Externo',
     'progvehdocext'           => 'N° Documento Conductor Externo',
-    'progvehplacaext'         => 'Placa vehiculo Externo Definitivo',
-    'progvehtipoext'          => 'Tipo vehiculo Externo',
+    'progvehplacaext'         => 'Placa vehículo Externo Definitivo',
+    'progvehtipoext'          => 'Tipo vehículo Externo',
 
     // mantenimiento de un vehículo
     'mantvehititle'           => 'Mantenimiento de Vehículos',
@@ -702,7 +702,7 @@ return [
     'solserembaja12'          => 'Granel',
     'solserembaja11'          => 'Embalajes Compuestos',
     'solserdimension'         => 'Tamaño del Residuo',
-    'solserdimensiondescrit'  => '<b>(Opcional)</b> <br><br>Indique las medidas del residuo en Metros.<br> <i>Maximo 30 metros en cada dimension</i> ',
+    'solserdimensiondescrit'  => '<b>(Opcional)</b> <br><br>Indique las medidas del residuo en Metros.<br> <i>Máximo 30 metros en cada dimensión</i> ',
     'solserdimension1'        => 'Alto (Metros)',
     'solserdimension2'        => 'Ancho (Metros)',
     'solserdimension3'        => 'Profundo (Metros)',
@@ -757,7 +757,7 @@ return [
 
     // Solicitud de Residuo
     'solser'                  => 'Solicitud de Servicio',
-    'solresedit'              => 'Editar Residuo de la Solcitud de Servicio',
+    'solresedit'              => 'Editar Residuo de la Solicitud de Servicio',
     'solrestitleclientepart1' => 'No puede',
     'o'                       => 'o',
     'solrestitleclientepart2' => 'este residuo porque',

@@ -24,7 +24,13 @@ class CambiodefechaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'date|after:today',
+            'Event' => 'date|after:today',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'Event.after' => 'Solo puede programar un servicio para fechas de hoy en adelante',
         ];
     }
 }
