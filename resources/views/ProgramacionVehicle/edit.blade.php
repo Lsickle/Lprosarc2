@@ -150,7 +150,7 @@
 											<div class="box-body">
 												<div class="form-group col-xs-12 col-md-6">
 													<label for="modalProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-													<input  class="form-control ProgVehFecha" readonly type="date" id="modalProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
+													<input  class="form-control ProgVehFecha" readonly type="date" id="modalProgVehFecha" name="ProgVehFecha" min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" value="{{old('ProgVehFecha')}}">
 												</div>
 												<div class="form-group col-xs-12 col-md-6">
 													<label for="modalProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -272,7 +272,7 @@
 							@endif
 							<div class="box-body">
 								<div class="form-group col-md-6">
-									<label for="ProgVehFecha">Servicio N°</label>
+									<label for="">Servicio N°</label>
 									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
 								</div>
 								<div class="form-group col-md-6">
@@ -342,7 +342,7 @@
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
-									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 1 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
 									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 									@endif
 									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
@@ -357,9 +357,13 @@
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6 col-md-offset-3">
+								<div class="form-group col-md-6">
+									<label for="">Servicio N°</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
-									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
