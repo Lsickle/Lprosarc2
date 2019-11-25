@@ -90,7 +90,9 @@ class SolicitudServicioController extends Controller
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::select('CliName', 'CliName','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)
+			->where('sedes.SedeDelete', 0)
+			->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
