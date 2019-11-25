@@ -65,7 +65,8 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha')}}">
+									<input  class="form-control ProgVehFecha" type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha')}}">
+									<small class="help-block with-errors"></small>
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -169,7 +170,7 @@
 		</div>
 	</div>
 </div>
-{{-- END Modal --}}
+{{-- END Modal
 
 {{--  Modal --}}
 <div class="modal modal-default fade in" id="CrearProgVehic2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -188,7 +189,7 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha2">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="ProgVehFecha form-control" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha2')}}">
+									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha2')}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
