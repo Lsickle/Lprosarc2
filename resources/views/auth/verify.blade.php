@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('htmlheader_title','Verificación')
-@section('contentheader_title','Verificación de Correo ELectrónico')
+@section('contentheader_title','Verificación de Correo Electrónico')
 
 @section('main-content')
 <div class="container-fluid spark-screen">

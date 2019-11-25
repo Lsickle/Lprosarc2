@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	Servicios
+	Servicios->Programacion
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -29,15 +29,19 @@
 									<th>{{ trans('adminlte_lang::message.progvehicvehic') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor'))
+									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor')) --}}
 										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
 										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
-									@endif
+										<th>Autorización</th>
+									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
 									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
+									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+									<th>{{ trans('adminlte_lang::message.progvehicserauth') }}</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody id="readyTable">
@@ -85,15 +89,19 @@
 									<td>{{$vehiculoPlaca}}</td>
 									<td>{{date('h:i A', strtotime($programacion->ProgVehSalida))}}</td>
 									<td>{{$ayudante}}</td>
-									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor'))
+									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor')) --}}
 										<td>{{$conductor}}</td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
-									@endif
+										<td>{{$programacion->ProgVehStatus}}</td>
+									{{-- @endif --}}
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
-									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> {{$programacion->ID_SolSer}}</a></td>
+									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> #{{$programacion->ID_SolSer}}</a></td>
+									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+									<td><a href="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" class='btn btn-success btn-block' title="{{ trans('adminlte_lang::message.progvehicserauth')}}"><i class="fas fa-sign-out-alt"></i></a></td>
+									@endif
 								</tr>
 								@endforeach
 							</tbody>

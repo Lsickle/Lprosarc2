@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Certificado;
+use App\SolicitudServicio;
 
 
 class CertificadoController extends Controller
@@ -27,12 +28,32 @@ class CertificadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $solicitudes = DB::table('solicitud_servicios')
-            ->select('*')
-            ->get();
-        return view('resivos.createCertificado', compact('solicitudes'));
+        $SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        if (!$SolicitudServicio) {
+            abort(404);
+        }
+        $certificado = new Certificado;
+        $certificado->CertNumero = '';
+        $certificado->CertiEspName = '';
+        $certificado->CertiEspValue = '';
+        $certificado->CertObservacion = '';
+        $certificado->CertSrc = '';
+        $certificado->CertAuthJo = '';
+        $certificado->CertAuthJl = '';
+        $certificado->CertAuthDp = '';
+        $certificado->CertAnexo = '';
+        $certificado->FK_CertSolser = $SolicitudServicio->ID_SolSer;
+        $certificado->save();
+
+        $certificado->CertNumero = $certificado->ID_SolSer;
+        $certificado->update();
+
+
+        return view('certificados.edit', compact('SolicitudServicio')); 
+
+        // return redirect()->route('solicitud-servicio.solservdocindex', compact('id'));
     }
 
     /**
@@ -43,7 +64,10 @@ class CertificadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        if (!$SolicitudServicio) {
+            abort(404);
+        }
     }
 
     /**

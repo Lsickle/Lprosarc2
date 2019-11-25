@@ -47,7 +47,7 @@
 										</div>
 									@endif
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-									@include('layouts.RespelPartials.Respelform1Edit')
+									@include('layouts.RespelPartials.respelform1Edit')
 								</div>
 								<div class="box box-info">
 									<div class="box-footer">
@@ -480,7 +480,7 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+opcion+"Container").append(tarifa);
+					$("#rango"+opcion+"row").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
 					// validarprevent(opcion);
 					last=last+1
@@ -495,6 +495,7 @@
 		function EliminarRango(opcion,rango){
 			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
+			$("#rangodefault"+opcion+rango).append(`<input hidden  type="text" name="Opcion[`+opcion+`][TarifaDesde][]" value=""><input hidden  type="text" name="Opcion[`+opcion+`][TarifaPrecio][]" value="">`);
 			$("#evaluacioncomercial").validator('update');
 			validarprevent(opcion);
 		}

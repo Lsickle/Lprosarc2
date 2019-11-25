@@ -247,7 +247,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDocType = 'CC';
         $personal->PersDocNumber = 1198869084;
         $personal->PersFirstName = 'William';
-        $personal->PersLastName = 'Cendales';
+        $personal->PersLastName = 'Cendales Arevalo';
         $personal->PersLibreta = 1198869084;
         $personal->PersBirthday = '25/05/2005';
         $personal->PersCellphone = 3564546897;

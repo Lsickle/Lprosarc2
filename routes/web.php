@@ -91,6 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
+	Route::get('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/pretratamiento','PretratamientoController');
@@ -110,6 +111,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
+	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex');
+	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificado', 'CertificadoController');
 	Route::resource('/manifiesto', 'ManifiestoController');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');

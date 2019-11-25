@@ -116,6 +116,10 @@
 				<option value="1">{{ trans('adminlte_lang::LangRespel.yes') }}</option>
 			</select>
 		</div>
+		<div id="NodangerNoclasf0">
+		</div>
+		<div id="Nocontrol0">
+		</div>
 	</div>
 </div>
 @section('NewScript')
@@ -139,6 +143,7 @@ function setDanger(id) {
 	$("#Clasif" + id).removeAttr("hidden");
 	$("#myform").validator('destroy');
 	$("#hoja" + id).prop('required', true);
+	$("#NodangerNoclasf" + id).empty();
 	$("#myform").validator('update');
 	attachPopover();
 }
@@ -148,17 +153,30 @@ function setNoDanger(id) {
 	$("#Clasif" + id).attr("hidden", true);
 	$("#Clasif" + id+" > select").prop('required', false);
 	$("#hoja" + id).prop('required', false);
+	$("#NodangerNoclasf" + id).append('<input hidden type="text" name="YRespelClasf4741[]" value=""><input hidden type="text" name="ARespelClasf4741[]" value="">');
 	$("#myform").validator('destroy');
 	$("#myform").validator('update');
 }
 
 function setControlada(id) {
 	AgregarControlada(id);
+	var ControladaName = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateName')`;
+	var ControladaDoc = `@include('layouts.RespelPartials.layoutsRes.ControladaCreateDoc')`;
+	$("#Controlada" + id).removeClass("btn-default");
+	$("#Controlada" + id).addClass("btn-success");
+	$("#Masivo" + id).removeClass("btn-success");
+	$("#Masivo" + id).addClass("btn-default");
+	$("#sustanciaFormDoc" + id).empty();
+	$("#sustanciaFormDoc" + id).append(ControladaDoc);
+	$("#sustanciaFormName" + id).empty();
+	$("#sustanciaFormName" + id).append(ControladaName);
+	/*se habilitan los campos correspondientes*/
 	$("#sustanciaFormtype" + id).removeAttr('hidden');
 	$("#sustanciaFormName" + id).removeAttr('hidden');
 	$("#sustanciaFormFile" + id).prop('required', true);
 	$("#sustanciaFormDoc" + id).removeAttr('hidden');
 	$("#sustanciaFormName" + id + " > select").prop('required', true);
+	$("#Nocontrol" + id).empty();
 	$("#myform").validator('update');
 	attachPopover();
 }
@@ -169,6 +187,9 @@ function setNoControlada(id) {
 	$("#sustanciaFormFile" + id).prop('required', false);
 	$("#sustanciaFormDoc" + id).attr("hidden", true);
 	$("#sustanciaFormName" + id + " > select").prop('required', false);
+	$("#sustanciaFormDoc" + id).empty();
+	$("#sustanciaFormName" + id).empty();
+	$("#Nocontrol" + id).append('<input hidden type="text" name="SustanciaControladaTipo[]" value=""><input hidden type="text" name="SustanciaControladaNombre[]" value=""><input style="display:none;" type="file" name="SustanciaControladaDocumento[]">');
 	$("#myform").validator('update');
 }
 

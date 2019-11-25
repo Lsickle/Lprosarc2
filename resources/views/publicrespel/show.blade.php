@@ -186,9 +186,11 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 							</li>
+							@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 							<li class="nav-item">
 								<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 							</li>
+							@endif
 						</ul>
 						<!-- nav-content -->
 						<div class="tab-content" style="display: block; overflow: auto;">

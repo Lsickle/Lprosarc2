@@ -45,7 +45,7 @@ class RespelStoreRequest extends FormRequest
                 'SustanciaControlada.*' => 'required|boolean',
                 'SustanciaControladaTipo.*'     => 'sometimes|boolean|nullable',
                 'SustanciaControladaNombre.*'   => 'sometimes|max:50|string|nullable',
-                'SustanciaControladaDocumento.*'=> 'sometimes|max:2048|mimes:pdf',
+                'SustanciaControladaDocumento.*'=> 'sometimes|max:2048|mimes:pdf|required_unless:SustanciaControlada.*,0',
 
             ];
 
