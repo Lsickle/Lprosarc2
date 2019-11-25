@@ -135,7 +135,7 @@
 							<div class="box box-info">
 								<div class="modal-body">
 									<div style="margin: auto;" id="descripModalCreate">
-										<form action="/vehicle-programacion" method="POST" id="formularioCreate" data-toggle="validator">
+										<form action="/vehicle-programacion/{{$programacion->FK_ProgServi}}/añadirVehiculo" method="POST" id="formularioCreate" data-toggle="validator">
 											@csrf
 											@if ($errors->create->any())
 												<div class="alert alert-danger" role="alert">
@@ -388,9 +388,13 @@
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6 col-md-offset-3">
+								<div class="form-group col-md-6">
+									<label for="">Servicio N°</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
-									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha"  min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
@@ -626,8 +630,8 @@
 		$('#modalFK_ProgConductor').attr('required', false);
 		$('#modalFK_ProgAyudante').attr('required', true);
 	}
-	$('#transport').on('change', function() { 
-		var id = $('#transport').val();
+	$('#modaltransport').on('change', function() { 
+		var id = $('#modaltransport').val();
 		if(id != 0){
 			$.ajaxSetup({
 				headers: {
