@@ -44,7 +44,7 @@
 								<select class="form-control select" id="UsRolDesc" name="UsRolDesc" required>
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+                                        <option value="{{$Rol->RolDesc}}" {{ old('UsRolDesc') == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -53,7 +53,7 @@
 								<select class="form-control select" id="UsRolDesc2" name="UsRolDesc2">
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc2') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+                                        <option value="{{$Rol->RolDesc}}" {{ old('UsRolDesc2') == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
 									@endforeach
 								</select>
 							</div>

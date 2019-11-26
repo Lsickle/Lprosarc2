@@ -98,5 +98,11 @@ class RolsTableSeeder extends Seeder
         $rol->RolDelete = '0';
         $rol->save();
 
+        $rol = new Rol();
+        $rol->RolName = 'jefehseq';
+        $rol->RolDesc = 'Jefe de HSEQ';
+        $rol->RolDelete = '0';
+        $rol->save();
+
     }
 }

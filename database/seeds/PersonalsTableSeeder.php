@@ -11,6 +11,8 @@ class PersonalsTableSeeder extends Seeder
      * @return void
      */
     public function run(){  
+        
+        /*id = 01 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -31,7 +33,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Sistemas@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 02 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -52,7 +55,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Sistemas3@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 03 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -73,7 +77,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Sistemas2@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 04 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -94,7 +99,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'dirtecnica@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 05 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -115,7 +121,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'logistica@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 06 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -136,7 +143,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'asistentelogistica@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 07 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -157,7 +165,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'auxiliarlogistico@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 08 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -178,7 +187,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'ingenierohseq@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 09 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -195,11 +205,12 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersBank = 'Av Villas';
         $personal->PersIngreso = '15/09/2008';
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
-        $personal->FK_PersCargo = 8;
+        $personal->FK_PersCargo = 16;
         $personal->PersDelete = 0;
         $personal->PersEmail = 'gerenteplanta@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 10 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -220,7 +231,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'ingtratamiento1@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 11 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -241,7 +253,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'ingtratamiento3@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 12 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -261,7 +274,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'ingtratamiento2@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 13 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -281,7 +295,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Conductor1@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 14 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -301,7 +316,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Conductor2@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 15 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -322,7 +338,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Conductor3@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 16 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -343,7 +360,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Conductor4@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 17 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -364,7 +382,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Conductor5@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 18 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -384,7 +403,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'subgerencia@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 19 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -405,7 +425,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'CuentasCorporativas@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 20 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -425,7 +446,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Comercial2@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 21 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -445,7 +467,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Comercial1@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 22 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -466,28 +489,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Comercial3@prosarc.com.co';
         $personal->save();
-
-        $personal = new Personal();
-        $personal->PersType = 0;
-        $personal->PersDocType = 'CC';
-        $personal->PersDocNumber = 16315776;
-        $personal->PersFirstName = 'Miguel';
-        $personal->PersSecondName = 'Felipe';
-        $personal->PersLastName = 'Martinez';
-        $personal->PersLibreta = 16315776;
-        $personal->PersBirthday = '4/06/2005';
-        $personal->PersCellphone = 3222621708;
-        $personal->PersAddress = 'Cll 120# 7-62 Ed cei3 ofi 609';
-        $personal->PersEPS = 'Famisanar';
-        $personal->PersARL = 'Colpatria';
-        $personal->PersBank = 'Av Villas';
-        $personal->PersIngreso = '10/05/2012';
-        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
-        $personal->FK_PersCargo = 12;
-        $personal->PersDelete = 0;
-        $personal->PersEmail = 'Comercial4@prosarc.com.co';
-        $personal->save();
-
+        
+        /*id = 23 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -508,7 +511,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'aprovechablesyraee@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 24 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -528,7 +532,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'servicomercial@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 25 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -548,7 +553,8 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersDelete = 0;
         $personal->PersEmail = 'Gestion@prosarc.com.co';
         $personal->save();
-
+        
+        /*id = 26 */
         $personal = new Personal();
         $personal->PersType = 0;
         $personal->PersDocType = 'CC';
@@ -568,6 +574,28 @@ class PersonalsTableSeeder extends Seeder
         $personal->FK_PersCargo = 15;
         $personal->PersDelete = 0;
         $personal->PersEmail = 'gerencia@prosarc.com.co';
+        $personal->save();
+
+        /*id = 27 */
+        $personal = new Personal();
+        $personal->PersType = 0;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = 5555555;
+        $personal->PersFirstName = 'David';
+        $personal->PersSecondName = '';
+        $personal->PersLastName = 'Pizza';
+        $personal->PersLibreta = 5555555;
+        $personal->PersBirthday = '24/03/1971';
+        $personal->PersCellphone = 3016894387;
+        $personal->PersAddress = 'Cll ppal de Mosquera';
+        $personal->PersEPS = 'Compensar';
+        $personal->PersARL = 'Colpatria';
+        $personal->PersBank = 'Av Villas';
+        $personal->PersIngreso = '15/09/2019';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 8;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = 'gerenteplanta@prosarc.com.co';
         $personal->save();
     }
 }

@@ -85,10 +85,8 @@ class PermisoUsuarioController extends Controller
     {
         if (in_array(Auth::user()->UsRol, Permisos::PersInter1)) {
 
-            $Roles = DB::table('users')
-                ->select('users.UsRolDesc')
-                ->where('users.UsRol', '<>', 'Cliente')
-                ->groupBy('users.UsRol')
+            $Roles = DB::table('rols')
+                ->where('rols.RolDelete', 0)
                 ->get();
 
              // Sede del usuario
@@ -139,14 +137,12 @@ class PermisoUsuarioController extends Controller
             'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
         ]);
         
-        $Rol = DB::table('users')
-            ->select('UsRol')
-            ->where('UsRolDesc', $request->input('UsRolDesc'))
+        $Rol = DB::table('rols')
+            ->where('RolDesc', $request->input('UsRolDesc'))
             ->first();
 
-        $Rol2 = DB::table('users')
-            ->select('UsRol')
-            ->where('UsRolDesc', $request->input('UsRolDesc2'))
+        $Rol2 = DB::table('rols')
+            ->where('RolDesc', $request->input('UsRolDesc2'))
             ->first();
 
         $User = new User();
@@ -156,10 +152,10 @@ class PermisoUsuarioController extends Controller
         $User->UsRolDesc = $request->input('UsRolDesc');
         $User->UsRolDesc2 = $request->input('UsRolDesc2');
         $User->UsSlug = hash('sha256', rand().time().$User->name);
-        $User->UsRol = $Rol->UsRol;
+        $User->UsRol = $Rol->RolName;
 
         if(isset($Rol2)){
-            $User->UsRol2 = $Rol2->UsRol;
+            $User->UsRol2 = $Rol2->RolName;
         }else{
             $User->UsRol2 = null;
         }
@@ -250,10 +246,8 @@ class PermisoUsuarioController extends Controller
             ->select('personals.PersFirstName', 'personals.PersLastName', 'personals.PersSlug', 'personals.ID_Pers')
             ->get();
             
-            $Roles = DB::table('users')
-                ->select('users.UsRolDesc')
-                ->where('users.UsRol', '<>', 'Cliente')
-                ->groupBy('users.UsRol')
+            $Roles = DB::table('rols')
+                ->where('rols.RolDelete', 0)
                 ->get();
             
             return view('permisos.edit', compact('User', 'Personals', 'Roles', 'Personal'));
@@ -278,21 +272,19 @@ class PermisoUsuarioController extends Controller
         $Validate = $request->validate([
             'email'     => 'required|max:255|unique:users,email,'.$User->email.',email',
         ]);
-        $Rol = DB::table('users')
-            ->select('UsRol')
-            ->where('UsRolDesc', $request->input('UsRolDesc'))
+        $Rol = DB::table('rols')
+            ->where('RolDesc', $request->input('UsRolDesc'))
             ->first();
 
-        $Rol2 = DB::table('users')
-            ->select('UsRol')
-            ->where('UsRolDesc', $request->input('UsRolDesc2'))
+        $Rol2 = DB::table('rols')
+            ->where('RolDesc', $request->input('UsRolDesc2'))
             ->first();
         
         $User->fill($request->except('UsAvatar', 'UsRol', 'UsRol2', 'FK_UserPers', 'UsStatus'));
-        $User->UsRol = $Rol->UsRol;
+        $User->UsRol = $Rol->RolName;
 
-        if(isset($Rol2->UsRol)){
-            $User->UsRol2 = $Rol2->UsRol;
+        if(isset($Rol2->RolName)){
+            $User->UsRol2 = $Rol2->RolName;
         }else{
             $User->UsRol2 = null;
         }
