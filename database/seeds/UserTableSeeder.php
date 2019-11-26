@@ -39,8 +39,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 1;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = 'Ingeniero de seguridad y salud Ocupacional';
         $user->DeleteUser = 0;
         $user->save();
 
@@ -56,8 +56,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 2;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = 'Ingeniero de seguridad y salud Ocupacional';
         $user->DeleteUser = 0;
         $user->save();
 
@@ -73,8 +73,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 3;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = 'Ingeniero de seguridad y salud Ocupacional';
         $user->DeleteUser = 0;
         $user->save();
 
