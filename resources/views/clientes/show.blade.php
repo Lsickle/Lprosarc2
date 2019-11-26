@@ -278,7 +278,7 @@
 					{{-- requerimientos --}}
 						<div class="tab-pane" id="requerimientos">
 							<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
-							<h3 class="profile-username text-center textolargo">Requerimientos a solicitar</h3>
+							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>
 							<div style='overflow-y:auto; max-height:503px;'>
 								@if(isset($Requerimientos))
 									<div class="col-md-6" style="text-align: center;">
