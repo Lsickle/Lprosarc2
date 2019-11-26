@@ -37,6 +37,8 @@ use App\Pretratamiento;
 use App\ManifiestoCarga;
 use App\Subcategoryrespelpublic;
 use App\Categoryrespelpublic;
+use App\RolsTableSeeder;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -49,6 +51,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {   
         //$this->call(RoleTableSeeder::class);
+        $this->call(RolsTableSeeder::class);
         $this->call(DepartamentosTableSeeder::class);
         $this->call(MunicipiosTableSeeder::class);
         $this->call(RealclientesTableSeeder::class);
