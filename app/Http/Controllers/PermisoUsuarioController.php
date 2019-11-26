@@ -87,6 +87,7 @@ class PermisoUsuarioController extends Controller
 
             $Roles = DB::table('rols')
                 ->where('rols.RolDelete', 0)
+                ->where('rols.RolName', '<>', 'Programador')
                 ->get();
 
              // Sede del usuario
@@ -248,6 +249,7 @@ class PermisoUsuarioController extends Controller
             
             $Roles = DB::table('rols')
                 ->where('rols.RolDelete', 0)
+                ->where('rols.RolName', '<>', 'Programador')
                 ->get();
             
             return view('permisos.edit', compact('User', 'Personals', 'Roles', 'Personal'));
