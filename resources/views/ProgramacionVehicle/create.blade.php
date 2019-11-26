@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	Servicios->Programacion
+	{{'Servicios-Programación'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -65,7 +65,8 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
+									<input  class="form-control ProgVehFecha" type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha')}}">
+									<small class="help-block with-errors"></small>
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -169,7 +170,7 @@
 		</div>
 	</div>
 </div>
-{{-- END Modal --}}
+{{-- END Modal
 
 {{--  Modal --}}
 <div class="modal modal-default fade in" id="CrearProgVehic2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -188,7 +189,7 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha2">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="ProgVehFecha form-control" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" value="{{old('ProgVehFecha2')}}">
+									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha2')}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
@@ -345,6 +346,10 @@
 				month: 'Mes',
 				week: 'Semana'
 			},
+			// validRange: {
+			//     start: '2019-11-24',
+			//     end: '2121-11-26'
+			//  },
 			defaultRangeSeparator: ' - ',
 			height: 'parent',
 			customButtons: {
@@ -505,7 +510,9 @@
 					NotifiTrue(msg);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					NotifiFalse("{{trans('adminlte_lang::message.progvehcediterror')}}");
+					for (var i = jqXHR.responseJSON.errors.Event.length - 1; i >= 0; i--) {
+						NotifiFalse(jqXHR.responseJSON.errors.Event[i]);
+					}
 				}
 			});
 		}

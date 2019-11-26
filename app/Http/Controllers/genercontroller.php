@@ -182,6 +182,7 @@ class genercontroller extends Controller
             ->select('sedes.*')
             ->where('FK_SedeCli', '=', $ID_Cli)
             ->where('SedeDelete', '=', 0)
+            ->oldest()
             ->get();
 
         $Gener = new generador();
