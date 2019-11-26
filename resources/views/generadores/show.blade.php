@@ -95,7 +95,7 @@
 										<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
 									</div>
 									<div>
-										<a href="#" class="pull-right textpopover" id="SGeneraddress{{$i}}" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</p>">{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</a>
+										<p href="#" class="pull-right textpopoveraddress" id="SGeneraddress{{$i}}" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</p>">{{$GenerSede->GSedeAddress}} ({{$GenerSede->MunName}}, {{$GenerSede->DepartName}})</p>
 									</div>
 								</li>
 								@php
