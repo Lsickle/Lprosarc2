@@ -45,7 +45,7 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->FK_TratProv = "6";
         $tratamiento->save();
         $tratamiento->clasificaciones()->attach([23,24,25,28,103,20,31,51,15]);
-        $tratamiento->pretratamientos()->attach([2,4,6,8,]);
+        $tratamiento->pretratamientos()->attach([2,4,6,8]);
 
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Area;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
+
 
 class AreasTableSeeder extends Seeder
 {

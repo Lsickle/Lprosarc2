@@ -365,7 +365,7 @@ class RespelController extends Controller
                 ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
                 ->get();
 
-                return $tratamientosViables;
+                // return $tratamientosViables;
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)

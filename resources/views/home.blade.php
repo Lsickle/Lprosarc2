@@ -19,7 +19,7 @@
         @break
 	@default
 @endswitch
-
+ <p>{{$values}}</p>
 <!-- Default box -->
 {{-- <div class="box">
 	<div class="box-header with-border">
