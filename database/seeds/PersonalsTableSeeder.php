@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Personal;
+use Faker\Generator as Faker;
 
 class PersonalsTableSeeder extends Seeder
 {
@@ -12,6 +13,8 @@ class PersonalsTableSeeder extends Seeder
      */
     public function run(){  
         
+        $faker = \Faker\Factory::create();
+        /*personal PROSARC*//*personal PROSARC*//*personal PROSARC*//*personal PROSARC*//*personal PROSARC*/
         /*id = 01 */
         $personal = new Personal();
         $personal->PersType = 0;
@@ -596,6 +599,486 @@ class PersonalsTableSeeder extends Seeder
         $personal->FK_PersCargo = 8;
         $personal->PersDelete = 0;
         $personal->PersEmail = 'gerenteplanta@prosarc.com.co';
+        $personal->save();
+
+        /*personal EXTERNO*//*personal EXTERNO*//*personal EXTERNO*//*personal EXTERNO*//*personal EXTERNO*/
+        /*id = 28 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = 1127609981;
+        $personal->PersFirstName = 'Alejandro';
+        $personal->PersSecondName = 'Gabriel';
+        $personal->PersLastName = 'De la hoz Caceres';
+        $personal->PersLibreta = 1127609981;
+        $personal->PersBirthday = '24/03/1971';
+        $personal->PersCellphone = 3014141414;
+        $personal->PersAddress = 'Cll ppal de Mosquera';
+        $personal->PersEPS = 'Compensar';
+        $personal->PersARL = 'Colpatria';
+        $personal->PersBank = 'Av Villas';
+        $personal->PersIngreso = '15/09/2019';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 17;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = 'luisdelahoz0@gmail.com';
+        $personal->PersFactura = 1;
+        $personal->save();
+
+        /*id = 29 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 18;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 30 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 19;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 31 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 20;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 32 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 21;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 33 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 22;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 34 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 23;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 35 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 24;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 36 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 25;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 37 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 26;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 38 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 27;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 39 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 28;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 40 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 29;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 41 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 30;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 42 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 31;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 43 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 32;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 44 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 33;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 45 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 34;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 46 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 35;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 0;
+        $personal->save();
+
+        /*id = 47 */
+        $personal = new Personal();
+        $personal->PersType = 1;
+        $personal->PersDocType = 'CC';
+        $personal->PersDocNumber = $faker->unique()->numberBetween($min = 800000000, $max = 1200000000);
+        $personal->PersFirstName = $faker->firstName();
+        $personal->PersSecondName = $faker->firstName();
+        $personal->PersLastName = $faker->lastName();
+        $personal->PersLibreta = $personal->PersDocNumber;
+        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
+        $personal->PersAddress = $faker->address();
+        $personal->PersEPS = '';
+        $personal->PersARL = '';
+        $personal->PersBank = '';
+        $personal->PersIngreso = '';
+        $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
+        $personal->FK_PersCargo = 36;
+        $personal->PersDelete = 0;
+        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEPS = '';
+        $personal->PersFactura = 1;
         $personal->save();
     }
 }

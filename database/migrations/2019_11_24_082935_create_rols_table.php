@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocDatoTable extends Migration
+class CreateRolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class CreateDocDatoTable extends Migration
      */
     public function up()
     {
-        Schema::create('doc_dato', function (Blueprint $table) {
+        Schema::create('rols', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('RolName', 32)->nullable();
+            $table->string('RolDesc', 64)->nullable();
+            $table->boolean('RolDelete')->default(0);
             $table->timestamps();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 
@@ -26,6 +32,6 @@ class CreateDocDatoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doc_dato');
+        Schema::dropIfExists('rols');
     }
 }

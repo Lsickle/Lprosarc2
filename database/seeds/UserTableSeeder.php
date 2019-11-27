@@ -468,5 +468,39 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc2 = 'Ingeniero de HSEQ';
         $user->DeleteUser = 0;
         $user->save();
+
+        $user = new User();
+        $user->name = 'Luis';
+        $user->email = 'luisdelahoz0@gmail.com';
+        $user->email_verified_at = now();
+        $user->password = bcrypt('secret');
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->UsStatus = 'Activo';
+        $user->UsSlug = hash('sha256', rand().time().$user->email);
+        $user->UsRol = 'Cliente';
+        $user->UsRolDesc = 'Usuario General';
+        $user->updated_by = 'Sistemas@prosarc.com.co';
+        $user->FK_UserPers = 28;
+        $user->UsRol2 = 'Cliente';
+        $user->UsRolDesc2 = 'Usuario General';
+        $user->DeleteUser = 0;
+        $user->save();
+
+        $user = new User();
+        $user->name = 'UserTest';
+        $user->email = 'prueba@cliente.com';
+        $user->email_verified_at = now();
+        $user->password = bcrypt('secret');
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->UsStatus = 'Activo';
+        $user->UsSlug = hash('sha256', rand().time().$user->email);
+        $user->UsRol = 'Cliente';
+        $user->UsRolDesc = 'Usuario General';
+        $user->updated_by = 'Sistemas@prosarc.com.co';
+        $user->FK_UserPers = 29;
+        $user->UsRol2 = 'Cliente';
+        $user->UsRolDesc2 = 'Usuario General';
+        $user->DeleteUser = 0;
+        $user->save();
     }
 }

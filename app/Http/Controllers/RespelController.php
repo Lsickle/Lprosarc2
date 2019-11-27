@@ -311,6 +311,7 @@ class RespelController extends Controller
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
+                ->where('TratDelete', 0)
                 ->get();
 
 
@@ -364,7 +365,7 @@ class RespelController extends Controller
                 ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
                 ->get();
 
-
+                return $tratamientosViables;
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)

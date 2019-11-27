@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RealclientesTableSeeder::class);
         $this->call(RealSedesTableSeeder::class);
         $this->call(GeneradorsTableSeeder::class);
+        $this->call(GenerSedesTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(PersonalsTableSeeder::class);
@@ -91,5 +92,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ManifiestoCargaTableSeeder::class);
         $this->call(categoryrespelpublicTableSeeder::class);
         $this->call(subcategoryrespelpublicTableSeeder::class);
+        $this->call(RequerimientosClienteTableSeeder::class);
+        
     }
 }
