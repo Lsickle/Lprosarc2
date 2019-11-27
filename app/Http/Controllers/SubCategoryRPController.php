@@ -96,12 +96,14 @@ class SubCategoryRPController extends Controller
      */
     public function edit($id)
     {
+        $Borrar = Respel::where('FK_SubCategoryRP', $id)->first();
         $Subcategoria = Subcategoryrespelpublic::find($id); 
         if (!$Subcategoria) {
             abort(404, 'la SubCategoria no existe en la Base de Datos');
         }
         $categories = Categoryrespelpublic::All();
-        return view('subcategoryRP.edit', compact('Subcategoria', 'categories'));   
+        //return $Borrar;
+        return view('subcategoryRP.edit', compact('Subcategoria', 'categories','Borrar'));   
     }
 
     /**
