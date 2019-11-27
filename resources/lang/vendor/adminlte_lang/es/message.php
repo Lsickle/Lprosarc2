@@ -229,7 +229,7 @@ return [
     'personaltitleh2'         => 'Persona de Contacto',
     'personalpaso1smart-wizzard' => 'Área y cargo de la persona',
     'personalpaso2smart-wizzard' => 'Datos básicos de contacto',
-    'personalpaso3smart-wizzard' => 'Complemento de datos de la personal',
+    'personalpaso3smart-wizzard' => 'Complemento de datos de la persona',
     'personalcarg'            => 'Cargo del Personal',
     'persdoctype'             => 'Tipo de Documento',
     'persdocument'            => 'Número del Documento',
