@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	Servicios->Programacion
+	{{'Servicios-Programación'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -135,7 +135,7 @@
 							<div class="box box-info">
 								<div class="modal-body">
 									<div style="margin: auto;" id="descripModalCreate">
-										<form action="/vehicle-programacion" method="POST" id="formularioCreate" data-toggle="validator">
+										<form action="/vehicle-programacion/{{$programacion->FK_ProgServi}}/añadirVehiculo" method="POST" id="formularioCreate" data-toggle="validator">
 											@csrf
 											@if ($errors->create->any())
 												<div class="alert alert-danger" role="alert">
@@ -388,9 +388,13 @@
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6 col-md-offset-3">
+								<div class="form-group col-md-6">
+									<label for="">Servicio N°</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
-									<input type="date" required="" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
+									<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha"  min="{{ $programacion->ProgVehFecha >= date('Y-m-d', strtotime(today())) ? date('Y-m-d', strtotime(today())) : date('Y-m-d', strtotime($programacion->ProgVehFecha)) }}" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label><small class="help-block with-errors">*</small>
@@ -444,6 +448,9 @@
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
+									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+									@endif
 									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
 								</div>
 							</div>
@@ -623,8 +630,8 @@
 		$('#modalFK_ProgConductor').attr('required', false);
 		$('#modalFK_ProgAyudante').attr('required', true);
 	}
-	$('#transport').on('change', function() { 
-		var id = $('#transport').val();
+	$('#modaltransport').on('change', function() { 
+		var id = $('#modaltransport').val();
 		if(id != 0){
 			$.ajaxSetup({
 				headers: {

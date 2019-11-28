@@ -17,6 +17,7 @@ class Clasificacion extends Model
         return $this->belongsToMany('App\Tratamiento','clasificacion_tratamiento', 'FK_Clasf', 'FK_Trat')
         ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+        ->where('tratamientos.TratDelete', 0)
         ->select('sedes.*', 'clientes.*', 'tratamientos.*');
         //lista los tratamientos relacionados usando muchos a muchos con sus gestores
     }

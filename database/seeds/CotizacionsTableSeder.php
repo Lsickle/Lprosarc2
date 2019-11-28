@@ -26,6 +26,19 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
+        $cotizacion->CotiNumero = "001";
+        $cotizacion->CotiFechaSolicitud = "2018-02-20 07:00:00";
+        $cotizacion->CotiFechaRespuesta = "2018-02-20 07:00:00";
+        $cotizacion->CotiFechaVencimiento = "2019-02-20 07:00:00";
+        $cotizacion->CotiVencida = "1";
+        $cotizacion->CotiPrecioTotal = "650000";
+        $cotizacion->CotiPrecioSubtotal = "350000";
+        $cotizacion->FK_CotiSede = "3";
+        $cotizacion->CotiDelete = '0';
+        $cotizacion->CotiStatus = 'Aprobada';
+        $cotizacion->save();
+
+        $cotizacion = new Cotizacion();
         $cotizacion->CotiNumero = "002";
         $cotizacion->CotiFechaSolicitud = "2018-10-20 07:00:00";
         $cotizacion->CotiFechaRespuesta = "2018-10-20 07:00:00";
@@ -35,7 +48,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "2350000";
         $cotizacion->FK_CotiSede = "3";
         $cotizacion->CotiDelete = '0';
-        $cotizacion->CotiStatus = 'Pendiente';
+        $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -46,9 +59,9 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiVencida = "0";
         $cotizacion->CotiPrecioTotal = "1650000";
         $cotizacion->CotiPrecioSubtotal = "1350000";
-        $cotizacion->FK_CotiSede = "4";
+        $cotizacion->FK_CotiSede = "3";
         $cotizacion->CotiDelete = '0';
-        $cotizacion->CotiStatus = 'Pendiente';
+        $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -61,7 +74,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiPrecioSubtotal = "1350000";
         $cotizacion->FK_CotiSede = "5";
         $cotizacion->CotiDelete = '0';
-        $cotizacion->CotiStatus = 'Pendiente';
+        $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -72,9 +85,9 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiVencida = "0";
         $cotizacion->CotiPrecioTotal = "1650000";
         $cotizacion->CotiPrecioSubtotal = "1350000";
-        $cotizacion->FK_CotiSede = "6";
+        $cotizacion->FK_CotiSede = "5";
         $cotizacion->CotiDelete = '0';
-        $cotizacion->CotiStatus = 'Rechazada';
+        $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();
 
         $cotizacion = new Cotizacion();
@@ -85,7 +98,7 @@ class CotizacionsTableSeder extends Seeder
         $cotizacion->CotiVencida = "0";
         $cotizacion->CotiPrecioTotal = "1650000";
         $cotizacion->CotiPrecioSubtotal = "1350000";
-        $cotizacion->FK_CotiSede = "1";
+        $cotizacion->FK_CotiSede = "5";
         $cotizacion->CotiDelete = '0';
         $cotizacion->CotiStatus = 'Aprobada';
         $cotizacion->save();

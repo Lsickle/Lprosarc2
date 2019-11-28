@@ -34,6 +34,7 @@ class TratamientoController extends Controller
         $tratamientos = Tratamiento::with(['pretratamientos', 'clasificaciones'])
         ->join('sedes', 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
         ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+        ->where('TratDelete', 0)
         ->get();
         // return $tratamientos;
         // return $depart;
@@ -148,6 +149,7 @@ class TratamientoController extends Controller
         // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
         $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
             ->where('ID_Trat', $id)
+            ->where('TratDelete', 0)
             ->first();
         if (!$tratamiento) {
             abort(404);
@@ -182,6 +184,7 @@ class TratamientoController extends Controller
 
             $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
                 ->where('ID_Trat', $id)
+                ->where('TratDelete', 0)
                 ->first();
             if (!$tratamiento) {
                 abort(404);
@@ -277,36 +280,36 @@ class TratamientoController extends Controller
         $tratamiento = Tratamiento::find($id);
 
         /*se elimina la relacion entre tratamiento y pretratamientos/clasificaciones*/
-        $tratamiento->clasificaciones()->detach();
+        // $tratamiento->clasificaciones()->detach();
 
-        foreach ($tratamiento->pretratamientos as $pretratamiento) {
-            $key = $pretratamiento->ID_PreTrat;
-            // $pretratamiento = Pretratamiento::find($key);
-            $pretratamientoRelated = Pretratamiento::withCount(['tratamientos'])
-                ->where('ID_PreTrat', $key)
-                ->first();
-            /*si los pretratamietnos estan relacionados con mas de un tratamiento No se eliminan*/
-            if ($pretratamientoRelated->tratamientos_count > 1) {
-                $tratamiento->pretratamientos()->detach($key);
-            }else{
-                $tratamiento->pretratamientos()->detach($key);
-                $pretratamientoRelated->delete();
-            }
+        // foreach ($tratamiento->pretratamientos as $pretratamiento) {
+        //     $key = $pretratamiento->ID_PreTrat;
+        //     // $pretratamiento = Pretratamiento::find($key);
+        //     $pretratamientoRelated = Pretratamiento::withCount(['tratamientos'])
+        //         ->where('ID_PreTrat', $key)
+        //         ->first();
+        //     /*si los pretratamietnos estan relacionados con mas de un tratamiento No se eliminan*/
+        //     if ($pretratamientoRelated->tratamientos_count > 1) {
+        //         $tratamiento->pretratamientos()->detach($key);
+        //     }else{
+        //         $tratamiento->pretratamientos()->detach($key);
+        //         $pretratamientoRelated->delete();
+        //     }
             
-        }
+        // }
 
         
-        // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-        //     if ($tratamiento->TratDelete == 0) {
-        //         $tratamiento->TratDelete = 1;
-        //     }
-        //     else{
-        //         $tratamiento->TratDelete = 0;
-        //     }
-        // $tratamiento->update();
+        $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
+            if ($tratamiento->TratDelete == 0) {
+                $tratamiento->TratDelete = 1;
+            }
+            else{
+                $tratamiento->TratDelete = 0;
+            }
+        $tratamiento->update();
 
-        /*se elimina el tratamiento de la base de datos*/
-        $tratamiento->delete();
+        // se elimina el tratamiento de la base de datos
+        // $tratamiento->delete();
         
 
         $log = new audit();
