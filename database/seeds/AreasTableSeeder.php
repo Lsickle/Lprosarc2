@@ -14,7 +14,7 @@ class AreasTableSeeder extends Seeder
      * @return void
      */
     public function run(){
-
+        $faker = \Faker\Factory::create();
         /*AREAS PROSARC*//*AREAS PROSARC*//*AREAS PROSARC*//*AREAS PROSARC*//*AREAS PROSARC*/
         /*id = 01*/
         $area = new Area();

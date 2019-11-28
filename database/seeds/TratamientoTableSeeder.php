@@ -25,7 +25,7 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->TratName = "Celda de Seguridad";
         $tratamiento->TratTipo = "1";
         $tratamiento->TratDelete = "0";
-        $tratamiento->FK_TratProv = "4";
+        $tratamiento->FK_TratProv = "7";
         $tratamiento->save();
         $tratamiento->clasificaciones()->attach([31,42,53,84,10,20,31,51,15]);
         $tratamiento->pretratamientos()->attach([1,2]);
@@ -34,7 +34,7 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->TratName = "TermoDestrucción";
         $tratamiento->TratTipo = "1";
         $tratamiento->TratDelete = "0";
-        $tratamiento->FK_TratProv = "4";
+        $tratamiento->FK_TratProv = "7";
         $tratamiento->save();
         $tratamiento->clasificaciones()->attach([2,4,5,8,10,12,13,14,15]);
 
@@ -42,7 +42,7 @@ class TratamientoTableSeeder extends Seeder
         $tratamiento->TratName = "Celda de Seguridad";
         $tratamiento->TratTipo = "1";
         $tratamiento->TratDelete = "0";
-        $tratamiento->FK_TratProv = "6";
+        $tratamiento->FK_TratProv = "10";
         $tratamiento->save();
         $tratamiento->clasificaciones()->attach([23,24,25,28,103,20,31,51,15]);
         $tratamiento->pretratamientos()->attach([2,4,6,8]);

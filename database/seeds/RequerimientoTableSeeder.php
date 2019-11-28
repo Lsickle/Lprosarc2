@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Requerimiento;
+use App\Tarifa;
+use App\Rango;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
 
@@ -83,7 +85,32 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->ReqSlug = hash('md5', rand().time().$Requerimiento->FK_ReqRespel.$Requerimiento->FK_ReqTrata);
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
-        
+
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 2 */
         $Requerimiento = new Requerimiento();
@@ -101,6 +128,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 3 */
         $Requerimiento = new Requerimiento();
@@ -118,6 +170,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 2*/
         /*id = 4 */
@@ -136,6 +213,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 5 */
         $Requerimiento = new Requerimiento();
@@ -153,6 +255,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 6 */
         $Requerimiento = new Requerimiento();
@@ -170,6 +297,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 3*/
         /*id = 7 */
@@ -188,6 +340,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 8 */
         $Requerimiento = new Requerimiento();
@@ -205,6 +382,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 9 */
         $Requerimiento = new Requerimiento();
@@ -222,6 +424,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 4*/
         /*id = 10 */
@@ -240,6 +467,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 11 */
         $Requerimiento = new Requerimiento();
@@ -257,6 +509,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 12 */
         $Requerimiento = new Requerimiento();
@@ -274,6 +551,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 5*/
         /*id = 13 */
@@ -292,6 +594,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 14 */
         $Requerimiento = new Requerimiento();
@@ -309,6 +636,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 15 */
         $Requerimiento = new Requerimiento();
@@ -326,6 +678,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 6*/
         /*id = 16 */
@@ -344,6 +721,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 17 */
         $Requerimiento = new Requerimiento();
@@ -361,6 +763,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 18 */
         $Requerimiento = new Requerimiento();
@@ -378,6 +805,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 7*/
         /*id = 19 */
@@ -396,6 +848,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 20 */
         $Requerimiento = new Requerimiento();
@@ -413,6 +890,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 21 */
         $Requerimiento = new Requerimiento();
@@ -430,6 +932,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 8*/
         /*id = 22 */
@@ -448,6 +975,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 23 */
         $Requerimiento = new Requerimiento();
@@ -465,6 +1017,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 24 */
         $Requerimiento = new Requerimiento();
@@ -482,6 +1059,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Lt';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 9*/
         /*id = 25 */
@@ -500,6 +1102,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 26 */
         $Requerimiento = new Requerimiento();
@@ -517,6 +1144,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 27 */
         $Requerimiento = new Requerimiento();
@@ -534,6 +1186,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 10*/
         /*id = 28 */
@@ -552,6 +1229,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 29 */
         $Requerimiento = new Requerimiento();
@@ -569,6 +1271,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 30 */
         $Requerimiento = new Requerimiento();
@@ -586,6 +1313,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 11*/
         /*id = 31 */
@@ -604,6 +1356,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 32 */
         $Requerimiento = new Requerimiento();
@@ -621,6 +1398,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 33 */
         $Requerimiento = new Requerimiento();
@@ -638,6 +1440,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 12*/
         /*id = 34 */
@@ -656,6 +1483,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 35 */
         $Requerimiento = new Requerimiento();
@@ -673,6 +1525,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 36 */
         $Requerimiento = new Requerimiento();
@@ -690,6 +1567,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 13*/
         /*id = 37 */
@@ -708,6 +1610,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 38 */
         $Requerimiento = new Requerimiento();
@@ -725,6 +1652,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 39 */
         $Requerimiento = new Requerimiento();
@@ -742,6 +1694,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 14*/
         /*id = 40 */
@@ -760,6 +1737,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 41 */
         $Requerimiento = new Requerimiento();
@@ -777,6 +1779,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 42 */
         $Requerimiento = new Requerimiento();
@@ -794,6 +1821,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*respel 15*/
         /*id = 43 */
@@ -812,6 +1864,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 44 */
         $Requerimiento = new Requerimiento();
@@ -829,6 +1906,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
         /*id = 45 */
         $Requerimiento = new Requerimiento();
@@ -846,6 +1948,31 @@ class RequerimientoTableSeeder extends Seeder
         $Requerimiento->save();
         $Requerimiento->pretratamientosSelected()->sync($this->relatedpretrat($Requerimiento->FK_ReqTrata));
         
+        $tarifa = new Tarifa();
+        $tarifa->TarifaDelete = 0;
+        $tarifa->TarifaVencimiento = '2020-11-15';
+        $tarifa->TarifaFrecuencia = $faker->randomElement(['Mensual', 'Servicio', 'N/A']);
+        $tarifa->Tarifatipo = 'Kg';
+        $tarifa->FK_TarifaReq = $Requerimiento->ID_Req;
+        $tarifa->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 30, $max = 39)*100;
+        $rango->TarifaDesde = '0';
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 20, $max = 29)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 1, $max = 9)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
+
+        $rango = new Rango();
+        $rango->TarifaPrecio = $faker->numberBetween($min = 15, $max = 19)*100;
+        $rango->TarifaDesde = $faker->numberBetween($min = 10, $max = 19)*1000;
+        $rango->FK_RangoTarifa = $tarifa->ID_Tarifa;
+        $rango->save();
 
     
     }

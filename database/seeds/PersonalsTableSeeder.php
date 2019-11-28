@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use App\Personal;
+use App\Cliente;
 use Faker\Generator as Faker;
 
 class PersonalsTableSeeder extends Seeder
@@ -634,7 +636,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -658,7 +660,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -682,7 +684,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -706,7 +708,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -730,7 +732,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -754,7 +756,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -778,7 +780,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -802,7 +804,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -826,7 +828,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -850,7 +852,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -874,7 +876,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -898,7 +900,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -922,7 +924,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -946,7 +948,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -970,7 +972,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -994,7 +996,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -1018,7 +1020,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -1042,7 +1044,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -1066,7 +1068,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSecondName = $faker->firstName();
         $personal->PersLastName = $faker->lastName();
         $personal->PersLibreta = $personal->PersDocNumber;
-        $personal->PersBirthday = $faker->date($format = 'Y-m-d', $max = '1960-01-01') ;
+        $personal->PersBirthday = $faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $personal->PersCellphone = $faker->numberBetween($min = 300, $max = 316).' '.$faker->numerify('### ####');
         $personal->PersAddress = $faker->address();
         $personal->PersEPS = '';
@@ -1080,5 +1082,10 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersEPS = '';
         $personal->PersFactura = 1;
         $personal->save();
+
+        // $cleinte1 = DB::table('clientes')->where('CliNit', '800.049.458-4')->first();
+         DB::table('clientes')->where('CliNit', '800.049.458-4')->update(['CliComercial' => 21]);
+         DB::table('clientes')->where('CliNit', '800.049.458-5')->update(['CliComercial' => 22]);
+        
     }
 }

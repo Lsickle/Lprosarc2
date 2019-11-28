@@ -37,7 +37,7 @@ use App\Pretratamiento;
 use App\ManifiestoCarga;
 use App\Subcategoryrespelpublic;
 use App\Categoryrespelpublic;
-use App\RolsTableSeeder;
+// use App\RolsTableSeeder;
 
 
 
@@ -71,6 +71,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(TratamientoTableSeeder::class);
         $this->call(CategoriaActivoTableSeeder::class);
         $this->call(SubCategoriaActivoTableSeeder::class);
+        $this->call(categoryrespelpublicTableSeeder::class);
+        $this->call(subcategoryrespelpublicTableSeeder::class);
         $this->call(ActivoTableSeeder::class);
         $this->call(SolicitudServicioTableSeeder::class);
         $this->call(VehicProgTableSeeder::class);
@@ -90,8 +92,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ArticuloXProveedorTableSeeder::class);
         $this->call(MovimientoActivoTableSeeder::class);
         $this->call(ManifiestoCargaTableSeeder::class);
-        $this->call(categoryrespelpublicTableSeeder::class);
-        $this->call(subcategoryrespelpublicTableSeeder::class);
         $this->call(RequerimientosClienteTableSeeder::class);
         
     }

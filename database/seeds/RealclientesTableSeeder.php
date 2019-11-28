@@ -1818,7 +1818,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliNit = '800.049.458-4';
 		$cliente->CliShortname = 'TestClient';
 		$cliente->CliCategoria = 'Cliente';
-		$cliente->CliComercial = 21;
+		// $cliente->CliComercial = 21;
 		$cliente->CliStatus = 'Autorizado';
 		$cliente->CliSlug = hash('sha256', rand().time().$cliente->CliNit);
 		$cliente->CliDelete = 0;
@@ -1830,7 +1830,7 @@ class RealclientesTableSeeder extends Seeder
 		$cliente->CliNit = '800.049.458-5';
 		$cliente->CliShortname = 'TestCorporation';
 		$cliente->CliCategoria = 'Cliente';
-		$cliente->CliComercial = 21;
+		// $cliente->CliComercial = 21;
 		$cliente->CliStatus = 'Autorizado';
 		$cliente->CliSlug = hash('sha256', rand().time().$cliente->CliNit);
 		$cliente->CliDelete = 0;
