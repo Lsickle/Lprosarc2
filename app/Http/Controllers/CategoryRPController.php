@@ -121,7 +121,7 @@ class CategoryRPController extends Controller
         $log = new audit();
         $log->AuditTabla="categoryrespelpublic";
         $log->AuditType="Actualizado";
-        $log->AuditRegistro=$Subcategory->ID_CategoryRP ;
+        $log->AuditRegistro=$categoria->ID_CategoryRP ;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$request->input('CategoryRpName');
         $log->save();
