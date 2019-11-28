@@ -646,7 +646,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 18;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -670,7 +670,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 19;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -694,7 +694,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 20;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -718,7 +718,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 21;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -742,7 +742,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 22;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -766,7 +766,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 23;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -790,7 +790,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 24;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -814,7 +814,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 25;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -838,7 +838,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 26;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -862,7 +862,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 27;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -886,7 +886,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 28;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -910,7 +910,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 29;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -934,7 +934,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 30;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -958,7 +958,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 31;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -982,7 +982,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 32;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -1006,7 +1006,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 33;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -1030,7 +1030,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 34;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -1054,7 +1054,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 35;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 0;
         $personal->save();
@@ -1078,7 +1078,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 36;
         $personal->PersDelete = 0;
-        $personal->PersEmail = $personal->PersFirstName.$faker->freeEmailDomain();
+        $personal->PersEmail = $personal->PersFirstName.'@'.$faker->freeEmailDomain();
         $personal->PersEPS = '';
         $personal->PersFactura = 1;
         $personal->save();
