@@ -13,10 +13,15 @@ class SolicitudResiduo extends Model{
     protected $primaryKey = 'ID_SolRes';
 
     public function SolicitudServicio(){
-    	return $this->belogsTo('App\SolicitudServicio','ID_SolSer');
+    	return $this->belongsTo('App\SolicitudServicio', 'FK_SolResSolSer', 'ID_SolSer');
     }
-    public function Respel(){
-    	return $this->belogsTo('App\Respel', 'ID_Respel');
+
+    // public function Respel(){
+    // 	return $this->belogsTo('App\Respel', 'ID_Respel');
+    // }
+
+    public function generespel(){
+    	return $this->belongsTo('App\ResiduosGener', 'FK_SolResRg', 'ID_SGenerRes');
     }
 }
 

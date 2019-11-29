@@ -14,6 +14,9 @@ use Illuminate\Support\Carbon;
 use App\Vehiculo;
 use App\Personal;
 use App\SolicitudServicio;
+use App\GenerSede;
+use App\SolicitudResiduo;
+use App\Documento;
 use Permisos;
 
 class VehicProgController extends Controller
@@ -186,10 +189,108 @@ class VehicProgController extends Controller
 		}
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
-		$programacion->save();
+		// $programacion->save();
+		// return $request->input('FK_ProgServi');
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$SolicitudServicio->SolSerStatus = 'Programado';
+
+		if ($SolicitudServicio->SolSerStatus == 'Aprobado') {
+			
+			$serviciovalidado = $request->input('FK_ProgServi');
+			/*cuenta los diferentes generadores*/
+			$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+			    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+			})
+			->with(['resgener' => function ($query) use ($serviciovalidado){
+			    $query->with(['solres' => function ($query) use ($serviciovalidado){
+			    	$query->where('FK_SolResSolSer', $serviciovalidado);
+			    }]);
+			    $query->whereHas('solres');
+			}])
+			// ->with('resgener.solres')
+			// ->where('residuos_gener.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
+			->get();
+			// $solrest = GenerSede::whereHas('resgener', function ($query) {
+			//     $query->with('solres');
+			// })
+			// ->get();
+		}
+		return $generadoresdelasolicitud;
+		foreach ($solrest as $sole) {
+			/*$programacion->ProgVehtipo: 0 = externo; 1 = Prosarc; 2 = alquilado; */
+			/*DocType: 0 = manifiesto de carga; 1 = certificado; 2 = manifiesto de envio*/
+			switch ($programacion->ProgVehtipo) {
+				/*externo*/
+				case '0':
+					$nuevodoc = new Documento;
+					$nuevodoc->DocType = 0;
+					$nuevodoc->DocNumero = 0;
+					$nuevodoc->DocEspName = 0;
+					$nuevodoc->DocEspValue = 0;
+					$nuevodoc->DocObservacion = 0;
+					$nuevodoc->DocSrc = 0;
+					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
+					$nuevodoc->DocNumRm = 0;
+					$nuevodoc->DocAuthHseq = 0;
+					$nuevodoc->DocAuthJl = 0;
+					$nuevodoc->DocAuthDp = 0;
+					$nuevodoc->DocAnexo = 0;
+					$nuevodoc->FK_CertSolser = $serviciovalidado;
+					$nuevodoc->DocEspValue = 0;
+					return $nuevodoc;
+
+					break;
+
+				/*Prosarc*/
+				case '1':
+					$nuevodoc = new Documento;
+					$nuevodoc->DocType = 0;
+					$nuevodoc->DocNumero = 1;
+					$nuevodoc->DocEspName = 1;
+					$nuevodoc->DocEspValue = 1;
+					$nuevodoc->DocObservacion = 1;
+					$nuevodoc->DocSrc = 1;
+					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
+					$nuevodoc->DocNumRm = 1;
+					$nuevodoc->DocAuthHseq = 0;
+					$nuevodoc->DocAuthJl = 0;
+					$nuevodoc->DocAuthDp = 0;
+					$nuevodoc->DocAnexo = 1;
+					$nuevodoc->FK_CertSolser = $serviciovalidado;
+					$nuevodoc->DocEspValue = 1;
+					return $nuevodoc;
+
+					break;
+
+				/*Alquilado*/
+				case '2':
+					$nuevodoc = new Documento;
+					$nuevodoc->DocType = 0;
+					$nuevodoc->DocNumero = 2;
+					$nuevodoc->DocEspName = 2;
+					$nuevodoc->DocEspValue = 2;
+					$nuevodoc->DocObservacion = 2;
+					$nuevodoc->DocSrc = 2;
+					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
+					$nuevodoc->DocNumRm = 2;
+					$nuevodoc->DocAuthHseq = 0;
+					$nuevodoc->DocAuthJl = 0;
+					$nuevodoc->DocAuthDp = 0;
+					$nuevodoc->DocAnexo = 2;
+					$nuevodoc->FK_CertSolser = $serviciovalidado;
+					$nuevodoc->DocEspValue = 2;
+					return $nuevodoc;
+
+					break;
+				
+				default:
+					return "no encontro el tipo de servicio";
+					break;
+			}
+				// $nuevodoc->save();
+			
+		}
+		// $SolicitudServicio->SolSerStatus = 'Programado';
 		if(!is_null($request->input('typetransportador'))){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
 			$SolicitudServicio->SolSerVehiculo = $vehiculo;
@@ -198,7 +299,7 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
 			$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		}
-		$SolicitudServicio->save();
+		// $SolicitudServicio->save();
 		
 		return redirect()->route('vehicle-programacion.create');
 	}
