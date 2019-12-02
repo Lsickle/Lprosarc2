@@ -205,15 +205,11 @@ class VehicProgController extends Controller
 			    $query->with(['solres' => function ($query) use ($serviciovalidado){
 			    	$query->where('FK_SolResSolSer', $serviciovalidado);
 			    }]);
-			    $query->whereHas('solres');
+			    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+			    	$query->where('FK_SolResSolSer', $serviciovalidado);
+			    });
 			}])
-			// ->with('resgener.solres')
-			// ->where('residuos_gener.ID_SGenerRes', 'solicitud_residuos.FK_SolResRg')
 			->get();
-			// $solrest = GenerSede::whereHas('resgener', function ($query) {
-			//     $query->with('solres');
-			// })
-			// ->get();
 		}
 		return $generadoresdelasolicitud;
 		foreach ($solrest as $sole) {
