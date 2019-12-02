@@ -32,6 +32,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				</div>
 				<div class="row">
 					<div class="col-md-12 ">
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-4">

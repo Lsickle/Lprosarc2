@@ -24,6 +24,8 @@ use App\Departamento;
 use App\Municipio;
 use App\Tarifa;
 use App\Rango;
+use App\Certificado;
+use App\Manifiesto;
 use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
@@ -515,6 +517,87 @@ class SolicitudServicioController extends Controller
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
+
+		// if ($Solicitud->SolSerStatus == 'Conciliado') {
+			
+		// 	$serviciovalidado = $Solicitud->ID_SolSer;
+		// 	/*cuenta los diferentes generadores*/
+		// 	$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+		// 	    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+		// 	})
+		// 	->with(['resgener' => function ($query) use ($serviciovalidado){
+		// 	    $query->with(['solres' => function ($query) use ($serviciovalidado){
+		// 	    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		// 	    	$query->with(['requerimiento.tratamiento', 'requerimiento:ID_Req,FK_ReqTrata']);
+		// 	    }]);
+		// 	    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+		// 	    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		// 	    });
+		// 	}])
+		// 	->get();
+		// 	// return $generadoresdelasolicitud;
+		// 			$documentos = array();
+		// 	foreach ($generadoresdelasolicitud as $genersede) {
+		// 		// $carpeta = array('' => , );
+		// 		foreach ($genersede->resgener as $resgener) {
+		// 			foreach ($resgener->solres as $key) {
+		// 				if ($key->SolResKgConciliado > 0) {
+		// 					switch ($key->requerimiento->tratamiento->TratTipo) {
+		// 						case '0':
+		// 							// return "tratamiento tipo: interno; Certificado";
+		// 							$certificado = new Certificado;
+		// 							$certificado->CertNumero = 1;
+		// 							$certificado->CertEspName = 1;
+		// 							$certificado->CertEspValue = 1;
+		// 							$certificado->CertObservacion = "certificado con la direccion especifica";
+		// 							// $certificado->CertSlug = hash('sha256', rand().time());
+		// 							$certificado->CertSrc = hash('sha256', rand().time()).'.pdf';
+		// 							// $certificado->CertNumRm = 1;
+		// 							$certificado->CertAuthJo = 0;
+		// 							$certificado->CertAuthJl = 0;
+		// 							$certificado->CertAuthDp = 0;
+		// 							$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+		// 							$certificado->FK_ManiSolSer = $Solicitud->ID_SolSer;
+		// 							// $certificado->save();
+
+		// 							// return $certificado;
+		// 							$documentos['certificados'][]=$certificado;
+
+		// 							break;
+
+		// 						case '1':
+		// 							// return "tratamiento tipo: externo; Manifiesto";
+
+		// 							$manifiesto = new Manifiesto;
+		// 							$manifiesto->ManifNumero = 1;
+		// 							$manifiesto->ManifEspName = 1;
+		// 							$manifiesto->ManifEspValue = 1;
+		// 							$manifiesto->ManifObservacion = "manifiesto con la direccion especifica";
+		// 							// $manifiesto->ManifSlug = hash('sha256', rand().time());
+		// 							$manifiesto->ManifSrc = hash('sha256', rand().time()).'.pdf';
+		// 							// $manifiesto->ManifNumRm = 1;
+		// 							$manifiesto->ManiAuthJo = 0;
+		// 							$manifiesto->ManiAuthJl = 0;
+		// 							$manifiesto->ManiAuthDp = 0;
+		// 							$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+		// 							$manifiesto->FK_CertSolser = $Solicitud->ID_SolSer;
+		// 							// $manifiesto->save();
+
+		// 							$documentos['manifiestos'][]=$manifiesto;
+		// 							// return $manifiesto;
+
+		// 							break;
+
+		// 						default:
+		// 							return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
+		// 							break;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 			return $documentos;
+		// }
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";

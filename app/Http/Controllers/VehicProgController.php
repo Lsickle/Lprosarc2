@@ -191,7 +191,7 @@ class VehicProgController extends Controller
 		}
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
-		// $programacion->save();
+		$programacion->save();
 		// return $request->input('FK_ProgServi');
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
@@ -237,7 +237,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 0;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 0;
 							// return $nuevodoc;
 
@@ -258,7 +258,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 1;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 1;
 							// return $nuevodoc;
 
@@ -279,7 +279,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 2;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 2;
 							// return $nuevodoc;
 
@@ -301,7 +301,7 @@ class VehicProgController extends Controller
 						}
 					$puntoderecoleccion = new Recolect;
 					$puntoderecoleccion->FK_ColectSgen = $sole->ID_GSede;
-					$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+					$puntoderecoleccion->FK_ColectProg = $programacion->ID_ProgVeh;
 					$puntoderecoleccion->save();
 				
 					// return $puntoderecoleccion;
@@ -327,7 +327,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 0;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 0;
 							// return $nuevodoc;
 
@@ -340,7 +340,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocNumero = 1;
 							$nuevodoc->DocEspName = 1;
 							$nuevodoc->DocEspValue = 1;
-							$nuevodoc->DocObservacion = "documento con la sede del cliente";
+							$nuevodoc->DocObservacion = "documento con la sede del generador";
 							$nuevodoc->DocSlug = hash('sha256', rand().time());
 							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
 							$nuevodoc->DocNumRm = 1;
@@ -348,7 +348,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 1;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 1;
 							// return $nuevodoc;
 
@@ -361,7 +361,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocNumero = 2;
 							$nuevodoc->DocEspName = 2;
 							$nuevodoc->DocEspValue = 2;
-							$nuevodoc->DocObservacion = "documento con la sede del cliente";
+							$nuevodoc->DocObservacion = "documento con la sede del generador";
 							$nuevodoc->DocSlug = hash('sha256', rand().time());
 							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
 							$nuevodoc->DocNumRm = 2;
@@ -369,7 +369,7 @@ class VehicProgController extends Controller
 							$nuevodoc->DocAuthJl = 0;
 							$nuevodoc->DocAuthDp = 0;
 							$nuevodoc->DocAnexo = 2;
-							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 							$nuevodoc->DocEspValue = 2;
 							// return $nuevodoc;
 
@@ -392,12 +392,12 @@ class VehicProgController extends Controller
 						}
 					}
 					$puntoderecoleccion = new Recolect;
-					$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+					$puntoderecoleccion->FK_ColectProg = $programacion->ID_ProgVeh;
 					$puntoderecoleccion->save();
 
 
 					
-					return $puntoderecoleccion;
+					// return $puntoderecoleccion;
 				break;
 
 			/*recolectar en direccion especifica*/
@@ -418,7 +418,7 @@ class VehicProgController extends Controller
 						$nuevodoc->DocAuthJl = 0;
 						$nuevodoc->DocAuthDp = 0;
 						$nuevodoc->DocAnexo = 0;
-						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 						$nuevodoc->DocEspValue = 0;
 						// return $nuevodoc;
 
@@ -439,7 +439,7 @@ class VehicProgController extends Controller
 						$nuevodoc->DocAuthJl = 0;
 						$nuevodoc->DocAuthDp = 0;
 						$nuevodoc->DocAnexo = 1;
-						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 						$nuevodoc->DocEspValue = 1;
 						// return $nuevodoc;
 
@@ -460,7 +460,7 @@ class VehicProgController extends Controller
 						$nuevodoc->DocAuthJl = 0;
 						$nuevodoc->DocAuthDp = 0;
 						$nuevodoc->DocAnexo = 2;
-						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_SolSer;
 						$nuevodoc->DocEspValue = 2;
 						// return $nuevodoc;
 
@@ -483,7 +483,7 @@ class VehicProgController extends Controller
 					}
 				}
 				$puntoderecoleccion = new Recolect;
-				$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+				$puntoderecoleccion->FK_ColectProg = $programacion->ID_ProgVeh;
 				$puntoderecoleccion->save();
 				break;
 			
@@ -492,7 +492,7 @@ class VehicProgController extends Controller
 				break;
 		}
 		
-		// $SolicitudServicio->SolSerStatus = 'Programado';
+		$SolicitudServicio->SolSerStatus = 'Programado';
 		if(!is_null($request->input('typetransportador'))){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
 			$SolicitudServicio->SolSerVehiculo = $vehiculo;
@@ -501,7 +501,7 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
 			$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		}
-		// $SolicitudServicio->save();
+		$SolicitudServicio->save();
 		
 		return redirect()->route('vehicle-programacion.create');
 	}
