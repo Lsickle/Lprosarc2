@@ -23,5 +23,10 @@ class SolicitudResiduo extends Model{
     public function generespel(){
     	return $this->belongsTo('App\ResiduosGener', 'FK_SolResRg', 'ID_SGenerRes');
     }
+
+    public function docdato()
+    {
+    	return $this->hasOne('App\Docdato', 'FK_DatoSolRes', 'ID_SolRes');
+    }
 }
 

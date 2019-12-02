@@ -17,6 +17,8 @@ use App\SolicitudServicio;
 use App\GenerSede;
 use App\SolicitudResiduo;
 use App\Documento;
+use App\Docdato;
+use App\Recolect;
 use Permisos;
 
 class VehicProgController extends Controller
@@ -211,81 +213,285 @@ class VehicProgController extends Controller
 			}])
 			->get();
 		}
-		return $generadoresdelasolicitud;
-		foreach ($solrest as $sole) {
-			/*$programacion->ProgVehtipo: 0 = externo; 1 = Prosarc; 2 = alquilado; */
-			/*DocType: 0 = manifiesto de carga; 1 = certificado; 2 = manifiesto de envio*/
-			switch ($programacion->ProgVehtipo) {
-				/*externo*/
-				case '0':
-					$nuevodoc = new Documento;
-					$nuevodoc->DocType = 0;
-					$nuevodoc->DocNumero = 0;
-					$nuevodoc->DocEspName = 0;
-					$nuevodoc->DocEspValue = 0;
-					$nuevodoc->DocObservacion = 0;
-					$nuevodoc->DocSrc = 0;
-					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
-					$nuevodoc->DocNumRm = 0;
-					$nuevodoc->DocAuthHseq = 0;
-					$nuevodoc->DocAuthJl = 0;
-					$nuevodoc->DocAuthDp = 0;
-					$nuevodoc->DocAnexo = 0;
-					$nuevodoc->FK_CertSolser = $serviciovalidado;
-					$nuevodoc->DocEspValue = 0;
-					return $nuevodoc;
+		// return $generadoresdelasolicitud;
+		/*$programacion->ProgVehtipo: 0 = externo; 1 = Prosarc; 2 = alquilado; */
+		/*SolSerTypeCollect: 99 = sedes generadores; 98 = sede cliente; 97 = direccion especifica; */
+		/*DocType: 0 = manifiesto de carga; 1 = certificado; 2 = manifiesto de envio*/
+		switch ($SolicitudServicio->SolSerTypeCollect) {
+			/*recolectar en sedes de los generadores*/
+			case '99':
+				foreach ($generadoresdelasolicitud as $sole) {
+					switch ($programacion->ProgVehtipo) {
+						/*externo*/
+						case '0':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 0;
+							$nuevodoc->DocEspName = 0;
+							$nuevodoc->DocEspValue = 0;
+							$nuevodoc->DocObservacion = "no deberia generar documentos";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 0;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 0;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 0;
+							// return $nuevodoc;
 
-					break;
+							break;
 
-				/*Prosarc*/
-				case '1':
-					$nuevodoc = new Documento;
-					$nuevodoc->DocType = 0;
-					$nuevodoc->DocNumero = 1;
-					$nuevodoc->DocEspName = 1;
-					$nuevodoc->DocEspValue = 1;
-					$nuevodoc->DocObservacion = 1;
-					$nuevodoc->DocSrc = 1;
-					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
-					$nuevodoc->DocNumRm = 1;
-					$nuevodoc->DocAuthHseq = 0;
-					$nuevodoc->DocAuthJl = 0;
-					$nuevodoc->DocAuthDp = 0;
-					$nuevodoc->DocAnexo = 1;
-					$nuevodoc->FK_CertSolser = $serviciovalidado;
-					$nuevodoc->DocEspValue = 1;
-					return $nuevodoc;
+						/*Prosarc*/
+						case '1':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 1;
+							$nuevodoc->DocEspName = 1;
+							$nuevodoc->DocEspValue = 1;
+							$nuevodoc->DocObservacion = "ok generar varios documentos";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 1;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 1;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 1;
+							// return $nuevodoc;
 
-					break;
+							break;
 
-				/*Alquilado*/
-				case '2':
-					$nuevodoc = new Documento;
-					$nuevodoc->DocType = 0;
-					$nuevodoc->DocNumero = 2;
-					$nuevodoc->DocEspName = 2;
-					$nuevodoc->DocEspValue = 2;
-					$nuevodoc->DocObservacion = 2;
-					$nuevodoc->DocSrc = 2;
-					$nuevodoc->DocSlug = hash('sha256', rand().time()).'.pdf';
-					$nuevodoc->DocNumRm = 2;
-					$nuevodoc->DocAuthHseq = 0;
-					$nuevodoc->DocAuthJl = 0;
-					$nuevodoc->DocAuthDp = 0;
-					$nuevodoc->DocAnexo = 2;
-					$nuevodoc->FK_CertSolser = $serviciovalidado;
-					$nuevodoc->DocEspValue = 2;
-					return $nuevodoc;
+						/*Alquilado*/
+						case '2':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 2;
+							$nuevodoc->DocEspName = 2;
+							$nuevodoc->DocEspValue = 2;
+							$nuevodoc->DocObservacion = "ok generar varios documentos";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 2;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 2;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 2;
+							// return $nuevodoc;
 
-					break;
+							break;
+						
+						default:
+							return "no encontro el tipo de servicio";
+							break;
+					}
+						$nuevodoc->save();
+
+						foreach ($sole->resgener as $resgener) {
+							foreach ($resgener->solres as $key) {
+								$nuevodocdato = new Docdato;
+								$nuevodocdato->FK_DatoDoc = $nuevodoc->ID_Doc;
+								$nuevodocdato->FK_DatoSolRes = $key->ID_SolRes;
+								$nuevodocdato->save();
+							}
+						}
+					$puntoderecoleccion = new Recolect;
+					$puntoderecoleccion->FK_ColectSgen = $sole->ID_GSede;
+					$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+					$puntoderecoleccion->save();
 				
-				default:
-					return "no encontro el tipo de servicio";
-					break;
-			}
-				// $nuevodoc->save();
+					// return $puntoderecoleccion;
+
+				}
+				break;
+
+			/*recolectar en sede del cliente*/
+			case '98':
+					switch ($programacion->ProgVehtipo) {
+						/*externo*/
+						case '0':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 0;
+							$nuevodoc->DocEspName = 0;
+							$nuevodoc->DocEspValue = 0;
+							$nuevodoc->DocObservacion = "no deberia generar documentos";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 0;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 0;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 0;
+							// return $nuevodoc;
+
+							break;
+
+						/*Prosarc*/
+						case '1':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 1;
+							$nuevodoc->DocEspName = 1;
+							$nuevodoc->DocEspValue = 1;
+							$nuevodoc->DocObservacion = "documento con la sede del cliente";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 1;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 1;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 1;
+							// return $nuevodoc;
+
+							break;
+
+						/*Alquilado*/
+						case '2':
+							$nuevodoc = new Documento;
+							$nuevodoc->DocType = 0;
+							$nuevodoc->DocNumero = 2;
+							$nuevodoc->DocEspName = 2;
+							$nuevodoc->DocEspValue = 2;
+							$nuevodoc->DocObservacion = "documento con la sede del cliente";
+							$nuevodoc->DocSlug = hash('sha256', rand().time());
+							$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+							$nuevodoc->DocNumRm = 2;
+							$nuevodoc->DocAuthHseq = 0;
+							$nuevodoc->DocAuthJl = 0;
+							$nuevodoc->DocAuthDp = 0;
+							$nuevodoc->DocAnexo = 2;
+							$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+							$nuevodoc->DocEspValue = 2;
+							// return $nuevodoc;
+
+							break;
+						
+						default:
+							return "no encontro el tipo de servicio";
+							break;
+					}
+						$nuevodoc->save();
+
+					foreach ($generadoresdelasolicitud as $sole) {
+						foreach ($sole->resgener as $resgener) {
+							foreach ($resgener->solres as $key) {
+								$nuevodocdato = new Docdato;
+								$nuevodocdato->FK_DatoDoc = $nuevodoc->ID_Doc;
+								$nuevodocdato->FK_DatoSolRes = $key->ID_SolRes;
+								$nuevodocdato->save();
+							}
+						}
+					}
+					$puntoderecoleccion = new Recolect;
+					$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+					$puntoderecoleccion->save();
+
+
+					
+					return $puntoderecoleccion;
+				break;
+
+			/*recolectar en direccion especifica*/
+			case '97':
+				switch ($programacion->ProgVehtipo) {
+					/*externo*/
+					case '0':
+						$nuevodoc = new Documento;
+						$nuevodoc->DocType = 0;
+						$nuevodoc->DocNumero = 0;
+						$nuevodoc->DocEspName = 0;
+						$nuevodoc->DocEspValue = 0;
+						$nuevodoc->DocObservacion = "no deberia generar documento";
+						$nuevodoc->DocSlug = hash('sha256', rand().time());
+						$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+						$nuevodoc->DocNumRm = 0;
+						$nuevodoc->DocAuthHseq = 0;
+						$nuevodoc->DocAuthJl = 0;
+						$nuevodoc->DocAuthDp = 0;
+						$nuevodoc->DocAnexo = 0;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->DocEspValue = 0;
+						// return $nuevodoc;
+
+						break;
+
+					/*Prosarc*/
+					case '1':
+						$nuevodoc = new Documento;
+						$nuevodoc->DocType = 0;
+						$nuevodoc->DocNumero = 1;
+						$nuevodoc->DocEspName = 1;
+						$nuevodoc->DocEspValue = 1;
+						$nuevodoc->DocObservacion = "documento con la direccion especifica";
+						$nuevodoc->DocSlug = hash('sha256', rand().time());
+						$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+						$nuevodoc->DocNumRm = 1;
+						$nuevodoc->DocAuthHseq = 0;
+						$nuevodoc->DocAuthJl = 0;
+						$nuevodoc->DocAuthDp = 0;
+						$nuevodoc->DocAnexo = 1;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->DocEspValue = 1;
+						// return $nuevodoc;
+
+						break;
+
+					/*Alquilado*/
+					case '2':
+						$nuevodoc = new Documento;
+						$nuevodoc->DocType = 0;
+						$nuevodoc->DocNumero = 2;
+						$nuevodoc->DocEspName = 2;
+						$nuevodoc->DocEspValue = 2;
+						$nuevodoc->DocObservacion = "documento con la direccion especifica";;
+						$nuevodoc->DocSlug = hash('sha256', rand().time());
+						$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
+						$nuevodoc->DocNumRm = 2;
+						$nuevodoc->DocAuthHseq = 0;
+						$nuevodoc->DocAuthJl = 0;
+						$nuevodoc->DocAuthDp = 0;
+						$nuevodoc->DocAnexo = 2;
+						$nuevodoc->FK_CertSolser = $SolicitudServicio->ID_ID_SolSer;
+						$nuevodoc->DocEspValue = 2;
+						// return $nuevodoc;
+
+						break;
+					
+					default:
+						return "no encontro el tipo de servicio";
+						break;
+				}
+					$nuevodoc->save();
+
+				foreach ($generadoresdelasolicitud as $sole) {
+					foreach ($sole->resgener as $resgener) {
+						foreach ($resgener->solres as $key) {
+							$nuevodocdato = new Docdato;
+							$nuevodocdato->FK_DatoDoc = $nuevodoc->ID_Doc;
+							$nuevodocdato->FK_DatoSolRes = $key->ID_SolRes;
+							$nuevodocdato->save();
+						}
+					}
+				}
+				$puntoderecoleccion = new Recolect;
+				$puntoderecoleccion->FK_ColectProg = $SolicitudServicio->ID_ID_SolSer;
+				$puntoderecoleccion->save();
+				break;
 			
+			default:
+				return "el tipo de servicio es externo";
+				break;
 		}
+		
 		// $SolicitudServicio->SolSerStatus = 'Programado';
 		if(!is_null($request->input('typetransportador'))){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
