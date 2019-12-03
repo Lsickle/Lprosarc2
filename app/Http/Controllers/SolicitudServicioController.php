@@ -7,6 +7,7 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Collection;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -516,88 +517,149 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
-		$Solicitud->save();
+		// $Solicitud->save();
 
-		// if ($Solicitud->SolSerStatus == 'Conciliado') {
+		if ($Solicitud->SolSerStatus == 'Conciliado') {
 			
-		// 	$serviciovalidado = $Solicitud->ID_SolSer;
-		// 	/*cuenta los diferentes generadores*/
-		// 	$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
-		// 	    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
-		// 	})
-		// 	->with(['resgener' => function ($query) use ($serviciovalidado){
-		// 	    $query->with(['solres' => function ($query) use ($serviciovalidado){
-		// 	    	$query->where('FK_SolResSolSer', $serviciovalidado);
-		// 	    	$query->with(['requerimiento.tratamiento', 'requerimiento:ID_Req,FK_ReqTrata']);
-		// 	    }]);
-		// 	    $query->whereHas('solres', function ($query) use ($serviciovalidado){
-		// 	    	$query->where('FK_SolResSolSer', $serviciovalidado);
-		// 	    });
-		// 	}])
-		// 	->get();
-		// 	// return $generadoresdelasolicitud;
-		// 			$documentos = array();
-		// 	foreach ($generadoresdelasolicitud as $genersede) {
-		// 		// $carpeta = array('' => , );
-		// 		foreach ($genersede->resgener as $resgener) {
-		// 			foreach ($resgener->solres as $key) {
-		// 				if ($key->SolResKgConciliado > 0) {
-		// 					switch ($key->requerimiento->tratamiento->TratTipo) {
-		// 						case '0':
-		// 							// return "tratamiento tipo: interno; Certificado";
-		// 							$certificado = new Certificado;
-		// 							$certificado->CertNumero = 1;
-		// 							$certificado->CertEspName = 1;
-		// 							$certificado->CertEspValue = 1;
-		// 							$certificado->CertObservacion = "certificado con la direccion especifica";
-		// 							// $certificado->CertSlug = hash('sha256', rand().time());
-		// 							$certificado->CertSrc = hash('sha256', rand().time()).'.pdf';
-		// 							// $certificado->CertNumRm = 1;
-		// 							$certificado->CertAuthJo = 0;
-		// 							$certificado->CertAuthJl = 0;
-		// 							$certificado->CertAuthDp = 0;
-		// 							$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
-		// 							$certificado->FK_ManiSolSer = $Solicitud->ID_SolSer;
-		// 							// $certificado->save();
+			$serviciovalidado = $Solicitud->ID_SolSer;
+			/*cuenta los diferentes generadores*/
+			$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+			    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+			})
+			->with(['resgener' => function ($query) use ($serviciovalidado){
+			    $query->with(['solres' => function ($query) use ($serviciovalidado){
+			    	$query->where('FK_SolResSolSer', $serviciovalidado);
+			    	$query->with(['requerimiento.tratamiento', 'requerimiento:ID_Req,FK_ReqTrata']);
+			    }]);
+			    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+			    	$query->where('FK_SolResSolSer', $serviciovalidado);
+			    });
+			}])
+			->get();
+			// return $generadoresdelasolicitud;
+					$documentos = collect();
+					// $documentos['certificados']=collect();
+					// $documentos['manifiestos']=collect();
+					$documentos['certificados.residuos']=collect();
+					$documentos['manifiestos.residuos']=collect();
 
-		// 							// return $certificado;
-		// 							$documentos['certificados'][]=$certificado;
+					$x=0;
+			foreach ($generadoresdelasolicitud as $genersede) {
+				// $carpeta = array('' => , );
+					$i=0;
+				foreach ($genersede->resgener as $resgener) {
+					foreach ($resgener->solres as $key) {
+						$i=0;
+						if ($key->SolResKgConciliado > 0) {
+							switch ($key->requerimiento->tratamiento->TratTipo) {
+								case '0':
+									// return "tratamiento tipo: interno; Certificado";
+									$certificado = [];
+									$certificado['CertNumero'] = 1;
+									$certificado['CertEspName'] = 1;
+									$certificado['CertEspValue'] = 1;
+									$certificado['CertObservacion'] = "certificado con la direccion especifica";
+									// $certificado['CertSlug'] = hash('sha256', rand().time());
+									$certificado['CertSrc'] = hash('sha256', rand().time()).'.pdf';
+									// $certificado['CertNumRm'] = 1;
+									$certificado['CertAuthJo'] = 0;
+									$certificado['CertAuthJl'] = 0;
+									$certificado['CertAuthDp'] = 0;
+									$certificado['CertAnexo'] = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$certificado['FK_CertCliente'] = $Solicitud->ID_SolSer;
+									$certificado['FK_CertGenerSede'] = $x;
+									$certificado['FK_CertGestor'] = $Solicitud->ID_SolSer;
+									$certificado['FK_CertTrat'] = $key->requerimiento->tratamiento->ID_Trat;
+									$certificado['FK_CertTransp'] = $x;
+									// $certificado['residuo'][] = $key;
+									// $certificado->save();
 
-		// 							break;
+									// return $certificado;
+									
+									// if ((isset($documentos['certificados']))&&(count($documentos['certificados'])>0)) {
+									// 	foreach ($documentos['certificados'] as $certificadoprevio) {
+									// 		if ($certificadoprevio->FK_CertTrat == $certificado['FK_CertTrat']) {
+									// 			$i++;
+									// 			// $certificadoprevio['residuo'] = Arr::add($certificadoprevio['residuo'], $key);
+									// 			$documentos['certificados']['residuos']->push($key);
+									// 		}
+									// 	}
+									// 	if ($i==0) {
+									// 		$documentos['certificados']->push($certificado);
+									// 		$documentos['certificados']['residuos']->push($key);
+									// 	}
+									// }else{
+									// 	$documentos['certificados']->push($certificado);
+									// 	$documentos['certificados']['residuos']->push($key);
+									// }
+									
+										$documentos['certificados']->push($certificado);
+										// $documentos['certificados.residuos']->push($key);
 
-		// 						case '1':
-		// 							// return "tratamiento tipo: externo; Manifiesto";
+									break;
 
-		// 							$manifiesto = new Manifiesto;
-		// 							$manifiesto->ManifNumero = 1;
-		// 							$manifiesto->ManifEspName = 1;
-		// 							$manifiesto->ManifEspValue = 1;
-		// 							$manifiesto->ManifObservacion = "manifiesto con la direccion especifica";
-		// 							// $manifiesto->ManifSlug = hash('sha256', rand().time());
-		// 							$manifiesto->ManifSrc = hash('sha256', rand().time()).'.pdf';
-		// 							// $manifiesto->ManifNumRm = 1;
-		// 							$manifiesto->ManiAuthJo = 0;
-		// 							$manifiesto->ManiAuthJl = 0;
-		// 							$manifiesto->ManiAuthDp = 0;
-		// 							$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
-		// 							$manifiesto->FK_CertSolser = $Solicitud->ID_SolSer;
-		// 							// $manifiesto->save();
+								case '1':
+									// return "tratamiento tipo: externo; Manifiesto";
 
-		// 							$documentos['manifiestos'][]=$manifiesto;
-		// 							// return $manifiesto;
+									$manifiesto = [];
+									$manifiesto['ManifNumero'] = 1;
+									$manifiesto['ManifEspName'] = 1;
+									$manifiesto['ManifEspValue'] = 1;
+									$manifiesto['ManifObservacion'] = "manifiesto con la direccion especifica";
+									// $manifiesto['ManifSlug'] = hash('sha256', rand().time());
+									$manifiesto['ManifSrc'] = hash('sha256', rand().time()).'.pdf';
+									// $manifiesto['ManifNumRm'] = 1;
+									$manifiesto['ManiAuthJo'] = 0;
+									$manifiesto['ManiAuthJl'] = 0;
+									$manifiesto['ManiAuthDp'] = 0;
+									$manifiesto['ManifAnexo'] = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$manifiesto['FK_ManifSolser'] = $Solicitud->ID_SolSer;
+									$manifiesto['FK_ManifCliente'] = $Solicitud->ID_SolSer;
+									$manifiesto['FK_ManifGenerSede'] = $x;
+									$manifiesto['FK_ManifGestor'] = $Solicitud->ID_SolSer;
+									$manifiesto['FK_ManifTrat'] = $key->requerimiento->tratamiento->ID_Trat;
+									$manifiesto['FK_ManifTransp'] = $x;
+									// $manifiesto['residuo'][] = $key;
+									// $manifiesto->save();
 
-		// 							break;
+									
+									// if ((isset($documentos['manifiestos']))&&(count($documentos['manifiestos'])>0)) {
+									// 	foreach ($documentos['manifiestos'] as $manifiestoprevio) {
+									// 		return $manifiestoprevio;
+									// 		if ($manifiestoprevio->FK_ManifTrat == $manifiesto['FK_ManifTrat']) {
+									// 			$i++;
+									// 			// $manifiestoprevio['residuo'] = Arr::add($manifiestoprevio['residuo'], $key);
+									// 			$documentos['manifiestos']['residuos']->push($key);
+									// 		}
+									// 	}
+									// 	if ($i==0) {
+									// 		$documentos['manifiestos']['residuos']->push($key);
+									// 		$documentos['manifiestos']->push($manifiesto);
+									// 	}
+									// }else{
+									// 	$documentos['manifiestos']['residuos']->push($key);
+									// 	$documentos['manifiestos']->push($manifiesto);
+									// }
+										
+										// $documentos['manifiestos.residuos']->push($key);
+										$documentos['manifiestos']->push($manifiesto);
 
-		// 						default:
-		// 							return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
-		// 							break;
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// 			return $documentos;
-		// }
+
+									// return $manifiesto;
+
+									break;
+
+								default:
+									return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
+									break;
+							}
+						}
+					}
+					$x++;
+				}
+			}
+					return $documentos;
+		}
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
