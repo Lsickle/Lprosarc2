@@ -86,6 +86,7 @@ class VehicProgController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -250,6 +251,7 @@ class VehicProgController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')

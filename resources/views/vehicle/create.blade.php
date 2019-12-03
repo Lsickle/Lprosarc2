@@ -35,11 +35,7 @@
 								<small class="help-block with-errors">*</small>
 								<input type="text" class="form-control placa" id="VehicPlaca" name="VehicPlaca" data-minlength="7" required="true">
 							</div>
-							<div class="form-group col-md-6">
-								<label for="VehicTipo">{{trans('adminlte_lang::message.vehictipo')}}</label>
-								<small class="help-block with-errors">*</small>
-								<input type="text" class="form-control" id="VehicTipo" name="VehicTipo" required="true" maxlength="64">
-							</div>
+							
 							<div class="form-group col-md-6">
 								<label for="VehicCapacidad">{{trans('adminlte_lang::message.vehiccapacidad')}}</label>
 								<small class="help-block with-errors">*</small>
@@ -49,6 +45,20 @@
 								<label for="VehicKmActual">{{trans('adminlte_lang::message.vehickm')}}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="number" class="form-control" id="VehicKmActual" name="VehicKmActual" required="true" max="999999">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="VehicTipo">{{trans('adminlte_lang::message.vehictipo')}}</label>
+								<small class="help-block with-errors">*</small>
+								<select class="form-control" id="VehicTipo" name="VehicTipo" required="true" maxlength="64">
+									<option value="Camión sencillo (2 Ejes)">Camión sencillo (2 Ejes)</option>
+									<option value="Dobletroque (3 Ejes)">Dobletroque (3 Ejes)</option>
+									<option value="Camión de 4 ejes">Camión de 4 ejes</option>
+									<option value="Tractocamión (2S1)">Tractocamión (2S1)</option>
+									<option value="Tractocamión (2S3)">Tractocamión (2S3)</option>
+									<option value="Tractocamión (3S1)">Tractocamión (3S1)</option>
+									<option value="Tractocamión (3S2)">Tractocamión (3S2)</option>
+									<option value="Tractocamión (3S3)">Tractocamión (3S3)</option>
+								</select>
 							</div>
 						</div>
 						<div class="box box-info">
