@@ -29,15 +29,28 @@
 								<th>Aprobación Director Planta</th>
 							</thead>
 							<tbody>
+								@foreach($certificados as $certificado)
 								<tr>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
+									<td>{{$certificado->FK_CertSolser}}</td>
+									<td>{{$certificado->CertNumero}}</td>
+									<td>Certificado - {{$certificado->CertSrc}}</td>
+									<td>{{$certificado->CertObservacion}}</td>
+									<td>{{$certificado->CertAuthJo}}</td>
+									<td>{{$certificado->CertAuthJl}}</td>
+									<td>{{$certificado->CertAuthDp}}</td>
 								</tr>
+								@endforeach
+								@foreach($manifiestos as $manifiesto)
+								<tr>
+									<td>{{$manifiesto->FK_ManifSolser}}</td>
+									<td>{{$manifiesto->ManifNumero}}</td>
+									<td>Manifiesto - {{$manifiesto->ManifSrc}}</td>
+									<td>{{$manifiesto->ManifObservacion}}</td>
+									<td>{{$manifiesto->ManifAuthJo}}</td>
+									<td>{{$manifiesto->ManifAuthJl}}</td>
+									<td>{{$manifiesto->ManifAuthDp}}</td>
+								</tr>
+								@endforeach
 							</tbody>
 						</table>
 					</div>

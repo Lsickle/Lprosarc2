@@ -1007,13 +1007,22 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
-		
-		return view('solicitud-serv.documentos', compact('SolicitudServicio'));
+		$certificados = Certificado::with(['certdato.solres'])
+		->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+		->get();
+
+		$manifiestos = Manifiesto::with(['manifdato.solres'])
+		->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer)
+		->get();
+
+		// return $certificados;
+		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados', 'manifiestos'));
 	}
 
 	public function solservdocstore($id)
 	{
 			
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
 		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
@@ -1030,6 +1039,10 @@ class SolicitudServicioController extends Controller
 		}])
 		->get();
 		// return $generadoresdelasolicitud;
+		/*consulta para el cliente de esta solicitud*/
+		$cliente = Cliente::whereHas('sedes.generador', function ($query) use ($generadoresdelasolicitud) {
+		    $query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
+		})->first();
 		foreach ($generadoresdelasolicitud as $genersede) {
 			foreach ($genersede->resgener as $resgener) {
 				foreach ($resgener->solres as $key) {
@@ -1040,6 +1053,9 @@ class SolicitudServicioController extends Controller
 
 								$certificadoprevio = Certificado::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_CertSolser', $id)
+								->first();
+
+								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
 								->first();
 
 								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)) {
@@ -1053,10 +1069,10 @@ class SolicitudServicioController extends Controller
 
 									$certificado = new Certificado;
 									$certificado->CertType = 0;
-									$certificado->CertNumero = 1;
-									$certificado->CertiEspName = 1;
-									$certificado->CertiEspValue = 1;
-									$certificado->CertObservacion = "certificado con la direccion especifica";
+									$certificado->CertNumero = "";
+									$certificado->CertiEspName = "";
+									$certificado->CertiEspValue = "";
+									$certificado->CertObservacion = "certificado con observacion generica";
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									$certificado->CertNumRm = "C-130";
@@ -1065,11 +1081,16 @@ class SolicitudServicioController extends Controller
 									$certificado->CertAuthDp = 0;
 									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertSolser = $id;
-									$certificado->FK_CertCliente = $id;
-									$certificado->FK_CertGenerSede = $id;
-									$certificado->FK_CertGestor = $id;
+									$certificado->FK_CertCliente = $cliente->ID_Cli;
+									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
+									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
-									$certificado->FK_CertTransp = $id;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$certificado->FK_CertTransp = $cliente->ID_Cli;
+									}else{
+										$certificado->FK_CertTransp = 1;
+									}
+									
 									$certificado->save();
 
 									$dato = new Certdato;
@@ -1098,10 +1119,10 @@ class SolicitudServicioController extends Controller
 								}else{
 									
 									$manifiesto = new Manifiesto;
-									$manifiesto->ManifNumero = 1;
-									$manifiesto->ManifiEspName = 1;
-									$manifiesto->ManifiEspValue = 1;
-									$manifiesto->ManifObservacion = "manifiesto con la direccion especifica";
+									$manifiesto->ManifNumero = "";
+									$manifiesto->ManifiEspName = "";
+									$manifiesto->ManifiEspValue = "";
+									$manifiesto->ManifObservacion = "manifiesto con observacion generica";
 									$manifiesto->ManifSlug = hash('sha256', rand().time());
 									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
 									$manifiesto->ManifNumRm = "M-16";
@@ -1110,11 +1131,15 @@ class SolicitudServicioController extends Controller
 									$manifiesto->ManifAuthDp = 0;
 									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$manifiesto->FK_ManifSolser = $id;
-									$manifiesto->FK_ManifCliente = $id;
-									$manifiesto->FK_ManifGenerSede = $id;
-									$manifiesto->FK_ManifGestor = $id;
+									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
+									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
+									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->FK_TratProv;
 									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
-									$manifiesto->FK_ManifTransp = $id;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+									}else{
+										$manifiesto->FK_ManifTransp = 1;
+									}
 									$manifiesto->save();
 
 									$dato = new Manifdato;

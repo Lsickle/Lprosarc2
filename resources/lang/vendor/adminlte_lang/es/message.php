@@ -629,7 +629,7 @@ return [
     'solsertypetransdescript' => 'Seleccione que tipo de transportador hará la recolección y/o entrega a la planta de Prosarc S.A. ESP. <br> Puede seleccionar transportador a Prosarc S.A. ESP. o un transportador propio.',
     'solsertransprosarc'      => 'Transportador Prosarc S.A. ESP.',
     'solsertranspro'          => 'Transportador Propio',
-    'solsertransprodescript'  => 'Seleccione el transportador que hará la entrega a la plata de Prosarc S.A. ESP. <br> Puede seleccionar como transportador a su misma empresa o seleccionar a otro transportador, <b>debe ser preciso en el ingreso de los datos de este transportador</b> ya que estos datos serán utilizados para generar el <b>certificado</b>.',
+    'solsertransprodescript'  => 'Seleccione el transportador que hará la entrega a la plata de Prosarc S.A. ESP. <br> Puede seleccionar como transportador a su misma empresa o seleccionar a otro transportador, <b>debe ser preciso en el ingreso de los datos de este transportador</b> ya que estos datos serán utilizados, para la recepción de los residuos, en la Planta de tratamiento de <b>Prosarc S.A. ESP.</b>.',
     'solsertransother'        => 'Otro Transportador',
     'solsertransname'         => 'Nombre de la Transportadora',
     'solsertransnit'          => 'Nit de la Transportadora',

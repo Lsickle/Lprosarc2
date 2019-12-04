@@ -488,7 +488,7 @@ class VehicProgController extends Controller
 				break;
 			
 			default:
-				return "el tipo de servicio es externo";
+				// return "el tipo de servicio es externo";
 				break;
 		}
 		
