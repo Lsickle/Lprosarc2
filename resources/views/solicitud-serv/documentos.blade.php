@@ -29,15 +29,36 @@
 								<th>Aprobación Director Planta</th>
 							</thead>
 							<tbody>
+								@foreach($certificados as $certificado)
 								<tr>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
-									<td>data1234</td>
+									<td>{{$certificado->FK_CertSolser}}</td>
+									<td>{{$certificado->ID_Cert}}</td>
+									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
+										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
+									@else
+										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
+									@endif
+									<td>{{$certificado->CertObservacion}}</td>
+									<td>{{$certificado->CertAuthJo}}</td>
+									<td>{{$certificado->CertAuthJl}}</td>
+									<td>{{$certificado->CertAuthDp}}</td>
 								</tr>
+								@endforeach
+								@foreach($manifiestos as $manifiesto)
+								<tr>
+									<td>{{$manifiesto->FK_ManifSolser}}</td>
+									<td>{{$manifiesto->ID_Manif}}</td>
+									@if($manifiesto->ManifSrc!=="ManifiestoDefault.pdf")
+										<td class="text-center"><a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-invoice'></a></td>
+									@else
+										<td class="text-center"><a disabled method='get' href='/img/{{$manifiesto->ManifSrc}}' class='btn btn-default'><i class='fas fa-file-invoice fa-lg'></a></td>
+									@endif
+									<td>{{$manifiesto->ManifObservacion}}</td>
+									<td>{{$manifiesto->ManifAuthJo}}</td>
+									<td>{{$manifiesto->ManifAuthJl}}</td>
+									<td>{{$manifiesto->ManifAuthDp}}</td>
+								</tr>
+								@endforeach
 							</tbody>
 						</table>
 					</div>

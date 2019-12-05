@@ -12,28 +12,28 @@ class ManifiestoCargaTableSeeder extends Seeder
      */
     public function run()
     {
-        $manicarg = new ManifiestoCarga();
-        $manicarg->FK_ManiCargProgVeh = 1;
-        $manicarg->save();
+        // $manicarg = new ManifiestoCarga();
+        // $manicarg->FK_ManiCargProgVeh = 1;
+        // $manicarg->save();
 
 
-        $manicarg = new ManifiestoCarga();
-        $manicarg->FK_ManiCargProgVeh = 2;
-        $manicarg->save();
+        // $manicarg = new ManifiestoCarga();
+        // $manicarg->FK_ManiCargProgVeh = 2;
+        // $manicarg->save();
 
 
-        $manicarg = new ManifiestoCarga();
-        $manicarg->FK_ManiCargProgVeh = 3;
-        $manicarg->save();
+        // $manicarg = new ManifiestoCarga();
+        // $manicarg->FK_ManiCargProgVeh = 3;
+        // $manicarg->save();
 
 
-        $manicarg = new ManifiestoCarga();
-        $manicarg->FK_ManiCargProgVeh = 4;
-        $manicarg->save();
+        // $manicarg = new ManifiestoCarga();
+        // $manicarg->FK_ManiCargProgVeh = 4;
+        // $manicarg->save();
 
 
-        $manicarg = new ManifiestoCarga();
-        $manicarg->FK_ManiCargProgVeh = 5;
-        $manicarg->save();
+        // $manicarg = new ManifiestoCarga();
+        // $manicarg->FK_ManiCargProgVeh = 5;
+        // $manicarg->save();
     }
 }

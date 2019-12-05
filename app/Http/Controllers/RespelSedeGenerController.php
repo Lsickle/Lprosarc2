@@ -32,7 +32,7 @@ class RespelSedeGenerController extends Controller
                 $RespelSedeGener = new ResiduosGener;
                 $RespelSedeGener->FK_SGener = $SGener->ID_GSede;
                 $RespelSedeGener->FK_Respel = $Respel2->ID_Respel;
-                $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_SGener);
+                $RespelSedeGener->SlugSGenerRes = hash('sha256', rand().time().$RespelSedeGener->FK_SGener.$RespelSedeGener->FK_Respel);
                 $RespelSedeGener->DeleteSGenerRes = 0;
                 $RespelSedeGener->save();
             }

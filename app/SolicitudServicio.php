@@ -52,4 +52,10 @@ class SolicitudServicio extends Model
 	public function ManifiestoCarga(){
 		return $this->hasMany('App\ManifiestoCarga','ID_ManiCarg','id');//como solicitud de servicio tiene muchos manifiesto de carga
 	}
+
+	/*consulta para with de documentos*/
+	public function documentos()
+	{
+		return $this->hasMany('App\Documento', 'FK_CertSolser', 'ID_SolSer');
+	}
 }

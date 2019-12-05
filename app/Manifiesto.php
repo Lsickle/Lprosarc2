@@ -12,4 +12,8 @@ class Manifiesto extends Model{
     public function SolicitudServicio(){
     	return $this->belogsTo('App\SolicitudServicio','ID_SolSer');
     }
+
+    public function manifdato(){
+    	return $this->hasMany('App\Manifdato','FK_DatoManif', 'ID_Manif');
+    }
 }

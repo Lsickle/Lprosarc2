@@ -29,7 +29,7 @@ class Sede extends Model
 	 return $this->belongsTo('App\Municipio', 'FK_SedeMun', 'ID_Mun');
 	}
 	public function generador(){
-        return $this->hasMany('App\generador', 'ID_Gener', 'id');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
+        return $this->hasMany('App\Generador', 'FK_GenerCli', 'ID_Sede');//como sede tiene muchas generadores el busca automaticamente el campo negocios_id
 	}
     public function SolicitudServicio(){
         return $this->hasMany('App\SolicitudServicio', 'ID_SolSer', 'id');//como sede tiene muchas solicitudes de servicio

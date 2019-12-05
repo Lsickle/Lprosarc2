@@ -58,7 +58,7 @@ Subcategorías
 <script>
     var contador = 1;
     function AgregarSubCat(){
-        var subcategoria = '<div class="col-md-6" id="subcategoria'+contador+'"><label for="subcategorianame[]">SubCategoría </label><div class="input-group"><input maxlength="60" id="subcategorianame[]" class="form-control" type="text" name="SubCategoryRpName[]"><a onclick="EliminarSubCat('+contador+')" class="input-group-addon" style=" color: red;" data-toggle="popover" title="Eliminar SubCategoría" data-content="haga click para eliminar la SubCategoria y luego envie el formulario" data-html="true" data-trigger="hover"><i class="fas fa-trash"></i></a></div></div>';
+        var subcategoria = '<div class="col-md-6" id="subcategoria'+contador+'"><label for="subcategorianame[]">SubCategoría </label><div class="input-group"><input maxlength="60" id="subcategorianame[]" class="form-control" type="text" name="SubCategoryRpName[]"><a onclick="EliminarSubCat('+contador+')" class="input-group-addon" style=" color: red;" title="Eliminar SubCategoría" ><i class="fas fa-trash"></i></a></div></div>';
         $("#categoriapanel").append(subcategoria);
         $("#myForm").validator('update');
         contador= parseInt(contador)+1;
