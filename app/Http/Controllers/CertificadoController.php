@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Certificado;
 use App\SolicitudServicio;
 
@@ -17,10 +18,9 @@ class CertificadoController extends Controller
      */
     public function index()
     {
-        $Certificados = DB::table('certificados')
-            ->select('certificados.*')
-            ->get();
-        return view('resivos.indexCertificado', compact('Certificados')); 
+        $certificados = Certificado::all();
+
+        return view('certificados.index', compact('certificados')); 
     }
 
     /**
@@ -30,28 +30,28 @@ class CertificadoController extends Controller
      */
     public function create($id)
     {
-        $SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-        if (!$SolicitudServicio) {
-            abort(404);
-        }
-        $certificado = new Certificado;
-        $certificado->CertNumero = '';
-        $certificado->CertiEspName = '';
-        $certificado->CertiEspValue = '';
-        $certificado->CertObservacion = '';
-        $certificado->CertSrc = '';
-        $certificado->CertAuthJo = '';
-        $certificado->CertAuthJl = '';
-        $certificado->CertAuthDp = '';
-        $certificado->CertAnexo = '';
-        $certificado->FK_CertSolser = $SolicitudServicio->ID_SolSer;
-        $certificado->save();
+        // $SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+        // if (!$SolicitudServicio) {
+        //     abort(404);
+        // }
+        // $certificado = new Certificado;
+        // $certificado->CertNumero = '';
+        // $certificado->CertiEspName = '';
+        // $certificado->CertiEspValue = '';
+        // $certificado->CertObservacion = '';
+        // $certificado->CertSrc = '';
+        // $certificado->CertAuthJo = '';
+        // $certificado->CertAuthJl = '';
+        // $certificado->CertAuthDp = '';
+        // $certificado->CertAnexo = '';
+        // $certificado->FK_CertSolser = $SolicitudServicio->ID_SolSer;
+        // $certificado->save();
 
-        $certificado->CertNumero = $certificado->ID_SolSer;
-        $certificado->update();
+        // $certificado->CertNumero = $certificado->ID_SolSer;
+        // $certificado->update();
 
 
-        return view('certificados.edit', compact('SolicitudServicio')); 
+        // return view('certificados.edit', compact('SolicitudServicio')); 
 
         // return redirect()->route('solicitud-servicio.solservdocindex', compact('id'));
     }
@@ -78,7 +78,8 @@ class CertificadoController extends Controller
      */
     public function show($id)
     {
-        //
+        $certificado = Certificado::where('CertSlug', $id)->first();
+        return view('certificados.show', compact('certificado')); 
     }
 
     /**
@@ -89,7 +90,8 @@ class CertificadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $certificado = Certificado::where('CertSlug', $id)->first();
+        return view('certificados.edit', compact('certificado')); 
     }
 
     /**
@@ -113,5 +115,37 @@ class CertificadoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function firmar($id, $servicio)
+    {
+        $certificado = Certificado::where('CertSlug', $id)->first();
+        switch (Auth::user()->UsRol) {
+            case 'Hseq':
+                $certificado->CertAuthHseq = 1;
+                break;
+
+            case 'JefeOperaciones':
+                $certificado->CertAuthJo = 1;
+                break;
+
+            case 'JefeLogistica':
+                $certificado->CertAuthJl = 1;
+                break;
+
+            case 'AdministradorPlanta':
+                $certificado->CertAuthDp = 1;
+                break;
+
+            case 'Programador':
+                $certificado->CertAuthHseq = 1;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $certificado->save();
+        return redirect()->route('solicitud-servicio.documentos', [$servicio]);
     }
 }

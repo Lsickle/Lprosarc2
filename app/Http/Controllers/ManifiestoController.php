@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Manifiesto;
 use Illuminate\Support\Facades\DB;
 
@@ -16,11 +17,9 @@ class ManifiestoController extends Controller
      */
     public function index()
     {
-        $Manifiestos = DB::table('manifiestos')
-            ->select('manifiestos.*')
-            ->get();
+        $manifiestos = Manifiesto::all();
 
-        return view('resivos.indexManifiesto', compact('Manifiestos'));
+        return view('manifiestos.index', compact('manifiestos'));
     }
 
     /**
@@ -52,7 +51,8 @@ class ManifiestoController extends Controller
      */
     public function show($id)
     {
-        //
+        $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
+        return view('manifiestos.show', compact('manifiesto')); 
     }
 
     /**
@@ -63,7 +63,8 @@ class ManifiestoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
+        return view('manifiestos.edit', compact('manifiesto')); 
     }
 
     /**
@@ -87,5 +88,38 @@ class ManifiestoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function firmar($id, $servicio)
+    {
+        $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
+        switch (Auth::user()->UsRol) {
+            case 'Hseq':
+                $manifiesto->ManifAuthHseq = 1;
+                break;
+
+            case 'JefeOperaciones':
+                $manifiesto->ManifAuthJo = 1;
+                break;
+
+            case 'JefeLogistica':
+                $manifiesto->ManifAuthJl = 1;
+                break;
+
+            case 'AdministradorPlanta':
+                $manifiesto->ManifAuthDp = 1;
+                break;
+
+            case 'Programador':
+                $manifiesto->ManifAuthHseq = 1;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $manifiesto->save();
+        return redirect()->route('solicitud-servicio.documentos', [$servicio]);
     }
 }

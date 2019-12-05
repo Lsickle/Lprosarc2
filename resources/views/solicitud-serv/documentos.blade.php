@@ -24,9 +24,18 @@
 								<th>#</th>
 								<th>Documento</th>
 								<th>Observación</th>
+								<th>Aprobación HSEQ</th>
 								<th>Aprobación Operaciones</th>
-								<th>Aprobación Logistica</th>
+								<th>Aprobación Logística</th>
 								<th>Aprobación Director Planta</th>
+								
+								@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+									<th>Ver</th>
+								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<th>Firmar</th>
+								@endif
+								<th>Actualizado el:</th>
 							</thead>
 							<tbody>
 								@foreach($certificados as $certificado)
@@ -39,9 +48,41 @@
 										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
 									@endif
 									<td>{{$certificado->CertObservacion}}</td>
-									<td>{{$certificado->CertAuthJo}}</td>
-									<td>{{$certificado->CertAuthJl}}</td>
-									<td>{{$certificado->CertAuthDp}}</td>
+									<td class="text-center">
+										@if($certificado->CertAuthHseq === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente</p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($certificado->CertAuthJo === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($certificado->CertAuthJl === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($certificado->CertAuthDp === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+									<td class="text-center"><a method='get' href='/certificado/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Certificado</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<td class="text-center"><a method='get' href='/certificado/{{$certificado->CertSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									<td>{{$certificado->updated_at}}</td>
 								</tr>
 								@endforeach
 								@foreach($manifiestos as $manifiesto)
@@ -54,9 +95,41 @@
 										<td class="text-center"><a disabled method='get' href='/img/{{$manifiesto->ManifSrc}}' class='btn btn-default'><i class='fas fa-file-invoice fa-lg'></a></td>
 									@endif
 									<td>{{$manifiesto->ManifObservacion}}</td>
-									<td>{{$manifiesto->ManifAuthJo}}</td>
-									<td>{{$manifiesto->ManifAuthJl}}</td>
-									<td>{{$manifiesto->ManifAuthDp}}</td>
+									<td class="text-center">
+										@if($manifiesto->ManifAuthHseq === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente</p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($manifiesto->ManifAuthJo === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($manifiesto->ManifAuthJl === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									<td class="text-center">
+										@if($manifiesto->ManifAuthDp === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+									<td class="text-center"><a method='get' href='/manifiesto/{{$manifiesto->ManifSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Manifiesto</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<td class="text-center"><a method='get' href='/manifiesto/{{$manifiesto->ManifSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Manifiesto</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el Manifiesto como firmado en la Base de datos  </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									<td>{{$manifiesto->updated_at}}</td>
 								</tr>
 								@endforeach
 							</tbody>

@@ -112,10 +112,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
-	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex');
+	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos'); ;
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificado', 'CertificadoController');
+	Route::get('/certificado/{id}/firmar/{servicio}', 'CertificadoController@firmar');
 	Route::resource('/manifiesto', 'ManifiestoController');
+	Route::get('/manifiesto/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 	Route::resource('/code', 'QrCodesController');
 	Route::resource('/horario', 'HorarioController');

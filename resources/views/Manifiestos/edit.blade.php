@@ -1,7 +1,7 @@
 @extends('layouts.app')
 {{-- vista de edición para el cliente --}}
 @section('htmlheader_title')
-Certificado edición
+Manifiesto edición
 @endsection
 
 @section('contentheader_title')
@@ -17,11 +17,11 @@ Certificado edición
 			<div class="col-md-12 col-md-offset-0">
 				<!-- Default box -->
 				<div class="box">
-					<form role="form" action="/respels/" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/manifiestos/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
 						@csrf
 						<div class="box-header">
-							<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
+							<h3 class="box-title">edición de manifiesto</h3>
 						</div>
 							<!-- left column -->
 							<!-- general form elements -->
@@ -37,7 +37,8 @@ Certificado edición
 										</ul>
 									</div>
 								@endif
-								@include('layouts.CertificadoPartials.CertificadoformEdit')
+								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+								@include('layouts.ManifiestoPartials.ManifiestoformEdit')
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
