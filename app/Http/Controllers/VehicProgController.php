@@ -91,6 +91,7 @@ class VehicProgController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -100,6 +101,7 @@ class VehicProgController extends Controller
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
 				->where('vehiculos.FK_VehiSede', 1)
+				->where('VehicDelete', 0)
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
@@ -532,6 +534,7 @@ class VehicProgController extends Controller
 			}
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
+				->where('VehicDelete', 0)
 				->get();
 			if($programacion->ProgVehtipo <> 0){
 				$SedeVehiculo = DB::table('sedes')
@@ -553,6 +556,7 @@ class VehicProgController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')

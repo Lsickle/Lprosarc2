@@ -377,7 +377,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													}
 												@endphp
 											<tr>
-												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} ><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
+												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
+													<i class="fas fa-external-link-alt"></i>
+													</a>
+													@if((in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->SustanciaControladaTipo == 0)&&($Residuo->SustanciaControlada != Null))
+														<a><i class="fas fa-flask" style="color: green"></i></a>
+													@endif
+													 {{$Residuo->RespelName}}</td>
 												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliName : ''}}</td>
 												<td>
 													<ul>
