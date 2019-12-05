@@ -77,10 +77,10 @@
 										@endif
 									</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
-									<td class="text-center"><a method='get' href='/certificado/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Certificado</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Certificado</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<td class="text-center"><a method='get' href='/certificado/{{$certificado->CertSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
 									<td>{{$certificado->updated_at}}</td>
 								</tr>
@@ -124,10 +124,10 @@
 										@endif
 									</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
-									<td class="text-center"><a method='get' href='/manifiesto/{{$manifiesto->ManifSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Manifiesto</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									<td class="text-center"><a method='get' href='/manifiestos/{{$manifiesto->ManifSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Actualizar Manifiesto</b>" data-content="<p style='width: 50%'>Puede actualizar el Certificado e ingresar información relevante para la generación del mismo </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<td class="text-center"><a method='get' href='/manifiesto/{{$manifiesto->ManifSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Manifiesto</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el Manifiesto como firmado en la Base de datos  </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									<td class="text-center"><a method='get' href='/manifiestos/{{$manifiesto->ManifSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Manifiesto</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el Manifiesto como firmado en la Base de datos  </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
 									<td>{{$manifiesto->updated_at}}</td>
 								</tr>
