@@ -32,8 +32,12 @@
 								@foreach($certificados as $certificado)
 								<tr>
 									<td>{{$certificado->FK_CertSolser}}</td>
-									<td>{{$certificado->CertNumero}}</td>
-									<td>Certificado - {{$certificado->CertSrc}}</td>
+									<td>{{$certificado->ID_Cert}}</td>
+									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
+										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
+									@else
+										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
+									@endif
 									<td>{{$certificado->CertObservacion}}</td>
 									<td>{{$certificado->CertAuthJo}}</td>
 									<td>{{$certificado->CertAuthJl}}</td>
@@ -43,8 +47,12 @@
 								@foreach($manifiestos as $manifiesto)
 								<tr>
 									<td>{{$manifiesto->FK_ManifSolser}}</td>
-									<td>{{$manifiesto->ManifNumero}}</td>
-									<td>Manifiesto - {{$manifiesto->ManifSrc}}</td>
+									<td>{{$manifiesto->ID_Manif}}</td>
+									@if($manifiesto->ManifSrc!=="ManifiestoDefault.pdf")
+										<td class="text-center"><a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-invoice'></a></td>
+									@else
+										<td class="text-center"><a disabled method='get' href='/img/{{$manifiesto->ManifSrc}}' class='btn btn-default'><i class='fas fa-file-invoice fa-lg'></a></td>
+									@endif
 									<td>{{$manifiesto->ManifObservacion}}</td>
 									<td>{{$manifiesto->ManifAuthJo}}</td>
 									<td>{{$manifiesto->ManifAuthJl}}</td>

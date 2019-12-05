@@ -145,31 +145,31 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 								@switch($SolicitudServicio->SolSerStatus)
 								    @case('Pendiente')
-								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el Cli<b>ente ac</b>epte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Pendiente')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Aceptado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Aprobado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Programado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Completado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Recibida')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Conciliado')
@@ -177,7 +177,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								        @break
 
 								    @case('No Conciliado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Tratado')
