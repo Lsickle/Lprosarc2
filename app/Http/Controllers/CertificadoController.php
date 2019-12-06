@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Certificado;
 use App\Cliente;
 use App\Audit;
+use App\Permisos;
 use App\SolicitudServicio;
 
 
@@ -20,6 +21,7 @@ class CertificadoController extends Controller
      */
     public function index()
     {
+            
         $certificados = Certificado::where(function($query){
             switch (Auth::user()->UsRol) {
                 case 'Cliente':
@@ -31,12 +33,18 @@ class CertificadoController extends Controller
                     ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
                     ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                     ->value('clientes.ID_Cli');
+
+                    $servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
+                    ->where('SolSerStatus', 'Certificacion')
+                    ->get('ID_SolSer');
+
                     // return $UserSedeID;
                     $query->where('FK_CertCliente', $UserSedeID);
                     $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
                     $query->where('CertAuthHseq', '!=', 0);
                     $query->where('CertAuthJl', '!=', 0);
                     $query->where('CertAuthDp', '!=', 0);
+                    $query->whereIn('FK_CertSolser', $servicioscertificadosdelcliente);
                     break;
 
                 case 'Comercial':
@@ -48,11 +56,12 @@ class CertificadoController extends Controller
                     break;
                 
                 default:
+                    // $query->where('ID_Cert', '>', 0);
                     break;
             }
         })
         ->get();
-
+        
         return view('certificados.index', compact('certificados')); 
     }
 

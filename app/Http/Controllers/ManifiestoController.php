@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Manifiesto;
 use App\Cliente;
 use App\Audit;
-use Illuminate\Support\Facades\DB;
+use App\Permisos;
+use App\SolicitudServicio;
 
 
 class ManifiestoController extends Controller
@@ -18,7 +20,7 @@ class ManifiestoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $manifiestos = Manifiesto::where(function($query){
             switch (Auth::user()->UsRol) {
                 case 'Cliente':
@@ -30,12 +32,17 @@ class ManifiestoController extends Controller
                     ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
                     ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                     ->value('clientes.ID_Cli');
-                    // return $UserSedeID;
+
+                    $servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
+                    ->where('SolSerStatus', 'Certificacion')
+                    ->get('ID_SolSer');
+
                     $query->where('FK_ManifCliente', $UserSedeID);
                     $query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
-                    $query->where('ManifAuthDp', 1);
-                    $query->where('ManifAuthJl', 1);
-                    $query->where('ManifAuthHseq', 1);
+                    $query->where('ManifAuthDp','!=', 0);
+                    $query->where('ManifAuthJl','!=', 0);
+                    $query->where('ManifAuthHseq','!=', 0);
+                    $query->whereIn('FK_ManifSolser', $servicioscertificadosdelcliente);
                     break;
 
                 case 'Comercial':

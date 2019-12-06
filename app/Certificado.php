@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Certificado extends Model{
     protected $table='certificados';
-    protected $fillable = ['CertNumero','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertAuthJo','CertAuthJl','CertAuthDp','CertAnexo'];
+    protected $fillable = ['CertType','CertNumero','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertSlug','CertNumRm','CertAuthHseq','CertAuthJo','CertAuthJl','CertAuthDp','CertAnexo','FK_CertSolser','FK_CertCliente','FK_CertGenerSede','FK_CertGestor','FK_CertTrat','FK_CertTransp'];
     protected $primaryKey = 'ID_Cert';
 
     public function SolicitudServicio(){
-    	return $this->belogsTo('App\SolicitudServicio','ID_SolSer');
+    	return $this->belogsTo('App\SolicitudServicio', 'FK_CertSolser', 'ID_SolSer');
     }
 
     public function certdato(){
