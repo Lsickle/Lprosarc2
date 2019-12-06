@@ -42,16 +42,17 @@
 								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">observaciones de la base de datos</textarea>
 							</li>
 							<li class="list-group-item">
-								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
-							<li class="list-group-item">
+							
+							{{-- <li class="list-group-item">
 								<b>Firma JO</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
-							</li>
+							</li> --}}
 							<li class="list-group-item">
 								<b>Firma JL</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
 							<li class="list-group-item">
-								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								<div class="col-md-12 form-group">

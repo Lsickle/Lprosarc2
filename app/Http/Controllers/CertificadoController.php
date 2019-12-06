@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Certificado;
 use App\Cliente;
+use App\Generador;
+use App\Tratamiento;
 use App\Audit;
+use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
 
@@ -121,7 +124,41 @@ class CertificadoController extends Controller
     public function show($id)
     {
         $certificado = Certificado::where('CertSlug', $id)->first();
-        return view('certificados.show', compact('certificado')); 
+
+
+        $generador = Generador::with(['GenerSede' => function ($query) use ($certificado){
+            $query->where('ID_GSede', $certificado->FK_CertGenerSede);
+
+        }])
+        ->whereHas('GenerSede', function ($query) use ($certificado){
+            $query->where('ID_GSede', $certificado->FK_CertGenerSede);
+            
+        })
+        ->first();
+
+        $transportador = Cliente::with('sedes')
+        ->where('ID_Cli',$certificado->FK_CertTransp)
+        ->first();
+
+        $cliente = Cliente::with('sedes')
+        ->where('ID_Cli',$certificado->FK_CertCliente)
+        ->first();
+
+        $gestor = Cliente::with('sedes')
+        ->where('ID_Cli',$certificado->FK_CertGestor)
+        ->first();
+
+        $tratamiento = Tratamiento::with('gestor.clientes')
+        ->where('ID_Trat',$certificado->FK_CertTrat)
+        ->first();
+
+        $residuos = Certdato::with('solres.requerimiento.respel')
+        ->where('FK_DatoCert',$certificado->ID_Cert)
+        ->get();
+
+        // return $residuos;
+
+        return view('certificados.show', compact('certificado', 'generador','transportador','cliente','gestor','tratamiento','residuos')); 
     }
 
     /**

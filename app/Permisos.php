@@ -250,7 +250,7 @@ class Permisos{
 		solicitud-serv/show/documentos
 	*/
 
-	const SIGNMANIFCERT = ['Programador','JefeLogistica','JefeOperaciones','AdministradorPlanta','Hseq'];
+	const SIGNMANIFCERT = ['Programador','JefeLogistica','JefeOperaciones','AdministradorPlanta','Hseq','AsistenteLogistica','Supervisor'];
 	/*Using ->
 		solicitud-serv/show/documentos
 	*/
