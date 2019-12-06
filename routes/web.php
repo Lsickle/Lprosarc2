@@ -116,8 +116,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificados', 'CertificadoController');
 	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
+	Route::get('/certificados/{id}/firmar', 'CertificadoController@firmarindex');
 	Route::resource('/manifiestos', 'ManifiestoController');
 	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
+	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 	Route::resource('/code', 'QrCodesController');
 	Route::resource('/horario', 'HorarioController');

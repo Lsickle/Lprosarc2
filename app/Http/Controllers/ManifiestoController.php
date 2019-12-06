@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Manifiesto;
+use App\Cliente;
+use App\Audit;
 use Illuminate\Support\Facades\DB;
 
 
@@ -17,7 +19,38 @@ class ManifiestoController extends Controller
      */
     public function index()
     {
-        $manifiestos = Manifiesto::all();
+        $manifiestos = Manifiesto::where(function($query){
+            switch (Auth::user()->UsRol) {
+                case 'Cliente':
+                    /*se define la sede del usuario actual*/
+                    $UserSedeID = DB::table('personals')
+                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                    ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->value('clientes.ID_Cli');
+                    // return $UserSedeID;
+                    $query->where('FK_ManifCliente', $UserSedeID);
+                    $query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
+                    $query->where('ManifAuthDp', 1);
+                    $query->where('ManifAuthJl', 1);
+                    $query->where('ManifAuthHseq', 1);
+                    break;
+
+                case 'Comercial':
+                    /*se define la sede del usuario actual*/
+                    $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get('ID_Cli');
+
+                    // return $clientes;
+                    $query->whereIn('FK_ManifCliente', $clientes);
+                    break;
+                
+                default:
+                    break;
+            }
+        })
+        ->get();
 
         return view('manifiestos.index', compact('manifiestos'));
     }
@@ -93,26 +126,107 @@ class ManifiestoController extends Controller
 
     public function firmar($id, $servicio)
     {
+        /*indice de firmas */
+        // 0:Pendiente
+        // 1:Director Planta
+        // 2:Jefe de Logistica
+        // 3:Jefe de Operaciones
+        // 4:Supervisor de Turno
+        // 5:Ingeniero HSEQ
+        // 6:Asistente de Logistica
+        // 7:Programador
         $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
         switch (Auth::user()->UsRol) {
             case 'Hseq':
-                $manifiesto->ManifAuthHseq = 1;
+                $manifiesto->ManifAuthHseq = 5;
                 break;
 
             case 'JefeOperaciones':
-                $manifiesto->ManifAuthJo = 1;
+                if (($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthDp == 3)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 3;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 3;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 3;
+                    $c=$c+1;
+                }
                 break;
 
             case 'JefeLogistica':
-                $manifiesto->ManifAuthJl = 1;
+                $manifiesto->ManifAuthJl = 2;
                 break;
 
             case 'AdministradorPlanta':
                 $manifiesto->ManifAuthDp = 1;
                 break;
 
+            case 'Supervisor':
+                if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthDp == 4)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 4;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 4;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 4;
+                    $c=$c+1;
+                }
+                break;
+
+            case 'AsistenteLogistica':
+                if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthDp == 6)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 6;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 6;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 6;
+                    $c=$c+1;
+                }
+                break;
+                   
             case 'Programador':
-                $manifiesto->ManifAuthHseq = 1;
+                if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthDp == 7)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 7;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 7;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 7;
+                    $c=$c+1;
+                }
                 break;
             
             default:
@@ -120,6 +234,138 @@ class ManifiestoController extends Controller
                 break;
         }
         $manifiesto->save();
+
+        $log = new audit();
+        $log->AuditTabla="manifiestos";
+        $log->AuditType="firmado";
+        $log->AuditRegistro=$manifiesto->ID_Manif;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
+
         return redirect()->route('solicitud-servicio.documentos', [$servicio]);
+    }
+
+
+    public function firmarindex($id)
+    {
+         /*indice de firmas */
+        // 0:Pendiente
+        // 1:Director Planta
+        // 2:Jefe de Logistica
+        // 3:Jefe de Operaciones
+        // 4:Supervisor de Turno
+        // 5:Ingeniero HSEQ
+        // 6:Asistente de Logistica
+        // 7:Programador
+        $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
+        switch (Auth::user()->UsRol) {
+            case 'Hseq':
+                $manifiesto->ManifAuthHseq = 5;
+                break;
+
+            case 'JefeOperaciones':
+                if (($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthDp == 3)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 3;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 3;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 3;
+                    $c=$c+1;
+                }
+                break;
+
+            case 'JefeLogistica':
+                $manifiesto->ManifAuthJl = 2;
+                break;
+
+            case 'AdministradorPlanta':
+                $manifiesto->ManifAuthDp = 1;
+                break;
+
+            case 'Supervisor':
+                if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthDp == 4)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 4;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 4;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 4;
+                    $c=$c+1;
+                }
+                break;
+
+            case 'AsistenteLogistica':
+                if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthDp == 6)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 6;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 6;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 6;
+                    $c=$c+1;
+                }
+                break;
+                   
+            case 'Programador':
+                if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthDp == 7)) {
+                    $c=1;
+                }else{
+                    $c=0;
+                }
+                if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthDp = 7;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthJl = 7;
+                    $c=$c+1;
+                }
+                if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
+                    $manifiesto->ManifAuthHseq = 7;
+                    $c=$c+1;
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $manifiesto->save();
+
+        $log = new audit();
+        $log->AuditTabla="manifiestos";
+        $log->AuditType="firmado";
+        $log->AuditRegistro=$manifiesto->ID_Manif;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
+
+        return redirect()->route('manifiestos.index');
     }
 }

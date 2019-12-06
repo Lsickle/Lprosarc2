@@ -233,6 +233,13 @@ class RespelController extends Controller
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
         }
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Nuevo respel";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
         return redirect()->route('respels.index');
     }
 
