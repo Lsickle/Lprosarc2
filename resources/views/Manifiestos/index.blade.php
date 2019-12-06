@@ -24,10 +24,10 @@ Lista de Manifiestos
 								<th>#</th>
 								<th>Documento</th>
 								<th>Observación</th>
-								<th>Aprobación HSEQ</th>
+								<th>Aprobación Director Planta</th>
 								{{-- <th>Aprobación Operaciones</th> --}}
 								<th>Aprobación Logística</th>
-								<th>Aprobación Director Planta</th>
+								<th>Aprobación HSEQ</th>
 								
 								@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
 									<th>Ver</th>
@@ -49,7 +49,7 @@ Lista de Manifiestos
 									@endif
 									<td>{{$manifiesto->ManifObservacion}}</td>
 									<td class="text-center">
-										@switch($manifiesto->ManifAuthHseq)
+										@switch($manifiesto->ManifAuthDp)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
@@ -100,6 +100,7 @@ Lista de Manifiestos
 											<p>Pendiente </p>
 										@endif
 									</td> --}}
+									
 									<td class="text-center">
 										@switch($manifiesto->ManifAuthJl)
 										    @case(0)
@@ -145,8 +146,9 @@ Lista de Manifiestos
 											<p>Error en Firma Digital</p>
 										@endswitch
 									</td>
+									
 									<td class="text-center">
-										@switch($manifiesto->ManifAuthDp)
+										@switch($manifiesto->ManifAuthHseq)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break

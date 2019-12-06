@@ -164,31 +164,36 @@ class CertificadoController extends Controller
         $certificado = Certificado::where('CertSlug', $id)->first();
         switch (Auth::user()->UsRol) {
             case 'Hseq':
-                $certificado->CertAuthHseq = 1;
+                $certificado->CertAuthHseq = 5;
                 break;
 
             case 'JefeOperaciones':
-                if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 3;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 3;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 3;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 3;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 3;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 3;
-                    $c=$c+1;
-                }
+                
                 break;
 
             case 'JefeLogistica':
-                $certificado->CertAuthJl = 1;
+                $certificado->CertAuthJl = 2;
                 break;
 
             case 'AdministradorPlanta':
@@ -196,68 +201,79 @@ class CertificadoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($certificado->CertAuthDp == 4)||($certificado->CertAuthDp == 4)||($certificado->CertAuthDp == 4)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthHseq == 4)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 4;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 4;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 4;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 4;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 4;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 4;
-                    $c=$c+1;
-                }
+                
                 break;
 
             case 'AsistenteLogistica':
-                if (($certificado->CertAuthDp == 6)||($certificado->CertAuthDp == 6)||($certificado->CertAuthDp == 6)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthHseq == 6)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 6;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 6;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 6;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 6;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 6;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 6;
-                    $c=$c+1;
-                }
-                break;
-
-            case 'AdministradorPlanta':
-                $certificado->CertAuthDp = 1;
+                
                 break;
 
                    
             case 'Programador':
-                if (($certificado->CertAuthDp == 7)||($certificado->CertAuthDp == 7)||($certificado->CertAuthDp == 7)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthHseq == 7)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 7;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 7;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 7;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 7;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 7;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 7;
-                    $c=$c+1;
-                }
+                
                 break;
             
             default:
@@ -296,23 +312,28 @@ class CertificadoController extends Controller
                 break;
 
             case 'JefeOperaciones':
-                if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 3;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 3;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 3;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 3;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 3;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 3;
-                    $c=$c+1;
-                }
+                
                 break;
 
             case 'JefeLogistica':
@@ -324,64 +345,79 @@ class CertificadoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($certificado->CertAuthDp == 4)||($certificado->CertAuthDp == 4)||($certificado->CertAuthDp == 4)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthHseq == 4)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 4;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 4;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 4;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 4;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 4;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 4;
-                    $c=$c+1;
-                }
+                
                 break;
 
             case 'AsistenteLogistica':
-                if (($certificado->CertAuthDp == 6)||($certificado->CertAuthDp == 6)||($certificado->CertAuthDp == 6)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthHseq == 6)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 6;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 6;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 6;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 6;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 6;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 6;
-                    $c=$c+1;
-                }
+                
                 break;
 
                    
             case 'Programador':
-                if (($certificado->CertAuthDp == 7)||($certificado->CertAuthDp == 7)||($certificado->CertAuthDp == 7)) {
-                    $c=1;
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                    # code...
                 }else{
-                    $c=0;
+                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthHseq == 7)) {
+                        $c=1;
+                    }else{
+                        $c=0;
+                    }
+                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
+                        $certificado->CertAuthDp = 7;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
+                        $certificado->CertAuthJl = 7;
+                        $c=$c+1;
+                    }
+                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
+                        $certificado->CertAuthHseq = 7;
+                        $c=$c+1;
+                    }
                 }
-                if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                    $certificado->CertAuthDp = 7;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                    $certificado->CertAuthJl = 7;
-                    $c=$c+1;
-                }
-                if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                    $certificado->CertAuthHseq = 7;
-                    $c=$c+1;
-                }
+                
                 break;
             
             default:

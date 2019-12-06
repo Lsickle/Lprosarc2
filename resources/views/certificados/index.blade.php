@@ -24,10 +24,10 @@ Lista de Certificados
 								<th>#</th>
 								<th>Documento</th>
 								<th>Observación</th>
-								<th>Aprobación HSEQ</th>
+								<th>Aprobación Director Planta</th>
 								{{-- <th>Aprobación Operaciones</th> --}}
 								<th>Aprobación Logística</th>
-								<th>Aprobación Director Planta</th>
+								<th>Aprobación HSEQ</th>
 								
 								@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
 									<th>Ver</th>
@@ -49,7 +49,7 @@ Lista de Certificados
 									@endif
 									<td>{{$certificado->CertObservacion}}</td>
 									<td class="text-center">
-										@switch($certificado->CertAuthHseq)
+										@switch($certificado->CertAuthDp)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
@@ -157,8 +157,9 @@ Lista de Certificados
 											<p>Error en Firma Digital</p>
 										@endswitch
 									</td>
+									
 									<td class="text-center">
-										@switch($certificado->CertAuthDp)
+										@switch($certificado->CertAuthHseq)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
