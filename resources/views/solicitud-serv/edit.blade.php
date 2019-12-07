@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.solsertitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios-Solicitudes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -62,7 +65,7 @@
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99" {{$Cliente->CliName == $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{$Cliente->CliShortname}}</option>
+										<option onclick="TransportadorCliente()" value="99" {{$Cliente->CliName == $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{$Cliente->CliName}}</option>
 										<option onclick="OtraTransportadora()" value="98" {{$Cliente->CliName <> $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransother') }}</option>
 									</select>
 								</div>
@@ -173,7 +176,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 												<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" {{$Solicitud->SolSerBascula <> null ? 'checked' : '' }}>
+													<input type="checkbox" class="testswitch" id="SolSerBascula" name="SolSerBascula" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "" : "disabled"}} {{$Solicitud->SolSerBascula <> null ? 'checked' : '' }}>
 												</div>
 											</label>
 										</div>
@@ -181,7 +184,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
 												<label for="SolSerCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{$Solicitud->SolSerCapacitacion <> null ? 'checked' : '' }}>
+													<input type="checkbox" class="testswitch" id="SolSerCapacitacion" name="SolSerCapacitacion" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliCapacitacion'] === 1) ? "" : "disabled"}} {{$Solicitud->SolSerCapacitacion <> null ? 'checked' : '' }}>
 												</div>
 											</label>
 										</div>
@@ -189,7 +192,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
 												<label for="SolSerMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{$Solicitud->SolSerMasPerson <> null ? 'checked' : '' }}>
+													<input type="checkbox" class="testswitch" id="SolSerMasPerson" name="SolSerMasPerson" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "" : "disabled"}} {{$Solicitud->SolSerMasPerson <> null ? 'checked' : '' }}>
 												</div>
 											</label>
 										</div>
@@ -197,7 +200,7 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
 												<label for="SolSerVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerVehicExclusive" name="SolSerVehicExclusive" {{$Solicitud->SolSerVehicExclusive <> null ? 'checked' : '' }}>
+													<input type="checkbox" class="testswitch" id="SolSerVehicExclusive" name="SolSerVehicExclusive" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "" : "disabled"}} {{$Solicitud->SolSerVehicExclusive <> null ? 'checked' : '' }}>
 												</div>
 											</label>
 										</div>
@@ -205,11 +208,11 @@
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
 												<label for="SolSerPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
 												<div style="width: 100%; height: 34px;">
-													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{$Solicitud->SolSerPlatform <> null ? 'checked' : '' }}>
+													<input type="checkbox" class="testswitch" id="SolSerPlatform" name="SolSerPlatform" {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "" : "disabled"}} {{$Solicitud->SolSerPlatform <> null ? 'checked' : '' }}>
 												</div>
 											</label>
 										</div>
-										<div class="col-md-4" style="text-align: center;">
+								{{-- 		<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
 												<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
 												<div style="width: 100%; height: 34px;">
@@ -223,7 +226,7 @@
 												<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{$Solicitud->SolSerDevolucion <> null ? $Solicitud->SolSerDevolucionTipo : ''}}">
 												<small class="help-block with-errors"></small>
 											</label>
-										</div>
+										</div> --}}
 									</div>
 								</div>
 							</div>
@@ -334,11 +337,42 @@
 		$('#AddressCollect').attr('required', false);
 		$('.addresscollect').attr('hidden',true);
 	@endif
-	$('#SolSerBascula').bootstrapSwitch('disabled',false);
-	$('#SolSerCapacitacion').bootstrapSwitch('disabled',false);
-	$('#SolSerMasPerson').bootstrapSwitch('disabled',false);
-	$('#SolSerVehicExclusive').bootstrapSwitch('disabled',false);
-	$('#SolSerPlatform').bootstrapSwitch('disabled',false);
+	var SolSerBascula = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "true" : "false"}};
+	var SolSerCapacitacion = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliCapacitacion'] === 1) ? "true" : "false"}};
+	var SolSerMasPerson = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "true" : "false"}};
+	var SolSerVehicExclusive = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "true" : "false"}};
+	var SolSerPlatform = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "true" : "false"}};
+	
+	if (SolSerBascula) {
+		$("#SolSerBascula").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerBascula").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerCapacitacion) {
+		$("#SolSerCapacitacion").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerMasPerson) {
+		$("#SolSerMasPerson").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerVehicExclusive) {
+		$("#SolSerVehicExclusive").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
+	}
+	if (SolSerPlatform) {
+		$("#SolSerPlatform").bootstrapSwitch('disabled',false);
+	}else{
+		$("#SolSerPlatform").bootstrapSwitch('disabled',true);
+	}
+	// $('#SolSerBascula').bootstrapSwitch('disabled',false);
+	// $('#SolSerCapacitacion').bootstrapSwitch('disabled',false);
+	// $('#SolSerMasPerson').bootstrapSwitch('disabled',false);
+	// $('#SolSerVehicExclusive').bootstrapSwitch('disabled',false);
+	// $('#SolSerPlatform').bootstrapSwitch('disabled',false);
 @endif
 @if($Solicitud->SolSerStatus === 'Programado')
 	$("#SolSerTipo").parent().remove();

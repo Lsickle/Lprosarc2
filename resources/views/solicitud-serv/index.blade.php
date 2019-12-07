@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.solsertitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios-Solicitudes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -58,7 +61,7 @@
 										<td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..." href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliShortname}}</td>
+												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..." href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliName}}</td>
 										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 											<th>{{$Servicio->TipoFacturacion}}</th>

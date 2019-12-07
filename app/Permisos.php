@@ -168,6 +168,7 @@ class Permisos{
 	const SolSerCertifi = ['Programador','Tesorería'];
 	/* Using ->
 		solicitud-serv/index
+		vehicle-programacion/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
 	 */
@@ -200,6 +201,21 @@ class Permisos{
 		clientcontoller::index
 	*/
 
+	const SUPERVISOR = ['Supervisor'];
+	/* Using ->
+		respel/index
+	*/
+	const TESORERIA = ['Tesorería'];
+	/* Using ->
+		vehicle-programacion/index
+	*/
+
+
+	const GrupoShowRespel = ['AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','Supervisor','Tesorería','AsistenteComercial'];
+	/* Using ->
+		
+	*/
+
 	const JefeComercial = ['Programador','JefeComercial','AdministradorBogota'];
 	/* Using ->
 		clientcontoller::index
@@ -229,6 +245,16 @@ class Permisos{
 		respelcontroller::edit
 	 */
 
+	const EDITMANIFCERT = ['Programador','JefeLogistica','AsistenteLogistica'];
+	/*Using ->
+		solicitud-serv/show/documentos
+	*/
+
+	const SIGNMANIFCERT = ['Programador','JefeLogistica','JefeOperaciones','AdministradorPlanta','Hseq','AsistenteLogistica','Supervisor'];
+	/*Using ->
+		solicitud-serv/show/documentos
+	*/
+
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];
@@ -239,7 +265,7 @@ class Permisos{
 	const CONTRATOS = ['Programador','AdministradorPlanta','AdministradorBogota','Comercial','AsistenteComercial','JefeComercial'];
 	const LISTACLIENTES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
 	const LISTAGENERADORES = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
-	const LISTARESIDUOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
+	const LISTARESIDUOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial','AsistenteLogistica'];
 	const TRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
 	const PERSONALCLIENTE = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
 	const SERVICIOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];

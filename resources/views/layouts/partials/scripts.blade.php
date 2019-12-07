@@ -130,7 +130,7 @@ $(document).ready(function() {
 		var isAndroid = ua.indexOf("android") > -1; 
 		if(isAndroid) {
 			$('.nombres').prop('maxlength', '60');
-			$('.nombres').prop('pattern', '[A-Za-z ]+');
+			$('.nombres').prop('pattern', '[A-ZÀ-ÿa-z ]+');
 			$('.nombres').attr('data-error', 'Unicamente letras');
 			$('.nombres').removeClass('nombres');
 		}
@@ -144,7 +144,7 @@ $(document).ready(function() {
 	$('.mobile').inputmask({ mask: "3[9][9 ][9][9][9 ][9][9][9][9]" });
 	$('.extension').inputmask({ mask: "[9][9][9][9][9]" });
 	$('.inputText').prop('maxlength', '100');
-	$('.inputText').prop('pattern', '[A-Za-z ]+');
+	$('.inputText').prop('pattern', '[A-Za-zÀ-ÿ ]+');
 	$('.document').inputmask({ mask: "[9][9][9][9][9][9][9][9][9][9][9]" });
 	$('.bank').inputmask({ mask: "[9][9][9][9 ][9][9][9][9 ][9][9][9][9 ][9][9][9][9]" });
 	$('.nombres').inputmask({ mask: "[a{0,15}] [a{0,15}] [a{0,15}] [a{0,15}]"});
@@ -636,6 +636,7 @@ function NotifiFalse(Mensaje) {
 	}
 	$(document).ready(function() {Checkboxs();});
 </script>
+{{-- script para deshabilitar los botones de los formularios al hacer submit --}}
 <script>
 	function envsubmit(){
 		$('form').on('submit', function(){

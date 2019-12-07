@@ -15,11 +15,11 @@ class AddColumsSolicitudResiduosTable extends Migration
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
             $table->string('SolResTypeUnidad')->nullable();
-            $table->bigInteger('SolResCantiUnidad')->nullable();
+            $table->decimal('SolResCantiUnidad', 8, 2)->nullable();
             $table->string('SolResEmbalaje')->nullable();
-            $table->bigInteger('SolResAlto')->nullable();
-            $table->bigInteger('SolResAncho')->nullable();
-            $table->bigInteger('SolResProfundo')->nullable();
+            $table->unsignedDecimal('SolResAlto', 3, 2)->nullable();
+            $table->unsignedDecimal('SolResAncho', 3, 2)->nullable();
+            $table->unsignedDecimal('SolResProfundo', 3, 2)->nullable();
             $table->boolean('SolResFotoDescargue_Pesaje')->nullable();
             $table->boolean('SolResFotoTratamiento')->nullable();
             $table->boolean('SolResVideoDescargue_Pesaje')->nullable();

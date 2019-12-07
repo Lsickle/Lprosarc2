@@ -44,7 +44,7 @@ class genercontroller extends Controller
         $Generadors = DB::table('generadors')
         ->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
         ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-        ->select('generadors.*', 'sedes.SedeName','clientes.CliShortname')
+        ->select('generadors.*', 'sedes.SedeName','clientes.CliName')
         ->where(function($query)use($ID_Cli){
             if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)){
                 if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
@@ -115,7 +115,7 @@ class genercontroller extends Controller
         $Gener = new generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
-        $Gener->GenerShortname = $request->input('GenerShortname');
+        // $Gener->GenerShortname = $request->input('GenerShortname');
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $Sede->ID_Sede;
         $Gener->GenerDelete = 0;
@@ -182,12 +182,13 @@ class genercontroller extends Controller
             ->select('sedes.*')
             ->where('FK_SedeCli', '=', $ID_Cli)
             ->where('SedeDelete', '=', 0)
+            ->oldest()
             ->get();
 
         $Gener = new generador();
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
-        $Gener->GenerShortname = $Cliente->CliShortname;
+        // $Gener->GenerShortname = $Cliente->CliShortname;
         $Gener->GenerSlug = hash('sha256', rand().time().$Gener->GenerName);
         $Gener->FK_GenerCli = $Sedes[0]->ID_Sede;
         $Gener->GenerDelete = $Cliente->CliDelete;
@@ -223,7 +224,7 @@ class genercontroller extends Controller
     {
         $Generador = generador::where('GenerSlug',$id)->first();
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
-        $Cliente = Cliente::select('clientes.CliShortname', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Cliente = Cliente::select('clientes.CliName', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $GenerSedes = DB::table('gener_sedes')
             ->join('generadors', 'generadors.ID_Gener', 'gener_sedes.FK_GSede')
             ->join('municipios', 'municipios.ID_Mun', 'gener_sedes.FK_GSedeMun')
@@ -304,7 +305,7 @@ class genercontroller extends Controller
                     }
             })],
             'GenerName'     => 'required|max:255',
-            'GenerShortname'=> 'required|max:64',
+            // 'GenerShortname'=> 'required|max:64',
             'GenerCode'     => 'max:32|nullable',  
             'FK_GenerCli'   => 'required',
         ]);

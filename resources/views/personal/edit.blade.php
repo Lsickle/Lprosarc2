@@ -3,7 +3,17 @@
 {{ trans('adminlte_lang::message.personalhtmlheader_title') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+<span style="background-image: linear-gradient(40deg, #FFFFFF, #A3A2AE); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@else
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endif
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -72,6 +82,15 @@
 																<option value="{{$Cargo->CargSlug}}" {{$Sede->ID_Carg == $Cargo->ID_Carg ? 'selected' : ''}} onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
 															@endforeach
 															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>
+														</select>
+													</div>
+													<div class="form-group col-md-6" id="Persfacturacion" >
+														<label for="Persfactura" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persfacturalabel') }}</b>" data-content="{{ trans('adminlte_lang::message.persfacturainfo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persfacturalabel') }}</label><a class="loadFK_PersCargo"></a>
+														<small class="help-block with-errors">*</small>
+														<select name="Persfactura" id="Persfactura" class="form-control" required>
+															<option {{$Persona->PersFactura == 1 ? 'selected' : ''}} value="1">Si</option>
+															
+															<option {{$Persona->PersFactura == 0 ? 'selected' : ''}} value="0">No</option>
 														</select>
 													</div>
 													<div class="form-group col-md-6" id="NewArea" style="display: none;">

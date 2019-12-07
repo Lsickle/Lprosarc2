@@ -9,7 +9,7 @@
 		<select name="SGenerador[`+contadorGenerador+`]" id="SGenerador" class="form-control" required="">
 			<option onclick="HiddenResiduosGener(`+contadorGenerador+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>
 			@foreach($SGeneradors as $SGenerador)
-			<option onclick="ResiduosGener(`+contadorGenerador+`,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
+			<option onclick="ResiduosGener(`+contadorGenerador+`,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerName.' ('.$SGenerador->GSedeName.')'}}</option>
 			@endforeach
 		</select>
 		<br>

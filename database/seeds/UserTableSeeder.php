@@ -39,8 +39,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 1;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = '';
         $user->DeleteUser = 0;
         $user->save();
 
@@ -56,13 +56,13 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 2;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = '';
         $user->DeleteUser = 0;
         $user->save();
 
         $user = new User();
-        $user->name = 'Duvan';
+        $user->name = 'Heidy';
         $user->email = 'Sistemas2@prosarc.com.co';
         $user->email_verified_at = now();
         $user->password = bcrypt('secret');
@@ -73,8 +73,8 @@ class UserTableSeeder extends Seeder
         $user->UsRolDesc = 'Programador de Software';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 3;
-        $user->UsRol2 = 'Cliente';
-        $user->UsRolDesc2 = 'Usuario General';
+        $user->UsRol2 = 'Hseq';
+        $user->UsRolDesc2 = '';
         $user->DeleteUser = 0;
         $user->save();
 
@@ -164,7 +164,7 @@ class UserTableSeeder extends Seeder
         $user->save();
 
         $user = new User();
-        $user->name = 'Leider';
+        $user->name = 'David';
         $user->email = 'gerenteplanta@prosarc.com.co';
         $user->email_verified_at = now();
         $user->password = bcrypt('secret');
@@ -174,7 +174,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'AdministradorPlanta';
         $user->UsRolDesc = 'Jefe de Planta';
         $user->updated_by = 'Sistemas@prosarc.com.co';
-        $user->FK_UserPers = 9;
+        $user->FK_UserPers = 27;
         $user->UsRol2 = 'JefeOperaciones';
         $user->UsRolDesc2 = 'Jefe de area Operaciones';
         $user->DeleteUser = 0;
@@ -412,7 +412,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'AsistenteComercial';
         $user->UsRolDesc = 'Asistente Comercial';
         $user->updated_by = 'Sistemas@prosarc.com.co';
-        $user->FK_UserPers = 23;
+        $user->FK_UserPers = 24;
         $user->UsRol2 = 'AsistenteComercial';
         $user->UsRolDesc2 = 'Asistente Comercial';
         $user->DeleteUser = 0;
@@ -429,7 +429,7 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'Tesorera';
         $user->UsRolDesc = 'Tesoreria y facturacion';
         $user->updated_by = 'Sistemas@prosarc.com.co';
-        $user->FK_UserPers = 24;
+        $user->FK_UserPers = 25;
         $user->UsRol2 = 'Tesorera';
         $user->UsRolDesc2 = 'Tesoreria y facturacion';
         $user->DeleteUser = 0;
@@ -446,9 +446,60 @@ class UserTableSeeder extends Seeder
         $user->UsRol = 'AdministradorBogota';
         $user->UsRolDesc = 'Gerente General PROSARC S.A. ESP.';
         $user->updated_by = 'Sistemas@prosarc.com.co';
-        $user->FK_UserPers = 25;
+        $user->FK_UserPers = 26;
         $user->UsRol2 = 'AdministradorPlanta';
         $user->UsRolDesc2 = 'Jefe de Planta';
+        $user->DeleteUser = 0;
+        $user->save();
+
+        $user = new User();
+        $user->name = 'Leider';
+        $user->email = 'jefehseq@prosarc.com.co';
+        $user->email_verified_at = now();
+        $user->password = bcrypt('secret');
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->UsStatus = 'Activo';
+        $user->UsSlug = hash('sha256', rand().time().$user->email);
+        $user->UsRol = 'jefehseq';
+        $user->UsRolDesc = 'Jefe de HSEQ';
+        $user->updated_by = 'Sistemas@prosarc.com.co';
+        $user->FK_UserPers = 9;
+        $user->UsRol2 = 'IngenieroHSEQ';
+        $user->UsRolDesc2 = 'Ingeniero de HSEQ';
+        $user->DeleteUser = 0;
+        $user->save();
+
+        $user = new User();
+        $user->name = 'Luis';
+        $user->email = 'luisdelahoz0@gmail.com';
+        $user->email_verified_at = now();
+        $user->password = bcrypt('secret');
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->UsStatus = 'Activo';
+        $user->UsSlug = hash('sha256', rand().time().$user->email);
+        $user->UsRol = 'Cliente';
+        $user->UsRolDesc = 'Usuario General';
+        $user->updated_by = 'Sistemas@prosarc.com.co';
+        $user->FK_UserPers = 28;
+        $user->UsRol2 = 'Cliente';
+        $user->UsRolDesc2 = 'Usuario General';
+        $user->DeleteUser = 0;
+        $user->save();
+
+        $user = new User();
+        $user->name = 'UserTest';
+        $user->email = 'prueba@cliente.com';
+        $user->email_verified_at = now();
+        $user->password = bcrypt('secret');
+        $user->UsAvatar = 'robot400x400.gif';
+        $user->UsStatus = 'Activo';
+        $user->UsSlug = hash('sha256', rand().time().$user->email);
+        $user->UsRol = 'Cliente';
+        $user->UsRolDesc = 'Usuario General';
+        $user->updated_by = 'Sistemas@prosarc.com.co';
+        $user->FK_UserPers = 29;
+        $user->UsRol2 = 'Cliente';
+        $user->UsRolDesc2 = 'Usuario General';
         $user->DeleteUser = 0;
         $user->save();
     }

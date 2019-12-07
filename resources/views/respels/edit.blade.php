@@ -6,7 +6,10 @@
 	@endsection
 	
 	@section('contentheader_title')
-	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+	  <span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+	  	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+	    <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+	  </span>
 	@endsection
 
 	@section('main-content')
@@ -44,7 +47,7 @@
 										</div>
 									@endif
 									<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-									@include('layouts.RespelPartials.Respelform1Edit')
+									@include('layouts.RespelPartials.respelform1Edit')
 								</div>
 								<div class="box box-info">
 									<div class="box-footer">
@@ -64,7 +67,10 @@
 	{{ trans('adminlte_lang::LangRespel.Respelevaluatetag') }}
 @endsection
 @section('contentheader_title')
-	{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
+	<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+		{{ trans('adminlte_lang::LangRespel.Respelevaluetemenu') }}
+	  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+	</span>
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -113,6 +119,7 @@
 									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'Falta TDE') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Falta TDE' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusfaltatde') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))||($Respels->RespelStatus == 'Incompleto') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Incompleto' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusincompleto') }}</option>
 									<option {{(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))||($Respels->RespelStatus == 'Vencido') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'Vencido' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusvencido') }}</option>
+									<option {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA)||in_array(Auth::user()->UsRol2, Permisos::AREALOGISTICA))||($Respels->RespelStatus == 'TDE actualizada') ? '' : 'disabled'}} {{$Respels->RespelStatus == 'TDE actualizada' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatustdeupdated') }}</option>
 								</select>
 							</li>
 							<li class="list-group-item">
@@ -218,7 +225,7 @@
 									@case('Pendiente')
 									@case('Incompleto')
 									@case('Rechazado')
-										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Copiar</a>
+										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lista de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Copiar</a>
 										@break
 									@default
 										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Copiar</a>
@@ -246,7 +253,9 @@
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
 								<li class="nav-item">
+								@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
+								@endif
 								</li>
 							</ul>
 							<!-- nav-content -->
@@ -471,7 +480,7 @@
 				var rango = $("#ranktarifa").val();
 				if(rango != ''){
 					var tarifa = `@include('layouts.respel-comercial.respel-rango')`;
-					$("#rango"+opcion+"Container").append(tarifa);
+					$("#rango"+opcion+"row").append(tarifa);
 					$("#evaluacioncomercial").validator('update');
 					// validarprevent(opcion);
 					last=last+1
@@ -484,8 +493,8 @@
 			});
 		}
 		function EliminarRango(opcion,rango){
-			console.log(opcion,rango);
 			$("#rango"+opcion+rango).remove();
+			$("#rangodefault"+opcion+rango).append(`<input hidden  type="text" name="Opcion[`+opcion+`][TarifaDesde][]" value=""><input hidden  type="text" name="Opcion[`+opcion+`][TarifaPrecio][]" value="">`);
 			$("#evaluacioncomercial").validator('update');
 			validarprevent(opcion);
 		}

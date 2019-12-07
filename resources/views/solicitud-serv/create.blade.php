@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.solsertitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios-Solicitudes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -215,7 +218,7 @@
 									<select name="SGenerador[0]" id="SGenerador" class="form-control" required="">
 										<option onclick="HiddenResiduosGener(0)" value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach($SGeneradors as $SGenerador)
-											<option onclick="ResiduosGener(0,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerShortname.' ('.$SGenerador->GSedeName.')'}}</option>
+											<option onclick="ResiduosGener(0,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerName.' ('.$SGenerador->GSedeName.')'}}</option>
 										@endforeach
 									</select>
 									<br>
@@ -230,7 +233,7 @@
 						<div id="ModalSupport"></div>
 						<div class="box box-info">
 							<div class="box-footer">
-								<a href="#" onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.applyfor') }}</a>
+								<a onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.applyfor') }}</a>
 								<button type="submit" id="Submit" style="display: none;"></button>
 							</div>
 						</div>

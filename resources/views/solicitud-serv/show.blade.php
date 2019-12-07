@@ -3,7 +3,10 @@
 Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.solsertitle')}}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	Servicios-Solicitudes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -29,6 +32,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				</div>
 				<div class="row">
 					<div class="col-md-12 ">
+						@if ($errors->any())
+							<div class="alert alert-danger" role="alert">
+								<ul>
+									@foreach ($errors->all() as $error)
+										<p>{{$error}}</p>
+									@endforeach
+								</ul>
+							</div>
+						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-4">
@@ -131,6 +143,58 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								</div>
 							</div>
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+								@switch($SolicitudServicio->SolSerStatus)
+								    @case('Pendiente')
+								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el Cli<b>ente ac</b>epte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Pendiente')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Aceptado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Aprobado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Programado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Completado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Recibida')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Conciliado')
+								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('No Conciliado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Tratado')
+								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Certificacion')
+								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+
+								    @default
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								@endswitch
+								
+							@endif
+							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
 							@endif
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
@@ -142,6 +206,53 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
+								@switch($SolicitudServicio->SolSerStatus)
+								    @case('Pendiente')
+								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+
+								    @case('Aceptado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+								        
+
+								    @case('Aprobado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Programado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Completado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Recibida')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Conciliado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('No Conciliado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Tratado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+								    @case('Certificacion')
+								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        @break
+
+
+								    @default
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								@endswitch
 								@endif
 							@endif
 							<div class="col-md-12" style="margin: 10px 0;">
@@ -190,7 +301,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 										</label>
 									</div>
-									<div class="col-md-4" style="text-align: center;">
+								{{-- 	<div class="col-md-4" style="text-align: center;">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserdevelem') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserdevelemdescrit') }} </p>">
 											<label for="SolSerDevolucion">{{ trans('adminlte_lang::message.solserdevelem') }}</label>
 											<div style="width: 100%; height: 34px;">
@@ -204,7 +315,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<input maxlength="128" type="text" maxlength="64" class="form-control" id="SolSerDevolucionTipo" name="SolSerDevolucionTipo" value="{{ $SolicitudServicio->SolSerDevolucionTipo}}" disabled="">
 											<small class="help-block with-errors"></small>
 										</label>
-									</div>
+									</div> --}}
 								</div>
 							</div>
 							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
@@ -222,6 +333,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<th>Pretratamientos</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
+											@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+												<th>Tarifa</th>
+											@endif
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 												<th>{{trans('adminlte_lang::message.address')}}</th>
@@ -238,6 +352,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 												<th>Certificado</th>
 											@endif
+											
 										</tr>
 									</thead>
 									<tbody>
@@ -251,10 +366,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													// $TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
 													switch ($Residuo->SolResTypeUnidad) {
 														case 'Unidad':
-															$TypeUnidad = 'Unidad(es)';
+															$TypeUnidad = 'Unidades';
 															break;
 														case 'Litros':
-															$TypeUnidad = 'Litro(s)';
+															$TypeUnidad = 'Litros';
 															break;
 														default:
 															$TypeUnidad = 'Kilogramos';
@@ -262,8 +377,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													}
 												@endphp
 											<tr>
-												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} ><i class="fas fa-external-link-alt"></i></a> {{$Residuo->RespelName}}</td>
-												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortname : ''}}</td>
+												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
+													<i class="fas fa-external-link-alt"></i>
+													</a>
+													@if((in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->SustanciaControladaTipo == 0)&&($Residuo->SustanciaControlada != Null))
+														<a><i class="fas fa-flask" style="color: green"></i></a>
+													@endif
+													 {{$Residuo->RespelName}}</td>
+												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliName : ''}}</td>
 												<td>
 													<ul>
 													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
@@ -272,8 +393,20 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													</ul>
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
-												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerShortname.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} {{$TypeUnidad}}</td>
+												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
+												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+													<td style="text-align: center;">
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado')
+														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
+														{{$Residuo->SolResPrecio}}
+														 Pesos
+													</td>
+												@endif
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
 												@else
@@ -281,9 +414,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 															@if($SolicitudServicio->SolSerStatus === 'Programado' && $Programacion->ProgVehEntrada !== Null)
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
 																@else
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -292,20 +425,20 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@endif
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{-- {{' '.$Residuo->SolResCantiUnidadRecibida}} --}}
-															{{$Residuo->SolResCantiUnidadRecibida  === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
+															{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 
 														@else
 															{{' '.$Residuo->SolResKgRecibido}}
 														@endif
-														{{$TypeUnidad}}
+														 {{$TypeUnidad}}
 													</td>
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 															@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
 																@else
-																	<a href="#" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -313,28 +446,37 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															<i class="fas fa-marker"></i></a>
 														@endif
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-															{{$Residuo->SolResCantiUnidadConciliada  === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
+															{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 														@else
-															{{$Residuo->SolResKgConciliado  === null ? 'N/A' : $Residuo->SolResKgConciliado }}
+															{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}
 														@endif
-														{{$TypeUnidad}}
+														 {{$TypeUnidad}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
 															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
-																<a href="#" class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">  --}}
+																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">
+																@else
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+																@endif
 															@else
 																<a style="color: black">
 															@endif
 															<i class="fas fa-marker"></i></a>
-															{{$Residuo->SolResKgTratado  === null ? 'N/A' : $Residuo->SolResKgTratado }} 
+															@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
+															@else
+																{{$Residuo->SolResKgTratado === null ? 'N/A' : $Residuo->SolResKgTratado }}
+															@endif
 															 {{$TypeUnidad}}
 														</td>
 													@endif
 													<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-info btn-block'> <i class="fas fa-search"></i> </a></td>
 												@endif
 												@if(($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Aprobado') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
-													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerShortname}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
+													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerName}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
 												@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
 													<td style="text-align: center;"><a href="#" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i></a></td>
 												@endif
@@ -431,6 +573,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								{{-- Modal --}}
 									<div id="addkgmodal"></div>
 								{{-- END Modal --}}
+								{{-- Modal --}}
+									<div id="addprice"></div>
+								{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -441,9 +586,68 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 </div>
 @endsection
 @section('NewScript')
+{{-- funciones para el modal de precio --}}
+@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+	<script>
+		function addprice(slug, precio){
+			var inputprice =  '<label for="SolResPrice">Tarifa del Residuo</label><small class="help-block with-errors">*</small><input type="number" min="0" class="form-control numberKg" id="SolResPrice" name="SolResPrecio" value="'+precio+'" required>';
+			$('#addprice').empty();
+			$('#addprice').append(`
+				<form role="form" action="/solicitud-residuo/`+slug+`/UpdatePrice" method="POST" enctype="multipart/form-data" data-toggle="validator" id="Formprice">
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="asignarPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+										<i class="fas fa-plus-circle"></i>
+										<span style="font-size: 0.3em; color: black;"><p>
+											Precio
+										</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+									<div class="form-group col-md-12">
+										`+inputprice+`
+									</div>
+									<input type="text" hidden name="SolRes" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			$('#asignarPrecio').modal();
+			$('#Formprice').validator('update');
+		};
+	</script>
+	@if ($errors->any())
+		<script>
+			$(document).ready(function() {
+				$("#editkgRecibido").modal("show");
+			});
+		</script>
+	@endif
+@endif
+
+{{-- funciones para el modal de kg --}}
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
-		function addkg(slug, cantidad, cantidadmax, tipo){
+		function addkg(slug, cantidad, cantidadmax, tipo, cantidadKG, KgConciliado){
 			var inputUnid =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>';
 			var inputKg =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResKg" maxlength="5" value="'+cantidad+'" required>';
 			$('#addkgmodal').empty();
@@ -451,7 +655,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
 					@method('PUT')
 					@csrf
-					<div class="modal modal-default fade in" id="editkgResivido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal modal-default fade in" id="editkgRecibido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -485,31 +689,42 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</ul>
 										</div>
 									@endif
-									<div class="form-group col-md-12">
 										@switch($SolicitudServicio->SolSerStatus)
 											@case('Programado')
+											<div class="form-group col-md-12">
 												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
-												<input type="text" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
-												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
-									</div>
+												<input type="number" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+											</div>
+											<div class="form-group col-md-12">	
+												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
+											</div>
 												@break
 											@case('No Conciliado')
 											@case('Completado')
-													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '<label for="SolResKgConciliado">Cantidad Conciliada '+tipo+'</label><small class="help-block wit11h-errors">*</small><input type="text" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="'+cantidad+'" required>')+`
-									</div>
+											<div class="form-group col-md-12">	
+												<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+											</div>
+											<div class="form-group col-md-12">	
+													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
+											</div>
 												@break
 											@case('Conciliado')
-												<label for="SolResKgTratado">Cantidad Tratada</label>
+											<div class="form-group col-md-12">	
+												<label for="SolResKgTratado">Cantidad Tratada (kg)</label>
 												<small class="help-block with-errors">*</small>
 												<div class="input-group">
-													<input type="text" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidad+`" required>
+													<input type="number" step=".1" min="0" class="form-control cantidadmax" id="SolResKgTratado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" max="`+KgConciliado+`" required>
 													<div class="input-group-btn">
-														<label for="ValorConciliado"><a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" onclick="submit(`+cantidadmax+`, `+tipo+`)">Tratado</a><label>
+														<a title="Lo conciliado ya esta tratado" id="btn-consiliado" class="btn btn-success" `+(tipo != 'Kilogramos' ? 'onclick="submit('+cantidadmax+','+KgConciliado+',\''+tipo+'\')"' : 'onclick="submit('+null+','+KgConciliado+',\''+tipo+'\')"')+`>Tratado</a>
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
-									</div>
+
+											</div>
+											<div class="form-group col-md-12">	
+												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadTratada">Cantidad Tratada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadTratada" name="SolResCantiUnidadTratada" maxlength="5" max="'+cantidadmax+'" value="'+cantidad+'" required>' : '')+`
+											</div>
 												@break
 										@endswitch
 										<input type="text" hidden name="SolRes" value="`+slug+`">
@@ -534,25 +749,33 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 					break;
 			};
-			$('#editkgResivido').modal();
+			$('#editkgRecibido').modal();
 			$('#FormKg').validator('update');
 		};
 
-		function submit(cantidadmax){
-			$('#conciliadokg').append(`
-				@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="{{$Residuo->SolResCantiUnidadConciliada}}">
-				@else
-					<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">
-				@endif
-			`);
+		function submit(cantidadmax, kgConciliado){
+			// console.log(cantidadmax);
+			// console.log(kgConciliado);
+			// console.log(tipo);
+			var ValorConciliadokg = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+kgConciliado+`">`;
+			var ValorConciliadounid = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">`;
+			// if (tipopeso != 'Kilogramos') {
+			// 	$('#conciliadokg').append(ValorConciliadounid);
+			// }else{
+			// 	$('#conciliadokg').append(ValorConciliadokg);
+			// }
+			$('#conciliadokg').append(ValorConciliadokg);
+			$('#SolResCantiUnidadTratada').val(cantidadmax);
+			$('#SolResKgTratado').val(kgConciliado);
+			$('#FormKg').validator('update');
 			$('#ValorConciliado').prop('type', "submit");
+
 		}
 	</script>
 	@if ($errors->any())
 		<script>
 			$(document).ready(function() {
-				$("#editkgResivido").modal("show");
+				$("#editkgRecibido").modal("show");
 			});
 		</script>
 	@endif
@@ -676,12 +899,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 				$('#titulo').append(`
-					<a href="/email-solser/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
+					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Notificar programacion de servicio</b>" data-content="<p style='width: 50%'>Este botón enviara una notificación al correo del cliente notificando la fecha de la programación de servicio... úselo únicamente cuando este seguro de los datos de la programación </p>" href="/email-solser/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
 				`);
 			@endif
 			@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($ProgramacionesActivas <= 0))
 				$('#titulo').append(`
-					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+					<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuniquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
 				`);
 			@endif
 			$('#titulo').append(`

@@ -273,7 +273,7 @@ class RespelPublicController extends Controller
         }
             if (isset($request['RespelHojaSeguridad'])) {
                 if($prespel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad)){
-                    unlink(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad);
+                    // unlink(public_path().'/img/HojaSeguridad/'.$prespel->RespelHojaSeguridad);
                 }
                 $file1 = $request['RespelHojaSeguridad'];
                 $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
@@ -286,7 +286,7 @@ class RespelPublicController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelTarj'])) {
                 if($prespel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj)){
-                    unlink(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj);
+                    // unlink(public_path().'/img/TarjetaEmergencia/'.$prespel->RespelTarj);
                 }
                 $file2 = $request['RespelTarj'];
                 $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
@@ -298,7 +298,7 @@ class RespelPublicController extends Controller
              /*verificar si se cargo un documento en este campo*/
             if (isset($request['RespelFoto'])) {
                 if($prespel->RespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto)){
-                    unlink(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto);
+                    // unlink(public_path().'/img/fotoRespelCreate/'.$prespel->RespelFoto);
                 }
                 $file3 = $request['RespelFoto'];
                 $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
@@ -310,7 +310,7 @@ class RespelPublicController extends Controller
             /*verificar si se cargo un documento en este campo*/
             if (isset($request['SustanciaControladaDocumento'])) {
                 if($prespel->SustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento)){
-                    unlink(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento);
+                    // unlink(public_path().'/img/SustanciaControlDoc/'.$prespel->SustanciaControladaDocumento);
                 }
                 $file4 = $request['SustanciaControladaDocumento'];
                 $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
@@ -370,7 +370,7 @@ class RespelPublicController extends Controller
         $PublicRespel = Respel::where('RespelSlug', $id)->first();
 
         $PublicRespel->load('requerimientos');
-
+        // return $PublicRespel;
         $newRespel = $PublicRespel->replicate();
         $newRespel->RespelSlug = hash('sha256', rand().time().$PublicRespel->RespelName);
         $newRespel->RespelPublic = 1;
@@ -381,17 +381,33 @@ class RespelPublicController extends Controller
 
         foreach($PublicRespel->requerimientos as $requerimiento)
         {
-            $requerimiento->load('pretratamientosSelected');
-            $newrequerimiento = $requerimiento->replicate();
-            $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
-            $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
-            $newrequerimiento->ofertado = 0;
-            $newrequerimiento->save();
+            if ($requerimiento->forevaluation == 1) {
+                $requerimiento->load('pretratamientosSelected');
+                $newrequerimiento = $requerimiento->replicate();
+                $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
+                $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
+                $newrequerimiento->ofertado = 0;
+                $newrequerimiento->save();
 
-            foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
-            {
-                $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
+                {
+                    $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                }
+                /*se copian las tarifas y los rangos relacionados*/
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimiento->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$newrequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                    $rangoparacopiar = Rango::find($rango->ID_Rango);
+                    $nuevarango = $rangoparacopiar->replicate();
+                    $nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                    $nuevarango->save();
+                }
             }
+            
         }
 
         $log = new audit();
@@ -450,17 +466,33 @@ class RespelPublicController extends Controller
 
         foreach($PublicRespel->requerimientos as $requerimiento)
         {
-            $requerimiento->load('pretratamientosSelected');
-            $newrequerimiento = $requerimiento->replicate();
-            $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
-            $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
-            $newrequerimiento->ofertado = 0;
-            $newrequerimiento->save();
+            if ($requerimiento->forevaluation == 1) {
+                $requerimiento->load('pretratamientosSelected');
+                $newrequerimiento = $requerimiento->replicate();
+                $newrequerimiento->ReqSlug = hash('md5', rand().time().$newRespel->ID_Respel);
+                $newrequerimiento->FK_ReqRespel = $newRespel->ID_Respel;
+                $newrequerimiento->ofertado = 0;
+                $newrequerimiento->save();
 
-            foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
-            {
-                $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                foreach($requerimiento->pretratamientosSelected as $pretratamientoSelected)
+                {
+                    $newrequerimiento->pretratamientosSelected()->attach($pretratamientoSelected->ID_PreTrat);
+                }
+                /*se copian las tarifas y requerimientos*/
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimiento->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$newrequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                    $rangoparacopiar = Rango::find($rango->ID_Rango);
+                    $nuevarango = $rangoparacopiar->replicate();
+                    $nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                    $nuevarango->save();
+                }
             }
+            
         }
 
         $log = new audit();

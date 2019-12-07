@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.progvehictitle') }}
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+	{{'Servicios-Programación'}}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="row">
@@ -25,7 +28,7 @@
 							}
 						@endphp
 						<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12" data-tipo="{{$servicionoprogramado->SolSerTipo}}" data-id="{{$servicionoprogramado->ID_SolSer}}">
-							<span class="col-md-12 form-group col-xs-12">N° {{$servicionoprogramado->ID_SolSer.' - '.$servicionoprogramado->CliShortname}}</span>
+							<span class="col-md-12 form-group col-xs-12">N° {{$servicionoprogramado->ID_SolSer.' - '.$servicionoprogramado->CliName}}</span>
 							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='{{$color}} col-md-12 form-group col-xs-12' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
 						</p>
 					@endforeach
@@ -62,7 +65,8 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha" name="ProgVehFecha" value="{{old('ProgVehFecha')}}">
+									<input  class="form-control ProgVehFecha" type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha')}}">
+									<small class="help-block with-errors"></small>
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
@@ -83,12 +87,36 @@
 									<select name="transport" id="transport" class="form-control">
 										<option value="">Seleccione...</option>
 										@foreach($transportadores as $transportador)
-											<option value="{{$transportador->CliSlug}}">{{$transportador->CliShortname}}</option>
+											<option value="{{$transportador->CliSlug}}">{{$transportador->CliName}}</option>
 										@endforeach
 									</select>
 								</div>
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
-									<label>Vehiculo</label><a class="loadvehicalqui"></a>
+									<label for="ProgVehDocConductorEXT">{{ trans('adminlte_lang::message.progvehdocext') }}</label>
+									<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocConductorEXT"  name="ProgVehDocConductorEXT">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehNameConductorEXT">{{ trans('adminlte_lang::message.progvehnameext') }}</label>
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameConductorEXT"  name="ProgVehNameConductorEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehDocAuxiliarEXT">{{ trans('adminlte_lang::message.progvehdocauxext') }}</label>
+									<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocAuxiliarEXT"  name="ProgVehDocAuxiliarEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehNameAuxiliarEXT">{{ trans('adminlte_lang::message.progvehnameauxext') }}</label>
+									<input type="text" maxlength="50" class="form-control" id="ProgVehNameAuxiliarEXT"  name="ProgVehNameAuxiliarEXT" >
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehPlacaEXT">{{ trans('adminlte_lang::message.progvehplacaext') }}</label>
+									<input type="text" class="form-control placa" id="ProgVehPlacaEXT"  name="ProgVehPlacaEXT" data-minlength="7">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label for="ProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label>
+									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT">
+								</div>
+								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
+									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control">
 										<option value="">Seleccione...</option>
@@ -142,7 +170,7 @@
 		</div>
 	</div>
 </div>
-{{-- END Modal --}}
+{{-- END Modal
 
 {{--  Modal --}}
 <div class="modal modal-default fade in" id="CrearProgVehic2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -161,7 +189,7 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha2">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="ProgVehFecha form-control" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" value="{{old('ProgVehFecha2')}}">
+									<input  class="form-control ProgVehFecha" readonly type="date" id="ProgVehFecha2" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha2')}}">
 								</div>
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida2') }}</label>
@@ -320,6 +348,10 @@
 				month: 'Mes',
 				week: 'Semana'
 			},
+			// validRange: {
+			//     start: '2019-11-24',
+			//     end: '2121-11-26'
+			//  },
 			defaultRangeSeparator: ' - ',
 			height: 'parent',
 			customButtons: {
@@ -369,7 +401,7 @@
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
 							color: '{{$programacion->ProgVehColor}}',
-							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliName." - ".$programacion->ID_SolSer}}',
 							start: '{{$programacion->ProgVehSalida}}',
 							textColor: 'black'
 						},
@@ -380,7 +412,7 @@
 							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 							url: '{{url('/vehicle-programacion/'.$programacion->ID_ProgVeh.'/edit')}}',
 							@endif
-							title: '{{$programacion->CliShortname." - ".$programacion->ID_SolSer}}',
+							title: '{{$programacion->CliName." - ".$programacion->ID_SolSer}}',
 							color: '#00a65a',
 							start: '{{$programacion->ProgVehSalida}}',
 							end: '{{$programacion->ProgVehEntrada}}',
@@ -480,7 +512,9 @@
 					NotifiTrue(msg);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					NotifiFalse("{{trans('adminlte_lang::message.progvehcediterror')}}");
+					for (var i = jqXHR.responseJSON.errors.Event.length - 1; i >= 0; i--) {
+						NotifiFalse(jqXHR.responseJSON.errors.Event[i]);
+					}
 				}
 			});
 		}

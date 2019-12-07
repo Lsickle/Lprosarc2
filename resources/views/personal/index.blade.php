@@ -3,7 +3,17 @@
 {{ trans('adminlte_lang::message.personalhtmlheader_title') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE))
+<span style="background-image: linear-gradient(40deg, #FFFFFF, #A3A2AE); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@else
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endif
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -30,6 +40,7 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<th>{{ trans('adminlte_lang::message.clientmenu') }}</th>
 									@endif
+									<th>Contacto de facturación</th>
 									<th>{{ trans('adminlte_lang::message.see') }}</th>
 								</tr>
 							</thead>
@@ -43,8 +54,9 @@
 									<td>{{$Personal->CargName}}</td>
 									<td>{{$Personal->AreaName}}</td>
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-										<td>{{$Personal->CliShortname}}</td>
+										<td>{{$Personal->CliName}}</td>
 									@endif
+									<td>{{$Personal->PersFactura==1 ? "Si" : "No"}}</td>
 									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>
 								@endforeach

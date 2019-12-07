@@ -26,6 +26,6 @@ class Generador extends Model
 	}
 	public function GenerSede()
     {
-        return $this->hasMany('App\GenerSede', 'ID_GSede', 'id');//como generador tiene muchas sedes de generador // el busca automaticamente el campo ID_GSede
+        return $this->hasMany('App\GenerSede', 'FK_GSede', 'ID_Gener');//como generador tiene muchas sedes de generador // el busca automaticamente el campo ID_GSede
     }
 }

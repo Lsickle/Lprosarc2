@@ -3,7 +3,17 @@
 	{{ trans('adminlte_lang::message.clientcliente') }}
 @endsection
 @section('contentheader_title')
+@if(Route::currentRouteName()=='clientes.show')
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.clientmenu') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@else
+<span style="background-image: linear-gradient(40deg, #FFFFFF, #A3A2AE); padding-right:30vw; position:relative; overflow:hidden;">
 	{{ trans('adminlte_lang::message.clientcliente') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endif
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -245,7 +255,7 @@
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.address') }}</b>
 								<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.address') }}')"><i class="far fa-copy"></i></a>
-								<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</a>
+								<p href="#" class="pull-right textpopoveraddress" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>
 							</li>
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right">{{$Sede->SedeCelular}}</a>
@@ -268,7 +278,7 @@
 					{{-- requerimientos --}}
 						<div class="tab-pane" id="requerimientos">
 							<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
-							<h3 class="profile-username text-center textolargo">Requerimientos a solicitar</h3>
+							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>
 							<div style='overflow-y:auto; max-height:503px;'>
 								@if(isset($Requerimientos))
 									<div class="col-md-6" style="text-align: center;">

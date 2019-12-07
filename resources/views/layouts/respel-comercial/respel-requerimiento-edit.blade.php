@@ -1,5 +1,5 @@
 @php
-    if ($opcion['ofertado'] == 1) {
+    if ($opcion['ofertado'] == 1||$opcion['en_uso'] == 1) {
         $OpcionOfertada = 1;
     }else{
         $OpcionOfertada = 0;

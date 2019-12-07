@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('htmlheader_title', 'Clasificación A')
+@section('contentheader_title')
+<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+	Clasificación A
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
+@endsection
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
@@ -23,7 +29,7 @@
 						<tbody>
 							<tr>
 								<td>A1010</td>
-								<td>Desechos metálicos y desechos que contengan aleaciones de cualquiera de las sustancias siguientes: <ul>
+								<td>Desechos metálicos y desechos que contengan aleaciones de cualquiera de las siguientes sustancias: <ul>
 								    <li>Antimonio</li>
 								    <li>Arsénico</li>
 								    <li>Berilio</li>
@@ -36,7 +42,7 @@
 							</tr>
 							<tr>
 								<td>A1020</td>
-								<td>Desechos que tengan como constituyentes o contaminantes, excluidos los desechos de metal en forma masiva, cualquiera de las sustancias siguientes:
+								<td>Desechos que tengan como constituyentes o contaminantes, excluidos los desechos de metal en forma masiva, cualquiera de las siguientes sustancias:
 								<ul>
 								     <li>Antimonio; compuestos de antimonio</li>
 								     <li>Berilio; compuestos de berilio</li>
@@ -48,7 +54,7 @@
 							</tr>
 							<tr>
 								<td>A1030</td>
-								<td>Desechos que tengan como constituyentes o contaminantes cualquiera de las sustancias siguientes: 
+								<td>Desechos que tengan como constituyentes o contaminantes cualquiera de las siguientes sustancias: 
 									<ul>
 									    <li>Arsénico; compuestos de arsénico</li>
 									    <li>Mercurio; compuestos de mercurio</li>
@@ -210,7 +216,7 @@
 							</tr>
 							<tr>
 								<td>A3180</td>
-								<td>Desechos, sustancias y artículos que contienen, consisten o están contaminados con bifenilo policlorado (PCB), terfenilo policlorado (PCT),naftaleno policlorado (PCN) o bifenilopolibromado (PBB), o cualquier otro compuesto polibromado análogo, con una concentración de igual o superior a50 mg/kg</td>
+								<td>Desechos, sustancias y artículos que contienen, consisten o están contaminados con bifenilo policlorado (PCB), terfenilo policlorado (PCT),naftaleno policlorado (PCN) o bifenilopolibromado (PBB), o cualquier otro compuesto polibromado análogo, con una concentración de igual o superior a 50 mg/kg</td>
 							</tr>
 							<tr>
 								<td>A3190</td>
@@ -238,7 +244,7 @@
 							</tr>
 							<tr>
 								<td>A4050</td>
-								<td>Desechos que contienen, consisten o están contaminados con algunos de los productos siguientes: <ul>
+								<td>Desechos que contienen, consisten o están contaminados con algunos de los siguientes productos: <ul>
 								    <li>Cianuros inorgánicos, con excepción de residuos que contienen metales preciosos, en forma sólida, con trazas de cianuros inorgánicos</li>
 								    <li>Cianuros orgánicos</li>
 								</ul></td>
@@ -265,7 +271,7 @@
 							</tr>
 							<tr>
 								<td>A4110</td>
-								<td>Desechos que contienen, consisten o, están contaminados con algunos de los productos siguientes: <ul>
+								<td>Desechos que contienen, consisten o, están contaminados con algunos de los siguientes productos: <ul>
 								    <li>Cualquier sustancia del grupo de los dibenzofuranos policlorados</li>
 								    <li>Cualquier sustancia del grupo de las dibenzodioxinas policloradas</li>
 								</ul></td>

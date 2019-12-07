@@ -12,6 +12,7 @@ use App\Respel;
 use App\Recurso;
 use App\ResiduosGener;
 use App\SolicitudServicio;
+use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use Permisos;
 
@@ -79,6 +80,11 @@ class SolicitudResiduoController extends Controller
 				->select('respels.RespelSlug', 'respels.RespelName', 'respels.ID_Respel')
 				->where('residuos_geners.ID_SGenerRes', $SolRes->FK_SolResRg)
 				->first();
+			$Requerimientos = DB::table('requerimientos')
+				->where('requerimientos.FK_ReqRespel', $Respel->ID_Respel)
+				->where('requerimientos.ofertado', '=', 1)
+				->first();
+			// return $Requerimientos;
 			if($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'Tratado'  || $SolSer->SolSerStatus === 'Certificacion'){
 				abort(403);
 			}
@@ -91,7 +97,7 @@ class SolicitudResiduoController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion', 'totalenviado'));
+			return view('solicitud-resid.edit', compact('SolRes', 'Respel', 'RespelSgener', 'SolSer', 'Programacion', 'totalenviado', 'Requerimientos'));
 		}else{
 			abort(403);
 		}
@@ -129,16 +135,23 @@ class SolicitudResiduoController extends Controller
 			case 'Completado':
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
 				break;
 			case 'Conciliado':
 				if( $request->input('ValorConciliado') == NULL){
-					$SolRes->SolResKgTratado = $request->input('SolResKg');
+					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
+						$SolRes->SolResKgTratado = $request->input('SolResKg');
+					}else{
+						$SolRes->SolResKgTratado = $request->input('SolResKg');
+					}
 				}else{
 					$SolRes->SolResKgTratado = $request->input('ValorConciliado');
 				}
+
 				break;
 			default:
 				abort(500);
@@ -170,8 +183,43 @@ class SolicitudResiduoController extends Controller
 		return redirect()->route('solicitud-servicio.show', compact('id'));
 	}
 
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	
+	public function updateSolResPrice(Request $request, $id){
+		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
+		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+
+		$Validate = $request->validate([
+			'SolResPrecio'  => 'required|numeric|nullable',
+		]);
+		$SolRes->SolResPrecio = $request->input('SolResPrecio');
+		$SolRes->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_residuos";
+		$log->AuditType="Modificado el precio";
+		$log->AuditRegistro=$SolRes->ID_SolRes;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		$idServicio = $SolSer->SolSerSlug;
+
+		return redirect()->route('solicitud-servicio.show', compact('idServicio'));
+	}
+
 	public function update(SolResUpdateRequest $request, $id)
 	{
+		// return $request;
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
@@ -184,10 +232,54 @@ class SolicitudResiduoController extends Controller
 		$SolRes->SolResAlto = $request->input('SolResAlto');
 		$SolRes->SolResAncho = $request->input('SolResAncho');
 		$SolRes->SolResProfundo = $request->input('SolResProfundo');
-		$SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
-		$SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
-		$SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
-		$SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		/*se verifica el requerimiento actualmente ofertado para el residuo*/
+		$respelgener= ResiduosGener::find($SolRes->FK_SolResRg);
+
+		$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
+	        ->where('ofertado', '=', 1)
+	        ->first();
+		if ($requerimientoOfertado->ReqFotoDescargue==0) {
+			$SolRes->SolResFotoDescargue_Pesaje = 0;
+		}else{
+			$SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+		}
+
+		if ($requerimientoOfertado->ReqFotoDestruccion==0) {
+			$SolRes->SolResFotoTratamiento = 0;
+		}else{
+			$SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+		}
+
+		if ($requerimientoOfertado->ReqVideoDescargue==0) {
+			$SolRes->SolResVideoDescargue_Pesaje = 0;
+		}else{
+			$SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+		}
+
+		if ($requerimientoOfertado->ReqVideoDestruccion==0) {
+			$SolRes->SolResVideoTratamiento = 0;
+		}else{
+			$SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		}
+
+		if ($requerimientoOfertado->ReqDevolucion==0) {
+			$SolRes->SolResDevolucion = 0;
+		}else{
+			$SolRes->SolResDevolucion = $request->input('SolResDevolucion');
+		}
+
+		if ($requerimientoOfertado->ReqAuditoria==0) {
+			$SolRes->SolResAuditoria = 0;
+		}else{
+			$SolRes->SolResAuditoria = $request->input('SolResAuditoria');
+		}
+		// $SolRes->SolResFotoDescargue_Pesaje = $request->input('SolResFotoDescargue_Pesaje');
+		// $SolRes->SolResFotoTratamiento = $request->input('SolResFotoTratamiento');
+		// $SolRes->SolResVideoDescargue_Pesaje = $request->input('SolResVideoDescargue_Pesaje');
+		// $SolRes->SolResVideoTratamiento = $request->input('SolResVideoTratamiento');
+		// $SolRes->SolResDevolucion = $request->input('SolResDevolucion');
+		// $SolRes->SolResAuditoria = $request->input('SolResAuditoria');
 		$SolRes->SolResTypeUnidad = $request->input('SolResTypeUnidad');
 
 		switch ($request->input('SolResEmbalaje')) {

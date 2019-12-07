@@ -7,6 +7,7 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -22,6 +23,12 @@ use App\Generador;
 use App\Personal;
 use App\Departamento;
 use App\Municipio;
+use App\Tarifa;
+use App\Rango;
+use App\Certificado;
+use App\Certdato;
+use App\Manifiesto;
+use App\Manifdato;
 use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
@@ -41,7 +48,7 @@ class SolicitudServicioController extends Controller
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
-			->select('solicitud_servicios.*', 'clientes.CliShortname', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
+			->select('solicitud_servicios.*', 'clientes.CliName', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -59,7 +66,7 @@ class SolicitudServicioController extends Controller
 				}
 			})
 			->get();
-		$Cliente = Cliente::select('CliShortname','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
 			if($servicio->SolSerTypeCollect == 98){
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
@@ -87,14 +94,18 @@ class SolicitudServicioController extends Controller
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
-			$Cliente = Cliente::select('CliName', 'CliShortname','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$Cliente = Cliente::select('CliName', 'CliName','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)
+			->where('sedes.SedeDelete', 0)
+			->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->where('generadors.GenerDelete', 0)
+				->where('gener_sedes.GSedeDelete', 0)
 				->get();
 			$Personals = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -103,6 +114,7 @@ class SolicitudServicioController extends Controller
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->where('personals.PersDelete', 0)
 				->get();
             $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
             // return $Requerimientos;
@@ -314,7 +326,42 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
-				$SolicitudResiduo->save();
+				/*validar el residuo para saber el tratamiento*/
+				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
+				/*asignar el requerimiento segun el tratamiento ofertado actualmente*/
+				// $SolicitudResiduo->FK_SolResRequerimiento = Requerimiento::select('ID_Req')
+				// ->where('FK_ReqRespel', $respelref)
+				// ->where('ofertado', 1)
+				// ->first()->ID_Req;
+				// $SolicitudResiduo->save();
+				$requerimientoparacopiar = Requerimiento::with(['pretratamientosSelected'])
+				->where('FK_ReqRespel', $respelref)
+				->where('ofertado', 1)
+				->where('forevaluation', 1)
+				->first();
+				$nuevorequerimiento = $requerimientoparacopiar->replicate();
+                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelref);
+                $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
+                $nuevorequerimiento->save();
+                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoparacopiar['pretratamientosSelected']);
+
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimientoparacopiar->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                	$rangoparacopiar = Rango::find($rango->ID_Rango);
+                	$nuevarango = $rangoparacopiar->replicate();
+                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                	$nuevarango->save();
+                }
+
+                
+                $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
+                $SolicitudResiduo->save();
 			}
 		}
 	}
@@ -385,7 +432,7 @@ class SolicitudServicioController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerShortname','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
+			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerName','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->get();
 		// $Residuos = DB::table('solicitud_residuos')
@@ -397,18 +444,20 @@ class SolicitudServicioController extends Controller
 		$Residuosoriginal = DB::table('solicitud_residuos')
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->join('requerimientos' , 'respels.ID_Respel', '=', 'Requerimientos.FK_ReqRespel')
-			->join('tratamientos' , 'Requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+			->join('requerimientos' , 'solicitud_residuos.FK_SolResRequerimiento', '=', 'requerimientos.ID_Req')
+			->join('tratamientos' , 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
 			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliShortname')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
-			->where('requerimientos.ofertado', 1)
+			// ->where('requerimientos.ofertado', 1)
+	        // ->where('forevaluation', 0)
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
 		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-	        ->where('ID_Req', $item->ID_Req)
+	        ->where('ID_Req', $item->FK_SolResRequerimiento)
+	        // ->where('forevaluation', 0)
 	        ->first();
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
@@ -472,6 +521,10 @@ class SolicitudServicioController extends Controller
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
 
+		if ($Solicitud->SolSerStatus == 'Conciliado') {
+			$this->solservdocstore($Solicitud->ID_SolSer);
+		}
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="Modificado Status";
@@ -499,6 +552,10 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudOld) {
 			abort(404);
 		}
+
+		$Cliente = Cliente::where('ID_Cli', $SolicitudOld->FK_SolSerCliente)->first();
+        $Requerimiento = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->first();
+
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
@@ -513,11 +570,35 @@ class SolicitudServicioController extends Controller
 			$SolicitudNew->SolSerVehiculo = $SolicitudOld->SolSerVehiculo;
 			$SolicitudNew->SolSerTypeCollect = $SolicitudOld->SolSerTypeCollect;
 			$SolicitudNew->SolSerCollectAddress = $SolicitudOld->SolSerCollectAddress;
-			$SolicitudNew->SolSerBascula = $SolicitudOld->SolSerBascula;
-			$SolicitudNew->SolSerCapacitacion = $SolicitudOld->SolSerCapacitacion;
-			$SolicitudNew->SolSerMasPerson = $SolicitudOld->SolSerMasPerson;
-			$SolicitudNew->SolSerVehicExclusive = $SolicitudOld->SolSerVehicExclusive;
-			$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+			if ($Requerimiento->RequeCliBascula==0) {
+				$SolicitudNew->SolSerBascula = 0;
+			}else{
+				$SolicitudNew->SolSerBascula = $SolicitudOld->SolSerBascula;
+			}
+
+			if ($Requerimiento->RequeCliCapacitacion==0) {
+				$SolicitudNew->SolSerCapacitacion = 0;
+			}else{
+				$SolicitudNew->SolSerCapacitacion = $SolicitudOld->SolSerCapacitacion;
+			}
+
+			if ($Requerimiento->RequeCliMasPerson==0) {
+				$SolicitudNew->SolSerMasPerson = 0;
+			}else{
+				$SolicitudNew->SolSerMasPerson = $SolicitudOld->SolSerMasPerson;
+			}
+
+			if ($Requerimiento->RequeCliVehicExclusive==0) {
+				$SolicitudNew->SolSerVehicExclusive = 0;
+			}else{
+				$SolicitudNew->SolSerVehicExclusive = $SolicitudOld->SolSerVehicExclusive;
+			}
+
+			if ($Requerimiento->RequeCliPlatform==0) {
+				$SolicitudNew->SolSerPlatform = 0;
+			}else{
+				$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+			}
 			$SolicitudNew->SolSerDevolucion = $SolicitudOld->SolSerDevolucion;
 			$SolicitudNew->SolSerDevolucionTipo = $SolicitudOld->SolSerDevolucionTipo;
 			$SolicitudNew->FK_SolSerPersona = $SolicitudOld->FK_SolSerPersona;
@@ -533,19 +614,85 @@ class SolicitudServicioController extends Controller
 				$SolResNew->SolResKgConciliado = 0;
 				$SolResNew->SolResKgTratado = 0;
 				$SolResNew->SolResDelete = 0;
-				$SolResNew->SolResSlug = hash('sha256', rand().time().$SolResNew->SolResKgEnviado);
-				$SolResNew->FK_SolResSolSer = $SolicitudNew->ID_SolSer;
 				$SolResNew->SolResTypeUnidad = $SolResOld->SolResTypeUnidad;
 				$SolResNew->SolResCantiUnidad = $SolResOld->SolResCantiUnidad;
 				$SolResNew->SolResEmbalaje = $SolResOld->SolResEmbalaje;
 				$SolResNew->SolResAlto = $SolResOld->SolResAlto;
 				$SolResNew->SolResAncho = $SolResOld->SolResAncho;
 				$SolResNew->SolResProfundo = $SolResOld->SolResProfundo;
-				$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
-				$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
-				$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
-				$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->SolResSlug = hash('sha256', rand().time().$SolResNew->SolResKgEnviado);
 				$SolResNew->FK_SolResRg = $SolResOld->FK_SolResRg;
+				$SolResNew->FK_SolResSolSer = $SolicitudNew->ID_SolSer;
+				/*se verifica el requerimiento actualmente ofertado para el residuo*/
+				$respelgener= ResiduosGener::find($SolResOld->FK_SolResRg);
+
+				$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
+			        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
+			        ->where('ofertado', '=', 1)
+			        ->where('forevaluation', '=', 1)
+			        ->first();
+				if ($requerimientoOfertado->ReqFotoDescargue==0) {
+					$SolResNew->SolResFotoDescargue_Pesaje = 0;
+				}else{
+					$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
+				}
+
+				if ($requerimientoOfertado->ReqFotoDestruccion==0) {
+					$SolResNew->SolResFotoTratamiento = 0;
+				}else{
+					$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
+				}
+
+				if ($requerimientoOfertado->ReqVideoDescargue==0) {
+					$SolResNew->SolResVideoDescargue_Pesaje = 0;
+				}else{
+					$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
+				}
+
+				if ($requerimientoOfertado->ReqVideoDestruccion==0) {
+					$SolResNew->SolResVideoTratamiento = 0;
+				}else{
+					$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+				}
+
+				if ($requerimientoOfertado->ReqDevolucion==0) {
+					$SolResNew->SolResDevolucion = 0;
+				}else{
+					$SolResNew->SolResDevolucion = $SolResOld->SolResDevolucion;
+				}
+
+				if ($requerimientoOfertado->ReqAuditoria==0) {
+					$SolResNew->SolResAuditoria = 0;
+				}else{
+					$SolResNew->SolResAuditoria = $SolResOld->SolResAuditoria;
+				}
+				$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->SolResDevolucion = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->SolResDevolCantidad = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
+				$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
+				/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
+				
+				$nuevorequerimiento = $requerimientoOfertado->replicate();
+                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
+                $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
+                $nuevorequerimiento->save();
+                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoOfertado['pretratamientosSelected']);
+
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimientoOfertado->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                	$rangoparacopiar = Rango::find($rango->ID_Rango);
+                	$nuevarango = $rangoparacopiar->replicate();
+                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                	$nuevarango->save();
+                }
+                $SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
 				$SolResNew->save();
 			}
 
@@ -584,12 +731,13 @@ class SolicitudServicioController extends Controller
 			}
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
 			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerShortname')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
 			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
@@ -602,6 +750,7 @@ class SolicitudServicioController extends Controller
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->where('personals.PersDelete', 0)
 				->get();
 			$KGenviados = DB::table('solicitud_residuos')
 				->select('SolResKgEnviado')
@@ -611,7 +760,7 @@ class SolicitudServicioController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado'));
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
 		}
 		else{
 			abort(403);
@@ -841,4 +990,228 @@ class SolicitudServicioController extends Controller
 
 		return redirect()->route('solicitud-servicio.index');
 	}
+
+	/**
+	 * list the related documents for specific solserv.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function solservdocindex($id)
+	{	
+		if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+			$SolicitudServicio = DB::table('solicitud_servicios')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
+			->where('solicitud_servicios.SolSerSlug', $id)
+			->where('solicitud_servicios.SolSerStatus', 'Certificacion')
+			->first();
+			if (!$SolicitudServicio) {
+				abort(403,	'Sus residuos aun no han sido certificados');
+			}
+			$certificados = Certificado::where(function($query) use ($SolicitudServicio){
+			    $UserSedeID = DB::table('personals')
+			    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+			    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+			    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+			    ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+			    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+			    ->value('clientes.ID_Cli');
+
+			    $query->where('FK_CertCliente', $UserSedeID);
+			    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
+			    $query->where('CertAuthHseq', '!=', 0);
+			    $query->where('CertAuthJl', '!=', 0);
+			    $query->where('CertAuthDp', '!=', 0);
+			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
+
+			})
+			->get();
+
+			$manifiestos = Manifiesto::where(function($query) use ($SolicitudServicio){
+				/*se define la sede del usuario actual*/
+				$UserSedeID = DB::table('personals')
+				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+				->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+				->value('clientes.ID_Cli');
+
+				$servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
+				->where('SolSerStatus', 'Certificacion')
+				->get('ID_SolSer');
+
+				$query->where('FK_ManifCliente', $UserSedeID);
+				$query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
+				$query->where('ManifAuthDp','!=', 0);
+				$query->where('ManifAuthJl','!=', 0);
+				$query->where('ManifAuthHseq','!=', 0);
+				$query->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer);
+			})
+			->get();
+		}else{
+			$SolicitudServicio = DB::table('solicitud_servicios')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
+			->where('solicitud_servicios.SolSerSlug', $id)
+			->first();
+			if (!$SolicitudServicio) {
+				abort(404);
+			}
+			$certificados = Certificado::with(['certdato.solres'])
+			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+			->get();
+
+			$manifiestos = Manifiesto::with(['manifdato.solres'])
+			->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer)
+			->get();
+		}
+		
+
+		// return $certificados;
+		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados', 'manifiestos'));
+	}
+
+	public function solservdocstore($id)
+	{
+			
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
+		$serviciovalidado = $id;
+		/*cuenta los diferentes generadores*/
+		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+		    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+		})
+		->with(['resgener' => function ($query) use ($serviciovalidado){
+		    $query->with(['solres' => function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    	$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
+		    }]);
+		    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    });
+		}])
+		->get();
+		// return $generadoresdelasolicitud;
+		/*consulta para el cliente de esta solicitud*/
+		$cliente = Cliente::whereHas('sedes.generador', function ($query) use ($generadoresdelasolicitud) {
+		    $query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
+		})->first();
+		foreach ($generadoresdelasolicitud as $genersede) {
+			foreach ($genersede->resgener as $resgener) {
+				foreach ($resgener->solres as $key) {
+					if ($key->SolResKgConciliado > 0) {
+						switch ($key->requerimiento->tratamiento->TratTipo) {
+							case '0':
+								// "tratamiento tipo: interno; Certificado";
+
+								$certificadoprevio = Certificado::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_CertSolser', $id)
+								->first();
+
+								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
+								->first();
+
+								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+
+									$dato = new Certdato;
+									$dato->FK_DatoCert = $certificadoprevio->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+
+									$certificado = new Certificado;
+									$certificado->CertType = 0;
+									$certificado->CertNumero = "";
+									$certificado->CertiEspName = "";
+									$certificado->CertiEspValue = "";
+									$certificado->CertObservacion = "certificado con observacion generica";
+									$certificado->CertSlug = hash('sha256', rand().time());
+									$certificado->CertSrc = 'CertificadoDefault.pdf';
+									$certificado->CertNumRm = "C-130";
+									$certificado->CertAuthJo = 0;
+									$certificado->CertAuthJl = 0;
+									$certificado->CertAuthDp = 0;
+									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$certificado->FK_CertSolser = $id;
+									$certificado->FK_CertCliente = $cliente->ID_Cli;
+									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
+									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$certificado->FK_CertTransp = $cliente->ID_Cli;
+									}else{
+										$certificado->FK_CertTransp = 1;
+									}
+									
+									$certificado->save();
+
+									$dato = new Certdato;
+									$dato->FK_DatoCert = $certificado->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+									
+								}
+
+								break;
+
+							case '1':
+							// "tratamiento tipo: externo ; manifiesto";
+								/*se verifica si ya existe un documento con ese tratamiento para esa solicitud de servicio*/
+								$manifiestoprevio = Manifiesto::where('FK_ManifTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_ManifSolser', $id)
+								->first();
+
+								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+									
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+									
+									$manifiesto = new Manifiesto;
+									$manifiesto->ManifNumero = "";
+									$manifiesto->ManifiEspName = "";
+									$manifiesto->ManifiEspValue = "";
+									$manifiesto->ManifObservacion = "manifiesto con observacion generica";
+									$manifiesto->ManifSlug = hash('sha256', rand().time());
+									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
+									$manifiesto->ManifNumRm = "M-16";
+									$manifiesto->ManifAuthJo = 0;
+									$manifiesto->ManifAuthJl = 0;
+									$manifiesto->ManifAuthDp = 0;
+									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$manifiesto->FK_ManifSolser = $id;
+									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
+									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
+									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+									}else{
+										$manifiesto->FK_ManifTransp = 1;
+									}
+									$manifiesto->save();
+
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiesto->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+								}
+
+								break;
+
+							default:
+								return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
+								break;
+						}
+					}
+				}
+			}
+		}
+	}
+
 }

@@ -3,7 +3,10 @@
 Subcategorías
 @endsection
 @section('contentheader_title')
-
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+    Subcategorías
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -17,7 +20,11 @@ Subcategorías
                     <form role="form" action="/subcategorypublic/{{$Subcategoria->ID_SubCategoryRP}}" method="POST" enctype="multipart/form-data" id="myForm">
                     @csrf
                     @method('DELETE')
-                        <button type="submit" class="btn btn-danger pull-right"> <i class="fa fa-trash"></i> Eliminar </button>
+                        @if($Subcategoria->ID_SubCategoryRP == 1 || isset($Borrar->FK_SubCategoryRP))
+                            <button data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Eliminar Categoria</b>" data-content="Debe existir mínimo una <b>SubCategoría</b>... Ádemas ningun residuo público debe estar asociada a esta <b>SubCategoría</b>" class="btn btn-default pull-right" disabled="true"> <i class="fa fa-trash"></i> Eliminar </button>
+                        @else
+                            <button type="submit" class="btn btn-danger pull-right" > <i class="fa fa-trash"></i> Eliminar </button>
+                        @endif
                     </form>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
+use App\Http\Requests\CambiodefechaStoreRequest;
 use App\Sede;
 use App\Area;
 use App\Tratamiento;
@@ -52,7 +53,7 @@ class AjaxController extends Controller
 		}
 	}
 	/*Funcion para cambiar el dia y hora de la programacion de un Vehiculo*/
-	public function CambioDeFecha(Request $request, $id){
+	public function CambioDeFecha(CambiodefechaStoreRequest $request, $id){
 		if ($request->ajax()) {
 			$fecha = date('Y-m-d', strtotime(substr($request->Event, 0, -1)));
 			$hora = date('H:i:s', strtotime(substr($request->Event, 0, -1)));
@@ -91,7 +92,7 @@ class AjaxController extends Controller
 				->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
 				->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 				->select('respels.ID_Respel', 'respels.RespelName', 'respels.RespelSlug')
-				->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
 				->where('cotizacions.CotiStatus', '=', 'Aprobada')
 				->where('respels.RespelDelete', '=', 0)
 				->where(function ($query) use ($ResSGeners){
@@ -120,6 +121,7 @@ class AjaxController extends Controller
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug')
+				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $slug)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
 				->get();
@@ -136,6 +138,7 @@ class AjaxController extends Controller
 				->select('ReqFotoDescargue', 'ReqFotoDestruccion', 'ReqVideoDescargue', 'ReqVideoDestruccion', 'ReqDevolucion', 'ReqDevolucionTipo', 'tarifas.Tarifatipo', 'ReqAuditoria')
 				->where('respels.RespelSlug', $slug)
 				->where('requerimientos.ofertado', 1)
+				->where('requerimientos.forevaluation', 1)
 				->first();
 			return response()->json($Requerimientos);
 		}

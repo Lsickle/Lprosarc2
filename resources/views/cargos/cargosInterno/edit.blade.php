@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::message.cargotitle') }}
 @endsection
 @section('contentheader_title')
-{{ trans('adminlte_lang::message.cargotitle') }}
+<span style="background-image: linear-gradient(40deg, #FFFFFF, #A3A2AE); padding-right:30vw; position:relative; overflow:hidden;">
+	{{ trans('adminlte_lang::message.cargotitle') }}
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -74,10 +77,10 @@
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargonametittle') }}" data-content="{{ trans('adminlte_lang::message.cargonameinfo') }}" for="NombreCargo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.cargoname')}}</label><small class="help-block with-errors">*</small>
 								<input data-minlength="5" required name="CargName" autofocus="true" type="text" class="form-control inputText" id="NombreCargo" value="{{$Cargos->CargName}}">
 							</div>
-							<div class="form-group col-xs-6 col-md-6">
+							{{-- <div class="form-group col-xs-6 col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::message.cargosalarytittle') }}" data-content="{{ trans('adminlte_lang::message.cargosalaryinfo') }}" for="CargoSalary"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.cargosalary')}}</label>
 								<input maxlength="12" name="CargSalary" autofocus="true" type="text" class="form-control money" id="CargoSalary" value="{{$Cargos->CargSalary}}">
-							</div>
+							</div> --}}
 						</div>
 						<div class="box box-info">
 							<div class="box-footer">

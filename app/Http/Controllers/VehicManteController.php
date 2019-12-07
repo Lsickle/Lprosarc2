@@ -117,7 +117,7 @@ class VehicManteController extends Controller
 
 			return view('ManteniVehicle.edit', compact('vehiculos', 'MantVehicles'));
 		}
-		/*Validacion para usuarios no permitidos en esta vista*/
+		/*Validacion para usuarios no permitidos en esta vista*/ 
 		else{
 			abort(403);
 		}
@@ -172,7 +172,7 @@ class VehicManteController extends Controller
 		$log->Auditlog=$request->all();
 		$log->save();
 
-		return redirect()->route('vehicle-mantenimiento.edit',['id' => $id])->with('Mensaje', trans('adminlte_lang::message.updatetrue'));
+		return redirect()->route('vehicle-mantenimiento.index',['id' => $id])->with('Mensaje', trans('adminlte_lang::message.updatetrue'));
 	}
 
 	/**

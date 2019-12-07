@@ -37,7 +37,7 @@ class RecursosStoreRequest extends FormRequest
                 $rule = [
                     'RecTipo' => 'required|max:32',
                     'RecCarte' => 'required|max:32',
-                    'RecSrc.*' => 'mimes:mp4|max:10240|required',
+                    'RecSrc.*' => 'mimes:mp4|max:20480|required',
                 ];
                 return $rule;
                 break;

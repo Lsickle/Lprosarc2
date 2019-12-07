@@ -3,7 +3,10 @@
 {{ trans('adminlte_lang::LangRespel.Respelinfotag') }}
 @endsection
 @section('contentheader_title')
-<span style="margin-left: 0.5em">{{ trans('adminlte_lang::LangRespel.respelmenu') }}</span>
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+	Residuos Comunes
+  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+</span>
 @endsection
 @section('main-content')
 @component('layouts.partials.modal')
@@ -183,9 +186,11 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 							</li>
+							@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 							<li class="nav-item">
 								<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
 							</li>
+							@endif
 						</ul>
 						<!-- nav-content -->
 						<div class="tab-content" style="display: block; overflow: auto;">

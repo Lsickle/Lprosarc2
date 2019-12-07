@@ -21,6 +21,7 @@ use App\User;
 use App\Requerimiento;
 use App\Rango;
 use App\ResiduosGener;
+use App\SolicitudResiduo;
 use App\Permisos;
 use App\Tarifa;
 use App\Categoryrespelpublic;
@@ -34,7 +35,13 @@ class RespelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
+        // $UserSedeID = DB::table('personals')
+        //                 ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+        //                 ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+        //                 ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+        //                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+        //                 ->value('sedes.ID_Sede');
+        //                 return $UserSedeID;
         $Respels = DB::table('respels')
             ->join('cotizacions', 'cotizacions.ID_Coti', '=', 'respels.FK_RespelCoti')
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
@@ -49,12 +56,13 @@ class RespelController extends Controller
                         ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
                         ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
                         ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                        ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
                         ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-                        ->value('sedes.ID_Sede');
+                        ->value('clientes.ID_Cli');
                         // return $UserSedeID;
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
-                        $query->where('sedes.ID_Sede',$UserSedeID);
+                        $query->where('clientes.ID_Cli', $UserSedeID);
                         break;
 
                     case 'Comercial':
@@ -225,6 +233,13 @@ class RespelController extends Controller
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
         }
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Nuevo respel";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
         return redirect()->route('respels.index');
     }
 
@@ -246,11 +261,17 @@ class RespelController extends Controller
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
 
+        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
+            $deleteButton = 'No borrable';
+        }else{
+            $deleteButton = 'borrable';
+        }
+
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
-            if ($Respels->RespelStatus=='Aprobado'||$Respels->RespelStatus=='Vencido') {
-                $editButton = 'No editable';
-            }else{
+            if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Falta TDE'||$Respels->RespelStatus=='Pendiente'||$Respels->RespelStatus=='TDE actualizada') {
                 $editButton = 'Editable';
+            }else{
+                $editButton = 'No editable';
             }
         else{
             $editButton = 'Editable';
@@ -259,6 +280,7 @@ class RespelController extends Controller
         //consultar cuales son los tratamientos viabiizados por jefe de operaciones
         $requerimientos = Requerimiento::with(['pretratamientosSelected'])
         ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+        ->where('forevaluation', '=', 1)
         ->get();
 
         
@@ -274,7 +296,7 @@ class RespelController extends Controller
             ->get();
         }
 
-        return view('respels.show', compact('Respels', 'requerimientos', 'editButton'));
+        return view('respels.show', compact('Respels', 'requerimientos', 'editButton', 'deleteButton'));
 
     }
 
@@ -296,6 +318,7 @@ class RespelController extends Controller
                 ->join('sedes', 'sedes.ID_Sede', '=', 'tratamientos.FK_TratProv')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->select('sedes.*', 'clientes.*', 'tratamientos.*')
+                ->where('TratDelete', 0)
                 ->get();
 
 
@@ -333,6 +356,12 @@ class RespelController extends Controller
                     case 'Incompleto':
                         return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
+                    case 'Falta TDE':
+                        return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
+                    case 'TDE actualizada':
+                        return view('respels.editTDE', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
                     default:
                         abort(403);
                         break;
@@ -343,24 +372,40 @@ class RespelController extends Controller
                 ->orWhere('ClasfCode', '=', $Respels['YRespelClasf4741'])
                 ->get();
 
-
+                // return $tratamientosViables;
                 //consultar cuales son los tratamientos viabiizados por jefe de operaciones
                 $requerimientos = Requerimiento::with(['pretratamientosSelected'])
                 ->where('FK_ReqRespel', '=', $Respels->ID_Respel)
+                ->where('forevaluation', '=', 1)
                 ->get();
-
                 // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
-                    $tarifas = Tarifa::with(['rangos'])
+                    // adjuntar tarifas relacionadas
+                    $requerimiento['tarifas'] = Tarifa::with(['rangos'])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
-                    $requerimiento['tarifas'] = $tarifas;
+                    
+                    // adjuntar tratamientos relacionadas
                     $requerimiento['tratamientos'] = Tratamiento::with(['pretratamientos'])
                     ->where('ID_Trat', '=', $requerimiento['FK_ReqTrata'] )
                     ->get();
+
+                    // validar si el requerimiento se encuentra en uso
+                    $usado = SolicitudResiduo::where('FK_SolResRequerimiento', '=', $requerimiento->ID_Req)
+                    ->get('FK_SolResRequerimiento');
+                    // return $usado;
+                    
+                    // if (count($usado)>0) {
+                    //     return $usado;
+                    // }
+                    if (count($usado)>0) {
+                        $requerimiento['en_uso'] = 1;
+                    }else{
+                        $requerimiento['en_uso'] = 0;
+                    }
                 }
 
-
+                // return $requerimientos;
                 $Sedes = DB::table('clientes')
                     ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->select('sedes.ID_Sede', 'sedes.SedeName')
@@ -525,7 +570,9 @@ class RespelController extends Controller
 
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             /*se eliminan los requerimientos relacionados*/
-            $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
+            $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)
+            ->where('forevaluation', 1)
+            ->get();
             foreach ($requerimientosparaBorrar as $key => $value) {
                 $value->pretratamientosSelected()->detach();
                 $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
@@ -535,64 +582,146 @@ class RespelController extends Controller
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             if ($opciones) {
                 foreach ($opciones as $key => $value) {
-                    if ($opciones[$key]) {
-                        // se crea un requerimiento por cada opcion
-                        if (isset($opciones[$key]['Tratamiento'])) {
-                           
-                            $requerimiento = new Requerimiento();
-                            if (isset($opciones[$key]['ReqFotoDescargue'])) {
-                                $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
-                            }
-                            if (isset($opciones[$key]['ReqFotoDestruccion'])) {
-                                $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
-                            }
-                            if (isset($opciones[$key]['ReqVideoDescargue'])) {
-                                $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
-                            }
-                            if (isset($opciones[$key]['ReqVideoDestruccion'])) {
-                                 $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
-                            }
-                            if (isset($opciones[$key]['ReqDevolucion'])) {
-                                $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
-                            }
-                            if (isset($opciones[$key]['ReqAuditoria'])) {
-                                $requerimiento->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
-                            }
-                            /*se adjunta los elementos relacionados al requerimiento*/
-                            if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
-                                $requerimiento->ofertado=1;
-                            }else{
-                                $requerimiento->ofertado=0;
-                            }
-                            $requerimiento->FK_ReqRespel=$respel->ID_Respel;
-                            $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
-                            $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
-                            $requerimiento->save();
+                    if (isset($opciones[$key])) {
+                        if (isset($opciones[$key]['ReqSlug'])&&($opciones[$key]['ReqSlug'])!="") {
+                            // se actualiza el requerimiento segun corresponda
+                            $requerimientoparaActualizar = Requerimiento::where('ReqSlug', $opciones[$key]['ReqSlug'])->first();
+                            if (isset($opciones[$key]['Tratamiento'])) {
+                               
+                                if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                                    $requerimientoparaActualizar->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+                                }
+                                if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                                    $requerimientoparaActualizar->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+                                }
+                                if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                                    $requerimientoparaActualizar->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+                                }
+                                if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                                     $requerimientoparaActualizar->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+                                }
+                                if (isset($opciones[$key]['ReqDevolucion'])) {
+                                    $requerimientoparaActualizar->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+                                }
+                                if (isset($opciones[$key]['ReqAuditoria'])) {
+                                    $requerimientoparaActualizar->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
+                                }
+                                /*se adjunta los elementos relacionados al requerimiento*/
+                                if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
+                                    $requerimientoparaActualizar->ofertado=1;
+                                }else{
+                                    $requerimientoparaActualizar->ofertado=0;
+                                }
+                                $requerimientoparaActualizar->FK_ReqRespel=$respel->ID_Respel;
+                                $requerimientoparaActualizar->forevaluation=1;
+                                $requerimientoparaActualizar->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                                // $requerimientoparaActualizar->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                                $requerimientoparaActualizar->save();
 
-                            if (isset($opciones[$key]['Pretratamientos'])) {
-                                $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
-                            }
-                            /*se verifica que las tarifas no esten disabled en la vista*/
-                            if (isset($opciones[$key]['TarifaFrecuencia'])) {
-                                $tarifa = new Tarifa();
-                                $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
-                                $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
-                                $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
-                                $tarifa->TarifaDelete=0;
-                                $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
-                                $tarifa->save();
+                                if (isset($opciones[$key]['Pretratamientos'])) {
+                                    $requerimientoparaActualizar->pretratamientosSelected()->sync($opciones[$key]['Pretratamientos']);
+                                }
+                                /*se verifica que las tarifas no esten disabled en la vista*/
+                                if (isset($opciones[$key]['TarifaFrecuencia'])) {
+                                    // $tarifa = new Tarifa();
+                                    $tarifa = Tarifa::where('FK_TarifaReq', $requerimientoparaActualizar->ID_Req)->first();
+                                    $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
+                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                                    $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
+                                    $tarifa->TarifaDelete=0;
+                                    $tarifa->FK_TarifaReq=$requerimientoparaActualizar->ID_Req;
+                                    $tarifa->save();
 
-                                foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
-                                   if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
-                                       $rango = new Rango();
-                                       $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
-                                       $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
-                                       $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
-                                       $rango->save(); 
-                                   }               
+                                    foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
+                                       if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
+                                            if (isset($opciones[$key]['ID_Rango'][$key2])) {
+                                                // $rango = new Rango();
+                                               $rango = Rango::where('ID_Rango', $opciones[$key]['ID_Rango'][$key2])->first();
+                                               $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                                               $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                                               $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                               $rango->save(); 
+                                            }else{
+                                               $rango = new Rango();
+                                               $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                                               $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                                               $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                               $rango->save(); 
+                                            }
+                                       }else{
+                                            if (isset($opciones[$key]['ID_Rango'][$key2])) {
+                                                // $rango = new Rango();
+                                               $rango = Rango::where('ID_Rango', $opciones[$key]['ID_Rango'][$key2])->first();
+                                               // $rango->TarifaPrecio=0;
+                                               // $rango->TarifaDesde=0;
+                                               // $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                               $rango->delete(); 
+                                            }
+                                       }            
+                                    }
+                                }
+                            }
+                        }else{
+                            // se crea un requerimiento por cada opcion
+                            if (isset($opciones[$key]['Tratamiento'])) {
+                               
+                                $requerimiento = new Requerimiento();
+                                if (isset($opciones[$key]['ReqFotoDescargue'])) {
+                                    $requerimiento->ReqFotoDescargue=$opciones[$key]['ReqFotoDescargue'];
+                                }
+                                if (isset($opciones[$key]['ReqFotoDestruccion'])) {
+                                    $requerimiento->ReqFotoDestruccion=$opciones[$key]['ReqFotoDestruccion'];
+                                }
+                                if (isset($opciones[$key]['ReqVideoDescargue'])) {
+                                    $requerimiento->ReqVideoDescargue=$opciones[$key]['ReqVideoDescargue'];
+                                }
+                                if (isset($opciones[$key]['ReqVideoDestruccion'])) {
+                                     $requerimiento->ReqVideoDestruccion=$opciones[$key]['ReqVideoDestruccion'];   
+                                }
+                                if (isset($opciones[$key]['ReqDevolucion'])) {
+                                    $requerimiento->ReqDevolucion=$opciones[$key]['ReqDevolucion'];
+                                }
+                                if (isset($opciones[$key]['ReqAuditoria'])) {
+                                    $requerimiento->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
+                                }
+                                /*se adjunta los elementos relacionados al requerimiento*/
+                                if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
+                                    $requerimiento->ofertado=1;
+                                }else{
+                                    $requerimiento->ofertado=0;
+                                }
+                                $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+                                $requerimiento->forevaluation=1;
+                                $requerimiento->FK_ReqTrata=$opciones[$key]['Tratamiento'];
+                                $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+                                $requerimiento->save();
+
+                                if (isset($opciones[$key]['Pretratamientos'])) {
+                                    $requerimiento->pretratamientosSelected()->attach($opciones[$key]['Pretratamientos']);
+                                }
+                                /*se verifica que las tarifas no esten disabled en la vista*/
+                                if (isset($opciones[$key]['TarifaFrecuencia'])) {
+                                    $tarifa = new Tarifa();
+                                    $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
+                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                                    $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
+                                    $tarifa->TarifaDelete=0;
+                                    $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                                    $tarifa->save();
+
+                                    foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
+                                       if ($opciones[$key]['TarifaPrecio'][$key2] != null) {
+                                           $rango = new Rango();
+                                           $rango->TarifaPrecio=$opciones[$key]['TarifaPrecio'][$key2];
+                                           $rango->TarifaDesde=$opciones[$key]['TarifaDesde'][$key2];
+                                           $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                           $rango->save(); 
+                                       }               
+                                    }
                                 }
                             }
                         }
+                        
                     }
                 }
             }  
@@ -614,7 +743,12 @@ class RespelController extends Controller
             // new  RespelMail($slug);
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
-        return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        // return redirect()->route('respels.edit', [$respel->RespelSlug]);
+        if ($respel->RespelPublic === 1) {
+            return redirect()->route('respelspublic.index');
+        }else{
+            return redirect()->route('respels.index');
+        }
     }
 
       /**
@@ -630,7 +764,9 @@ class RespelController extends Controller
         $opciones = $request->Opcion;
         // return $request;
         // return $tarifasparaBorrar;
-
+        if (in_array(Auth::user()->UsRol, Permisos::SUPERVISOR)) {
+            return redirect()->route('respels.show', [$respel->RespelSlug]);
+        }
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             /*se eliminan los requerimientos relacionados*/
             $requerimientosparaBorrar = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)->get();
@@ -723,5 +859,46 @@ class RespelController extends Controller
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
         return redirect()->route('respels.edit', [$respel->RespelSlug]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTDE(Request $request, $id)
+    {
+        $respel = Respel::where('RespelSlug', $id)->first();
+        if (!$respel) {
+            abort(404);
+        }
+        // return $request;
+        /*verificar si se cargo un documento en este campo*/
+            if (isset($request['RespelTarj'])) {
+                if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
+                    // unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
+                }
+                $file2 = $request['RespelTarj'];
+                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
+                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+                $newTDE = "TDE actualizada";
+            }else{
+                $tarj = $respel->RespelTarj;
+                $newTDE = $respel->RespelStatus;
+            }   
+        $respel->RespelTarj = $tarj;
+        $respel->RespelStatus = $newTDE;
+        $respel->save();
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Eliminado";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog="actualizada la tarjeta de emergencia";
+        $log->save();
+
+        return redirect()->route('respels.index');
     }
 }

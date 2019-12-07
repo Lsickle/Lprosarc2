@@ -10,7 +10,7 @@
 		protected $fillable = ['ReqFotoCargue', 'ReqFotoDescargue', 'ReqFotoPesaje','ReqFotoReempacado', 'ReqFotoMezclado', 'ReqFotoDestruccion', 
 		'ReqVideoCargue', 'ReqVideoDescargue', 'ReqVideoPesaje', 'ReqVideoReempacado', 'ReqVideoMezclado', 'ReqVideoDestruccion', 'ReqAuditoria', 
 		'ReqAuditoriaTipo', 'ReqDevolucion', 'ReqDevolucionTipo', 'ReqDatosPersonal', 'ReqPlanillas', 'ReqAlistamiento', 'ReqCapacitacion', 
-		'ReqBascula', 'ReqMasPerson', 'ReqPlatform', 'ReqCertiEspecial', 'ReqSlug', 'FK_ReqTrata', 'FK_ReqRespel', 'FK_ReqTarifa'];
+		'ReqBascula', 'ReqMasPerson', 'ReqPlatform', 'ReqCertiEspecial', 'ReqSlug', 'FK_ReqTrata', 'FK_ReqRespel', 'FK_ReqTarifa', 'forevaluation'];
 	
 		public $primaryKey = 'ID_Req';
 	
@@ -31,7 +31,7 @@
 
 		public function tratamiento()
 		{
-			return $this->hasMany('App\Tratamiento', 'FK_ReqTrat', 'ID_Trat');
+			return $this->belongsTo('App\Tratamiento', 'FK_ReqTrata', 'ID_Trat');
 		}
 
 		//lista las pretratamientos relacionados usando muchos a muchos
