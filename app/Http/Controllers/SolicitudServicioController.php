@@ -1085,7 +1085,7 @@ class SolicitudServicioController extends Controller
 		->with(['resgener' => function ($query) use ($serviciovalidado){
 		    $query->with(['solres' => function ($query) use ($serviciovalidado){
 		    	$query->where('FK_SolResSolSer', $serviciovalidado);
-		    	$query->with(['requerimiento.tratamiento', 'requerimiento:ID_Req,FK_ReqTrata']);
+		    	$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
 		    }]);
 		    $query->whereHas('solres', function ($query) use ($serviciovalidado){
 		    	$query->where('FK_SolResSolSer', $serviciovalidado);
@@ -1137,7 +1137,7 @@ class SolicitudServicioController extends Controller
 									$certificado->FK_CertSolser = $id;
 									$certificado->FK_CertCliente = $cliente->ID_Cli;
 									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
-									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->FK_TratProv;
+									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
 									if ($SolicitudServicio->SolSerTipo == 'Externo') {
 										$certificado->FK_CertTransp = $cliente->ID_Cli;
@@ -1187,7 +1187,7 @@ class SolicitudServicioController extends Controller
 									$manifiesto->FK_ManifSolser = $id;
 									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
 									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
-									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->FK_TratProv;
+									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
 									if ($SolicitudServicio->SolSerTipo == 'Externo') {
 										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
