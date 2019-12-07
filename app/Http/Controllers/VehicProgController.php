@@ -454,7 +454,7 @@ class VehicProgController extends Controller
 						$nuevodoc->DocNumero = 2;
 						$nuevodoc->DocEspName = 2;
 						$nuevodoc->DocEspValue = 2;
-						$nuevodoc->DocObservacion = "documento con la direccion especifica";;
+						$nuevodoc->DocObservacion = "documento con la direccion especifica";
 						$nuevodoc->DocSlug = hash('sha256', rand().time());
 						$nuevodoc->DocSrc = $nuevodoc->DocSlug.'.pdf';
 						$nuevodoc->DocNumRm = 2;

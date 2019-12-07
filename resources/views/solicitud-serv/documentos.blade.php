@@ -24,9 +24,19 @@
 								<th>#</th>
 								<th>Documento</th>
 								<th>Observación</th>
-								<th>Aprobación Operaciones</th>
-								<th>Aprobación Logistica</th>
+								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 								<th>Aprobación Director Planta</th>
+								{{-- <th>Aprobación Operaciones</th> --}}
+								<th>Aprobación Logística</th>
+								<th>Aprobación HSEQ</th>
+								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<th>Ver</th>
+								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<th>Firmar</th>
+								@endif
+								<th>Actualizado el:</th>
 							</thead>
 							<tbody>
 								@foreach($certificados as $certificado)
@@ -39,9 +49,157 @@
 										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
 									@endif
 									<td>{{$certificado->CertObservacion}}</td>
-									<td>{{$certificado->CertAuthJo}}</td>
-									<td>{{$certificado->CertAuthJl}}</td>
-									<td>{{$certificado->CertAuthDp}}</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<td class="text-center">
+										@switch($certificado->CertAuthDp)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									{{-- <td class="text-center">
+										@if($certificado->CertAuthJo === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td> --}}
+									<td class="text-center">
+										@switch($certificado->CertAuthJl)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									<td class="text-center">
+										@switch($certificado->CertAuthHseq)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Información Adicional</b>" data-content="<p style='width: 50%'>Puede ver la información adicional relevante para la generación del certificado </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									<td>{{$certificado->updated_at}}</td>
 								</tr>
 								@endforeach
 								@foreach($manifiestos as $manifiesto)
@@ -54,9 +212,157 @@
 										<td class="text-center"><a disabled method='get' href='/img/{{$manifiesto->ManifSrc}}' class='btn btn-default'><i class='fas fa-file-invoice fa-lg'></a></td>
 									@endif
 									<td>{{$manifiesto->ManifObservacion}}</td>
-									<td>{{$manifiesto->ManifAuthJo}}</td>
-									<td>{{$manifiesto->ManifAuthJl}}</td>
-									<td>{{$manifiesto->ManifAuthDp}}</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<td class="text-center">
+										@switch($manifiesto->ManifAuthDp)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									{{-- <td class="text-center">
+										@if($manifiesto->ManifAuthJo === 1)
+											<i class='fas fa-signature'></i>
+										@else
+											<p>Pendiente </p>
+										@endif
+									</td> --}}
+									<td class="text-center">
+										@switch($manifiesto->ManifAuthJl)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									<td class="text-center">
+										@switch($manifiesto->ManifAuthHseq)
+										    @case(0)
+										        <p>Pendiente</p>
+										        @break
+
+										    @case(1)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Director de Planta</p>
+										        @break
+										    
+										    @case(2)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Logística</p>
+										        @break
+										    
+										    @case(3)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Jefe de Operaciones</p>
+										        @break
+										    
+										    @case(4)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Supervisor de Turno</p>
+										        @break
+										    
+										    @case(5)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Ingeniero HSEQ</p>
+										        @break
+										        
+										    @case(6)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Asistente de Logística</p>
+										        @break
+
+										    @case(7)
+										        <i class='fas fa-signature fa-lg'></i>
+										        <p>Programador</p>
+										        @break
+
+										    @default
+											<p>Error en Firma Digital</p>
+										@endswitch
+									</td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<td class="text-center"><a method='get' href='/manifiestos/{{$manifiesto->ManifSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Información Adicional</b>" data-content="<p style='width: 50%'>Puede ver la información adicional relevante para la generación del Manifiesto  </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
+									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+									<td class="text-center"><a method='get' href='/manifiestos/{{$manifiesto->ManifSlug}}/firmar/{{$SolicitudServicio->SolSerSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Manifiesto</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el Manifiesto como firmado en la Base de datos  </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									@endif
+									<td>{{$manifiesto->updated_at}}</td>
 								</tr>
 								@endforeach
 							</tbody>

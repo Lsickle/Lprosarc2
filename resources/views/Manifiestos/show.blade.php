@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-	Certificado
+	Manifiesto
 @endsection
 @section('contentheader_title')
 	<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
-		Certificado
+		Manifiesto
 	  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 	</span>
 @endsection
@@ -14,7 +14,7 @@
 
 	@endslot
 	@slot('textModal')
-		El certificado <b>N° </b>
+		El manifiesto <b>N° </b>
 	@endslot
 @endcomponent
 <div class="container-fluid spark-screen">
@@ -42,17 +42,16 @@
 								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">observaciones de la base de datos</textarea>
 							</li>
 							<li class="list-group-item">
-								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
-							
-							{{-- <li class="list-group-item">
+							<li class="list-group-item">
 								<b>Firma JO</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
-							</li> --}}
+							</li>
 							<li class="list-group-item">
 								<b>Firma JL</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
 							<li class="list-group-item">
-								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								<div class="col-md-12 form-group">
@@ -90,7 +89,7 @@
 				<div class="box">
 					<!-- box header -->
 					<div class="box-header with-border">
-						<h3 class="box-title">Información para generar Certificado</h3>
+						<h3 class="box-title">Información para generar Manifiesto</h3>
 						<div class="box-tools pull-right">
 							{{-- @if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 								@switch()
@@ -112,7 +111,7 @@
 								@endswitch
 							@endif --}}
 							
-							<a href="/certificados/{{$certificado->CertSlug}}/edit" method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-warning'><i class='fas fa-lg fa-copy'></i> Editar</a>
+							<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Editar</a>
 						</div>
 					</div>
 
@@ -181,13 +180,6 @@
 					<div class="box-footer">
 
 					</div>
-					{{-- @php
-					foreach ($contadorRango as $key => $value) {
-						foreach ($value as $key2 => $value2) {
-							echo $value2;
-						}
-					}
-					@endphp --}}
 					<!-- /.nav-tabs-custom -->
 				</div>
 				<!-- /.box -->

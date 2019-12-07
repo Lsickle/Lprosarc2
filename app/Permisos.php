@@ -245,6 +245,16 @@ class Permisos{
 		respelcontroller::edit
 	 */
 
+	const EDITMANIFCERT = ['Programador','JefeLogistica','AsistenteLogistica'];
+	/*Using ->
+		solicitud-serv/show/documentos
+	*/
+
+	const SIGNMANIFCERT = ['Programador','JefeLogistica','JefeOperaciones','AdministradorPlanta','Hseq','AsistenteLogistica','Supervisor'];
+	/*Using ->
+		solicitud-serv/show/documentos
+	*/
+
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];
