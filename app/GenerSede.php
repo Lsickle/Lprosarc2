@@ -39,7 +39,7 @@ class GenerSede extends Model
 		return $this->hasMany('App\ResiduosGener', 'FK_SGener', 'ID_GSede');
 	}
 
-	public function recolect(){
-		return $this->hasMany('App\Recolect', 'FK_ColectSgen', 'ID_GSede');
+	public function programacionesdeservicio(){
+		return $this->hasMany('App\ProgramacionVehiculo', 'recolect', 'FK_ColectSgen', 'FK_ColectProg');
 	}
 }

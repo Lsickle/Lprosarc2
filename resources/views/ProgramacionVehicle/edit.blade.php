@@ -339,6 +339,30 @@
 										@endforeach
 									</select>
 								</div>
+								
+								<div class="col-md-6">
+								    <label for="select2sedes" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'><ul class='list-group'>
+									    @foreach($recolectPointsService as $punto)
+								        @foreach($recolectPointsProg as $puntoelegido)
+								        @if($punto->ID_GSede == $puntoelegido->FK_ColectSgen)
+								        <li class='list-group-item'>{{$punto->generadors->GenerName}} => {{$punto->GSedeAddress}}</li>
+								        @endif
+								        @endforeach
+								        @endforeach
+									</ul></p>">
+								<span><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Puntos de Recolección</label>
+								    <select class="form-control select" id="select2sedes" name="ProgGenerSedes[]" multiple="multiple">
+								        @foreach($recolectPointsService as $punto)
+								        <option  
+								        @foreach($recolectPointsProg as $puntoelegido)
+								        @if($punto->ID_GSede == $puntoelegido->FK_ColectSgen)
+								        	selected="true"
+								        @endif
+								        @endforeach
+								        title="{{$punto->GSedeAddress}}" value="{{$punto->ID_GSede}}">{{$punto->generadors->GenerName}} - </option>
+								        @endforeach
+								    </select>
+								</div>
 								<div class="form-group col-md-6 col-md-offset-5">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
@@ -446,6 +470,29 @@
 									<label for="ProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label><small class="help-block with-errors">*</small>
 									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT" value="{{$programacion->ProgVehTipoEXT}}">
 								</div>
+								<div class="col-md-6">
+								    <label for="select2sedes" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'><ul class='list-group'>
+									    @foreach($recolectPointsService as $punto)
+								        @foreach($recolectPointsProg as $puntoelegido)
+								        @if($punto->ID_GSede == $puntoelegido->FK_ColectSgen)
+								        <li class='list-group-item'>{{$punto->generadors->GenerName}} => {{$punto->GSedeAddress}}</li>
+								        @endif
+								        @endforeach
+								        @endforeach
+									</ul></p>">
+								<span><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>Puntos de Recolección</label>
+								    <select class="form-control select" id="select2sedes" name="ProgGenerSedes[]" multiple="multiple">
+								        @foreach($recolectPointsService as $punto)
+								        <option  
+								        @foreach($recolectPointsProg as $puntoelegido)
+								        @if($punto->ID_GSede == $puntoelegido->FK_ColectSgen)
+								        	selected="true"
+								        @endif
+								        @endforeach
+								        title="{{$punto->GSedeAddress}}" value="{{$punto->ID_GSede}}">{{$punto->generadors->GenerName}} - </option>
+								        @endforeach
+								    </select>
+								</div>
 								<div class="fomr-group col-md-6" style="margin-bottom: 30px;">
 									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
@@ -464,6 +511,7 @@
 										@endforeach
 									</select>
 								</div>
+
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
 									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
@@ -580,7 +628,8 @@
 			$("#ProgVehDocAuxiliarEXT").prop('disabled', true);
 			$("#ProgVehNameAuxiliarEXT").prop('disabled', true);
 			$("#ProgVehPlacaEXT").prop('disabled', true);
-			$("#ProgVehTipoEXT").prop('disabled', true);
+			$("#ProgVehTipoEXT").prop('disabled', true);select2sedes
+			$("#select2sedes").prop('disabled', true);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				$("#ProgVehEntrada").prop('required', true);

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\ProgramacionVehiculo;
 use Illuminate\Validation\Rule;
-use App\audit;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use App\audit;
+use App\ProgramacionVehiculo;
 use App\Vehiculo;
 use App\Personal;
 use App\SolicitudServicio;
@@ -589,7 +590,38 @@ class VehicProgController extends Controller
 				->where('CliCategoria', 'Transportador')
 				->where('CliDelete', 0)
 				->get();
-			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores'));
+
+			$serviciovalidado = $programacion->FK_ProgServi;
+			/*cuenta los diferentes generadores*/
+			$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+			    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+			})
+			// ->with(['resgener' => function ($query) use ($serviciovalidado){
+			//     $query->with(['solres' => function ($query) use ($serviciovalidado){
+			//     	$query->where('FK_SolResSolSer', $serviciovalidado);
+			//     }]);
+			//     $query->whereHas('solres', function ($query) use ($serviciovalidado){
+			//     	$query->where('FK_SolResSolSer', $serviciovalidado);
+			//     });
+			// }])
+			->get('ID_GSede');
+
+			/*se crea array de las sedes de generador en la solicitud de servicio*/
+			$sedesgenerfiltrado = collect([]);
+			foreach ($generadoresdelasolicitud as $key => $value) {
+				$sedesgenerfiltrado = $sedesgenerfiltrado->concat([$value->ID_GSede]);
+			}
+			$recolectPointsService = GenerSede::with('generadors')
+				->whereIn('ID_GSede', $sedesgenerfiltrado)
+				->get();
+
+			// return $recolectPointsService;
+
+			$recolectPointsProg = Recolect::with('sedegen.generadors')
+				->where('FK_ColectProg', $programacion->ID_ProgVeh)
+				->get();
+
+			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -654,7 +686,7 @@ class VehicProgController extends Controller
 			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
-			
+
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
 		}
@@ -668,6 +700,8 @@ class VehicProgController extends Controller
 			$nomConduct = null;
 		}
 		$programacion->save();
+		// return $request->input('ProgGenerSedes');
+		$programacion->puntosderecoleccion()->sync($request->input('ProgGenerSedes'));
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$SolicitudServicio->SolSerStatus = 'Programado';
