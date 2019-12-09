@@ -394,10 +394,10 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Foto" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '1' || '{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '0'){
+			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == 1 || '{{$SolRes->SolResFotoDescargue_Pesaje}}'  == 0){
 				Pesaje();
 			}
-			if('{{$SolRes->SolResFotoTratamiento}}' == '1'){
+			if('{{$SolRes->SolResFotoTratamiento}}' == 1){
 				Tratamiento();
 			}		
 			$('#recursoinputext').attr('accept', '.jpg,.jpeg,.png');
@@ -410,10 +410,10 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Video" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' == '1'){
+			if('{{$SolRes->SolResVideoDescargue_Pesaje}}' == 1){
 				Pesaje();
 			}
-			if('{{$SolRes->SolResVideoTratamiento}}' == '1'){
+			if('{{$SolRes->SolResVideoTratamiento}}' == 1){
 				Tratamiento();
 			}
 			$('#recursoinputext').attr('accept', '.mp4');
