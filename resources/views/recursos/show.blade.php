@@ -161,7 +161,7 @@
 						</div>
 					</div>
 				</div>
-				@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+				@if((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0))
 				{{-- @if(1 == 1) --}}
 					{{-- Modal Añadir Recurso  --}}
 					<form role="form" action="/recurso/{{$SolRes->SolResSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator" id="addRecursoForm" class="form">
@@ -205,7 +205,7 @@
 				</div>
 				<div class="row">
 					{{-- @if(((($SolSer->SolSerStatus <> 'Pendiente' || $SolSer->SolSerStatus <> 'Aprobado' || $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null)) --}}
-					@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
+					@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1 ||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
 						<tbody hidden onload="renderTable()" id="readyTable">
 							<div class="col-md-12">
 								<center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -222,7 +222,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoFoto')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -394,7 +394,7 @@
 			$("#categoria").append(`
 				<input type="text" hidden value="Foto" name="RecCarte">
 			`);
-			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '1'){
+			if('{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '1' || '{{$SolRes->SolResFotoDescargue_Pesaje}}'  == '0'){
 				Pesaje();
 			}
 			if('{{$SolRes->SolResFotoTratamiento}}' == '1'){
