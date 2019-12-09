@@ -130,7 +130,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }} Interno</h4>
+								<h4 class="modal-title" id="titleModalCreate">{{ trans('adminlte_lang::message.progvehictitle') }} Interno / Alquilado</h4>
 							</div>
 							<div class="box box-info">
 								<div class="modal-body">
@@ -146,7 +146,8 @@
 													</ul>
 												</div>
 											@endif
-											<input type="text" hidden name="FK_ProgServi" class="FK_ProgServi" id="FK_ProgServi">
+											<input type="text" hidden name="FK_ProgServi" id="FK_ProgServi">
+											<input type="text" hidden name="StatusProgServi" id="FK_ProgServi" value="{{$programacion->ProgVehStatus}}">
 											<div class="box-body">
 												<div class="form-group col-xs-12 col-md-6">
 													<label for="modalProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
@@ -257,6 +258,8 @@
 				{{-- END Modal --}}
 
 				@if($programacion->ProgVehtipo == 1)
+					{{-- formulario para vehiculos internos prosarc --}}
+
 					<div class="box box-info">
 						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
@@ -271,9 +274,13 @@
 								</div>
 							@endif
 							<div class="box-body">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-3">
 									<label for="">Servicio N°</label>
 									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-3">
+									<label for="">Status</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->ProgVehStatus}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
@@ -298,11 +305,11 @@
 											<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
 									</select>
-									@foreach($vehiculos as $vehiculo)
+									{{-- @foreach($vehiculos as $vehiculo)
 										@if($vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo)
 											<input name="FK_ProgVehiculo" hidden aria-hidden="true" value="{{$vehiculo->ID_Vehic}}">
 										@endif
-									@endforeach
+									@endforeach --}}
 								</div>
 								<div class="form-group col-md-6">
 									<label for="progVehKm">{{ trans('adminlte_lang::message.progvehickm') }}</label>
@@ -317,11 +324,11 @@
 											<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
 									</select>
-									@foreach($conductors as $conductor)
+									{{-- @foreach($conductors as $conductor)
 										@if($conductor->ID_Pers == $programacion->FK_ProgConductor)
 											<input name="FK_ProgConductor" hidden aria-hidden="true" value="{{$conductor->ID_Pers}}">
 										@endif
-									@endforeach
+									@endforeach --}}
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
@@ -352,14 +359,20 @@
 						</form>
 					</div>
 				@elseif($programacion->ProgVehtipo == 0)
+					{{-- formulario para vehiculos externos --}}
+
 					<div class="box box-info">
 						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-3">
 									<label for="">Servicio N°</label>
 									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-3">
+									<label for="">Status</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->ProgVehStatus}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>
@@ -383,14 +396,19 @@
 						</form>
 					</div>
 				@else
+					{{-- formulario para vehiculos alquilados --}}
 					<div class="box box-info">
 						<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 							@csrf
 							@method('PUT')
 							<div class="box-body">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-3">
 									<label for="">Servicio N°</label>
 									<input disabled type="text" class="form-control" value="{{$programacion->FK_ProgServi}}">
+								</div>
+								<div class="form-group col-md-3">
+									<label for="">Status</label>
+									<input disabled type="text" class="form-control" value="{{$programacion->ProgVehStatus}}">
 								</div>
 								<div class="form-group col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label><small class="help-block with-errors">*</small>

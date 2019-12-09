@@ -87,16 +87,27 @@ class VehicProgController extends Controller
 				->select('mantenvehics.*','vehiculos.VehicPlaca')
 				->where('mantenvehics.HoraMavFin', '>', now())
 				->get();
+			/*conductores de prosarc*/
 			$conductors = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('ID_Cli', 1)
 				->where('PersDelete', '!=' , 1)
 				->get();
+			/*auxiliares de prosarc*/
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Operario')
+				->where('ID_Cli', 1)
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
@@ -552,16 +563,26 @@ class VehicProgController extends Controller
 				$SedeVehiculo = 0;
 				$Vehiculos2 = 0;
 			}
+			/*conductores de prosarc*/
 			$conductors = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Conductor')
+				->where('ID_Cli', 1)
 				->where('PersDelete', '!=' , 1)
 				->get();
+			/*auxiliares de prosarc*/
 			$ayudantes = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->where('CargName', 'Operario')
+				->where('ID_Cli', 1)
 				->get();
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
@@ -632,6 +653,8 @@ class VehicProgController extends Controller
 			$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
 			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+			
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
 		}
@@ -843,6 +866,7 @@ class VehicProgController extends Controller
 		}
 		$programacion->FK_ProgServi = $id;
 		$programacion->ProgVehDelete = 0;
+		$programacion->ProgVehStatus =  $request->input('StatusProgServi');
 		$programacion->save();
 
 		// $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
