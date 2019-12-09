@@ -852,6 +852,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
+			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
+				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
+					$('#titulo').append(`
+						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'>La Solicitud de servicio no podra ser gestionada hasta que sea aprobada por Tesoreria, sin embargo, puede adelantar la revisión de la información<br>Para mas detalles comuníquese con <b>Tesoreria</b> </p>" disabled class="btn btn-default pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusaprobado')}}</a>
+					`);
+				@endif
+				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
+					$('#titulo').append(`
+						<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>
+					`);
+				@endif
+			@endif
 		@break
 		@case('Aceptado')
 			$('#titulo').empty();
