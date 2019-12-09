@@ -112,7 +112,7 @@
 								@endswitch
 							@endif --}}
 							
-							<a href="/certificado/{{$certificado->CertSlug}}/edit" method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-warning'><i class='fas fa-lg fa-copy'></i> Editar</a>
+							<a href="/certificados/{{$certificado->CertSlug}}/edit" method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-warning'><i class='fas fa-lg fa-copy'></i> Editar</a>
 						</div>
 					</div>
 
