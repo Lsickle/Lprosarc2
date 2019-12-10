@@ -216,6 +216,7 @@
 															<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_ProgVehiculo') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 														@endforeach
 													</select>
+
 												</div>
 												<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 													<label for="modalFK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
@@ -305,6 +306,9 @@
 											<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
 									</select>
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+										<input type="text" hidden="true" value="{{$programacion->FK_ProgVehiculo}}" name="FK_ProgVehiculo">
+									@endif
 									{{-- @foreach($vehiculos as $vehiculo)
 										@if($vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo)
 											<input name="FK_ProgVehiculo" hidden aria-hidden="true" value="{{$vehiculo->ID_Vehic}}">
@@ -324,6 +328,9 @@
 											<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
 									</select>
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+										<input type="text" hidden="true" value="{{$programacion->FK_ProgConductor}}" name="FK_ProgConductor">
+									@endif
 									{{-- @foreach($conductors as $conductor)
 										@if($conductor->ID_Pers == $programacion->FK_ProgConductor)
 											<input name="FK_ProgConductor" hidden aria-hidden="true" value="{{$conductor->ID_Pers}}">
