@@ -146,11 +146,11 @@ class CertificadoController extends Controller
      */
     public function edit($id)
     {
-        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)) {
+        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol2, Permisos::EDITMANIFCERT)) {
             $certificado = Certificado::where('CertSlug', $id)->first();
             return view('certificados.edit', compact('certificado')); 
         }else{
-            abort(404, "no posee permisos para la edicion de certificados")
+            abort(404, "no posee permisos para la edición de certificados");
         }
         
     }

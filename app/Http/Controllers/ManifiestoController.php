@@ -114,11 +114,11 @@ class ManifiestoController extends Controller
      */
     public function edit($id)
     {
-        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)) {
+        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol2, Permisos::EDITMANIFCERT)) {
             $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
             return view('manifiestos.edit', compact('manifiesto')); 
         }else{
-            abort(404, "no posee permisos para la edicion de manifiestos")
+            abort(404, "no posee permisos para la edición de manifiestos");
         }
     }
 
