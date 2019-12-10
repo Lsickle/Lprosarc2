@@ -111,7 +111,7 @@
 								@endswitch
 							@endif --}}
 							
-							<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Editar</a>
+							{{-- <a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Editar</a> --}}
 						</div>
 					</div>
 
@@ -144,30 +144,30 @@
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Generadorpane">
-									{{-- @include('layouts.respel-cliente.respel-residuo') --}}
+									@include('layouts.ManifiestoPartials.manifGenerador')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuospane">
-									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
+									@include('layouts.ManifiestoPartials.manifResiduos')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Transportadorpane">
-									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
+									@include('layouts.ManifiestoPartials.manifTransportador')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Clientepane">
-									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
+									@include('layouts.ManifiestoPartials.manifCliente')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Gestorpane">
-									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
+									@include('layouts.ManifiestoPartials.manifGestorTratamiento')
 								</div>
 								<div class="tab-pane fade" id="Anexospane">
-									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
+									{{-- @include('layouts.ManifiestoPartials.respel-tarifas') --}}
 								</div>
 
 								<div id="modalrango"></div>

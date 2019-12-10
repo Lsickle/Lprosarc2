@@ -91,7 +91,18 @@ class ManifiestoController extends Controller
      */
     public function show($id)
     {
-        $manifiesto = Manifiesto::where('ManifSlug', $id)->first();
+        $manifiesto = Manifiesto::with(['SolicitudServicio' => function ($query){
+            $query->with(['SolicitudResiduo' => function ($query){
+                $query->where('SolResKgConciliado', '>', 0);
+                $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                $query->with('generespel.respels');
+                $query->with('requerimiento');
+            }]);
+            
+        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento'])
+        ->where('ManifSlug', $id)
+        ->first();
+        // return $manifiesto->transportador;
         return view('manifiestos.show', compact('manifiesto')); 
     }
 
