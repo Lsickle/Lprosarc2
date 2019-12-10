@@ -3,7 +3,7 @@
 	Certificado
 @endsection
 @section('contentheader_title')
-	<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+	<span style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
 		Certificado
 	  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 	</span>
@@ -27,32 +27,33 @@
 					<!-- box body -->
 					<div class="box-body box-profile">
 						{{-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
-						<h3 class="profile-username text-center">Nombre del generador</h3>
-						<p class="text-muted text-center">Tratamiento</p>
+						<h3 class="profile-username text-center">{{$certificado->sedegenerador->generadors->GenerName}}</h3>
+						<p class="text-muted text-center">{{$certificado->tratamiento->TratName}}</p>
 						<ul class="list-group list-group-unbordered">
 							<li class="list-group-item">
-								<b>Servicio #</b> <a class="pull-right">xxxx</a>
+								<b>Servicio #</b> <a class="pull-right">{{$certificado->FK_CertSolser}}</a>
 							</li>
 							<li class="list-group-item">
-								<b>certificado #</b> <a class="pull-right">xxxx</a>
+								<b>certificado #</b> <a class="pull-right">{{$certificado->ID_Cert}}</a>
 							</li>
 							
 							<li class="list-group-item">
 								<label>Observaciones</label>
-								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">observaciones de la base de datos</textarea>
+								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$certificado->CertObservacion}}</textarea>
 							</li>
 							<li class="list-group-item">
-								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma HSEQ</b> <a class="pull-right">@if($certificado->CertAuthHseq === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
 							
+							
 							{{-- <li class="list-group-item">
-								<b>Firma JO</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma JO</b> <a class="pull-right">{{ $certificado->CertAuthJo === 1 ? "<i class='fas fa-signature'></i>" : "" }}</a>
 							</li> --}}
 							<li class="list-group-item">
-								<b>Firma JL</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma JL</b> <a class="pull-right">@if($certificado->CertAuthJl === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
 							<li class="list-group-item">
-								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma DP</b> <a class="pull-right">@if($certificado->CertAuthDp === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								<div class="col-md-12 form-group">
@@ -60,7 +61,11 @@
 									<div class="input-group">
 										<input type="text" class="form-control" value="Ver Documento" disabled>
 										<div class="input-group-btn">
-											<a method='get' href='/img/HojaSeguridad/' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@if($certificado->CertSrc == 'CertificadoDefault.pdf')
+											<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@else
+											<a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@endif
 										</div>
 									</div>	
 								</div>

@@ -3,7 +3,7 @@
 	Manifiesto
 @endsection
 @section('contentheader_title')
-	<span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
+	<span style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
 		Manifiesto
 	  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 	</span>
@@ -27,31 +27,31 @@
 					<!-- box body -->
 					<div class="box-body box-profile">
 						{{-- <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture"> --}}
-						<h3 class="profile-username text-center">Nombre del generador</h3>
-						<p class="text-muted text-center">Tratamiento</p>
+						<h3 class="profile-username text-center">{{$manifiesto->sedegenerador->generadors->GenerName}}</h3>
+						<p class="text-muted text-center">{{$manifiesto->tratamiento->TratName}}</p>
 						<ul class="list-group list-group-unbordered">
 							<li class="list-group-item">
-								<b>Servicio #</b> <a class="pull-right">xxxx</a>
+								<b>Servicio #</b> <a class="pull-right">{{$manifiesto->FK_ManifSolser}}</a>
 							</li>
 							<li class="list-group-item">
-								<b>certificado #</b> <a class="pull-right">xxxx</a>
+								<b>manifiesto #</b> <a class="pull-right">{{$manifiesto->ID_Manif}}</a>
 							</li>
 							
 							<li class="list-group-item">
 								<label>Observaciones</label>
-								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">observaciones de la base de datos</textarea>
+								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$manifiesto->ManifObservacion}}</textarea>
 							</li>
 							<li class="list-group-item">
-								<b>Firma HSEQ</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma HSEQ</b> <a class="pull-right">@if($manifiesto->ManifAuthHseq === 1)<i class='fas fa-signature'></i>@endif</a>
+							</li>
+							{{-- <li class="list-group-item">
+								<b>Firma JO</b> <a class="pull-right">{{ $manifiesto->ManifAuthJo === 1 ? "<i class='fas fa-signature'></i>" : "" }}</a>
+							</li> --}}
+							<li class="list-group-item">
+								<b>Firma JL</b> <a class="pull-right">@if($manifiesto->ManifAuthJl === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
 							<li class="list-group-item">
-								<b>Firma JO</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
-							</li>
-							<li class="list-group-item">
-								<b>Firma JL</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
-							</li>
-							<li class="list-group-item">
-								<b>Firma DP</b> <a class="pull-right"><i class='fas fa-signature'></i></a>
+								<b>Firma DP</b> <a class="pull-right">@if($manifiesto->ManifAuthDp === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								<div class="col-md-12 form-group">
@@ -59,7 +59,11 @@
 									<div class="input-group">
 										<input type="text" class="form-control" value="Ver Documento" disabled>
 										<div class="input-group-btn">
-											<a method='get' href='/img/HojaSeguridad/' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@if($manifiesto->ManifSrc == 'ManifiestoDefault.pdf')
+											<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@else
+											<a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+											@endif
 										</div>
 									</div>	
 								</div>
