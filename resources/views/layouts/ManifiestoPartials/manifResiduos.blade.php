@@ -9,6 +9,7 @@
 		<thead>
 			<tr>
 				<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
+				<th>Corriente</th>
 				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<th>Tarifa</th>
@@ -38,8 +39,8 @@
 				}
 			@endphp
 			<tr>
-				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>
-					 {{$Residuo->generespel->respels->RespelName}}</td>
+				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->generespel->respels->RespelName}}</td>
+				<td>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</td>
 				<td>{{$Residuo->SolResEmbalaje}}</td>
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<td style="text-align: center;">

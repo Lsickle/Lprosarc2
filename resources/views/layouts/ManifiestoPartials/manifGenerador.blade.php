@@ -2,9 +2,9 @@
 			<div class="box box-primary">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+						{{-- @if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							<a href="/generadores/{{$manifiesto->sedegenerador->generadors->GenerSlug}}/edit" class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> <b>{{ trans('adminlte_lang::message.edit') }}</b></a>
-						@endif
+						@endif --}}
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$manifiesto->sedegenerador->generadors->GenerSlug}}

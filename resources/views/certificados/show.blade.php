@@ -97,27 +97,9 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">Información para generar Certificado</h3>
 						<div class="box-tools pull-right">
-							{{-- @if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-								@switch()
-									@case('Revisado')
-									@case('Evaluado')
-									@case('Cotizado')
-									@case('Aprobado')
-									@case('Vencido')
-										<a method='get' style="margin-right: 1em;" href='/clientToRp/{{$Respels->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Haga click en este boton para copiar la información de este residuo y crear uno nuevo, el cual quedara disponible en la lista de residuos comunes para que otros clientes puedan utilizarlo </p>" class='btn btn-primary'><i class='fas fa-lg fa-copy'></i> Firmar</a>
-										@break
-									@case('Falta TDE')
-									@case('Pendiente')
-									@case('Incompleto')
-									@case('Rechazado')
-										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lista de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Firmar</a>
-										@break
-									@default
-										<a disabled method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-default'><i class='fas fa-lg fa-copy'></i> Firmar</a>
-								@endswitch
-							@endif --}}
-							
-							{{-- <a href="/certificados/{{$certificado->CertSlug}}/edit" method='get' style="margin-right: 1em;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'>Este residuo aun no cumple con las condiciones para incluirlo en la lsta de residuos comunes </p>" class='btn btn-warning'><i class='fas fa-lg fa-copy'></i> Editar</a> --}}
+							@if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT) ||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+								<a href="/certificados/{{$certificado->CertSlug}}/edit" class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> <b>{{ trans('adminlte_lang::message.edit') }}</b></a>
+							@endif
 						</div>
 					</div>
 
