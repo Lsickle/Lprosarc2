@@ -30,15 +30,16 @@
 									<th>{{ trans('adminlte_lang::message.progvehicsalida') }}</th>
 									<th>{{ trans('adminlte_lang::message.progvehicayudan') }}</th>
 									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor') || Auth::user()->UsRol2 <> trans('adminlte_lang::message.Conductor')) --}}
-										<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
-										<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
-										<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
-										<th>Autorización</th>
+									<th>{{ trans('adminlte_lang::message.progvehicconduc') }}</th>
+									<th>Puntos de recolección</th>
+									<th>{{ trans('adminlte_lang::message.progvehicllegada') }}</th>
+									<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
+									<th>Autorización</th>
 									{{-- @endif --}}
 									
 									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
-										<th>{{ trans('adminlte_lang::message.edit') }}</th>
+									<th>{{ trans('adminlte_lang::message.edit') }}</th>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 									<th>{{ trans('adminlte_lang::message.progvehicserauth') }}</th>
@@ -92,6 +93,15 @@
 									<td>{{$ayudante}}</td>
 									{{-- @if(Auth::user()->UsRol <> trans('adminlte_lang::message.Conductor')) --}}
 										<td>{{$conductor}}</td>
+										<td><ul class="list-group">
+											@foreach($programacion->puntosderecoleccion as $Punto)
+										    <li data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Dirección de los Puntos</b>" data-content="<p style='width: 50%'>
+										    	<ul class='list-group'>
+										    	    <li class='list-group-item'><b>Generador:</b>{{$Punto->generadors->GenerName}}<br><b>Sede:</b>{{$Punto->GSedeName}}<br><b>Dirección:</b>{{$Punto->GSedeAddress}}<br><b>Cel:</b>{{$Punto->GSedeCelular}}</li>
+										    	</ul>
+										    	<br>Para mas detalles comuníquese con su <b>Jefe de Logistica</b> </p>" class="list-group-item">{{$Punto->GSedeName}}</li>
+										    @endforeach
+										</ul></td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 										<td>{{$programacion->ProgVehStatus}}</td>
