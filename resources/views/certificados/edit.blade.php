@@ -17,7 +17,7 @@ Certificado edición
 			<div class="col-md-12 col-md-offset-0">
 				<!-- Default box -->
 				<div class="box">
-					<form role="form" action="/respels/" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/certificados/{{$certificado->CertSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
 						@csrf
 						<div class="box-header">

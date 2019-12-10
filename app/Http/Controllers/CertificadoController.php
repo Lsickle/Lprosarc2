@@ -159,7 +159,29 @@ class CertificadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $certificado = Certificado::where('CertSlug', $id)->first();
+
+        $certificado->CertiEspName = $request->input('CertiEspName');
+        $certificado->CertiEspValue = $request->input('CertiEspValue');
+        $certificado->CertObservacion = $request->input('CertObservacion');
+        $certificado->CertNumRm = $request->input('CertNumRm');
+        if (isset($request['CertSrc'])) {
+            $file1 = $request['CertSrc'];
+            $hoja = $certificado->CertSlug.'.pdf';
+
+            $file1->move(public_path().'/img/Certificados/',$hoja);
+        }
+        else{
+            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                $hoja = 'CertificadoDefault.pdf';
+            }else{
+                $hoja = $certificado->CertSrc;
+            }
+        }
+        $certificado->CertSrc = $hoja;
+        $certificado->save();
+
+        return view('certificados.edit', compact('certificado')); 
     }
 
     /**

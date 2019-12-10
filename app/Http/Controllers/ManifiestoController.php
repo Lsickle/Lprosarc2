@@ -127,7 +127,29 @@ class ManifiestoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $manifiesto = manifiesto::where('ManifSlug', $id)->first();
+
+        $manifiesto->ManifiEspName = $request->input('ManifiEspName');
+        $manifiesto->ManifiEspValue = $request->input('ManifiEspValue');
+        $manifiesto->ManifObservacion = $request->input('ManifObservacion');
+        $manifiesto->ManifNumRm = $request->input('ManifNumRm');
+        if (isset($request['ManifSrc'])) {
+            $file1 = $request['ManifSrc'];
+            $hoja = $manifiesto->ManifSlug.'.pdf';
+
+            $file1->move(public_path().'/img/Manifiestos/',$hoja);
+        }
+        else{
+            if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
+                $hoja = 'ManifiestoDefault.pdf';
+            }else{
+                $hoja = $manifiesto->ManifSrc;
+            }
+        }
+        $manifiesto->ManifSrc = $hoja;
+        $manifiesto->save();
+
+        return view('manifiestos.edit', compact('manifiesto')); 
     }
 
     /**

@@ -17,7 +17,7 @@ Manifiesto edición
 			<div class="col-md-12 col-md-offset-0">
 				<!-- Default box -->
 				<div class="box">
-					<form role="form" action="/manifiestos/{{$Respels->RespelSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/manifiestos/{{$manifiesto->ManifSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
 						@csrf
 						<div class="box-header">
@@ -37,7 +37,7 @@ Manifiesto edición
 										</ul>
 									</div>
 								@endif
-								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
+								{{-- <input type="text" name="Sede" style="display: none;" value="{{$Sede}}"> --}}
 								@include('layouts.ManifiestoPartials.ManifiestoformEdit')
 							</div>
 							<div class="box box-info">
