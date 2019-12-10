@@ -418,8 +418,15 @@ class SolicitudServicioController extends Controller
 				$horas = " en las horas de la mañana";
 			}
 			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
-			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehEntrada', null)->where('ProgVehDelete', 0)->get();
-			$ProgramacionesActivas = count($Programaciones);
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			// ->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get();
+			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get());
+			// $ProgramacionesActivas = ($Programaciones);
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -464,7 +471,7 @@ class SolicitudServicioController extends Controller
 		  	return $item;
 		});
 		// return $Residuos;
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio'));
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
 	}
 
 

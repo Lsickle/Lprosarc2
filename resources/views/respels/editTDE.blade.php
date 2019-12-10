@@ -46,7 +46,7 @@
 									</div>
 								@endif
 								<input type="text" name="Sede" style="display: none;" value="{{$Sede}}">
-								@include('layouts.RespelPartials.Respelform1EditTDE')
+								@include('layouts.RespelPartials.respelform1EditTDE')
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
