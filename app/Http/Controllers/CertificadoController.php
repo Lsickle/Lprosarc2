@@ -146,8 +146,13 @@ class CertificadoController extends Controller
      */
     public function edit($id)
     {
-        $certificado = Certificado::where('CertSlug', $id)->first();
-        return view('certificados.edit', compact('certificado')); 
+        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)) {
+            $certificado = Certificado::where('CertSlug', $id)->first();
+            return view('certificados.edit', compact('certificado')); 
+        }else{
+            abort(404, "no posee permisos para la edicion de certificados")
+        }
+        
     }
 
     /**

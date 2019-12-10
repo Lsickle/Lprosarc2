@@ -5,8 +5,8 @@ Manifiesto edición
 @endsection
 
 @section('contentheader_title')
-  <span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
-  	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+  <span style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
+  	Edición del Manifiesto
     <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
   </span>
 @endsection
@@ -21,7 +21,7 @@ Manifiesto edición
 						@method('PUT')
 						@csrf
 						<div class="box-header">
-							<h3 class="box-title">edición de manifiesto</h3>
+							<h3 class="box-title">Datos del Manifiesto</h3>
 						</div>
 							<!-- left column -->
 							<!-- general form elements -->
