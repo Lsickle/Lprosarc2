@@ -19,7 +19,7 @@
 		</thead>
 		<tbody>
 		@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-		@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_ManifTrat)
+		@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
 			@php
 				// $TotalEnv = $Residuo->generespel->respels->SolResKgEnviado+$TotalEnv;
 				// $TotalRec = $Residuo->generespel->respels->SolResKgRecibido+$TotalRec;
