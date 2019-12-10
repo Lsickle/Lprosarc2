@@ -40,7 +40,7 @@ Lista de Certificados
 							<tbody>
 								@foreach($certificados as $certificado)
 								<tr>
-									<td class="text-center">{{$certificado->FK_CertSolser}}</td>
+									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
 									<td class="text-center">{{$certificado->ID_Cert}}</td>
 									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>

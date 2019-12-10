@@ -40,7 +40,7 @@ Lista de Manifiestos
 							<tbody>
 								@foreach($manifiestos as $manifiesto)
 								<tr>
-									<td class="text-center">{{$manifiesto->FK_ManifSolser}}</td>
+									<td class="text-center">#{{$manifiesto->FK_ManifSolser}}</td>
 									<td class="text-center">{{$manifiesto->ID_Manif}}</td>
 									@if($manifiesto->ManifSrc!=="ManifiestoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-invoice fa-lg'></a></td>

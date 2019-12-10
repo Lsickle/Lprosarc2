@@ -145,30 +145,30 @@
 							<div class="tab-content" style="display: block; overflow: auto;">
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Generadorpane">
-									{{-- @include('layouts.respel-cliente.respel-residuo') --}}
+									@include('layouts.CertificadoPartials.certiGenerador')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuospane">
-									{{-- @include('layouts.respel-comercial.respel-tratamiento') --}}
+									@include('layouts.CertificadoPartials.certiResiduos')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Transportadorpane">
-									{{-- @include('layouts.respel-comercial.respel-pretrat') --}}
+									@include('layouts.CertificadoPartials.certiTransportador')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- /.tab-pane fade -->
 								<div class="tab-pane fade" id="Clientepane">
-									{{-- @include('layouts.respel-comercial.respel-requerimiento') --}}
+									@include('layouts.CertificadoPartials.certiCliente')
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade" id="Gestorpane">
-									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
+									@include('layouts.CertificadoPartials.certiGestorTratamiento')
 								</div>
 								<div class="tab-pane fade" id="Anexospane">
-									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
+									{{-- @include('layouts.CertificadoPartials.respel-tarifas') --}}
 								</div>
 
 								<div id="modalrango"></div>

@@ -45,4 +45,16 @@ class cliente extends Model
     public function manifiestosdetransportador(){
 		return $this->hasMany('App\Manifiesto','FK_ManifGestor', 'ID_Cli');
     }
+
+    public function certificados(){
+		return $this->hasMany('App\Manifiesto','FK_CertCliente', 'ID_Cli');
+    }
+
+    public function certificadosdegestor(){
+		return $this->hasMany('App\Manifiesto','FK_CertTransp', 'ID_Cli');
+    }
+    
+    public function certificadosdetransportador(){
+		return $this->hasMany('App\Manifiesto','FK_CertGestor', 'ID_Cli');
+    }
 }
