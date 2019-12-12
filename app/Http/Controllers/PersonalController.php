@@ -49,7 +49,20 @@ class PersonalController extends Controller
 				}
 			})
 			->get();
-		return view('personal.index', compact('Personals'));
+
+		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+
+		/*registro de persona habilitada para facturación*/
+		$IdPersonaFacturacion = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.ID_Pers')
+			->where('Persfactura', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+		return view('personal.index', compact('Personals', 'IdPersonaFacturacion'));
 	}
 
 	/**
@@ -178,6 +191,18 @@ class PersonalController extends Controller
 			->select('personals.*', 'cargos.CargName','sedes.SedeName','clientes.ID_Cli')
 			->where('PersSlug', $id)
 			->first();
+
+		/*registro de persona habilitada para facturación*/
+		$IdPersonaFacturacion = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.ID_Pers')
+			->where('Persfactura', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+
 		if($Persona->ID_Cli == $IDClienteSegunUsuario || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Sede = DB::table('sedes')
 				->join('areas', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
@@ -200,7 +225,7 @@ class PersonalController extends Controller
 				->where('CargArea', $Sede->ID_Area)
 				->where('CargDelete', '=', 0)
 				->get();
-			return view('personal.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas'));
+			return view('personal.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas', 'IdPersonaFacturacion'));
 		}
 		else{
 			abort(403);
@@ -235,6 +260,7 @@ class PersonalController extends Controller
 			'PersAddress'   => 'max:255|nullable',
 			'Persfactura'   => 'max:2|nullable',
 		]);
+
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
 		if($request->input('CargArea') <> "NewArea"){
@@ -279,6 +305,37 @@ class PersonalController extends Controller
 		$Persona->fill($request->except('FK_PersCargo'));
 		$Persona->FK_PersCargo = $Cargo;
 		$Persona->Persfactura = $request->input('Persfactura');
+
+		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+
+		/*registro de persona habilitada para facturación*/
+		$IdPersonaFacturacion= DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.ID_Pers')
+			->where('Persfactura', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+
+		if (($Persona->Persfactura == 1)&&($IdPersonaFacturacion->ID_Pers == Auth::user()->FK_UserPers)) {
+			/*se quita la condicion de facturacion a la persona de facturacion actual*/
+			$Personadefacturacion = DB::table('personals')
+			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.Persfactura')
+			->where(function($query){
+				$idcli = userController::IDClienteSegunUsuario();
+				$query->where('clientes.ID_Cli', '=', $idcli);
+			})
+			->first();
+
+			$Personadefacturacion->Persfactura = 0;
+			$Personadefacturacion->save();
+		}
 		$Persona->save();
 
 		$log = new audit();

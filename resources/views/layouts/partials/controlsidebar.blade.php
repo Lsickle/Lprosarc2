@@ -16,7 +16,18 @@
 						<a href='/permisos'>
 							<i class="menu-icon fa fa-users bg-green"></i>
 							<div class="menu-info">
-								<h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.Menuuser') }}</h4>
+								<h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.Menuuser') }} Internos</h4>
+								<p>{{ trans('adminlte_lang::message.userdescription') }}</p>
+							</div>
+						</a>
+					</li>
+				@endif
+				@if (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
+					<li>
+						<a href='/UsuariosExternos'>
+							<i class="menu-icon fa fa-users bg-red"></i>
+							<div class="menu-info">
+								<h4 class="control-sidebar-subheading">{{ trans('adminlte_lang::message.Menuuser') }} Externos</h4>
 								<p>{{ trans('adminlte_lang::message.userdescription') }}</p>
 							</div>
 						</a>

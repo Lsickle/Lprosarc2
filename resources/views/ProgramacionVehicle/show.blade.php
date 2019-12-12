@@ -210,10 +210,11 @@
 											<th>Pretratamientos</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
-											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 												<th>{{trans('adminlte_lang::message.address')}}</th>
 											@endif
+											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
+											
 										</tr>
 									</thead>
 									<tbody>
@@ -249,10 +250,11 @@
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td>{{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
 												@endif
+												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
+												
 											</tr>
 											@endif
 										@endforeach
