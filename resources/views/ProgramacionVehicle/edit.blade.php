@@ -501,6 +501,12 @@
 											<option value="{{$Vehiculo->ID_Vehic}}" {{$Vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$Vehiculo->VehicPlaca}}</option>
 										@endforeach
 									</select>
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+									@else
+									<input hidden type="text" name="vehicalqui" value="{{$Vehiculo->ID_Vehic}}">
+									@endif
+									@endif
 								</div>
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
@@ -628,7 +634,7 @@
 			$("#ProgVehDocAuxiliarEXT").prop('disabled', true);
 			$("#ProgVehNameAuxiliarEXT").prop('disabled', true);
 			$("#ProgVehPlacaEXT").prop('disabled', true);
-			$("#ProgVehTipoEXT").prop('disabled', true);select2sedes
+			$("#ProgVehTipoEXT").prop('disabled', true);
 			$("#select2sedes").prop('disabled', true);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))

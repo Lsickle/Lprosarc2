@@ -197,6 +197,15 @@ class clientcontoller extends Controller
             $Sede->SedeDelete = 0;
             $Sede->save();
 
+            $requerimiento = new RequerimientosCliente();
+            $requerimiento->RequeCliBascula = 0;
+            $requerimiento->RequeCliCapacitacion = 0;
+            $requerimiento->RequeCliMasPerson = 0;
+            $requerimiento->RequeCliVehicExclusive = 0;
+            $requerimiento->RequeCliPlatform = 0;
+            $requerimiento->FK_RequeClient = $Cliente->ID_Cli;
+            $requerimiento->save();
+
             $Area = new Area();
             $Area->AreaName = $request->input("AreaName");
             $Area->FK_AreaSede = $Sede->ID_Sede;
