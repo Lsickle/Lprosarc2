@@ -5,8 +5,8 @@ Certificado edición
 @endsection
 
 @section('contentheader_title')
-  <span style="background-image: linear-gradient(40deg, #FF856D, #CC0000); padding-right:30vw; position:relative; overflow:hidden;">
-  	{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}
+  <span style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
+  	Edición del Certificado
     <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
   </span>
 @endsection
@@ -17,11 +17,11 @@ Certificado edición
 			<div class="col-md-12 col-md-offset-0">
 				<!-- Default box -->
 				<div class="box">
-					<form role="form" action="/respels/" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" action="/certificados/{{$certificado->CertSlug}}" method="POST" id="myform" enctype="multipart/form-data" data-toggle="validator">
 						@method('PUT')
 						@csrf
 						<div class="box-header">
-							<h3 class="box-title">{{ trans('adminlte_lang::LangRespel.Respeleditmenu') }}</h3>
+							<h3 class="box-title">Datos del Certificado</h3>
 						</div>
 							<!-- left column -->
 							<!-- general form elements -->

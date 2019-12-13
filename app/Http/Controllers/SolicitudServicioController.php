@@ -1137,9 +1137,9 @@ class SolicitudServicioController extends Controller
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									$certificado->CertNumRm = "C-130";
-									$certificado->CertAuthJo = 0;
-									$certificado->CertAuthJl = 0;
-									$certificado->CertAuthDp = 0;
+									$certificado->CertAuthJo = 1;
+									$certificado->CertAuthJl = 1;
+									$certificado->CertAuthDp = 1;
 									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertSolser = $id;
 									$certificado->FK_CertCliente = $cliente->ID_Cli;
@@ -1187,9 +1187,9 @@ class SolicitudServicioController extends Controller
 									$manifiesto->ManifSlug = hash('sha256', rand().time());
 									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
 									$manifiesto->ManifNumRm = "M-16";
-									$manifiesto->ManifAuthJo = 0;
-									$manifiesto->ManifAuthJl = 0;
-									$manifiesto->ManifAuthDp = 0;
+									$manifiesto->ManifAuthJo = 1;
+									$manifiesto->ManifAuthJl = 1;
+									$manifiesto->ManifAuthDp = 1;
 									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$manifiesto->FK_ManifSolser = $id;
 									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;

@@ -10,10 +10,30 @@ class Certificado extends Model{
     protected $primaryKey = 'ID_Cert';
 
     public function SolicitudServicio(){
-    	return $this->belogsTo('App\SolicitudServicio', 'FK_CertSolser', 'ID_SolSer');
+    	return $this->belongsTo('App\SolicitudServicio', 'FK_CertSolser', 'ID_SolSer');
     }
 
     public function certdato(){
     	return $this->hasMany('App\Certdato','FK_DatoCert', 'ID_Cert');
+    }
+
+    public function cliente(){
+		return $this->belongsTo('App\Cliente','FK_CertCliente', 'ID_Cli');
+    }
+
+    public function sedegenerador(){
+		return $this->belongsTo('App\GenerSede','FK_CertGenerSede', 'ID_GSede');
+    }
+    
+    public function gestor(){
+		return $this->belongsTo('App\Cliente','FK_CertGestor', 'ID_Cli');
+    }
+
+    public function tratamiento(){
+		return $this->belongsTo('App\Tratamiento','FK_CertTrat', 'ID_Trat');
+    }
+
+    public function transportador(){
+		return $this->belongsTo('App\Cliente','FK_CertTransp', 'ID_Cli');
     }
 }

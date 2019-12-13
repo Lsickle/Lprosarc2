@@ -26,6 +26,11 @@ class GenerSede extends Model
 	 return $this->belongsTo('App\Generador', 'FK_GSede', 'ID_Gener');
 	}
 
+	public function municipio()
+	{
+	 return $this->belongsTo('App\Municipio', 'FK_GSedeMun', 'ID_Mun');
+	}
+
 	public function SolicitudServicio()
     {
         return $this->hasMany('App\SolicitudServicio', 'ID_SolSer');//como genersede tiene muchas solicitudes de servicio
@@ -42,4 +47,8 @@ class GenerSede extends Model
 	public function programacionesdeservicio(){
 		return $this->hasMany('App\ProgramacionVehiculo', 'recolect', 'FK_ColectSgen', 'FK_ColectProg');
 	}
+
+	public function manifiestos(){
+		return $this->hasMany('App\Manifiesto','FK_ManifGenerSede', 'ID_GSede');
+    }
 }
