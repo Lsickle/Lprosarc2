@@ -20,6 +20,7 @@ use App\SolicitudResiduo;
 use App\Documento;
 use App\Docdato;
 use App\Recolect;
+use App\Sede;
 use App\Requerimiento;
 use Permisos;
 
@@ -820,7 +821,7 @@ class VehicProgController extends Controller
 			// $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
-		$programacion->save();
+		$programacion->update();
 		// return $request->input('ProgGenerSedes');
 		$programacion->puntosderecoleccion()->sync($request->input('ProgGenerSedes'));
 

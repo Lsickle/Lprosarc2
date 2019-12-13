@@ -22,9 +22,18 @@
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.personaltitlelist') }}</h3>
+					
+
 					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-						<a href="personal/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
+						<a href="personal/create" class="btn btn-primary pull-right">Crear Personal</a>
 					@endif
+
+					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						@if($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)
+							<a href="UsuariosCliente" class="btn btn-info pull-right" style="margin-right: 1em;">Lista de Usuarios</a>
+						@endif
+					@endif
+					
 				</div>
 				<div class="box box-info">
 					<div class="box-body">

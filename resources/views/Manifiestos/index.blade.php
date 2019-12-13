@@ -3,7 +3,7 @@
 Lista de Manifiestos
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+<span style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
 	Manifiestos
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
@@ -40,7 +40,7 @@ Lista de Manifiestos
 							<tbody>
 								@foreach($manifiestos as $manifiesto)
 								<tr>
-									<td class="text-center">{{$manifiesto->FK_ManifSolser}}</td>
+									<td class="text-center">#{{$manifiesto->FK_ManifSolser}}</td>
 									<td class="text-center">{{$manifiesto->ID_Manif}}</td>
 									@if($manifiesto->ManifSrc!=="ManifiestoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-invoice fa-lg'></a></td>

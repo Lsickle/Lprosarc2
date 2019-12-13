@@ -36,7 +36,9 @@
 									<th>{{ trans('adminlte_lang::message.progvehictype') }}</th>
 									<th>Autorización</th>
 									{{-- @endif --}}
-									
+									@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
+									<th>ver programación</th>
+									@endif
 									<th>{{ trans('adminlte_lang::message.progvehicservi2') }}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 									<th>{{ trans('adminlte_lang::message.edit') }}</th>
@@ -106,7 +108,9 @@
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 										<td>{{$programacion->ProgVehStatus}}</td>
 									{{-- @endif --}}
-									
+									@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
+										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class='btn btn-info btn-block'><i class="fas fa-search"></i> <b>Datos</b></a></td>
+									@endif
 									<td><a href="/solicitud-servicio/{{$programacion->SolSerSlug}}"class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i> #{{$programacion->ID_SolSer}}</a></td>
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>

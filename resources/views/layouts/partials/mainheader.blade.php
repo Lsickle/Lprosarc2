@@ -162,7 +162,7 @@
 							@if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
 								<img class="user-image" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
 							@else
-								<img class="user-image" src="../../../img/defaultuser.png" alt="User Image">
+								<img class="user-image" src="../../../img/robot400x400.gif" alt="User Image">
 							@endif
 							<!-- hidden-xs hides the username on small devices so only the image appears. -->
 							<span class="hidden-xs" data-toggle="tooltip">{{ Auth::user()->name }}</span>

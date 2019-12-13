@@ -80,6 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/permisos', 'PermisoUsuarioController');
 	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
+	Route::resource('/UsuariosCliente', 'PermisoClienteController');
+	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit'); 
+	Route::put('/UsuarioCliente/{id}','PermisoClienteController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
 	Route::resource('/areas','AreaController');
@@ -111,6 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-residuo/{id}/UpdatePrice', 'SolicitudResiduoController@updateSolResPrice');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
+	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos'); ;
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');

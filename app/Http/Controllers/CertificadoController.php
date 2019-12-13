@@ -38,7 +38,7 @@ class CertificadoController extends Controller
                     ->value('clientes.ID_Cli');
 
                     $servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
-                    ->where('SolSerStatus', 'Certificacion')
+                    ->where('SolServCertStatus', 2)
                     ->get('ID_SolSer');
 
                     // return $UserSedeID;
@@ -123,42 +123,19 @@ class CertificadoController extends Controller
      */
     public function show($id)
     {
-        $certificado = Certificado::where('CertSlug', $id)->first();
-
-
-        $generador = Generador::with(['GenerSede' => function ($query) use ($certificado){
-            $query->where('ID_GSede', $certificado->FK_CertGenerSede);
-
-        }])
-        ->whereHas('GenerSede', function ($query) use ($certificado){
-            $query->where('ID_GSede', $certificado->FK_CertGenerSede);
+        $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+            $query->with(['SolicitudResiduo' => function ($query){
+                $query->where('SolResKgConciliado', '>', 0);
+                $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                $query->with('generespel.respels');
+                $query->with('requerimiento');
+            }]);
             
-        })
+        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento'])
+        ->where('CertSlug', $id)
         ->first();
-
-        $transportador = Cliente::with('sedes')
-        ->where('ID_Cli',$certificado->FK_CertTransp)
-        ->first();
-
-        $cliente = Cliente::with('sedes')
-        ->where('ID_Cli',$certificado->FK_CertCliente)
-        ->first();
-
-        $gestor = Cliente::with('sedes')
-        ->where('ID_Cli',$certificado->FK_CertGestor)
-        ->first();
-
-        $tratamiento = Tratamiento::with('gestor.clientes')
-        ->where('ID_Trat',$certificado->FK_CertTrat)
-        ->first();
-
-        $residuos = Certdato::with('solres.requerimiento.respel')
-        ->where('FK_DatoCert',$certificado->ID_Cert)
-        ->get();
-
-        // return $residuos;
-
-        return view('certificados.show', compact('certificado', 'generador','transportador','cliente','gestor','tratamiento','residuos')); 
+        // return $certificado;
+        return view('certificados.show', compact('certificado')); 
     }
 
     /**
@@ -169,8 +146,13 @@ class CertificadoController extends Controller
      */
     public function edit($id)
     {
-        $certificado = Certificado::where('CertSlug', $id)->first();
-        return view('certificados.edit', compact('certificado')); 
+        if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol2, Permisos::EDITMANIFCERT)) {
+            $certificado = Certificado::where('CertSlug', $id)->first();
+            return view('certificados.edit', compact('certificado')); 
+        }else{
+            abort(404, "no posee permisos para la edición de certificados");
+        }
+        
     }
 
     /**
@@ -182,7 +164,29 @@ class CertificadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $certificado = Certificado::where('CertSlug', $id)->first();
+
+        $certificado->CertiEspName = $request->input('CertiEspName');
+        $certificado->CertiEspValue = $request->input('CertiEspValue');
+        $certificado->CertObservacion = $request->input('CertObservacion');
+        $certificado->CertNumRm = $request->input('CertNumRm');
+        if (isset($request['CertSrc'])) {
+            $file1 = $request['CertSrc'];
+            $hoja = $certificado->CertSlug.'.pdf';
+
+            $file1->move(public_path().'/img/Certificados/',$hoja);
+        }
+        else{
+            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                $hoja = 'CertificadoDefault.pdf';
+            }else{
+                $hoja = $certificado->CertSrc;
+            }
+        }
+        $certificado->CertSrc = $hoja;
+        $certificado->save();
+
+        return view('certificados.edit', compact('certificado')); 
     }
 
     /**

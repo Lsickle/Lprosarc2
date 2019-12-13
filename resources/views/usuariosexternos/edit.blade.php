@@ -14,7 +14,7 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.useredit') }}</h3>
 				</div>
 				<div class="box box-info">
-					<form role="form" action="/permisos/{{$User->UsSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
+					<form role="form" action="/UsuariosCliente/{{$User->UsSlug}}" method="POST" enctype="multipart/form-data"  data-toggle="validator" class="form">
 						@csrf
 						@method('PUT')
 						@if ($errors->any())
@@ -48,24 +48,6 @@
 							<div class="form-group col-md-6">
 								<label for="name">{{ trans('adminlte_lang::message.username') }}</label><small class="help-block with-errors">*</small>
 								<input type="text" name="name" class="form-control inputText" id="name" maxlength="255" required value="{{$User->name}}">
-							</div>
-							<div class="form-group col-md-6">
-                                <label for="UsRol">{{ trans('adminlte_lang::message.userrol') }}</label></label><small class="help-block with-errors">*</small>
-								<select class="form-control select" id="UsRol" name="UsRolDesc" required>
-                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
-									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->RolDesc}}" {{ $User->UsRolDesc == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
-									@endforeach
-								</select>
-							</div>
-                            <div class="form-group col-md-6">
-                                <label for="UsRol2">{{ trans('adminlte_lang::message.userrol2') }}</label></label><small class="help-block with-errors"></small>
-								<select class="form-control select" id="UsRol2" name="UsRolDesc2">
-                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
-									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->RolDesc}}" {{ $User->UsRolDesc2 == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
-									@endforeach
-								</select>
 							</div>
 							<div class="col-md-6 form-group">
 								<label for="email">{{ trans('adminlte_lang::message.emailaddress') }}</label><small class="help-block with-errors">*</small>
