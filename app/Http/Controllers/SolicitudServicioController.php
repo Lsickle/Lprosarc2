@@ -57,6 +57,7 @@ class SolicitudServicioController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
 						$query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
@@ -519,7 +520,21 @@ class SolicitudServicioController extends Controller
 						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-							$Solicitud->SolSerStatus = 'Certificacion';
+							// $Solicitud->SolSerStatus = 'Certificacion';
+							$Solicitud->SolServCertStatus = 2;
+							$Solicitud->SolSerDescript = $request->input('solserdescript');
+							$Solicitud->save();
+
+							$log = new audit();
+							$log->AuditTabla="solicitud_servicios";
+							$log->AuditType="Modificado Status";
+							$log->AuditRegistro=$Solicitud->ID_SolSer;
+							$log->AuditUser=Auth::user()->email;
+							$log->Auditlog=$Solicitud->SolSerStatus;
+							$log->save();
+
+							return redirect()->route('solicitud-servicio.index');
+
 						}
 						break;
 				}
@@ -1080,6 +1095,27 @@ class SolicitudServicioController extends Controller
 		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados', 'manifiestos'));
 	}
 
+	public function sendtobilling($id)
+	{
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+			
+		$Solicitud->SolServCertStatus=1;
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="enviado a facturacion";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$Solicitud->SolServCertStatus;
+		$log->save();
+
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
+
 	public function solservdocstore($id)
 	{
 			
@@ -1137,7 +1173,7 @@ class SolicitudServicioController extends Controller
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									$certificado->CertNumRm = "C-130";
-									$certificado->CertAuthJo = 1;
+									$certificado->CertAuthHseq = 1;
 									$certificado->CertAuthJl = 1;
 									$certificado->CertAuthDp = 1;
 									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
@@ -1187,7 +1223,7 @@ class SolicitudServicioController extends Controller
 									$manifiesto->ManifSlug = hash('sha256', rand().time());
 									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
 									$manifiesto->ManifNumRm = "M-16";
-									$manifiesto->ManifAuthJo = 1;
+									$manifiesto->ManifAuthHseq = 1;
 									$manifiesto->ManifAuthJl = 1;
 									$manifiesto->ManifAuthDp = 1;
 									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
