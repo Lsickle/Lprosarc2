@@ -48,7 +48,7 @@
 
 					</div>
 					<p>
-						<img class="profile-user-img img-responsive img-circle" src="{{file_exists(public_path()."/img/ImagesProfile/$User->UsAvatar") && $User->UsAvatar <> null ? "../../../img/ImagesProfile/$User->UsAvatar" : '../../../img/defaultuser.png'}}" alt="User profile picture">
+						<img class="profile-user-img img-responsive img-circle" src="{{file_exists(public_path()."/img/ImagesProfile/$User->UsAvatar") && $User->UsAvatar <> null ? "../../../img/ImagesProfile/$User->UsAvatar" : '../../../img/robot400x400.gif'}}" alt="User profile picture">
 					</p>
 					<h3 class="profile-username text-center">{{$User->name}}</h3>
 

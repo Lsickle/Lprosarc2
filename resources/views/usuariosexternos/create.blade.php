@@ -28,7 +28,7 @@
 						<div class="box-body">
                             <div class="form-group col-md-6">
                                 <label for="FK_UserPers">{{ trans('adminlte_lang::message.userpersonadd') }}</label></label><small class="help-block with-errors"></small>
-								<select class="form-control select" id="FK_UserPers" name="FK_UserPers">
+								<select required class="form-control select" id="FK_UserPers" name="FK_UserPers">
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Personals as $Personal)		
                                         <option value="{{$Personal->PersSlug}}" {{ old('FK_UserPers') == $Personal->PersSlug ? 'selected' : '' }}>{{$Personal->PersFirstName}} {{$Personal->PersLastName}}</option>

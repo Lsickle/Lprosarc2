@@ -28,9 +28,12 @@
 						<a href="personal/create" class="btn btn-primary pull-right">Crear Personal</a>
 					@endif
 
-					@if($IdPersonaFacturacion[0]->ID_Pers == Auth::user()->FK_UserPers)
-						<a href="UsuariosCliente" class="btn btn-info pull-right" style="margin-right: 1em;">Lista de Usuarios</a>
+					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
+						@if($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)
+							<a href="UsuariosCliente" class="btn btn-info pull-right" style="margin-right: 1em;">Lista de Usuarios</a>
+						@endif
 					@endif
+					
 				</div>
 				<div class="box box-info">
 					<div class="box-body">

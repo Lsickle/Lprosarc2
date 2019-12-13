@@ -28,7 +28,7 @@
 						@endif
 						<div class="box-body">
 							<label for="img" style="display:flex; justify-content:center;">
-								<img style="cursor:pointer;" class="profile-user-img img-responsive img-circle" src="{{file_exists(public_path()."/img/ImagesProfile/$User->UsAvatar") && $User->UsAvatar <> null ? "../../../img/ImagesProfile/$User->UsAvatar" : '../../../img/defaultuser.png'}}" alt="User profile picture">
+								<img style="cursor:pointer;" class="profile-user-img img-responsive img-circle" src="{{file_exists(public_path()."/img/ImagesProfile/$User->UsAvatar") && $User->UsAvatar <> null ? "../../../img/ImagesProfile/$User->UsAvatar" : '../../../img/robot400x400.gif'}}" alt="User profile picture">
 							</label>
 							<input type="file" id="img" style="display:none;" name="UsAvatar" accept="image/*">
 							<div class="form-group col-md-6">

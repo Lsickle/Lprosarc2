@@ -78,9 +78,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
 	Route::delete('/respelSGener/{id}', 'RespelSedeGenerController@destroySGener');
 	Route::resource('/permisos', 'PermisoUsuarioController');
-	Route::resource('/UsuariosCliente', 'PermisoClienteController');
 	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
+	Route::resource('/UsuariosCliente', 'PermisoClienteController');
+	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit'); 
+	Route::put('/UsuarioCliente/{id}','PermisoClienteController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
 	Route::resource('/areas','AreaController');

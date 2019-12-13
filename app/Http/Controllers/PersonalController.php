@@ -39,7 +39,7 @@ class PersonalController extends Controller
 					$query->where('personals.PersDelete', '=', 0);
 				}
 				/*Validacion del Programador para ver todo el personal externo aun asi este eliminado*/
-				else if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+				else if(in_array(Auth::user()->UsRol,	 Permisos::PROGRAMADOR)){
 					$query->where('clientes.ID_Cli', '<>', $id);
 				}
 				/*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
@@ -52,17 +52,29 @@ class PersonalController extends Controller
 
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 
-		/*registro de persona habilitada para facturación*/
+		/*registro de persona habilitada para facturación del cliente*/
 		$IdPersonaFacturacion = DB::table('personals')
 			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 			->select('personals.ID_Pers')
-			->where('Persfactura', 1)
+			->where('PersFactura', 1)
 			->where('ID_Cli', $IDClienteSegunUsuario)
 			->get();
-		return view('personal.index', compact('Personals', 'IdPersonaFacturacion'));
+
+		/*registro de persona habilitada para administracion de usuarios del cliente*/
+		$IdPersonaAdmin = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.ID_Pers')
+			->where('PersAdmin', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+
+		return view('personal.index', compact('Personals', 'IdPersonaFacturacion', 'IdPersonaAdmin'));
 	}
 
 	/**
@@ -192,14 +204,25 @@ class PersonalController extends Controller
 			->where('PersSlug', $id)
 			->first();
 
-		/*registro de persona habilitada para facturación*/
+		/*registro de persona habilitada para administracion de usuarios del cliente*/
+		$IdPersonaAdmin = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->select('personals.ID_Pers')
+			->where('PersAdmin', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+
+		/*registro de persona habilitada para administracion de usuarios del cliente*/
 		$IdPersonaFacturacion = DB::table('personals')
 			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 			->select('personals.ID_Pers')
-			->where('Persfactura', 1)
+			->where('personals.PersFactura', 1)
 			->where('ID_Cli', $IDClienteSegunUsuario)
 			->get();
 
@@ -225,7 +248,7 @@ class PersonalController extends Controller
 				->where('CargArea', $Sede->ID_Area)
 				->where('CargDelete', '=', 0)
 				->get();
-			return view('personal.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas', 'IdPersonaFacturacion'));
+			return view('personal.edit', compact('Persona', 'Sede', 'Cargos', 'Sedes', 'Areas', 'IdPersonaAdmin', 'IdPersonaFacturacion'));
 		}
 		else{
 			abort(403);
@@ -259,6 +282,7 @@ class PersonalController extends Controller
 			'PersCellphone' => 'required|min:12',
 			'PersAddress'   => 'max:255|nullable',
 			'Persfactura'   => 'max:2|nullable',
+			'PersAdmin'     => 'max:2|nullable',
 		]);
 
 		$NuevaArea = $request->input('NewArea');
@@ -305,36 +329,58 @@ class PersonalController extends Controller
 		$Persona->fill($request->except('FK_PersCargo'));
 		$Persona->FK_PersCargo = $Cargo;
 		$Persona->Persfactura = $request->input('Persfactura');
+		$Persona->PersAdmin = $request->input('PersAdmin');
 
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 
-		/*registro de persona habilitada para facturación*/
-		$IdPersonaFacturacion= DB::table('personals')
+		/*registro de persona habilitada para facturación del cliente*/
+		$IdPersonaFacturacion = DB::table('personals')
 			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 			->select('personals.ID_Pers')
-			->where('Persfactura', 1)
+			->where('PersFactura', 1)
 			->where('ID_Cli', $IDClienteSegunUsuario)
 			->get();
 
-		if (($Persona->Persfactura == 1)&&($IdPersonaFacturacion->ID_Pers == Auth::user()->FK_UserPers)) {
-			/*se quita la condicion de facturacion a la persona de facturacion actual*/
-			$Personadefacturacion = DB::table('personals')
-			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+		/*registro de persona habilitada para administracion de usuarios del cliente*/
+		$IdPersonaAdmin = DB::table('personals')
+			->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('personals.Persfactura')
-			->where(function($query){
-				$idcli = userController::IDClienteSegunUsuario();
-				$query->where('clientes.ID_Cli', '=', $idcli);
-			})
-			->first();
+			->select('personals.ID_Pers')
+			->where('PersAdmin', 1)
+			->where('ID_Cli', $IDClienteSegunUsuario)
+			->get();
+
+		if (($Persona->Persfactura == 1)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
+			/*se quita la condicion de facturacion a la persona de facturacion actual*/
+			$Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
 
 			$Personadefacturacion->Persfactura = 0;
 			$Personadefacturacion->save();
+		}
+		if (($Persona->Persfactura == 0)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
+			/*se quita la condicion de facturacion a la persona de facturacion actual*/
+			$Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
+			/*en caso de que vaya a quedar el cliente sin persona de facturacion*/
+			if ($Persona->ID_Pers == $IdPersonaFacturacion[0]->ID_Pers) {
+				$Personadefacturacionpredeterminada = Personal::where('ID_Pers', $IdPersonaAdmin[0]->ID_Pers)->first();
+				$Personadefacturacionpredeterminada->Persfactura = 1;
+				$Personadefacturacionpredeterminada->save();
+			}
+			$Personadefacturacion->Persfactura = 0;
+			$Personadefacturacion->save();
+		}
+		if (($Persona->PersAdmin == 1)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
+			/*se quita la condicion de administracion a la persona de administracion actual*/
+
+			$Personadeadministracion = Personal::where('ID_Pers', $IdPersonaAdmin[0]->ID_Pers)->first();
+
+			$Personadeadministracion->PersAdmin = 0;
+			$Personadeadministracion->save();
 		}
 		$Persona->save();
 

@@ -22,7 +22,7 @@
 						</a>
 					</li>
 				@endif
-				@if (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
+			{{-- 	@if (in_array(Auth::user()->UsRol, Permisos::Jefes) || in_array(Auth::user()->UsRol2, Permisos::Jefes))
 					<li>
 						<a href='/UsuariosExternos'>
 							<i class="menu-icon fa fa-users bg-red"></i>
@@ -32,7 +32,7 @@
 							</div>
 						</a>
 					</li>
-				@endif
+				@endif --}}
 				@if (Auth::user()->email == 'Sistemas@prosarc.com.co'||Auth::user()->email == 'Sistemas3@prosarc.com.co'||Auth::user()->email == 'Sistemas2@prosarc.com.co')
 					<li>
 							<a href='#'>

@@ -29,7 +29,23 @@ class PermisoClienteController extends Controller
     public function index()
     {
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
-            // usuarios sin personal
+            
+            $IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+	        /*registro de persona habilitada para administracion de usuarios del cliente*/
+			$IdPersonaAdmin = DB::table('personals')
+				->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.ID_Pers')
+				->where('PersAdmin', 1)
+				->where('ID_Cli', $IDClienteSegunUsuario)
+				->get();
+			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
+				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
+			}
+
+			/*se continua con el proceso si es el admisnitrador*/// usuarios sin personal
             $UsersSinPersonal = DB::table('users')
                 ->where('users.UsRol', 'Cliente')
                 ->where('FK_UserPers', null)
@@ -52,28 +68,21 @@ class PermisoClienteController extends Controller
                 ->select('sedes.ID_Sede', 'clientes.ID_Cli')
                 ->first();
 
-            // usuarios con personal de la sede
+            // usuarios con personal del cliente
             $Users = DB::table('users')
                 ->join('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-                ->where(function ($query) use ($Personal){
-                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                        $query->where('clientes.ID_Cli', $Personal->ID_Cli);
-                    }else{
-                        $query->where('sedes.ID_Sede', $Personal->ID_Sede);
-                        $query->where('DeleteUser', 0);
-                    }
-                })
+				->where('clientes.ID_Cli', $IDClienteSegunUsuario)
                 ->where('users.UsRol', 'Cliente')
                 ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
                 ->get();
            
             return view('usuariosexternos.index', compact('Users', 'UsersSinPersonal'));
         } else {
-            abort(403);
+            abort(403,'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 
@@ -85,7 +94,22 @@ class PermisoClienteController extends Controller
     public function create()
     {
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+        	$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+	        /*registro de persona habilitada para administracion de usuarios del cliente*/
+			$IdPersonaAdmin = DB::table('personals')
+				->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.ID_Pers')
+				->where('PersAdmin', 1)
+				->where('ID_Cli', $IDClienteSegunUsuario)
+				->get();
+			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
+				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
+			}
 
+			/*se continua con el proceso si es el administrador*/
             $Roles = DB::table('rols')
                 ->where('rols.RolDelete', 0)
                 ->where('rols.RolName', '<>', 'Programador')
@@ -101,7 +125,8 @@ class PermisoClienteController extends Controller
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->where('sedes.ID_Sede', $Sede->ID_Sede)
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->where('clientes.ID_Cli', $IDClienteSegunUsuario)
                 ->where('DeleteUser', 0)
                 ->select('users.FK_UserPers')
                 ->get();
@@ -111,7 +136,8 @@ class PermisoClienteController extends Controller
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->where('sedes.ID_Sede', $Sede->ID_Sede)
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->where('clientes.ID_Cli', $IDClienteSegunUsuario)
                 ->where(function ($query) use($Users){
                     foreach($Users as $User){
                         $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
@@ -122,7 +148,7 @@ class PermisoClienteController extends Controller
                 
             return view('usuariosexternos.create', compact('Personals', 'Roles'));
         }else{
-            abort(403);
+            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 
@@ -139,6 +165,7 @@ class PermisoClienteController extends Controller
             'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
             'name'      => 'required|max:64',
             'UsAvatar'  => 'max:5120|mimes:jpeg,svg,png,gif,jpg|nullable',
+            'FK_UserPers'  => 'required',
         ]);
 
         $User = new User();
@@ -179,16 +206,31 @@ class PermisoClienteController extends Controller
     public function show($id)
     {
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+        	$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+	        /*registro de persona habilitada para administracion de usuarios del cliente*/
+			$IdPersonaAdmin = DB::table('personals')
+				->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.ID_Pers')
+				->where('PersAdmin', 1)
+				->where('ID_Cli', $IDClienteSegunUsuario)
+				->get();
+			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
+				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
+			}
 
+			/*se continua con el proceso si es el admisnitrador*/
             $User = User::where('UsSlug', $id)->first();
             if (!$User) {
-                abort(404);
+                abort(404, 'el usuario que trata de ver ya no existe en la base de datos');
             }
             $Personal = Personal::where('ID_Pers', $User->FK_UserPers)->first();
 
             return view('usuariosexternos.show', compact('User', 'Personal'));
         }else{
-            abort(403);
+            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 
@@ -202,9 +244,25 @@ class PermisoClienteController extends Controller
     {
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
 
+			$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
+	        /*registro de persona habilitada para administracion de usuarios del cliente*/
+			$IdPersonaAdmin = DB::table('personals')
+				->join('cargos', 'FK_PersCargo', '=', 'ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.ID_Pers')
+				->where('PersAdmin', 1)
+				->where('ID_Cli', $IDClienteSegunUsuario)
+				->get();
+			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
+				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
+			}
+
+			/*se continua con el proceso si es el admisnitrador*/
             $User = User::where('UsSlug', $id)->first();
             if (!$User) {
-                abort(404);
+                abort(404, 'el usuario que trata de editar ya no existe en la base de datos');
             }
             $Personal = Personal::select('PersFirstName', 'PersLastName', 'PersSlug', 'ID_Pers')->where('ID_Pers', $User->FK_UserPers)->first();
             
@@ -218,7 +276,8 @@ class PermisoClienteController extends Controller
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
                 ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
                 ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                ->where('sedes.ID_Sede', $Sede->ID_Sede)
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->where('clientes.ID_Cli', $IDClienteSegunUsuario)
                 ->where('DeleteUser', 0)
                 ->select('users.FK_UserPers')
                 ->get();
@@ -228,7 +287,8 @@ class PermisoClienteController extends Controller
             ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
             ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
             ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-            ->where('sedes.ID_Sede', $Sede->ID_Sede)
+			->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+			->where('clientes.ID_Cli', $IDClienteSegunUsuario)
             ->where(function ($query) use($Users, $User){
                 foreach($Users as $User){
                     $query->where('personals.ID_Pers', '<>', $User->FK_UserPers);
@@ -244,7 +304,7 @@ class PermisoClienteController extends Controller
             
             return view('usuariosexternos.edit', compact('User', 'Personals', 'Roles', 'Personal'));
         }else{
-            abort(403);
+            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 
@@ -263,11 +323,15 @@ class PermisoClienteController extends Controller
             abort(404);
         }
         $Validate = $request->validate([
-            'email'     => 'required|max:255|unique:users,email',
-            'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
+            'email'     => 'required|max:255|unique:users,email,'.$User->email.',email',
+            // 'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
             'name'      => 'required|max:64',
             'UsAvatar'  => 'max:5120|mimes:jpeg,svg,png,gif,jpg|nullable',
         ]);
+        /*si se cambia el correo se debe verificar de nuevo por seguridad*/
+        if ($User->email != $request->input('email')) {
+        	$User->email_verified_at = null;
+        }
         $User->fill($request->except('UsAvatar', 'UsRol', 'UsRol2', 'FK_UserPers', 'UsStatus'));
         $User->UsRol = 'Cliente';
         $User->UsRolDesc = 'Usuario General';
@@ -313,7 +377,7 @@ class PermisoClienteController extends Controller
             }
             return view('usuariosexternos.editpassword', compact('User'));
         }else{
-            abort(403);
+            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 
@@ -362,7 +426,7 @@ class PermisoClienteController extends Controller
                 return redirect()->route('UsuariosCliente.show', compact('id'));
             }
         }else{
-            abort(403);
+            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
     }
 }

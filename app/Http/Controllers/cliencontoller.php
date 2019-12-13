@@ -222,8 +222,9 @@ class clientcontoller extends Controller
             $Personal->PersType = 1;
             $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersFirstName);
             $Personal->PersDelete = 0; 
-            $Personal->PersFactura = 1; 
-            $Personal->FK_PersCargo = $Cargo->ID_Carg; 
+            $Personal->PersFactura = 1;
+            $Personal->PersAdmin = 1;
+            $Personal->FK_PersCargo = $Cargo->ID_Carg;
             $Personal->save();
 
             $user = User::where('id', Auth::user()->id)->first();
