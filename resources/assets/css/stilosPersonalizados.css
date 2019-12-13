@@ -41,6 +41,14 @@ a.textpopover{
 	text-overflow: ellipsis; 
 	text-align: right;
 }
+p.textpopoveraddress{
+	width: 45%; 
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; 
+	text-align: right;
+	color: #3c8dbc;
+}
 .textolargo{
 	word-break: break-all;
 }

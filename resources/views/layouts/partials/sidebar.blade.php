@@ -10,7 +10,7 @@
                         @if(file_exists(public_path().'/img/ImagesProfile/'.Auth::user()->UsAvatar) && Auth::user()->UsAvatar <> null)
                             <img class="img-circle" src="../../../img/ImagesProfile/{{Auth::user()->UsAvatar }}" alt="User Image">
                         @else
-                            <img class="img-circle" src="../../../img/defaultuser.png" alt="User Image">
+                            <img class="img-circle" src="../../../img/robot400x400.gif" alt="User Image">
                         @endif
                     </div>
                     <div class="pull-left info" style="overflow:hidden; max-width: 10em; max-height: 3.1em; height: auto; width: auto; position: absolute; top: 0.5em;">

@@ -80,6 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/permisos', 'PermisoUsuarioController');
 	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
+	Route::resource('/UsuariosCliente', 'PermisoClienteController');
+	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit'); 
+	Route::put('/UsuarioCliente/{id}','PermisoClienteController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
 	Route::resource('/areas','AreaController');
@@ -92,6 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::get('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
+	Route::post('/vehicle-programacion/{id}/añadirVehiculo','VehicProgController@añadirVehiculo');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/pretratamiento','PretratamientoController');
@@ -110,11 +114,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-residuo/{id}/UpdatePrice', 'SolicitudResiduoController@updateSolResPrice');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
+	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
-	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex');
+	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos'); ;
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
-	Route::resource('/certificado', 'CertificadoController');
-	Route::resource('/manifiesto', 'ManifiestoController');
+	Route::resource('/certificados', 'CertificadoController');
+	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
+	Route::get('/certificados/{id}/firmar', 'CertificadoController@firmarindex');
+	Route::resource('/manifiestos', 'ManifiestoController');
+	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
+	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');
 	Route::resource('/articulos-proveedor', 'ArticuloXProveedorController');
 	Route::resource('/code', 'QrCodesController');
 	Route::resource('/horario', 'HorarioController');
@@ -127,7 +136,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
-	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
+	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA'); 
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	Route::resource('/contratos', 'ContratoController');
 	Route::resource('/requeri-client', 'RequerimientosClienteController');

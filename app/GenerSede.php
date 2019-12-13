@@ -20,18 +20,35 @@ class GenerSede extends Model
 	{
 	    return 'GSedeSlug';
 	}
+
 	public function generadors()
 	{
 	 return $this->belongsTo('App\Generador', 'FK_GSede', 'ID_Gener');
 	}
+
+	public function municipio()
+	{
+	 return $this->belongsTo('App\Municipio', 'FK_GSedeMun', 'ID_Mun');
+	}
+
 	public function SolicitudServicio()
     {
         return $this->hasMany('App\SolicitudServicio', 'ID_SolSer');//como genersede tiene muchas solicitudes de servicio
     }
+
     public function Areas(){
     	return $this->hasMany('App\GenerSede', 'ID_Area', 'id');//como genersedes tiene muchas areas
 	}
-	public function ResiduosGener(){
-		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
+
+	public function resgener(){
+		return $this->hasMany('App\ResiduosGener', 'FK_SGener', 'ID_GSede');
 	}
+
+	public function programacionesdeservicio(){
+		return $this->hasMany('App\ProgramacionVehiculo', 'recolect', 'FK_ColectSgen', 'FK_ColectProg');
+	}
+
+	public function manifiestos(){
+		return $this->hasMany('App\Manifiesto','FK_ManifGenerSede', 'ID_GSede');
+    }
 }

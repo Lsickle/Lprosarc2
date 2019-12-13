@@ -37,4 +37,8 @@ class Tratamiento extends Model
         // cada tratamiento esta relacionado con muchos residuos mediante de la tabla requerimientos
     }
 
+    public function manifiestos(){
+        return $this->hasMany('App\Manifiesto','FK_ManifTrat', 'ID_Trat');
+    }
+
 }

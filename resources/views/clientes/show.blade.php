@@ -255,7 +255,7 @@
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.address') }}</b>
 								<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.address') }}')"><i class="far fa-copy"></i></a>
-								<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</a>
+								<p href="#" class="pull-right textpopoveraddress" id="{{ trans('adminlte_lang::message.address') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>">{{$Sede->SedeAddress}} - {{$Sede->MunName}}, {{$Sede->DepartName}}</p>
 							</li>
 							<li class="list-group-item">
 								<b>{{ trans('adminlte_lang::message.mobile') }}</b> <a class="pull-right">{{$Sede->SedeCelular}}</a>
@@ -278,7 +278,7 @@
 					{{-- requerimientos --}}
 						<div class="tab-pane" id="requerimientos">
 							<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
-							<h3 class="profile-username text-center textolargo">Requerimientos a solicitar</h3>
+							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>
 							<div style='overflow-y:auto; max-height:503px;'>
 								@if(isset($Requerimientos))
 									<div class="col-md-6" style="text-align: center;">

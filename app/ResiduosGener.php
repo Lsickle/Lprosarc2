@@ -14,10 +14,15 @@ class ResiduosGener extends Model
 
     public function gener_sedes()
 	{
-	 return $this->belongsTo('App\GenerSede','FK_SGener', 'ID_GSede');
+	 return $this->belongsTo('App\GenerSede', 'FK_SGener', 'ID_GSede');
 	}
     public function respels()
 	{
-	 return $this->belongsTo('App\GenerSede','FK_Respel', 'ID_Respel');
+	 return $this->belongsTo('App\Respel','FK_Respel', 'ID_Respel');
+	}
+
+	public function solres()
+	{
+	 return $this->hasMany('App\SolicitudResiduo', 'FK_SolResRg', 'ID_SGenerRes');
 	}
 }

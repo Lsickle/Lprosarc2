@@ -7,6 +7,7 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\SolicitudServicio;
@@ -24,6 +25,10 @@ use App\Departamento;
 use App\Municipio;
 use App\Tarifa;
 use App\Rango;
+use App\Certificado;
+use App\Certdato;
+use App\Manifiesto;
+use App\Manifdato;
 use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
@@ -51,7 +56,8 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
-						$query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
@@ -90,7 +96,9 @@ class SolicitudServicioController extends Controller
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Departamentos = Departamento::all();
 			$Cliente = Cliente::select('CliName', 'CliName','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)
+			->where('sedes.SedeDelete', 0)
+			->get();
 			$SGeneradors = DB::table('gener_sedes')
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
@@ -411,8 +419,15 @@ class SolicitudServicioController extends Controller
 				$horas = " en las horas de la mañana";
 			}
 			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
-			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehEntrada', null)->where('ProgVehDelete', 0)->get();
-			$ProgramacionesActivas = count($Programaciones);
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			// ->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get();
+			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get());
+			// $ProgramacionesActivas = ($Programaciones);
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -457,7 +472,7 @@ class SolicitudServicioController extends Controller
 		  	return $item;
 		});
 		// return $Residuos;
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio'));
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
 	}
 
 
@@ -505,7 +520,21 @@ class SolicitudServicioController extends Controller
 						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-							$Solicitud->SolSerStatus = 'Certificacion';
+							// $Solicitud->SolSerStatus = 'Certificacion';
+							$Solicitud->SolServCertStatus = 2;
+							$Solicitud->SolSerDescript = $request->input('solserdescript');
+							$Solicitud->save();
+
+							$log = new audit();
+							$log->AuditTabla="solicitud_servicios";
+							$log->AuditType="Modificado Status";
+							$log->AuditRegistro=$Solicitud->ID_SolSer;
+							$log->AuditUser=Auth::user()->email;
+							$log->Auditlog=$Solicitud->SolSerStatus;
+							$log->save();
+
+							return redirect()->route('solicitud-servicio.index');
+
 						}
 						break;
 				}
@@ -513,6 +542,10 @@ class SolicitudServicioController extends Controller
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
+
+		if ($Solicitud->SolSerStatus == 'Conciliado') {
+			$this->solservdocstore($Solicitud->ID_SolSer);
+		}
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -987,17 +1020,241 @@ class SolicitudServicioController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function solservdocindex($id)
-	{
-		$SolicitudServicio = DB::table('solicitud_servicios')
-		->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-		->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
-		->where('solicitud_servicios.SolSerSlug', $id)
-		->first();
-		if (!$SolicitudServicio) {
-			abort(404);
+	{	
+		if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+			$SolicitudServicio = DB::table('solicitud_servicios')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
+			->where('solicitud_servicios.SolSerSlug', $id)
+			->where('solicitud_servicios.SolSerStatus', 'Certificacion')
+			->first();
+			if (!$SolicitudServicio) {
+				abort(403,	'Sus residuos aun no han sido certificados');
+			}
+			$certificados = Certificado::where(function($query) use ($SolicitudServicio){
+			    $UserSedeID = DB::table('personals')
+			    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+			    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+			    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+			    ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+			    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+			    ->value('clientes.ID_Cli');
+
+			    $query->where('FK_CertCliente', $UserSedeID);
+			    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
+			    $query->where('CertAuthHseq', '!=', 0);
+			    $query->where('CertAuthJl', '!=', 0);
+			    $query->where('CertAuthDp', '!=', 0);
+			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
+
+			})
+			->get();
+
+			$manifiestos = Manifiesto::where(function($query) use ($SolicitudServicio){
+				/*se define la sede del usuario actual*/
+				$UserSedeID = DB::table('personals')
+				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+				->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+				->value('clientes.ID_Cli');
+
+				$servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
+				->where('SolSerStatus', 'Certificacion')
+				->get('ID_SolSer');
+
+				$query->where('FK_ManifCliente', $UserSedeID);
+				$query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
+				$query->where('ManifAuthDp','!=', 0);
+				$query->where('ManifAuthJl','!=', 0);
+				$query->where('ManifAuthHseq','!=', 0);
+				$query->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer);
+			})
+			->get();
+		}else{
+			$SolicitudServicio = DB::table('solicitud_servicios')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName','personals.PersEmail')
+			->where('solicitud_servicios.SolSerSlug', $id)
+			->first();
+			if (!$SolicitudServicio) {
+				abort(404);
+			}
+			$certificados = Certificado::with(['certdato.solres'])
+			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+			->get();
+
+			$manifiestos = Manifiesto::with(['manifdato.solres'])
+			->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer)
+			->get();
 		}
 		
-		return view('solicitud-serv.documentos', compact('SolicitudServicio'));
+
+		// return $certificados;
+		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados', 'manifiestos'));
+	}
+
+	public function sendtobilling($id)
+	{
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+			
+		$Solicitud->SolServCertStatus=1;
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="enviado a facturacion";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$Solicitud->SolServCertStatus;
+		$log->save();
+
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
+
+	public function solservdocstore($id)
+	{
+			
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
+		$serviciovalidado = $id;
+		/*cuenta los diferentes generadores*/
+		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+		    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+		})
+		->with(['resgener' => function ($query) use ($serviciovalidado){
+		    $query->with(['solres' => function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    	$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
+		    }]);
+		    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    });
+		}])
+		->get();
+		// return $generadoresdelasolicitud;
+		/*consulta para el cliente de esta solicitud*/
+		$cliente = Cliente::whereHas('sedes.generador', function ($query) use ($generadoresdelasolicitud) {
+		    $query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
+		})->first();
+		foreach ($generadoresdelasolicitud as $genersede) {
+			foreach ($genersede->resgener as $resgener) {
+				foreach ($resgener->solres as $key) {
+					if ($key->SolResKgConciliado > 0) {
+						switch ($key->requerimiento->tratamiento->TratTipo) {
+							case '0':
+								// "tratamiento tipo: interno; Certificado";
+
+								$certificadoprevio = Certificado::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_CertSolser', $id)
+								->first();
+
+								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
+								->first();
+
+								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+
+									$dato = new Certdato;
+									$dato->FK_DatoCert = $certificadoprevio->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+
+									$certificado = new Certificado;
+									$certificado->CertType = 0;
+									$certificado->CertNumero = "";
+									$certificado->CertiEspName = "";
+									$certificado->CertiEspValue = "";
+									$certificado->CertObservacion = "certificado con observacion generica";
+									$certificado->CertSlug = hash('sha256', rand().time());
+									$certificado->CertSrc = 'CertificadoDefault.pdf';
+									$certificado->CertNumRm = "C-130";
+									$certificado->CertAuthHseq = 1;
+									$certificado->CertAuthJl = 1;
+									$certificado->CertAuthDp = 1;
+									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$certificado->FK_CertSolser = $id;
+									$certificado->FK_CertCliente = $cliente->ID_Cli;
+									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
+									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$certificado->FK_CertTransp = $cliente->ID_Cli;
+									}else{
+										$certificado->FK_CertTransp = 1;
+									}
+									
+									$certificado->save();
+
+									$dato = new Certdato;
+									$dato->FK_DatoCert = $certificado->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+									
+								}
+
+								break;
+
+							case '1':
+							// "tratamiento tipo: externo ; manifiesto";
+								/*se verifica si ya existe un documento con ese tratamiento para esa solicitud de servicio*/
+								$manifiestoprevio = Manifiesto::where('FK_ManifTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_ManifSolser', $id)
+								->first();
+
+								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+									
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+									
+									$manifiesto = new Manifiesto;
+									$manifiesto->ManifNumero = "";
+									$manifiesto->ManifiEspName = "";
+									$manifiesto->ManifiEspValue = "";
+									$manifiesto->ManifObservacion = "manifiesto con observacion generica";
+									$manifiesto->ManifSlug = hash('sha256', rand().time());
+									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
+									$manifiesto->ManifNumRm = "M-16";
+									$manifiesto->ManifAuthHseq = 1;
+									$manifiesto->ManifAuthJl = 1;
+									$manifiesto->ManifAuthDp = 1;
+									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$manifiesto->FK_ManifSolser = $id;
+									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
+									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
+									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+									}else{
+										$manifiesto->FK_ManifTransp = 1;
+									}
+									$manifiesto->save();
+
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiesto->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+								}
+
+								break;
+
+							default:
+								return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
+								break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

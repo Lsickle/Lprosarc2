@@ -27,8 +27,9 @@
 						@endif
 						<div class="box-body">
                             <div class="form-group col-md-6">
-                                <label for="FK_UserPers">{{ trans('adminlte_lang::message.userpersonadd') }}</label></label><small class="help-block with-errors"></small>
-								<select class="form-control select" id="FK_UserPers" name="FK_UserPers">
+                                <label for="FK_UserPers" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.userpersonadd') }}</b>" data-content="En esta lista aparecen las personas registradas, por su empresa en el sistema <b>SisPRO</b>, que no tienen un Usuario asignado <br><br> <b>Nota:</b> Si la lista esta vacia primero deberá registrar una persona nueva, desde la lista de personal de su Empresa, para luego poder asignar esa persona durante la creacion de su nuevo Usuario"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.userpersonadd') }}</label>
+                                <small class="help-block with-errors"></small>
+								<select required class="form-control select" id="FK_UserPers" name="FK_UserPers">
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Personals as $Personal)		
                                         <option value="{{$Personal->PersSlug}}" {{ old('FK_UserPers') == $Personal->PersSlug ? 'selected' : '' }}>{{$Personal->PersFirstName}} {{$Personal->PersLastName}}</option>
@@ -44,7 +45,7 @@
 								<select class="form-control select" id="UsRolDesc" name="UsRolDesc" required>
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+                                        <option value="{{$Rol->RolDesc}}" {{ old('UsRolDesc') == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -53,7 +54,7 @@
 								<select class="form-control select" id="UsRolDesc2" name="UsRolDesc2">
                                     <option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Roles as $Rol)		
-                                        <option value="{{$Rol->UsRolDesc}}" {{ old('UsRolDesc2') == $Rol->UsRolDesc ? 'selected' : '' }}>{{$Rol->UsRolDesc}}</option>
+                                        <option value="{{$Rol->RolDesc}}" {{ old('UsRolDesc2') == $Rol->RolDesc ? 'selected' : '' }}>{{$Rol->RolDesc}}</option>
 									@endforeach
 								</select>
 							</div>

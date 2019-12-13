@@ -7,7 +7,7 @@
 	{{ trans('adminlte_lang::message.home') }}
 @endsection
 @section('contentheader_title')
-<div class="text-center"><h2> Bienvenido {{ Auth::user()->name }}</h4></div>
+<div class="text-center"><h2> Bienvenid@ {{ Auth::user()->name }}</h4></div>
 @endsection
 @switch(Auth::user()->UsRol)
     @case('JefeLogistica')
@@ -19,7 +19,6 @@
         @break
 	@default
 @endswitch
-
 <!-- Default box -->
 {{-- <div class="box">
 	<div class="box-header with-border">

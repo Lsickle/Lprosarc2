@@ -44,12 +44,24 @@ class SolicitudServicio extends Model
 		return $this->hasMany('App\Manifiesto','ID_Manif', 'id');//como solicitud de servicio tiene muchos manifiestos
 	}
 	public function SolicitudResiduo(){
-		return $this->hasMany('App\SolicitudResiduo', 'ID_SolRes', 'id');//como solicitud de servicio tiene muchas solicitud de residuos
+		return $this->hasMany('App\SolicitudResiduo', 'FK_SolResSolSer', 'ID_SolSer');//como solicitud de servicio tiene muchas solicitud de residuos
 	}
 	public function ResiduosGener(){
 		return $this->hasMany('App\ResiduosGener', 'ID_SGenerRes', 'id');
 	}
 	public function ManifiestoCarga(){
 		return $this->hasMany('App\ManifiestoCarga','ID_ManiCarg','id');//como solicitud de servicio tiene muchos manifiesto de carga
+	}
+
+	/*consulta para with de documentos*/
+	public function documentos()
+	{
+		return $this->hasMany('App\Documento', 'FK_CertSolser', 'ID_SolSer');
+	}
+
+	/*consulta para with de manifiestos*/
+	public function manifiestos()
+	{
+		return $this->hasMany('App\Manifiesto', 'FK_ManifSolser', 'ID_SolSer');
 	}
 }

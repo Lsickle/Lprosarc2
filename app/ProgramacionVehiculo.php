@@ -28,4 +28,9 @@ class ProgramacionVehiculo extends Model
     {
         return $this->hasMany('App\ordenCompra', 'ID_Orden', 'id');
     }
+
+    public function puntosderecoleccion()
+    {
+        return $this->belongsToMany('App\GenerSede', 'recolect', 'FK_ColectProg', 'FK_ColectSgen');
+    }
 }
