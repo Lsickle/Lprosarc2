@@ -310,6 +310,16 @@
 											<input name="FK_ProgVehiculo" hidden aria-hidden="true" value="{{$vehiculo->ID_Vehic}}">
 										@endif
 									@endforeach --}}
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+									@else
+									<input hidden type="text" name="FK_ProgVehiculo" value="{{$programacion->FK_ProgVehiculo}}">
+									<input hidden type="text" name="ProgVehFecha" value="{{$programacion->ProgVehFecha}}">
+									<input hidden type="text" name="ProgVehSalida" value="{{$programacion->ProgVehSalida}}">
+									<input hidden type="text" name="FK_ProgConductor" value="{{$programacion->FK_ProgConductor}}">
+									<input hidden type="text" name="FK_ProgAyudante" value="{{$programacion->FK_ProgAyudante}}">
+									@endif
+									@endif
 								</div>
 								<div class="form-group col-md-6">
 									<label for="progVehKm">{{ trans('adminlte_lang::message.progvehickm') }}</label>
@@ -504,7 +514,9 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
 									@else
-									<input hidden type="text" name="vehicalqui" value="{{$Vehiculo->ID_Vehic}}">
+									<input hidden type="text" name="vehicalqui" value="{{$programacion->FK_ProgVehiculo}}">
+									<input hidden type="text" name="ProgVehFecha" value="{{$programacion->ProgVehFecha}}">
+									<input hidden type="text" name="ProgVehSalida" value="{{$programacion->ProgVehSalida}}">
 									@endif
 									@endif
 								</div>
@@ -578,11 +590,14 @@
 					$("#ProgVehColor").prop("disabled", false);
 				@endif
 				@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
-					$(".select2-container--disabled").css("background-color", "#EEE");
-					$("#ProgVehEntrada").prop('required', true);
-					$("#progVehKm").prop('required', true);
-					$("#ProgVehEntrada").prop('disabled', false);
-					$("#progVehKm").prop('disabled', false);
+					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+					@else
+						$(".select2-container--disabled").css("background-color", "#EEE");
+						$("#ProgVehEntrada").prop('required', true);
+						$("#progVehKm").prop('required', true);
+						$("#ProgVehEntrada").prop('disabled', false);
+						$("#progVehKm").prop('disabled', false);
+					@endif
 				@endif
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
@@ -607,8 +622,11 @@
 			$("#update").prop("disabled", true);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+			@else
 				$("#ProgVehEntrada").prop("required", true);
 				$("#ProgVehEntrada").prop("disabled", false);
+			@endif
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 				$("#ProgVehFecha").prop("disabled", false);
@@ -638,6 +656,8 @@
 			$("#select2sedes").prop('disabled', true);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+			@else
 				$("#ProgVehEntrada").prop('required', true);
 				$("#ProgVehEntrada").prop('disabled', false);
 				$("#FK_ProgAyudante").prop('disabled', true);
@@ -653,6 +673,7 @@
 				$("#ProgVehPlacaEXT").prop('disabled', false);
 				$("#ProgVehTipoEXT").prop('required', true);
 				$("#ProgVehTipoEXT").prop('disabled', false);
+			@endif
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 				$("#ProgVehFecha").prop("disabled", false);
