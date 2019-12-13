@@ -136,6 +136,7 @@ class PermisoUsuarioController extends Controller
         $Validate = $request->validate([
             'email'     => 'required|max:255|unique:users,email',
             'password'  => 'required|max:255|min:8|confirmed:password_confirmation',
+            'FK_UserPers'  => 'required',
         ]);
         
         $Rol = DB::table('rols')

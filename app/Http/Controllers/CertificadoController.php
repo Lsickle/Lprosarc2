@@ -38,7 +38,7 @@ class CertificadoController extends Controller
                     ->value('clientes.ID_Cli');
 
                     $servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
-                    ->where('SolSerStatus', 'Certificacion')
+                    ->where('SolServCertStatus', 2)
                     ->get('ID_SolSer');
 
                     // return $UserSedeID;
