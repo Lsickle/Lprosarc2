@@ -986,7 +986,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
 				@else
-				@if ($SolicitudServicio->SolServCertStatus=0)
+				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
 					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);
@@ -1006,7 +1006,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
 				@else
-				@if ($SolicitudServicio->SolServCertStatus=0)
+				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
 					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);
