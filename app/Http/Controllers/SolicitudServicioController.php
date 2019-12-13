@@ -56,7 +56,7 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
-						$query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
