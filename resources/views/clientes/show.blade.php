@@ -277,7 +277,9 @@
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 					{{-- requerimientos --}}
 						<div class="tab-pane" id="requerimientos">
-							<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"> <i class="fas fa-edit"></i> </a>
+							@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial))
+								<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
+							@endif
 							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>
 							<div style='overflow-y:auto; max-height:503px;'>
 								@if(isset($Requerimientos))
