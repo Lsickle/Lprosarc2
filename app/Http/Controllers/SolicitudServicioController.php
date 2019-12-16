@@ -409,6 +409,26 @@ class SolicitudServicioController extends Controller
 			$SolSerCollectAddress = $SolSerCollectAddress." (".$Municipio2->MunName." - ".$Municipio2->DepartName.")";
 		}
 		$TextProgramacion = null;
+		if($SolicitudServicio->SolSerStatus == 'Notificado'){
+			setlocale(LC_ALL, "es_CO.UTF-8");
+			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+				$horas = " en las horas de la tarde";
+			}
+			else{
+				$horas = " en las horas de la mañana";
+			}
+			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			// ->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get();
+			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get());
+			// $ProgramacionesActivas = ($Programaciones);
+		}
 		if($SolicitudServicio->SolSerStatus == 'Programado'){
 			setlocale(LC_ALL, "es_CO.UTF-8");
 			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();

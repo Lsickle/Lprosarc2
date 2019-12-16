@@ -826,7 +826,7 @@ class VehicProgController extends Controller
 		$programacion->puntosderecoleccion()->sync($request->input('ProgGenerSedes'));
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$SolicitudServicio->SolSerStatus = 'Programado';
+		// $SolicitudServicio->SolSerStatus = 'Programado';
 		if($programacion->ProgVehtipo <> 0){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
 			$SolicitudServicio->SolSerVehiculo = $vehiculo;
@@ -927,6 +927,10 @@ class VehicProgController extends Controller
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 		->where('ProgVehDelete', 0)
 		->get();
+
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$SolicitudServicio->SolSerStatus='Notificado';
+        $SolicitudServicio->save();
 		// return $programaciones;
 		foreach ($programaciones as $vehiculo) {
 			// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
@@ -942,8 +946,8 @@ class VehicProgController extends Controller
 			$log->save();
 		}
 
+		return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
 
-		return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
 		
 	}
 
