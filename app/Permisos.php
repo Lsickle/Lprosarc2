@@ -219,6 +219,7 @@ class Permisos{
 	const AsigComercial = ['Programador','AdministradorBogota'];
 	/* Using ->
 		clientes/index
+		cleintes/show requerimientos
 	*/
 
 	const JefeOperaciones = ['Programador','JefeOperaciones'];

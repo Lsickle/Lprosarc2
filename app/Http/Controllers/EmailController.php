@@ -58,6 +58,18 @@ class EmailController extends Controller
                 ->where('progvehiculos.ProgVehDelete', 0)
                 ->first();
             Mail::to($email->PersEmail)->send(new SolSerEmail($email));
+        }elseif($SolSer->SolSerStatus === 'Notificado'){
+            $email = DB::table('solicitud_servicios')
+                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                ->where('progvehiculos.ProgVehDelete', 0)
+                ->first();
+            Mail::to($email->PersEmail)->send(new SolSerEmail($email));
+            return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
+
         }else{
             $email = DB::table('solicitud_servicios')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')

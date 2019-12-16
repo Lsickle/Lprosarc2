@@ -59,7 +59,19 @@
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
 										<td style="text-align: center;">{{date('d-m-y', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
+										@else
+										@switch($Servicio->SolSerStatus)
+
+										    @case('Programado')
+												<td style="text-align: center;">Aprobado</td>
+										        @break
+										    
+										    @default
+												<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
+										@endswitch
+										@endif
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 												<td><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Persona de Contacto</b>" data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..." href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i class="fas fa-user"></i></a>{{$Servicio->CliName}}</td>
 										@endif
