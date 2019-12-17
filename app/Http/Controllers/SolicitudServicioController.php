@@ -420,7 +420,6 @@ class SolicitudServicioController extends Controller
 			}
 			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
 			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-			// ->where('ProgVehEntrada', null)
 			->where('ProgVehDelete', 0)
 			->get();
 			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
