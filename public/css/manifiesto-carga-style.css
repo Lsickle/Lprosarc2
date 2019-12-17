@@ -1,0 +1,66 @@
+*,*:after, *:before{
+	margin: 0;
+	padding: 0;
+	box-sizing:  border-box;
+}
+html{
+	font-size: 10px;
+}
+header{
+	width: 75rem;
+	height: 4rem;
+	position: relative;
+	margin: 3rem;
+	font-size: 1.3rem;
+}
+section{
+	width: 75rem;
+	position: relative;
+	margin: 3rem;
+	font-size: 1.3rem;
+}
+#header{
+	width: 75rem;
+	height: 4rem;
+	text-align: center;
+	border-collapse: collapse;
+}
+#header1{
+	width: 20rem;
+	height: 4rem;
+	font-size: 10px;
+	border: 1px solid black;
+}
+#textheader1{
+	width: 40rem;
+	height: 2rem;
+	border: 1px solid black;
+}
+#textheader2{
+	width: 40rem;
+	height: 2rem;
+	border: 1px solid black;
+}
+#textheader3{
+	width: 13rem;
+	height: 2rem;
+	border: 1px solid black;
+}
+#textheader4{
+	width: 4rem;
+	height: 2rem;
+	border: 1px solid black;
+	font-size: 1rem;
+}
+#textheader5{
+	width: 4rem;
+	height: 2rem;
+	border: 1px solid black;
+	font-size: 1rem;
+}
+#textheader6{
+	width: 5rem;
+	height: 2rem;
+	border: 1px solid black;
+	font-size: 1rem;
+}

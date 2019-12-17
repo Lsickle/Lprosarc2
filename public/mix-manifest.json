@@ -1,0 +1,20 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/app-landing.js": "/js/app-landing.js",
+    "/js/dependencias2.js": "/js/dependencias2.js",
+    "/css/all.css": "/css/all.css",
+    "/css/app.css": "/css/app.css",
+    "/css/all-landing.css": "/css/all-landing.css",
+    "/css/dependencias.css": "/css/dependencias.css",
+    "/css/chart.css": "/css/chart.css",
+    "/css/bootstrap-slider.css": "/css/bootstrap-slider.css",
+    "/css/fullcalendar.css": "/css/fullcalendar.css",
+    "/css/datatable-depen.css": "/css/datatable-depen.css",
+    "/css/datatable-plugins.css": "/css/datatable-plugins.css",
+    "/css/stilosPersonalizados.css": "/css/stilosPersonalizados.css",
+    "/js/dependencias.js": "/js/dependencias.js",
+    "/js/chart.js": "/js/chart.js",
+    "/js/fullcalendar.js": "/js/fullcalendar.js",
+    "/js/datatable-depen.js": "/js/datatable-depen.js",
+    "/js/datatable-plugins.js": "/js/datatable-plugins.js"
+}
