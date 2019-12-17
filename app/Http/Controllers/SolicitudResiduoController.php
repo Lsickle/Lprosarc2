@@ -123,6 +123,7 @@ class SolicitudResiduoController extends Controller
 			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
 		]);
 		switch($SolSer->SolSerStatus){
+			case 'Notificado':
 			case 'Programado':
 			case 'Notificado':
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
@@ -220,7 +221,7 @@ class SolicitudResiduoController extends Controller
 
 	public function update(SolResUpdateRequest $request, $id)
 	{
-		// return $request;
+		return $request;
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
