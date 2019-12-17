@@ -125,6 +125,7 @@ class SolicitudResiduoController extends Controller
 		switch($SolSer->SolSerStatus){
 			case 'Notificado':
 			case 'Programado':
+			case 'Notificado':
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
