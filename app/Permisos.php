@@ -171,14 +171,10 @@ class Permisos{
 		vehicle-programacion/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
-	 */
-	const SOLSERACEPTADO = ['Programador','Tesorería'];
-	/* Using ->
-		solicitud-serv/index
-		SolicitudServicioController::changestatus
-		SolicitudServicioController::index
 		clientes::show
 	 */
+	const SOLSERACEPTADO = ['Programador','Tesorería'];
+
 	const SEDECOMERCIAL = ['Programador','Tesorería','AsistenteComercial','AdministradorBogota','Comercial','JefeComercial'];
 	/* Using ->
 		solicitud-serv/index
