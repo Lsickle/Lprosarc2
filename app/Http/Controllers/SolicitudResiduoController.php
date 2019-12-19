@@ -221,7 +221,7 @@ class SolicitudResiduoController extends Controller
 
 	public function update(SolResUpdateRequest $request, $id)
 	{
-		return $request;
+		// return $request;
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
