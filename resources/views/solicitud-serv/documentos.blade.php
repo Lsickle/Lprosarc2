@@ -14,8 +14,8 @@
 			<div class="col-md-16 col-md-offset-0">
 				<div class="box">
 					<div class="box-header with-border">
-						<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/documentos/create" class="btn btn-success"><i class="fas fa-file-contract"></i> Añadir Certificado</a>
-						<a disabled href="" class="btn btn-success"><i class="fas fa-file-invoice"></i> Añadir Manifiesto</a>
+						{{-- <a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/documentos/create" class="btn btn-success"><i class="fas fa-file-contract"></i> Añadir Certificado</a> --}}
+						{{-- <a disabled href="" class="btn btn-success"><i class="fas fa-file-invoice"></i> Añadir Manifiesto</a> --}}
 					</div>
 					<div class="box-body">
 						<table class="table table-compact table-bordered table-striped">
