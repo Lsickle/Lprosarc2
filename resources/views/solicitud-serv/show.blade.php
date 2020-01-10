@@ -700,7 +700,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="form-group col-md-12">
 												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+												<input type="number" step=".1" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
 											</div>
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
