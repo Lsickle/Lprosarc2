@@ -197,13 +197,13 @@ class SolServStoreRequest extends FormRequest
     public function messages()
     {
         $messages = [
-            'SolSerTipo.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResAuditoriaTipo.numeric' => 'Sorry! Lamer Jajaja',
-            'SolSerTransportador.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResTypeUnidad.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResEmbalaje.numeric' => 'Sorry! Lamer Jajaja',
-            'between' => 'Sorry! Lamer Jajaja',
-            'boolean' => 'Sorry! Lamer Jajaja',
+            'SolSerTipo.numeric' => 'el tipo de solicitud de servicio no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResAuditoriaTipo.numeric' => 'el tipo de auditoria no coincide con los permitidos en la aplicación o no esta definido',
+            'SolSerTransportador.numeric' => 'el tipo de transportador no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResTypeUnidad.numeric' => 'el tipo de unidad no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResEmbalaje.numeric' => 'el embalaje no coincide con los permitidos en la aplicación o no esta definido',
+            'between' => 'Solo se permiten valores between',
+            'boolean' => 'Solo se permiten valores Boolean',
         ];
         return $messages;
     }
