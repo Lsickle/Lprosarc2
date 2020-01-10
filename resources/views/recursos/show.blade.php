@@ -205,7 +205,7 @@
 				</div>
 				<div class="row">
 					{{-- @if(((($SolSer->SolSerStatus <> 'Pendiente' || $SolSer->SolSerStatus <> 'Aprobado' || $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null)) --}}
-					@if((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1 ||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
+					@if((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1 ||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
 						<tbody hidden onload="renderTable()" id="readyTable">
 							<div class="col-md-12">
 								<center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
