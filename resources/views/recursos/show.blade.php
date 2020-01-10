@@ -222,7 +222,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoFoto')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado'|| $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -254,7 +254,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoVideo')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')|| $SolSer->SolSerStatus === 'Tratado') && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
