@@ -31,9 +31,9 @@
 		<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserembaja') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserembaja') }}</label>
 			<small class="help-block with-errors">*</small>
-			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje`+id_div+contadorRespel[id_div]+`" class="form-control" required="">
+			<select name="SolResEmbalaje[`+id_div+`][]" id="SolResEmbalaje`+id_div+contadorRespel[id_div]+`" class="form-control selectdeembalaje" required="">
 				<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-				<option value="99">{{ trans('adminlte_lang::message.solserembaja1') }}</option>
+				<option value="99" data-image="https://picsum.photos/536/354">{{ trans('adminlte_lang::message.solserembaja1') }}</option>
 				<option value="98">{{ trans('adminlte_lang::message.solserembaja2') }}</option>
 				<option value="97">{{ trans('adminlte_lang::message.solserembaja3') }}</option>
 				<option value="96">{{ trans('adminlte_lang::message.solserembaja4') }}</option>
@@ -45,6 +45,8 @@
 				<option value="90">{{ trans('adminlte_lang::message.solserembaja10') }}</option>
 				<option value="89">{{ trans('adminlte_lang::message.solserembaja11') }}</option>
 				<option value="88">{{ trans('adminlte_lang::message.solserembaja12') }}</option>
+				<option value="87">{{ trans('adminlte_lang::message.solserembaja13') }}</option>
+				<option value="86">{{ trans('adminlte_lang::message.solserembaja14') }}</option>
 			</select>
 		</div>
 		<div class="form-group col-md-16 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`" style="text-align: center;">
