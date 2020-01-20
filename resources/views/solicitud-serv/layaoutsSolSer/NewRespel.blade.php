@@ -47,6 +47,8 @@
 				<option value="90">{{ trans('adminlte_lang::message.solserembaja10') }}</option>
 				<option value="89">{{ trans('adminlte_lang::message.solserembaja11') }}</option>
 				<option value="88">{{ trans('adminlte_lang::message.solserembaja12') }}</option>
+				<option value="87">{{ trans('adminlte_lang::message.solserembaja13') }}</option>
+				<option value="86">{{ trans('adminlte_lang::message.solserembaja14') }}</option>
 			</select>
 		</div>
 		<div class="form-group col-md-16 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`" style="text-align: center;">
