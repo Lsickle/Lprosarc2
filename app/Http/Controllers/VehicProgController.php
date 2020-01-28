@@ -119,9 +119,9 @@ class VehicProgController extends Controller
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
-				->where('CargName', 'Operario')
+				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)
-				->where('PersDelete', '!=' , 1)
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
@@ -704,7 +704,8 @@ class VehicProgController extends Controller
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
-				->where('CargName', 'Operario')
+				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)
 				->get();
 			$transportadores = DB::table('clientes')
