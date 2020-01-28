@@ -43,16 +43,36 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solserindexnumber')}}: {{$SolicitudServicio->ID_SolSer}}</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solsershowaudita')}}</label>
+									@if($SolicitudServicio->SolResAuditoriaTipo == null)
+									<span>No</span>
+									@else
 									<span>{{$SolicitudServicio->SolResAuditoriaTipo}}</span>
+									@endif
+								</div>
+								<div class="col-md-3">
+									<label>Status</label>
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<span>{{$SolicitudServicio->SolSerStatus}}</span>
+									@else
+									@switch($Servicio->SolSerStatus)
+
+									    @case('Programado')
+											<td style="text-align: center;">Aprobado</td>
+									        @break
+									    
+									    @default
+											<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
+									@endswitch
+									@endif
 								</div>
 								<hr>
 							</div>
@@ -833,8 +853,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
 							</div> 
 							<div class="modal-footer">
-								<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">No, salir</button>
-								<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+								<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Enviar</label>
 							</div>
 						</form>
 					</div>

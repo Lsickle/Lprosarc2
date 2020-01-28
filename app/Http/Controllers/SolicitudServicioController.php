@@ -66,6 +66,7 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			})
+			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {

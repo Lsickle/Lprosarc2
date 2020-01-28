@@ -57,7 +57,7 @@
 							<tbody>
 								@foreach ($Servicios as $Servicio)
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-										<td style="text-align: center;">{{date('d-m-y', strtotime($Servicio->created_at))}}</td>
+										<td style="text-align: center;">{{date('Y/m/d', strtotime($Servicio->created_at))}}</td>
 										<td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td style="text-align: center;">{{$Servicio->SolSerStatus}}</td>
