@@ -89,6 +89,7 @@ $(document).ready(function() {
 	SelectsMultiple();
 });
 </script>
+
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -580,6 +581,7 @@ function NotifiFalse(Mensaje) {
 			"responsive": true,
 			"keys": true,
 			"lengthChange": true,
+			"searching": true,
 			"buttons": [
 				botoncito,
 			],
