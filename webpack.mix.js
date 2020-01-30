@@ -122,6 +122,18 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-rowgroup/js/dataTables.rowGroup.js',
 				'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
 				'node_modules/datatables.net-select/js/dataTables.select.js',
+				'node_modules/datatables.net-dt/css/jquery.dataTables.js',
+				'node_modules/datatables.net-autofill-dt/js/autoFill.dataTables.js',
+				'node_modules/datatables.net-buttons-dt/js/buttons.dataTables.js',
+				'node_modules/datatables.net-colreorder-dt/js/colReorder.dataTables.js',
+				'node_modules/datatables.net-fixedcolumns-dt/js/fixedColumns.dataTables.js',
+				'node_modules/datatables.net-fixedheader-dt/js/fixedHeader.dataTables.js',
+				'node_modules/datatables.net-keytable-dt/js/keyTable.dataTables.js',
+				'node_modules/datatables.net-responsive-dt/js/responsive.dataTables.js',
+				'node_modules/datatables.net-rowgroup-dt/js/rowGroup.dataTables.js',
+				'node_modules/datatables.net-rowreorder-dt/js/rowReorder.dataTables.js',
+				'node_modules/datatables.net-scroller-dt/js/scroller.dataTables.js',
+				'node_modules/datatables.net-select-dt/js/select.dataTables.js'
 		], 'public/js/datatable-depen.js')
 	 .scripts([
 				// 'node_modules/datatables.net-plugins/pagination/input.js',

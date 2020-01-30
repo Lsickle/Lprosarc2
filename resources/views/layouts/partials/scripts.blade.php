@@ -89,6 +89,7 @@ $(document).ready(function() {
 	SelectsMultiple();
 });
 </script>
+
 {{-- script para formulario en smart-wizzard --}}
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -567,7 +568,7 @@ function NotifiFalse(Mensaje) {
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
 				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
-		/*inicializacion de datatable general*/        
+		/*inicializacion de datatable general*/      
 		$('.table').DataTable({
 			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
 				"<'row'<'col-md-12'tr>>" +
@@ -576,13 +577,19 @@ function NotifiFalse(Mensaje) {
 			"autoWidth": true,
 			// "select": true,
 			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
 			"searchHighlight": true,
 			"responsive": true,
 			"keys": true,
 			"lengthChange": true,
+			"searching": true,
 			"buttons": [
 				botoncito,
 			],
+			// "columns": [
+			//     { "type": "date-uk" },
+			//     ],
 			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -606,7 +613,7 @@ function NotifiFalse(Mensaje) {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
-				"colvis": 'Ajouté au presse-papiers',
+				"colvis": 'Ajouté au presse-papiers'
 			}
 		});
 	});

@@ -143,6 +143,7 @@ class SolicitudResiduoController extends Controller
 				}
 				break;
 			case 'Conciliado':
+			case 'Certificacion':
 				if( $request->input('ValorConciliado') == NULL){
 					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');

@@ -426,11 +426,11 @@ class UserTableSeeder extends Seeder
         $user->UsAvatar = 'robot400x400.gif';
         $user->UsStatus = 'Activo';
         $user->UsSlug = hash('sha256', rand().time().$user->email);
-        $user->UsRol = 'Tesorera';
+        $user->UsRol = 'Tesorería';
         $user->UsRolDesc = 'Tesoreria y facturacion';
         $user->updated_by = 'Sistemas@prosarc.com.co';
         $user->FK_UserPers = 25;
-        $user->UsRol2 = 'Tesorera';
+        $user->UsRol2 = 'Tesorería';
         $user->UsRolDesc2 = 'Tesoreria y facturacion';
         $user->DeleteUser = 0;
         $user->save();

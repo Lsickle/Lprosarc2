@@ -56,6 +56,7 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+						// $query->whereIn('solicitud_servicios.SolSerStatus', ['Pendiente']);
 						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
@@ -63,9 +64,12 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						$query->where('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
 			})
+			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
@@ -539,7 +543,7 @@ class SolicitudServicioController extends Controller
 						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-							// $Solicitud->SolSerStatus = 'Certificacion';
+							$Solicitud->SolSerStatus = 'Certificacion';
 							$Solicitud->SolServCertStatus = 2;
 							$Solicitud->SolSerDescript = $request->input('solserdescript');
 							$Solicitud->save();
