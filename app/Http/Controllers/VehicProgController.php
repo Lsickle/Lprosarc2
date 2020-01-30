@@ -781,6 +781,7 @@ class VehicProgController extends Controller
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 				$programacion->progVehKm = $request->input('progVehKm');
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
 				$vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
 				$vehiculo->VehicKmActual = $request->input('progVehKm');
 				$vehiculo->save();
@@ -800,6 +801,7 @@ class VehicProgController extends Controller
 		else if($programacion->ProgVehtipo == 2){
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
 			}
 			$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
 			$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
@@ -816,6 +818,7 @@ class VehicProgController extends Controller
 		else{
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
