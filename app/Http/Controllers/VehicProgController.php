@@ -218,6 +218,7 @@ class VehicProgController extends Controller
 		}
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
+		$programacion->ProgVehStatus = 'Autorizado';
 		$programacion->save();
 		// return $request->input('FK_ProgServi');
 
@@ -936,19 +937,20 @@ class VehicProgController extends Controller
 		$SolicitudServicio->SolSerStatus='Notificado';
         $SolicitudServicio->save();
 		// return $programaciones;
-		foreach ($programaciones as $vehiculo) {
-			// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
-			$vehiculo->ProgVehStatus = "Autorizado";
-			$vehiculo->save();
+		
+		// foreach ($programaciones as $vehiculo) {
+		// 	// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
+		// 	$vehiculo->ProgVehStatus = "Autorizado";
+		// 	$vehiculo->save();
+		// }
 
-			$log = new audit();
-			$log->AuditTabla="progvehiculos";
-			$log->AuditType="Autorizado";
-			$log->AuditRegistro=$vehiculo->ID_ProgVeh;
-			$log->AuditUser=Auth::user()->email;
-			$log->Auditlog=$vehiculo->ProgVehStatus;
-			$log->save();
-		}
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Notificado";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$SolicitudServicio->SolSerStatus;
+		$log->save();
 
 		return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
 

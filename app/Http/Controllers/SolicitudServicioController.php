@@ -7,9 +7,11 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
+use App\Mail\NewSolServEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -251,6 +253,39 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+
+		// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'tesoreria@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'sugerencia@prosarc.com.co',
+								$comercial->PersEmail
+							 ];
+		}else{
+			$comercial = "";
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'tesoreria@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'sugerencia@prosarc.com.co'
+							 ];	
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+
+		// se envia un correo por cada residuo registrado
+		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
 

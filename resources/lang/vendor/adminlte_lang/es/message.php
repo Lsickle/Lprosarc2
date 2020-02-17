@@ -436,7 +436,7 @@ return [
     'progvehiccreatetext'     => 'Calendario',
     'progvehicservi'          => 'N° del servicio',
     'progvehicservi2'         => 'Ver servicio',
-    'progvehicserauth'        => 'Autorizar servicio',
+    'progvehicserauth'        => 'Notificar servicio',
     'progvehictype'           => 'Tipo de transporte',
     'progvehicfech'           => 'Fecha de la programación',
     'progvehicsalida'         => 'Hora de prestación del servicio',

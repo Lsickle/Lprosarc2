@@ -16,6 +16,10 @@
 
     @case('AsistenteLogistica')
 		{{-- @include('layouts.homeroles.asistentelogistica') --}}
+		@break
+		
+	@case('Supervisor')
+		@include('layouts.homeroles.supervisor')
         @break
 	@default
 @endswitch
