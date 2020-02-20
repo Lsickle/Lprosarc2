@@ -30,6 +30,8 @@ class VehiculoRecibidoEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('emails.progvehiculo.recibido');
+        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
+                    ->subject('Vehiculo Recibido')
+                    ->markdown('emails.progvehiculo.recibido');
     }
 }
