@@ -8,8 +8,8 @@ El cliente {{$SolicitudServicio['cliente']->CliName}} ha creado una nueva Solici
     <li>correo: {{$SolicitudServicio['personalcliente']->PersEmail}}</li>
 </ul>
 
-@component('mail::button', ['url' => '/solicitud-servicio', [$SolicitudServicio->SolSerSlug]])
-Ver Servicio
+@component('mail::button', ['url' => url('/solicitud-servicio', [$SolicitudServicio->SolSerSlug])])
+Ver Solicitud de Servicio
 @endcomponent
 
 Saludos

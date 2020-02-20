@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use App\Mail\VehiculoRecibidoEmail;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -786,6 +788,7 @@ class VehicProgController extends Controller
 				$vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
 				$vehiculo->VehicKmActual = $request->input('progVehKm');
 				$vehiculo->save();
+				
 			}
 			else{
 				$programacion->ProgVehEntrada = null;
@@ -837,6 +840,11 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerVehiculo = $vehiculo;
 		}
 		$SolicitudServicio->save();
+
+		if ($programacion->ProgVehStatus == 'Cerrada') {
+			$destinatarios = ['recepcionpda@prosarc.com.co'];
+			Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
+		}
 
 		$log = new audit();
 		$log->AuditTabla="progvehiculos";
