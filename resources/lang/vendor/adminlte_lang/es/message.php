@@ -584,6 +584,7 @@ return [
     'MenuVehiclelist'         => 'Lista de Vehículos',
     'MenuPrograVehic'         => 'Programación de Servicios',
     'MenuPrograVehicSidebar'  => 'Programación',
+    'MenuAlmacenSidebar'      => 'Almacenamiento',
     'MenuMantVehic'           => 'Mantenimiento de Vehículos',
     'MenuShopTitle'           => 'Compra',
     'MenuShopOrde'            => 'Orden de Compra',

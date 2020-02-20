@@ -116,7 +116,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
 	Route::get('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
-	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos'); ;
+	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
+	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificados', 'CertificadoController');
 	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
