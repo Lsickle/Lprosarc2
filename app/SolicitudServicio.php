@@ -19,7 +19,7 @@ class SolicitudServicio extends Model
 	{
 	    return 'SolSerSlug';
 	}
-	// especificar foranea del modelo sede
+	// especificar foránea del modelo sede
 	public function sedes()
 	{
 	 return $this->belongsTo('App\Sede', 'ID_Sede');

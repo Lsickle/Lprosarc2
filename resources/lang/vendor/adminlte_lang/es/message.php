@@ -729,7 +729,7 @@ return [
     'solsershowemprecity'     => 'Ciudad:',
     'solsershowtransempre'    => 'Empresa Transportadora:',
     'solsershowtranscity'     => 'Ciudad de la Transportadora:',
-    'solsershowcantitotal'    => 'Cantidad Total:',
+    'solsershowcantitotal'    => 'Totales:',
     'solsersupportpay'        => 'Soporte de pago',
     'solsersupportpaydescript' => 'Adjunte el soporte de pago ya que su solicitud es inferior de <b>500kg</b>.',
     

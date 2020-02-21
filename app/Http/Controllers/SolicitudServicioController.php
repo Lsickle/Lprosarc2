@@ -100,30 +100,15 @@ class SolicitudServicioController extends Controller
 	 */
 	public function indexalmacenados(){
 
-		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo'])->get();
+		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '!=', 'SolResKgTratado');
+							}])
+							->orderBy('created_at', 'desc')
+							->get();
+
+		// return $SolicitudesServicios;
 		
-		return 	$SolicitudesServicios;
-		
-		$Residuosoriginal = DB::table('solicitud_residuos')
-			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
-			->join('respels' , 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
-			->join('requerimientos' , 'solicitud_residuos.FK_SolResRequerimiento', '=', 'requerimientos.ID_Req')
-			->join('tratamientos' , 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
-			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
-			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
-			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
-			->get();
-		
-		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
-	        ->where('ID_Req', $item->FK_SolResRequerimiento)
-	        ->first();
-	        
-	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
-		  	return $item;
-		});
-		return view('vistade almacenamiento', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
+		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios'));
 	}
 	/**
 	 * Show the form for creating a new resource.
