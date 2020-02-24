@@ -105,8 +105,22 @@ class SolicitudServicioController extends Controller
 							}])
 							->orderBy('created_at', 'desc')
 							->get();
+		$celda = 0;
+		$nombresdetratamiento = collect();
 
-		// return $SolicitudesServicios;
+		foreach ($SolicitudesServicios as $servicio) {
+			foreach ($servicio->SolicitudResiduo as $Residuo) {
+				// $nombresdetratamiento->push($Residuo->requerimiento->tratamiento->TratName);
+				if ($Residuo->requerimiento->tratamiento->TratName) {
+					$celda = $celda + $Residuo->SolResKgRecibido;
+					$nombresdetratamiento->push(['trat' => $Residuo->requerimiento->tratamiento->TratName, 'peso' => $celda]);
+				}
+			}
+		}
+		// $totalTratamiento = SolicitudServicio::find('7');
+
+		// return $totalTratamiento->SolicitudResiduo->sum('SolResKgEnviado');
+		return $nombresdetratamiento->all();
 		
 		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios'));
 	}

@@ -70,4 +70,8 @@ class SolicitudServicio extends Model
 	{
 	 return $this->belongsTo('App\Cliente', 'FK_SolSerCliente', 'ID_Cli');
 	}
+
+	public function countQuantity(){
+		return $this->requerimiento()->tratamiento()->groupBy('TratName')->sum('tratamiento.quantity');
+	}
 }

@@ -56,7 +56,6 @@ Residuos Almacenados en Planta
 								$TotalCons = 0;
 								$Totaltrat = 0;
 								$falta = 0;
-								$collection = collect([]);
 							@endphp
 							@foreach($SolicitudesServicios as $SolicitudServicio)
 							@foreach ($SolicitudServicio->SolicitudResiduo as $Residuo)
@@ -82,9 +81,7 @@ Residuos Almacenados en Planta
 								$TotalCons = $TotalCons + $Residuo->SolResKgConciliado;
 								$Totaltrat = $Totaltrat + $Residuo->SolResKgTratado;
 								$falta = $falta + ($Residuo->SolResKgConciliado - $Residuo->SolResKgTratado);								
-								$collection = $collection->push([
-									['TratName' => $Residuo->requerimiento->tratamiento->TratName, 'peso' => ($Residuo->SolResKgConciliado - $Residuo->SolResKgTratado)],
-								]);
+							
 								@endphp
 							</tr>
 							@endif
@@ -100,13 +97,13 @@ Residuos Almacenados en Planta
 								<th style="text-align: right;">{{$falta}} kg</th>
 							</tr>
 							<tr>
-								<th colspan="5">{{trans('adminlte_lang::message.solsershowcantitotal')}} tratamiento x</th>
+								{{-- <th colspan="5">{{trans('adminlte_lang::message.solsershowcantitotal')}} tratamiento x</th>
 								@php
 									$filtered = $collection->where('peso', '<', '1000');
 								@endphp
 								<th colspan="4">{{ 
 									$filtered->all()
-								 }}</th>
+								 }}</th> --}}
 							</tr>
 						</tfoot>
 					</table>
