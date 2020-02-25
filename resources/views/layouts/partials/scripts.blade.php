@@ -334,6 +334,36 @@ $(document).ready(function() {
 
 </script>
 @endif
+
+{{-- script para tabla de totales --}}
+@if(Route::currentRouteName()=='solicitud-servicio.show')
+<script type="text/javascript">
+$(document).ready(function() {
+
+	/*funcion para renderizar la tabla de cotizacion.index*/
+	$('#totalesTable').DataTable({
+		responsive: true,
+		select: true,
+		dom: '',
+		colReorder: true,
+		ordering: true,
+		autoWith: true,
+		searchHighlight: true,
+	});
+
+	/*funcion para resaltar las busquedas*/
+	var table = $('#totalesTable').DataTable();
+
+	table.on('draw', function() {
+		var body = $(table.table().body());
+		body.unhighlight();
+		body.highlight(table.search());
+	});
+});
+
+</script>
+@endif
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#departamento").change(function(e){

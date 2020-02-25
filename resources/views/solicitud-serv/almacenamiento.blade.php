@@ -82,7 +82,7 @@ Residuos Almacenados en Planta
 								<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
 								<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
 								<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
-								<th style="text-align: right; white-space: nowrap;"> {{$value['tratado'] - $value['conciliado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado'] - $value['tratado']}} kg</th>
 							</tr>
 							@endforeach
 							<tr>
@@ -90,7 +90,7 @@ Residuos Almacenados en Planta
 								<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
 								<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
 								<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
-								<th style="text-align: right; white-space: nowrap;"> {{$total['recibido'] - $total['conciliado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado'] - $total['tratado']}} kg</th>
 							</tr>
 						</tfoot>
 					</table>
