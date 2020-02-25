@@ -7,9 +7,11 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
+use App\Mail\NewSolServEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -79,17 +81,66 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		// $Comerciales = DB::table('personals')
-  //                       ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-  //                       ->select('personals.*')
-  //                       ->where('personals.PersDelete', 0)
-  //                       ->where('users.UsRol', 'Comercial')
-  //                       ->orWhere('users.UsRol2', 'Comercial')
-  //                       ->get();
+		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+		// 				->select('personals.*')
+		// 				->where('personals.PersDelete', 0)
+		// 				->where('users.UsRol', 'Comercial')
+		// 				->orWhere('users.UsRol2', 'Comercial')
+		// 				->get();
 		
 		// return $Servicios;
 		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function indexalmacenados(){
+
+		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '!=', 'SolResKgTratado');
+							}])
+							->orderBy('created_at', 'desc')
+							->get();
+		
+		
+		/*se inicializan las variables para el calculo de totales */
+		$total['recibido'] = 0;		
+		$total['conciliado'] = 0;		
+		$total['tratado'] = 0;		
+		$cantidadesXtratamiento = [];
+		
+
+		/* se itera sobre todos los residuos de las solicitudes de servicio */
+		foreach ($SolicitudesServicios as $servicio) {
+			foreach ($servicio->SolicitudResiduo as $residuo) {
+				$collection = collect($cantidadesXtratamiento);
+
+				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
+				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}
+			}
+		}
+		// return $total;
+		
+		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios', 'cantidadesXtratamiento', 'total'));
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -251,6 +302,39 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+
+		// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'tesoreria@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'sugerencia@prosarc.com.co',
+								$comercial->PersEmail
+							 ];
+		}else{
+			$comercial = "";
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'tesoreria@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'sugerencia@prosarc.com.co'
+							 ];	
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+
+		// se envia un correo por cada residuo registrado
+		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
 
@@ -494,8 +578,45 @@ class SolicitudServicioController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
-		// return $Residuos;
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
+
+		$SolicitudesServicioscount = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo'])
+			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
+			->orderBy('created_at', 'desc')
+			->get();
+		
+		/*se inicializan las variables para el calculo de totales */
+		$total['recibido'] = 0;		
+		$total['conciliado'] = 0;		
+		$total['tratado'] = 0;		
+		$cantidadesXtratamiento = [];
+		
+
+		/* se itera sobre todos los residuos de las solicitudes de servicio */
+		foreach ($SolicitudesServicioscount as $servicio) {
+			foreach ($servicio->SolicitudResiduo as $residuo) {
+				$collection = collect($cantidadesXtratamiento);
+
+				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
+				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}
+			}
+		}
+		// return $total;
+		// return $cantidadesXtratamiento;
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento'));
 	}
 
 

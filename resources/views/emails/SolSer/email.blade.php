@@ -8,7 +8,7 @@
 @switch($mail->SolSerStatus)
     @case('Aprobado')
         @php
-            $text = 'ha sido aprobada, ahora queda en espera para realizarle una programación';
+            $text = 'ha sido aprobada, ahora queda en espera para asignarle una programación';
         @endphp
         @break
     @case('Programado')
@@ -37,7 +37,7 @@
         @break
     @case('Completado')
         @php
-            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el boton (Conciliado) para dar inicio al tratamiento de los residuos';
+            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el botón (Conciliado) para dar inicio al tratamiento de los residuos';
         @endphp
         @break
     @case('No Conciliado')
@@ -52,7 +52,7 @@
         @break
     @case('Certificacion')
         @php
-            $text = 'ha sido Certificada con éxito. esperamos que el proceso haya sido realizado a su entera satisfaccion, ¡Gracias por su preferencia!';
+            $text = 'ha sido Certificada con éxito. esperamos que el proceso haya sido realizado a su entera satisfacción, ¡Gracias por su preferencia!';
         @endphp
         @break
 @endswitch

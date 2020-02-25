@@ -1,7 +1,7 @@
 @component('mail::message')
-# Contratos cercanos a vencerce
+# Contratos cercanos a vencerse
 
-Los siguientes contratos estan apunto de ser vencidos.<br><br><br>
+Los siguientes contratos están apunto de ser vencidos.<br><br><br>
 
 @component('mail::table')
     | Clientes | Fecha de Vencimiento |
@@ -11,6 +11,6 @@ Los siguientes contratos estan apunto de ser vencidos.<br><br><br>
     @endforeach
 @endcomponent
 <br><br>
-@lang('Si desea ver más detalles diríjase a aplicación de SiReS en el apartado de "Contratos".')
+@lang('Si desea ver más detalles diríjase a aplicación de SisPRO en el apartado de "Contratos".')
 
 @endcomponent
