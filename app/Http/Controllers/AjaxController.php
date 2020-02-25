@@ -36,6 +36,7 @@ class AjaxController extends Controller
 				->where('FK_AreaSede', $Sede->ID_Sede)
 				->where('AreaDelete', '=', 0)
 				->get();
+
 			return response()->json($Areas);
 		}
 	}

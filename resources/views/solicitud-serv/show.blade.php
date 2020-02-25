@@ -199,15 +199,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
 								@switch($SolicitudServicio->SolSerStatus)
-								    @case('Pendiente')
+									@case('Completado')
+								    @case('Recibida')
+								    @case('Notificado')
 								    @case('Aceptado')
 								    @case('Aprobado')
+								    @case('Conciliado')
+								    @case('Pendiente')
 								    @case('Notificado')
 								    @case('Programado')
-								    @case('Notificado')
-								    @case('Completado')
-								    @case('Recibida')
-								    @case('Conciliado')
 								    @case('No Conciliado')
 								    @case('Tratado')
 								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
@@ -223,6 +223,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								@endswitch
 								@endif
 							@endif
+							
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
+
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
 									<label>Requerimientos de la solicitud</label>
@@ -453,23 +456,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										@endforeach
 									@endforeach
 									</tbody>
-									{{-- <tfoot>
-										<tr>
-											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-											<th style="text-align: right;">{{$TotalEnv}} kg</th>
-											<th style="text-align: right;">{{$TotalRec}} kg</th>
-											<th style="text-align: right;">{{$TotalCons}} kg</th>
-											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th style="text-align: right;">{{$TotalTrat}} kg</th>
-											@endif
-											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
-												<th colspan="2"></th>
-											@else
-												<th></th>
-											@endif
-										</tr>
-									</tfoot> --}}
 								</table>
+								
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
 								{{--  Modal --}}
@@ -544,6 +532,54 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								{{-- Modal --}}
 									<div id="addprice"></div>
 								{{-- END Modal --}}
+								{{--  Modal --}}
+								<div class="modal modal-default fade in" id="ModalTotales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<span style="font-size: 1.5em;"><p>Totales por Tratamiento</p></span>
+												<div class="box box-info col-md-16" style="text-align: center;">
+													<table id="totalesTable">
+														<thead>
+															<tr>
+																<th>Tratamiento</th>
+																<th>recibido</th>
+																<th>conciliado</th>
+																<th>tratado</th>
+																<th>pendiente</th>
+															</tr>
+														</thead>
+														<tbody>
+															@foreach ($cantidadesXtratamiento as $key => $value)
+															<tr>
+																<th>{{$key}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado'] - $value['tratado']}} kg</th>
+															</tr>
+															@endforeach
+														</tbody>
+														<tfoot>
+															<tr>
+																<th>{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado'] - $total['tratado']}} kg</th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Salir</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							{{-- END Modal --}}
 							</div>
 						</div>
 					</div>

@@ -190,7 +190,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 7;
         $personal->PersDelete = 0;
-        $personal->PersEmail = 'ingenierohseq@prosarc.com.co';
+        $personal->PersEmail = 'recepcionpda@prosarc.com.co';
         $personal->save();
         
         /*id = 09 */
@@ -212,7 +212,7 @@ class PersonalsTableSeeder extends Seeder
         $personal->PersSlug = hash('sha256', rand().time().$personal->PersDocNumber);
         $personal->FK_PersCargo = 16;
         $personal->PersDelete = 0;
-        $personal->PersEmail = 'gerenteplanta@prosarc.com.co';
+        $personal->PersEmail = 'ingenierohseq@prosarc.com.co';
         $personal->save();
         
         /*id = 10 */

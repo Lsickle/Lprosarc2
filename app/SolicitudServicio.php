@@ -19,14 +19,14 @@ class SolicitudServicio extends Model
 	{
 	    return 'SolSerSlug';
 	}
-	// especificar foranea del modelo sede
+	// especificar foránea del modelo sede
 	public function sedes()
 	{
 	 return $this->belongsTo('App\Sede', 'ID_Sede');
 	}
 	public function municipio()
 	{
-	 return $this->belongsTo('App\Municipio', 'ID_Muns');
+	 return $this->belongsTo('App\Municipio', 'SolSerCityTrans', 'ID_Mun');
 	}
 	// especificar foranea del modelo GenerSede
 	public function GenerSedes()
@@ -35,13 +35,13 @@ class SolicitudServicio extends Model
 	}
 	public function Personal()
 	{
-	 	return $this->belongsTo('App\Personal', 'ID_Pers');
+	 	return $this->belongsTo('App\Personal', 'FK_SolSerPersona', 'ID_Pers');
 	}
 	public function Certificado(){
-		return $this->hasMany('App\Certificado','ID_Cert','id');//como solicitud de servicio tiene muchos certificados
+		return $this->hasMany('App\Certificado', 'ID_Cert','id');//como solicitud de servicio tiene muchos certificados
 	}
 	public function Manifiesto(){
-		return $this->hasMany('App\Manifiesto','ID_Manif', 'id');//como solicitud de servicio tiene muchos manifiestos
+		return $this->hasMany('App\Manifiesto', 'ID_Manif', 'id');//como solicitud de servicio tiene muchos manifiestos
 	}
 	public function SolicitudResiduo(){
 		return $this->hasMany('App\SolicitudResiduo', 'FK_SolResSolSer', 'ID_SolSer');//como solicitud de servicio tiene muchas solicitud de residuos
@@ -63,5 +63,15 @@ class SolicitudServicio extends Model
 	public function manifiestos()
 	{
 		return $this->hasMany('App\Manifiesto', 'FK_ManifSolser', 'ID_SolSer');
+	}
+
+	// especificar foranea del modelo sede
+	public function cliente()
+	{
+	 return $this->belongsTo('App\Cliente', 'FK_SolSerCliente', 'ID_Cli');
+	}
+
+	public function countQuantity(){
+		return $this->requerimiento()->tratamiento()->groupBy('TratName')->sum('tratamiento.quantity');
 	}
 }

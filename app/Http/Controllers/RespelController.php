@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RespelMail;
+use App\Mail\ResiduoNuevo;
 use App\audit;
 use App\Respel;
 use App\Sede;
@@ -24,6 +26,7 @@ use App\ResiduosGener;
 use App\SolicitudResiduo;
 use App\Permisos;
 use App\Tarifa;
+use App\Personal;
 use App\Categoryrespelpublic;
 use Illuminate\Support\Arr;
 
@@ -232,7 +235,38 @@ class RespelController extends Controller
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
+
+            if($respel->RespelStatus === "Pendiente"){
+                /*se verifican los datos de las sede y y cliente segun el usuarios que registra el residuo*/
+                $respel['cliente'] = DB::table('personals')
+                    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                    ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+                    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->select(['sedes.SedeName', 'clientes.CliName', 'clientes.CliComercial'])
+                    ->first();
+
+                // se verifica si el cliente tiene comercial asignado
+                // se establece la lista de destinatarios
+                if ($respel['cliente']->CliComercial <> null) {
+                    $comercial = Personal::where('ID_Pers', $respel['cliente']->CliComercial)->first();
+                    $destinatarios = ['diroperaciones@prosarc.com.co', $comercial->PersEmail];
+                }else{
+                    $comercial = "";
+                    $destinatarios = ['diroperaciones@prosarc.com.co'];
+                }
+
+                $respel['comercial'] = $comercial;
+                $respel['personalcliente'] = Personal::where('ID_Pers', Auth::user()->FK_UserPers)->first();
+                
+
+                // se envia un correo por cada residuo registrado
+                Mail::to($destinatarios)->send(new ResiduoNuevo($respel));
+                // return new ResiduoNuevo($respel);
+            }
         }
+
         $log = new audit();
         $log->AuditTabla="respels";
         $log->AuditType="Nuevo respel";
