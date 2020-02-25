@@ -105,24 +105,41 @@ class SolicitudServicioController extends Controller
 							}])
 							->orderBy('created_at', 'desc')
 							->get();
-		$celda = 0;
-		$nombresdetratamiento = collect();
+		
+		
+		/*se inicializan las variables para el calculo de totales */
+		$total['recibido'] = 0;		
+		$total['conciliado'] = 0;		
+		$total['tratado'] = 0;		
+		$cantidadesXtratamiento = [];
+		
 
+		/* se itera sobre todos los residuos de las solicitudes de servicio */
 		foreach ($SolicitudesServicios as $servicio) {
-			foreach ($servicio->SolicitudResiduo as $Residuo) {
-				// $nombresdetratamiento->push($Residuo->requerimiento->tratamiento->TratName);
-				if ($Residuo->requerimiento->tratamiento->TratName) {
-					$celda = $celda + $Residuo->SolResKgRecibido;
-					$nombresdetratamiento->push(['trat' => $Residuo->requerimiento->tratamiento->TratName, 'peso' => $celda]);
+			foreach ($servicio->SolicitudResiduo as $residuo) {
+				$collection = collect($cantidadesXtratamiento);
+
+				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
+				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
 				}
 			}
 		}
-		// $totalTratamiento = SolicitudServicio::find('7');
-
-		// return $totalTratamiento->SolicitudResiduo->sum('SolResKgEnviado');
-		return $nombresdetratamiento->all();
+		// return $total;
 		
-		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios'));
+		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios', 'cantidadesXtratamiento', 'total'));
 	}
 	/**
 	 * Show the form for creating a new resource.

@@ -51,12 +51,6 @@ Residuos Almacenados en Planta
 							</tr>
 						</thead>
 						<tbody>
-							@php
-								$TotalRec = 0;
-								$TotalCons = 0;
-								$Totaltrat = 0;
-								$falta = 0;
-							@endphp
 							@foreach($SolicitudesServicios as $SolicitudServicio)
 							@foreach ($SolicitudServicio->SolicitudResiduo as $Residuo)
 							@if($Residuo->SolResKgConciliado != $Residuo->SolResKgTratado)
@@ -76,34 +70,27 @@ Residuos Almacenados en Planta
 								<td>{{$Residuo->SolResKgConciliado}}</td>
 								<td>{{$Residuo->SolResKgTratado}}</td>
 								<td>{{$Residuo->SolResKgConciliado - $Residuo->SolResKgTratado}}</td>
-								@php
-								$TotalRec = $TotalRec + $Residuo->SolResKgRecibido;
-								$TotalCons = $TotalCons + $Residuo->SolResKgConciliado;
-								$Totaltrat = $Totaltrat + $Residuo->SolResKgTratado;
-								$falta = $falta + ($Residuo->SolResKgConciliado - $Residuo->SolResKgTratado);								
-							
-								@endphp
 							</tr>
 							@endif
 							@endforeach
 							@endforeach
 						</tbody>
 						<tfoot>
+							@foreach ($cantidadesXtratamiento as $key => $value)
+							<tr>
+								<th colspan="5">SubTotal: {{$key}}</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$value['tratado'] - $value['conciliado']}} kg</th>
+							</tr>
+							@endforeach
 							<tr>
 								<th colspan="5">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-								<th style="text-align: right;">{{$TotalRec}} kg</th>
-								<th style="text-align: right;">{{$TotalCons}} kg</th>
-								<th style="text-align: right;">{{$Totaltrat}} kg</th>
-								<th style="text-align: right;">{{$falta}} kg</th>
-							</tr>
-							<tr>
-								{{-- <th colspan="5">{{trans('adminlte_lang::message.solsershowcantitotal')}} tratamiento x</th>
-								@php
-									$filtered = $collection->where('peso', '<', '1000');
-								@endphp
-								<th colspan="4">{{ 
-									$filtered->all()
-								 }}</th> --}}
+								<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
+								<th style="text-align: right; white-space: nowrap;"> {{$total['recibido'] - $total['conciliado']}} kg</th>
 							</tr>
 						</tfoot>
 					</table>
