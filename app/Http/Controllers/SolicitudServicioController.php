@@ -79,6 +79,14 @@ class SolicitudServicioController extends Controller
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$servicio->recepcion = null;
+			}
 		}
 		// $Comerciales = DB::table('personals')
 		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
@@ -195,7 +203,7 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
-		$SolicitudServicio->SolSerStatus = 'Pendiente';
+		$SolicitudServicio->SolSerStatus = 'Aceptado';
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
 				$SolicitudServicio->SolSerAuditable = 1;

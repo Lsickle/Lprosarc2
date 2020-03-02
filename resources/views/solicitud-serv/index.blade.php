@@ -30,6 +30,7 @@
 							<thead>
 								<tr>
 									<th>{{trans('adminlte_lang::message.solsershowdate')}}</th>
+									<th>{{trans('adminlte_lang::message.solsershowdateRPDA')}}</th>
 									<th>N°</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th nowrap><span data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="Status de la Solicitud de Servicio" data-content="
@@ -103,6 +104,13 @@
 								@foreach ($Servicios as $Servicio)
 									<tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
 										<td style="text-align: center;">{{date('Y/m/d', strtotime($Servicio->created_at))}}</td>
+										<td style="text-align: center;">
+											@if($Servicio->recepcion == null)
+											{{null}}
+											@else
+											{{date('Y/m/d', strtotime($Servicio->recepcion))}}
+											@endif
+										</td>
 										<td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
 										@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
 											@switch($Servicio->SolSerStatus)
