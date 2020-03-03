@@ -132,7 +132,7 @@
 													@break
 												{{-- residuo Aprobado --}}
 												@case('Notificado')
-													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Notificado</b>" data-content="<p style='width: 50%'>La fecha programada para la recolección de sus residuos ha sido aprobada por favor revise el correo electrónico de la persona de contacto para tener le información de las fechas... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Notificado</b>" data-content="<p style='width: 50%'>La fecha programada para la recolección de sus residuos ha sido aprobada por favor revise el correo electrónico de la persona de contacto para tener le información de las fechas o ingrese a los detalles de esta solicitud, haciendo click en el icono azul con una lupa... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												@case('Recibido')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Recibido</b>" data-content="<p style='width: 50%'>Los residuos correspondientes a esta solicitud han sido recibidos y se están verificando las cantidades... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}</td>
@@ -169,7 +169,7 @@
 													@break
 												{{-- residuo Rechazado --}}
 												@case('Aceptado')
-													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Aceptado</b>" data-content="<p style='width: 50%'>La solicitud de servicio ha sido aceptada por <b>Tesorería</b> y debe ser revisada por el Asistente de Logistica para validar las condiciones del servicio y las cantidades de los residuos... <br>Para más detalles comuníquese con el <b>Asistente de Logistica</b> </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Aceptado</b>" data-content="<p style='width: 50%'>La solicitud de servicio debe ser revisada por el Asistente de Logistica para validar las condiciones del servicio y las cantidades de los residuos... <br>Para más detalles comuníquese con el <b>Asistente de Logistica</b> </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												{{-- residuo Evaluado --}}
 												@case('Aprobado')
@@ -177,11 +177,11 @@
 													@break
 												{{-- residuo Cotizado --}}
 												@case('Programado')
-													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Programado</b>" data-content="<p style='width: 50%'>Se han creado las programaciones de servicios necesarias para la recolección de los residuos correspondientes a esta solicitud... El área de <b>Tesorería</b> deberá autorizar dichas recolecciones/programaciones para que los conductores puedan visualizarlas y ejecutarlas en la fecha que corresponda <br>Para más detalles comuníquese con el <b>Jefe de Logistica o Tesoreria</b> según corresponda</p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Programado</b>" data-content="<p style='width: 50%'>Se han creado las programaciones de servicios necesarias para la recolección de los residuos correspondientes a esta solicitud... El <b> Jefe de Logistica</b> deberá notificar al cliente dichas recolecciones/programaciones y ejecutarlas en la fecha que corresponda <br>Para más detalles comuníquese con el <b>Jefe de Logistica</b></p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												{{-- residuo Aprobado --}}
 												@case('Notificado')
-													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Notificado</b>" data-content="<p style='width: 50%'>El Área de tesorería ha autorizado la ejecución de las programaciones/recolecciones correspondientes a esta solicitud... adicionalmente se ha enviado una notificación por correo electrónico a la persona de contacto del cliente informando la fecha de la programación de servicio <br>Para más detalles comuníquese con el <b>Jefe de Logistica</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Notificado</b>" data-content="<p style='width: 50%'>Se ha enviado una notificación por correo electrónico a la persona de contacto del cliente informando la fecha de la programación de servicio <br>Para más detalles comuníquese con el <b>Jefe de Logistica</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												{{-- cotización vencida --}}
 												@case('Recibido')
