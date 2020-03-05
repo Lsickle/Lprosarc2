@@ -40,6 +40,16 @@
 										@endforeach
 									</select>
 								</div>
+								<div class="form-group col-md-12">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
+									<small class="help-block with-errors"></small>
+									<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach ($Personals as $Personal)
+										<option value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+										@endforeach
+									</select>
+								</div>
 								<div class="form-group col-md-6">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 									<small class="help-block with-errors">*</small>

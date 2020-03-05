@@ -6,15 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Auth;
-use App\SolicitudServicio;
-use App\Personal;
 
-class SolSerEmail extends Mailable implements ShouldQueue
+class SolSerEmailClient extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public $email;
+
 
     /**
      * Create a new message instance.
@@ -22,7 +20,7 @@ class SolSerEmail extends Mailable implements ShouldQueue
      * @return void
      */
     public function __construct($email)
-    {   
+    {
         $this->email = $email;
     }
 
@@ -33,7 +31,7 @@ class SolSerEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
+        return $this->from('notificaciones@prosarc.com.co', $this->email->CliName)
                         ->subject('Solicitud de Servicio')
                         ->markdown('emails.SolSer.email');
     }

@@ -176,7 +176,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -204,6 +204,7 @@ class SolicitudServicioController extends Controller
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aceptado';
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
 				$SolicitudServicio->SolSerAuditable = 1;
@@ -922,7 +923,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -933,6 +934,9 @@ class SolicitudServicioController extends Controller
 			$totalenviado = 0;
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+				return $value;
 			}
 			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
 		}
@@ -955,6 +959,8 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
+
 		if($SolicitudServicio->SolSerStatus === 'Programado'){
 			if($request->input('SolSerTransportador') <> null){
 				if($request->input('SolSerTransportador') <> 98){
