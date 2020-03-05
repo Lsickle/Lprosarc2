@@ -55,13 +55,16 @@
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 										@foreach ($Personals as $Personal)
 										<option 
+										@if ($Solicitud->SolServMailCopia !== "null")
 										@foreach(json_decode($Solicitud->SolServMailCopia) as $contactoCopia)
 											@if ($contactoCopia == $Personal->PersEmail)
 												selected
 											@endif
 										@endforeach
+										@endif
 										value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
 										@endforeach
+										
 									</select>
 								</div>
 								
