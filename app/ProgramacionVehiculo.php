@@ -33,4 +33,9 @@ class ProgramacionVehiculo extends Model
     {
         return $this->belongsToMany('App\GenerSede', 'recolect', 'FK_ColectProg', 'FK_ColectSgen');
     }
+
+    public function servicio()
+    {
+        return $this->belongsTo('App\SolicitudServicio', 'ID_SolSer', 'FK_ProgServi');
+    }
 }

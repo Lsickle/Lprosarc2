@@ -32,6 +32,7 @@
 										@endforeach
 									</select>
 								</div>
+								
 								<div class="form-group col-md-6">
 									<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="En este campo puede adjuntar un archivo PDF del Soporte de Pago como constancia de haber cancelado el costo de la solicitud de servicio... <br><b>Tamaño maximo del archivo: 5 Mb.</b> <br><br> Para mas detalles comuníquese con su <b>Asesor Comercial</b>"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
 										<small class="help-block with-errors"></small>
@@ -46,6 +47,27 @@
 										</div>
 									</div>
 								</div>
+
+								<div class="form-group col-md-12">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
+									<small class="help-block with-errors"></small>
+									<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">
+										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
+										@foreach ($Personals as $Personal)
+										<option 
+										@if ($Solicitud->SolServMailCopia !== "null")
+										@foreach(json_decode($Solicitud->SolServMailCopia) as $contactoCopia)
+											@if ($contactoCopia == $Personal->PersEmail)
+												selected
+											@endif
+										@endforeach
+										@endif
+										value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+										@endforeach
+										
+									</select>
+								</div>
+								
 								<div class="form-group col-md-6">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 									<small class="help-block with-errors">*</small>

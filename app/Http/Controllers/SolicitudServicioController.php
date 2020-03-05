@@ -79,6 +79,14 @@ class SolicitudServicioController extends Controller
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$servicio->recepcion = null;
+			}
 		}
 		// $Comerciales = DB::table('personals')
 		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
@@ -168,7 +176,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -195,7 +203,8 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
-		$SolicitudServicio->SolSerStatus = 'Pendiente';
+		$SolicitudServicio->SolSerStatus = 'Aceptado';
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
 				$SolicitudServicio->SolSerAuditable = 1;
@@ -312,7 +321,7 @@ class SolicitudServicioController extends Controller
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
-								'tesoreria@prosarc.com.co',
+								'gestion@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'sugerencia@prosarc.com.co',
 								$comercial->PersEmail
@@ -323,7 +332,7 @@ class SolicitudServicioController extends Controller
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
-								'tesoreria@prosarc.com.co',
+								'gestion@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'sugerencia@prosarc.com.co'
 							 ];	
@@ -914,7 +923,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -947,6 +956,8 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
+
 		if($SolicitudServicio->SolSerStatus === 'Programado'){
 			if($request->input('SolSerTransportador') <> null){
 				if($request->input('SolSerTransportador') <> 98){
