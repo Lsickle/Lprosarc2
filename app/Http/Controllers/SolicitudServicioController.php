@@ -321,7 +321,6 @@ class SolicitudServicioController extends Controller
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
-								'gestion@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'sugerencia@prosarc.com.co',
 								$comercial->PersEmail
@@ -332,7 +331,6 @@ class SolicitudServicioController extends Controller
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
-								'gestion@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'sugerencia@prosarc.com.co'
 							 ];	
