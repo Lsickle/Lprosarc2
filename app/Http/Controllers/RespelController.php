@@ -762,6 +762,7 @@ class RespelController extends Controller
         }
         $respel->RespelStatus = $request['RespelStatus'];
         $respel->RespelStatusDescription = $request['RespelStatusDescription'];
+        $respel->updated_at = now();
         $respel->save();
 
         /*auditoria de la actualizacion*/
