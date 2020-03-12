@@ -322,7 +322,7 @@ class SolicitudServicioController extends Controller
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
-								'sugerencia@prosarc.com.co',
+								'subgerencia@prosarc.com.co',
 								$comercial->PersEmail
 							 ];
 		}else{
@@ -332,7 +332,7 @@ class SolicitudServicioController extends Controller
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
-								'sugerencia@prosarc.com.co'
+								'subgerencia@prosarc.com.co'
 							 ];	
 		}
 
