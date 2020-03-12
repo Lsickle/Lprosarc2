@@ -774,7 +774,7 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        if($respel->RespelStatus === "Aprobado"){
+        if(($respel->RespelStatus === "Aprobado")&&($respel->RespelPublic === 0)){
             // new  RespelMail($slug);
             return redirect()->route('email-respel', [$respel->RespelSlug]);
         }
