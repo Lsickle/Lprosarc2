@@ -135,6 +135,7 @@ class VehicProgController extends Controller
 				->where('SolSerStatus', 'Aprobado')
 				->orderBy('solicitud_servicios.updated_at', 'asc')
 				->get();
+				/*return $programacions;*/
 			return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
