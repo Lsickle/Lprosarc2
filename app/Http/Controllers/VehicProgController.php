@@ -152,7 +152,10 @@ class VehicProgController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		// return $request;
+		$validate = $request->validate([
+			'ProgVehPrecintos'   =>   'max:6|min:6'
+		]);
+		/*return $request;*/
 		$programacion = new ProgramacionVehiculo();
 		if(date('H', strtotime($request->input('ProgVehSalida'))) >= 12){
 			$turno = "0";
@@ -163,6 +166,8 @@ class VehicProgController extends Controller
 		$programacion->ProgVehTurno = $turno;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
+
+
 		/*typetransportador = 0 -> transporte prosarc*/
 		/*typetransportador = 1 -> transporte alquilado*/
 		if(!is_null($request->input('typetransportador'))){
@@ -174,6 +179,9 @@ class VehicProgController extends Controller
 				$programacion->ProgVehtipo = 1;
 				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 				$programacion->ProgVehColor = $request->input('ProgVehColor');
+				
+				$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+
 				$programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
 				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 				$conductor = Personal::select('PersFirstName', 'PersLastName')->where('ID_Pers', $request->input('FK_ProgConductor'))->first();
@@ -744,6 +752,8 @@ class VehicProgController extends Controller
 				->where('FK_ColectProg', $programacion->ID_ProgVeh)
 				->get();
 
+			/*return $programacion*/;
+
 			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
@@ -761,6 +771,11 @@ class VehicProgController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		$validate = $request->validate([
+			'ProgVehPrecintos'   =>   'max:6|min:6'
+		]);
+
+
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
 			abort(404);
@@ -781,6 +796,8 @@ class VehicProgController extends Controller
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
 				$programacion->progVehKm = $request->input('progVehKm');
+
+
 				$vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
 				$vehiculo->VehicKmActual = $request->input('progVehKm');
 				$vehiculo->save();
@@ -795,6 +812,11 @@ class VehicProgController extends Controller
 			$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 			$programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+
+
+			$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+
+
 			$programacion->ProgVehColor = $request->input('ProgVehColor');
 		}
 		else if($programacion->ProgVehtipo == 2){
@@ -809,6 +831,8 @@ class VehicProgController extends Controller
 			$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
+
+			$programación->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
