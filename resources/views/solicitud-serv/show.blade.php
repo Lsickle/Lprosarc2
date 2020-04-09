@@ -43,16 +43,36 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solserindexnumber')}}: {{$SolicitudServicio->ID_SolSer}}</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label>{{trans('adminlte_lang::message.solsershowaudita')}}</label>
+									@if($SolicitudServicio->SolResAuditoriaTipo == null)
+									<span>No</span>
+									@else
 									<span>{{$SolicitudServicio->SolResAuditoriaTipo}}</span>
+									@endif
+								</div>
+								<div class="col-md-3">
+									<label>Status</label>
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+									<span>{{$SolicitudServicio->SolSerStatus}}</span>
+									@else
+									@switch($SolicitudServicio->SolSerStatus)
+
+									    @case('Programado')
+											<td style="text-align: center;">Aprobado</td>
+									        @break
+									    
+									    @default
+											<td style="text-align: center;">{{$SolicitudServicio->SolSerStatus}}</td>
+									@endswitch
+									@endif
 								</div>
 								<hr>
 							</div>
@@ -145,52 +165,24 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 								@switch($SolicitudServicio->SolSerStatus)
 								    @case('Pendiente')
-								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el Cli<b>ente ac</b>epte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('Pendiente')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
 								    @case('Aceptado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
 								    @case('Aprobado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
 								    @case('Programado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
+								    @case('Notificado')
 								    @case('Completado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
 								    @case('Recibida')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								    @case('No Conciliado')
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Conciliado')
-								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('No Conciliado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
+								    @case('Certificacion')
 								    @case('Tratado')
 								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
-								    @case('Certificacion')
-								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-
 								    @default
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentacion relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentación relativa a certificados y manifiestos estara disponible a partir de que el Cliente acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								@endswitch
 								
 							@endif
@@ -199,50 +191,26 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@endif
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 								@if($SolicitudServicio->SolSerSupport <> null)
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Haga click para visualizar el PDF del soporte de pago, que adjuntó, para esta solicitud de servicio' : 'Haga click para visualizar el PDF del soporte de pago, adjuntado por el cliente, para esta solicitud de servicio'}}"><a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info pull-left" target="_blank" style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Haga click para visualizar el PDF del soporte de pago, que adjuntó, para esta solicitud de servicio' : 'Haga click para visualizar el PDF del soporte de pago, adjuntado por el cliente, para esta solicitud de servicio'}}"><a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info pull-left" target="_blank" style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
 									
 								@else
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
+								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
 								@switch($SolicitudServicio->SolSerStatus)
-								    @case('Pendiente')
-								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-
-								    @case('Aceptado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-								        
-
-								    @case('Aprobado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('Programado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('Completado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
+									@case('Completado')
 								    @case('Recibida')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
+								    @case('Notificado')
+								    @case('Aceptado')
+								    @case('Aprobado')
 								    @case('Conciliado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
+								    @case('Pendiente')
+								    @case('Notificado')
+								    @case('Programado')
 								    @case('No Conciliado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
 								    @case('Tratado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
 								    @case('Certificacion')
@@ -251,10 +219,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 
 
 								    @default
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que el <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								@endswitch
 								@endif
 							@endif
+							
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
+
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
 									<label>Requerimientos de la solicitud</label>
@@ -412,7 +383,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@else
 													<td style="text-align: center;">
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-															@if($SolicitudServicio->SolSerStatus === 'Programado' && (count($Programaciones)>$ProgramacionesActivas))
+															@if(($SolicitudServicio->SolSerStatus === 'Programado'||$SolicitudServicio->SolSerStatus === 'Notificado') && (count($Programaciones)>$ProgramacionesActivas))
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
 																@else
@@ -454,7 +425,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
-															@if($SolicitudServicio->SolSerStatus === 'Conciliado')
+															@if($SolicitudServicio->SolSerStatus === 'Conciliado' || ($SolicitudServicio->SolSerStatus === 'Certificacion' && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado))
 																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">  --}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">
@@ -485,23 +456,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										@endforeach
 									@endforeach
 									</tbody>
-									{{-- <tfoot>
-										<tr>
-											<th colspan="3">{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-											<th style="text-align: right;">{{$TotalEnv}} kg</th>
-											<th style="text-align: right;">{{$TotalRec}} kg</th>
-											<th style="text-align: right;">{{$TotalCons}} kg</th>
-											@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-												<th style="text-align: right;">{{$TotalTrat}} kg</th>
-											@endif
-											@if($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Certificacion')
-												<th colspan="2"></th>
-											@else
-												<th></th>
-											@endif
-										</tr>
-									</tfoot> --}}
 								</table>
+								
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
 								{{--  Modal --}}
@@ -576,6 +532,54 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								{{-- Modal --}}
 									<div id="addprice"></div>
 								{{-- END Modal --}}
+								{{--  Modal --}}
+								<div class="modal modal-default fade in" id="ModalTotales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<span style="font-size: 1.5em;"><p>Totales por Tratamiento</p></span>
+												<div class="box box-info col-md-16" style="text-align: center;">
+													<table id="totalesTable">
+														<thead>
+															<tr>
+																<th>Tratamiento</th>
+																<th>recibido</th>
+																<th>conciliado</th>
+																<th>tratado</th>
+																<th>pendiente</th>
+															</tr>
+														</thead>
+														<tbody>
+															@foreach ($cantidadesXtratamiento as $key => $value)
+															<tr>
+																<th>{{$key}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado'] - $value['tratado']}} kg</th>
+															</tr>
+															@endforeach
+														</tbody>
+														<tfoot>
+															<tr>
+																<th>{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado'] - $total['tratado']}} kg</th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Salir</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -666,6 +670,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											Cantidad
 											@switch($SolicitudServicio->SolSerStatus)
 												@case('Programado')
+												@case('Notificado')
 													Recibida
 													@break
 												@case('No Conciliado')
@@ -691,10 +696,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									@endif
 										@switch($SolicitudServicio->SolSerStatus)
 											@case('Programado')
+											@case('Notificado')
 											<div class="form-group col-md-12">
 												<label for="SolResKgRecibido">Cantidad Recibida (kg)</label>
 												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+												<input type="number" step=".1" class="form-control numberKg" id="SolResKgRecibido" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
 											</div>
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
@@ -710,6 +716,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 												@break
 											@case('Conciliado')
+											@case('Certificacion')
 											<div class="form-group col-md-12">	
 												<label for="SolResKgTratado">Cantidad Tratada (kg)</label>
 												<small class="help-block with-errors">*</small>
@@ -739,6 +746,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			`);
 			switch('{{$SolicitudServicio->SolSerStatus}}'){
 				case('Programado'):
+				case('Notificado'):
 					numeroKg();
 					break;
 				case('Completado'):
@@ -826,8 +834,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
 							</div> 
 							<div class="modal-footer">
-								<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">No, salir</button>
-								<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+								<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Enviar</label>
 							</div>
 						</form>
 					</div>
@@ -909,13 +917,41 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
 			@endif
-			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Notificar programacion de servicio</b>" data-content="<p style='width: 50%'>Este botón enviara una notificación al correo del cliente notificando la fecha de la programación de servicio... úselo únicamente cuando este seguro de los datos de la programación </p>" href="/email-solser/{{$SolicitudServicio->SolSerSlug}}" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
+						<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>
+				`);
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
+				/*$('#titulo').append(`
+					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Notificar programacion de servicio</b>" data-content="<p style='width: 50%'>Este botón enviara una notificación al correo del cliente notificando la fecha de la programación de servicio... úselo únicamente cuando este seguro de los datos de la programación </p>" href="/email-solser/" class="btn btn-primary pull-right"><i class="fas fa-bell"></i><b> Notificar</b></a>
+				`);*/
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+				@if($ProgramacionesActivas == count($Programaciones))
+					
+				@elseif($ProgramacionesActivas == 0)
+					$('#titulo').append(`
+						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+					`);
+				@else
+					$('#titulo').append(`
+						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Faltan Vehiculos por Recibir</b>" data-content="<p style='width: 50%'>Asegúrese de que todos los vehículos correspondientes a la solicitud de servicio <b>#{{$SolicitudServicio->ID_SolSer}}</b> hayan sido recibidos por el área de Logística antes de marcar solicitud de servicio como <b>recibida</b><br>Para mas detalles comuníquese con el <b>Jefe de Logística</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-warning pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}-Faltan Vehiculos</a>
+					`);
+				@endif
+			@endif
+		@break
+		@case('Notificado')
+			$('#titulo').empty();
+			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
+				$('#titulo').append(`
+					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-				@if($ProgramacionesActivas <= 0)
+				@if($ProgramacionesActivas == count($Programaciones))
+					
+				@elseif($ProgramacionesActivas == 0)
 					$('#titulo').append(`
 						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
 					`);
@@ -986,7 +1022,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
 				@else
-				@if ($SolicitudServicio->SolServCertStatus=0)
+				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
 					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);
@@ -1006,7 +1042,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
 				@else
-				@if ($SolicitudServicio->SolServCertStatus=0)
+				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
 					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);

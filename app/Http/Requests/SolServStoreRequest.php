@@ -122,7 +122,7 @@ class SolServStoreRequest extends FormRequest
                     $rules['SolResTypeUnidad.'.$Generador.'.'.$y] = 'nullable|numeric|between:98,99';
                     $rules['SolResCantiUnidad.'.$Generador.'.'.$y] = 'nullable|numeric';
                     $rules['SolResKgEnviado.'.$Generador.'.'.$y] = 'required|numeric';
-                    $rules['SolResEmbalaje.'.$Generador.'.'.$y] = 'required|numeric|between:88,99';
+                    $rules['SolResEmbalaje.'.$Generador.'.'.$y] = 'required|numeric|between:86,99';
                     $rules['SolResAlto.'.$Generador.'.'.$y] = 'nullable|numeric|max:30|min:0';
                     $rules['SolResAncho.'.$Generador.'.'.$y] = 'nullable|numeric|max:30|min:0';
                     $rules['SolResProfundo.'.$Generador.'.'.$y] = 'nullable|numeric|max:30|min:0';
@@ -197,13 +197,13 @@ class SolServStoreRequest extends FormRequest
     public function messages()
     {
         $messages = [
-            'SolSerTipo.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResAuditoriaTipo.numeric' => 'Sorry! Lamer Jajaja',
-            'SolSerTransportador.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResTypeUnidad.numeric' => 'Sorry! Lamer Jajaja',
-            'SolResEmbalaje.numeric' => 'Sorry! Lamer Jajaja',
-            'between' => 'Sorry! Lamer Jajaja',
-            'boolean' => 'Sorry! Lamer Jajaja',
+            'SolSerTipo.numeric' => 'el tipo de solicitud de servicio no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResAuditoriaTipo.numeric' => 'el tipo de auditoria no coincide con los permitidos en la aplicación o no esta definido',
+            'SolSerTransportador.numeric' => 'el tipo de transportador no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResTypeUnidad.numeric' => 'el tipo de unidad no coincide con los permitidos en la aplicación o no esta definido',
+            'SolResEmbalaje.numeric' => 'el embalaje no coincide con los permitidos en la aplicación o no esta definido',
+            'between' => 'Solo se permiten valores between',
+            'boolean' => 'Solo se permiten valores Boolean',
         ];
         return $messages;
     }

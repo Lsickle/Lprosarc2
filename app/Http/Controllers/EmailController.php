@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SolSerEmail;
+use App\Mail\SolSerEmailClient;
 use App\Mail\RespelMail;
 use App\SolicitudServicio;
 use App\Personal;
@@ -35,11 +36,11 @@ class EmailController extends Controller
             //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
             //     ->select('users.email')
             //     ->get();
-
+            
             foreach($Roles1 as $Rol1){
                 //SE ENVIA UN CORREO A CADA USUARIO DE ACUERDO AL ARRAY ROLES 1
-                Mail::to($Rol1->email)->send(new SolSerEmail($email));
-            }
+                Mail::to($Rol1->email)->send(new SolSerEmailClient($email));
+            }   
                 // validacion del rol2 para el envio de correo
                 // foreach($Roles2 as $Rol2){
                 //     Mail::to($Rol2->email)->send(new SolSerEmail($email));
@@ -57,14 +58,52 @@ class EmailController extends Controller
                 ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
                 ->where('progvehiculos.ProgVehDelete', 0)
                 ->first();
-            Mail::to($email->PersEmail)->send(new SolSerEmail($email));
+
+            if ($SolSer->SolServMailCopia == "null") {
+                Mail::to($email->PersEmail)
+                ->send(new SolSerEmail($email));
+            }else{
+                Mail::to($email->PersEmail)
+                ->cc(json_decode($SolSer->SolServMailCopia))
+                ->send(new SolSerEmail($email));
+            }
+            
+        }elseif($SolSer->SolSerStatus === 'Notificado'){
+            $email = DB::table('solicitud_servicios')
+                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                ->where('progvehiculos.ProgVehDelete', 0)
+                ->first();
+
+            if ($SolSer->SolServMailCopia == "null") {
+                Mail::to($email->PersEmail)
+                ->send(new SolSerEmail($email));
+            }else{
+                Mail::to($email->PersEmail)
+                ->cc(json_decode($SolSer->SolServMailCopia))
+                ->send(new SolSerEmail($email));
+            }
+            return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
+
         }else{
             $email = DB::table('solicitud_servicios')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
                 ->select('personals.PersEmail', 'solicitud_servicios.*')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
-            Mail::to($email->PersEmail)->send(new SolSerEmail($email));
+                
+            if ($SolSer->SolServMailCopia == "null") {
+                Mail::to($email->PersEmail)
+                ->send(new SolSerEmail($email));
+            }else{
+                Mail::to($email->PersEmail)
+                ->cc(json_decode($SolSer->SolServMailCopia))
+                ->send(new SolSerEmail($email));
+            }
+            
         }
         // return back();
         return redirect()->route('solicitud-servicio.index');

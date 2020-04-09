@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use App\Mail\VehiculoRecibidoEmail;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -119,9 +121,9 @@ class VehicProgController extends Controller
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
-				->where('CargName', 'Operario')
+				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)
-				->where('PersDelete', '!=' , 1)
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
@@ -227,6 +229,7 @@ class VehicProgController extends Controller
 		}
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
+		$programacion->ProgVehStatus = 'Autorizado';
 		$programacion->save();
 		// return $request->input('FK_ProgServi');
 
@@ -713,7 +716,8 @@ class VehicProgController extends Controller
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
-				->where('CargName', 'Operario')
+				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)
 				->get();
 			$transportadores = DB::table('clientes')
@@ -798,9 +802,13 @@ class VehicProgController extends Controller
 				$programacion->progVehKm = $request->input('progVehKm');
 
 
+
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
+
 				$vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
 				$vehiculo->VehicKmActual = $request->input('progVehKm');
 				$vehiculo->save();
+				
 			}
 			else{
 				$programacion->ProgVehEntrada = null;
@@ -822,6 +830,7 @@ class VehicProgController extends Controller
 		else if($programacion->ProgVehtipo == 2){
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
 			}
 			$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
 			$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
@@ -840,6 +849,7 @@ class VehicProgController extends Controller
 		else{
 			if($request->input('ProgVehEntrada')){
 				$programacion->ProgVehEntrada = $request->input('ProgVehFecha').' '.$llegada;
+				$programacion->ProgVehStatus = 'Cerrada';/*se cierra la programacion del vehiculo*/
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
@@ -851,12 +861,17 @@ class VehicProgController extends Controller
 		$programacion->puntosderecoleccion()->sync($request->input('ProgGenerSedes'));
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$SolicitudServicio->SolSerStatus = 'Programado';
+		// $SolicitudServicio->SolSerStatus = 'Programado';
 		if($programacion->ProgVehtipo <> 0){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
 			$SolicitudServicio->SolSerVehiculo = $vehiculo;
 		}
 		$SolicitudServicio->save();
+
+		if ($programacion->ProgVehStatus == 'Cerrada') {
+			$destinatarios = ['recepcionpda@prosarc.com.co'];
+			Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
+		}
 
 		$log = new audit();
 		$log->AuditTabla="progvehiculos";
@@ -952,23 +967,28 @@ class VehicProgController extends Controller
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 		->where('ProgVehDelete', 0)
 		->get();
+
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$SolicitudServicio->SolSerStatus='Notificado';
+        $SolicitudServicio->save();
 		// return $programaciones;
-		foreach ($programaciones as $vehiculo) {
-			// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
-			$vehiculo->ProgVehStatus = "Autorizado";
-			$vehiculo->save();
+		
+		// foreach ($programaciones as $vehiculo) {
+		// 	// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
+		// 	$vehiculo->ProgVehStatus = "Autorizado";
+		// 	$vehiculo->save();
+		// }
 
-			$log = new audit();
-			$log->AuditTabla="progvehiculos";
-			$log->AuditType="Autorizado";
-			$log->AuditRegistro=$vehiculo->ID_ProgVeh;
-			$log->AuditUser=Auth::user()->email;
-			$log->Auditlog=$vehiculo->ProgVehStatus;
-			$log->save();
-		}
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Notificado";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$SolicitudServicio->SolSerStatus;
+		$log->save();
 
+		return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
 
-		return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio autorizado correctamente'));
 		
 	}
 

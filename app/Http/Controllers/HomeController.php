@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\SolicitudServicio;
 use App\Vehiculo;
+use App\Permisos;
+use Carbon\Carbon;
 use App\ProgramacionVehiculo;
 
 class HomeController extends Controller
@@ -140,8 +142,30 @@ class HomeController extends Controller
                 return view('home', compact('SolicitudServicios', 'SolicitudServiciosProg', 'Km', 'Pendientes', 'Aprobadas', 'Programadas', 'Recibidas', 'Concialiadas', 'Tratadas', 'Certificadas', 'ProgramacionesHoy', 'ProgramacionesMañana', 'serviciosnoprogramados', 'Vehiculos'));
                 break;
 
-            case 'value':
-                # code...
+            case 'Supervisor':
+                $programacions = DB::table('progvehiculos')
+				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName')
+				->whereIn('progvehiculos.ProgVehFecha', [today(), Carbon::tomorrow()])
+				->get();
+                $personals = DB::table('personals')
+                    ->select('ID_Pers', 'PersFirstName', 'PersLastName')
+                    ->get();
+                $vehiculos = DB::table('vehiculos')
+                    ->select('ID_Vehic','VehicPlaca')
+                    ->get();
+
+                $programacions = $programacions->map(function ($item) {
+                    $programacion = ProgramacionVehiculo::with(['puntosderecoleccion.generadors'])
+                        ->where('ID_ProgVeh', $item->ID_ProgVeh)
+                        // ->where('forevaluation', 0)
+                        ->first();
+                    
+                    $item->puntosderecoleccion =  $programacion->puntosderecoleccion;
+                    return $item;
+                });
+                return view('home', compact('programacions', 'personals', 'vehiculos'));
                 break;
 
             case 'value':

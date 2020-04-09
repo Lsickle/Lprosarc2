@@ -123,7 +123,9 @@ class SolicitudResiduoController extends Controller
 			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
 		]);
 		switch($SolSer->SolSerStatus){
+			case 'Notificado':
 			case 'Programado':
+			case 'Notificado':
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
@@ -141,6 +143,7 @@ class SolicitudResiduoController extends Controller
 				}
 				break;
 			case 'Conciliado':
+			case 'Certificacion':
 				if( $request->input('ValorConciliado') == NULL){
 					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');

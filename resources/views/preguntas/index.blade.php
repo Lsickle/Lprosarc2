@@ -57,7 +57,7 @@
                             <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="question3">
                                 <div class="panel-body">
                                     <span>
-                                        El ícono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra información adicional en los formularios que ayuda a llenar correctamente el campo o también permite brindar más detalles en otros partes del sistema <b>SiReS</b>.
+                                        El ícono <i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i> muestra información adicional en los formularios que ayuda a llenar correctamente el campo o también permite brindar más detalles en otros partes del sistema <b>SisPRO</b>.
                                     </span>
                                 </div>
                             </div>

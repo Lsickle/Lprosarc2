@@ -104,6 +104,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->addParentClass('treeview')
 						->addIf(in_array(Auth::user()->UsRol, Permisos::SERVICIOS) || in_array(Auth::user()->UsRol2, Permisos::SERVICIOS), (Link::toUrl('/solicitud-servicio', '<i class="fas fa-file-invoice"></i> <span>'. trans('adminlte_lang::message.MenuServTitleSidebar').'</span>')))
 						->addIf(in_array(Auth::user()->UsRol, Permisos::PROGRAMACIONES) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMACIONES), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> <span>'. trans('adminlte_lang::message.MenuPrograVehicSidebar').'</span>')))
+						->addIf(in_array(Auth::user()->UsRol, Permisos::ALMACENAMIENTO) || in_array(Auth::user()->UsRol2, Permisos::ALMACENAMIENTO), (Link::toUrl('/almacenamiento', '<i class="fas fa-pallet"></i> <span>'. trans('adminlte_lang::message.MenuAlmacenSidebar').'</span>')))
 						->addClass('treeview-menu')
 					)
 				)

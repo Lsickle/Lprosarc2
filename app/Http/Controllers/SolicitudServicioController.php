@@ -7,9 +7,11 @@ use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
+use App\Mail\NewSolServEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -56,6 +58,7 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
+						// $query->whereIn('solicitud_servicios.SolSerStatus', ['Pendiente']);
 						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
@@ -63,9 +66,12 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+						$query->where('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
 			})
+			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
@@ -73,19 +79,76 @@ class SolicitudServicioController extends Controller
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
 				$servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$servicio->recepcion = null;
+			}
 		}
 		// $Comerciales = DB::table('personals')
-  //                       ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-  //                       ->select('personals.*')
-  //                       ->where('personals.PersDelete', 0)
-  //                       ->where('users.UsRol', 'Comercial')
-  //                       ->orWhere('users.UsRol2', 'Comercial')
-  //                       ->get();
+		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+		// 				->select('personals.*')
+		// 				->where('personals.PersDelete', 0)
+		// 				->where('users.UsRol', 'Comercial')
+		// 				->orWhere('users.UsRol2', 'Comercial')
+		// 				->get();
 		
 		// return $Servicios;
 		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function indexalmacenados(){
+
+		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '!=', 'SolResKgTratado');
+							}])
+							->orderBy('created_at', 'desc')
+							->get();
+		
+		
+		/*se inicializan las variables para el calculo de totales */
+		$total['recibido'] = 0;		
+		$total['conciliado'] = 0;		
+		$total['tratado'] = 0;		
+		$cantidadesXtratamiento = [];
+		
+
+		/* se itera sobre todos los residuos de las solicitudes de servicio */
+		foreach ($SolicitudesServicios as $servicio) {
+			foreach ($servicio->SolicitudResiduo as $residuo) {
+				$collection = collect($cantidadesXtratamiento);
+
+				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
+				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}
+			}
+		}
+		// return $total;
+		
+		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios', 'cantidadesXtratamiento', 'total'));
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -113,7 +176,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -140,7 +203,8 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
-		$SolicitudServicio->SolSerStatus = 'Pendiente';
+		$SolicitudServicio->SolSerStatus = 'Aceptado';
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
 				$SolicitudServicio->SolSerAuditable = 1;
@@ -247,6 +311,37 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+
+		// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'subgerencia@prosarc.com.co',
+								$comercial->PersEmail
+							 ];
+		}else{
+			$comercial = "";
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'subgerencia@prosarc.com.co'
+							 ];	
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+
+		// se envia un correo por cada residuo registrado
+		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 		return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 	}
 
@@ -409,6 +504,25 @@ class SolicitudServicioController extends Controller
 			$SolSerCollectAddress = $SolSerCollectAddress." (".$Municipio2->MunName." - ".$Municipio2->DepartName.")";
 		}
 		$TextProgramacion = null;
+		if($SolicitudServicio->SolSerStatus == 'Notificado'){
+			setlocale(LC_ALL, "es_CO.UTF-8");
+			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+				$horas = " en las horas de la tarde";
+			}
+			else{
+				$horas = " en las horas de la mañana";
+			}
+			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			->where('ProgVehDelete', 0)
+			->get();
+			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+			->where('ProgVehEntrada', null)
+			->where('ProgVehDelete', 0)
+			->get());
+			// $ProgramacionesActivas = ($Programaciones);
+		}
 		if($SolicitudServicio->SolSerStatus == 'Programado'){
 			setlocale(LC_ALL, "es_CO.UTF-8");
 			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
@@ -471,8 +585,45 @@ class SolicitudServicioController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
-		// return $Residuos;
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
+
+		$SolicitudesServicioscount = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo'])
+			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
+			->orderBy('created_at', 'desc')
+			->get();
+		
+		/*se inicializan las variables para el calculo de totales */
+		$total['recibido'] = 0;		
+		$total['conciliado'] = 0;		
+		$total['tratado'] = 0;		
+		$cantidadesXtratamiento = [];
+		
+
+		/* se itera sobre todos los residuos de las solicitudes de servicio */
+		foreach ($SolicitudesServicioscount as $servicio) {
+			foreach ($servicio->SolicitudResiduo as $residuo) {
+				$collection = collect($cantidadesXtratamiento);
+
+				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
+				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
+					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
+					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
+				}
+			}
+		}
+		// return $total;
+		// return $cantidadesXtratamiento;
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento'));
 	}
 
 
@@ -520,7 +671,7 @@ class SolicitudServicioController extends Controller
 						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-							// $Solicitud->SolSerStatus = 'Certificacion';
+							$Solicitud->SolSerStatus = 'Certificacion';
 							$Solicitud->SolServCertStatus = 2;
 							$Solicitud->SolSerDescript = $request->input('solserdescript');
 							$Solicitud->save();
@@ -770,7 +921,7 @@ class SolicitudServicioController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->where('personals.PersDelete', 0)
 				->get();
@@ -803,6 +954,8 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
+
 		if($SolicitudServicio->SolSerStatus === 'Programado'){
 			if($request->input('SolSerTransportador') <> null){
 				if($request->input('SolSerTransportador') <> 98){

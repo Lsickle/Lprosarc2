@@ -171,14 +171,10 @@ class Permisos{
 		vehicle-programacion/index
 		SolicitudServicioController::changestatus
 		SolicitudServicioController::index
-	 */
-	const SOLSERACEPTADO = ['Programador','Tesorería'];
-	/* Using ->
-		solicitud-serv/index
-		SolicitudServicioController::changestatus
-		SolicitudServicioController::index
 		clientes::show
 	 */
+	const SOLSERACEPTADO = ['Programador','Tesorería'];
+
 	const SEDECOMERCIAL = ['Programador','Tesorería','AsistenteComercial','AdministradorBogota','Comercial','JefeComercial'];
 	/* Using ->
 		solicitud-serv/index
@@ -223,6 +219,7 @@ class Permisos{
 	const AsigComercial = ['Programador','AdministradorBogota'];
 	/* Using ->
 		clientes/index
+		cleintes/show requerimientos
 	*/
 
 	const JefeOperaciones = ['Programador','JefeOperaciones'];
@@ -270,6 +267,7 @@ class Permisos{
 	const PERSONALCLIENTE = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial'];
 	const SERVICIOS = ['Programador','AdministradorPlanta','JefeLogistica','AsistenteLogistica','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','AsistenteComercial','JefeComercial'];
 	const PRETRATAMIENTOS = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
+	const ALMACENAMIENTO = ['Programador','AdministradorPlanta','JefeOperaciones','Supervisor','AdministradorBogota','Tesorería','Comercial','JefeComercial'];
 
 }
 

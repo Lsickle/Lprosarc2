@@ -205,7 +205,7 @@
 				</div>
 				<div class="row">
 					{{-- @if(((($SolSer->SolSerStatus <> 'Pendiente' || $SolSer->SolSerStatus <> 'Aprobado' || $SolSer->SolSerStatus <> 'Aceptado') && (!in_array(Auth::user()->UsRol, Permisos::CLIENTE))) || (($SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE)))) && ($Programacion->ProgVehEntrada !== Null)) --}}
-					@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1 ||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
+					@if((($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1 ||  $SolRes->SolResVideoTratamiento == 1 ||  $SolRes->SolResVideoDescargue_Pesaje == 1 ))
 						<tbody hidden onload="renderTable()" id="readyTable">
 							<div class="col-md-12">
 								<center><h3>{{trans('adminlte_lang::message.recursos')}}</h3></center>
@@ -222,7 +222,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoFoto')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado'|| $SolSer->SolSerStatus === 'Tratado'|| $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResFotoDescargue_Pesaje == 1 || $SolRes->SolResFotoDescargue_Pesaje == 0 || $SolRes->SolResFotoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recaddfoto')}}" id="addFoto"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -240,8 +240,8 @@
 																		<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" target="_blank" title="{{trans('adminlte_lang::message.recampliarfoto')}}" style="color:orange;"><label style="cursor:pointer;"><i class="fas fa-expand-arrows-alt"></label></i></a></li>
 																		@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 																			<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Foto->SolResSlug}}`, `{{$Foto->RecTipo}}`, `{{$Foto->RecCarte}}`, `{{$Foto->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletefoto')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-																			<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																		@endif
+																		<li role="presentation"><a href="../../../img/Recursos/{{$Foto->RecSrc}}/{{$Foto->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Foto->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadfoto')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																	</ul>
 																</div>
 															</nav>
@@ -254,7 +254,7 @@
 									<div class="col-md-6" style="margin-bottom:15px;">
 										<h4>
 											{{trans('adminlte_lang::message.recursoVideo')}}
-											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado')|| $SolSer->SolSerStatus === 'Tratado') && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
+											@if(((in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)) && ($SolSer->SolSerStatus === 'Programado' || $SolSer->SolSerStatus === 'Completado' || $SolSer->SolSerStatus === 'Conciliado' || $SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Tratado' || $SolSer->SolSerStatus === 'Notificado')) && ($SolRes->SolResVideoDescargue_Pesaje == 1 || $SolRes->SolResVideoTratamiento == 1))
 												<a method='get' href='#' data-toggle='modal' data-target='#addRecurso' style="color:green" title="{{trans('adminlte_lang::message.recdeletevideo')}}" id="addVideo"><i class="fas fa-plus-circle"></i></a>
 											@endif
 										</h4>
@@ -270,8 +270,8 @@
 																<li role="presentation" class="navbar-brand" style="color:white"><i>{{$Video->RecTipo}}</i></li>
 																@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 																	<li role="presentation"><a href="#" onclick="deleteRecursos(`{{$Video->SolResSlug}}`, `{{$Video->RecTipo}}`, `{{$Video->RecCarte}}`, `{{$Video->SlugRec}}`)" title="{{trans('adminlte_lang::message.recdeletevideo')}}"><label style="color:red; cursor:pointer;"><i class="fas fa-trash-alt"></i></label></a></li>
-																	<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 																@endif
+																<li role="presentation"><a href="../../../img/Recursos/{{$Video->RecSrc}}/{{$Video->RecRmSrc}}" download="{{now().'_'.$Respel->RespelName.'_'.$Video->RecTipo}}" title="{{trans('adminlte_lang::message.recdowloadvideo')}}"><label style="color:pink; cursor:pointer;"><i class="fas fa-download"></i></label></a></li>
 															</ul>
 														</div>
 													</nav>

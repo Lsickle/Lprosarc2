@@ -45,5 +45,8 @@ class ProgramacionVehiculo extends Model
     ];
 
 
-
+    public function servicio()
+    {
+        return $this->belongsTo('App\SolicitudServicio', 'ID_SolSer', 'FK_ProgServi');
+    }
 }

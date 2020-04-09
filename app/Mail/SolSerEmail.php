@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use App\SolicitudServicio;
 use App\Personal;
 
-class SolSerEmail extends Mailable
+class SolSerEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $mail;
+    public $email;
 
     /**
      * Create a new message instance.
@@ -22,8 +22,8 @@ class SolSerEmail extends Mailable
      * @return void
      */
     public function __construct($email)
-    {
-        $this->mail = $email;
+    {   
+        $this->email = $email;
     }
 
     /**
@@ -33,15 +33,8 @@ class SolSerEmail extends Mailable
      */
     public function build()
     {
-        if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($this->mail->SolSerStatus === 'No Conciliado' || $this->mail->SolSerStatus === 'Conciliado')){
-            return $this->from('notificaciones@prosarc.com.co', $this->mail->CliName)
+        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                         ->subject('Solicitud de Servicio')
                         ->markdown('emails.SolSer.email');
-        }else{
-            return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                        ->subject('Solicitud de Servicio')
-                        ->markdown('emails.SolSer.email');
-        }
-        
     }
 }
