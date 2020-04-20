@@ -65,6 +65,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+	/*Route::resource('/vencidos', 'RespelController');*/
+
+
+	Route::get('vencidos', ['as' => 'vencidos', 'uses' => 'RespelController@vencidos']);
+
+
 	Route::resource('/respelspublic', 'RespelPublicController');
 	Route::get('/clientToRp/{id}', 'RespelPublicController@clientToRp');
 	Route::get('/rpToClient/{id}', 'RespelPublicController@rpToClient');

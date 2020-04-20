@@ -28,6 +28,10 @@ use App\Permisos;
 use App\Tarifa;
 use App\Personal;
 use App\Categoryrespelpublic;
+
+use App\Role;
+use App\Cliente;
+
 use Illuminate\Support\Arr;
 
 class RespelController extends Controller
@@ -935,5 +939,19 @@ class RespelController extends Controller
         $log->save();
 
         return redirect()->route('respels.index');
+    }
+
+    public function vencidos()
+    {
+        $user = Auth::user()->UsRol; 
+        $requerimientos = Requerimiento::with(['respel.cotizacion.sede.clientes', 'tarifa.rangos'])
+        ->where('ofertado', '1')->get();
+
+        /*$requerimientos['personal'] = Personal::all();*/
+
+        $personals = Personal::all();
+
+        /*return $personal;*/
+        return view ('respels.vencidos', compact('requerimientos', 'user', 'personals'));
     }
 }
