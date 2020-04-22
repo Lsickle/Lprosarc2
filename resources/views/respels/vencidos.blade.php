@@ -21,15 +21,17 @@
 									<tr>
 										@if($user == 'Comercial')
 											<th>Nombre</th>
-											<th>Tarifa</th>
+											<th>Tarifa - Peso</th>
 											<th>Fecha de Vencimiento</th>
 											<th>Cliente</th>
+											<th>Editar</th>
 										@else
 											<th>Nombre</th>
-											<th>Tarifa</th>
+											<th>Tarifa - Peso</th>
 											<th>Fecha de Vencimiento</th>
 											<th>Cliente</th>
 											<th>Comercial Asignado</th>
+											<th>Editar</th>
 										@endif
 									</tr>
 								</thead>
@@ -39,22 +41,23 @@
 											@foreach($requerimientos as $requerimiento)
 												<tr>
 													<th>{{$requerimiento->respel->RespelName}}</th>
-													<th class="text-center">
+													<th>
 													@foreach($requerimiento->tarifa->rangos as $rango)
-														<li>{{$rango->TarifaPrecio}}</li>
+														<li>${{$rango->TarifaPrecio}} - {{$rango->TarifaDesde}}</li>
 													@endforeach
 													</th>
 													<th>{{$requerimiento->tarifa->TarifaVencimiento}}</th>
 													<th>{{$requerimiento->respel->cotizacion->sede->clientes->CliName}}</th>
+													<th class="text-center"><a href="/respels/{{$requerimiento->respel->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>{{-- <button class="btn btn-warning">Editar</button> --}}</th>
 												</tr>
 											@endforeach
 										@else
 											@foreach($requerimientos as $requerimiento)
 												<tr>
 													<th>{{$requerimiento->respel->RespelName}}</th>
-													<th class="text-center">
+													<th>
 													@foreach($requerimiento->tarifa->rangos as $rango)
-														<li>{{$rango->TarifaPrecio}}</li>
+														<li>${{$rango->TarifaPrecio}} - {{$rango->TarifaDesde}}</li>
 													@endforeach
 													</th>
 													<th>{{$requerimiento->tarifa->TarifaVencimiento}}</th>
@@ -66,6 +69,7 @@
 															@endif
 														@endforeach
 													</th>
+													<th class="text-center"><a href="/respels/{{$requerimiento->respel->RespelSlug}}/edit" class="btn btn-warning">{{ trans('adminlte_lang::message.edit') }}</a>{{-- <button class="btn btn-warning">Editar</button> --}}</th>
 												</tr>
 											@endforeach
 										@endif

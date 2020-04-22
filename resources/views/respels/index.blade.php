@@ -21,7 +21,9 @@
 						<a href="respelspublic/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
 				@endif
 
-				<a href="vencidos" class="btn btn-primary pull-right">Vencidos</a>
+				@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+					<a href="vencidos" class="btn btn-primary pull-right"  style="float: right; margin-right: 0.5em;">Vencidos</a>
+				@endif
 
 				</div>
 				<!-- /.box-header -->

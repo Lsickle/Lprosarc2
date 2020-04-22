@@ -943,15 +943,17 @@ class RespelController extends Controller
 
     public function vencidos()
     {
-        $user = Auth::user()->UsRol; 
-        $requerimientos = Requerimiento::with(['respel.cotizacion.sede.clientes', 'tarifa.rangos'])
-        ->where('ofertado', '1')->get();
+        if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
+            $user = Auth::user()->UsRol; 
+            $requerimientos = Requerimiento::with(['respel.cotizacion.sede.clientes', 'tarifa.rangos'])
+            ->where('ofertado', '1')->get();
+            /*$requerimientos['personal'] = Personal::all();*/
+            $personals = Personal::all();
+            /*return $personal;*/
+            return view ('respels.vencidos', compact('requerimientos', 'user', 'personals'));
 
-        /*$requerimientos['personal'] = Personal::all();*/
-
-        $personals = Personal::all();
-
-        /*return $personal;*/
-        return view ('respels.vencidos', compact('requerimientos', 'user', 'personals'));
+        }else{
+            abort(403); 
+        }
     }
 }
