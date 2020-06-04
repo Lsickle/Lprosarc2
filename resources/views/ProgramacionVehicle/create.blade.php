@@ -81,6 +81,26 @@
 										<option onclick="TranspotadorAlquilado()" value="1">Alquilado</option>
 									</select>
 								</div>
+
+								{{-- Div correspondiente a el campo de precintos --}}
+
+								<div class="form-group col-md-12" id="containerDePrecintos">
+									<div class="row" id="precintos0">
+										<div class="col-md-12">
+											<label>Precintos</label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="ProgVehPrecintos[]" class="form-control">
+										</div>
+										<div class="col-md-2">
+											<a class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</a>
+										</div>
+										<div class="col-md-2">
+											<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(0)">Borrar</button>
+										</div>
+									</div>
+								</div>
+
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label>Transportador</label>
 									<small class="help-block with-errors">*</small>
@@ -91,6 +111,8 @@
 										@endforeach
 									</select>
 								</div>
+
+
 								<div class="form-group col-md-12 vehiculoAlquilado" hidden="true">
 									<label for="ProgVehDocConductorEXT">{{ trans('adminlte_lang::message.progvehdocext') }}</label>
 									<input type="text" maxlength="15" data-minlength="6" class="form-control document" id="ProgVehDocConductorEXT"  name="ProgVehDocConductorEXT">
@@ -583,6 +605,42 @@
 		}
 	});
 	@endif
+</script>
+
+<script type="text/javascript">
+	
+
+	var contadorPrecintos = 0;
+	function addPrecinto(){
+		contadorPrecintos++
+		container = $('#containerDePrecintos')
+		container.append(`<div class="row" id="precintos`+contadorPrecintos+`">
+			<div class="col-md-12">
+				<label for="ProgVehPrecintos`+contadorPrecintos+`">Precintos</label>
+			</div>
+			<div class="col-md-8">
+				<input type="text" name="ProgVehPrecintos[]" class="form-control" id="ProgVehPrecintos`+contadorPrecintos+`">
+			</div>
+			<div class="col-md-2">
+				<a class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto(`+contadorPrecintos+`)">Añadir Precinto</a>
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(`+contadorPrecintos+`)">Borrar</button>
+			</div>
+		</div>`)
+	};
+
+
+
+	function dropPrecinto(id){
+		var id = $('#precintos'+id).remove();
+	};
+
+
+	
+
+
+
 </script>
 
 @endsection

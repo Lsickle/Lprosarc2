@@ -13,7 +13,7 @@ class Tarifa extends Model
     protected $primaryKey = 'ID_Tarifa';
 
     public function requerimiento(){
-    	return $this->belongsTo('App\Requerimiento',  'FK_TarifaReq', 'ID_Req');
+    	return $this->belongsTo('App\Requerimiento', 'ID_Req', 'FK_TarifaReq');
     }
 
     public function rangos(){

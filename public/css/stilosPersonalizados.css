@@ -156,6 +156,19 @@ button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
 }
+
+.addprecinto {
+	margin: 0px 0px 0px -30px;
+}
+
+.dropprecinto {
+	margin: 0px 0px 0px -5px;
+}
+
+.dropprecintoedit {
+	margin: 0px 0px 0px -30px;
+	padding: 6px 18px 6px 18px;
+}
 /*Stilos del Loading con el logo de Prosarc*/
 #contenedor_carga{
 	background-color: #ecf0f5;

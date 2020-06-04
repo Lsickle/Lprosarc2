@@ -8,7 +8,7 @@ class ProgramacionVehiculo extends Model
 {
     protected $table = 'progvehiculos';
     
-    protected $fillable = ['ProgVehFecha', 'progVehKm', 'ProgVehTurno', 'ProgVehtipo', 'ProgVehEntrada', 'ProgVehSalida','ProgVehDelete','FK_ProgVehiculo','FK_ProgMan','FK_ProgConductor','FK_ProgAyudante', 'FK_ProgServi', 'ProgVehDocConductorEXT', 'ProgVehNameConductorEXT', 'ProgVehDocAuxiliarEXT', 'ProgVehNameAuxiliarEXT', 'ProgVehPlacaEXT', 'ProgVehTipoEXT', 'ProgVehStatus'];
+    protected $fillable = ['ProgVehFecha', 'progVehKm', 'ProgVehTurno', 'ProgVehtipo', 'ProgVehEntrada', 'ProgVehSalida','ProgVehDelete','FK_ProgVehiculo','FK_ProgMan','FK_ProgConductor','FK_ProgAyudante', 'FK_ProgServi', 'ProgVehDocConductorEXT', 'ProgVehNameConductorEXT', 'ProgVehDocAuxiliarEXT', 'ProgVehNameAuxiliarEXT', 'ProgVehPlacaEXT', 'ProgVehTipoEXT', 'ProgVehStatus', 'ProgVehPrecintos'];
 
     protected $primaryKey = 'ID_ProgVeh';
 
@@ -33,6 +33,17 @@ class ProgramacionVehiculo extends Model
     {
         return $this->belongsToMany('App\GenerSede', 'recolect', 'FK_ColectProg', 'FK_ColectSgen');
     }
+
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'ProgVehPrecintos' => 'array',
+    ];
+
 
     public function servicio()
     {
