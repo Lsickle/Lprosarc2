@@ -107,10 +107,18 @@ class clientcontoller extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             if(Auth::user()->FK_UserPers === NULL){
                 $Departamentos = Departamento::all();
+                $comerciales = DB::table('personals')
+                ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->select('personals.*')
+                ->where('personals.PersDelete', 0)
+                ->where('users.UsRol', 'Comercial')
+                ->orWhere('users.UsRol2', 'Comercial')
+                ->get();
+
                 if (old('FK_SedeMun') !== null){
                     $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
                 }
-                return view('clientes.create2', compact('Departamentos', 'Municipios'));
+                return view('clientes.create2', compact('Departamentos', 'Municipios', 'comerciales'));
             }else{
                 return redirect()->route('home');
             }
@@ -127,6 +135,8 @@ class clientcontoller extends Controller
      */
     public function store(ClienteStoreRequest $request)
     {
+
+        // return $request;
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)){
             $Cliente = new Cliente();
             $Cliente->CliNit = $request->input('CliNit');
@@ -135,6 +145,8 @@ class clientcontoller extends Controller
             $Cliente->CliCategoria = 'Cliente';
             $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliShortname);
             $Cliente->CliDelete = 0;
+            $Cliente->CliComercial = $request->input('CliComercial');
+            $Cliente->CliShortname = $request->input('CliName');
             // $Folder = $request->input('CliShortname');
             // if ($request->hasfile('CliRut')){
             //     $Rut = 'Rut - '.date('j-m-y').hash('sha256', rand().time().$request->CliRut->getClientOriginalName()).'.'.$request->CliRut->extension();
