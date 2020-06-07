@@ -110,6 +110,7 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->get();
+            $tratamientos = all();
             return view('respels.create', compact('Sede'));
         }elseif(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
             $Sedes = DB::table('clientes')
