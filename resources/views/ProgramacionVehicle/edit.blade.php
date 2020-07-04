@@ -216,6 +216,7 @@
 															<option value="{{$vehiculo->ID_Vehic}}" {{old('FK_ProgVehiculo') == $vehiculo->ID_Vehic ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 														@endforeach
 													</select>
+
 												</div>
 												<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 													<label for="modalFK_ProgConductor">{{ trans('adminlte_lang::message.progvehicconduc') }}</label>
@@ -305,6 +306,9 @@
 											<option value="{{$vehiculo->ID_Vehic}}" {{$vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo ? 'selected' : ''}}>{{$vehiculo->VehicPlaca}}</option>
 										@endforeach
 									</select>
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+										<input type="text" hidden="true" value="{{$programacion->FK_ProgVehiculo}}" name="FK_ProgVehiculo">
+									@endif
 									{{-- @foreach($vehiculos as $vehiculo)
 										@if($vehiculo->ID_Vehic == $programacion->FK_ProgVehiculo)
 											<input name="FK_ProgVehiculo" hidden aria-hidden="true" value="{{$vehiculo->ID_Vehic}}">
@@ -334,6 +338,9 @@
 											<option value="{{$conductor->ID_Pers}}" {{$conductor->ID_Pers == $programacion->FK_ProgConductor ? 'selected' : ''}}>{{$conductor->PersFirstName.' '.$conductor->PersLastName}}</option>
 										@endforeach
 									</select>
+									@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+										<input type="text" hidden="true" value="{{$programacion->FK_ProgConductor}}" name="FK_ProgConductor">
+									@endif
 									{{-- @foreach($conductors as $conductor)
 										@if($conductor->ID_Pers == $programacion->FK_ProgConductor)
 											<input name="FK_ProgConductor" hidden aria-hidden="true" value="{{$conductor->ID_Pers}}">
@@ -373,6 +380,35 @@
 								        @endforeach
 								    </select>
 								</div>
+
+
+
+
+
+
+								@foreach($programacion->ProgVehPrecintos as $precinto)
+									<div class="col-md-6" id="containerDePrecintos">
+										<div class="row" id="precintos0">
+											<div class="col-md-10">
+												<label>Precintos</label>
+											</div>
+											<div class="form-group col-md-10">
+												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
+											</div>
+											<div class="col-md-2">
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+											</div>
+										</div>
+									</div>
+								@endforeach
+
+
+
+
+
+
+
+
 								<div class="form-group col-md-6 col-md-offset-5">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
@@ -383,11 +419,22 @@
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
-									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
-									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
-									@endif
-									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									<div class="col-md-2">
+										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+										<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+										@endif
+									</div>
+									<div class="col-md-2">
+										<a class="btn btn-primary addprecinto pull-left" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</a>
+									</div>
+
+									<div class="col-md-8">
+										<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									</div>
 								</div>
+								{{-- <div class="col-md-2">
+									<a class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</a>
+								</div> --}}
 							</div>
 							<!-- /.box-body -->
 						</form>
@@ -480,6 +527,33 @@
 									<label for="ProgVehTipoEXT">{{ trans('adminlte_lang::message.progvehtipoext') }}</label><small class="help-block with-errors">*</small>
 									<input type="text" maxlength="16" class="form-control" id="ProgVehTipoEXT"  name="ProgVehTipoEXT" value="{{$programacion->ProgVehTipoEXT}}">
 								</div>
+
+
+
+
+
+								<div class="col-md-6" id="containerDePrecintos">
+									<div class="row" id="precintos0">
+										@foreach($programacion->ProgVehPrecintos as $precinto)
+											<div class="form-group col-md-8">
+												<label>Precintos</label>
+												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
+											</div>
+											<div class="col-md-2">
+												<button class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</button>
+											</div>
+											<div class="col-md-2">
+												<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(0)">Borrar</button>
+											</div>
+										@endforeach
+									</div>
+								</div>
+
+
+
+
+
+
 								<div class="col-md-6">
 								    <label for="select2sedes" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'><ul class='list-group'>
 									    @foreach($recolectPointsService as $punto)
@@ -529,7 +603,6 @@
 										@endforeach
 									</select>
 								</div>
-
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
 									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
@@ -766,5 +839,32 @@
 		}
 	});
 	@endif
+	</script>
+	<script type="text/javascript">
+		
+		var contadorPrecintos = 0;
+		function addPrecinto(){
+			contadorPrecintos++
+			container = $('#containerDePrecintos')
+			container.append(`
+			<div class="row" id="precintos`+contadorPrecintos+`">
+				<div class="col-md-12">
+					<label for="ProgVehPrecintos`+contadorPrecintos+`">Precintos</label>
+				</div>
+				<div class="col-md-10">
+					<input type="text" name="ProgVehPrecintos[]" class="form-control" id="ProgVehPrecintos`+contadorPrecintos+`">
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(`+contadorPrecintos+`)">Borrar</button>
+				</div>
+			</div>`)
+		};
+
+
+
+		function dropPrecinto(id){
+			var id = $('#precintos'+id).remove();
+		};
+
 	</script>
 @endsection

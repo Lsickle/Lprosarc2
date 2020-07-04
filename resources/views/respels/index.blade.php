@@ -20,6 +20,11 @@
 				@if(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC))
 						<a href="respelspublic/create" class="btn btn-primary" style="float: right; margin-right: 0.5em;">Crear Residuo Común</a>
 				@endif
+
+				@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+					<a href="vencidos" class="btn btn-primary pull-right"  style="float: right; margin-right: 0.5em;">Vencidos</a>
+				@endif
+
 				</div>
 				<!-- /.box-header -->
 				<div class="box box-info">

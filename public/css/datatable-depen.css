@@ -643,7 +643,6 @@ a.dt-button {
   user-select: none;
   text-decoration: none;
   outline: none;
-  text-overflow: ellipsis;
 }
 button.dt-button.disabled,
 div.dt-button.disabled,
@@ -770,7 +769,11 @@ div.dt-button-collection {
   z-index: 2002;
   border-radius: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
+  -webkit-column-gap: 8px;
+  -moz-column-gap: 8px;
+  -ms-column-gap: 8px;
+  -o-column-gap: 8px;
+  column-gap: 8px;
 }
 div.dt-button-collection button.dt-button,
 div.dt-button-collection div.dt-button,
@@ -811,7 +814,7 @@ div.dt-button-collection.fixed {
   border-radius: 0;
 }
 div.dt-button-collection.fixed.two-column {
-  margin-left: -200px;
+  margin-left: -150px;
 }
 div.dt-button-collection.fixed.three-column {
   margin-left: -225px;
@@ -819,22 +822,12 @@ div.dt-button-collection.fixed.three-column {
 div.dt-button-collection.fixed.four-column {
   margin-left: -300px;
 }
-div.dt-button-collection > :last-child {
-  display: block !important;
-  -webkit-column-gap: 8px;
-  -moz-column-gap: 8px;
-  -ms-column-gap: 8px;
-  -o-column-gap: 8px;
-  column-gap: 8px;
-}
-div.dt-button-collection > :last-child > * {
+div.dt-button-collection > * {
   -webkit-column-break-inside: avoid;
   break-inside: avoid;
 }
 div.dt-button-collection.two-column {
-  width: 400px;
-}
-div.dt-button-collection.two-column > :last-child {
+  width: 300px;
   padding-bottom: 1px;
   -webkit-column-count: 2;
   -moz-column-count: 2;
@@ -844,8 +837,6 @@ div.dt-button-collection.two-column > :last-child {
 }
 div.dt-button-collection.three-column {
   width: 450px;
-}
-div.dt-button-collection.three-column > :last-child {
   padding-bottom: 1px;
   -webkit-column-count: 3;
   -moz-column-count: 3;
@@ -855,8 +846,6 @@ div.dt-button-collection.three-column > :last-child {
 }
 div.dt-button-collection.four-column {
   width: 600px;
-}
-div.dt-button-collection.four-column > :last-child {
   padding-bottom: 1px;
   -webkit-column-count: 4;
   -moz-column-count: 4;
