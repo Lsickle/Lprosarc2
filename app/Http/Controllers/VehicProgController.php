@@ -155,7 +155,7 @@ class VehicProgController extends Controller
 	public function store(Request $request)
 	{
 		$validate = $request->validate([
-			'ProgVehPrecintos'   =>   'max:6|min:6'
+			// 'ProgVehPrecintos'   =>   'max:16|min:1'
 		]);
 		/*return $request;*/
 		$programacion = new ProgramacionVehiculo();
@@ -776,7 +776,7 @@ class VehicProgController extends Controller
 	public function update(Request $request, $id)
 	{
 		$validate = $request->validate([
-			'ProgVehPrecintos'   =>   'max:6|min:6'
+			// 'ProgVehPrecintos'   =>   'max:16|min:6'
 		]);
 
 
@@ -969,7 +969,7 @@ class VehicProgController extends Controller
 		->get();
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$SolicitudServicio->SolSerStatus='Notificado';
+		$SolicitudServicio->SolSerStatus='Cerrada';
         $SolicitudServicio->save();
 		// return $programaciones;
 		

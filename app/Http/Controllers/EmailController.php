@@ -68,7 +68,7 @@ class EmailController extends Controller
                 ->send(new SolSerEmail($email));
             }
             
-        }elseif($SolSer->SolSerStatus === 'Notificado'){
+        }elseif($SolSer->SolSerStatus === 'Cerrada'){
             $email = DB::table('solicitud_servicios')
                 ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')

@@ -35,6 +35,18 @@
             $text = "ha sido Programada para $TextProgramacion";
         @endphp
         @break
+    @case('Cerrada')
+        @php
+            setlocale(LC_ALL, "es_CO.UTF-8");
+            if(date('H', strtotime($email->ProgVehSalida)) >= 12){
+                $horas = " en las horas de la tarde";
+            }else{
+                $horas = " en las horas de la mañana";
+            }
+            $TextProgramacion = "el día ".strftime("%d", strtotime($email->ProgVehSalida))." del mes de ".strftime("%B", strtotime($email->ProgVehSalida)).$horas;
+            $text = "ha sido Programada para $TextProgramacion";
+        @endphp
+        @break
     @case('Completado')
         @php
             $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el botón (Conciliado) para dar inicio al tratamiento de los residuos';

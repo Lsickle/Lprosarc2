@@ -385,22 +385,36 @@
 
 
 
-
-								@foreach($programacion->ProgVehPrecintos as $precinto)
-									<div class="col-md-6" id="containerDePrecintos">
-										<div class="row" id="precintos0">
-											<div class="col-md-10">
-												<label>Precintos</label>
+								<div class="col-md-6" id="containerDePrecintos">
+								@if ($programacion->ProgVehPrecintos != null)
+									@foreach($programacion->ProgVehPrecintos as $precinto)
+											<div class="row" id="precintos0">
+												<div class="col-md-10">
+													<label>Precintos</label>
+												</div>
+												<div class="form-group col-md-10">
+													<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
+												</div>
+												<div class="col-md-2">
+													<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+												</div>
 											</div>
-											<div class="form-group col-md-10">
-												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
-											</div>
-											<div class="col-md-2">
-												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
-											</div>
+									@endforeach
+								@else
+									<div class="row" id="precintos0">
+										<div class="col-md-10">
+											<label>Precintos</label>
+										</div>
+										<div class="form-group col-md-10">
+											<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="'sin precintos'">
+										</div>
+										<div class="col-md-2">
+											<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
 										</div>
 									</div>
-								@endforeach
+								@endif
+								</div>
+								
 
 
 
