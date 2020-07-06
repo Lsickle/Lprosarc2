@@ -110,8 +110,9 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->get();
-            $tratamientos = all();
-            return view('respels.create', compact('Sede'));
+            $tratamientos = Tratamiento::all();
+
+            return view('respels.create', compact('Sede', 'tratamientos'));
         }elseif(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
             $Sedes = DB::table('clientes')
                 ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
@@ -119,8 +120,7 @@ class RespelController extends Controller
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
             $categories = Categoryrespelpublic::all();
-
-            return view('respels.create', compact('Sedes', 'categories'));
+            return view('respels.create', compact('Sedes', 'categories', 'tratamientos'));
         }else{
             abort(403);
         }
@@ -222,7 +222,7 @@ class RespelController extends Controller
             }else{
                 $respel->SustanciaControlada = 0;
             }
-            $respel->RespelStatus = "Pendiente";
+            $respel->RespelStatus = "Aprobado";
             // $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
@@ -240,6 +240,28 @@ class RespelController extends Controller
             $respel->RespelDelete = 0;
             $respel->RespelDeclaracion = $request['RespelDeclaracion'][$x];
             $respel->save();
+
+            $requerimiento = new Requerimiento();
+            $requerimiento->ofertado=1;
+            $requerimiento->FK_ReqRespel=$respel->ID_Respel;
+            $requerimiento->forevaluation=1;
+            $requerimiento->FK_ReqTrata=$request['RespelTratamiento'][$x];
+            $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
+            $requerimiento->save();
+
+            $tarifa = new Tarifa();
+            $tarifa->TarifaFrecuencia='Servicio';
+            $tarifa->TarifaVencimiento='2025-11-15';
+            $tarifa->Tarifatipo='Kg';
+            $tarifa->TarifaDelete=0;
+            $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+            $tarifa->save();
+
+            $rango = new Rango();
+            $rango->TarifaPrecio=1500;
+            $rango->TarifaDesde=1;
+            $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+            $rango->save();
 
             if($respel->RespelStatus === "Pendiente"){
                 /*se verifican los datos de las sede y y cliente segun el usuarios que registra el residuo*/
@@ -389,6 +411,9 @@ class RespelController extends Controller
 
                 /*el Cliente solo puede editar pendientes e incompletos*/
                 switch ($statusRespel) {
+                    case 'Aprobado':
+                        return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
+                        break;
                     case 'Pendiente':
                         return view('respels.edit', compact('Respels', 'Sede', 'Requerimientos', 'tratamientos'));
                         break;
@@ -604,8 +629,6 @@ class RespelController extends Controller
         // return $request->Opcion[0]['TarifaFrecuencia'];
         $respel = Respel::where('RespelSlug', $id)->first();
         $opciones = $request->Opcion;
-        // return $request;
-        // return $tarifasparaBorrar;
 
         if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             /*se eliminan los requerimientos relacionados*/
