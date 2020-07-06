@@ -26,7 +26,7 @@ class AddColumnProgVehPrecintosToProgvehiculosTable extends Migration
     public function down()
     {
         Schema::table('progvehiculos', function (Blueprint $table) {
-            //
+            $table->dropColumn('ProgVehPrecintos');
         });
     }
 }
