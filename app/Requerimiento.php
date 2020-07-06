@@ -31,7 +31,7 @@
 
 		public function tratamiento()
 		{
-			return $this->belongsTo('App\Tratamiento', 'FK_TrataReq', 'ID_Trat');
+			return $this->belongsTo('App\Tratamiento', 'FK_ReqTrata', 'ID_Trat');
 		}
 
 		//lista las pretratamientos relacionados usando muchos a muchos
