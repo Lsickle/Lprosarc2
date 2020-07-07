@@ -168,7 +168,7 @@ class VehicProgController extends Controller
 		$programacion->ProgVehTurno = $turno;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
-
+		$programacion->ProgVehEntrada = now();
 
 		/*typetransportador = 0 -> transporte prosarc*/
 		/*typetransportador = 1 -> transporte alquilado*/
@@ -177,7 +177,7 @@ class VehicProgController extends Controller
 				/*ProgVehtipo = 0 -> transporte externo*/
 				/*ProgVehtipo = 1 -> transporte interno prosarc*/
 				/*ProgVehtipo = 2 -> transporte alquilado*/
-
+				
 				$programacion->ProgVehtipo = 1;
 				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 				$programacion->ProgVehColor = $request->input('ProgVehColor');
@@ -969,7 +969,7 @@ class VehicProgController extends Controller
 		->get();
 
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$SolicitudServicio->SolSerStatus='Cerrada';
+		$SolicitudServicio->SolSerStatus='Notificado';
         $SolicitudServicio->save();
 		// return $programaciones;
 		

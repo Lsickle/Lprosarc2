@@ -203,7 +203,7 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
-		$SolicitudServicio->SolSerStatus = 'Aceptado';
+		$SolicitudServicio->SolSerStatus = 'Aprobado';
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
@@ -732,7 +732,7 @@ class SolicitudServicioController extends Controller
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
-			$SolicitudNew->SolSerStatus = 'Cerrada';
+			$SolicitudNew->SolSerStatus = 'Aprobado';
 			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
 			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
 			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
