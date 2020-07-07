@@ -77,8 +77,8 @@
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.tarjetaemergencia') }}</label>
-			<small class="help-block with-errors"></small>
-			<input name="RespelTarj[]" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+			<small class="help-block with-errors">*</small>
+			<input name="RespelTarj[]" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf" required>
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label style="margin-bottom: 3px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>{{ trans('adminlte_lang::LangRespel.foto') }}</b>" data-content="{{ trans('adminlte_lang::LangRespel.fotopopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.fotolabel') }}</label>

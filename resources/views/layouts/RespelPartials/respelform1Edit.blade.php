@@ -127,7 +127,7 @@
 				</div>
 				@else
 				<div class="input-group">
-					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+					<input required name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>

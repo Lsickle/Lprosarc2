@@ -732,7 +732,7 @@ class SolicitudServicioController extends Controller
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
-			$SolicitudNew->SolSerStatus = 'Pendiente';
+			$SolicitudNew->SolSerStatus = 'Cerrada';
 			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
 			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
 			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
