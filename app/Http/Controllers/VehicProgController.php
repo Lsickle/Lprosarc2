@@ -868,10 +868,10 @@ class VehicProgController extends Controller
 		}
 		$SolicitudServicio->save();
 
-		if ($programacion->ProgVehStatus == 'Cerrada') {
-			$destinatarios = ['recepcionpda@prosarc.com.co'];
-			Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
-		}
+		// if ($programacion->ProgVehStatus == 'Cerrada') {
+		// 	$destinatarios = ['recepcionpda@prosarc.com.co'];
+		// 	Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
+		// }
 
 		$log = new audit();
 		$log->AuditTabla="progvehiculos";
