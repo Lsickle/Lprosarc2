@@ -968,7 +968,6 @@ class VehicProgController extends Controller
 		->where('ProgVehDelete', 0)
 		->get();
 
-		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$SolicitudServicio->SolSerStatus='Notificado';
         $SolicitudServicio->save();
 		// return $programaciones;
