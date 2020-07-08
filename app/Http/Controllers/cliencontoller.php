@@ -147,6 +147,8 @@ class clientcontoller extends Controller
             $Cliente->CliDelete = 0;
             $Cliente->CliComercial = $request->input('CliComercial');
             $Cliente->CliShortname = $request->input('CliName');
+            $Cliente->CliStatus = 'Autorizado';
+            $Cliente->TipoFacturacion = 'Credito';
             // $Folder = $request->input('CliShortname');
             // if ($request->hasfile('CliRut')){
             //     $Rut = 'Rut - '.date('j-m-y').hash('sha256', rand().time().$request->CliRut->getClientOriginalName()).'.'.$request->CliRut->extension();
