@@ -416,7 +416,7 @@
 			eventSources:[{
 				events: [
 					@foreach($programacions as $programacion)
-						@if(($programacion->ProgVehtipo == 1 || $programacion->ProgVehtipo == 2) && ($programacion->ProgVehEntrada == null))
+						@if(($programacion->ProgVehtipo == 1 || $programacion->ProgVehtipo == 2))
 						{
 							id: '{{$programacion->ID_ProgVeh}}',
 							@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))

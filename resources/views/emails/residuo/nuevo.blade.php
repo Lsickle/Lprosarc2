@@ -5,7 +5,7 @@
 @component('mail::message')
 # Nuevo residuo registrado
 
-El residuo <b>{{$respel->RespelName}}</b> ha sido registrado por el Cliente <b>{{$respel['cliente']->CliName}} -> {{$respel['cliente']->SedeName}}</b> y debe ser evaluado por el área de Operaciones para asignar los tratamientos viables que correspondan.<br><br>
+El residuo <b>{{$respel->RespelName}}</b> ha sido registrado por el Cliente <b>{{$respel['cliente']->CliName}} -> {{$respel['cliente']->SedeName}}</b> y deberia ser revisado por el área de Operaciones para validar el tratamiento elegido por el Cliente.<br><br>
 
 Por favor revise la información  del residuo, usando el siguiente botón<br><br>
 

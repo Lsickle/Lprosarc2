@@ -155,7 +155,7 @@ class VehicProgController extends Controller
 	public function store(Request $request)
 	{
 		$validate = $request->validate([
-			'ProgVehPrecintos'   =>   'max:6|min:6'
+			// 'ProgVehPrecintos'   =>   'max:16|min:1'
 		]);
 		/*return $request;*/
 		$programacion = new ProgramacionVehiculo();
@@ -168,7 +168,7 @@ class VehicProgController extends Controller
 		$programacion->ProgVehTurno = $turno;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
 		$programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
-
+		$programacion->ProgVehEntrada = now();
 
 		/*typetransportador = 0 -> transporte prosarc*/
 		/*typetransportador = 1 -> transporte alquilado*/
@@ -177,7 +177,7 @@ class VehicProgController extends Controller
 				/*ProgVehtipo = 0 -> transporte externo*/
 				/*ProgVehtipo = 1 -> transporte interno prosarc*/
 				/*ProgVehtipo = 2 -> transporte alquilado*/
-
+				
 				$programacion->ProgVehtipo = 1;
 				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 				$programacion->ProgVehColor = $request->input('ProgVehColor');
@@ -776,7 +776,7 @@ class VehicProgController extends Controller
 	public function update(Request $request, $id)
 	{
 		$validate = $request->validate([
-			'ProgVehPrecintos'   =>   'max:6|min:6'
+			// 'ProgVehPrecintos'   =>   'max:16|min:6'
 		]);
 
 
@@ -868,10 +868,10 @@ class VehicProgController extends Controller
 		}
 		$SolicitudServicio->save();
 
-		if ($programacion->ProgVehStatus == 'Cerrada') {
-			$destinatarios = ['recepcionpda@prosarc.com.co'];
-			Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
-		}
+		// if ($programacion->ProgVehStatus == 'Cerrada') {
+		// 	$destinatarios = ['recepcionpda@prosarc.com.co'];
+		// 	Mail::to($destinatarios)->send(new VehiculoRecibidoEmail($SolicitudServicio));
+		// }
 
 		$log = new audit();
 		$log->AuditTabla="progvehiculos";
@@ -968,7 +968,6 @@ class VehicProgController extends Controller
 		->where('ProgVehDelete', 0)
 		->get();
 
-		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$SolicitudServicio->SolSerStatus='Notificado';
         $SolicitudServicio->save();
 		// return $programaciones;

@@ -127,7 +127,7 @@
 				</div>
 				@else
 				<div class="input-group">
-					<input name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+					<input required name="RespelTarj" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 					<div class="input-group-btn">
 						<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
 					</div>
@@ -184,6 +184,18 @@
 				@else
 					@include('layouts.RespelPartials.layoutsRes.MasivoEditDoc')
 				@endif
+			</div>
+			<div class="col-md-6 form-group has-feedback">
+				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>tratamiento<b>" data-content="Elija el tratamiento para su residuo según lo que se acordó con el representante comercial de PROSARC S.A. ESP">
+					<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Tratamiento
+				</label>
+				<small class="help-block with-errors">*</small>
+				<select id="selectTratamiento" name="RespelTratamiento" class="form-control" required>
+					<option value="">Seleccione un Tratamiento</option>
+					@foreach ($tratamientos as $tratamiento)
+						<option value="{{$tratamiento->ID_Trat}}">{{$tratamiento->TratName }}</option>
+					@endforeach
+				</select>
 			</div>
 			<div class="col-md-6 form-group has-feedback">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.aceptaciontittlepopover') }}" data-content="{{ trans('adminlte_lang::LangRespel.aceptacioninfopopover') }}">

@@ -385,22 +385,36 @@
 
 
 
-
-								@foreach($programacion->ProgVehPrecintos as $precinto)
-									<div class="col-md-6" id="containerDePrecintos">
-										<div class="row" id="precintos0">
-											<div class="col-md-10">
-												<label>Precintos</label>
+								<div class="col-md-6" id="containerDePrecintos">
+								@if ($programacion->ProgVehPrecintos != null)
+									@foreach($programacion->ProgVehPrecintos as $precinto)
+											<div class="row" id="precintos0">
+												<div class="col-md-10">
+													<label>Precintos</label>
+												</div>
+												<div class="form-group col-md-10">
+													<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
+												</div>
+												<div class="col-md-2">
+													<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+												</div>
 											</div>
-											<div class="form-group col-md-10">
-												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
-											</div>
-											<div class="col-md-2">
-												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
-											</div>
+									@endforeach
+								@else
+									<div class="row" id="precintos0">
+										<div class="col-md-10">
+											<label>Precintos</label>
+										</div>
+										<div class="form-group col-md-10">
+											<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="'sin precintos'">
+										</div>
+										<div class="col-md-2">
+											<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
 										</div>
 									</div>
-								@endforeach
+								@endif
+								</div>
+								
 
 
 
@@ -643,15 +657,15 @@
 			@if($programacion->ProgVehEntrada !== null)
 				console.log('no tiene fecha de entrada');
 				// $(".select2-selection").css("background-image", "none");
-				$("#ProgVehFecha").prop("disabled", true);
-				$("#ProgVehSalida").prop("disabled", true);
-				$("#FK_ProgVehiculo").prop("disabled", true);
-				$("#FK_ProgConductor").prop("disabled", true);
-				$("#FK_ProgAyudante").prop("disabled", true);
-				$("#ProgVehEntrada").prop("disabled", true);
-				$("#progVehKm").prop("disabled", true);
-				$("#ProgVehColor").prop("disabled", true);
-				$("#update").prop("disabled", true);
+				$("#ProgVehFecha").prop("disabled", false);
+				$("#ProgVehSalida").prop("disabled", false);
+				$("#FK_ProgVehiculo").prop("disabled", false);
+				$("#FK_ProgConductor").prop("disabled", false);
+				$("#FK_ProgAyudante").prop("disabled", false);
+				$("#ProgVehEntrada").prop("disabled", false);
+				$("#progVehKm").prop("disabled", false);
+				$("#ProgVehColor").prop("disabled", false);
+				$("#update").prop("disabled", false);
 			@else
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::JEFELOGISTICA))
 					// $(".select2-selection").css("background-image", "none");
@@ -688,11 +702,11 @@
 		});
 	@elseif($programacion->ProgVehtipo == 0)
 		@if($programacion->ProgVehEntrada <> null)
-			$("#ProgVehFecha").prop("disabled", true);
+			$("#ProgVehFecha").prop("disabled", false);
 			$(".select2-selection").css("background-image", "none");
-			$("#ProgVehSalida").prop("disabled", true);
+			$("#ProgVehSalida").prop("disabled", false);
 			$("#ProgVehEntrada").prop("disabled", true);
-			$("#update").prop("disabled", true);
+			$("#update").prop("disabled", false);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
@@ -714,19 +728,19 @@
 		@endif
 	@else
 		@if($programacion->ProgVehEntrada <> null)
-			$("#ProgVehFecha").prop("disabled", true);
+			$("#ProgVehFecha").prop("disabled", false);
 			$(".select2-selection").css("background-image", "none");
-			$("#vehicalqui").prop("disabled", true);
-			$("#ProgVehSalida").prop("disabled", true);
+			$("#vehicalqui").prop("disabled", false);
+			$("#ProgVehSalida").prop("disabled", false);
 			$("#ProgVehEntrada").prop("disabled", true);
-			$("#update").prop("disabled", true);
-			$("#ProgVehDocConductorEXT").prop('disabled', true);
-			$("#ProgVehNameConductorEXT").prop('disabled', true);
-			$("#ProgVehDocAuxiliarEXT").prop('disabled', true);
-			$("#ProgVehNameAuxiliarEXT").prop('disabled', true);
-			$("#ProgVehPlacaEXT").prop('disabled', true);
-			$("#ProgVehTipoEXT").prop('disabled', true);
-			$("#select2sedes").prop('disabled', true);
+			$("#update").prop("disabled", false);
+			$("#ProgVehDocConductorEXT").prop('disabled', false);
+			$("#ProgVehNameConductorEXT").prop('disabled', false);
+			$("#ProgVehDocAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehNameAuxiliarEXT").prop('disabled', false);
+			$("#ProgVehPlacaEXT").prop('disabled', false);
+			$("#ProgVehTipoEXT").prop('disabled', false);
+			$("#select2sedes").prop('disabled', false);
 		@else
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
