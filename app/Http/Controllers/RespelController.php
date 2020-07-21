@@ -263,7 +263,7 @@ class RespelController extends Controller
             $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
             $rango->save();
 
-            if($respel->RespelStatus === "Pendiente"){
+            if($respel->RespelStatus === "Aprobado"){
                 /*se verifican los datos de las sede y y cliente segun el usuarios que registra el residuo*/
                 $respel['cliente'] = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
@@ -278,10 +278,10 @@ class RespelController extends Controller
                 // se establece la lista de destinatarios
                 if ($respel['cliente']->CliComercial <> null) {
                     $comercial = Personal::where('ID_Pers', $respel['cliente']->CliComercial)->first();
-                    $destinatarios = ['diroperaciones@prosarc.com.co', $comercial->PersEmail];
+                    $destinatarios = ['gerenteplanta@prosarc.com.co', 'dirtecnica@prosarc.com.co', $comercial->PersEmail];
                 }else{
                     $comercial = "";
-                    $destinatarios = ['diroperaciones@prosarc.com.co'];
+                    $destinatarios = ['gerenteplanta@prosarc.com.co', 'dirtecnica@prosarc.com.co'];
                 }
 
                 $respel['comercial'] = $comercial;
