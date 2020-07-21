@@ -55,6 +55,7 @@ class AjaxController extends Controller
 	}
 	/*Funcion para cambiar el dia y hora de la programacion de un Vehiculo*/
 	public function CambioDeFecha(CambiodefechaStoreRequest $request, $id){
+		/*return $request;*/
 		if ($request->ajax()) {
 			$fecha = date('Y-m-d', strtotime(substr($request->Event, 0, -1)));
 			$hora = date('H:i:s', strtotime(substr($request->Event, 0, -1)));

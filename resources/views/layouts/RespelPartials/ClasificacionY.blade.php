@@ -101,111 +101,111 @@
 							</tr>
 							<tr>
 								<td>Y19</td>
-								<td>Metales carbonilos</td>
+								<td>Desechos que tengan como constituyentes: Metales carbonilos</td>
 							</tr>
 							<tr>
 								<td>Y20</td>
-								<td>Berilio, compuestos de berilio</td>
+								<td>Desechos que tengan como constituyentes: Berilio, compuestos de berilio</td>
 							</tr>
 							<tr>
 								<td>Y21</td>
-								<td>Compuestos de cromo hexavalente</td>
+								<td>Desechos que tengan como constituyentes: Compuestos de cromo hexavalente</td>
 							</tr>
 							<tr>
 								<td>Y22</td>
-								<td>Compuestos de cobre</td>
+								<td>Desechos que tengan como constituyentes: Compuestos de cobre</td>
 							</tr>
 							<tr>
 								<td>Y23</td>
-								<td>Compuestos de zinc</td>
+								<td>Desechos que tengan como constituyentes: Compuestos de zinc</td>
 							</tr>
 							<tr>
 								<td>Y24</td>
-								<td>Arsénico, compuestos de arsénico</td>
+								<td>Desechos que tengan como constituyentes: Arsénico, compuestos de arsénico</td>
 							</tr>
 							<tr>
 								<td>Y25</td>
-								<td>Selenio, compuestos de selenio</td>
+								<td>Desechos que tengan como constituyentes: Selenio, compuestos de selenio</td>
 							</tr>
 							<tr>
 								<td>Y26</td>
-								<td>Cadmio, compuestos de cadmio</td>
+								<td>Desechos que tengan como constituyentes: Cadmio, compuestos de cadmio</td>
 							</tr>
 							<tr>
 								<td>Y27</td>
-								<td>Antimonio, compuestos de antimonio</td>
+								<td>Desechos que tengan como constituyentes: Antimonio, compuestos de antimonio</td>
 							</tr>
 							<tr>
 								<td>Y28</td>
-								<td>Telurio, compuestos de telurio</td>
+								<td>Desechos que tengan como constituyentes: Telurio, compuestos de telurio</td>
 							</tr>
 							<tr>
 								<td>Y29</td>
-								<td>Mercurio, compuestos de mercurio</td>
+								<td>Desechos que tengan como constituyentes: Mercurio, compuestos de mercurio</td>
 							</tr>
 							<tr>
 								<td>Y30</td>
-								<td>Talio, compuestos de talío</td>
+								<td>Desechos que tengan como constituyentes: Talio, compuestos de talío</td>
 							</tr>
 							<tr>
 								<td>Y31</td>
-								<td>Plomo, compuestos de plomo</td>
+								<td>Desechos que tengan como constituyentes: Plomo, compuestos de plomo</td>
 							</tr>
 							<tr>
 								<td>Y32</td>
-								<td>Compuestos inorgánicos de flúor, con exclusión del fluoruro calcico</td>
+								<td>Desechos que tengan como constituyentes: Compuestos inorgánicos de flúor, con exclusión del fluoruro calcico</td>
 							</tr>
 							<tr>
 								<td>Y33</td>
-								<td>Cianuros inorgánicos</td>
+								<td>Desechos que tengan como constituyentes: Cianuros inorgánicos</td>
 							</tr>
 							<tr>
 								<td>Y34</td>
-								<td>Soluciones ácidas o ácidos en forma sólida</td>
+								<td>Desechos que tengan como constituyentes: Soluciones ácidas o ácidos en forma sólida</td>
 							</tr>
 							<tr>
 								<td>Y35</td>
-								<td>Soluciones básicas o bases en forma sólida</td>
+								<td>Desechos que tengan como constituyentes: Soluciones básicas o bases en forma sólida</td>
 							</tr>
 							<tr>
 								<td>Y36</td>
-								<td>Asbesto (polvo y fibras)</td>
+								<td>Desechos que tengan como constituyentes: Asbesto (polvo y fibras)</td>
 							</tr>
 							<tr>
 								<td>Y37</td>
-								<td>Compuestos orgánicos de fósforo</td>
+								<td>Desechos que tengan como constituyentes: Compuestos orgánicos de fósforo</td>
 							</tr>
 							<tr>
 								<td>Y38</td>
-								<td>Cianuros orgánicos</td>
+								<td>Desechos que tengan como constituyentes: Cianuros orgánicos</td>
 							</tr>
 							<tr>
 								<td>Y39</td>
-								<td>Fenoles, compuestos fenólicos, con inclusión de clorofenoles</td>
+								<td>Desechos que tengan como constituyentes: Fenoles, compuestos fenólicos, con inclusión de clorofenoles</td>
 							</tr>
 							<tr>
 								<td>Y40</td>
-								<td>Éteres</td>
+								<td>Desechos que tengan como constituyentes: Éteres</td>
 							</tr>
 							<tr>
 								<td>Y41</td>
-								<td>Solventes orgánicos halogenados</td>
+								<td>Desechos que tengan como constituyentes: Solventes orgánicos halogenados</td>
 							</tr>
 							<tr>
 								<td>Y42</td>
-								<td>Disolventes orgánicos, con exclusión de disolventes halogenados</td>
+								<td>Desechos que tengan como constituyentes: Disolventes orgánicos, con exclusión de disolventes halogenados</td>
 							</tr>
 							<tr>
 								<td>Y43</td>
-								<td>Cualquier sustancia del grupo de los dibenzofuranos policlorados</td>
+								<td>Desechos que tengan como constituyentes: Cualquier sustancia del grupo de los dibenzofuranos policlorados</td>
 							</tr>
 							<tr>
 								<td>Y44</td>
-								<td>Cualquier sustancia del grupo de las dibenzoparadioxinas policloradas</td>
+								<td>Desechos que tengan como constituyentes: Cualquier sustancia del grupo de las dibenzoparadioxinas policloradas</td>
 							</tr>
 							<tr>
 								<td>Y45</td>
-								<td>Compuestos organohalogenados, que no sean las sustancias mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44).</td>
+								<td>Desechos que tengan como constituyentes: Compuestos organohalogenados, que no sean las sustancias mencionadas en los campos anteriores (por ejemplo, Y39, Y41, Y42, Y43, Y44).</td>
 							</tr>
 						</tbody>
 					</table>

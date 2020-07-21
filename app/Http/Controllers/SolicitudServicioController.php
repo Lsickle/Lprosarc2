@@ -203,7 +203,7 @@ class SolicitudServicioController extends Controller
 	{
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
-		$SolicitudServicio->SolSerStatus = 'Aceptado';
+		$SolicitudServicio->SolSerStatus = 'Aprobado';
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 		switch ($request->input('SolResAuditoriaTipo')) {
 			case 99:
@@ -732,7 +732,7 @@ class SolicitudServicioController extends Controller
 		if(!is_null($SolicitudOld)){
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
-			$SolicitudNew->SolSerStatus = 'Pendiente';
+			$SolicitudNew->SolSerStatus = 'Aprobado';
 			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
 			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
 			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
@@ -868,6 +868,38 @@ class SolicitudServicioController extends Controller
                 $SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
 				$SolResNew->save();
 			}
+		
+		$SolicitudServicio = $SolicitudNew;
+					// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'subgerencia@prosarc.com.co',
+								$comercial->PersEmail
+							 ];
+		}else{
+			$comercial = "";
+			$destinatarios = ['diroperaciones@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co',
+								'subgerencia@prosarc.com.co'
+							 ];	
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
+
+
+		// se envia un correo por cada residuo registrado
+		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
@@ -1326,9 +1358,10 @@ class SolicitudServicioController extends Controller
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									$certificado->CertNumRm = "C-130";
-									$certificado->CertAuthHseq = 1;
-									$certificado->CertAuthJl = 1;
-									$certificado->CertAuthDp = 1;
+									$certificado->CertAuthHseq = 0;
+									$certificado->CertAuthJl = 0;
+									$certificado->CertAuthDp = 0;
+									$certificado->CertAuthJo = 0;
 									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertSolser = $id;
 									$certificado->FK_CertCliente = $cliente->ID_Cli;
@@ -1376,9 +1409,10 @@ class SolicitudServicioController extends Controller
 									$manifiesto->ManifSlug = hash('sha256', rand().time());
 									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
 									$manifiesto->ManifNumRm = "M-16";
-									$manifiesto->ManifAuthHseq = 1;
-									$manifiesto->ManifAuthJl = 1;
-									$manifiesto->ManifAuthDp = 1;
+									$manifiesto->ManifAuthHseq = 0;
+									$manifiesto->ManifAuthJl = 0;
+									$manifiesto->ManifAuthDp = 0;
+									$manifiesto->ManifAuthJo = 0;
 									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$manifiesto->FK_ManifSolser = $id;
 									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;

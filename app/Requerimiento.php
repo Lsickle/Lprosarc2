@@ -26,7 +26,7 @@
 
 		public function tarifa()
 		{
-			return $this->hasOne('App\Tarifa', 'FK_ReqTarifa', 'ID_Req');
+			return $this->hasOne('App\Tarifa', 'FK_TarifaReq', 'ID_Req');
 		}
 
 		public function tratamiento()

@@ -211,7 +211,7 @@
                                                     <label for="PersSecondName">{{ trans('adminlte_lang::message.perssecondtname') }}</label><small class="help-block with-errors"></small>
                                                     <input type="text" class="form-control nombres" id="PersSecondName" name="PersSecondName" maxlength="25" value="{{ old('PersSecondName') }}">
                                                 </div>
-                                                <div class="form-group col-md-12">
+                                                <div class="form-group col-md-6">
                                                     <label for="PersLastName">{{ trans('adminlte_lang::message.perslastname') }}</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
                                                 </div>
@@ -230,6 +230,17 @@
                                                         <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12"  maxlength="12" value="{{ old('PersCellphone') }}" required>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="CliComercial" data-placement="auto" data-html="true" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Correo electrónico de la Persona de Contacto</b>" data-content="Este dato es importante para que la persona de contacto pueda recibir las novedades con relacion a sus residuos y solicitudes de servicio... <br>Si la persona de contacto no cuenta con una dirección de correo electrónico también puede escribir acá el correo electrónico con el que se registro al sistema <b>SisPro</b>.">
+                                                    Comercial Asignado
+                                                </label><small class="help-block with-errors">*</small>
+                                                <select class="form-control select" id="CliComercial" name="CliComercial" required>
+                                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+                                                    @foreach ($comerciales as $comercial)    
+                                                        <option value="{{$comercial->ID_Pers}}" {{ old('CliComercial') == $comercial->ID_Pers ? 'selected' : '' }}>{{ $comercial->PersFirstName }} {{$comercial->PersSecondName}} {{$comercial->PersLastName}}</option>      
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="box-footer">
                                                 <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
