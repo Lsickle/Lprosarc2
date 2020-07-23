@@ -46,7 +46,7 @@ class VehicProgController extends Controller
 					}
 					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)||in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR)){
 						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
-						$query->where('solicitud_servicios.SolSerStatus', 'Notificado');
+						// $query->where('solicitud_servicios.SolSerStatus', 'Notificado');
 					}
 					if(in_array(Auth::user()->UsRol, Permisos::TESORERIA)||in_array(Auth::user()->UsRol2, Permisos::TESORERIA)){
 						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
