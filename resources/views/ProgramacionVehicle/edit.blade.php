@@ -427,14 +427,15 @@
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
-										<br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+										{{-- <br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a> --}}
+										<br><a href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Declaracion de residuos'}}</a>
 									@endif
 								</div>
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
 									<div class="col-md-2">
-										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d')))
 										<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 										@endif
 									</div>
@@ -547,21 +548,34 @@
 
 
 								<div class="col-md-6" id="containerDePrecintos">
-									<div class="row" id="precintos0">
+									@if ($programacion->ProgVehPrecintos != null)
 										@foreach($programacion->ProgVehPrecintos as $precinto)
-											<div class="form-group col-md-8">
+										<div class="row" id="precintos{{$loop->index}}">
+											<div class="col-md-10">
 												<label>Precintos</label>
+											</div>
+											<div class="form-group col-md-10">
 												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
 											</div>
 											<div class="col-md-2">
-												<button class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</button>
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+											</div>
+										</div>
+										@endforeach
+									@else
+										<div class="row" id="precintos0">
+											<div class="col-md-10">
+												<label>Precintos</label>
+											</div>
+											<div class="form-group col-md-10">
+												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="'sin precintos'">
 											</div>
 											<div class="col-md-2">
-												<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(0)">Borrar</button>
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
 											</div>
-										@endforeach
+										</div>
+									@endif
 									</div>
-								</div>
 
 
 
@@ -619,7 +633,7 @@
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
-									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d')))
 									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 									@endif
 									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>

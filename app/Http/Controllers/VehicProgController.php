@@ -207,6 +207,7 @@ class VehicProgController extends Controller
 				$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
 				$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 				$programacion->ProgVehColor = '#FFFF00';
+				$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 				if ($request->input('vehicalqui')!=null) {
 					$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 				}else{
@@ -573,9 +574,9 @@ class VehicProgController extends Controller
 		}
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
-		if($SolicitudServicio->SolSerTipo == 'Interno'){
-			$SolSerConductor = Personal::where('ID_Pers', $SolicitudServicio->SolSerConductor)->first();
-		}
+		// if($SolicitudServicio->SolSerTipo == 'Interno'){
+		// 	$SolSerConductor = Personal::where('ID_Pers', $SolicitudServicio->SolSerConductor)->first();
+		// }
 		if($SolicitudServicio->SolSerTypeCollect == 98){
 			$Address = Sede::select('SedeAddress')->where('ID_Sede',$SolicitudServicio->SolSerCollectAddress)->first();
 			$SolSerCollectAddress = $Address->SedeAddress;
@@ -631,7 +632,8 @@ class VehicProgController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerName','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
+			->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerName','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress', 'municipios.MunName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->whereIn('gener_sedes.ID_GSede', $puntos)
 			->get();

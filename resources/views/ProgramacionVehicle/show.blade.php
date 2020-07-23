@@ -127,7 +127,7 @@
 									@if($SolicitudServicio->SolSerTipo == 'Interno')
 										<div class="col-md-6">
 											<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
-											<a>{{$SolSerConductor == null ? trans('adminlte_lang::message.solsernullprogram') : $SolSerConductor->PersFirstName." ".$SolSerConductor->PersLastName}}</a>
+											<a>{{$SolicitudServicio->SolSerConductor == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerConductor}}</a>
 										</div>
 										<div class="col-md-6">
 											<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
@@ -225,9 +225,7 @@
 											<th>Peligrosidad</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
-											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
-												<th>{{trans('adminlte_lang::message.address')}}</th>
-											@endif
+											<th>{{trans('adminlte_lang::message.address')}}</th>
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantienv')}}</th>
 											
 										</tr>
@@ -275,9 +273,7 @@
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td>{{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
-													<td>{{$GenerResiduo->GSedeAddress}}</td>
-												@endif
+												<td>{{$GenerResiduo->GSedeAddress}} - Municipio:{{$GenerResiduo->MunName}}</td>
 												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
 												
 											</tr>
