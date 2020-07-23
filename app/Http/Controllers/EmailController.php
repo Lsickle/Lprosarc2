@@ -28,7 +28,7 @@ class EmailController extends Controller
                 ->first();
            // {{ $message->embed(base_path() . '/img/logo.png') }}
             $Roles1 = DB::table('users')
-                ->whereIn('users.UsRol', ['AsistenteLogistica'])
+                ->whereIn('users.UsRol', ['AsistenteLogistica', 'Supervisor'])
                 ->select('users.email')
                 ->get();
                 

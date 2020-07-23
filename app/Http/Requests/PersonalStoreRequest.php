@@ -33,8 +33,8 @@ class PersonalStoreRequest extends FormRequest
             'NewArea'       => 'required_if:CargArea,NewArea|min:4|nullable',
             'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo|min:4|nullable',
 
-            'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
-            'PersDocNumber' => ['required','max:25',Rule::unique('personals')->where(function($query) use ($request){
+            'PersDocType'   => 'nullable|in:CC,CE,NIT,RUT',
+            'PersDocNumber' => ['nullable','max:25',Rule::unique('personals')->where(function($query) use ($request){
                 $Personal = DB::table('personals')
                     ->select('PersDocNumber', 'PersDelete')
                     ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
@@ -49,7 +49,7 @@ class PersonalStoreRequest extends FormRequest
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',
-            'PersEmail'     => 'required|email|max:255|regex:/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+[.][a-zA-Z0-9_]{2,6}([.][a-z]{2})?$/i',
+            'PersEmail'     => 'required|email|max:255',
             'PersCellphone' => 'required|min:12',
             'PersAddress'   => 'max:255|nullable',
 

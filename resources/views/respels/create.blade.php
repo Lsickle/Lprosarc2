@@ -68,7 +68,7 @@
 							<!-- /.box-body -->
 							<div class="box box-info">	
 								<div class="box-footer">
-									<a onclick="AgregarRes()" class="btn btn-primary"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	
+									{{-- <a onclick="AgregarRes()" class="btn btn-primary"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	 --}}
 									<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::LangRespel.registerrespelButton') }}</button>
 								</div>
 							</div>
