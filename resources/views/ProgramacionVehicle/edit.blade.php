@@ -625,7 +625,7 @@
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 									<small class="help-block with-errors">*</small>
-									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select" required="" disabled="">
+									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select" required="">
 										@foreach($ayudantes as $ayudante)
 											<option value="{{$ayudante->ID_Pers}}" {{$ayudante->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 										@endforeach
