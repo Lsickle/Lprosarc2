@@ -388,7 +388,7 @@
 								<div class="col-md-6" id="containerDePrecintos">
 								@if ($programacion->ProgVehPrecintos != null)
 									@foreach($programacion->ProgVehPrecintos as $precinto)
-											<div class="row" id="precintos0">
+											<div class="row" id="precintos{{$loop->index}}">
 												<div class="col-md-10">
 													<label>Precintos</label>
 												</div>
@@ -396,7 +396,7 @@
 													<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
 												</div>
 												<div class="col-md-2">
-													<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+													<a class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto({{$loop->index}})">Eliminar</a>
 												</div>
 											</div>
 									@endforeach
@@ -409,7 +409,7 @@
 											<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="'sin precintos'">
 										</div>
 										<div class="col-md-2">
-											<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+											<a class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</a>
 										</div>
 									</div>
 								@endif
@@ -427,14 +427,15 @@
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
 									<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
-										<br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a>
+										{{-- <br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a> --}}
+										<br><a href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Declaracion de residuos'}}</a>
 									@endif
 								</div>
 							</div>
 							<div class="box box-info">
 								<div class="box-footer">
 									<div class="col-md-2">
-										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
+										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d')))
 										<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
 										@endif
 									</div>
@@ -547,28 +548,41 @@
 
 
 								<div class="col-md-6" id="containerDePrecintos">
-									<div class="row" id="precintos0">
+									@if ($programacion->ProgVehPrecintos != null)
 										@foreach($programacion->ProgVehPrecintos as $precinto)
-											<div class="form-group col-md-8">
+										<div class="row" id="precintos{{$loop->index}}">
+											<div class="col-md-10">
 												<label>Precintos</label>
+											</div>
+											<div class="form-group col-md-10">
 												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
 											</div>
 											<div class="col-md-2">
-												<button class="btn btn-success addprecinto" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</button>
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto({{$loop->index}})">Eliminar</button>
+											</div>
+										</div>
+										@endforeach
+									@else
+										<div class="row" id="precintos0">
+											<div class="col-md-10">
+												<label>Precintos</label>
+											</div>
+											<div class="form-group col-md-10">
+												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="'sin precintos'">
 											</div>
 											<div class="col-md-2">
-												<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(0)">Borrar</button>
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
 											</div>
-										@endforeach
+										</div>
+									@endif
 									</div>
-								</div>
 
 
 
 
 
 
-								<div class="col-md-6">
+								<div class="form-group col-md-6">
 								    <label for="select2sedes" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'><ul class='list-group'>
 									    @foreach($recolectPointsService as $punto)
 								        @foreach($recolectPointsProg as $puntoelegido)
@@ -591,7 +605,7 @@
 								        @endforeach
 								    </select>
 								</div>
-								<div class="fomr-group col-md-6" style="margin-bottom: 30px;">
+								<div class="form-group col-md-6">
 									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control" required="" disabled="">
@@ -611,7 +625,7 @@
 								<div class="form-group col-md-6">
 									<label for="FK_ProgAyudante">{{ trans('adminlte_lang::message.progvehicayudan') }}</label>
 									<small class="help-block with-errors">*</small>
-									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select" required="" disabled="">
+									<select name="FK_ProgAyudante" id="FK_ProgAyudante" class="form-control select" required="">
 										@foreach($ayudantes as $ayudante)
 											<option value="{{$ayudante->ID_Pers}}" {{$ayudante->ID_Pers == $programacion->FK_ProgAyudante ? 'selected' : ''}}>{{$ayudante->PersFirstName.' '.$ayudante->PersLastName}}</option>
 										@endforeach
@@ -619,10 +633,18 @@
 								</div>
 								<div class="col-md-12 col-xs-12 box box-info"></div>
 								<div class="box-footer">
-									@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d') && $programacion->ProgVehEntrada == null))
-									<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
-									@endif
-									<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									<div class="col-md-2">
+										@if((in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1)) && (date("Y-m-d",strtotime($programacion->ProgVehFecha."+ 0 days")) >= date('Y-m-d')))
+										<a href='#' data-toggle='modal' data-target="#CrearProgVehic" class="btn btn-primary pull-left">{{ trans('adminlte_lang::message.progvehicadd') }}</a>
+										@endif
+									</div>
+									<div class="col-md-2">
+										<a class="btn btn-primary addprecinto pull-left" id="addprecinto" onclick="addPrecinto()">Añadir Precinto</a>
+									</div>
+
+									<div class="col-md-8">
+										<button type="submit" class="btn btn-success pull-right" id="update">{{ trans('adminlte_lang::message.update') }}</button>
+									</div>
 								</div>
 							</div>
 
@@ -855,8 +877,14 @@
 	@endif
 	</script>
 	<script type="text/javascript">
-		
+	@if ($programacion->ProgVehPrecintos != null)
+		@foreach($programacion->ProgVehPrecintos as $precinto)
+			var contadorPrecintos = {{$loop->count - 1}};
+			@break
+		@endforeach
+	@else
 		var contadorPrecintos = 0;
+	@endif
 		function addPrecinto(){
 			contadorPrecintos++
 			container = $('#containerDePrecintos')
@@ -869,7 +897,7 @@
 					<input type="text" name="ProgVehPrecintos[]" class="form-control" id="ProgVehPrecintos`+contadorPrecintos+`">
 				</div>
 				<div class="col-md-2">
-					<button class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(`+contadorPrecintos+`)">Borrar</button>
+					<a class="btn btn-danger dropprecinto" type="button" id="button-addon2" onclick="dropPrecinto(`+contadorPrecintos+`)">Borrar</a>
 				</div>
 			</div>`)
 		};
