@@ -558,7 +558,7 @@
 												<input type="text" maxlength="16" class="form-control" id="ProgVehPrecintos" name="ProgVehPrecintos[]" value="{{$precinto}}">
 											</div>
 											<div class="col-md-2">
-												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto(0)">Eliminar</button>
+												<button class="btn btn-danger dropprecintoedit" type="button" id="button-addon2" onclick="dropPrecinto({{$loop->index}})">Eliminar</button>
 											</div>
 										</div>
 										@endforeach
@@ -582,7 +582,7 @@
 
 
 
-								<div class="col-md-6">
+								<div class="form-group col-md-6">
 								    <label for="select2sedes" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Copiar información del residuo</b>" data-content="<p style='width: 50%'><ul class='list-group'>
 									    @foreach($recolectPointsService as $punto)
 								        @foreach($recolectPointsProg as $puntoelegido)
@@ -605,7 +605,7 @@
 								        @endforeach
 								    </select>
 								</div>
-								<div class="fomr-group col-md-6" style="margin-bottom: 30px;">
+								<div class="form-group col-md-6">
 									<label>Placa Vehiculo Provicional</label><a class="loadvehicalqui"></a>
 									<small class="help-block with-errors">*</small>
 									<select name="vehicalqui" id="vehicalqui" class="form-control" required="" disabled="">

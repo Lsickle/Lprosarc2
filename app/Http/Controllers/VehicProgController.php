@@ -784,7 +784,7 @@ class VehicProgController extends Controller
 			// 'ProgVehPrecintos'   =>   'max:16|min:6'
 		]);
 
-
+		// return $request->input('ProgVehPrecintos');
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
 			abort(404);
@@ -846,7 +846,7 @@ class VehicProgController extends Controller
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 
-			$programación->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+			$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
@@ -858,6 +858,8 @@ class VehicProgController extends Controller
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+			// $programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+
 			// $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
