@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	{{'Servicios-Programación'}}
+	{{'Declaración de Residuos'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -84,8 +84,21 @@
 									<a>{{$SolicitudServicio->PersFirstName.' '.$SolicitudServicio->PersLastName}}</a>
 								</div>
 								<div class="col-md-6">
+									<label>Cargo/Area</label><br>
+									<a>
+										{{$SolicitudServicio->CargName}} / {{$SolicitudServicio->AreaName}}
+									</a>
+								</div>
+								
+							</div>
+							<div class="col-md-12 border-gray">
+								<div class="col-md-6">
 									<label>{{ trans('adminlte_lang::message.emailaddress') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->PersEmail}}</p>">{{$SolicitudServicio->PersEmail}}</a>
+								</div>
+								<div class="col-md-6">
+									<label>Celular</label><br>
+									<a>{{$SolicitudServicio->PersCellphone}}</a>
 								</div>
 							</div>
 							<div class="col-md-12 border-gray">
@@ -207,7 +220,9 @@
 										<tr>
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>Tratamiento</th>
-											<th>Pretratamientos</th>
+											<th>Clasificación <br>4741</th>
+											<th>Estado Físico</th>
+											<th>Peligrosidad</th>
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
@@ -240,13 +255,23 @@
 												@endphp
 											<tr>
 												<td>{{$Residuo->RespelName}}</td>
-												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliName : ''}}</td>
+												<td>{{$Residuo->TratName}}</td>
 												<td>
-													<ul>
-													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
-													    <li>{{$pretratamientoSelected->PreTratName}}</li>
-													@endforeach
-													</ul>
+													@if($Residuo->YRespelClasf4741 == NULL)
+													<p>
+														{{$Residuo->ARespelClasf4741}}
+													</p>
+													@else
+													<p>
+														{{$Residuo->YRespelClasf4741}}
+													</p>
+													@endif
+												</td>
+												<td>
+													{{$Residuo->RespelEstado}}
+												</td>
+												<td>
+													{{$Residuo->RespelIgrosidad}}
 												</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td>{{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>

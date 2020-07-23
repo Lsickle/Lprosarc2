@@ -562,7 +562,10 @@ class VehicProgController extends Controller
 		}
 		$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
+			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail', 'personals.PersCellphone', 'cargos.CargName', 'areas.AreaName')
 			->where('solicitud_servicios.ID_SolSer', $Programacion->FK_ProgServi)
 			->first();
 		if (!$SolicitudServicio) {
@@ -616,7 +619,7 @@ class VehicProgController extends Controller
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 			->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedePhone1', 'sedes.SedeExt1', 'sedes.SedePhone2', 'sedes.SedeExt2', 'municipios.MunName')
 			->where('clientes.ID_Cli', $SolicitudServicio->FK_SolSerCliente)
 			->first();
 		/*puntos de recoleccion de la solicitud array de ID_Gsede*/	
@@ -661,7 +664,7 @@ class VehicProgController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
-		// return $Residuos;
+		// return $Cliente;
 		return view('ProgramacionVehicle.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
 	}
 
