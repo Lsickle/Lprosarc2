@@ -46,7 +46,7 @@ class VehicProgController extends Controller
 					}
 					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)||in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR)){
 						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
-						$query->where('solicitud_servicios.SolSerStatus', 'Notificado');
+						// $query->where('solicitud_servicios.SolSerStatus', 'Notificado');
 					}
 					if(in_array(Auth::user()->UsRol, Permisos::TESORERIA)||in_array(Auth::user()->UsRol2, Permisos::TESORERIA)){
 						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
@@ -207,6 +207,7 @@ class VehicProgController extends Controller
 				$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
 				$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
 				$programacion->ProgVehColor = '#FFFF00';
+				$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 				if ($request->input('vehicalqui')!=null) {
 					$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 				}else{
@@ -562,7 +563,10 @@ class VehicProgController extends Controller
 		}
 		$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail')
+			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail', 'personals.PersCellphone', 'cargos.CargName', 'areas.AreaName')
 			->where('solicitud_servicios.ID_SolSer', $Programacion->FK_ProgServi)
 			->first();
 		if (!$SolicitudServicio) {
@@ -570,9 +574,9 @@ class VehicProgController extends Controller
 		}
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
-		if($SolicitudServicio->SolSerTipo == 'Interno'){
-			$SolSerConductor = Personal::where('ID_Pers', $SolicitudServicio->SolSerConductor)->first();
-		}
+		// if($SolicitudServicio->SolSerTipo == 'Interno'){
+		// 	$SolSerConductor = Personal::where('ID_Pers', $SolicitudServicio->SolSerConductor)->first();
+		// }
 		if($SolicitudServicio->SolSerTypeCollect == 98){
 			$Address = Sede::select('SedeAddress')->where('ID_Sede',$SolicitudServicio->SolSerCollectAddress)->first();
 			$SolSerCollectAddress = $Address->SedeAddress;
@@ -616,7 +620,7 @@ class VehicProgController extends Controller
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 			->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName')
+			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedePhone1', 'sedes.SedeExt1', 'sedes.SedePhone2', 'sedes.SedeExt2', 'municipios.MunName')
 			->where('clientes.ID_Cli', $SolicitudServicio->FK_SolSerCliente)
 			->first();
 		/*puntos de recoleccion de la solicitud array de ID_Gsede*/	
@@ -628,7 +632,8 @@ class VehicProgController extends Controller
 			->join('residuos_geners', 'residuos_geners.ID_SGenerRes', '=', 'solicitud_residuos.FK_SolResRg')
 			->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 			->join('generadors' , 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
-			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerName','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress')
+			->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+			->select('gener_sedes.GSedeName', 'residuos_geners.FK_SGener', 'generadors.GenerName','gener_sedes.GSedeSlug', 'gener_sedes.GSedeAddress', 'municipios.MunName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			->whereIn('gener_sedes.ID_GSede', $puntos)
 			->get();
@@ -661,7 +666,7 @@ class VehicProgController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
-		// return $Residuos;
+		// return $Cliente;
 		return view('ProgramacionVehicle.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones'));
 	}
 
@@ -779,7 +784,7 @@ class VehicProgController extends Controller
 			// 'ProgVehPrecintos'   =>   'max:16|min:6'
 		]);
 
-
+		// return $request->input('ProgVehPrecintos');
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
 			abort(404);
@@ -841,7 +846,7 @@ class VehicProgController extends Controller
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 
-			$programación->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+			$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 
 			$nomConduct = $programacion->ProgVehDocConductorEXT;
 			$vehiculo = $programacion->ProgVehPlacaEXT;
@@ -853,6 +858,8 @@ class VehicProgController extends Controller
 			}
 			$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
 			$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
+			// $programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
+
 			// $vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
 			$nomConduct = null;
 		}
