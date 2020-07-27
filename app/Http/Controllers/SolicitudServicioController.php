@@ -63,13 +63,13 @@ class SolicitudServicioController extends Controller
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
-				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
-						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
-						$query->where('solicitud_servicios.SolServCertStatus', 1);
-					}
-				}
+				// if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
+				// 	if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+				// 		$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+				// 		// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+				// 		$query->where('solicitud_servicios.SolServCertStatus', 1);
+				// 	}
+				// }
 			})
 			->orderBy('created_at', 'desc')
 			->get();
@@ -684,7 +684,9 @@ class SolicitudServicioController extends Controller
 							$log->Auditlog=$Solicitud->SolSerStatus;
 							$log->save();
 
-							return redirect()->route('solicitud-servicio.index');
+							// return redirect()->route('solicitud-servicio.index');
+							$slug = $Solicitud->SolSerSlug;
+							return redirect()->route('email-solser', compact('slug'));
 
 						}
 						break;

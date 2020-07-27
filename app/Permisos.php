@@ -165,7 +165,7 @@ class Permisos{
 	/* Using ->
 		ProgramacionVehicle/edit
 	*/
-	const SolSerCertifi = ['Programador','Tesorería'];
+	const SolSerCertifi = ['Programador','Tesorería','AdministradorPlanta'];
 	/* Using ->
 		solicitud-serv/index
 		vehicle-programacion/index
