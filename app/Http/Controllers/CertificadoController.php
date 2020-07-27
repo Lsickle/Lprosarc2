@@ -44,7 +44,7 @@ class CertificadoController extends Controller
                     // return $UserSedeID;
                     $query->where('FK_CertCliente', $UserSedeID);
                     $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
-                    $query->where('CertAuthHseq', '!=', 0);
+                    $query->where('CertAuthJo', '!=', 0);
                     $query->where('CertAuthJl', '!=', 0);
                     $query->where('CertAuthDp', '!=', 0);
                     $query->whereIn('FK_CertSolser', $servicioscertificadosdelcliente);
@@ -218,28 +218,7 @@ class CertificadoController extends Controller
                 break;
 
             case 'JefeOperaciones':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
-                    # code...
-                }else{
-                    if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
-                        $c=1;
-                    }else{
-                        $c=0;
-                    }
-                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                        $certificado->CertAuthDp = 3;
-                        $c=$c+1;
-                    }
-                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                        $certificado->CertAuthJl = 3;
-                        $c=$c+1;
-                    }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 3;
-                        $c=$c+1;
-                    }
-                }
-                
+                $certificado->CertAuthJo = 3;                
                 break;
 
             case 'JefeLogistica':
@@ -251,10 +230,10 @@ class CertificadoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthHseq == 4)) {
+                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthJo == 4)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -267,8 +246,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 4;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 4;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 4;
                         $c=$c+1;
                     }
                 }
@@ -276,10 +255,10 @@ class CertificadoController extends Controller
                 break;
 
             case 'AsistenteLogistica':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthHseq == 6)) {
+                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthJo == 6)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -292,8 +271,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 6;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 6;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 6;
                         $c=$c+1;
                     }
                 }
@@ -302,10 +281,10 @@ class CertificadoController extends Controller
 
                    
             case 'Programador':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthHseq == 7)) {
+                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthJo == 7)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -318,8 +297,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 7;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 7;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 7;
                         $c=$c+1;
                     }
                 }
@@ -362,28 +341,7 @@ class CertificadoController extends Controller
                 break;
 
             case 'JefeOperaciones':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
-                    # code...
-                }else{
-                    if (($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)||($certificado->CertAuthDp == 3)) {
-                        $c=1;
-                    }else{
-                        $c=0;
-                    }
-                    if (($certificado->CertAuthDp == 0)&&($c<1)) {
-                        $certificado->CertAuthDp = 3;
-                        $c=$c+1;
-                    }
-                    if (($certificado->CertAuthJl == 0)&&($c<1)) {
-                        $certificado->CertAuthJl = 3;
-                        $c=$c+1;
-                    }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 3;
-                        $c=$c+1;
-                    }
-                }
-                
+                $certificado->CertAuthJo = 3;
                 break;
 
             case 'JefeLogistica':
@@ -395,10 +353,10 @@ class CertificadoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthHseq == 4)) {
+                    if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthJo == 4)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -411,8 +369,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 4;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 4;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 4;
                         $c=$c+1;
                     }
                 }
@@ -420,10 +378,10 @@ class CertificadoController extends Controller
                 break;
 
             case 'AsistenteLogistica':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthHseq == 6)) {
+                    if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthJo == 6)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -436,8 +394,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 6;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 6;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 6;
                         $c=$c+1;
                     }
                 }
@@ -446,10 +404,10 @@ class CertificadoController extends Controller
 
                    
             case 'Programador':
-                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthHseq == 0)) {
+                if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthHseq == 7)) {
+                    if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthJo == 7)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -462,8 +420,8 @@ class CertificadoController extends Controller
                         $certificado->CertAuthJl = 7;
                         $c=$c+1;
                     }
-                    if (($certificado->CertAuthHseq == 0)&&($c<1)) {
-                        $certificado->CertAuthHseq = 7;
+                    if (($certificado->CertAuthJo == 0)&&($c<1)) {
+                        $certificado->CertAuthJo = 7;
                         $c=$c+1;
                     }
                 }

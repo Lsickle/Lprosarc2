@@ -41,7 +41,7 @@ class ManifiestoController extends Controller
                     $query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
                     $query->where('ManifAuthDp','!=', 0);
                     $query->where('ManifAuthJl','!=', 0);
-                    $query->where('ManifAuthHseq','!=', 0);
+                    $query->where('ManifAuthJo','!=', 0);
                     $query->whereIn('FK_ManifSolser', $servicioscertificadosdelcliente);
                     break;
 
@@ -188,28 +188,7 @@ class ManifiestoController extends Controller
                 break;
 
             case 'JefeOperaciones':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
-                    # code...
-                }else{
-                    if (($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthJl == 3)||($manifiesto->ManifAuthHseq == 3)) {
-                        $c=1;
-                    }else{
-                        $c=0;
-                    }
-                    if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthDp = 3;
-                        $c=$c+1;
-                    }
-                    if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthJl = 3;
-                        $c=$c+1;
-                    }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 3;
-                        $c=$c+1;
-                    }
-                }
-                
+                $manifiesto->ManifAuthJo = 3;
                 break;
 
             case 'JefeLogistica':
@@ -221,10 +200,10 @@ class ManifiestoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthJl == 4)||($manifiesto->ManifAuthHseq == 4)) {
+                    if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthJl == 4)||($manifiesto->ManifAuthJo == 4)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -237,8 +216,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 4;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 4;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 4;
                         $c=$c+1;
                     }
                 }
@@ -246,10 +225,10 @@ class ManifiestoController extends Controller
                 break;
 
             case 'AsistenteLogistica':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthJl == 6)||($manifiesto->ManifAuthHseq == 6)) {
+                    if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthJl == 6)||($manifiesto->ManifAuthJo == 6)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -262,8 +241,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 6;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 6;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 6;
                         $c=$c+1;
                     }
                 }
@@ -271,10 +250,10 @@ class ManifiestoController extends Controller
                 break;
                    
             case 'Programador':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthJl == 7)||($manifiesto->ManifAuthHseq == 7)) {
+                    if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthJl == 7)||($manifiesto->ManifAuthJo == 7)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -287,8 +266,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 7;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 7;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 7;
                         $c=$c+1;
                     }
                 }
@@ -331,28 +310,7 @@ class ManifiestoController extends Controller
                 break;
 
             case 'JefeOperaciones':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
-                    # code...
-                }else{
-                    if (($manifiesto->ManifAuthDp == 3)||($manifiesto->ManifAuthJl == 3)||($manifiesto->ManifAuthHseq == 3)) {
-                        $c=1;
-                    }else{
-                        $c=0;
-                    }
-                    if (($manifiesto->ManifAuthDp == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthDp = 3;
-                        $c=$c+1;
-                    }
-                    if (($manifiesto->ManifAuthJl == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthJl = 3;
-                        $c=$c+1;
-                    }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 3;
-                        $c=$c+1;
-                    }
-                }
-                
+                $manifiesto->ManifAuthJo = 3;
                 break;
 
             case 'JefeLogistica':
@@ -364,10 +322,10 @@ class ManifiestoController extends Controller
                 break;
 
             case 'Supervisor':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthJl == 4)||($manifiesto->ManifAuthHseq == 4)) {
+                    if (($manifiesto->ManifAuthDp == 4)||($manifiesto->ManifAuthJl == 4)||($manifiesto->ManifAuthJo == 4)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -380,8 +338,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 4;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 4;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 4;
                         $c=$c+1;
                     }
                 }
@@ -389,10 +347,10 @@ class ManifiestoController extends Controller
                 break;
 
             case 'AsistenteLogistica':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthJl == 6)||($manifiesto->ManifAuthHseq == 6)) {
+                    if (($manifiesto->ManifAuthDp == 6)||($manifiesto->ManifAuthJl == 6)||($manifiesto->ManifAuthJo == 6)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -405,8 +363,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 6;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 6;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 6;
                         $c=$c+1;
                     }
                 }
@@ -414,10 +372,10 @@ class ManifiestoController extends Controller
                 break;
                    
             case 'Programador':
-                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthHseq == 0)) {
+                if (($manifiesto->ManifAuthDp == 0)&&($manifiesto->ManifAuthJl == 0)&&($manifiesto->ManifAuthJo == 0)) {
                     # code...
                 }else{
-                    if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthJl == 7)||($manifiesto->ManifAuthHseq == 7)) {
+                    if (($manifiesto->ManifAuthDp == 7)||($manifiesto->ManifAuthJl == 7)||($manifiesto->ManifAuthJo == 7)) {
                         $c=1;
                     }else{
                         $c=0;
@@ -430,8 +388,8 @@ class ManifiestoController extends Controller
                         $manifiesto->ManifAuthJl = 7;
                         $c=$c+1;
                     }
-                    if (($manifiesto->ManifAuthHseq == 0)&&($c<1)) {
-                        $manifiesto->ManifAuthHseq = 7;
+                    if (($manifiesto->ManifAuthJo == 0)&&($c<1)) {
+                        $manifiesto->ManifAuthJo = 7;
                         $c=$c+1;
                     }
                 }
