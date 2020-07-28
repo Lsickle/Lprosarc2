@@ -191,6 +191,10 @@ class CertificadoController extends Controller
                 $hoja = $certificado->CertSrc;
             }
         }
+        $certificado->CertAuthHseq = 0;
+        $certificado->CertAuthJo = 0;
+        $certificado->CertAuthJl = 0;
+        $certificado->CertAuthDp = 0;
         $certificado->CertSrc = $hoja;
         $certificado->save();
 

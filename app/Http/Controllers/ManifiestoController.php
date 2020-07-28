@@ -158,6 +158,10 @@ class ManifiestoController extends Controller
                 $hoja = $manifiesto->ManifSrc;
             }
         }
+        $manifiesto->ManifAuthHseq = 0;
+        $manifiesto->ManifAuthJo = 0;
+        $manifiesto->ManifAuthJl = 0;
+        $manifiesto->ManifAuthDp = 0;
         $manifiesto->ManifSrc = $hoja;
         $manifiesto->save();
 
