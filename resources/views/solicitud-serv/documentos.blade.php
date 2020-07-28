@@ -148,7 +148,7 @@
 										@endswitch
 									</td>
 									<td class="text-center">
-										@switch($certificado->CertAuthHseq)
+										@switch($certificado->CertAuthJo)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
@@ -311,7 +311,7 @@
 										@endswitch
 									</td>
 									<td class="text-center">
-										@switch($manifiesto->ManifAuthHseq)
+										@switch($manifiesto->ManifAuthJo)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
