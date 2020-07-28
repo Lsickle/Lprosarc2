@@ -184,6 +184,10 @@ class CertificadoController extends Controller
                 $file1 = $request['CertSrc'];
                 $file1->move(public_path().'/img/Certificados/',$hoja);
             }
+            $certificado->CertAuthHseq = 0;
+            $certificado->CertAuthJo = 0;
+            $certificado->CertAuthJl = 0;
+            $certificado->CertAuthDp = 0;
         }else{
             if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                 $hoja = 'CertificadoDefault.pdf';
@@ -191,10 +195,7 @@ class CertificadoController extends Controller
                 $hoja = $certificado->CertSrc;
             }
         }
-        $certificado->CertAuthHseq = 0;
-        $certificado->CertAuthJo = 0;
-        $certificado->CertAuthJl = 0;
-        $certificado->CertAuthDp = 0;
+        
         $certificado->CertSrc = $hoja;
         $certificado->save();
 

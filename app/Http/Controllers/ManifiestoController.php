@@ -151,6 +151,10 @@ class ManifiestoController extends Controller
                 $file1 = $request['ManifSrc'];
                 $file1->move(public_path().'/img/Manifiestos/',$hoja);
             }
+            $manifiesto->ManifAuthHseq = 0;
+            $manifiesto->ManifAuthJo = 0;
+            $manifiesto->ManifAuthJl = 0;
+            $manifiesto->ManifAuthDp = 0;
         }else{
             if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
                 $hoja = 'ManifiestoDefault.pdf';
@@ -158,10 +162,7 @@ class ManifiestoController extends Controller
                 $hoja = $manifiesto->ManifSrc;
             }
         }
-        $manifiesto->ManifAuthHseq = 0;
-        $manifiesto->ManifAuthJo = 0;
-        $manifiesto->ManifAuthJl = 0;
-        $manifiesto->ManifAuthDp = 0;
+        
         $manifiesto->ManifSrc = $hoja;
         $manifiesto->save();
 
