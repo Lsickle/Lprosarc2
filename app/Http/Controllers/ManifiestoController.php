@@ -161,6 +161,14 @@ class ManifiestoController extends Controller
         $manifiesto->ManifSrc = $hoja;
         $manifiesto->save();
 
+        $log = new audit();
+        $log->AuditTabla="manifiestos";
+        $log->AuditType="actualizado";
+        $log->AuditRegistro=$manifiesto->ID_Manif;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
+
         return view('manifiestos.edit', compact('manifiesto')); 
     }
 

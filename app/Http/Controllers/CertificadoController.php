@@ -194,6 +194,14 @@ class CertificadoController extends Controller
         $certificado->CertSrc = $hoja;
         $certificado->save();
 
+        $log = new audit();
+        $log->AuditTabla="certificados";
+        $log->AuditType="actualizado";
+        $log->AuditRegistro=$certificado->ID_Cert;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
+
         return view('certificados.edit', compact('certificado')); 
     }
 
