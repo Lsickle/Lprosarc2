@@ -171,12 +171,20 @@ class CertificadoController extends Controller
         $certificado->CertObservacion = $request->input('CertObservacion');
         $certificado->CertNumRm = $request->input('CertNumRm');
         if (isset($request['CertSrc'])) {
-            $file1 = $request['CertSrc'];
-            $hoja = $certificado->CertSlug.'.pdf';
-
-            $file1->move(public_path().'/img/Certificados/',$hoja);
-        }
-        else{
+            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                $file1 = $request['CertSrc'];
+                $hoja = $certificado->CertSlug.'.pdf';
+                $file1->move(public_path().'/img/Certificados/',$hoja);
+            }else{
+                //se elimina el archivo anterior
+                $hoja = $certificado->CertSlug.'.pdf';
+                $fileanterior =  public_path().'/img/Certificados/'.$hoja;
+                unlink($fileanterior);
+                //se carga el archivo nuevo que viene del formulario
+                $file1 = $request['CertSrc'];
+                $file1->move(public_path().'/img/Certificados/',$hoja);
+            }
+        }else{
             if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                 $hoja = 'CertificadoDefault.pdf';
             }else{

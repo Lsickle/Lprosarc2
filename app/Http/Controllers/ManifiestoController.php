@@ -138,12 +138,20 @@ class ManifiestoController extends Controller
         $manifiesto->ManifObservacion = $request->input('ManifObservacion');
         $manifiesto->ManifNumRm = $request->input('ManifNumRm');
         if (isset($request['ManifSrc'])) {
-            $file1 = $request['ManifSrc'];
-            $hoja = $manifiesto->ManifSlug.'.pdf';
-
-            $file1->move(public_path().'/img/Manifiestos/',$hoja);
-        }
-        else{
+            if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
+                $file1 = $request['ManifSrc'];
+                $hoja = $manifiesto->ManifSlug.'.pdf';
+                $file1->move(public_path().'/img/Manifiestos/',$hoja);
+            }else{
+                //se elimina el archivo anterior
+                $hoja = $manifiesto->ManifSlug.'.pdf';
+                $fileanterior =  public_path().'/img/Manifiestos/'.$hoja;
+                unlink($fileanterior);
+                //se carga el archivo nuevo que viene del formulario
+                $file1 = $request['ManifSrc'];
+                $file1->move(public_path().'/img/Manifiestos/',$hoja);
+            }
+        }else{
             if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
                 $hoja = 'ManifiestoDefault.pdf';
             }else{
