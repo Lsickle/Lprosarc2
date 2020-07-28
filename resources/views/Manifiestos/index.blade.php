@@ -27,9 +27,9 @@ Lista de Manifiestos
 								<th>Aprobación Director Planta</th>
 								{{-- <th>Aprobación Operaciones</th> --}}
 								<th>Aprobación Logística</th>
-								<th>Aprobación HSEQ</th>
+								<th>Aprobación Operaciones</th>
 								
-								@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<th>Ver</th>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
@@ -148,7 +148,7 @@ Lista de Manifiestos
 									</td>
 									
 									<td class="text-center">
-										@switch($manifiesto->ManifAuthHseq)
+										@switch($manifiesto->ManifAuthJo)
 										    @case(0)
 										        <p>Pendiente</p>
 										        @break
@@ -192,7 +192,7 @@ Lista de Manifiestos
 											<p>Error en Firma Digital</p>
 										@endswitch
 									</td>
-									@if(in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<td class="text-center"><a method='get' href='/manifiestos/{{$manifiesto->ManifSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Información Adicional</b>" data-content="<p style='width: 50%'>Puede ver la información adicional relevante para la generación del Manifiesto  </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
