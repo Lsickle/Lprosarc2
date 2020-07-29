@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CertUpdated;
 use App\Certificado;
 use App\Cliente;
 use App\Generador;
@@ -195,10 +197,18 @@ class CertificadoController extends Controller
                 $hoja = $certificado->CertSrc;
             }
         }
-        
         $certificado->CertSrc = $hoja;
         $certificado->save();
 
+        if (isset($request['CertSrc'])) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $destinatarios = ['dirtecnica@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co'
+							 ];	
+		    Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+        }
+        
         $log = new audit();
         $log->AuditTabla="certificados";
         $log->AuditType="actualizado";
