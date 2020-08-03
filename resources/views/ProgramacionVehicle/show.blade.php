@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	{{'Declaración de Residuos'}}
+	{{'Manifiesto de carga'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -56,109 +56,113 @@
 								</div>
 								<hr>
 							</div>
-							@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-								<div class="col-md-12 border-gray">
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowempre') }}</label><br>
-										<a>{{$Cliente->CliName}}</a>
-									</div>
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowemprenit') }}</label><br>
-										<a>{{$Cliente->CliNit}}</a>
-									</div>
-								</div>
-								<div class="col-md-12 border-gray">
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowempreaddress') }}</label><br>
-										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsershowempreaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->SedeAddress}}</p>">{{$Cliente->SedeAddress}}</a>
-									</div>
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowemprecity') }}</label><br>
-										<a>{{$Cliente->MunName}}</a>
-									</div>
-								</div>
-							@endif
 							<div class="col-md-12 border-gray">
-								<div class="col-md-6">
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsershowempre') }}</label><br>
+									<a>{{$Cliente->CliName}}</a>
+								</div>
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsershowemprenit') }}</label><br>
+									<a>{{$Cliente->CliNit}}</a>
+								</div>
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsershowempreaddress') }}</label><br>
+									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsershowempreaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->SedeAddress}}</p>">{{$Cliente->SedeAddress}}</a>
+								</div>
+							</div>
+							<div class="col-md-12 border-gray">
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsershowemprecity') }}</label><br>
+									<a>{{$Cliente->MunName}}</a>
+								</div>
+								<div class="col-md-4">
 									<label>{{ trans('adminlte_lang::message.solserpersonal') }}:</label><br>
 									<a>{{$SolicitudServicio->PersFirstName.' '.$SolicitudServicio->PersLastName}}</a>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label>Cargo/Area</label><br>
 									<a>
 										{{$SolicitudServicio->CargName}} / {{$SolicitudServicio->AreaName}}
 									</a>
 								</div>
-								
 							</div>
+							{{-- <div class="col-md-12 border-gray">
+								
+								
+							</div> --}}
 							<div class="col-md-12 border-gray">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label>{{ trans('adminlte_lang::message.emailaddress') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->PersEmail}}</p>">{{$SolicitudServicio->PersEmail}}</a>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label>Celular</label><br>
 									<a>{{$SolicitudServicio->PersCellphone}}</a>
 								</div>
+								<div class="col-md-4">
+									<button type="button" class="btn btn-box-tool boton" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" onclick="AnimationMenusForm('.Transportadora')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>	
+								</div>
 							</div>
-							<div class="col-md-12 border-gray">
-								<div class="col-md-6">
+							<div class="col-md-12 border-gray collapse Transportadora">
+								<div class="col-md-4">
 									<label>{{ trans('adminlte_lang::message.solsershowtransempre') }}</label><br>
 									<a>{{$SolicitudServicio->SolSerNameTrans}}</a>
 								</div>
-								<div class="col-md-6">
-									<button type="button" class="btn btn-box-tool boton" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" onclick="AnimationMenusForm('.Transportadora')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
+								<div class="col-md-4">
 									<label>{{ trans('adminlte_lang::message.solsertransnit') }}:</label><br>
 									<a>{{$SolicitudServicio->SolSerNitTrans}}</a>
 								</div>
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsertransaddress') }}:</label><br>
+									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsertransaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerAdressTrans}}</p>">{{$SolicitudServicio->SolSerAdressTrans}}</a>
+								</div>
+								
 							</div>
-							<div class="col-md-16">
-								<div class="col-md-12 border-gray collapse Transportadora">
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsertransaddress') }}:</label><br>
-										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsertransaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerAdressTrans}}</p>">{{$SolicitudServicio->SolSerAdressTrans}}</a>
-									</div>
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowtranscity') }}</label><br>
-										<a>{{$Municipio}}</a>
-									</div>
+							<div class="col-md-12 border-gray collapse Transportadora">
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solsershowtranscity') }}</label><br>
+									<a>{{$Municipio}}</a>
 								</div>
-								<div class="col-md-12 border-gray collapse Transportadora">
-									@if($SolicitudServicio->SolSerTipo == 'Interno')
-										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
-											<a>{{$SolicitudServicio->SolSerConductor == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerConductor}}</a>
-										</div>
-										<div class="col-md-6">
-											<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
-											<a>{{$SolicitudServicio->SolSerVehiculo == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerVehiculo}}</a>
-										</div>
-									@else
-									<div class="col-md-6">
+								@if($SolicitudServicio->SolSerTipo == 'Interno')
+									<div class="col-md-4">
 										<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
-										<a>{{$SolSerConductor == null ? 'N/A' : $SolSerConductor}}</a>
+										<a>{{$SolicitudServicio->SolSerConductor == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerConductor}}</a>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
-										<a>{{$SolicitudServicio->SolSerVehiculo == null ? 'N/A' : $SolicitudServicio->SolSerVehiculo}}</a>
+										<a>{{$SolicitudServicio->SolSerVehiculo == null ? trans('adminlte_lang::message.solsernullprogram') : $SolicitudServicio->SolSerVehiculo}}</a>
 									</div>
-									@endif
+								@else
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solserconduc') }}:</label><br>
+									<a>{{$SolSerConductor == null ? 'N/A' : $SolSerConductor}}</a>
 								</div>
+								<div class="col-md-4">
+									<label>{{ trans('adminlte_lang::message.solservehic') }}:</label><br>
+									<a>{{$SolicitudServicio->SolSerVehiculo == null ? 'N/A' : $SolicitudServicio->SolSerVehiculo}}</a>
+								</div>
+								@endif
 							</div>
 							<div class="col-md-12 border-gray">
-								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
+								<div class="col-md-4" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solserstatusdescrip') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerDescript}}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
 								</div>
-								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
+								<div class="col-md-4" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolSerCollectAddress}}</p>">{{$SolSerCollectAddress}}</a>
 								</div>
+								<div class="col-md-4">
+
+								</div>
+								<div class="col-md-4">
+									@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+										<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
+									@endif
+								</div>
 							</div>
 							
-							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
-								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
-							@endif
+							
 							
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
