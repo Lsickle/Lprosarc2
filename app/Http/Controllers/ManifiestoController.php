@@ -138,20 +138,41 @@ class ManifiestoController extends Controller
         $manifiesto->ManifObservacion = $request->input('ManifObservacion');
         $manifiesto->ManifNumRm = $request->input('ManifNumRm');
         if (isset($request['ManifSrc'])) {
-            $file1 = $request['ManifSrc'];
-            $hoja = $manifiesto->ManifSlug.'.pdf';
-
-            $file1->move(public_path().'/img/Manifiestos/',$hoja);
-        }
-        else{
+            if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
+                $file1 = $request['ManifSrc'];
+                $hoja = $manifiesto->ManifSlug.'.pdf';
+                $file1->move(public_path().'/img/Manifiestos/',$hoja);
+            }else{
+                //se elimina el archivo anterior
+                $hoja = $manifiesto->ManifSlug.'.pdf';
+                $fileanterior =  public_path().'/img/Manifiestos/'.$hoja;
+                unlink($fileanterior);
+                //se carga el archivo nuevo que viene del formulario
+                $file1 = $request['ManifSrc'];
+                $file1->move(public_path().'/img/Manifiestos/',$hoja);
+            }
+            $manifiesto->ManifAuthHseq = 0;
+            $manifiesto->ManifAuthJo = 0;
+            $manifiesto->ManifAuthJl = 0;
+            $manifiesto->ManifAuthDp = 0;
+        }else{
             if ($manifiesto->ManifSrc == 'ManifiestoDefault.pdf') {
                 $hoja = 'ManifiestoDefault.pdf';
             }else{
                 $hoja = $manifiesto->ManifSrc;
             }
         }
+        
         $manifiesto->ManifSrc = $hoja;
         $manifiesto->save();
+
+        $log = new audit();
+        $log->AuditTabla="manifiestos";
+        $log->AuditType="actualizado";
+        $log->AuditRegistro=$manifiesto->ID_Manif;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
 
         return view('manifiestos.edit', compact('manifiesto')); 
     }
