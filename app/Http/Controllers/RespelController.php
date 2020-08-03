@@ -564,6 +564,15 @@ class RespelController extends Controller
             $respel->RespelDeclaracion = $request['RespelDeclaracion'];
             $respel->update();
 
+            if (isset($request['RespelTratamiento'])) {
+                $requerimiento = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)
+                ->where('ofertado', 1)
+                ->where('forevaluation', 1)
+                ->first();
+                $requerimiento->FK_ReqTrata=$request['RespelTratamiento'];
+                $requerimiento->update();
+            }
+
             $log = new audit();
             $log->AuditTabla="respels";
             $log->AuditType="Modificado";

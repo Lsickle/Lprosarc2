@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CertUpdated;
 use App\Certificado;
 use App\Cliente;
 use App\Generador;
@@ -171,12 +173,24 @@ class CertificadoController extends Controller
         $certificado->CertObservacion = $request->input('CertObservacion');
         $certificado->CertNumRm = $request->input('CertNumRm');
         if (isset($request['CertSrc'])) {
-            $file1 = $request['CertSrc'];
-            $hoja = $certificado->CertSlug.'.pdf';
-
-            $file1->move(public_path().'/img/Certificados/',$hoja);
-        }
-        else{
+            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                $file1 = $request['CertSrc'];
+                $hoja = $certificado->CertSlug.'.pdf';
+                $file1->move(public_path().'/img/Certificados/',$hoja);
+            }else{
+                //se elimina el archivo anterior
+                $hoja = $certificado->CertSlug.'.pdf';
+                $fileanterior =  public_path().'/img/Certificados/'.$hoja;
+                unlink($fileanterior);
+                //se carga el archivo nuevo que viene del formulario
+                $file1 = $request['CertSrc'];
+                $file1->move(public_path().'/img/Certificados/',$hoja);
+            }
+            $certificado->CertAuthHseq = 0;
+            $certificado->CertAuthJo = 0;
+            $certificado->CertAuthJl = 0;
+            $certificado->CertAuthDp = 0;
+        }else{
             if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                 $hoja = 'CertificadoDefault.pdf';
             }else{
@@ -185,6 +199,23 @@ class CertificadoController extends Controller
         }
         $certificado->CertSrc = $hoja;
         $certificado->save();
+
+        if (isset($request['CertSrc'])) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $destinatarios = ['dirtecnica@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'gerenteplanta@prosarc.com.co'
+							 ];	
+		    Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+        }
+        
+        $log = new audit();
+        $log->AuditTabla="certificados";
+        $log->AuditType="actualizado";
+        $log->AuditRegistro=$certificado->ID_Cert;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($id);
+        $log->save();
 
         return view('certificados.edit', compact('certificado')); 
     }
