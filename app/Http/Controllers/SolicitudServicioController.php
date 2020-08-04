@@ -1268,6 +1268,17 @@ class SolicitudServicioController extends Controller
 			if (!$SolicitudServicio) {
 				abort(404);
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$SolicitudServicio->recepcion = null;
+			}
+
+			$SolicitudServicio->CliName = Cliente::find($SolicitudServicio->FK_SolSerCliente)->first('CliNAme', 'CliSlug');
+
 			$certificados = Certificado::with(['certdato.solres'])
 			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
 			->get();
