@@ -66,7 +66,16 @@ class CertificadoController extends Controller
             }
         })
         ->get();
-        
+        $certificados->map(function ($certificado) {
+            $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehEntrada');
+            if ($fecharecepcionenplanta != null) {
+                $certificado->recepcion = $fecharecepcionenplanta->ProgVehEntrada;
+            }else{
+                $certificado->recepcion = "";
+            }
+            $certificado->cliente = $certificado->SolicitudServicio->cliente()->first('CliName')->CliName;
+            return $certificado ;
+        });
         return view('certificados.index', compact('certificados')); 
     }
 
@@ -193,9 +202,7 @@ class CertificadoController extends Controller
         }else{
             if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                 $hoja = 'CertificadoDefault.pdf';
-            }else{
-                $hoja = $certificado->CertSrc;
-            }
+            }  
         }
         $certificado->CertSrc = $hoja;
         $certificado->save();
