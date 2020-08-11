@@ -1277,7 +1277,7 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->recepcion = null;
 			}
 
-			$SolicitudServicio->CliName = Cliente::find($SolicitudServicio->FK_SolSerCliente)->first('CliNAme', 'CliSlug');
+			$SolicitudServicio->cliente = cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
 			$certificados = Certificado::with(['certdato.solres'])
 			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
