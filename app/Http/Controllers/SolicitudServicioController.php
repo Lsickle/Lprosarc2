@@ -83,7 +83,7 @@ class SolicitudServicioController extends Controller
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
 			if($fechaRecepcion){
-				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
 			}else{
 				$servicio->recepcion = null;
 			}
