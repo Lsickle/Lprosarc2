@@ -83,7 +83,7 @@ class SolicitudServicioController extends Controller
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
 			if($fechaRecepcion){
-				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
 			}else{
 				$servicio->recepcion = null;
 			}
@@ -570,7 +570,7 @@ class SolicitudServicioController extends Controller
 			->join('tratamientos' , 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
 			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliShortName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			// ->where('requerimientos.ofertado', 1)
 	        // ->where('forevaluation', 0)
@@ -1268,6 +1268,17 @@ class SolicitudServicioController extends Controller
 			if (!$SolicitudServicio) {
 				abort(404);
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$SolicitudServicio->recepcion = null;
+			}
+
+			$SolicitudServicio->cliente = cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
+
 			$certificados = Certificado::with(['certdato.solres'])
 			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
 			->get();
