@@ -63,13 +63,13 @@ class SolicitudServicioController extends Controller
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
-				if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-						$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
-						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
-						$query->where('solicitud_servicios.SolServCertStatus', 1);
-					}
-				}
+				// if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
+				// 	if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+				// 		$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
+				// 		// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
+				// 		$query->where('solicitud_servicios.SolServCertStatus', 1);
+				// 	}
+				// }
 			})
 			->orderBy('created_at', 'desc')
 			->get();
@@ -83,7 +83,7 @@ class SolicitudServicioController extends Controller
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
 			if($fechaRecepcion){
-				$servicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
 			}else{
 				$servicio->recepcion = null;
 			}
@@ -570,7 +570,7 @@ class SolicitudServicioController extends Controller
 			->join('tratamientos' , 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
 			->join('sedes' , 'tratamientos.FK_TratProv', '=', 'sedes.ID_Sede')
 			->join('clientes' , 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliName')
+			->select('solicitud_residuos.*','residuos_geners.FK_SGener', 'respels.*', 'requerimientos.ID_Req', 'tratamientos.TratName', 'clientes.CliShortName')
 			->where('solicitud_residuos.FK_SolResSolSer', $SolicitudServicio->ID_SolSer)
 			// ->where('requerimientos.ofertado', 1)
 	        // ->where('forevaluation', 0)
@@ -684,7 +684,9 @@ class SolicitudServicioController extends Controller
 							$log->Auditlog=$Solicitud->SolSerStatus;
 							$log->save();
 
-							return redirect()->route('solicitud-servicio.index');
+							// return redirect()->route('solicitud-servicio.index');
+							$slug = $Solicitud->SolSerSlug;
+							return redirect()->route('email-solser', compact('slug'));
 
 						}
 						break;
@@ -1266,6 +1268,17 @@ class SolicitudServicioController extends Controller
 			if (!$SolicitudServicio) {
 				abort(404);
 			}
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+			}else{
+				$SolicitudServicio->recepcion = null;
+			}
+
+			$SolicitudServicio->cliente = cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
+
 			$certificados = Certificado::with(['certdato.solres'])
 			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
 			->get();
@@ -1358,9 +1371,10 @@ class SolicitudServicioController extends Controller
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									$certificado->CertNumRm = "C-130";
-									$certificado->CertAuthHseq = 1;
-									$certificado->CertAuthJl = 1;
-									$certificado->CertAuthDp = 1;
+									$certificado->CertAuthHseq = 0;
+									$certificado->CertAuthJl = 0;
+									$certificado->CertAuthDp = 0;
+									$certificado->CertAuthJo = 0;
 									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertSolser = $id;
 									$certificado->FK_CertCliente = $cliente->ID_Cli;
@@ -1408,9 +1422,10 @@ class SolicitudServicioController extends Controller
 									$manifiesto->ManifSlug = hash('sha256', rand().time());
 									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
 									$manifiesto->ManifNumRm = "M-16";
-									$manifiesto->ManifAuthHseq = 1;
-									$manifiesto->ManifAuthJl = 1;
-									$manifiesto->ManifAuthDp = 1;
+									$manifiesto->ManifAuthHseq = 0;
+									$manifiesto->ManifAuthJl = 0;
+									$manifiesto->ManifAuthDp = 0;
+									$manifiesto->ManifAuthJo = 0;
 									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$manifiesto->FK_ManifSolser = $id;
 									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
