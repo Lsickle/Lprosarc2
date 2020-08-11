@@ -301,7 +301,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										<tr>
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>Tratamiento</th>
-											<th>Pretratamientos</th>
+											{{-- <th>Pretratamientos</th> --}}
 											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 											<th>{{trans('adminlte_lang::message.gener')}}</th>
 											@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
@@ -355,14 +355,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<a><i class="fas fa-flask" style="color: green"></i></a>
 													@endif
 													 {{$Residuo->RespelName}}</td>
-												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliName : ''}}</td>
-												<td>
+												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortName : ''}}</td>
+												{{-- <td>
 													<ul>
 													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
 													    <li>{{$pretratamientoSelected->PreTratName}}</li>
 													@endforeach
 													</ul>
-												</td>
+												</td> --}}
 												<td>{{$Residuo->SolResEmbalaje}}</td>
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
