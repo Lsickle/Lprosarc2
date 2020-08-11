@@ -45,7 +45,7 @@
 								<tr>
 									<td>{{$SolicitudServicio->cliente->CliName}}</td>
 									<td>{{$certificado->FK_CertSolser}}</td>
-									<td>{{$SolicitudServicio->recepcion}}</td>
+									<td>{{date('Y/m/d', strtotime($SolicitudServicio->recepcion))}}</td>
 									<td>{{$certificado->ID_Cert}}</td>
 									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
