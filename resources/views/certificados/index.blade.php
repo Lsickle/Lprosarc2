@@ -40,7 +40,7 @@ Lista de Certificados
 									<th>Ver</th>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<th>Firmar</th>
+									<th>Aprobar</th>
 								@endif
 								<th>Actualizado el:</th>
 							</thead>
