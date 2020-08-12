@@ -142,7 +142,7 @@ class CertificadoController extends Controller
                 $query->with('requerimiento');
             }]);
             
-        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento'])
+        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
         ->where('CertSlug', $id)
         ->first();
         // return $certificado;
@@ -158,7 +158,18 @@ class CertificadoController extends Controller
     public function edit($id)
     {
         if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol2, Permisos::EDITMANIFCERT)) {
-            $certificado = Certificado::where('CertSlug', $id)->first();
+            $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+                $query->with(['SolicitudResiduo' => function ($query){
+                    $query->where('SolResKgConciliado', '>', 0);
+                    $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                    $query->with('generespel.respels');
+                    $query->with('requerimiento');
+                }]);
+                
+            }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento'])
+            ->where('CertSlug', $id)
+            ->first();
+
             return view('certificados.edit', compact('certificado')); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");

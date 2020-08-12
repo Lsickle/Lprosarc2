@@ -31,7 +31,7 @@
 
 		<div class="col-md-6 form-group has-feedback">
 			<label># Recibo de materiales</label>
-			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="{{$certificado->CertNumRm}}">
+			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo) @if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat){{$Residuo->SolResRM}}, @endif @endforeach">
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">

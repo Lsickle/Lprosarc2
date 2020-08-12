@@ -14,7 +14,7 @@ class AddRmColumnToSolicitudResiduosTable extends Migration
     public function up()
     {
         Schema::table('solicitud_residuos', function (Blueprint $table) {
-            $table->string('SolResRM', 32)->nullable();
+            $table->string('SolResRM', 64)->nullable();
         });
     }
 
