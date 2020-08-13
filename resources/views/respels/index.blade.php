@@ -34,6 +34,7 @@
 								<tr>
 									<th>Actualizado</th>
 									<th>{{trans('adminlte_lang::LangRespel.RespelName')}}</th>
+									<th>Tratamiento Ofertado</th>
 									<th>{{trans('adminlte_lang::LangRespel.Respelclas')}}</th>
 									<th>{{trans('adminlte_lang::LangRespel.Respelhoja')}}</th>
 									<th>{{trans('adminlte_lang::LangRespel.Respeltarj')}}</th>
@@ -101,6 +102,7 @@
 									{{-- <td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td> --}}
 									<td>{{ $respel->updated_at }}</td>
 									<td class="text-center">{{$respel->RespelName}}</td>
+									<td class="text-center">{{$respel->TratName}}</td>
 
 									@if($respel->YRespelClasf4741 <> null)
 										<td class="text-center">{{$respel->YRespelClasf4741}}</td>

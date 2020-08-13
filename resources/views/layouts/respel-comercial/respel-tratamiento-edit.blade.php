@@ -17,7 +17,7 @@
         <label data-trigger="hover" data-toggle="popover" title="Seleccione Un Tratamiento" data-content="<p> Seleccione entre los tratamientos Viables(segun la Clasificación del residuo) o cualquiera de los tratamientos previamente registrados en la aplicacion SiReS</b></p>" for="tratamiento{{$contadorphp}}">
         Tratamiento
         </label>
-        <select {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && $OpcionOfertada==0 ? '' : 'disabled' }} class="selecttrat" id="opciontratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Tratamiento]" style="width:100%;">
+        <select {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) ? '' : 'disabled' }} class="selecttrat" id="opciontratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Tratamiento]" style="width:100%;">
             <option disabled="true" selected="true">Seleccione un Tratamiento...</option>
             <optgroup label="--------------Viables--------------">
                 @foreach($tratamientosViables as $tratamientoviable)
@@ -41,15 +41,15 @@
                 @endforeach 
             </optgroup>
         </select>
-        @if(in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial)||$OpcionOfertada==1)
+        @if(in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial)&&$OpcionOfertada==1)
             <input hidden name="Opcion[{{$contadorphp}}][Tratamiento]" value="{{$opcion->FK_ReqTrata}}"> 
         @endif
     </div>
     <div class="col-md-2">
         <div class="col-md-12">
             <label data-trigger="hover" data-toggle="popover" title="Tratamiento Ofertado</b>" data-content="<p> autorización para que el cliente pueda elegir el tratamiento de este residuo al momento de realizar la solicitud de servicio</p>">  Ofertado</label>
-            <input {{in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial) ? '' : 'disabled' }} {{$opcion['ofertado'] == 1 ? "checked=true" : ""}} type="radio" class="ofertaswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}"/>
-            @if((in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && ($opcion['ofertado'] == 1))
+            <input {{in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones) ? '' : 'disabled' }} {{$opcion['ofertado'] == 1 ? "checked=true" : ""}} type="radio" class="ofertaswitch" id="ofert{{$contadorphp}}" name="TratOfertado" value="{{$contadorphp}}"/>
+            @if((in_array(Auth::user()->UsRol, Permisos::ComercialYJefeComercial)||in_array(Auth::user()->UsRol2, Permisos::ComercialYJefeComercial)) && ($opcion['ofertado'] == 1))
                 <input hidden name="TratOfertado" value="{{$contadorphp}}"> 
             @endif
         </div>

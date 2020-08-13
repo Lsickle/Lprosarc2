@@ -54,10 +54,6 @@ class RespelController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->join('personals', 'personals.ID_Pers', '=', 'clientes.CliComercial')
-            ->join('requerimientos', function ($join) {
-                $join->on('requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
-                    ->where('requerimientos.forevaluation', '=', 1);
-            })
             ->select('respels.*', 'clientes.CliName', 'clientes.CliComercial', 'personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersCellphone')
             ->where(function($query){
                 switch (Auth::user()->UsRol) {
@@ -95,8 +91,26 @@ class RespelController extends Controller
             })
             ->get();
 
-            // return $Respels;
+            foreach ($Respels as $key => $value) {
+                $requerimiento = Requerimiento::where('FK_ReqRespel', $Respels[$key]->ID_Respel)
+                ->where('forevaluation', 1)
+                ->where('ofertado', 1)
+                ->first();
 
+                if (isset($requerimiento->FK_ReqTrata) && $requerimiento->ofertado == 1) {
+                    $tratamiento = Tratamiento::where('ID_Trat', $requerimiento->FK_ReqTrata)->first('TratName');
+                    if (isset($tratamiento->TratName)) {
+                        $Respels[$key]->TratName = $tratamiento->TratName;
+                    }else{
+                        $Respels[$key]->TratName = '';
+                    }
+                }else{
+                    $Respels[$key]->TratName = '';
+                }
+                
+            }
+            // return $Respels->pluck('TratName');
+ 
         return view('respels.index', compact('Respels')); 
     }
     /**
