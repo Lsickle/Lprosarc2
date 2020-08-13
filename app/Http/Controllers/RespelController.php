@@ -54,10 +54,6 @@ class RespelController extends Controller
             ->join('sedes', 'sedes.ID_Sede', '=', 'cotizacions.FK_CotiSede')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
             ->join('personals', 'personals.ID_Pers', '=', 'clientes.CliComercial')
-            ->join('requerimientos', function ($join) {
-                $join->on('requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
-                    ->where('requerimientos.forevaluation', '=', 1);
-            })
             ->select('respels.*', 'clientes.CliName', 'clientes.CliComercial', 'personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersCellphone')
             ->where(function($query){
                 switch (Auth::user()->UsRol) {
