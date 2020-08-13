@@ -15,7 +15,7 @@
 	</div>
 	<div class="col-md-12" style="margin-bottom: 0.25em;">
 	    <label for="pretratamiento{{$contadorphp}}">Pretratamiento</label>
-	    <select {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) && $OpcionOfertada==0 ? '' : 'disabled' }} multiple="multiple" class="form-control" id="pretratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Pretratamientos][]">
+	    <select {{(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)) ? '' : 'disabled' }} multiple="multiple" class="form-control" id="pretratamiento{{$contadorphp}}" name="Opcion[{{$contadorphp}}][Pretratamientos][]">
 	    	@if(isset($opcion['tratamientos'][0]))
 		    	@foreach($opcion['tratamientos'][0]->pretratamientos as $pretratamiento)
 					<option
