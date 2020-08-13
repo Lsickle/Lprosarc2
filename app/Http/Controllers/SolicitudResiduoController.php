@@ -132,6 +132,7 @@ class SolicitudResiduoController extends Controller
 				}
 				$SolRes->SolResKgRecibido = $request->input('SolResKg');
 				$SolRes->SolResKgConciliado = $request->input('SolResKg');
+				$SolRes->SolResRM = $request->input('SolResRM');
 				break;
 			case 'No Conciliado':
 			case 'Completado':

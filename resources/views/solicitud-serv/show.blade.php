@@ -299,6 +299,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									@endphp
 									<thead>
 										<tr>
+											@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+												<th># RM</th>
+											@endif
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>Tratamiento</th>
 											{{-- <th>Pretratamientos</th> --}}
@@ -348,6 +351,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													}
 												@endphp
 											<tr>
+												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+													<th>{{$Residuo->SolResRM}}</th>
+												@endif
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
 													<i class="fas fa-external-link-alt"></i>
 													</a>
@@ -704,6 +710,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
+											</div>
+											<div class="form-group col-md-12">
+												<label for="SolResRM"># Recibo de material</label>
+												<small class="help-block with-errors">*</small>
+												<input type="text" class="form-control" id="SolResRM" name="SolResRM" maxlength="8" value="" required>
 											</div>
 												@break
 											@case('No Conciliado')

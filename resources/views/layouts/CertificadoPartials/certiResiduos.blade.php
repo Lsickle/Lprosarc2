@@ -8,6 +8,7 @@
 		@endphp
 		<thead>
 			<tr>
+				<th># RM</th>
 				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 				<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 				<th>Corriente</th>
@@ -22,7 +23,8 @@
 		</thead>
 		<tbody>
 		@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-		@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
+		@foreach ($certificado->certdato as $certdato)
+		@if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
 			@php
 				// $TotalEnv = $Residuo->generespel->respels->SolResKgEnviado+$TotalEnv;
 				// $TotalRec = $Residuo->generespel->respels->SolResKgRecibido+$TotalRec;
@@ -41,6 +43,7 @@
 				}
 			@endphp
 			<tr>
+				<td>{{$Residuo->SolResRM}}</td></td>
 				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->SolResEmbalaje}}</td>
 				<td>
 					 {{$Residuo->generespel->respels->RespelName}}</td>
@@ -72,6 +75,7 @@
 				@endif
 			</tr>
 		@endif
+		@endforeach
 		@endforeach
 		</tbody>
 	</table>

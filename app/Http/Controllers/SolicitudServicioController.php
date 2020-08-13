@@ -1272,7 +1272,7 @@ class SolicitudServicioController extends Controller
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
 			if($fechaRecepcion){
-				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehEntrada;
+				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
 			}else{
 				$SolicitudServicio->recepcion = null;
 			}
@@ -1348,12 +1348,13 @@ class SolicitudServicioController extends Controller
 
 								$certificadoprevio = Certificado::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_CertSolser', $id)
+								->where('FK_CertGenerSede', $genersede->ID_GSede)
 								->first();
 
 								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
 								->first();
 
-								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)&&($certificadoprevio->FK_CertGenerSede == $genersede->ID_GSede)) {
 
 									$dato = new Certdato;
 									$dato->FK_DatoCert = $certificadoprevio->ID_Cert;

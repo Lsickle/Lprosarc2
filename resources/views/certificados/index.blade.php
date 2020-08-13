@@ -40,14 +40,14 @@ Lista de Certificados
 									<th>Ver</th>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<th>Firmar</th>
+									<th>Aprobar</th>
 								@endif
 								<th>Actualizado el:</th>
 							</thead>
 							<tbody>
 								@foreach($certificados as $certificado)
 								<tr>
-									<td>{{$certificado->recepcion}}</td>
+									<td>{{date('Y/m/d', strtotime($certificado->recepcion))}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th class="text-center">{{$certificado->cliente}}</th>
 										<td class="text-center">{{$certificado->CertNumRm}}</td>
