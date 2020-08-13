@@ -8,19 +8,23 @@
 		@endphp
 		<thead>
 			<tr>
+				<th># RM</th>
+				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 				<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 				<th>Corriente</th>
-				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<th>Tarifa</th>
 				@endif
 				<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
+				@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)||in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 				<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>		
+				@endif
 			</tr>
 		</thead>
 		<tbody>
 		@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-		@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
+		@foreach ($certificado->certdato as $certdato)
+		@if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
 			@php
 				// $TotalEnv = $Residuo->generespel->respels->SolResKgEnviado+$TotalEnv;
 				// $TotalRec = $Residuo->generespel->respels->SolResKgRecibido+$TotalRec;
@@ -28,21 +32,22 @@
 				// $TotalTrat = $Residuo->generespel->respels->SolResKgTratado+$TotalTrat;
 				switch ($Residuo->SolResTypeUnidad) {
 					case 'Unidad':
-						$TypeUnidad = 'Unidades';
+						$TypeUnidad = 'Unid.';
 						break;
 					case 'Litros':
-						$TypeUnidad = 'Litros';
+						$TypeUnidad = 'Lt.';
 						break;
 					default:
-						$TypeUnidad = 'Kilogramos';
+						$TypeUnidad = 'Kg.';
 						break;
 				}
 			@endphp
 			<tr>
-				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>
+				<td>{{$Residuo->SolResRM}}</td></td>
+				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->SolResEmbalaje}}</td>
+				<td>
 					 {{$Residuo->generespel->respels->RespelName}}</td>
 				<td>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</td>
-				<td>{{$Residuo->SolResEmbalaje}}</td>
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<td style="text-align: center;">
 					{{$Residuo->SolResPrecio}}
@@ -58,16 +63,19 @@
 					@endif
 					 {{$TypeUnidad}}
 				</td>
-				<td style="text-align: center;">
-					@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-						{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
-					@else
-						{{$Residuo->SolResKgTratado === null ? 'N/A' : $Residuo->SolResKgTratado }}
-					@endif
-					 {{$TypeUnidad}}
-				</td>
+				@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)||in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+					<td style="text-align: center;">
+						@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+							{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
+						@else
+							{{$Residuo->SolResKgTratado === null ? 'N/A' : $Residuo->SolResKgTratado }}
+						@endif
+						{{$TypeUnidad}}
+					</td>
+				@endif
 			</tr>
 		@endif
+		@endforeach
 		@endforeach
 		</tbody>
 	</table>

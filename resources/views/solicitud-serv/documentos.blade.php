@@ -20,7 +20,9 @@
 					<div class="box-body">
 						<table class="table table-compact table-bordered table-striped">
 							<thead>
+								<th>cliente</th>
 								<th>Servicio</th>
+								<th>Fecha Recepcion</th>
 								<th>#</th>
 								<th>Documento</th>
 								<th>Observación</th>
@@ -34,14 +36,16 @@
 									<th>Ver</th>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<th>Firmar</th>
+									<th>Aprobar</th>
 								@endif
 								<th>Actualizado el:</th>
 							</thead>
 							<tbody>
 								@foreach($certificados as $certificado)
 								<tr>
+									<td>{{$SolicitudServicio->cliente->CliName}}</td>
 									<td>{{$certificado->FK_CertSolser}}</td>
+									<td>{{date('Y/m/d', strtotime($SolicitudServicio->recepcion))}}</td>
 									<td>{{$certificado->ID_Cert}}</td>
 									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
@@ -205,6 +209,7 @@
 								@foreach($manifiestos as $manifiesto)
 								<tr>
 									<td>{{$manifiesto->FK_ManifSolser}}</td>
+									<td>{{$SolicitudServicio->recepcion}}</td>
 									<td>{{$manifiesto->ID_Manif}}</td>
 									@if($manifiesto->ManifSrc!=="ManifiestoDefault.pdf")
 										<td class="text-center"><a method='get' href='/img/Manifiestos/{{$manifiesto->ManifSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-invoice'></a></td>

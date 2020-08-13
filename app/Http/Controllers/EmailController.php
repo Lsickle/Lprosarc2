@@ -103,6 +103,25 @@ class EmailController extends Controller
             }
             return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
 
+        }elseif($SolSer->SolSerStatus === 'Completado'){
+            $email = DB::table('solicitud_servicios')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->select('personals.PersEmail', 'solicitud_servicios.*')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                ->first();
+            
+            $destinatarios = ['asistentelogistica@prosarc.com.co',
+                            $email->PersEmail];
+
+            if ($SolSer->SolServMailCopia == "null") {
+                Mail::to($destinatarios)
+                ->send(new SolSerEmail($email));
+            }else{
+                Mail::to($destinatarios)
+                ->cc(json_decode($SolSer->SolServMailCopia))
+                ->send(new SolSerEmail($email));
+            }
+            
         }else{
             $email = DB::table('solicitud_servicios')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
