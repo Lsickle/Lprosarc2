@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use App\Mail\VehiculoRecibidoEmail;
+use App\Mail\CancelSolServEmail;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -22,6 +23,7 @@ use App\SolicitudResiduo;
 use App\Documento;
 use App\Docdato;
 use App\Recolect;
+use App\Cliente;
 use App\Sede;
 use App\Requerimiento;
 use Permisos;
@@ -924,6 +926,52 @@ class VehicProgController extends Controller
 					$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 				}
 				$SolicitudServicio->save();
+
+				/*espacio para notificacion de programacion cancelada*/
+				$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+
+				$emailCliente = DB::table('solicitud_servicios')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->select('personals.PersEmail', 'solicitud_servicios.*')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
+                ->first();
+            
+
+				// se establece la lista de destinatarios
+				if ($SolicitudServicio['cliente']->CliComercial <> null) {
+					$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+					$destinatarios = ['dirtecnica@prosarc.com.co',
+										'logistica@prosarc.com.co',
+										'asistentelogistica@prosarc.com.co',
+										'auxiliarlogistico@prosarc.com.co',
+										'gerenteplanta@prosarc.com.co',
+										$emailCliente->PersEmail,
+										$comercial->PersEmail
+									];
+				}else{
+					$comercial = "";
+					$destinatarios = ['dirtecnica@prosarc.com.co',
+										'logistica@prosarc.com.co',
+										'asistentelogistica@prosarc.com.co',
+										'auxiliarlogistico@prosarc.com.co',
+										'gerenteplanta@prosarc.com.co',
+										$emailCliente->PersEmail
+									];	
+				}
+
+				$SolicitudServicio['comercial'] = $comercial;
+				$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+				if ($SolicitudServicio->SolServMailCopia == "null") {
+					Mail::to($destinatarios)
+					->send(new CancelSolServEmail($SolicitudServicio));
+				}else{
+					Mail::to($destinatarios)
+					->cc(json_decode($SolicitudServicio->SolServMailCopia))
+					->send(new CancelSolServEmail($SolicitudServicio));
+				}
+				
+
 			}
 
 			$log = new audit();
