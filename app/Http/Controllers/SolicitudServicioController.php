@@ -585,6 +585,23 @@ class SolicitudServicioController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
+		
+		$SolicitudServicio->Repetible = 0;
+
+		foreach ($Residuos as $residuo => $value) {
+			$requerimientos = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('ID_Req', $value->FK_SolResRequerimiento)
+	        ->first();
+			$residuoSinTratamiento = Requerimiento::where('FK_ReqRespel', $requerimientos->FK_ReqRespel)
+			->where('ofertado', 1)
+			->where('forevaluation', 1)
+	        ->first();
+
+
+			if ($residuoSinTratamiento == null) {
+				$SolicitudServicio->Repetible++;
+			}
+		}
 
 		$SolicitudesServicioscount = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo'])
 			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
@@ -805,7 +822,12 @@ class SolicitudServicioController extends Controller
 			        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
 			        ->where('ofertado', '=', 1)
 			        ->where('forevaluation', '=', 1)
-			        ->first();
+					->first();
+					
+				if ($requerimientoOfertado == null) {
+					$SolicitudNew->delete();
+					abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
+				}
 				if ($requerimientoOfertado->ReqFotoDescargue==0) {
 					$SolResNew->SolResFotoDescargue_Pesaje = 0;
 				}else{
