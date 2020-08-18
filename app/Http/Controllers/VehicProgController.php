@@ -927,7 +927,7 @@ class VehicProgController extends Controller
 				}
 				$SolicitudServicio->save();
 
-				/*espacio para notificacion de programacion cancelada*/
+				/*inicio de espacio para notificacion de programacion cancelada*/
 				$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 
 				$emailCliente = DB::table('solicitud_servicios')
@@ -970,7 +970,8 @@ class VehicProgController extends Controller
 					->cc(json_decode($SolicitudServicio->SolServMailCopia))
 					->send(new CancelSolServEmail($SolicitudServicio));
 				}
-				
+
+				/*fin de espacio para notificacion de programacion cancelada*/
 
 			}
 
