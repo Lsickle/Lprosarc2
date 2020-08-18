@@ -197,7 +197,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
 								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								@if ($SolicitudServicio->Repetible == 0)
 								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
+								@else
+								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="alguno de los residuos de este servicio no tiene un tratamiento ofertado por lo cual no puede repetir esta solicitud"><a disabled href='#' data-toggle='' style="margin: 10px  30px;" data-target='' class="btn btn-default">Repetir <i class="fas fa-redo-alt"></i></a></label>
+								@endif
 								@switch($SolicitudServicio->SolSerStatus)
 									@case('Completado')
 								    @case('Recibida')
