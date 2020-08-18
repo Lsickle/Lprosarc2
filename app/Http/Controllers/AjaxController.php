@@ -8,6 +8,7 @@ use App\ProgramacionVehiculo;
 use App\Http\Requests\CambiodefechaStoreRequest;
 use App\Sede;
 use App\Area;
+use App\Requerimiento;
 use App\Tratamiento;
 use App\Pretratamientos;
 use App\GenerSede;
@@ -112,7 +113,7 @@ class AjaxController extends Controller
 				})
 				->get();
 
-			return response()->json($Respels);
+		return response()->json($Respels);
 		}
 	}
 
@@ -122,11 +123,27 @@ class AjaxController extends Controller
 			$Respels = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
-				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug')
+				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
 				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $slug)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)
+				->where('requerimientos.forevaluation', 1)
+				->where('requerimientos.ofertado', 1)
 				->get();
+
+			foreach ($Respels as $key => $value) {
+				if (isset($Respels[$key]->FK_ReqTrata) && $Respels[$key]->ofertado == 1) {
+					$tratamiento = Tratamiento::where('ID_Trat', $Respels[$key]->FK_ReqTrata)->first('TratName');
+					if (isset($tratamiento->TratName)) {
+						$Respels[$key]->TratName = $tratamiento->TratName;
+					}else{
+						$Respels[$key]->TratName = '';
+					}
+				}else{
+					$Respels[$key]->TratName = '';
+				}
+			}
 				return response()->json($Respels);
 		}
 	}
