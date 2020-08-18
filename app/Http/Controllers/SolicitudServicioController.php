@@ -585,6 +585,23 @@ class SolicitudServicioController extends Controller
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
+		
+		$SolicitudServicio->Repetible = 0;
+
+		foreach ($Residuos as $residuo => $value) {
+			$requerimientos = Requerimiento::with(['pretratamientosSelected'])
+	        ->where('ID_Req', $value->FK_SolResRequerimiento)
+	        ->first();
+			$residuoSinTratamiento = Requerimiento::where('FK_ReqRespel', $requerimientos->FK_ReqRespel)
+			->where('ofertado', 1)
+			->where('forevaluation', 1)
+	        ->first();
+
+
+			if ($residuoSinTratamiento == null) {
+				$SolicitudServicio->Repetible++;
+			}
+		}
 
 		$SolicitudesServicioscount = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo'])
 			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
