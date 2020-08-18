@@ -903,11 +903,11 @@ class VehicProgController extends Controller
 			abort(404);
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
 		if ($programacion->ProgVehDelete == 0){
 			$programacion->ProgVehDelete = 1;
 			$programacion->save();
-			if(is_null($programaciones) && $SolicitudServicio->SolSerStatus == 'Programado'){
+			$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
+			if($programaciones == null && ($SolicitudServicio->SolSerStatus == 'Programado'||$SolicitudServicio->SolSerStatus == 'Notificado')){
 				$SolicitudServicio->SolSerStatus = 'Aprobado';
 				if($SolicitudServicio->SolSerTipo == 'Interno'){
 					$transportador = DB::table('clientes')

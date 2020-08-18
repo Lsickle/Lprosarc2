@@ -826,6 +826,15 @@ class SolicitudServicioController extends Controller
 					
 				if ($requerimientoOfertado == null) {
 					$SolicitudNew->delete();
+
+					$log = new audit();
+					$log->AuditTabla="solicitud_servicios";
+					$log->AuditType="repetir fallido";
+					$log->AuditRegistro=$SolicitudNew->ID_SolSer;
+					$log->AuditUser=Auth::user()->email;
+					$log->Auditlog=$SolicitudNew;
+					$log->save();
+					
 					abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
 				}
 				if ($requerimientoOfertado->ReqFotoDescargue==0) {
