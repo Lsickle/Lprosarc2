@@ -142,6 +142,36 @@ class RequerimientoController extends Controller
         return redirect()->route('requerimientos.index');
     }
 
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTrat(Request $request, $id, $servicio)
+    {
+        // return $request;
+
+        $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
+
+        if ($Requerimiento == null) {
+            abort(404, 'requerimiento no encontrado durante modificación de tratamiento')
+        }
+        $Requerimiento->FK_ReqTrata = $request->FK_ReqTrata;
+        $Requerimiento->save();
+
+        $log = new audit();
+        $log->AuditTabla="requerimientos";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$Requerimiento->ID_Req;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$request->all();
+        $log->save();
+        // return redirect()->route('respels.index');
+        return redirect()->route('solicitud-servicio.show', $servicio);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

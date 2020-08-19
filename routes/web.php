@@ -137,6 +137,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	// Route::resource('/asistencias', 'AsistenciaController');
 	Route::resource('/recurso', 'RecursoController');
 	Route::resource('/requerimientos', 'RequerimientoController');
+	Route::put('/requerimientos/{id}/updateTrat/{servicio}', 'RequerimientoController@updateTrat')->name('requerimientos.updateTrat');
 	Route::resource('/holidays', 'holidayController');
 	Route::resource('/cotizacion', 'CotizacionController');
 	Route::resource('/tarifas', 'TarifaController');
