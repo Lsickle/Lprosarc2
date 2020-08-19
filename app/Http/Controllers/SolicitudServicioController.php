@@ -409,6 +409,12 @@ class SolicitudServicioController extends Controller
 					case 88:
 						$SolicitudResiduo->SolResEmbalaje = "Granel";
 						break;
+					case 87:
+						$SolicitudResiduo->SolResEmbalaje = "Canecas 55 gal.";
+						break;
+					case 86:
+						$SolicitudResiduo->SolResEmbalaje = "Canecas 05 gal.";
+						break;
 				}
 				$SolicitudResiduo->SolResAlto = $request['SolResAlto'][$Generador][$y];
 				$SolicitudResiduo->SolResAncho = $request['SolResAncho'][$Generador][$y];

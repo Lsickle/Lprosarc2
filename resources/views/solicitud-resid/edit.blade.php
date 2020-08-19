@@ -87,6 +87,8 @@
 									<option value="90" {{$SolRes->SolResEmbalaje  === "Tachos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja10') }}</option>
 									<option value="89" {{$SolRes->SolResEmbalaje  === "Embalajes Compuestos" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja11') }}</option>
 									<option value="88" {{$SolRes->SolResEmbalaje  === "Granel" ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja12') }}</option>
+									<option value="87" {{$SolRes->SolResEmbalaje  === "Canecas 55 gal." ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja13') }}</option>
+									<option value="86" {{$SolRes->SolResEmbalaje  === "Canecas 05 gal." ? 'selected' : '' }}>{{ trans('adminlte_lang::message.solserembaja14') }}</option>
 								</select>
 							</div>
 
