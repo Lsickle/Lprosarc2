@@ -702,6 +702,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										</div>
 									@endif
 										@switch($SolicitudServicio->SolSerStatus)
+											@case('Pendiente')
+											@case('Aprobado')
 											@case('Programado')
 											@case('Notificado')
 											@case('No Conciliado')
