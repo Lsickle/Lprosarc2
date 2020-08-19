@@ -323,6 +323,12 @@ class SolicitudResiduoController extends Controller
 			case 88:
 				$SolRes->SolResEmbalaje = "Granel";
 				break;
+			case 87:
+				$SolRes->SolResEmbalaje = "Canecas 55 gal.";
+				break;
+			case 86:
+				$SolRes->SolResEmbalaje = "Canecas 05 gal.";
+				break;
 			default:
 				abort(500);
 		}
