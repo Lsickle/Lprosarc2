@@ -368,7 +368,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														@if($SolicitudServicio->SolSerStatus !== 'Certificado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`)">
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
 														@else
 															<a style="color: black">
 														@endif
@@ -479,79 +479,82 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
-								{{--  Modal --}}
-									<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-body">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-														<i class="fas fa-exclamation-triangle"></i>
-														<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
-													</div> 
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-													<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
-														<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
-													</form>
-												</div>
+							{{--  Modal --}}
+								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+													<i class="fas fa-exclamation-triangle"></i>
+													<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
+												</div> 
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+												<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
+													<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
+												</form>
 											</div>
 										</div>
 									</div>
-								{{-- END Modal --}}
-								 {{--  Modal --}}
-									<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-body">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<span style="font-size: 1.5em;"><p>Requerimientos de los residuos</p></span>
-													<div class="box box-info col-md-16" style="text-align: center;">
-														@foreach($Residuos as $Residuo)
-															<div class="col-md-12 col-xs-12" style="margin-top: 5px;">
-																<label>{{$Residuo->RespelName.' - '.$Residuo->SolResEmbalaje}}</label>
-															</div>
-															<div class="col-md-12 col-xs-12">
-																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-right: 1px solid black;">
-																	<label style="text-align: center;"	>Descargue</label>
-																	<div style="width: 100%;">
-																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
-																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
-																	</div>
-																</div>
-																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;border-right: 1px solid black;">
-																	<label style="text-align: center;">{{trans('adminlte_lang::message.requeretratamiento')}}</label>
-																	<div style="width: 100%;">
-																		<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }}/>
-																		<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }}/>
-																	</div>
-																</div>
-																<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;">
-																	<label style="text-align: center;">Devolución/Auditoria</label>
-																	<div style="width: 100%;">
-																		<input type="checkbox" class="embalajeswitch" data-size="small" {{ $Residuo->SolResDevolucion == 1 ? 'checked' : '' }} disabled/>
-																		<input type="checkbox" class="auditoriaswitch" data-size="small" {{ $Residuo->SolResAuditoria == 1 ? 'checked' : '' }} disabled/>
-																	</div>
+								</div>
+							{{-- END Modal --}}
+								{{--  Modal --}}
+								<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<span style="font-size: 1.5em;"><p>Requerimientos de los residuos</p></span>
+												<div class="box box-info col-md-16" style="text-align: center;">
+													@foreach($Residuos as $Residuo)
+														<div class="col-md-12 col-xs-12" style="margin-top: 5px;">
+															<label>{{$Residuo->RespelName.' - '.$Residuo->SolResEmbalaje}}</label>
+														</div>
+														<div class="col-md-12 col-xs-12">
+															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-right: 1px solid black;">
+																<label style="text-align: center;"	>Descargue</label>
+																<div style="width: 100%;">
+																	<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
+																	<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
 																</div>
 															</div>
-														@endforeach 
-													</div><br><br><br>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-primary" data-dismiss="modal">Salir</button>
-												</div>
+															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;border-right: 1px solid black;">
+																<label style="text-align: center;">{{trans('adminlte_lang::message.requeretratamiento')}}</label>
+																<div style="width: 100%;">
+																	<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }}/>
+																	<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }}/>
+																</div>
+															</div>
+															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;">
+																<label style="text-align: center;">Devolución/Auditoria</label>
+																<div style="width: 100%;">
+																	<input type="checkbox" class="embalajeswitch" data-size="small" {{ $Residuo->SolResDevolucion == 1 ? 'checked' : '' }} disabled/>
+																	<input type="checkbox" class="auditoriaswitch" data-size="small" {{ $Residuo->SolResAuditoria == 1 ? 'checked' : '' }} disabled/>
+																</div>
+															</div>
+														</div>
+													@endforeach 
+												</div><br><br><br>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Salir</button>
 											</div>
 										</div>
 									</div>
-								{{-- END Modal --}}
+								</div>
+							{{-- END Modal --}}
+							{{-- Modal --}}
+								<div id="addkgmodal"></div>
+							{{-- END Modal --}}
+							{{-- Modal --}}
+								<div id="addprice"></div>
+							{{-- END Modal --}}
 								{{-- Modal --}}
-									<div id="addkgmodal"></div>
-								{{-- END Modal --}}
-								{{-- Modal --}}
-									<div id="addprice"></div>
-								{{-- END Modal --}}
-								{{--  Modal --}}
+								<div id="changetratmodal"></div>
+							{{-- END Modal --}}
+							{{--  Modal --}}
 								<div class="modal modal-default fade in" id="ModalTotales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
@@ -668,12 +671,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 @endif
 
 {{-- funciones para el modal de cambio de trtamiento --}}
-@if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 	<script>
-		function changeTratamiento(slug, idTrat, tratName, idReq){
-			$('#addkgmodal').empty();
-			$('#addkgmodal').append(`
-				<form role="form" action="requerimientos/`+idReq+`/updateTrat/`+solServicio+`" method="POST" data-toggle="validator" id="FormChangeTrat">
+		function changeTratamiento(slug, idTrat, tratName, idReq, solServicio){
+			$('#changetratmodal').empty();
+			$('#changetratmodal').append(`
+				<form role="form" action="../requerimientos/`+idReq+`/updateTrat/`+solServicio+`" method="POST" data-toggle="validator" id="FormChangeTrat">
 					@method('PUT')
 					@csrf
 					<div class="modal modal-default fade in" id="ChangeTrat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -681,8 +684,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-										<i class="fas fa-plus-circle"></i>
+									<div style="font-size: 5em; color: orange; text-align: center; margin: auto;">
+										<i class="fas fa-paste"></i>
 										<span style="font-size: 0.3em; color: black;"><p>
 											Tratamiento Aplicado
 										</p></span>
@@ -730,46 +733,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					</div>
 				</form>
 			`);
-			switch('{{$SolicitudServicio->SolSerStatus}}'){
-				case('Programado'):
-				case('Notificado'):
-					numeroKg();
-					break;
-				case('Completado'):
-				case('No Conciliado'):
-						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
-					break;
-				case('Conciliado'):
-						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
-					break;
-			};
-			$('#editkgRecibido').modal();
-			$('#FormKg').validator('update');
+			$('#ChangeTrat').modal();
+			$('#FormChangeTrat').validator('update');
+			// $('#selectTratamiento').select2();
 		};
-
-		function submit(cantidadmax, kgConciliado){
-			// console.log(cantidadmax);
-			// console.log(kgConciliado);
-			// console.log(tipo);
-			var ValorConciliadokg = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+kgConciliado+`">`;
-			var ValorConciliadounid = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">`;
-			// if (tipopeso != 'Kilogramos') {
-			// 	$('#conciliadokg').append(ValorConciliadounid);
-			// }else{
-			// 	$('#conciliadokg').append(ValorConciliadokg);
-			// }
-			$('#conciliadokg').append(ValorConciliadokg);
-			$('#SolResCantiUnidadTratada').val(cantidadmax);
-			$('#SolResKgTratado').val(kgConciliado);
-			$('#FormKg').validator('update');
-			$('#ValorConciliado').prop('type', "submit");
-
-		}
 	</script>
 	@if ($errors->any())
 		<script>
 			$(document).ready(function() {
-				$("#editkgRecibido").modal("show");
+				$("#FormChangeTrat").modal("show");
 			});
 		</script>
 	@endif
