@@ -356,7 +356,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@endphp
 											<tr>
 												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
-													<th>{{$Residuo->SolResRM}}</th>
+													<td>{{$Residuo->SolResRM}}</td>
 												@endif
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
 													<i class="fas fa-external-link-alt"></i>
@@ -365,7 +365,16 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<a><i class="fas fa-flask" style="color: green"></i></a>
 													@endif
 													 {{$Residuo->RespelName}}</td>
-												<td>{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortName : ''}}</td>
+												<td>
+													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+														@if($SolicitudServicio->SolSerStatus !== 'Certificado')
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`)">
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
+													@endif
+													{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortName : ''}}</td>
 												{{-- <td>
 													<ul>
 													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
@@ -648,6 +657,114 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#asignarPrecio').modal();
 			$('#Formprice').validator('update');
 		};
+	</script>
+	@if ($errors->any())
+		<script>
+			$(document).ready(function() {
+				$("#editkgRecibido").modal("show");
+			});
+		</script>
+	@endif
+@endif
+
+{{-- funciones para el modal de cambio de trtamiento --}}
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+	<script>
+		function changeTratamiento(slug, idTrat, tratName, idReq){
+			$('#addkgmodal').empty();
+			$('#addkgmodal').append(`
+				<form role="form" action="requerimientos/`+idReq+`/updateTrat/`+solServicio+`" method="POST" data-toggle="validator" id="FormChangeTrat">
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="ChangeTrat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+										<i class="fas fa-plus-circle"></i>
+										<span style="font-size: 0.3em; color: black;"><p>
+											Tratamiento Aplicado
+										</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+										@switch($SolicitudServicio->SolSerStatus)
+											@case('Programado')
+											@case('Notificado')
+											@case('No Conciliado')
+											@case('Completado')
+											@case('Conciliado')
+											@case('Tratado')
+											<div class="form-group col-md-12">	
+												<label for="FK_ReqTrata">Tratamiento Aplicado</label><small class="help-block with-errors">*</small>
+												<select id="selectTratamiento" name="FK_ReqTrata" class="form-control" required>
+													<option value="">Seleccione un Tratamiento</option>
+													@if($tratamientos == 'NoAutorizado')
+														<option value="`+idTrat+`">`+tratName+`</option>
+													@else
+														@foreach ($tratamientos as $tratamiento)
+															<option value="{{$tratamiento->ID_Trat}}">{{$tratamiento->TratName}}</option>
+														@endforeach
+													@endif
+												</select>
+											</div>
+												@break
+										@endswitch
+										<input type="text" hidden name="SolRes" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			switch('{{$SolicitudServicio->SolSerStatus}}'){
+				case('Programado'):
+				case('Notificado'):
+					numeroKg();
+					break;
+				case('Completado'):
+				case('No Conciliado'):
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					break;
+				case('Conciliado'):
+						$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+					break;
+			};
+			$('#editkgRecibido').modal();
+			$('#FormKg').validator('update');
+		};
+
+		function submit(cantidadmax, kgConciliado){
+			// console.log(cantidadmax);
+			// console.log(kgConciliado);
+			// console.log(tipo);
+			var ValorConciliadokg = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+kgConciliado+`">`;
+			var ValorConciliadounid = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">`;
+			// if (tipopeso != 'Kilogramos') {
+			// 	$('#conciliadokg').append(ValorConciliadounid);
+			// }else{
+			// 	$('#conciliadokg').append(ValorConciliadokg);
+			// }
+			$('#conciliadokg').append(ValorConciliadokg);
+			$('#SolResCantiUnidadTratada').val(cantidadmax);
+			$('#SolResKgTratado').val(kgConciliado);
+			$('#FormKg').validator('update');
+			$('#ValorConciliado').prop('type', "submit");
+
+		}
 	</script>
 	@if ($errors->any())
 		<script>
