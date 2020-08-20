@@ -156,7 +156,7 @@ class RequerimientoController extends Controller
         $Requerimiento = Requerimiento::where('ID_Req', $id)->first();
 
         if ($Requerimiento == null) {
-            abort(404, 'requerimiento no encontrado durante modificación de tratamiento')
+            abort(404, 'requerimiento no encontrado durante modificación de tratamiento');
         }
         $Requerimiento->FK_ReqTrata = $request->FK_ReqTrata;
         $Requerimiento->save();
