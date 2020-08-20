@@ -1409,6 +1409,8 @@ class SolicitudServicioController extends Controller
 									$certificado = new Certificado;
 									$certificado->CertType = 0;
 									$certificado->CertNumero = "";
+									$certificado->CertManifNumero = "";
+									$certificado->CertManifPrepend = "";
 									$certificado->CertiEspName = "";
 									$certificado->CertiEspValue = "";
 									$certificado->CertObservacion = "certificado con observacion generica";

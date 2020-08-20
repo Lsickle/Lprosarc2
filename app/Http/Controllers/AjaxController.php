@@ -12,6 +12,7 @@ use App\Requerimiento;
 use App\Tratamiento;
 use App\Pretratamientos;
 use App\GenerSede;
+use App\Certificado;
 
 class AjaxController extends Controller
 {
@@ -27,6 +28,32 @@ class AjaxController extends Controller
 			return response()->json($municipio);
 		}
 	}
+
+	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/
+	public function DocNumber(Request $request, $id)
+	{
+		if ($request->ajax()) {
+			switch ($id) {
+				case '0':
+					$ultimoNumero = Certificado::where('CertNumero', '!=', NULL)->orderBy('CertNumero', 'desc')->first('CertNumero');
+					$proximoNumero = ($ultimoNumero->CertNumero == NULL) ? 1 : $ultimoNumero->CertNumero+1 ;
+					break;
+				case '1':
+					$ultimoNumero = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
+					$proximoNumero = ($ultimoNumero == NULL) ? 1 : ($ultimoNumero->CertManifNumero+1);
+					break;
+				case '2':
+					$proximoNumero = '';
+				break;
+				
+				default:
+					abort(404, 'tipo de documento no encontrado');
+					break;
+			}
+			return response()->json($proximoNumero);
+		}
+	}
+
 	/*Funcion para ver por medio de Ajax las Areas que le competen a una Sede*/
 	public function AreasSedes(Request $request, $id)
 	{

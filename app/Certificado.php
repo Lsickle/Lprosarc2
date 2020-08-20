@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Certificado extends Model{
     protected $table='certificados';
-    protected $fillable = ['CertType','CertNumero','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertSlug','CertNumRm','CertAuthHseq','CertAuthJo','CertAuthJl','CertAuthDp','CertAnexo','FK_CertSolser','FK_CertCliente','FK_CertGenerSede','FK_CertGestor','FK_CertTrat','FK_CertTransp'];
+    protected $fillable = ['CertType','CertNumero','CertiEspName','CertiEspValue','CertObservacion','CertSrc','CertSlug','CertNumRm','CertAuthHseq','CertAuthJo','CertAuthJl','CertAuthDp','CertAnexo','FK_CertSolser','FK_CertCliente','FK_CertGenerSede','FK_CertGestor','FK_CertTrat','FK_CertTransp','CertManifNumero','CertManifPrepend','CertNumeroExt','CertSrcManif','CertSrcExt'];
     protected $primaryKey = 'ID_Cert';
 
     public function SolicitudServicio(){
