@@ -317,7 +317,7 @@ class SolicitudServicioController extends Controller
 		// se establece la lista de destinatarios
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-			$destinatarios = ['diroperaciones@prosarc.com.co',
+			$destinatarios = ['dirtecnica@prosarc.com.co',
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
@@ -327,7 +327,7 @@ class SolicitudServicioController extends Controller
 							 ];
 		}else{
 			$comercial = "";
-			$destinatarios = ['diroperaciones@prosarc.com.co',
+			$destinatarios = ['dirtecnica@prosarc.com.co',
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
@@ -920,7 +920,7 @@ class SolicitudServicioController extends Controller
 		// se establece la lista de destinatarios
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-			$destinatarios = ['diroperaciones@prosarc.com.co',
+			$destinatarios = ['dirtecnica@prosarc.com.co',
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
@@ -930,7 +930,7 @@ class SolicitudServicioController extends Controller
 							 ];
 		}else{
 			$comercial = "";
-			$destinatarios = ['diroperaciones@prosarc.com.co',
+			$destinatarios = ['dirtecnica@prosarc.com.co',
 								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',

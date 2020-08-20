@@ -79,7 +79,7 @@ class EmailController extends Controller
                 ->where('progvehiculos.ProgVehDelete', 0)
                 ->first();
             $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-            $destinatarios = ['diroperaciones@prosarc.com.co',
+            $destinatarios = ['dirtecnica@prosarc.com.co',
                                 'logistica@prosarc.com.co',
                                 'asistentelogistica@prosarc.com.co',
                                 'auxiliarlogistico@prosarc.com.co',
