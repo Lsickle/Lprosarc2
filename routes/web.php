@@ -150,6 +150,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/requeri-client', 'RequerimientosClienteController');
 	/*Rutas de peticiones de Ajax*/
 	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
+	Route::get('/doc-number/{id}', 'AjaxController@DocNumber');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
 	Route::put('/CambioDeFechaProgVehic/{id}', 'AjaxController@CambioDeFecha');
