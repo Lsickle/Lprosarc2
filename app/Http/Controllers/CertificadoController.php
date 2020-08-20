@@ -67,9 +67,9 @@ class CertificadoController extends Controller
         })
         ->get();
         $certificados->map(function ($certificado) {
-            $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehEntrada');
+            $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
             if ($fecharecepcionenplanta != null) {
-                $certificado->recepcion = $fecharecepcionenplanta->ProgVehEntrada;
+                $certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
             }else{
                 $certificado->recepcion = "";
             }
