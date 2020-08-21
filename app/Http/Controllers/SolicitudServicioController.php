@@ -32,6 +32,8 @@ use App\Certdato;
 use App\Manifiesto;
 use App\Manifdato;
 use App\Requerimiento;
+use App\Documento;
+use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use Permisos;
@@ -1226,10 +1228,36 @@ class SolicitudServicioController extends Controller
 	public function destroy($id)
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
-		if (!$SolicitudServicio) {
-			abort(404);
+
+		switch ($SolicitudServicio->SolSerStatus) {
+			case 'Aprobado':
+			case 'Programado':
+			case 'Notificado':
+			case 'Aprobado':
+				if (!$SolicitudServicio) {
+					abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
+				}
+				
+				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
+				
+				foreach ($documentos as $key => $documento) {
+					$docdato = DocDato::where('FK_DatoDoc', $documento->ID_Doc)->get();
+
+					foreach ($docdato as $key => $dato) {
+							DocDato::destroy($dato->ID_Dato);
+					}
+					Documento::destroy($documento->ID_Doc);
+				}
+				
+				SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
+
+				break;
+			
+			default:
+				abort(503, 'el servicio no puede ser eliminado si ya fue recibido en Planta');
+				break;
 		}
-		SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
+		
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
