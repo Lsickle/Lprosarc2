@@ -5,8 +5,28 @@
 			<input maxlength="128" name="CertType" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$certificado->CertType}}">
 		</div> --}}
 		<div class="col-md-6 form-group has-feedback">
+			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Tipo de documento<b>" data-content="Elija el tipo de documentos que corresponda para su creación…<br><ul>
+				<li>Certificado Prosarc</li>
+				<li>Manifiesto de envió</li>
+				<li>Certificado externo (<b>Otros Gestores</b>)</li>
+			</ul>">
+				<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Tipo de documento
+			</label>
+			<small class="help-block with-errors">*</small>
+			<select id="CertTypeSelect" name="CertType" class="form-control" required>
+				<option value="">Seleccione...</option>
+				<option value="0">Certificado Prosarc</option>
+				<option value="1">Manifiesto de envió a Gestor</option>
+				<option value="2">Certificado externo (otros gestores)</option>
+			</select>
+		</div>
+		<div class="col-md-6 form-group">
 			<label>Número</label>
-			<input disabled maxlength="5" name="CertNumero" type="text" class="form-control" placeholder="Nombre del certificado" value="{{$certificado->CertNumero}}">
+			<div class="input-group" id="inputGroupNumDoc">
+				{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
+				<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="">
+				<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+			</div>
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">
@@ -60,3 +80,92 @@
 			</div>
 		</div>
 </div>
+@section('NewScript')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#CertTypeSelect").change(function(e){
+			id=$("#CertTypeSelect").val();
+			e.preventDefault();
+			if (id == 2) {
+				$("#prefijo").remove();
+				$("#docNumberInput").val('');
+			} else {
+				$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+					}
+				});
+				$.ajax({
+					url: "{{url('/doc-number')}}/"+id,
+					method: 'GET',
+					data:{},
+					beforeSend: function(){
+						$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+						$("#docNumberInput").prop('disabled', true);
+					},
+					success: function(res){
+						console.log(res);
+						$("#docNumberInput").empty();
+						switch (id) {
+							case '0':
+								$("#prefijo").remove();
+								$("#docNumberInput").val(res);
+								break;
+							case '1':
+								$("#inputGroupNumDoc").prepend('<span class="input-group-addon" id="prefijo">M</span>');
+								$("#docNumberInput").val(res);
+								break;
+							default:
+								$("#docNumberInput").val('');
+								break;
+						}
+					},
+					complete: function(){
+						$(".load").empty();
+						$("#docNumberInput").prop('disabled', false);
+					}
+				})
+			}
+			
+		});
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#copiarNumero").click(function(e){
+			id=$("#CertTypeSelect").val();
+			e.preventDefault();
+			copiarCertNum("docNumberInput", id);
+			
+		});
+	});
+</script>
+<script type="text/javascript">
+	function copiarCertNum(id_elemento, tipo) {
+		var aux = document.createElement("input");
+		switch (tipo) {
+			case '0':
+			aux.setAttribute("value", document.getElementById(id_elemento).value);
+				break;
+
+			case '1':
+			aux.setAttribute("value", 'M'+document.getElementById(id_elemento).value);
+				break;
+
+			case '2':
+			aux.setAttribute("value", document.getElementById(id_elemento).value);
+				break;
+
+			default:
+				break;
+		}
+		document.body.appendChild(aux);
+		aux.select();
+		document.execCommand("copy");
+		document.body.removeChild(aux);
+		var Mensaje = "¡Texto Copiado!";
+		NotifiTrue(Mensaje);
+	}
+	
+	</script>
+@endsection

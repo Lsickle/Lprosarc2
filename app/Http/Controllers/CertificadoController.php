@@ -67,9 +67,9 @@ class CertificadoController extends Controller
         })
         ->get();
         $certificados->map(function ($certificado) {
-            $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehEntrada');
+            $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
             if ($fecharecepcionenplanta != null) {
-                $certificado->recepcion = $fecharecepcionenplanta->ProgVehEntrada;
+                $certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
             }else{
                 $certificado->recepcion = "";
             }
@@ -170,6 +170,11 @@ class CertificadoController extends Controller
             ->where('CertSlug', $id)
             ->first();
 
+            // foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $value) {
+            //     $arrayDeRms = [];
+
+            //     return $value;
+            // }
             return view('certificados.edit', compact('certificado')); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");
