@@ -170,12 +170,17 @@ class CertificadoController extends Controller
             ->where('CertSlug', $id)
             ->first();
 
+            $ultimoCertificado = Certificado::where('CertNumero', '!=', NULL)->orderBy('CertNumero', 'desc')->first('CertNumero');
+            $proximoCertificado = ($ultimoCertificado->CertNumero == NULL) ? 1 : $ultimoCertificado->CertNumero+1 ;
+            
+            $ultimoManif = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
+			$proximoManif = ($ultimoManif == NULL) ? 1 : ($ultimoManif->CertManifNumero+1);
             // foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $value) {
             //     $arrayDeRms = [];
 
             //     return $value;
             // }
-            return view('certificados.edit', compact('certificado')); 
+            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif'])); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");
         }
@@ -497,6 +502,42 @@ class CertificadoController extends Controller
         $log->save();
 
         return redirect()->route('certificados.index');
+    }
+
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function wordtemplate($id)
+    {
+        $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+            $query->with(['SolicitudResiduo' => function ($query){
+                $query->where('SolResKgConciliado', '>', 0);
+                $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                $query->with('generespel.respels');
+                $query->with('requerimiento');
+            }]);
+            
+        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
+        ->where('CertSlug', $id)
+        ->first();
+
+        $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
+        if ($fecharecepcionenplanta != null) {
+            $certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
+        }else{
+            $certificado->recepcion = "";
+        }
+
+        // return $certificado;
+        if ($certificado->tratamiento->TratName == 'TermoDestrucción') {
+            return view('certificados.imprimible', compact('certificado')); 
+        }else{
+            return view('certificados.manifiesto', compact('certificado')); 
+        }
     }
 
 

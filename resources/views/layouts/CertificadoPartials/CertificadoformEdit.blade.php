@@ -15,18 +15,58 @@
 			<small class="help-block with-errors">*</small>
 			<select id="CertTypeSelect" name="CertType" class="form-control" required>
 				<option value="">Seleccione...</option>
-				<option value="0">Certificado Prosarc</option>
-				<option value="1">Manifiesto de envió a Gestor</option>
-				<option value="2">Certificado externo (otros gestores)</option>
+				<option {{($certificado->CertType == 0 && $certificado->CertSrc != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="0">Certificado Prosarc</option>
+				<option {{($certificado->CertType == 1 && $certificado->CertSrcManif != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="1">Manifiesto de envió a Gestor</option>
+				<option {{($certificado->CertType == 2 && $certificado->CertSrcExt != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="2">Certificado externo (otros gestores)</option>
 			</select>
 		</div>
 		<div class="col-md-6 form-group">
-			<label>Número</label>
-			<div class="input-group" id="inputGroupNumDoc">
-				{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-				<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="">
-				<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
-			</div>
+			@switch($certificado->CertType)
+				@case(0)
+					@if ($certificado->CertSrc != 'CertificadoDefault.pdf')
+						<label>Número de Certificado Actual</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
+						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@else
+						<label>Número de Certificado Recomendado</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
+							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@endif
+
+					@break
+				@case(1)
+					@if ($certificado->CertSrcManif != 'CertificadoDefault.pdf')
+						<label>Número de Manifiesto Actual</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							<span class="input-group-addon" id="prefijo">M</span>
+						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertManifNumero}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@else
+						<label>Número de Manifiesto Recomendado</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							<span class="input-group-addon" id="prefijo">M</span>
+							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoManif}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@endif
+					@break
+				@default
+
+					<label>Número</label>
+					<div class="input-group" id="inputGroupNumDoc">
+						{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
+						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="">
+						<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+					</div>
+					
+			@endswitch
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">
