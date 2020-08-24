@@ -128,6 +128,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/certificados', 'CertificadoController');
 	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
 	Route::get('/certificados/{id}/firmar', 'CertificadoController@firmarindex');
+	Route::get('/certificados/{id}/wordtemplate', 'CertificadoController@wordtemplate');
 	Route::resource('/manifiestos', 'ManifiestoController');
 	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
 	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');
