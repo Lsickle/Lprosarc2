@@ -33,5 +33,14 @@ class SolicitudResiduo extends Model{
     {
     	return $this->belongsTo('App\Requerimiento', 'FK_SolResRequerimiento', 'ID_Req');
     }
+
+     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'SolResRM' => 'json',
+    ];
 }
 

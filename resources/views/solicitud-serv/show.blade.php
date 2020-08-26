@@ -356,7 +356,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@endphp
 											<tr>
 												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
-													<td>{{$Residuo->SolResRM}}</td>
+													<td>
+														{{-- @foreach ($Residuo->SolResRM as $rm)
+															{{$rm}}<br>
+														@endforeach --}}
+													</td>
 												@endif
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
 													<i class="fas fa-external-link-alt"></i>
@@ -806,10 +810,25 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
 											</div>
-											<div class="form-group col-md-12">
-												<label for="SolResRM"># Recibo de material</label>
+											<div class="form-group col-md-3">
+												<label for="SolResRM"># RM</label>
 												<small class="help-block with-errors">*</small>
-												<input type="text" class="form-control" id="SolResRM" name="SolResRM" maxlength="8" value="" required>
+												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="" required>
+											</div>
+											<div class="form-group col-md-3">
+												<label for="SolResRM"># RM</label>
+												<small class="help-block with-errors">*</small>
+												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
+											</div>
+											<div class="form-group col-md-3">
+												<label for="SolResRM"># RM</label>
+												<small class="help-block with-errors">*</small>
+												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
+											</div>
+											<div class="form-group col-md-3">
+												<label for="SolResRM"># RM</label>
+												<small class="help-block with-errors">*</small>
+												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
 											</div>
 												@break
 											@case('No Conciliado')
