@@ -43,14 +43,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
-								<div class="col-md-3">
+								<div class="col-md-4 col-span">
 									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label>{{trans('adminlte_lang::message.solserindexnumber')}}: {{$SolicitudServicio->ID_SolSer}}</label>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label>{{trans('adminlte_lang::message.solsershowaudita')}}</label>
 									@if($SolicitudServicio->SolResAuditoriaTipo == null)
 									<span>No</span>
@@ -58,7 +58,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<span>{{$SolicitudServicio->SolResAuditoriaTipo}}</span>
 									@endif
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label>Status</label>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<span>{{$SolicitudServicio->SolSerStatus}}</span>
@@ -73,6 +73,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<td style="text-align: center;">{{$SolicitudServicio->SolSerStatus}}</td>
 									@endswitch
 									@endif
+								</div>
+								<div class="col-md-2">
+									<label>{{'Vehiculos'}}: </label>
+									<span>{{$Programaciones->Count()}}</span>
 								</div>
 								<hr>
 							</div>
@@ -229,6 +233,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@endif
 							
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>RMs</b>" data-content="Haga click para visualizar los Números de Recibo de Materiales (<b>RM</b>) relacionados con esta Solicitud de Servicio"><a onclick="updateRMs(`{{$SolicitudServicio->SolSerSlug}}`)" style="margin: 10px 10px;" class='btn btn-info pull-right'><i class="fas fa-list-ol"></i><b>RMs</b></a></label>
 
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
@@ -304,7 +309,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<thead>
 										<tr>
 											@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
-												<th># RM</th>
+												<th>#RM</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 											<th>Tratamiento</th>
@@ -357,9 +362,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<tr>
 												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 													<td>
-														{{-- @foreach ($Residuo->SolResRM as $rm)
-															{{$rm}}<br>
-														@endforeach --}}
+														@if ($Residuo->SolResRM2 !== null)
+															@foreach ($Residuo->SolResRM2 as $rm => $value)
+																{{$value}}<br>
+															@endforeach
+														@else
+															{{'RM Invalido -> '}} {{$Residuo->SolResRM}}
+														@endif
 													</td>
 												@endif
 												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
@@ -408,9 +417,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 															@if(($SolicitudServicio->SolSerStatus === 'Programado'||$SolicitudServicio->SolSerStatus === 'Notificado') && (count($Programaciones)>$ProgramacionesActivas))
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, ``{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -430,9 +439,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 															@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -606,6 +615,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									</div>
 								</div>
 							{{-- END Modal --}}
+							{{--  Modal --}}
+								<div id="addRMsmodal"></div>
+							{{-- END Modal --}}
 							</div>
 						</div>
 					</div>
@@ -616,6 +628,118 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 </div>
 @endsection
 @section('NewScript')
+
+
+{{-- funciones para el modal de RMs --}}
+@if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
+	<script>
+		function updateRMs(slug){
+			var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
+			$('#addRMsmodal').empty();
+			$('#addRMsmodal').append(`
+				<form role="form" action="/solicitud-servicio/`+slug+`/updateRms" method="POST" data-toggle="validator" id="FormRMs">
+					@method('PUT')
+					@csrf
+					<div class="modal modal-default fade in" id="editRMs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<div style="font-size: 5em; color: lightblue; text-align: center; margin: auto;">
+										<i class="fas fa-clipboard-list"></i>
+										<span style="font-size: 0.3em; color: black;"><p>
+											Números de Recibo de material
+										</p></span>
+									</div>
+								</div>
+								<div class="modal-header">
+									@if ($errors->any())
+										<div class="alert alert-danger" role="alert">
+											<ul>
+												@foreach ($errors->all() as $error)
+													<p>{{$error}}</p>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[0]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[1]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[2]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[3]+`">
+										</div>
+										<input type="text" hidden name="SolServ" value="`+slug+`">
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			`);
+			$('#editRMs').modal();
+			$('#FormRMs').validator('update');
+		};
+	</script>
+@else
+	<script>
+		function updateRMs(slug){
+			var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
+			$('#addRMsmodal').empty();
+			$('#addRMsmodal').append(`
+				<div class="modal modal-default fade in" id="showRMs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: lightblue; text-align: center; margin: auto;">
+									<i class="fas fa-clipboard-list"></i>
+									<span style="font-size: 0.3em; color: black;"><p>
+										Números de Recibo de material
+									</p></span>
+								</div>
+							</div>
+							<div class="modal-header">
+									<table class="table table-bordered">
+										<thead class="thead-dark">
+											<tr id="listadeRM" ></tr>
+										</thead>
+									</table>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			for (let index = 0; index < arrayRMs.length; index++) {
+				if (arrayRMs[index] !== null) {
+					$('#listadeRM').append(`<th class="text-center">`+`RM-`+arrayRMs[index]+`</th>`);
+				}
+			}
+			$('#showRMs').modal();
+			$('#FormRMs').validator('update');
+		};
+	</script>
+@endif
+
+
 {{-- funciones para el modal de precio --}}
 @if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 	<script>
@@ -668,7 +792,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	@if ($errors->any())
 		<script>
 			$(document).ready(function() {
-				$("#editkgRecibido").modal("show");
+				$("#Formprice").modal("show");
 			});
 		</script>
 	@endif
@@ -756,9 +880,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 {{-- funciones para el modal de kg --}}
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
 	<script>
-		function addkg(slug, cantidad, cantidadmax, tipo, cantidadKG, KgConciliado){
+		function addkg(slug, cantidad, cantidadmax, tipo, cantidadKG, KgConciliado, SolResRM){
+			console.log('solresRM = '+SolResRM);
+			var rmSelected = JSON.parse(SolResRM);
 			var inputUnid =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>';
 			var inputKg =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResKg" maxlength="5" value="'+cantidad+'" required>';
+			// var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
 			$('#addkgmodal').empty();
 			$('#addkgmodal').append(`
 				<form role="form" action="/solicitud-residuo/`+slug+`/Update" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
@@ -810,25 +937,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
 											</div>
-											<div class="form-group col-md-3">
-												<label for="SolResRM"># RM</label>
-												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="" required>
-											</div>
-											<div class="form-group col-md-3">
-												<label for="SolResRM"># RM</label>
-												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
-											</div>
-											<div class="form-group col-md-3">
-												<label for="SolResRM"># RM</label>
-												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
-											</div>
-											<div class="form-group col-md-3">
-												<label for="SolResRM"># RM</label>
-												<small class="help-block with-errors">*</small>
-												<input type="number" class="form-control" id="SolResRM" name="SolResRM[]" min="0" max="99999" value="">
+											<div class="col-md-12 form-group has-feedback">
+												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
+												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
+												</select>
 											</div>
 												@break
 											@case('No Conciliado')
@@ -883,6 +995,43 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					break;
 			};
 			$('#editkgRecibido').modal();
+
+			var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
+
+			/*se verifica si todos los valores son nulos*/
+			var nulos = 0;
+			for (let indexnulos = 0; indexnulos < arrayRMs.length; indexnulos++) {
+				if (arrayRMs[indexnulos] == null) {
+					nulos++;
+				}
+			}
+
+			if (nulos == 4) {
+				$('#SolResRMselect').empty();
+				$('#SolResRMselect').append(`<option disabled value="">debe cargar un numero de RM en el boton azul "RMs" para poder luego elegirlo en este formulario...</option>`);
+			}else{
+				$('#SolResRMselect').append(`<option disabled value="">seleccione un número de recibo de materiales...</option>`);
+				for (let index = 0; index < arrayRMs.length; index++) {
+					if (arrayRMs[index] !== null) {
+						let estaono = false;
+						if (rmSelected !== null) {
+							for (let indexselected = 0; indexselected < rmSelected.length; indexselected++) {
+								if (rmSelected[indexselected] == arrayRMs[index]) {
+									estaono = true;
+								}
+							}
+						}
+						
+						if(estaono==true){
+							console.log('Key is exist in Object!');
+							$('#SolResRMselect').append(`<option selected value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
+						}else{
+							$('#SolResRMselect').append(`<option value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
+						}
+					}
+				}
+			}
+			SelectsMultiple();
 			$('#FormKg').validator('update');
 		};
 

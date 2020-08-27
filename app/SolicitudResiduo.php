@@ -40,7 +40,7 @@ class SolicitudResiduo extends Model{
      * @var array
      */
     protected $casts = [
-        'SolResRM' => 'json',
+        'SolResRM' => 'array',
     ];
 }
 
