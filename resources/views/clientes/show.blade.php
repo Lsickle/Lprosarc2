@@ -277,7 +277,7 @@
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 					{{-- requerimientos --}}
 						<div class="tab-pane" id="requerimientos">
-							@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial))
+							@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
 								<a href='#' data-toggle='modal' data-target='#editReque' class="btn btn-warning pull-right"><i class="fas fa-edit"></i></a>
 							@endif
 							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>

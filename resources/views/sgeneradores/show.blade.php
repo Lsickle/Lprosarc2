@@ -61,6 +61,10 @@
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.gener') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
 						</li>
 						<li class="list-group-item">
+							<b>NIT</b> 
+							<a href="#" class="pull-right textpopover" title="NIT" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerNit}}</p>">{{$Generador->GenerNit}}</a>
+						</li>
+						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.address') }}</b> 
 							<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.adddress') }}')"><i class="far fa-copy"></i></a>
 							<p href="#" class="pull-right textpopoveraddress" id="{{ trans('adminlte_lang::message.adddress') }}" title="{{ trans('adminlte_lang::message.address') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</p>">{{$SedeGener->GSedeAddress}} ({{$Municipio->MunName}} - {{$Departamento->DepartName}})</p>

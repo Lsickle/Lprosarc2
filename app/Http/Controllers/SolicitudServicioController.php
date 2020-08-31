@@ -512,44 +512,54 @@ class SolicitudServicioController extends Controller
 			$SolSerCollectAddress = $SolSerCollectAddress." (".$Municipio2->MunName." - ".$Municipio2->DepartName.")";
 		}
 		$TextProgramacion = null;
-		if($SolicitudServicio->SolSerStatus == 'Notificado'){
-			setlocale(LC_ALL, "es_CO.UTF-8");
-			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
-			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
-				$horas = " en las horas de la tarde";
-			}
-			else{
-				$horas = " en las horas de la mañana";
-			}
-			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
-			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-			->where('ProgVehDelete', 0)
-			->get();
-			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-			->where('ProgVehEntrada', null)
-			->where('ProgVehDelete', 0)
-			->get());
-			// $ProgramacionesActivas = ($Programaciones);
-		}
-		if($SolicitudServicio->SolSerStatus == 'Programado'){
-			setlocale(LC_ALL, "es_CO.UTF-8");
-			$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
-			if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
-				$horas = " en las horas de la tarde";
-			}
-			else{
-				$horas = " en las horas de la mañana";
-			}
-			$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
-			$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-			// ->where('ProgVehEntrada', null)
-			->where('ProgVehDelete', 0)
-			->get();
-			$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-			->where('ProgVehEntrada', null)
-			->where('ProgVehDelete', 0)
-			->get());
-			// $ProgramacionesActivas = ($Programaciones);
+		switch ($SolicitudServicio->SolSerStatus) {
+			case 'Notificado':
+				setlocale(LC_ALL, "es_CO.UTF-8");
+				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
+				$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehDelete', 0)
+				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
+				// $ProgramacionesActivas = ($Programaciones);
+				break;
+
+			case 'Programado':
+				setlocale(LC_ALL, "es_CO.UTF-8");
+				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
+				$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				// ->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
+				// $ProgramacionesActivas = ($Programaciones);
+				break;
+
+			default:
+				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				// ->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get();
+				break;
 		}
 		$Cliente = DB::table('clientes')
 			->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -588,13 +598,22 @@ class SolicitudServicioController extends Controller
 		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
-	        ->first();
+			->first();
+			
+			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
 		
 		$SolicitudServicio->Repetible = 0;
+
+		/* se convierte el tipo de dato a aray mediante la consulta en el modelo de la columna SolSerRMs usando eloquent*/
+		$rms = SolicitudServicio::where('SolSerSlug', $SolicitudServicio->SolSerSlug)->first('SolSerRMs');
+		$SolicitudServicio->SolSerRMs = $rms->SolSerRMs;
+
+		// return $Residuos;
 
 		foreach ($Residuos as $residuo => $value) {
 			$requerimientos = Requerimiento::with(['pretratamientosSelected'])
@@ -652,7 +671,10 @@ class SolicitudServicioController extends Controller
 			$tratamientos = 'NoAutorizado';
 		}
 
-		// return $total;
+		// foreach ($Residuos->SolResRM as $key => $value) {
+		// 	$Residuos->SolResRM[$key] = explode($value);
+		// }
+		// return $Programaciones->count();
 		// return $cantidadesXtratamiento;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos'));
 	}
@@ -1380,6 +1402,27 @@ class SolicitudServicioController extends Controller
 		$log->AuditRegistro=$Solicitud->ID_SolSer;
 		$log->AuditUser=Auth::user()->email;
 		$log->Auditlog=$Solicitud->SolServCertStatus;
+		$log->save();
+
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
+
+		public function updateRms(Request $request, $id)
+	{
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+			
+		$Solicitud->SolSerRMs=$request->input('SolServRM');
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="actualizados los RMs";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$request;
 		$log->save();
 
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
