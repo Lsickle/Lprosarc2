@@ -362,7 +362,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<tr>
 												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 													<td>
-														@if ($Residuo->SolResRM2 !== null)
+														@if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
 															@foreach ($Residuo->SolResRM2 as $rm => $value)
 																{{$value}}<br>
 															@endforeach
