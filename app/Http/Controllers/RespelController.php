@@ -240,7 +240,7 @@ class RespelController extends Controller
             }else{
                 $respel->SustanciaControlada = 0;
             }
-            $respel->RespelStatus = "Aprobado";
+            $respel->RespelStatus = "Pendiente";
             // $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
             $respel->RespelTarj = $tarj;
