@@ -281,7 +281,7 @@ class RespelController extends Controller
             $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
             $rango->save();
 
-            if($respel->RespelStatus === "Aprobado"){
+            if($respel->RespelStatus === "Pendiente"){
                 /*se verifican los datos de las sede y y cliente segun el usuarios que registra el residuo*/
                 $respel['cliente'] = DB::table('personals')
                     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
