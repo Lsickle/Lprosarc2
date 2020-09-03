@@ -24,7 +24,7 @@ class SolResUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'SolResEmbalaje' 		=> 'required|numeric|max:99|min:88',
+            'SolResEmbalaje' 		=> 'required|numeric|max:99|min:86',
 			'SolResKgEnviado'		=> 'max:999999|required|numeric',
 			'SolResTypeUnidad' 		=> 'nullable|in:Unidad,Litros|required_with_all:SolResCantiUnidad',
 			'SolResCantiUnidad'		=> 'max:50000|nullable|numeric|required_with_all:SolResTypeUnidad',
