@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PersonalStoreRequest;
+use App\Http\Requests\PersonalUpdateRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
@@ -262,28 +263,28 @@ class PersonalController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id){
+	public function update(PersonalUpdateRequest $request, $id){
 		$Persona = Personal::where('PersSlug', $id)->first();
 		if (!$Persona) {
 			abort(404);
 		}
-		$validate = $request->validate([
-			'Sede'          => 'required',
-			'CargArea'      => 'required',
-			'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
-            'NewArea'       => 'required_if:CargArea,NewArea',
-            'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
-			'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
-			'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
-			'PersFirstName' => 'required|max:64',
-			'PersSecondName'=> 'max:64|nullable',
-			'PersLastName'  => 'required|max:64',
-			'PersEmail'     => 'required|email|max:255',
-			'PersCellphone' => 'required|min:12',
-			'PersAddress'   => 'max:255|nullable',
-			'Persfactura'   => 'max:2|nullable',
-			'PersAdmin'     => 'max:2|nullable',
-		]);
+		// $validate = $request->validate([
+		// 	'Sede'          => 'required',
+		// 	'CargArea'      => 'required',
+		// 	'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
+        //     'NewArea'       => 'required_if:CargArea,NewArea',
+        //     'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
+		// 	'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
+		// 	'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
+		// 	'PersFirstName' => 'required|max:64',
+		// 	'PersSecondName'=> 'max:64|nullable',
+		// 	'PersLastName'  => 'required|max:64',
+		// 	'PersEmail'     => 'required|email|max:255',
+		// 	'PersCellphone' => 'required|min:12',
+		// 	'PersAddress'   => 'max:255|nullable',
+		// 	'Persfactura'   => 'max:2|nullable',
+		// 	'PersAdmin'     => 'max:2|nullable',
+		// ]);
 
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
@@ -358,21 +359,24 @@ class PersonalController extends Controller
 		if (($Persona->Persfactura == 1)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
 			/*se quita la condicion de facturacion a la persona de facturacion actual*/
 			$Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
-
 			$Personadefacturacion->Persfactura = 0;
 			$Personadefacturacion->save();
 		}
 		if (($Persona->Persfactura == 0)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
 			/*se quita la condicion de facturacion a la persona de facturacion actual*/
-			$Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
+			// $Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
+			// $Personadefacturacion->Persfactura = 0;
+			// $Personadefacturacion->save();
+			
 			/*en caso de que vaya a quedar el cliente sin persona de facturacion*/
-			if ($Persona->ID_Pers == $IdPersonaFacturacion[0]->ID_Pers) {
+			if (($Persona->ID_Pers == $IdPersonaFacturacion[0]->ID_Pers)) {
 				$Personadefacturacionpredeterminada = Personal::where('ID_Pers', $IdPersonaAdmin[0]->ID_Pers)->first();
 				$Personadefacturacionpredeterminada->Persfactura = 1;
 				$Personadefacturacionpredeterminada->save();
+				if ($Persona->ID_Pers == $IdPersonaAdmin[0]->ID_Pers) {
+					$Persona->Persfactura = 1;
+				}
 			}
-			$Personadefacturacion->Persfactura = 0;
-			$Personadefacturacion->save();
 		}
 		if (($Persona->PersAdmin == 1)&&($IdPersonaAdmin[0]->ID_Pers == Auth::user()->FK_UserPers)) {
 			/*se quita la condicion de administracion a la persona de administracion actual*/
