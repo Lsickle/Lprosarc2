@@ -140,8 +140,8 @@
 												<div id="form-step-1" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
 														<label for="PersDocType" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persdoctype') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotypedoc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persdoctype') }}</label>
-														<small class="help-block with-errors">*</small>
-														<select name="PersDocType" id="PersDocType" class="form-control" required>
+														<small class="help-block with-errors"></small>
+														<select name="PersDocType" id="PersDocType" class="form-control">
 															<option {{$Persona->PersDocType == 'CC' ? 'selected' : ''}} value="CC">{{ trans('adminlte_lang::message.persdoctypecc') }}</option>
 															<option {{$Persona->PersDocType == 'CE' ? 'selected' : ''}} value="CE">{{ trans('adminlte_lang::message.persdoctypece') }}</option>
 															<option {{$Persona->PersDocType == 'NIT' ? 'selected' : ''}} value="NIT">{{ trans('adminlte_lang::message.persdoctypenit') }}</option>
@@ -150,8 +150,8 @@
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersDocNumber" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persdocument') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodoc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persdocument') }}</label>
-														<small class="help-block with-errors errorsdoc">*</small>
-														<input data-minlength="6" maxlength="11" required name="PersDocNumber" type="text" class="form-control document" id="PersDocNumber" value="{{$Persona->PersDocNumber}}">
+														<small class="help-block with-errors errorsdoc"></small>
+														<input data-minlength="6" maxlength="11" name="PersDocNumber" type="text" class="form-control document" id="PersDocNumber" value="{{$Persona->PersDocNumber}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersFirstName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persfirstname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfofirstname') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persfirstname') }}</label>
