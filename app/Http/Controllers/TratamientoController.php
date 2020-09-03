@@ -60,6 +60,7 @@ class TratamientoController extends Controller
             $sedes = DB::table('sedes')
                     ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                     ->where('CliCategoria', '=', 'proveedor')
+                    ->where('ID_Sede', '=', 1)
                     ->select('sedes.*', 'clientes.*')
                     ->get();
 
