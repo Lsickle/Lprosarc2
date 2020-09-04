@@ -15,6 +15,7 @@ use App\Audit;
 use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
+use App\SolicitudResiduo;
 
 
 class CertificadoController extends Controller
@@ -145,6 +146,13 @@ class CertificadoController extends Controller
         }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
         ->where('CertSlug', $id)
         ->first();
+
+        $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
+			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+	        $item->SolResRM2 = $rm->SolResRM;
+		  	return $item;
+		});
+        
         // return $certificado;
         return view('certificados.show', compact('certificado')); 
     }
