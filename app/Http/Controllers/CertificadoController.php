@@ -188,6 +188,11 @@ class CertificadoController extends Controller
 
             //     return $value;
             // }
+            $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
+                $rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+                $item->SolResRM2 = $rm->SolResRM;
+                return $item;
+            });
             return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif'])); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");
