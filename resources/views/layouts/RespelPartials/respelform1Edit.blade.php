@@ -50,7 +50,7 @@
 
 					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger7') }}
-					</option>S
+					</option>
 
 					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger8') }}
