@@ -568,7 +568,7 @@ class VehicProgController extends Controller
 			->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 			->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 			->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail', 'personals.PersCellphone', 'cargos.CargName', 'areas.AreaName')
+			->select('solicitud_servicios.*','personals.PersFirstName','personals.PersLastName', 'personals.PersEmail', 'personals.PersCellphone', 'personals.PersPhoneNumber', 'cargos.CargName', 'areas.AreaName')
 			->where('solicitud_servicios.ID_SolSer', $Programacion->FK_ProgServi)
 			->first();
 		if (!$SolicitudServicio) {

@@ -44,13 +44,13 @@
 						{{ trans('adminlte_lang::LangRespel.danger5') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger5')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger6') }}
 					</option>
 
 					<option value = "{{ trans('adminlte_lang::LangRespel.danger7')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger7') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger7') }}
-					</option>
+					</option>S
 
 					<option value = "{{ trans('adminlte_lang::LangRespel.danger8')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger8') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger8') }}
