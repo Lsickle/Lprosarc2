@@ -433,6 +433,16 @@ color:#0D0D0D'>Para constancia se firma en Mosquera, el día 21 de Agosto de
  </tr>
 </table>
 
+<p class=MsoNormal style='text-align:justify'><b><span lang=ES
+style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='text-align:justify'><b><span lang=ES
+style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:left;text-indent:
+-35.4pt'><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+color:#0D0D0D'>{{$certificado->CertSlug}}</span></p>
+
 </div>
 
 </body>
