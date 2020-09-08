@@ -209,6 +209,7 @@ class CertificadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $certificado = Certificado::where('CertSlug', $id)->first();
 
         $certificado->CertiEspName = $request->input('CertiEspName');
@@ -237,6 +238,23 @@ class CertificadoController extends Controller
             if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                 $hoja = 'CertificadoDefault.pdf';
             }  
+        }
+        switch ($request->input('CertType')) {
+            case 0:
+                $certificado->CertNumero = $request->input('CertNumero');
+                break;
+
+            case 1:
+                $certificado->CertManifNumero = $request->input('CertNumero');
+                break;
+
+            case 2:
+                $certificado->CertNumeroExt = $request->input('CertNumero');
+                break;
+            
+            default:
+                $certificado->CertNumero = $request->input('CertNumero');
+                break;
         }
         $certificado->CertSrc = $hoja;
         $certificado->save();

@@ -76,25 +76,25 @@ el generador:</span></p>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 1.0pt;
+  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>Empresa:  <b>{{$certificado->sedegenerador->generadors->GenerName}}</b></span></p>
   </td>
-  <td width=123 valign=top style='width:92.15pt;border:solid gray 1.0pt;
+  <td width=123 valign=top style='width:92.15pt;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>NIT:      <b>{{$certificado->sedegenerador->generadors->GenerNit}}</b></span></p>
   </td>
  </tr>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 1.0pt;
+  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} ({{$certificado->sedegenerador->municipio->MunName}})</b></span></p>
   </td>
   <td width=123 style='width:92.15pt;border-top:none;border-left:none;
-  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>Ciudad:
   <b>{{$certificado->sedegenerador->municipio->Departamento->DepartName}}</b></span></p>
   </td>
@@ -118,25 +118,25 @@ transportadora:</span></p>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 1.0pt;
+  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>Empresa: <b>{{$certificado->transportador->ID_Cli == 1 ? $certificado->transportador->CliShortname : $certificado->transportador->CliName}} </b></span></p>
   </td>
-  <td width=123 valign=top style='width:92.15pt;border:solid gray 1.0pt;
+  <td width=123 valign=top style='width:92.15pt;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>NIT: <b>{{$certificado->transportador->CliNit}}</b></span></p>
   </td>
  </tr>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 1.0pt;
+  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>Dirección: <b>{{$certificado->transportador->sedes[0]->SedeAddress}} ({{$certificado->transportador->sedes[0]->Municipios->MunName}})</b></span></p>
   </td>
   <td width=123 valign=top style='width:92.15pt;border-top:none;border-left:
-  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif'>Ciudad: <b>{{$certificado->transportador->sedes[0]->Municipios->Departamento->DepartName}}</b> </span></p>
@@ -162,11 +162,11 @@ información:</span></p>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=536
  style='width:401.7pt;border-collapse:collapse;border:none'>
  <tr>
-  <td width=162 style='width:121.65pt;border:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=162 style='width:121.65pt;border:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Fecha de Recepción</span></p>
   </td>
-  <td width=373 colspan=3 style='width:280.05pt;border:solid gray 1.0pt;
+  <td width=373 colspan=3 style='width:280.05pt;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>@php 
@@ -182,13 +182,13 @@ información:</span></p>
   </td>
  </tr>
  <tr>
-  <td width=162 style='width:121.65pt;border:solid gray 1.0pt;border-top:none;
+  <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Numero de Recibo de Materiales</span></p>
   </td>
   <td width=373 colspan=3 style='width:280.05pt;border-top:none;border-left:
-  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Pendiente (36462)</span></b></p>
@@ -207,25 +207,25 @@ $totalfilas=++$totalfilas;
 @endforeach
 @endforeach
  <tr style='height:11.1pt'>
-  <td width=162 rowspan={{$totalfilas}} style='width:121.65pt;border:solid gray 1.0pt;
+  <td width=162 rowspan={{$totalfilas}} style='width:121.65pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:11.1pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Descripción del Material</span></p>
   </td>
   <td width=227 style='width:6.0cm;border-top:none;border-left:none;border-bottom:
-  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:11.1pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>DESCRIPCIÓN</span></b></p>
   </td>
   <td width=80 style='width:60.3pt;border-top:none;border-left:none;border-bottom:
-  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:11.1pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>CORRIENTE</span></b></p>
   </td>
   <td width=66 style='width:49.65pt;border-top:none;border-left:none;
-  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:11.1pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>PESO
@@ -240,18 +240,18 @@ $totalKg = 0;
 @if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
  <tr style='height:3.2pt'>
   <td width=227 style='width:6.0cm;border-top:none;border-left:none;border-bottom:
-  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:3.2pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>{{$Residuo->generespel->respels->RespelName}}</span></p>
   </td>
   <td width=80 style='width:60.3pt;border-top:none;border-left:none;border-bottom:
-  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:3.2pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif'>{{$Residuo->generespel->respels->YRespelClasf4741}}-{{$Residuo->generespel->respels->ARespelClasf4741}}</span></p>
   </td>
   <td width=66 style='width:49.65pt;border-top:none;border-left:none;
-  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:3.2pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:black'>{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}</span></p>
@@ -266,13 +266,13 @@ $totalKg = 0;
 @endforeach
 @endforeach
  <tr>
-  <td width=162 style='width:121.65pt;border:solid gray 1.0pt;border-top:none;
+  <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Cantidad Total (kg)</span></p>
   </td>
   <td width=373 colspan=3 style='width:280.05pt;border-top:none;border-left:
-  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:black'>{{$totalKg}}</span></b><b><span lang=ES style='font-size:7.5pt;
@@ -280,13 +280,13 @@ $totalKg = 0;
   </td>
  </tr>
  <tr>
-  <td width=162 style='width:121.65pt;border:solid gray 1.0pt;border-top:none;
+  <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Mes del Tratamiento</span></p>
   </td>
   <td width=373 colspan=3 style='width:280.05pt;border-top:none;border-left:
-  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>@php 
@@ -302,13 +302,13 @@ $totalKg = 0;
   </td>
  </tr>
  <tr>
-  <td width=162 style='width:121.65pt;border:solid gray 1.0pt;border-top:none;
+  <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Observaciones</span></p>
   </td>
   <td width=373 colspan=3 style='width:280.05pt;border-top:none;border-left:
-  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Ninguna.</span></p>
