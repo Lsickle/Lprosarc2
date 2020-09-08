@@ -77,25 +77,25 @@ color:#0D0D0D'>&nbsp;</span></b></p>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=397 valign=top style='width:297.45pt;border:solid black 1.0pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Empresa:  <b>{{$certificado->sedegenerador->generadors->GenerName}}</b></span></p>
   </td>
-  <td width=113 valign=top style='width:3.0cm;border:solid black 1.0pt;
+  <td width=113 valign=top style='width:3.0cm;border:solid gray 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>NIT: <b>{{$certificado->sedegenerador->generadors->GenerNit}}</b></span></p>
   </td>
  </tr>
  <tr>
-  <td width=397 valign=top style='width:297.45pt;border:solid black 1.0pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} ({{$certificado->sedegenerador->municipio->MunName}})</b></span></p>
   </td>
   <td width=113 style='width:3.0cm;border-top:none;border-left:none;border-bottom:
-  solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Ciudad: <b>{{$certificado->sedegenerador->municipio->Departamento->DepartName}}</b></span></p>
   </td>
@@ -119,25 +119,25 @@ transportadora:</span></p>
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=397 valign=top style='width:297.45pt;border:solid black 1.0pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Empresa:  <b>{{$certificado->transportador->ID_Cli == 1 ? $certificado->transportador->CliShortname : $certificado->transportador->CliName}}</b></span></p>
   </td>
-  <td width=113 valign=top style='width:3.0cm;border:solid black 1.0pt;
+  <td width=113 valign=top style='width:3.0cm;border:solid gray 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>NIT: <b>{{$certificado->transportador->CliNit}}</b></span></p>
   </td>
  </tr>
  <tr>
-  <td width=397 valign=top style='width:297.45pt;border:solid black 1.0pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
   7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección:  <b>{{$certificado->transportador->sedes[0]->SedeAddress}} ({{$certificado->transportador->sedes[0]->Municipios->MunName}})</b></span></p>
   </td>
   <td width=113 valign=top style='width:3.0cm;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Ciudad: <b>{{$certificado->transportador->sedes[0]->Municipios->Departamento->DepartName}}</b></span></p>
   </td>
@@ -162,11 +162,11 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=510
  style='width:382.5pt;border-collapse:collapse;border:none'>
  <tr>
-  <td width=170 style='width:127.3pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=170 style='width:127.3pt;border:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Fecha de Recepción</span></p>
   </td>
-  <td width=340 colspan=4 style='width:255.2pt;border:solid black 1.0pt;
+  <td width=340 colspan=4 style='width:255.2pt;border:solid gray 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>@php 
@@ -182,31 +182,31 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
   </td>
  </tr>
  <tr>
-  <td width=170 style='width:127.3pt;border:solid black 1.0pt;border-top:none;
+  <td width=170 style='width:127.3pt;border:solid gray 1.0pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Número de Recibo de Materiales </span></p>
   </td>
   <td width=76 style='width:56.65pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>36329</span></b></p>
   </td>
   <td width=198 colspan=2 style='width:148.75pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Número
   manifiesto de carga</span></p>
   </td>
   <td width=66 style='width:49.8pt;border-top:none;border-left:none;border-bottom:
-  solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>36329</span></b></p>
   </td>
  </tr>
  <tr>
-  <td width=510 colspan=5 style='width:382.5pt;border:solid black 1.0pt;
+  <td width=510 colspan=5 style='width:382.5pt;border:solid gray 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>INFORMACIÓN
@@ -214,19 +214,19 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
   </td>
  </tr>
  <tr style='height:8.05pt'>
-  <td width=368 colspan=3 style='width:276.05pt;border:solid black 1.0pt;
+  <td width=368 colspan=3 style='width:276.05pt;border:solid gray 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>RESIDUO</span></b></p>
   </td>
   <td width=76 style='width:56.65pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>CORRIENTE</span></b></p>
   </td>
   <td width=66 style='width:49.8pt;border-top:none;border-left:none;border-bottom:
-  solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>PESO
@@ -240,19 +240,19 @@ $totalKg = 0;
 @if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
  </tr>
  <tr style='height:8.05pt'>
-  <td width=368 colspan=3 valign=top style='width:276.05pt;border:solid black 1.0pt;
+  <td width=368 colspan=3 valign=top style='width:276.05pt;border:solid gray 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:8.05pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#333333'>{{$Residuo->generespel->respels->RespelName}}</span></p>
   </td>
   <td width=76 valign=top style='width:56.65pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#333333'>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</span></p>
   </td>
   <td width=66 valign=top style='width:49.8pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
   style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#333333'>{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}</span></p>
@@ -267,13 +267,13 @@ $totalKg = 0;
 @endforeach
 @endforeach
  <tr>
-  <td width=170 style='width:127.3pt;border:solid black 1.0pt;border-top:none;
+  <td width=170 style='width:127.3pt;border:solid gray 1.0pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Cantidad Total.</span></b></p>
   </td>
   <td width=340 colspan=4 style='width:255.2pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>{{$totalKg}}</span></b><b><span lang=ES style='font-size:7.5pt;
@@ -281,13 +281,13 @@ $totalKg = 0;
   </td>
  </tr>
  <tr>
-  <td width=170 style='width:127.3pt;border:solid black 1.0pt;border-top:none;
+  <td width=170 style='width:127.3pt;border:solid gray 1.0pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Mes del Tratamiento:</span></b></p>
   </td>
   <td width=340 colspan=4 style='width:255.2pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>
@@ -305,13 +305,13 @@ $totalKg = 0;
   </td>
  </tr>
  <tr style='height:5.3pt'>
-  <td width=170 style='width:127.3pt;border:solid black 1.0pt;border-top:none;
+  <td width=170 style='width:127.3pt;border:solid gray 1.0pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt;height:5.3pt'>
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Observaciones</span></b></p>
   </td>
   <td width=340 colspan=4 style='width:255.2pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:5.3pt'>
   <p class=MsoNormal><strong><span lang=ES style='font-size:7.5pt;font-family:
   "Arial",sans-serif;color:#0D0D0D;background:white;font-weight:normal'>Ninguna.</span></strong></p>
@@ -350,11 +350,88 @@ enero 21 de 2002, 0886 de julio 27 de 2004 y la 909 del 06 de junio de 2008 del
 MAVDT y a nuestra Licencia Ambiental, según Resolución No. 3077 de noviembre 7
 de 2006, expedida por la CAR.</span></p>
 
-<p class=MsoNormal style='text-align:justify'><b><span lang=ES
-style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></b></p>
+<p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
+7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></p>
 
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-indent:
+-35.4pt'><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+color:#0D0D0D'>Para constancia se firma en Mosquera, el día 21 de Agosto de
+2020.</span></b></p>
 
-<p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+</div>
+
+<div align=center>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr style='height:8.1pt'>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt;height:8.1pt'>
+  <p class=MsoNormal style='text-align:justify'><span lang=ES><img width=125
+  height=53 id="Imagen 6"
+  src="/img//JhonGonzales2.png"></span></p>
+  </td>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt;height:8.1pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+  <td style='padding:0cm 5.4pt 0cm 5.4pt;height:8.1pt'>
+  <p class=MsoNormal style='text-align:justify'><span lang=ES><img width=118
+  height=76 id="Imagen 5"
+  src="/img/VictorVelasco2.png"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>JOHN GONZALEZ
+  </span></b></p>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Jefe de Logística</span></b></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>VICTOR
+  VELASCO</span></b></p>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Jefe de Operaciones</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><span lang=ES><img width=120
+  height=144 id="Imagen 4"
+  src="/img/DavidPizza2.png"></span></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Vo. Bo. </span></b></p>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>DAVID PIZZA </span></b></p>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Director de Planta</span></b></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+  <td width=190 valign=top style='width:142.4pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><b><span lang=ES
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>&nbsp;</span></b></p>
+  </td>
+ </tr>
+</table>
 
 </div>
 
