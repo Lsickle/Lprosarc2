@@ -1328,6 +1328,7 @@ class SolicitudServicioController extends Controller
 			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
 
 			})
+			->with(['tratamiento'])
 			->get();
 
 			$manifiestos = Manifiesto::where(function($query) use ($SolicitudServicio){
