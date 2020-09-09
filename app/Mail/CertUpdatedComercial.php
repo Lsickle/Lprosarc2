@@ -35,8 +35,22 @@ class CertUpdatedComercial extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        switch ($this->certificado->CertType) {
+            case 0:
+                $asunto = 'Certificado #'.$this->certificado->CertNumero.' disponible para verificación';
+                break;
+            case 1:
+                $asunto = 'Manifiesto #M'.$this->certificado->CertManifNumero.' disponible para verificación';
+                break;
+            case 2:
+                $asunto = 'certificado externo #'.$this->certificado->CertNumeroExt.' disponible para verificación';
+                break;
+            default:
+                $asunto = 'Documento #'.$this->certificado->ID_Cert.' disponible para verificación';
+                break;
+        }
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                        ->subject('Documento disponible para verificación')
+                        ->subject($asunto)
                         ->markdown('emails.certupdated.certcomercial');
     }
 }
