@@ -61,11 +61,32 @@ Lista de Certificados
 									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
 									<td class="text-center">{{$certificado->ID_Cert}}</td>
 									<td>{{$certificado->CertObservacion}}</td>
-									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
-										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
-									@else
-										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
-									@endif
+									@switch($certificado->CertType)
+										@case(0)
+											@if($certificado->CertSrc!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
+											@endif
+											@break
+										@case(1)
+											@if($certificado->CertSrcManif!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/Manifiestos/{{$certificado->CertSrcManif}}' target='_blank' class='btn btn-primary'><i class='far fa-file-alt fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' target='_blank' class='btn btn-default'><i class='far fa-file-alt fa-lg'></a></td>
+											@endif
+											@break
+										@case(2)
+											@if($certificado->CertSrcExt!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/CertificadosEXT/{{$certificado->CertSrcExt}}' target='_blank' class='btn btn-warning'><i class='far fa-file-alt fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' target='_blank' class='btn btn-default'><i class='far fa-file-alt fa-lg'></a></td>
+											@endif
+											@break
+										@default
+											
+									@endswitch
+									
 									
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center">

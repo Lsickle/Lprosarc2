@@ -47,11 +47,11 @@
 {{$text3}}
 @endcomponent
 
-Luego de revisar el documento puede utilizar el botón a continuación para autorizarlo
+{{-- Luego de revisar el documento puede utilizar el botón a continuación para autorizarlo
 
 @component('mail::button', ['url' => url('/certificados'.'/'.$certificado->CertSlug.'/firmar'.'/'.$servicio->SolSerSlug)])
 Firmar Certificado
-@endcomponent
+@endcomponent --}}
 
 Saludos
 @endcomponent

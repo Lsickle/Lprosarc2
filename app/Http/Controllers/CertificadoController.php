@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CertUpdated;
+use App\Mail\CertUpdatedComercial;
 use App\Certificado;
 use App\Cliente;
+use App\Personal;
 use App\Generador;
 use App\Tratamiento;
 use App\Audit;
@@ -212,61 +214,122 @@ class CertificadoController extends Controller
     {
         // return $request;
         $certificado = Certificado::where('CertSlug', $id)->first();
-
+        $certificado->CertType = $request->input('CertType');
         $certificado->CertiEspName = $request->input('CertiEspName');
         $certificado->CertiEspValue = $request->input('CertiEspValue');
         $certificado->CertObservacion = $request->input('CertObservacion');
         $certificado->CertNumRm = $request->input('CertNumRm');
-        if (isset($request['CertSrc'])) {
-            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
-                $file1 = $request['CertSrc'];
-                $hoja = $certificado->CertSlug.'.pdf';
-                $file1->move(public_path().'/img/Certificados/',$hoja);
-            }else{
-                //se elimina el archivo anterior
-                $hoja = $certificado->CertSlug.'.pdf';
-                $fileanterior =  public_path().'/img/Certificados/'.$hoja;
-                unlink($fileanterior);
-                //se carga el archivo nuevo que viene del formulario
-                $file1 = $request['CertSrc'];
-                $file1->move(public_path().'/img/Certificados/',$hoja);
-            }
-            $certificado->CertAuthHseq = 0;
-            $certificado->CertAuthJo = 0;
-            $certificado->CertAuthJl = 0;
-            $certificado->CertAuthDp = 0;
-        }else{
-            if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
-                $hoja = 'CertificadoDefault.pdf';
-            }  
-        }
+
         switch ($request->input('CertType')) {
             case 0:
                 $certificado->CertNumero = $request->input('CertNumero');
+                if (isset($request['CertSrc'])) {
+                    if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                        $file1 = $request['CertSrc'];
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $file1->move(public_path().'/img/Certificados/',$hoja);
+                    }else{
+                        //se elimina el archivo anterior
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $fileanterior =  public_path().'/img/Certificados/'.$hoja;
+                        unlink($fileanterior);
+                        //se carga el archivo nuevo que viene del formulario
+                        $file1 = $request['CertSrc'];
+                        $file1->move(public_path().'/img/Certificados/',$hoja);
+                    }
+                    $certificado->CertAuthHseq = 0;
+                    $certificado->CertAuthJo = 0;
+                    $certificado->CertAuthJl = 0;
+                    $certificado->CertAuthDp = 0;
+                }else{
+                    if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
+                        $hoja = 'CertificadoDefault.pdf';
+                    }  
+                }
+                $certificado->CertSrc = $hoja;
                 break;
 
             case 1:
                 $certificado->CertManifNumero = $request->input('CertNumero');
+                if (isset($request['CertSrc'])) {
+                    if ($certificado->CertSrcManif == 'CertificadoDefault.pdf') {
+                        $file1 = $request['CertSrc'];
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $file1->move(public_path().'/img/Manifiestos/',$hoja);
+                    }else{
+                        //se elimina el archivo anterior
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $fileanterior =  public_path().'/img/Manifiestos/'.$hoja;
+                        unlink($fileanterior);
+                        //se carga el archivo nuevo que viene del formulario
+                        $file1 = $request['CertSrc'];
+                        $file1->move(public_path().'/img/Manifiestos/',$hoja);
+                    }
+                    $certificado->CertAuthHseq = 0;
+                    $certificado->CertAuthJo = 0;
+                    $certificado->CertAuthJl = 0;
+                    $certificado->CertAuthDp = 0;
+                }else{
+                    if ($certificado->CertSrcManif == 'CertificadoDefault.pdf') {
+                        $hoja = 'CertificadoDefault.pdf';
+                    }  
+                }
+                $certificado->CertSrcManif = $hoja;
                 break;
 
             case 2:
                 $certificado->CertNumeroExt = $request->input('CertNumero');
+                if (isset($request['CertSrc'])) {
+                    if ($certificado->CertSrcExt == 'CertificadoDefault.pdf') {
+                        $file1 = $request['CertSrc'];
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $file1->move(public_path().'/img/CertificadosEXT/',$hoja);
+                    }else{
+                        //se elimina el archivo anterior
+                        $hoja = $certificado->CertSlug.'.pdf';
+                        $fileanterior =  public_path().'/img/CertificadosEXT/'.$hoja;
+                        unlink($fileanterior);
+                        //se carga el archivo nuevo que viene del formulario
+                        $file1 = $request['CertSrc'];
+                        $file1->move(public_path().'/img/CertificadosEXT/',$hoja);
+                    }
+                    $certificado->CertAuthHseq = 0;
+                    $certificado->CertAuthJo = 0;
+                    $certificado->CertAuthJl = 0;
+                    $certificado->CertAuthDp = 0;
+                }else{
+                    if ($certificado->CertSrcExt == 'CertificadoDefault.pdf') {
+                        $hoja = 'CertificadoDefault.pdf';
+                    }  
+                }
+                $certificado->CertSrcExt = $hoja;
                 break;
             
             default:
                 $certificado->CertNumero = $request->input('CertNumero');
                 break;
         }
-        $certificado->CertSrc = $hoja;
         $certificado->save();
 
         if (isset($request['CertSrc'])) {
+
             $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
             $destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
-								'gerenteplanta@prosarc.com.co'
-							 ];	
-		    Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+                                    'logistica@prosarc.com.co',
+                                    'gerenteplanta@prosarc.com.co'
+                                    ];
+
+            Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+            
+                        // se verifica si el cliente tiene comercial asignado
+
+            $servicio['cliente'] = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+            // se establece la lista de destinatarios
+            if ($servicio['cliente']->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $servicio['cliente']->CliComercial)->first();
+                $destinatariosComercial = [$comercial->PersEmail];
+                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio));
+            }
         }
         
         $log = new audit();
