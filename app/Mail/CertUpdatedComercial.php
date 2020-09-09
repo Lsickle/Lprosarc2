@@ -11,7 +11,7 @@ use App\Certificado;
 use App\SolicitudServicio;
 use App\Personal;
 
-class CertUpdated extends Mailable implements ShouldQueue
+class CertUpdatedComercial extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -36,7 +36,7 @@ class CertUpdated extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                        ->subject('Documento disponible para firma')
-                        ->markdown('emails.certupdated.cert');
+                        ->subject('Documento disponible para verificación')
+                        ->markdown('emails.certupdated.certcomercial');
     }
 }

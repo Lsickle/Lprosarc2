@@ -1328,6 +1328,7 @@ class SolicitudServicioController extends Controller
 			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
 
 			})
+			->with(['tratamiento'])
 			->get();
 
 			$manifiestos = Manifiesto::where(function($query) use ($SolicitudServicio){
@@ -1478,12 +1479,21 @@ class SolicitudServicioController extends Controller
 								}else{
 
 									$certificado = new Certificado;
-									$certificado->CertType = 0;
+									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
+										$certificado->CertType = 0;
+									}else{
+										$certificado->CertType = 1;
+									}
 									$certificado->CertNumero = "";
 									$certificado->CertManifNumero = "";
 									$certificado->CertManifPrepend = "";
 									$certificado->CertiEspName = "";
 									$certificado->CertiEspValue = "";
+									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
+										$certificado->CertObservacion = "certificado con observacion generica";
+									}else{
+										$certificado->CertObservacion = "manifiesto con observacion generica";
+									}
 									$certificado->CertObservacion = "certificado con observacion generica";
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
