@@ -18,6 +18,7 @@ Lista de Certificados
 						{{-- <a disabled href="" class="btn btn-success"><i class="fas fa-file-invoice"></i> Añadir Manifiesto</a> --}}
 					</div>
 					<div class="box-body">
+						<div id="ModalStatus"></div>
 						<table class="table table-compact table-bordered table-striped">
 							<thead>
 								<th>Fecha recepción</th>
@@ -26,6 +27,7 @@ Lista de Certificados
 									<th># RM</th>
 								@endif
 								<th>Servicio</th>
+								<th>Tratamiento</th>
 								<th># Documento</th>
 								<th>Observación</th>
 								<th>Archivo</th>
@@ -42,6 +44,9 @@ Lista de Certificados
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
 									<th>Aprobar</th>
 								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+									<th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
+								@endif
 								<th>Actualizado el:</th>
 							</thead>
 							<tbody>
@@ -53,13 +58,35 @@ Lista de Certificados
 										<td class="text-center">{{$certificado->CertNumRm}}</td>
 									@endif
 									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
+									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
 									<td class="text-center">{{$certificado->ID_Cert}}</td>
 									<td>{{$certificado->CertObservacion}}</td>
-									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
-										<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
-									@else
-										<td class="text-center"><a disabled method='get' href='/img/{{$certificado->CertSrc}}' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
-									@endif
+									@switch($certificado->CertType)
+										@case(0)
+											@if($certificado->CertSrc!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' class='btn btn-default'><i class='fas fa-file-contract fa-lg'></a></td>
+											@endif
+											@break
+										@case(1)
+											@if($certificado->CertSrcManif!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/Manifiestos/{{$certificado->CertSrcManif}}' target='_blank' class='btn btn-primary'><i class='far fa-file-alt fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' target='_blank' class='btn btn-default'><i class='far fa-file-alt fa-lg'></a></td>
+											@endif
+											@break
+										@case(2)
+											@if($certificado->CertSrcExt!=="CertificadoDefault.pdf")
+												<td class="text-center"><a method='get' href='/img/CertificadosEXT/{{$certificado->CertSrcExt}}' target='_blank' class='btn btn-warning'><i class='far fa-file-alt fa-lg'></a></td>
+											@else
+												<td class="text-center"><a disabled method='get' href='/img/CertificadoDefault.pdf' target='_blank' class='btn btn-default'><i class='far fa-file-alt fa-lg'></a></td>
+											@endif
+											@break
+										@default
+											
+									@endswitch
+									
 									
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center">
@@ -225,6 +252,14 @@ Lista de Certificados
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
 									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}/firmar' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
+									@php
+										$Status = ['Conciliado', 'Tratado'];
+									@endphp
+									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+										<td>
+											<a onclick="ModalStatus('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
+										</td>
+									@endif
 									<td>{{$certificado->updated_at}}</td>
 								</tr>
 								@endforeach
@@ -237,4 +272,40 @@ Lista de Certificados
 	</div>
 @endsection
 @section('NewScript')
+<script>
+	function ModalStatus(slug, id, boolean, value, text){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
+									<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
+										@csrf
+										<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+										<input type="text" name="solserstatus" value="`+value+`" style="display: none;">
+									</form>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			$('#SolSer').validator('update');
+			popover();
+			envsubmit();
+			$('#myModal').modal();
+		}
+	}
+</script>
 @endsection

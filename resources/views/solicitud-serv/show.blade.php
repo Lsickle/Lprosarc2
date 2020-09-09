@@ -380,11 +380,37 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													 {{$Residuo->RespelName}}</td>
 												<td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-														@if($SolicitudServicio->SolSerStatus !== 'Certificado')
+														@switch($SolicitudServicio->SolSerStatus)
+															@case('Aprobado')
 																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-														@else
-															<a style="color: black">
-														@endif
+																@break
+															@case('Aceptado')
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
+																@break
+															@case('Notificado')
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
+																@break
+															@case('Completado')
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
+																@break
+															@case('No Conciliado')
+																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
+																@break
+															@case('Conciliado')
+																<a style="color: black">
+																@break
+															@case('Certificacion')
+																<a style="color: black">
+																@break
+															@case('Certificado')
+																<a style="color: black">
+																@break
+															@case('Tratado')
+																<a style="color: black">
+																@break
+															@default
+																<a style="color: black">
+														@endswitch
 														<i class="fas fa-marker"></i></a>
 													@endif
 													{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortName : ''}}</td>

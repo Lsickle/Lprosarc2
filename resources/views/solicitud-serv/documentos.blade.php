@@ -22,6 +22,7 @@
 							<thead>
 								<th>cliente</th>
 								<th>Servicio</th>
+								<th>Tratamiento</th>
 								<th>Fecha Recepcion</th>
 								<th>#</th>
 								<th>Documento</th>
@@ -45,6 +46,7 @@
 								<tr>
 									<td>{{$SolicitudServicio->cliente->CliName}}</td>
 									<td>{{$certificado->FK_CertSolser}}</td>
+									<td>{{$certificado->tratamiento->TratName}}</td>
 									<td>{{date('Y/m/d', strtotime($SolicitudServicio->recepcion))}}</td>
 									<td>{{$certificado->ID_Cert}}</td>
 									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
