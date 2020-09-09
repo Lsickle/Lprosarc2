@@ -3,7 +3,7 @@
         @php
             $text1 = '# Certificado N° '.$certificado->CertNumero;
         
-            $text2 = 'El personal de logistica ha cargado un nuevo certificado en la aplicacion SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
+            $text2 = 'El personal de logística ha cargado un nuevo certificado en la aplicación SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
             
             $url = 'img/Certificados/'.$certificado->CertSlug.'.pdf';
 
@@ -14,7 +14,7 @@
         @php
             $text1 = '# Manifiesto N° '.$certificado->CertManifNumero;
         
-            $text2 = 'El personal de logistica ha cargado un nuevo manifiesto en la aplicacion SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
+            $text2 = 'El personal de logística ha cargado un nuevo manifiesto en la aplicación SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
             
             $url = 'img/Manifiestos/'.$certificado->CertSlug.'.pdf';
 
@@ -25,7 +25,7 @@
         @php
             $text1 = '# Manifiesto N° '.$certificado->CertNumeroExt;
         
-            $text2 = 'El personal de logistica ha cargado un nuevo certificado externo en la aplicacion SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
+            $text2 = 'El personal de logística ha cargado un nuevo certificado externo en la aplicación SisPRO correspondiente al servicio N°'.$certificado->FK_CertSolser;
             
             $url = 'img/CertificadosEXT/'.$certificado->CertSlug.'.pdf';
 
