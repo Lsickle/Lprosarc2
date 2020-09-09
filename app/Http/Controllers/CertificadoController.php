@@ -66,6 +66,7 @@ class CertificadoController extends Controller
                     break;
             }
         })
+        ->with(['tratamiento'])
         ->get();
         $certificados->map(function ($certificado) {
             $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');

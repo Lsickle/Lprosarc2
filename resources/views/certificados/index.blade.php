@@ -26,6 +26,7 @@ Lista de Certificados
 									<th># RM</th>
 								@endif
 								<th>Servicio</th>
+								<th>Tratamiento</th>
 								<th># Documento</th>
 								<th>Observación</th>
 								<th>Archivo</th>
@@ -53,6 +54,7 @@ Lista de Certificados
 										<td class="text-center">{{$certificado->CertNumRm}}</td>
 									@endif
 									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
+									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
 									<td class="text-center">{{$certificado->ID_Cert}}</td>
 									<td>{{$certificado->CertObservacion}}</td>
 									@if($certificado->CertSrc!=="CertificadoDefault.pdf")
