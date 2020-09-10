@@ -15,9 +15,9 @@
 			<small class="help-block with-errors">*</small>
 			<select id="CertTypeSelect" name="CertType" class="form-control" required>
 				<option value="">Seleccione...</option>
-				<option {{($certificado->CertType == 0 && $certificado->CertSrc != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="0">Certificado Prosarc</option>
-				<option {{($certificado->CertType == 1 && $certificado->CertSrcManif != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="1">Manifiesto de envió a Gestor</option>
-				<option {{($certificado->CertType == 2 && $certificado->CertSrcExt != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="2">Certificado externo (otros gestores)</option>
+				<option {{($certificado->CertType == 0) ? 'selected' : ''}} value="0">Certificado Prosarc</option>
+				<option {{($certificado->CertType == 1) ? 'selected' : ''}} value="1">Manifiesto de envió a Gestor</option>
+				<option {{($certificado->CertType == 2) ? 'selected' : ''}} value="2">Certificado externo (otros gestores)</option>
 			</select>
 		</div>
 		<div class="col-md-6 form-group">
