@@ -15,23 +15,23 @@
 			<small class="help-block with-errors">*</small>
 			<select id="CertTypeSelect" name="CertType" class="form-control" required>
 				<option value="">Seleccione...</option>
-				<option {{($certificado->CertType == 0 && $certificado->CertSrc != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="0">Certificado Prosarc</option>
-				<option {{($certificado->CertType == 1 && $certificado->CertSrcManif != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="1">Manifiesto de envió a Gestor</option>
-				<option {{($certificado->CertType == 2 && $certificado->CertSrcExt != 'CertificadoDefault.pdf') ? 'selected' : ''}} value="2">Certificado externo (otros gestores)</option>
+				<option {{($certificado->CertType == 0) ? 'selected' : ''}} value="0">Certificado Prosarc</option>
+				<option {{($certificado->CertType == 1) ? 'selected' : ''}} value="1">Manifiesto de envió a Gestor</option>
+				<option {{($certificado->CertType == 2) ? 'selected' : ''}} value="2">Certificado externo (otros gestores)</option>
 			</select>
 		</div>
 		<div class="col-md-6 form-group">
 			@switch($certificado->CertType)
 				@case(0)
 					@if ($certificado->CertSrc != 'CertificadoDefault.pdf')
-						<label>Número de Certificado Actual</label>
+						<label id="labelGroupNumDoc">Número de Certificado Actual</label>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
 						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
-						<label>Número de Certificado Recomendado</label>
+						<label id="labelGroupNumDoc">Número de Certificado (Recomendado)</label>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
 							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
@@ -42,17 +42,34 @@
 					@break
 				@case(1)
 					@if ($certificado->CertSrcManif != 'CertificadoDefault.pdf')
-						<label>Número de Manifiesto Actual</label>
+						<label id="labelGroupNumDoc">Número de Manifiesto Actual</label>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
-						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertManifNumero}}">
+						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$certificado->CertManifNumero}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
-						<label>Número de Manifiesto Recomendado</label>
+						<label id="labelGroupNumDoc">Número de Manifiesto (Recomendado)</label>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
-							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoManif}}">
+							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$proximoManif}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@endif
+					@break
+				@case(2)
+					@if ($certificado->CertSrcManif != 'CertificadoDefault.pdf')
+						<label id="labelGroupNumDoc">Número de Certificado Externo Actual</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							<span class="input-group-addon" id="prefijo">M</span>
+						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado externo" value="{{$certificado->CertNumeroExt}}">
+							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+						</div>
+					@else
+						<label id="labelGroupNumDoc">Número de Certificado Externo</label>
+						<div class="input-group" id="inputGroupNumDoc">
+							<span class="input-group-addon" id="prefijo">M</span>
+							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado externo" value="{{$proximoManif}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@endif
@@ -69,7 +86,7 @@
 			@endswitch
 		</div>
 
-		<div class="col-md-6 form-group has-feedback">
+		{{-- <div class="col-md-6 form-group has-feedback">
 			<label>Dato especial</label>
 			<input maxlength="32" name="CertiEspName" type="text" class="form-control" placeholder="Dato especial según requerimiento del cliente" value="{{$certificado->CertiEspName}}">
 		</div>
@@ -77,16 +94,19 @@
 		<div class="col-md-6 form-group has-feedback">
 			<label>Valor del Dato especial</label>
 			<input maxlength="32" name="CertiEspValue" type="text" class="form-control" placeholder="Valor del Dato especial" value="{{$certificado->CertiEspValue}}">
-		</div>
+		</div> --}}
 
 		<div class="col-md-6 form-group has-feedback">
 			<label>Observación</label>
 			<input maxlength="200" name="CertObservacion" type="text" class="form-control" placeholder="campo de observación" value="{{$certificado->CertObservacion}}">
 		</div>
-
+		
 		<div class="col-md-6 form-group has-feedback">
 			<label>Codigo</label>
-			<input readonly  type="text" class="form-control" placeholder="Clave para generar codigo QR" value="https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf">
+			<div class="input-group" id="divQrCode">
+				<input id="inputQrCode" readonly  type="text" class="form-control" placeholder="Clave para generar codigo QR" value="https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf">
+				<span class="btn btn-success input-group-addon" id="copiarCodigo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+			</div>
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">
@@ -107,7 +127,7 @@
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>CertSrc</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Pdf del Certificado</label>
+			<label id="srcLabel">Archivo Pdf del Certificado</label>
 			<small class="help-block with-errors">*</small>
 			<div class="input-group">
 				<input name="CertSrc" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
@@ -120,8 +140,7 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="col-md-6 form-group has-feedback">
+		{{-- <div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>CertAnexo</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Anexos del certificado</label>
 			<small class="help-block with-errors">*</small>
 			<div class="input-group">
@@ -130,7 +149,7 @@
 					<a method='get' href='/img/TarjetaEmergencia/' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
 				</div>
 			</div>
-		</div>
+		</div> --}}
 </div>
 @section('NewScript')
 <script type="text/javascript">
@@ -141,7 +160,13 @@
 			if (id == 2) {
 				$("#prefijo").remove();
 				$("#docNumberInput").val('');
-			} else {
+				$("#labelGroupNumDoc").empty();
+				$("#labelGroupNumDoc").prepend('Número de Certificado Externo');
+				$("#srcLabel").empty();
+				$("#srcLabel").prepend('Archivo Pdf del Certificado Externo');
+				$("#docNumberInput").attr('placeholder','Número de Certificado Externo');
+				$("#inputQrCode").val('https://sispro.prosarc.com/img/CertificadosEXT/{{$certificado->CertSlug}}.pdf');
+		 	} else {
 				$.ajaxSetup({
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -160,14 +185,28 @@
 						$("#docNumberInput").empty();
 						switch (id) {
 							case '0':
+								$("#labelGroupNumDoc").empty();
+								$("#labelGroupNumDoc").prepend('Número de Certificado (Recomendado)');
+								$("#srcLabel").empty();
+								$("#srcLabel").prepend('Archivo Pdf del Certificado');
 								$("#prefijo").remove();
 								$("#docNumberInput").val(res);
+								$("#docNumberInput").attr('placeholder','Número de Certificado');
+								$("#inputQrCode").val('https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf');
 								break;
 							case '1':
+								$("#labelGroupNumDoc").empty();
+								$("#labelGroupNumDoc").prepend('Número de Manifiesto (Recomendado)');
+								$("#srcLabel").empty();
+								$("#srcLabel").prepend('Archivo Pdf del Manifiesto');
 								$("#inputGroupNumDoc").prepend('<span class="input-group-addon" id="prefijo">M</span>');
+								$("#docNumberInput").attr('placeholder','Número de Manifiesto');
 								$("#docNumberInput").val(res);
+								$("#inputQrCode").val('https://sispro.prosarc.com/img/Manifiestos/{{$certificado->CertSlug}}.pdf');
 								break;
 							default:
+								$("#labelGroupNumDoc").empty();
+								$("#labelGroupNumDoc").prepend('Número de Documento');
 								$("#docNumberInput").val('');
 								break;
 						}
@@ -198,14 +237,17 @@
 		switch (tipo) {
 			case '0':
 			aux.setAttribute("value", document.getElementById(id_elemento).value);
+			var Mensaje = "¡Número de Certificado Copiado!";
 				break;
 
 			case '1':
 			aux.setAttribute("value", 'M'+document.getElementById(id_elemento).value);
+			var Mensaje = "¡Número de Manifiesto Copiado!";
 				break;
 
 			case '2':
 			aux.setAttribute("value", document.getElementById(id_elemento).value);
+			var Mensaje = "¡Número de Certificado Externo Copiado!";
 				break;
 
 			default:
@@ -215,9 +257,7 @@
 		aux.select();
 		document.execCommand("copy");
 		document.body.removeChild(aux);
-		var Mensaje = "¡Texto Copiado!";
 		NotifiTrue(Mensaje);
 	}
-	
 	</script>
 @endsection
