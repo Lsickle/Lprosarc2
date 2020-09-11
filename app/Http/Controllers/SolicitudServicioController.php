@@ -1497,7 +1497,7 @@ class SolicitudServicioController extends Controller
 									$certificado->CertObservacion = "certificado con observacion generica";
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
-									$certificado->CertNumRm = "C-130";
+									// $certificado->CertNumRm = "C-130";
 									$certificado->CertAuthHseq = 0;
 									$certificado->CertAuthJl = 0;
 									$certificado->CertAuthDp = 0;
@@ -1513,7 +1513,29 @@ class SolicitudServicioController extends Controller
 									}else{
 										$certificado->FK_CertTransp = 1;
 									}
-									
+
+									$certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
+										$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+										$item->SolResRM2 = $rm->SolResRM;
+										return $item;
+									});
+									$collection2 = collect([]);
+									foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $Residuo) {
+										if ($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat) {
+											if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2)) {
+												foreach ($Residuo->SolResRM2 as $key2 => $value) {
+													$collection2 = $collection2->concat([$value]);
+												}
+											}else {
+												$uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
+											}
+										}
+									}
+									if ($collection2->isNotEmpty()) {
+										$unicos = collect($collection2->unique());
+										$uniquestring = $unicos->values()->join(', ');
+									}
+									$certificado->CertNumRm = $uniquestring;
 									$certificado->save();
 
 									$dato = new Certdato;

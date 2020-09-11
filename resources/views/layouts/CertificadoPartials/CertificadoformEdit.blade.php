@@ -1,3 +1,27 @@
+@php
+$collection2 = collect([]);
+@endphp
+@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
+@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
+@if($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
+@foreach ($Residuo->SolResRM2 as $rm => $value)
+@php
+$collection2 = $collection2->concat([$value]);
+@endphp
+@endforeach
+@else
+@php
+$uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
+@endphp
+@endif
+@endif
+@endforeach
+@php
+if ($collection2->isNotEmpty()) {
+	$unicos = collect($collection2->unique());
+	$uniquestring = $unicos->values()->join(', ');
+}
+@endphp
 <div id="">
 	{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
 		{{-- <div class="col-md-6 form-group has-feedback">
@@ -111,19 +135,7 @@
 
 		<div class="col-md-6 form-group has-feedback">
 			<label># Recibo de materiales</label>
-			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="
-{{-- @foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
-@if($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
-@foreach ($Residuo->SolResRM2 as $rm => $value)
-{{$value}}, 
-@endforeach
-@else
-{{'RM Invalido -> '}} {{$Residuo->SolResRM}}
-@endif
-@endif
-@endforeach --}}
-">
+			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="{{$uniquestring}}">
 		</div>
 
 		<div class="col-md-6 form-group has-feedback">
