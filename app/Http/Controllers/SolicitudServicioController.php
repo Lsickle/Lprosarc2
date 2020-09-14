@@ -636,6 +636,7 @@ class SolicitudServicioController extends Controller
 			->get();
 		
 		/*se inicializan las variables para el calculo de totales */
+		$total['estimado'] = 0;		
 		$total['recibido'] = 0;		
 		$total['conciliado'] = 0;		
 		$total['tratado'] = 0;		
@@ -649,16 +650,20 @@ class SolicitudServicioController extends Controller
 
 				/* si el tratamiento existe en la lista se suman las cantidadesxtratamiento y los totales correspondientes */
 				if ($collection->has($residuo->requerimiento->tratamiento->TratName)) {
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['estimado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['estimado'] + $residuo->SolResKgEnviado;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] + $residuo->SolResKgRecibido;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] + $residuo->SolResKgConciliado;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] + $residuo->SolResKgTratado;
+					$total['estimado'] = $total['estimado'] + $residuo->SolResKgEnviado;
 					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
 					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
 					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
 				}else{
+					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['estimado'] = $residuo->SolResKgEnviado;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['recibido'] = $residuo->SolResKgRecibido;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['conciliado'] = $residuo->SolResKgConciliado;
 					$cantidadesXtratamiento[$residuo->requerimiento->tratamiento->TratName]['tratado'] = $residuo->SolResKgTratado;
+					$total['estimado'] = $total['estimado'] + $residuo->SolResKgEnviado;
 					$total['recibido'] = $total['recibido'] + $residuo->SolResKgRecibido;
 					$total['conciliado'] = $total['conciliado'] + $residuo->SolResKgConciliado;
 					$total['tratado'] = $total['tratado'] + $residuo->SolResKgTratado;
