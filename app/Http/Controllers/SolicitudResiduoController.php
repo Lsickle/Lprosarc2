@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CantConciliadaUpdated;
 use App\SolicitudResiduo;
 use App\Http\Requests\SolResUpdateRequest;
 use App\audit;
@@ -14,6 +16,8 @@ use App\ResiduosGener;
 use App\SolicitudServicio;
 use App\Requerimiento;
 use App\ProgramacionVehiculo;
+use App\Cliente;
+use App\Personal;
 use Permisos;
 
 class SolicitudResiduoController extends Controller
@@ -395,28 +399,75 @@ class SolicitudResiduoController extends Controller
 		if (!$SolRes) {
 			abort(404);
 		}
-		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
 
 		$Validate = $request->validate([
 			'SolResKg'  => 'required|numeric|max:50000|nullable',
 			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
 		]);
-		switch($SolSer->SolSerStatus){
+
+		switch($SolicitudServicio->SolSerStatus){
 			case 'Conciliado':
 			case 'Certificacion':
+				$oldValue=$SolRes->SolResKgConciliado;
+				$newValue=$request->input('SolResKg');
 				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
 					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
-
+				
 				break;
 			default:
 				abort(500);
 				break;
 		}
 		$SolRes->save();
+
+		
+		$SolRes['oldValue'] = $oldValue;
+		$SolRes['newValue'] = $newValue;
+		$SolRes['RespelName'] = $SolRes->requerimiento->respel->RespelName;
+		// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = [$SolicitudServicio['personalcliente']->PersEmail];					
+			
+			if ($SolicitudServicio->SolServMailCopia == "null") {
+				$cc = ['dirtecnica@prosarc.com.co',
+					'logistica@prosarc.com.co',
+					'asistentelogistica@prosarc.com.co',
+					'auxiliarlogistico@prosarc.com.co',
+					'recepcionpda@prosarc.com.co',
+					$comercial->PersEmail
+					];
+			}else{
+				$cc = ['dirtecnica@prosarc.com.co',
+					'logistica@prosarc.com.co',
+					'asistentelogistica@prosarc.com.co',
+					'auxiliarlogistico@prosarc.com.co',
+					'recepcionpda@prosarc.com.co',
+					$comercial->PersEmail,
+					$SolicitudServicio->SolServMailCopia
+					];
+			}
+		}else{
+			abort(500, 'el cliente no tiene comercial asignado durante el envío de la notificación de cantidad conciliada modificada');
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
+
+		
+
+		// se envia un correo por con la informacion del residuo modificado
+		Mail::to($destinatarios)
+		->cc($cc)
+		->send(new CantConciliadaUpdated($SolRes, $SolicitudServicio));
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_residuos";
