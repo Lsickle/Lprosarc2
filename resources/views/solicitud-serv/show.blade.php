@@ -605,6 +605,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<thead>
 															<tr>
 																<th>Tratamiento</th>
+																<th>estimado</th>
 																<th>recibido</th>
 																<th>conciliado</th>
 																<th>tratado</th>
@@ -615,6 +616,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															@foreach ($cantidadesXtratamiento as $key => $value)
 															<tr>
 																<th>{{$key}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$value['estimado']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
@@ -625,6 +627,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<tfoot>
 															<tr>
 																<th>{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
+																<th style="text-align: right; white-space: nowrap;"> {{$total['estimado']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
 																<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
