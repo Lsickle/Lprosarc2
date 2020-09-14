@@ -1481,23 +1481,19 @@ class SolicitudServicioController extends Controller
 									$certificado = new Certificado;
 									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
 										$certificado->CertType = 0;
+										$certificado->CertObservacion = "certificado con observacion generica";
 									}else{
 										$certificado->CertType = 1;
+										$certificado->CertObservacion = "manifiesto con observacion generica";
 									}
 									$certificado->CertNumero = "";
 									$certificado->CertManifNumero = "";
 									$certificado->CertManifPrepend = "";
 									$certificado->CertiEspName = "";
 									$certificado->CertiEspValue = "";
-									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
-										$certificado->CertObservacion = "certificado con observacion generica";
-									}else{
-										$certificado->CertObservacion = "manifiesto con observacion generica";
-									}
-									$certificado->CertObservacion = "certificado con observacion generica";
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
-									$certificado->CertNumRm = "C-130";
+									// $certificado->CertNumRm = "C-130";
 									$certificado->CertAuthHseq = 0;
 									$certificado->CertAuthJl = 0;
 									$certificado->CertAuthDp = 0;
@@ -1513,7 +1509,12 @@ class SolicitudServicioController extends Controller
 									}else{
 										$certificado->FK_CertTransp = 1;
 									}
-									
+
+									$certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
+										$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+										$item->SolResRM2 = $rm->SolResRM;
+										return $item;
+									});
 									$certificado->save();
 
 									$dato = new Certdato;
@@ -1526,7 +1527,7 @@ class SolicitudServicioController extends Controller
 								break;
 
 							case '1':
-							// "tratamiento tipo: externo ; manifiesto";
+								// "tratamiento tipo: externo ; manifiesto";
 								/*se verifica si ya existe un documento con ese tratamiento para esa solicitud de servicio*/
 								$manifiestoprevio = Manifiesto::where('FK_ManifTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_ManifSolser', $id)

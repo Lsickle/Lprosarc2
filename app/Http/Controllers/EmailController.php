@@ -26,28 +26,23 @@ class EmailController extends Controller
                 ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
                 ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                 ->first();
-           // {{ $message->embed(base_path() . '/img/logo.png') }}
-            $Roles1 = DB::table('users')
-                ->whereIn('users.UsRol', ['AsistenteLogistica', 'Supervisor'])
-                ->select('users.email')
-                ->get();
-                
-            // $Roles2 = DB::table('users')
-            //     ->whereIn('users.UsRol2', ['JefeLogistica', 'AsistenteLogistica'])
-            //     ->select('users.email')
-            //     ->get();
-            
-            foreach($Roles1 as $Rol1){
-                //SE ENVIA UN CORREO A CADA USUARIO DE ACUERDO AL ARRAY ROLES 1
-                Mail::to($Rol1->email)->send(new SolSerEmailClient($email));
-            }   
-                // validacion del rol2 para el envio de correo
-                // foreach($Roles2 as $Rol2){
-                //     Mail::to($Rol2->email)->send(new SolSerEmail($email));
-                // }
 
-                // para no enviar a logistica los email
-                // Mail::to(Auth::user()->email)->send(new SolSerEmail($email));
+            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+            $destinatarios = ['logistica@prosarc.com.co',
+                                'asistentelogistica@prosarc.com.co',
+                                'recepcionpda@prosarc.com.co',
+                                'ingtratamiento1@prosarc.com.co',
+                                'ingtratamiento2@prosarc.com.co',
+                                'ingtratamiento3@prosarc.com.co',
+                                $comercial->PersEmail
+                            ];
+            $destinatarioscc = ['dirtecnica@prosarc.com.co',
+                                'auxiliarlogistico@prosarc.com.co',
+                                'gerenteplanta@prosarc.com.co'
+                            ];
+            Mail::to($destinatarios)
+            ->cc($destinatarioscc)
+            ->send(new SolSerEmailClient($email));
 
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
