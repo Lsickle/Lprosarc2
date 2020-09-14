@@ -381,4 +381,53 @@ class SolicitudResiduoController extends Controller
 
 		return redirect()->route('solicitud-servicio.show', compact('id'));
 	}
+
+		/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+ 
+	public function corregirSolRes(Request $request, $id){
+		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
+		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+
+		$Validate = $request->validate([
+			'SolResKg'  => 'required|numeric|max:50000|nullable',
+			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
+		]);
+		switch($SolSer->SolSerStatus){
+			case 'Conciliado':
+			case 'Certificacion':
+				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+				}else{
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+				}
+
+				break;
+			default:
+				abort(500);
+				break;
+		}
+		$SolRes->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_residuos";
+		$log->AuditType="Corregido por Direccion planta";
+		$log->AuditRegistro=$SolRes->ID_SolRes;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		$id = $SolSer->SolSerSlug;
+
+		return redirect()->route('solicitud-servicio.show', compact('id'));
+	}
 }

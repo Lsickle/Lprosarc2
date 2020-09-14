@@ -474,6 +474,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															@endif
 															<i class="fas fa-marker"></i></a>
 														@endif
+														@if(in_array(Auth::user()->UsRol, Permisos::UpdateCantConciliada) || in_array(Auth::user()->UsRol2, Permisos::UpdateCantConciliada))
+															@if($SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Conciliado')
+																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+																@else
+																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
+																@endif
+															@else
+																<a style="color: black">
+															@endif
+															<i class="fas fa-marker"></i></a>
+														@endif
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 														@else
@@ -1064,6 +1076,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#FormKg').validator('update');
 		};
 
+		
 		function submit(cantidadmax, kgConciliado){
 			// console.log(cantidadmax);
 			// console.log(kgConciliado);
@@ -1090,6 +1103,144 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			});
 		</script>
 	@endif
+@endif
+
+@if(in_array(Auth::user()->UsRol, Permisos::UpdateCantConciliada) || in_array(Auth::user()->UsRol2, Permisos::UpdateCantConciliada))
+<script>
+	function editKgConciliado(slug, cantidad, cantidadmax, tipo, cantidadKG, KgConciliado, SolResRM){
+		console.log('solresRM = '+SolResRM);
+		var rmSelected = JSON.parse(SolResRM);
+		var inputUnid =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>';
+		var inputKg =  '<label for="SolResCantiUnidadRecibida">Cantidad Recibida'+tipo+'</label><small class="help-block with-errors">*</small><input type="text" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResKg" maxlength="5" value="'+cantidad+'" required>';
+		// var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
+		$('#addkgmodal').empty();
+		$('#addkgmodal').append(`
+			<form role="form" action="/solicitud-residuo/`+slug+`/corregirSolRes" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
+				@method('PUT')
+				@csrf
+				<div class="modal modal-default fade in" id="editkgRecibido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+									<i class="fas fa-plus-circle"></i>
+									<span style="font-size: 0.3em; color: black;"><p>
+										Cantidad
+										@switch($SolicitudServicio->SolSerStatus)
+											@case('Conciliado')
+											@case('Certificacion')
+												Conciliada
+												@break
+										@endswitch
+									</p></span>
+								</div>
+							</div>
+							<div class="modal-header">
+								@if ($errors->any())
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											@foreach ($errors->all() as $error)
+												<p>{{$error}}</p>
+											@endforeach
+										</ul>
+									</div>
+								@endif
+									@switch($SolicitudServicio->SolSerStatus)
+										@case('Certificacion')
+										@case('Conciliado')
+										<div class="form-group col-md-12">	
+											<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block with-errors">*</small><input type="number" step=".01" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
+										</div>
+										<div class="form-group col-md-12">	
+												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
+										</div>
+											@break
+									@endswitch
+									<input type="text" hidden name="SolRes" value="`+slug+`">
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		`);
+		switch('{{$SolicitudServicio->SolSerStatus}}'){
+			case('Conciliado'):
+			case('Certificacion'):
+					$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
+				break;
+		};
+		$('#editkgRecibido').modal();
+
+		var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
+
+		/*se verifica si todos los valores son nulos*/
+		var nulos = 0;
+		for (let indexnulos = 0; indexnulos < arrayRMs.length; indexnulos++) {
+			if (arrayRMs[indexnulos] == null) {
+				nulos++;
+			}
+		}
+
+		if (nulos == 4) {
+			$('#SolResRMselect').empty();
+			$('#SolResRMselect').append(`<option disabled value="">debe cargar un numero de RM en el boton azul "RMs" para poder luego elegirlo en este formulario...</option>`);
+		}else{
+			$('#SolResRMselect').append(`<option disabled value="">seleccione un número de recibo de materiales...</option>`);
+			for (let index = 0; index < arrayRMs.length; index++) {
+				if (arrayRMs[index] !== null) {
+					let estaono = false;
+					if (rmSelected !== null) {
+						for (let indexselected = 0; indexselected < rmSelected.length; indexselected++) {
+							if (rmSelected[indexselected] == arrayRMs[index]) {
+								estaono = true;
+							}
+						}
+					}
+					
+					if(estaono==true){
+						console.log('Key is exist in Object!');
+						$('#SolResRMselect').append(`<option selected value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
+					}else{
+						$('#SolResRMselect').append(`<option value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
+					}
+				}
+			}
+		}
+		SelectsMultiple();
+		$('#FormKg').validator('update');
+	};
+
+	
+	function submit(cantidadmax, kgConciliado){
+		// console.log(cantidadmax);
+		// console.log(kgConciliado);
+		// console.log(tipo);
+		var ValorConciliadokg = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+kgConciliado+`">`;
+		var ValorConciliadounid = `<input type="text" hidden name="ValorConciliado" id="ValorConciliado" value="`+cantidadmax+`">`;
+		// if (tipopeso != 'Kilogramos') {
+		// 	$('#conciliadokg').append(ValorConciliadounid);
+		// }else{
+		// 	$('#conciliadokg').append(ValorConciliadokg);
+		// }
+		$('#conciliadokg').append(ValorConciliadokg);
+		$('#SolResCantiUnidadTratada').val(cantidadmax);
+		$('#SolResKgTratado').val(kgConciliado);
+		$('#FormKg').validator('update');
+		$('#ValorConciliado').prop('type', "submit");
+
+	}
+</script>
+@if ($errors->any())
+	<script>
+		$(document).ready(function() {
+			$("#editkgRecibido").modal("show");
+		});
+	</script>
+@endif
 @endif
 <script>
 	function ModalDeleteRespel(slug, respel, generador){
