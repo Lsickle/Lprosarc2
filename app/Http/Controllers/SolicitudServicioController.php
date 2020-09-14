@@ -1481,20 +1481,16 @@ class SolicitudServicioController extends Controller
 									$certificado = new Certificado;
 									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
 										$certificado->CertType = 0;
+										$certificado->CertObservacion = "certificado con observacion generica";
 									}else{
 										$certificado->CertType = 1;
+										$certificado->CertObservacion = "manifiesto con observacion generica";
 									}
 									$certificado->CertNumero = "";
 									$certificado->CertManifNumero = "";
 									$certificado->CertManifPrepend = "";
 									$certificado->CertiEspName = "";
 									$certificado->CertiEspValue = "";
-									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
-										$certificado->CertObservacion = "certificado con observacion generica";
-									}else{
-										$certificado->CertObservacion = "manifiesto con observacion generica";
-									}
-									$certificado->CertObservacion = "certificado con observacion generica";
 									$certificado->CertSlug = hash('sha256', rand().time());
 									$certificado->CertSrc = 'CertificadoDefault.pdf';
 									// $certificado->CertNumRm = "C-130";
@@ -1519,23 +1515,6 @@ class SolicitudServicioController extends Controller
 										$item->SolResRM2 = $rm->SolResRM;
 										return $item;
 									});
-									$collection2 = collect([]);
-									foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $Residuo) {
-										if ($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat) {
-											if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2)) {
-												foreach ($Residuo->SolResRM2 as $key2 => $value) {
-													$collection2 = $collection2->concat([$value]);
-												}
-											}else {
-												$uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
-											}
-										}
-									}
-									if ($collection2->isNotEmpty()) {
-										$unicos = collect($collection2->unique());
-										$uniquestring = $unicos->values()->join(', ');
-									}
-									$certificado->CertNumRm = $uniquestring;
 									$certificado->save();
 
 									$dato = new Certdato;
@@ -1548,7 +1527,7 @@ class SolicitudServicioController extends Controller
 								break;
 
 							case '1':
-							// "tratamiento tipo: externo ; manifiesto";
+								// "tratamiento tipo: externo ; manifiesto";
 								/*se verifica si ya existe un documento con ese tratamiento para esa solicitud de servicio*/
 								$manifiestoprevio = Manifiesto::where('FK_ManifTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_ManifSolser', $id)

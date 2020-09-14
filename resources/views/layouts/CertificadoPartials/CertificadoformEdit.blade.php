@@ -2,19 +2,27 @@
 $collection2 = collect([]);
 @endphp
 @foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat)
-@if($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
-@foreach ($Residuo->SolResRM2 as $rm => $value)
-@php
-$collection2 = $collection2->concat([$value]);
-@endphp
-@endforeach
-@else
-@php
-$uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
-@endphp
-@endif
-@endif
+	@if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat&&$Residuo->generespel->gener_sedes->ID_GSede == $certificado->FK_CertGenerSede)
+		@if($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
+			@foreach ($Residuo->SolResRM2 as $rm2 => $value2)
+				@php
+				$collection2 = $collection2->concat([$value2]);
+				@endphp
+			@endforeach
+		@else
+			@if (is_Array($Residuo->SolResRM))
+				@foreach ($Residuo->SolResRM as $rm => $value)
+					@php
+						$collection2 = $collection2->concat([$value]);
+					@endphp
+				@endforeach
+			@else
+				@php
+					$uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
+				@endphp
+			@endif
+		@endif
+	@endif
 @endforeach
 @php
 if ($collection2->isNotEmpty()) {
