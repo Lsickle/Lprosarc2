@@ -28,18 +28,21 @@ class EmailController extends Controller
                 ->first();
 
             $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-            $destinatarios = ['dirtecnica@prosarc.com.co',
-                                'logistica@prosarc.com.co',
+            $destinatarios = ['logistica@prosarc.com.co',
                                 'asistentelogistica@prosarc.com.co',
-                                'auxiliarlogistico@prosarc.com.co',
                                 'recepcionpda@prosarc.com.co',
                                 'ingtratamiento1@prosarc.com.co',
                                 'ingtratamiento2@prosarc.com.co',
                                 'ingtratamiento3@prosarc.com.co',
-                                'gerenteplanta@prosarc.com.co',
                                 $comercial->PersEmail
                             ];
-            Mail::to($destinatarios)->send(new SolSerEmailClient($email));
+            $destinatarioscc = ['dirtecnica@prosarc.com.co',
+                                'auxiliarlogistico@prosarc.com.co',
+                                'gerenteplanta@prosarc.com.co'
+                            ];
+            Mail::to($destinatarios)
+            ->cc($destinatarioscc)
+            ->send(new SolSerEmailClient($email));
 
         }elseif($SolSer->SolSerStatus === 'Programado'){
             $email = DB::table('solicitud_servicios')
