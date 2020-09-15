@@ -437,23 +437,15 @@ class SolicitudResiduoController extends Controller
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 			$destinatarios = [$SolicitudServicio['personalcliente']->PersEmail];					
 			
-			if ($SolicitudServicio->SolServMailCopia == "null") {
-				$cc = ['dirtecnica@prosarc.com.co',
+			$cc = ['dirtecnica@prosarc.com.co',
 					'logistica@prosarc.com.co',
 					'asistentelogistica@prosarc.com.co',
 					'auxiliarlogistico@prosarc.com.co',
 					'recepcionpda@prosarc.com.co',
 					$comercial->PersEmail
 					];
-			}else{
-				$cc = ['dirtecnica@prosarc.com.co',
-					'logistica@prosarc.com.co',
-					'asistentelogistica@prosarc.com.co',
-					'auxiliarlogistico@prosarc.com.co',
-					'recepcionpda@prosarc.com.co',
-					$comercial->PersEmail,
-					$SolicitudServicio->SolServMailCopia
-					];
+			if ($SolicitudServicio->SolServMailCopia !== "null") {
+				$cc = array_merge($cc, json_decode($SolicitudServicio->SolServMailCopia));
 			}
 		}else{
 			abort(500, 'el cliente no tiene comercial asignado durante el envío de la notificación de cantidad conciliada modificada');
@@ -477,7 +469,7 @@ class SolicitudResiduoController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
-		$id = $SolSer->SolSerSlug;
+		$id = $SolicitudServicio->SolSerSlug;
 
 		return redirect()->route('solicitud-servicio.show', compact('id'));
 	}

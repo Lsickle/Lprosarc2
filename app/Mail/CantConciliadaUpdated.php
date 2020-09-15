@@ -13,7 +13,7 @@ use App\Personal;
 
 class CantConciliadaUpdated extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
 
     public $SolRes;
     public $SolicitudServicio;
@@ -37,10 +37,10 @@ class CantConciliadaUpdated extends Mailable implements ShouldQueue
     public function build()
     {
         
-        $asunto = 'se modifico la cantidad Conciliada del resido '.$this->SolRes['RespelName'].' en la solicitud de servicio #'.$this->SolicitudServicio->ID_SolSer;
+        $asunto = 'La cantidad Conciliada del residuo '.$this->SolRes['RespelName'].' en la Solicitud de Servicio #'.$this->SolicitudServicio->ID_SolSer.' ha sido modificada';
 
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                         ->subject($asunto)
-                        ->markdown('emails.SolServ.cantConciliadaUpdateMail');
+                        ->markdown('emails.SolSer.conciliadaupdat');
     }
 }
