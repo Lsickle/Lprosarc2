@@ -24,7 +24,7 @@
 				<select id="selectDanger0" name="RespelIgrosidad" class="form-control" required>
 					<option value="">{{ trans('adminlte_lang::LangRespel.select')}}</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger1')}}" {{ ($Respels->RespelIgrosidad === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
+					<option value = "No peligroso" {{ ($Respels->RespelIgrosidad === 'No peligroso' ? 'selected' : '' )}} onclick="setNoDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger1') }}
 					</option>
 
@@ -44,7 +44,7 @@
 						{{ trans('adminlte_lang::LangRespel.danger5') }}
 					</option>
 
-					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger5') ? 'selected' : '') }} onclick="setDanger(0)">
+					<option value = "{{ trans('adminlte_lang::LangRespel.danger6')}}" {{ ($Respels->RespelIgrosidad === trans('adminlte_lang::LangRespel.danger6') ? 'selected' : '') }} onclick="setDanger(0)">
 						{{ trans('adminlte_lang::LangRespel.danger6') }}
 					</option>
 
@@ -62,11 +62,11 @@
 			<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;" id="danger0">
 				<label>Tipo de clasificación</label><br>
 				@if(is_null($Respels->ARespelClasf4741))
-				<a class="btn btn-success" onclick="AgregarY(0)">Y</a>
-				<a class="btn btn-default" onclick="AgregarA(0)">A</a>
+				<a class="btn btn-success" id="ClasifY0" onclick="AgregarY(0)">Y</a>
+				<a class="btn btn-default" id="ClasifA0" onclick="AgregarA(0)">A</a>
 				@else
-				<a class="btn btn-default" onclick="AgregarY(0)">Y</a>
-				<a class="btn btn-success" onclick="AgregarA(0)">A</a>
+				<a class="btn btn-default" id="ClasifY0" onclick="AgregarY(0)">Y</a>
+				<a class="btn btn-success" id="ClasifA0" onclick="AgregarA(0)">A</a>
 				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback" id="Clasif0">

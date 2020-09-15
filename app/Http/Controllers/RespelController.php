@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Validator;
 use App\Http\Requests\RespelStoreRequest;
+use App\Http\Requests\RespelUpdateRequest;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RespelMail;
 use App\Mail\ResiduoNuevo;
@@ -508,8 +509,9 @@ class RespelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RespelStoreRequest $request, $id)
+    public function update(RespelUpdateRequest $request, $id)
     {
+        // return $request;
         $respel = Respel::where('RespelSlug', $id)->first();
         if (!$respel) {
             abort(404);
