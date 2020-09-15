@@ -62,11 +62,11 @@
 			<div class="col-md-6 form-group has-feedback" style="max-height: 2em; text-align: center;" id="danger0">
 				<label>Tipo de clasificación</label><br>
 				@if(is_null($Respels->ARespelClasf4741))
-				<a class="btn btn-success" onclick="AgregarY(0)">Y</a>
-				<a class="btn btn-default" onclick="AgregarA(0)">A</a>
+				<a class="btn btn-success" id="ClasifY0" onclick="AgregarY(0)">Y</a>
+				<a class="btn btn-default" id="ClasifA0" onclick="AgregarA(0)">A</a>
 				@else
-				<a class="btn btn-default" onclick="AgregarY(0)">Y</a>
-				<a class="btn btn-success" onclick="AgregarA(0)">A</a>
+				<a class="btn btn-default" id="ClasifY0" onclick="AgregarY(0)">Y</a>
+				<a class="btn btn-success" id="ClasifA0" onclick="AgregarA(0)">A</a>
 				@endif
 			</div>
 			<div class="col-md-6 form-group has-feedback" id="Clasif0">
