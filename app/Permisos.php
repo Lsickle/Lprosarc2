@@ -206,6 +206,11 @@ class Permisos{
 		vehicle-programacion/index
 	*/
 
+	const UpdateCantConciliada = ['Programador','AdministradorPlanta'];
+	/* Using ->
+		vehicle-programacion/index
+	*/
+
 
 	const GrupoShowRespel = ['AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','Supervisor','Tesorería','AsistenteComercial'];
 	/* Using ->
