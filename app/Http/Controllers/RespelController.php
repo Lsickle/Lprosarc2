@@ -12,6 +12,7 @@ use App\Http\Requests\RespelStoreRequest;
 use App\Http\Requests\RespelUpdateRequest;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RespelMail;
+use App\Mail\incompleteRespel;
 use App\Mail\ResiduoNuevo;
 use App\audit;
 use App\Respel;
@@ -831,10 +832,26 @@ class RespelController extends Controller
         $log->Auditlog=json_encode($request->all());
         $log->save();
 
-        if(($respel->RespelStatus === "Aprobado")&&($respel->RespelPublic === 0)){
-            // new  RespelMail($slug);
-            return redirect()->route('email-respel', [$respel->RespelSlug]);
+        if($respel->RespelPublic === 0){
+            switch ($respel->RespelStatus) {
+                case 'Aprobado':
+                    return redirect()->route('email-respel', [$respel->RespelSlug]);
+                    break;
+
+                case 'Incompleto':
+                    $comercial = Personal::where('ID_Pers', $respel->Cotizacion->Sede->clientes->CliComercial)->pluck('PersEmail');
+                    $personalCliente = Personal::whereHas('cargo.area.sede', function ($query) use ($respel) {
+                        $query->where('ID_Sede', $respel->Cotizacion->Sede->ID_Sede);
+                    })->pluck('PersEmail');
+		            Mail::to($comercial)->cc($personalCliente)->send(new incompleteRespel($respel));
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
         }
+        
         // return redirect()->route('respels.edit', [$respel->RespelSlug]);
         if ($respel->RespelPublic === 1) {
             return redirect()->route('respelspublic.index');

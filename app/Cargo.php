@@ -9,10 +9,10 @@ class Cargo extends Model{
     protected $fillable = ['CargName','CargSalary','CargGrade','CargDelete','CargArea'];
     protected $primaryKey = 'ID_Carg';
 
-    public function Areas(){
-    	return $this->belongsTo('App\Area','ID_Area');
+    public function area(){
+    	return $this->belongsTo('App\Area','CargArea','ID_Area');
     }
     public function Personal(){
-    	return $this->hasMany('App\Personal', 'ID_Pers', 'id');//como cargos tiene mucho personal
+    	return $this->hasMany('App\Personal', 'FK_PersCargo', 'ID_Carg');//como cargos tiene mucho personal
     }
 }

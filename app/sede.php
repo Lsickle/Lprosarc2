@@ -47,7 +47,7 @@ class Sede extends Model
     	return $this->hasMany('App\Manifiesto','ID_ID_Manif','id');//como sedes tiene muchos manifiestos
     }
     public function Areas(){
-    	return $this->hasMany('App\Area', 'ID_Area', 'id'); //como sedes tiene muchas areas
+    	return $this->hasMany('App\Area', 'FK_AreaSede', 'ID_Sede'); //como sedes tiene muchas areas
     }
     public function Tratamiento(){
     	return $this->hasMany('App\Tratamiento','ID_Trat','id');//como sedes tiene muchos tratamientos

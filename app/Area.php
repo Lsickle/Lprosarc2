@@ -9,13 +9,13 @@ class Area extends Model{
     protected $fillable = ['AreaName'];
     protected $primaryKey = 'ID_Area';
 
-    public function Sedes(){
-    	return $this->belongsTo('App\Sede','ID_Sede');
+    public function sede(){
+    	return $this->belongsTo('App\Sede','FK_AreaSede','ID_Sede');
     }
     public function GenerSedes(){
     	return $this->belongsTo('App\GenerSede','ID_GSede');
     }
     public function Cargos(){
-    	return $this->hasMany('App\Cargo', 'ID_Carg', 'id');//Como una area tiene muchos cargos
+    	return $this->hasMany('App\Cargo', 'CargArea', 'ID_Area');//Como una area tiene muchos cargos
     }
 }
