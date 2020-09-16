@@ -9,16 +9,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class incompleteRespel extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+
+    public $respel;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($respel)
     {
-        //
+        $this->respel = $respel;
     }
 
     /**
@@ -28,6 +30,8 @@ class incompleteRespel extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
+                    ->subject('El residuo '.$this->respel->RespelName.' está Incompleto')
+                    ->markdown('emails.Respel.incomplete');
     }
 }
