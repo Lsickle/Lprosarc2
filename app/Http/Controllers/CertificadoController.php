@@ -244,7 +244,9 @@ class CertificadoController extends Controller
                 }else{
                     if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                         $hoja = 'CertificadoDefault.pdf';
-                    }  
+                    }else{
+                        $hoja = $certificado->CertSrc;
+                    }
                 }
                 $certificado->CertSrc = $hoja;
                 break;
@@ -272,7 +274,9 @@ class CertificadoController extends Controller
                 }else{
                     if ($certificado->CertSrcManif == 'CertificadoDefault.pdf') {
                         $hoja = 'CertificadoDefault.pdf';
-                    }  
+                    }else{
+                        $hoja = $certificado->CertSrcManif;
+                    }
                 }
                 $certificado->CertSrcManif = $hoja;
                 break;
@@ -300,7 +304,9 @@ class CertificadoController extends Controller
                 }else{
                     if ($certificado->CertSrcExt == 'CertificadoDefault.pdf') {
                         $hoja = 'CertificadoDefault.pdf';
-                    }  
+                    }else{
+                        $hoja = $certificado->CertSrcExt;
+                    }
                 }
                 $certificado->CertSrcExt = $hoja;
                 break;
