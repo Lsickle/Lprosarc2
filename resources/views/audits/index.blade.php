@@ -33,10 +33,15 @@
                 <td>{{$auditoria->AuditRegistro}}</td>
                 <td>{{$auditoria->AuditUser}}</td>
                 <td>
-                
+                {{-- @if (is_Array($auditoria->Auditlog))
                 @foreach ($auditoria->Auditlog as $key=>$val)
                           <b>{{ $key }}</b>:{{ $val }}<br>
                 @endforeach
+                @else    
+                {{$auditoria->Auditlog}}
+                @endif --}}
+                {{json_decode($auditoria->Auditlog)}}
+                
                 </td>
               </tr>
               @endforeach
