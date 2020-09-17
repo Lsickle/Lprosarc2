@@ -148,9 +148,9 @@ if ($collection2->isNotEmpty()) {
 
 		<div class="col-md-6 form-group has-feedback">
 			<label id="srcLabel">Archivo Pdf del Certificado</label>
-			<small class="help-block with-errors">*</small>
+			<small class="help-block with-errors"></small>
 			<div class="input-group">
-				<input name="CertSrc" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
+			<input name="CertSrc" {{($certificado->CertAuthJo == 0||$certificado->CertAuthJl == 0||$certificado->CertAuthDp == 0) ? '' : 'disabled'}} type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 				<div class="input-group-btn">
 					@if($certificado->CertSrc == 'CertificadoDefault.pdf')
 					<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>

@@ -16,7 +16,7 @@ class auditController extends Controller
     public function index()
     {
         $auditorias = audit::all();
-        // return $auditorias;
+        return $auditorias;
         return view('audits.index', compact('auditorias'));
     }
 
