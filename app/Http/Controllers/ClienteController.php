@@ -55,7 +55,7 @@ class ClienteController extends Controller
 
     public function updateCliStatus($slug)
     {
-        $cliente = cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
@@ -67,7 +67,7 @@ class ClienteController extends Controller
 
     public function negarCliStatus($slug)
     {
-        $cliente = cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
@@ -79,7 +79,7 @@ class ClienteController extends Controller
 
     public function facturacionContado($slug)
     {
-        $cliente = cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
@@ -91,7 +91,7 @@ class ClienteController extends Controller
 
     public function facturacionCredito($slug)
     {
-        $cliente = cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
@@ -103,7 +103,7 @@ class ClienteController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $cliente = cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
