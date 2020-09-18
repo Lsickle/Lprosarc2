@@ -213,7 +213,6 @@ if ($collection2->isNotEmpty()) {
 						$("#docNumberInput").prop('disabled', true);
 					},
 					success: function(res){
-						console.log(res);
 						$("#docNumberInput").empty();
 						switch (id) {
 							case '0':
@@ -316,13 +315,6 @@ if ($collection2->isNotEmpty()) {
 			default:
 				break;
 		}
-		console.log('type es '+type);
-		console.log('numero es '+numero);
-		console.log('longitudNumero es '+longitudNumero);
-		console.log('numeroActual es '+numeroActual);
-		console.log('NombreDoc es '+NombreDoc);
-		console.log('certManifNumero es '+certManifNumero);
-		console.log('certNumero es '+certNumero);
 		if ((numero.length >= longitudNumero) && (numero != numeroActual)) {
 			$.ajaxSetup({
 				headers: {
@@ -338,7 +330,6 @@ if ($collection2->isNotEmpty()) {
 					$("#docNumberInput").prop('disabled', true);
 				},
 				success: function(numeroexiste){
-					console.log(numeroexiste);
 					$("#numberValidateResponse").empty();
 					if (numeroexiste==true) {
 						$("#numberValidateResponse").prepend('<small class="help-block with-errors" style="color:red;">OJO: Número de '+NombreDoc+' ya esta en uso</small>');
