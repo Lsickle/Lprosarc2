@@ -60,7 +60,7 @@ class CertificadoUpdateRequest extends FormRequest
             })],
         ];
     }
-     public function messages(Request $request)
+     public function messages()
     {
         return [
             'CertNumero.unique' => 'El campo "número de certificado/manifiesto" ya esta en uso.',
