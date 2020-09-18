@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Sede;
-use App\cliente;
+use App\Cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;

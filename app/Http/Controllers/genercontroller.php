@@ -62,7 +62,7 @@ class genercontroller extends Controller
         ->get();
         
         // para saber si no se debe mostrar el boton soy gener
-        $Cliente = cliente::select('CliNit')->where('ID_Cli', $ID_Cli)->first();
+        $Cliente = Cliente::select('CliNit')->where('ID_Cli', $ID_Cli)->first();
         $Gener = generador::select('GenerNit')->where('GenerNit', $Cliente->CliNit)->where('GenerDelete', 0)->first();
         
         return view('generadores.index', compact('Generadors', 'Gener'));
@@ -175,7 +175,7 @@ class genercontroller extends Controller
     public function storeSoyGenerador($id)
     {
         $ID_Cli = userController::IDClienteSegunUsuario();
-        $Cliente = cliente::where('ID_Cli', $ID_Cli)->first();
+        $Cliente = Cliente::where('ID_Cli', $ID_Cli)->first();
 
         $Sedes = DB::table('sedes')
             ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')

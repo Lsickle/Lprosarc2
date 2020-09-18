@@ -10,7 +10,7 @@ use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
 use App\AuditRequest;
 use App\Sede;
-use App\cliente;
+use App\Cliente;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
@@ -88,7 +88,7 @@ class sclientcontroller extends Controller
         $Sede->FK_SedeCli = $ID_Cli;
         $Sede->SedeDelete = 0;
         $Sede->save();
-        $id = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $id = Cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
 
         return redirect()->route('cliente-show', compact('id'));
     }
@@ -139,7 +139,7 @@ class sclientcontroller extends Controller
         if (!$Sede) {
             abort(404);
         }
-        $Cliente = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Cliente = Cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $Sede->fill($request->all());
         $Sede->save();
 
@@ -161,7 +161,7 @@ class sclientcontroller extends Controller
             if (!$Sede) {
                 abort(404);
             }
-            $Cliente = cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+            $Cliente = Cliente::select('CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
             if ($Sede->SedeDelete == 0) {
                 $Sede->SedeDelete = 1;
                 $Sede->save();

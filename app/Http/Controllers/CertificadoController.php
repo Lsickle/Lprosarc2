@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CertUpdated;
 use App\Mail\CertUpdatedComercial;
 use App\Certificado;
-use App\Cliente;
+use App\cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
