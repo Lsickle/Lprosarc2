@@ -18,6 +18,7 @@ use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
+use App\Http\Requests\CertificadoUpdateRequest;
 
 
 class CertificadoController extends Controller
@@ -210,7 +211,7 @@ class CertificadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CertificadoUpdateRequest $request, $id)
     {
         // return $request;
         $certificado = Certificado::where('CertSlug', $id)->first();
@@ -253,6 +254,7 @@ class CertificadoController extends Controller
 
             case 1:
                 $certificado->CertManifNumero = $request->input('CertNumero');
+                $certificado->CertNumero = 0;
                 if (isset($request['CertSrc'])) {
                     if ($certificado->CertSrcManif == 'CertificadoDefault.pdf') {
                         $file1 = $request['CertSrc'];
@@ -346,7 +348,8 @@ class CertificadoController extends Controller
         $log->Auditlog=json_encode($id);
         $log->save();
 
-        return view('certificados.edit', compact('certificado')); 
+        // return view('certificados.edit', compact('certificado')); 
+        return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
     }
 
     /**
