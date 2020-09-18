@@ -344,7 +344,7 @@ class clientcontoller extends Controller
             'CliCertificaionComercial2' => 'mimes:pdf|max:5120|sometimes',
         ]);
             
-        $cliente = cliente::where('CliSlug', $cliente->CliSlug)->first();
+        $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
         $cliente->fill($request->except('CliRut', 'CliCamaraComercio', 'CliRepresentanteLegal', 'CliCertificaionComercial', 'CliCertificaionBancaria'));
         $Folder = $cliente->CliShortname;
         if ($request->hasfile('CliRut')){

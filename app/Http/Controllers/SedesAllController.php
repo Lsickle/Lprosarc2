@@ -8,7 +8,7 @@ use App\Http\Controllers\userController;
 use App\Http\Requests\SedeRequest;
 use App\AuditRequest;
 use App\Sede;
-use App\cliente;
+use App\Cliente;
 use App\Permisos;
 use App\audit;
 use App\Municipio;
@@ -40,7 +40,7 @@ class SedesAllController extends Controller
     public function update(SedeRequest $request, $slug)
     {
         $Sede = Sede::where('SedeSlug',$slug)->first();
-        $Cliente = cliente::select('ID_Cli', 'CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+        $Cliente = Cliente::select('ID_Cli', 'CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         if (!$Sede) {
             abort(404);
         }
@@ -56,7 +56,7 @@ class SedesAllController extends Controller
     {
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
             $Sede = Sede::where('SedeSlug', $slug)->first();
-            $Cliente = cliente::select('ID_Cli', 'CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
+            $Cliente = Cliente::select('ID_Cli', 'CliSlug')->where('ID_Cli', $Sede->FK_SedeCli)->first();
             if (!$Sede) {
                 abort(404);
             }
