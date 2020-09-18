@@ -63,23 +63,7 @@ class CertificadoUpdateRequest extends FormRequest
      public function messages(Request $request)
     {
         return [
-            switch ($request->input('CertType')) {
-                case 0:
-            'CertNumero.unique' => 'El número de Certificado '.$request->input('CertNumero').' ya esta en uso.',
-                    
-                    break;
-                case 1:
-            'CertNumero.unique' => 'El número de Manifiesto '.$request->input('CertNumero').'  ya esta en uso.',
-                    # code...
-                    break;
-                case 2:
             'CertNumero.unique' => 'El campo "número de certificado/manifiesto" ya esta en uso.',
-                    # code...
-                    break;
-                default:
-                    # code...
-                    break;
-            }
         ];
     }
 }
