@@ -224,6 +224,7 @@ class CertificadoController extends Controller
         switch ($request->input('CertType')) {
             case 0:
                 $certificado->CertNumero = $request->input('CertNumero');
+                $certificado->CertManifNumero = 0;
                 if (isset($request['CertSrc'])) {
                     if ($certificado->CertSrc == 'CertificadoDefault.pdf') {
                         $file1 = $request['CertSrc'];
