@@ -57,18 +57,22 @@ if ($collection2->isNotEmpty()) {
 				@case(0)
 					@if ($certificado->CertSrc != 'CertificadoDefault.pdf')
 						<label id="labelGroupNumDoc">Número de Certificado Actual</label>
-						<small id="numberValidateResponse" class="help-block with-errors">¿duplicado?</small>
+						<span id="numberValidateResponse">
+							<small class="help-block with-errors" style="color:black;">Número de Certificado actual</small>
+						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-						<input required onchange="verificarDuplicado()" oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
+						<input required oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
 						<label id="labelGroupNumDoc">Número de Certificado (Recomendado)</label>
-						<small id="numberValidateResponse" class="help-block with-errors" style='color:green;'>numero errado</small>
+						<div id="numberValidateResponse">
+							<small class="help-block with-errors" style="color:black;">Siguiente Número de Certificado</small>
+						</div>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-							<input required onchange="verificarDuplicado()" oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
+							<input required oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@endif
@@ -77,6 +81,9 @@ if ($collection2->isNotEmpty()) {
 				@case(1)
 					@if ($certificado->CertSrcManif != 'CertificadoDefault.pdf')
 						<label id="labelGroupNumDoc">Número de Manifiesto Actual</label>
+						<span id="numberValidateResponse">
+							<small class="help-block with-errors" style="color:black;">Número de Manifiesto actual</small>
+						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
 						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$certificado->CertManifNumero}}">
@@ -84,6 +91,9 @@ if ($collection2->isNotEmpty()) {
 						</div>
 					@else
 						<label id="labelGroupNumDoc">Número de Manifiesto (Recomendado)</label>
+						<span id="numberValidateResponse">
+							<small class="help-block with-errors" style="color:black;">Siguiente Número de Manifiesto</small>
+						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
 							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$proximoManif}}">
@@ -286,10 +296,33 @@ if ($collection2->isNotEmpty()) {
 	function verificarDuplicado() {
 		var numero = $("#docNumberInput").val();
 		var type = $("#CertTypeSelect").val();
+		var certNumero = {{$certificado->CertNumero}};
+		var certManifNumero = {{$certificado->CertManifNumero}};
 
-		console.log(numero.length);
-		if (numero.length > 4) {
-			console.log("mayor que 4");
+		switch (type) {
+			case '0':
+			var	longitudNumero = 5;
+			var numeroActual = certNumero;
+			var NombreDoc = 'Certificado';
+				break;
+
+			case '1':
+			var	longitudNumero = 4;
+			var numeroActual = certManifNumero;
+			var NombreDoc = 'Manifiesto';
+				break;
+
+			default:
+				break;
+		}
+		console.log('type es '+type);
+		console.log('numero es '+numero);
+		console.log('longitudNumero es '+longitudNumero);
+		console.log('numeroActual es '+numeroActual);
+		console.log('NombreDoc es '+NombreDoc);
+		console.log('certManifNumero es '+certManifNumero);
+		console.log('certNumero es '+certNumero);
+		if ((numero.length >= longitudNumero) && (numero != numeroActual)) {
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -305,48 +338,28 @@ if ($collection2->isNotEmpty()) {
 				},
 				success: function(numeroexiste){
 					console.log(numeroexiste);
+					$("#numberValidateResponse").empty();
 					if (numeroexiste==true) {
-						$("#numberValidateResponse").empty();
-						$("#numberValidateResponse").removeClass('text-danger');
-						$("#numberValidateResponse").removeClass('text-success');
-						switch (type) {
-							case '0':
-								$("#numberValidateResponse").prepend('OJO: EL NÚMERO DE CERTIFICADO YA ESTA EN USO');
-								break;
-
-							case '1':
-								$("#numberValidateResponse").prepend('OJO: EL NÚMERO DE MANIFIESTO YA ESTA EN USO');
-								break;	
-							default:
-								break;
-						}
-						$("#numberValidateResponse").css('color:red;');
+						$("#numberValidateResponse").prepend('<small class="help-block with-errors" style="color:red;">OJO: Número de '+NombreDoc+' ya esta en uso</small>');
 					}else{
-						$("#numberValidateResponse").empty();
-						$("#numberValidateResponse").removeClass('text-danger');
-						$("#numberValidateResponse").removeClass('text-success');
-						switch (type) {
-							case '0':
-								$("#numberValidateResponse").prepend('Número de certificado Disponible');
-								break;
-
-							case '1':
-								$("#numberValidateResponse").prepend('Número de certificado Disponible');
-								break;	
-							default:
-								break;
-						}
-						$("#numberValidateResponse").css('color:green;');
+						$("#numberValidateResponse").prepend('<small class="help-block with-errors" style="color:green;">Número de '+NombreDoc+' Disponible</small>');
 					}
 				},
 				complete: function(){
-					$(".fa-spin").remove();
+					$(".fa-sync-alt").remove();
 					$("#docNumberInput").prop('disabled', false);
+					$("#docNumberInput").focus();
 				}
 			})
-		} else {
-		console.log("menor que 4");
+		} else if(numero == numeroActual){
+			$("#numberValidateResponse").empty();
+			$("#numberValidateResponse").prepend('<small class="help-block with-errors" style="color:black;">Número  de '+NombreDoc+' actual</small>');
+		} else{
+			$("#numberValidateResponse").empty();
+			$("#numberValidateResponse").prepend('<small class="help-block with-errors" style="color:red;">El Número  de '+NombreDoc+' debe ser de '+longitudNumero+' digitos</small>');
 		}
+		$("#docNumberInput").focus();
+		// $("#docNumberInput").select();
 	}
 </script>
 @endsection
