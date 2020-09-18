@@ -57,16 +57,18 @@ if ($collection2->isNotEmpty()) {
 				@case(0)
 					@if ($certificado->CertSrc != 'CertificadoDefault.pdf')
 						<label id="labelGroupNumDoc">Número de Certificado Actual</label>
+						<small id="numberValidateResponse" class="help-block with-errors">¿duplicado?</small>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-						<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
+						<input required onchange="verificarDuplicado()" oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
 						<label id="labelGroupNumDoc">Número de Certificado (Recomendado)</label>
+						<small id="numberValidateResponse" class="help-block with-errors" style='color:green;'>numero errado</small>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-							<input max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
+							<input required onchange="verificarDuplicado()" oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@endif
@@ -279,5 +281,72 @@ if ($collection2->isNotEmpty()) {
 		document.body.removeChild(aux);
 		NotifiTrue(Mensaje);
 	}
-	</script>
+</script>
+<script>
+	function verificarDuplicado() {
+		var numero = $("#docNumberInput").val();
+		var type = $("#CertTypeSelect").val();
+
+		console.log(numero.length);
+		if (numero.length > 4) {
+			console.log("mayor que 4");
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: "{{url('/verificarduplicado')}}/"+numero+"/"+type,
+				method: 'GET',
+				data:{},
+				beforeSend: function(){
+					$("#labelGroupNumDoc").append(' <i class="fas fa-sync-alt fa-spin" style="color:black;"></i>');
+					$("#docNumberInput").prop('disabled', true);
+				},
+				success: function(numeroexiste){
+					console.log(numeroexiste);
+					if (numeroexiste==true) {
+						$("#numberValidateResponse").empty();
+						$("#numberValidateResponse").removeClass('text-danger');
+						$("#numberValidateResponse").removeClass('text-success');
+						switch (type) {
+							case '0':
+								$("#numberValidateResponse").prepend('OJO: EL NÚMERO DE CERTIFICADO YA ESTA EN USO');
+								break;
+
+							case '1':
+								$("#numberValidateResponse").prepend('OJO: EL NÚMERO DE MANIFIESTO YA ESTA EN USO');
+								break;	
+							default:
+								break;
+						}
+						$("#numberValidateResponse").css('color:red;');
+					}else{
+						$("#numberValidateResponse").empty();
+						$("#numberValidateResponse").removeClass('text-danger');
+						$("#numberValidateResponse").removeClass('text-success');
+						switch (type) {
+							case '0':
+								$("#numberValidateResponse").prepend('Número de certificado Disponible');
+								break;
+
+							case '1':
+								$("#numberValidateResponse").prepend('Número de certificado Disponible');
+								break;	
+							default:
+								break;
+						}
+						$("#numberValidateResponse").css('color:green;');
+					}
+				},
+				complete: function(){
+					$(".fa-spin").remove();
+					$("#docNumberInput").prop('disabled', false);
+				}
+			})
+		} else {
+		console.log("menor que 4");
+		}
+	}
+</script>
 @endsection
