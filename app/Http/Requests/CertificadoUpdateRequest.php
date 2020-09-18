@@ -32,20 +32,18 @@ class CertificadoUpdateRequest extends FormRequest
             'CertNumero' => ['required',Rule::unique('certificados')->where(function ($query) use ($request){
                 switch ($request->input('CertType')) {
                     case 0:
-                        $certificado = Certificado::where('CertNumero', $request->input('CertNumero'))
-                            ->first('CertNumero');
+                        $certificado = Certificado::where('CertNumero', $request->input('CertNumero'))->first('CertNumero');
 
-                        if(isset($certificado->CertNumero)){
+                        if(isset($certificado->CertNumero) && $request->input('CertNumeroActual')!=$certificado->CertNumero){
                             $query->where('CertNumero','=', $certificado->CertNumero);
                         }else{
                             $query->where('CertNumero','=', null);
                         }
                         break;
                     case 1:
-                        $certificado = Certificado::where('CertManifNumero', $request->input('CertNumero'))
-                            ->first('CertManifNumero');
+                        $certificado = Certificado::where('CertManifNumero', $request->input('CertNumero'))->first('CertManifNumero');
                         
-                        if(isset($certificado->CertManifNumero)){
+                        if(isset($certificado->CertManifNumero) && $request->input('CertNumeroActual')!=$certificado->CertNumero){
                             $query->where('CertNumero','=', $certificado->CertManifNumero);
                         }else{
                             $query->where('CertNumero','=', null);
@@ -62,10 +60,26 @@ class CertificadoUpdateRequest extends FormRequest
             })],
         ];
     }
-     public function messages()
+     public function messages(Request $request)
     {
         return [
+            switch ($request->input('CertType')) {
+                case 0:
+            'CertNumero.unique' => 'El número de Certificado '.$request->input('CertNumero').' ya esta en uso.',
+                    
+                    break;
+                case 1:
+            'CertNumero.unique' => 'El número de Manifiesto '.$request->input('CertNumero').'  ya esta en uso.',
+                    # code...
+                    break;
+                case 2:
             'CertNumero.unique' => 'El campo "número de certificado/manifiesto" ya esta en uso.',
+                    # code...
+                    break;
+                default:
+                    # code...
+                    break;
+            }
         ];
     }
 }

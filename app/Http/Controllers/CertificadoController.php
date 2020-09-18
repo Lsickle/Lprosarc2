@@ -213,7 +213,7 @@ class CertificadoController extends Controller
      */
     public function update(CertificadoUpdateRequest $request, $id)
     {
-        // return $request;
+        return $request;
         $certificado = Certificado::where('CertSlug', $id)->first();
         $certificado->CertType = $request->input('CertType');
         $certificado->CertiEspName = $request->input('CertiEspName');

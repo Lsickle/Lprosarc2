@@ -55,6 +55,7 @@ if ($collection2->isNotEmpty()) {
 		<div class="col-md-6 form-group">
 			@switch($certificado->CertType)
 				@case(0)
+					<input style="display: none;" name="CertNumeroActual" value="{{$certificado->CertNumero}}">
 					@if ($certificado->CertSrc != 'CertificadoDefault.pdf')
 						<label id="labelGroupNumDoc">Número de Certificado Actual</label>
 						<span id="numberValidateResponse">
@@ -79,6 +80,7 @@ if ($collection2->isNotEmpty()) {
 
 					@break
 				@case(1)
+					<input style="display: none;" name="CertNumeroActual" value="{{$certificado->CertManifNumero}}">
 					@if ($certificado->CertSrcManif != 'CertificadoDefault.pdf')
 						<label id="labelGroupNumDoc">Número de Manifiesto Actual</label>
 						<span id="numberValidateResponse">
@@ -86,7 +88,7 @@ if ($collection2->isNotEmpty()) {
 						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
-						<input required oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$certificado->CertManifNumero}}">
+							<input required oninput="verificarDuplicado()" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$certificado->CertManifNumero}}">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
