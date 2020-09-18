@@ -238,5 +238,29 @@ class AjaxController extends Controller
 		}
 	}
 
-
+	/*Funcion para verificar si el numero de documento durante la actualizacion de certificados o manifiestos quedari duplicado en la base de datos*/
+	public function verificarDuplicado(Request $request, $numero, $type)
+	{
+		if ($request->ajax()) {
+			switch ($type) {
+				case '0':
+			$documentos = Certificado::where('CertNumero', $numero)->get();
+					break;
+				
+				case '1':
+			$documentos = Certificado::where('CertManifNumero', $numero)->get();
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+			if ($documentos->count() > 0) {
+				$numeroexiste = true;
+			}else{
+				$numeroexiste = false;
+			}
+			return response()->json($numeroexiste);
+		}
+	}
 }
