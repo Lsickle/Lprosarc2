@@ -59,7 +59,21 @@ Lista de Certificados
 									@endif
 									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
 									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
-									<td class="text-center">{{$certificado->ID_Cert}}</td>
+									<td class="text-center">
+									@switch($certificado->CertType)
+										@case(0)
+											{{$certificado->CertNumero}}
+											@break
+										@case(1)
+											{{$certificado->CertManifNumero}}
+											@break
+										@case(2)
+											{{$certificado->CertNumeroExt}}
+											@break
+										@default
+											{{$certificado->ID_Cert}}
+									@endswitch
+									</td>
 									<td>{{$certificado->CertObservacion}}</td>
 									@switch($certificado->CertType)
 										@case(0)
