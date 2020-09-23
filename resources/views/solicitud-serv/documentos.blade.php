@@ -18,6 +18,7 @@
 						{{-- <a disabled href="" class="btn btn-success"><i class="fas fa-file-invoice"></i> Añadir Manifiesto</a> --}}
 					</div>
 					<div class="box-body">
+						<div id="ModalStatus"></div>
 						<table class="table table-compact table-bordered table-striped">
 							<thead>
 								<th>Fecha recepción</th>
