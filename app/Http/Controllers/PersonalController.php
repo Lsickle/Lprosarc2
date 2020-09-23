@@ -268,23 +268,6 @@ class PersonalController extends Controller
 		if (!$Persona) {
 			abort(404);
 		}
-		// $validate = $request->validate([
-		// 	'Sede'          => 'required',
-		// 	'CargArea'      => 'required',
-		// 	'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
-        //     'NewArea'       => 'required_if:CargArea,NewArea',
-        //     'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo',
-		// 	'PersDocType'   => 'required|in:CC,CE,NIT,RUT',
-		// 	'PersDocNumber' => 'required|max:25|unique:personals,PersDocNumber,'.$request->input('PersDocNumber').',PersDocNumber',
-		// 	'PersFirstName' => 'required|max:64',
-		// 	'PersSecondName'=> 'max:64|nullable',
-		// 	'PersLastName'  => 'required|max:64',
-		// 	'PersEmail'     => 'required|email|max:255',
-		// 	'PersCellphone' => 'required|min:12',
-		// 	'PersAddress'   => 'max:255|nullable',
-		// 	'Persfactura'   => 'max:2|nullable',
-		// 	'PersAdmin'     => 'max:2|nullable',
-		// ]);
 
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
@@ -382,8 +365,11 @@ class PersonalController extends Controller
 			/*se quita la condicion de administracion a la persona de administracion actual*/
 
 			$Personadeadministracion = Personal::where('ID_Pers', $IdPersonaAdmin[0]->ID_Pers)->first();
-
-			$Personadeadministracion->PersAdmin = 0;
+			if ($Persona->ID_Pers == Auth::user()->FK_UserPers) {
+				$Personadeadministracion->PersAdmin = 1;
+			}else{
+				$Personadeadministracion->PersAdmin = 0;
+			}
 			$Personadeadministracion->save();
 		}
 		$Persona->save();

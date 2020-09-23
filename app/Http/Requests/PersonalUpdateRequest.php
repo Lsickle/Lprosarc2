@@ -32,7 +32,6 @@ class PersonalUpdateRequest extends FormRequest
             'FK_PersCargo'  => 'required_unless:CargArea,NewArea',
             'NewArea'       => 'required_if:CargArea,NewArea|min:4|nullable',
             'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo|min:4|nullable',
-
             'PersDocType'   => 'nullable|in:CC,CE,NIT,RUT',
             'PersDocNumber' => ['nullable','max:25',Rule::unique('personals')->where(function($query) use ($request){
                 $Personal = DB::table('personals')

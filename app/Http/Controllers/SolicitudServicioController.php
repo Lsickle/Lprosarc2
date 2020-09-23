@@ -1335,29 +1335,6 @@ class SolicitudServicioController extends Controller
 			})
 			->with(['tratamiento'])
 			->get();
-
-			$manifiestos = Manifiesto::where(function($query) use ($SolicitudServicio){
-				/*se define la sede del usuario actual*/
-				$UserSedeID = DB::table('personals')
-				->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-				->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-				->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-				->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
-				->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-				->value('clientes.ID_Cli');
-
-				$servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
-				->where('SolSerStatus', 'Certificacion')
-				->get('ID_SolSer');
-
-				$query->where('FK_ManifCliente', $UserSedeID);
-				$query->where('ManifSrc', '!=', 'ManifiestoDefault.pdf');
-				$query->where('ManifAuthDp','!=', 0);
-				$query->where('ManifAuthJl','!=', 0);
-				$query->where('ManifAuthHseq','!=', 0);
-				$query->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer);
-			})
-			->get();
 		}else{
 			$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -1382,14 +1359,11 @@ class SolicitudServicioController extends Controller
 			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
 			->get();
 
-			$manifiestos = Manifiesto::with(['manifdato.solres'])
-			->where('FK_ManifSolser', $SolicitudServicio->ID_SolSer)
-			->get();
 		}
 		
 
 		// return $certificados;
-		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados', 'manifiestos'));
+		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados'));
 	}
 
 	public function sendtobilling($id)
