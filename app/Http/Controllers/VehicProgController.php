@@ -901,7 +901,7 @@ class VehicProgController extends Controller
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
-			abort(404);
+			abort(404), 'la programación de vehículo que trata de eliminar no se encuentra en la base de datos';
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		switch ($SolicitudServicio->SolServStatus) {
@@ -1026,7 +1026,7 @@ class VehicProgController extends Controller
 	{
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
-			abort(404);
+			abort(404 'la programación de vehículo que trata de actualizar no se encuentra en la base de datos');
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
