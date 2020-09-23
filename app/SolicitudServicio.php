@@ -78,7 +78,7 @@ class SolicitudServicio extends Model
 
 	public function programacionesrecibidas()
 	{
-		return $this->programaciones()->whereNotNull('ProgVehEntrada');
+		return $this->programaciones()->whereNotNull('ProgVehEntrada')->where('ProgVehDelete', 0);
 	}
 
 	protected $casts = [
