@@ -54,8 +54,8 @@ Lista de Certificados
 								<tr>
 									<td>{{date('Y/m/d', strtotime($certificado->recepcion))}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<td class="text-center">{{$certificado->CertNumRm}}</td>
 										<td class="text-center"><b>{{$certificado->cliente}}</b></td>
+										<td class="text-center">{{$certificado->CertNumRm}}</td>
 									@endif
 									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
 									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
