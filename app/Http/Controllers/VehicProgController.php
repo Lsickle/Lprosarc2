@@ -904,105 +904,115 @@ class VehicProgController extends Controller
 			abort(404);
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		if ($programacion->ProgVehDelete == 0){
-			$programacion->ProgVehDelete = 1;
-			$programacion->save();
-			$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
-			if($programaciones == null && ($SolicitudServicio->SolSerStatus == 'Programado'||$SolicitudServicio->SolSerStatus == 'Notificado')){
-				$SolicitudServicio->SolSerStatus = 'Aprobado';
-				if($SolicitudServicio->SolSerTipo == 'Interno'){
-					$transportador = DB::table('clientes')
-						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName',  'municipios.ID_Mun')
-						->where('ID_Cli', 1)
+		switch ($SolicitudServicio->SolServStatus) {
+			case 'Aprobado':
+			case 'Notificado':
+			case 'Programado':
+				if ($programacion->ProgVehDelete == 0){
+					$programacion->ProgVehDelete = 1;
+					$programacion->save();
+					$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->where('ID_ProgVeh', '<>', $programacion->ID_ProgVeh)->first();
+					if($programaciones == null && ($SolicitudServicio->SolSerStatus == 'Programado'||$SolicitudServicio->SolSerStatus == 'Notificado')){
+						$SolicitudServicio->SolSerStatus = 'Aprobado';
+						if($SolicitudServicio->SolSerTipo == 'Interno'){
+							$transportador = DB::table('clientes')
+								->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+								->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+								->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName',  'municipios.ID_Mun')
+								->where('ID_Cli', 1)
+								->first();
+							$SolicitudServicio->SolSerConductor = null;
+							$SolicitudServicio->SolSerVehiculo = null;
+							$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
+							$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
+							$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
+							$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
+						}
+						$SolicitudServicio->save();
+		
+						/*inicio de espacio para notificacion de programacion cancelada*/
+						$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		
+						$emailCliente = DB::table('solicitud_servicios')
+						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+						->select('personals.PersEmail', 'solicitud_servicios.*')
+						->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
 						->first();
-					$SolicitudServicio->SolSerConductor = null;
-					$SolicitudServicio->SolSerVehiculo = null;
-					$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
-					$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
-					$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-					$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
+					
+		
+						// se establece la lista de destinatarios
+						if ($SolicitudServicio['cliente']->CliComercial <> null) {
+							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+							$destinatarios = ['dirtecnica@prosarc.com.co',
+												'logistica@prosarc.com.co',
+												'asistentelogistica@prosarc.com.co',
+												'auxiliarlogistico@prosarc.com.co',
+												'gerenteplanta@prosarc.com.co',
+												$emailCliente->PersEmail,
+												$comercial->PersEmail
+											];
+						}else{
+							$comercial = "";
+							$destinatarios = ['dirtecnica@prosarc.com.co',
+												'logistica@prosarc.com.co',
+												'asistentelogistica@prosarc.com.co',
+												'auxiliarlogistico@prosarc.com.co',
+												'gerenteplanta@prosarc.com.co',
+												$emailCliente->PersEmail
+											];	
+						}
+		
+						$SolicitudServicio['comercial'] = $comercial;
+						$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+		
+						if ($SolicitudServicio->SolServMailCopia == "null") {
+							Mail::to($destinatarios)
+							->send(new CancelSolServEmail($SolicitudServicio));
+						}else{
+							Mail::to($destinatarios)
+							->cc(json_decode($SolicitudServicio->SolServMailCopia))
+							->send(new CancelSolServEmail($SolicitudServicio));
+						}
+		
+						/*fin de espacio para notificacion de programacion cancelada*/
+		
+					}
+		
+					$log = new audit();
+					$log->AuditTabla = "progvehiculos";
+					$log->AuditType = "Eliminado";
+					$log->AuditRegistro = $programacion->ID_ProgVeh;
+					$log->AuditUser = Auth::user()->email;
+					$log->Auditlog = $programacion->ProgVehDelete;
+					$log->save();
+					return redirect()->route('vehicle-programacion.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
 				}
-				$SolicitudServicio->save();
-
-				/*inicio de espacio para notificacion de programacion cancelada*/
-				$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
-
-				$emailCliente = DB::table('solicitud_servicios')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->select('personals.PersEmail', 'solicitud_servicios.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
-                ->first();
-            
-
-				// se establece la lista de destinatarios
-				if ($SolicitudServicio['cliente']->CliComercial <> null) {
-					$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-					$destinatarios = ['dirtecnica@prosarc.com.co',
-										'logistica@prosarc.com.co',
-										'asistentelogistica@prosarc.com.co',
-										'auxiliarlogistico@prosarc.com.co',
-										'gerenteplanta@prosarc.com.co',
-										$emailCliente->PersEmail,
-										$comercial->PersEmail
-									];
-				}else{
-					$comercial = "";
-					$destinatarios = ['dirtecnica@prosarc.com.co',
-										'logistica@prosarc.com.co',
-										'asistentelogistica@prosarc.com.co',
-										'auxiliarlogistico@prosarc.com.co',
-										'gerenteplanta@prosarc.com.co',
-										$emailCliente->PersEmail
-									];	
+				else{
+					$programacion->ProgVehDelete = 0;
+					if($SolicitudServicio->SolSerStatus == 'Aprobado'){
+						$SolicitudServicio->SolSerStatus = 'Programado';
+						if($SolicitudServicio->SolSerTipo == 'Interno'){
+							$SolicitudServicio->SolSerConductor = $programacion->FK_ProgConductor;
+							$SolicitudServicio->SolSerVehiculo = $programacion->FK_ProgVehiculo;
+						}
+						$SolicitudServicio->save();
+					}
+		
+					$log = new audit();
+					$log->AuditTabla = "progvehiculos";
+					$log->AuditType = "Restaurado";
+					$log->AuditRegistro = $programacion->ID_ProgVeh;
+					$log->AuditUser = Auth::user()->email;
+					$log->Auditlog = $programacion->ProgVehDelete;
+					$log->save();
+					$programacion->save();
+					return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 				}
-
-				$SolicitudServicio['comercial'] = $comercial;
-				$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
-
-				if ($SolicitudServicio->SolServMailCopia == "null") {
-					Mail::to($destinatarios)
-					->send(new CancelSolServEmail($SolicitudServicio));
-				}else{
-					Mail::to($destinatarios)
-					->cc(json_decode($SolicitudServicio->SolServMailCopia))
-					->send(new CancelSolServEmail($SolicitudServicio));
-				}
-
-				/*fin de espacio para notificacion de programacion cancelada*/
-
-			}
-
-			$log = new audit();
-			$log->AuditTabla = "progvehiculos";
-			$log->AuditType = "Eliminado";
-			$log->AuditRegistro = $programacion->ID_ProgVeh;
-			$log->AuditUser = Auth::user()->email;
-			$log->Auditlog = $programacion->ProgVehDelete;
-			$log->save();
-			return redirect()->route('vehicle-programacion.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
-		}
-		else{
-			$programacion->ProgVehDelete = 0;
-			if($SolicitudServicio->SolSerStatus == 'Aprobado'){
-				$SolicitudServicio->SolSerStatus = 'Programado';
-				if($SolicitudServicio->SolSerTipo == 'Interno'){
-					$SolicitudServicio->SolSerConductor = $programacion->FK_ProgConductor;
-					$SolicitudServicio->SolSerVehiculo = $programacion->FK_ProgVehiculo;
-				}
-				$SolicitudServicio->save();
-			}
-
-			$log = new audit();
-			$log->AuditTabla = "progvehiculos";
-			$log->AuditType = "Restaurado";
-			$log->AuditRegistro = $programacion->ID_ProgVeh;
-			$log->AuditUser = Auth::user()->email;
-			$log->Auditlog = $programacion->ProgVehDelete;
-			$log->save();
-			$programacion->save();
-			return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
+			break;
+			
+			default:
+			abort(503, 'No se puede eliminar la programación de vehículo ya que la solicitud de servicio fue completada');
+				break;
 		}
 	}
 
