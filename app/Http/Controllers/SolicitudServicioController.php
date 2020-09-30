@@ -763,7 +763,7 @@ class SolicitudServicioController extends Controller
 		$log->AuditType="Modificado Status";
 		$log->AuditRegistro=$Solicitud->ID_SolSer;
 		$log->AuditUser=Auth::user()->email;
-		$log->Auditlog=$Solicitud->SolSerStatus;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
 		switch($Solicitud->SolSerStatus){
