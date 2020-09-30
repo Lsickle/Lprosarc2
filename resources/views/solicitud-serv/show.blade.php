@@ -159,7 +159,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							<div class="col-md-12 border-gray">
 								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solserstatusdescrip') }}:</label><br>
-									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->SolSerDescript}}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
+									<a href="#" style="overflow: hidden;
+									text-overflow: ellipsis;
+									display: inline-block;
+									white-space: nowrap;
+									max-width: 100%;
+									text-overflow: ellipsis;" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
 								</div>
 								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
@@ -1262,6 +1267,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		`);
 		$('#myModal'+slug).modal();
 	}
+	var observacion = `{!!$SolicitudServicio->SolSerDescript!!}`;
 	function ModalStatus(slug, status){
 		$('#ModalStatus').empty();
 		$('#ModalStatus').append(`
@@ -1280,8 +1286,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								@csrf
 								<div class="form-group col-md-12">
 									<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
-									<small class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
-									<input type="text" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"/>
+									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
+									<textarea id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript">`+observacion+`</textarea>
 								</div>
 								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
@@ -1297,6 +1303,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			</div>
 		`);
 		$('#SolSer').validator('update');
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		$('#textDescription').keyup(function() {
+			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+			observacion = area.value;
+		});
 		popover();
 		envsubmit();
 		$('#myModal').modal();
