@@ -947,6 +947,7 @@ class VehicProgController extends Controller
 												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
+												'recepcionpda@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												$emailCliente->PersEmail,
 												$comercial->PersEmail
@@ -958,6 +959,7 @@ class VehicProgController extends Controller
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
+												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
 											];	
 						}

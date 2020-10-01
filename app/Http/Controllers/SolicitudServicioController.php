@@ -793,6 +793,7 @@ class SolicitudServicioController extends Controller
 			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
 			$SolicitudNew = new SolicitudServicio();
 			$SolicitudNew->SolSerStatus = 'Aprobado';
+			$SolicitudNew->SolSerAuditable = $SolicitudOld->SolSerAuditable;
 			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
 			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
 			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
@@ -836,6 +837,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudNew->SolSerDevolucionTipo = $SolicitudOld->SolSerDevolucionTipo;
 			$SolicitudNew->FK_SolSerPersona = $SolicitudOld->FK_SolSerPersona;
 			$SolicitudNew->FK_SolSerCliente = $SolicitudOld->FK_SolSerCliente;
+			$SolicitudNew->SolServMailCopia = $SolicitudOld->SolServMailCopia;
 			$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
 			$SolicitudNew->SolSerDelete = 0;
 			$SolicitudNew->save();
