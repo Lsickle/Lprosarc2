@@ -904,7 +904,7 @@ class VehicProgController extends Controller
 			abort(404, 'la programación de vehículo que trata de eliminar no se encuentra en la base de datos');
 		}
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		switch ($SolicitudServicio->SolServStatus) {
+		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Aprobado':
 			case 'Notificado':
 			case 'Programado':
