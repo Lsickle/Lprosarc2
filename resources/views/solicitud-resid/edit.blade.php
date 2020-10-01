@@ -62,13 +62,13 @@
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidad') }}</label>
 								<small class="help-block with-errors"></small>
-								<input type="text" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" maxlength="5" value="{{$SolRes->SolResCantiUnidad}}" disabled="">
+								<input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidad" name="SolResCantiUnidad" value="{{$SolRes->SolResCantiUnidad}}" disabled="">
 							</div>
 							@endif
 							<div class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsercantidadkg') }}</b>" data-content="{{ trans('adminlte_lang::message.solsercantidadkgdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsercantidadkg') }}</label>
 								<small class="help-block with-errors">*</small>
-								<input type="text" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" maxlength="5" value="{{$SolRes->SolResKgEnviado}}" required>
+								<input type="number" step=".01" min="0" class="form-control numberKg" id="SolResKgEnviado" name="SolResKgEnviado" value="{{$SolRes->SolResKgEnviado}}" required>
 							</div>
 							<div id="embalaje" class="form-group col-md-6">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserembaja') }}</b>" data-content="{{ trans('adminlte_lang::message.solserembajadescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserembaja') }}</label>
