@@ -31,7 +31,7 @@ class CancelSolServEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                    ->subject('Nueva Solicitud de Servicio')
+                    ->subject('Programación de vehículos Cancelada')
                     ->markdown('emails.SolSer.cancelsolserv');
     }
 }
