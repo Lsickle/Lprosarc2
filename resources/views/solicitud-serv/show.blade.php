@@ -163,7 +163,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									text-overflow: ellipsis;
 									display: inline-block;
 									white-space: nowrap;
-									max-width: 100%;" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
+									max-width: 100%;" title="Observaciones" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
 								</div>
 								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
@@ -1266,6 +1266,16 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		`);
 		$('#myModal'+slug).modal();
 	}
+	var observacion = `{!!$SolicitudServicio->SolSerDescript!!}`;
+	function updatecaracteres() {
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		observacion = area.value;
+		
+	}
+	
 	
 	function ModalStatus(slug, status){
 		$('#ModalStatus').empty();
@@ -1302,14 +1312,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			</div>
 		`);
 		$('#SolSer').validator('update');
+		popover();
 		var area = document.getElementById("textDescription");
 		var message = document.getElementById("caracteresrestantes");
 		var maxLength = 4000;
-		$('#textDescription').keyup(function updatecaracteres() {
+		$('#textDescription').keyup(function () {
 			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 			observacion = area.value;
 		});
-		popover();
 		envsubmit();
 		$('#myModal').modal();
 	}

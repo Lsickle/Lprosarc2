@@ -1232,6 +1232,7 @@ class SolicitudServicioController extends Controller
 		}
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->save();
 
 		if(!is_null($request->input('SGenerador'))){
