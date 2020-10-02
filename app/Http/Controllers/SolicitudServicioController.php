@@ -286,6 +286,7 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->SolSerCityTrans = $transportadorcity;
 		$SolicitudServicio->SolSerConductor = $conductor;
 		$SolicitudServicio->SolSerVehiculo = $vehiculo;
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->SolSerTypeCollect = $request->input('SolSerTypeCollect');
 		$SolicitudServicio->SolSerCollectAddress = $direccioncollect;
 		if($request->input('SolSerBascula')){
@@ -779,7 +780,7 @@ class SolicitudServicioController extends Controller
 		}
 	}
 
-	public function repeat($slug)
+	public function repeat(Request $request, $slug)
 	{
 		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
 		if (!$SolicitudOld) {
@@ -840,6 +841,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudNew->SolServMailCopia = $SolicitudOld->SolServMailCopia;
 			$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
 			$SolicitudNew->SolSerDelete = 0;
+			$SolicitudNew->SolSerDescript = $request->input('solserdescript');
 			$SolicitudNew->save();
 
 			foreach ($SolResOlds as $SolResOld) {
@@ -1231,6 +1233,7 @@ class SolicitudServicioController extends Controller
 		}
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->save();
 
 		if(!is_null($request->input('SGenerador'))){
