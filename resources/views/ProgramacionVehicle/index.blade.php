@@ -108,6 +108,7 @@
 										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
 										<td>{{$programacion->ProgVehStatus}}</td>
 									{{-- @endif --}}
+									
 									@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class='btn btn-info btn-block'><i class="fas fa-search"></i> <b>Datos</b></a></td>
 									@endif
@@ -115,11 +116,18 @@
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}/edit' class='btn btn-warning btn-block'><i class="fas fa-edit"></i> <b>{{trans('adminlte_lang::message.edit')}}</b></a></td>
 									@endif
+
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
-									<td><a href="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" class='btn btn-success btn-block' title="{{ trans('adminlte_lang::message.progvehicserauth')}}"><i class="fas fa-sign-out-alt"></i></a></td>
+									@php
+										$Status = ['Aprobado', 'Programado'];
+									@endphp
+									<td>
+										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" {{in_array($programacion->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-{{in_array($programacion->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
+									</td>
 									@endif
 								</tr>
 								@endforeach
+								<div id="ModalStatus"></div>
 							</tbody>
 						</table>
 					</div>
@@ -128,4 +136,56 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('NewScript')
+<script>
+	var observacion = ``;
+	function updatecaracteres() {
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		observacion = area.value;
+		
+	}
+	function ModalStatus(slug, idServicio, boolean, value, text){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div text-align: center; margin: auto;">
+									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
+									<form action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+										@csrf
+										@method('PUT')
+										<div class="form-group col-md-12">
+											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>
+											<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
+											<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript">`+observacion+`</textarea>
+										</div>
+										<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+										<input type="text" name="solserstatus" value="`+value+`" style="display: none;">
+									</form>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Enviar</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			$('#SolSer').validator('update');
+			popover();
+			envsubmit();
+			$('#myModal').modal();
+		}
+	}
+</script>
 @endsection
