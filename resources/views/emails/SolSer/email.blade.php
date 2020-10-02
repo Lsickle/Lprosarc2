@@ -62,6 +62,11 @@
             $text = "ha sido aceptada satisfactoriamente por el cliente $email->CliName, según las cantidades enviadas a conciliación... esto permite dar inicio al registro de las cantidades tratadas para cada residuo de la solicitud de servicio";
         @endphp
         @break
+    @case('Corregido')
+        @php
+            $text = "ha sido corregida en las cantidades conciliadas de los residuos que correspondan según previa convesación con el cliente: $email->CliName. el cual deberá revisar los pesos y/o cantidades conciliadas en cada uno de los residuos y luego use el botón (Conciliado) para dar inicio al tratamiento y certificación del servicio";
+        @endphp
+        @break
     @case('Certificacion')
         @php
             $text = 'ha sido Certificada con éxito. esperamos que el proceso haya sido realizado a su entera satisfacción, ¡Gracias por su preferencia!';
@@ -77,6 +82,7 @@ En estos momentos la Solicitud de Servicio N° {{$email->ID_SolSer}} {{$text}}.<
 @break
 
 @case('Programado')
+@case('Corregido')
 @case('Notificado')
 @case('Cerrada')
 # Observaciones de Logistica

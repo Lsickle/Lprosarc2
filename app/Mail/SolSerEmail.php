@@ -35,19 +35,22 @@ class SolSerEmail extends Mailable implements ShouldQueue
     {
         switch ($this->email->SolSerStatus) {
             case 'Notificado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ya cuenta con fecha PROGRAMADA";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." ya cuenta con fecha PROGRAMADA";
                 break;
             case 'Completado':
-                $asuntoStatus = 'En la Solicitud de Servicio #'.$this->email->ID_SolSer." se ha COMPLETADO la recepción de los residuos";
+                $asuntoStatus = 'En el Servicio #'.$this->email->ID_SolSer." se ha COMPLETADO la recepción de los residuos";
                 break;
             case 'Conciliado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CONCILIADA por el cliente";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." ha sido CONCILIADO por el cliente";
                 break;
             case 'No Conciliado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido RECHAZADA por el cliente";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." ha sido RECHAZADO por el cliente";
                 break;
             case 'Certificacion':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CERTIFICADA por Prosarc S.A. ESP";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." ha sido CERTIFICADO por Prosarc S.A. ESP";
+                break;
+            case 'Corregido':
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." ha sido CORREGIDO en las cantidades conciliadas que corresponden";
                 break;
             default:
                 $asuntoStatus = "Solicitud de Servicio";
