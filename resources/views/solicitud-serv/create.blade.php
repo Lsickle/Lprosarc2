@@ -154,11 +154,18 @@
 									<small class="help-block with-errors">*</small>
 									<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2"></select>
 								</div>
-								<div class="col-md-12" style="margin: 10px 0;">
+								<div class="col-md-12">
 									<center>
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>Opcional</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
+										<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Observaciones" onclick="AnimationMenusForm('.Observaciones')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requirements') }}</b>" data-content="{{ trans('adminlte_lang::message.requirementsdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.requirements') }}</label>
+										<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 									</center>
-									<div class="col-md-12" style="border: 2px dashed #00c0ef">
+									<div class="form-group col-md-12 collapse Observaciones" style="margin-bottom: 1em; padding-left:0; padding-right:0;">
+										<small id="caracteresrestantes" class="help-block with-errors"></small>
+										<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="SolSerDescript"></textarea>
+									</div>
+									<div class="col-md-12 collapse Requerimientos" style="border: 2px dashed #00c0ef">
 										<div class="col-md-4" style="text-align: center;">
 											<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 												<label for="SolSerBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
@@ -318,6 +325,14 @@ function submitverify(){
 		}
 	}
 }
+$(document).ready(function(){
+	var area = document.getElementById("textDescription");
+	var message = document.getElementById("caracteresrestantes");
+	var maxLength = 4000;
+	$('#textDescription').keyup(function updatecaracteres() {
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+	});
+})
 </script>
 @include('solicitud-serv.layaoutsSolSer.functionsSolSer')
 @endsection

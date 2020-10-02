@@ -158,13 +158,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							</div>
 							<div class="col-md-12 border-gray">
 								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
-									<label>{{ trans('adminlte_lang::message.solserstatusdescrip') }}:</label><br>
+									<label>Observaciones:</label><br>
 									<a href="#" style="overflow: hidden;
 									text-overflow: ellipsis;
 									display: inline-block;
 									white-space: nowrap;
-									max-width: 100%;
-									text-overflow: ellipsis;" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solserstatusdescrip') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
+									max-width: 100%;" title="Observaciones" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</p>">{{$SolicitudServicio->SolSerDescript}}</a>
 								</div>
 								<div class="col-md-6" {{$SolicitudServicio->SolSerTipo == "Externo" ? 'hidden' : ''}}>
 									<label>{{ trans('adminlte_lang::message.solseraddrescollect') }}:</label><br>
@@ -539,19 +538,26 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
+											<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="POST" id="SolSerRepeat">
+											@csrf
+											@method('PUT')
 											<div class="modal-body">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 													<i class="fas fa-exclamation-triangle"></i>
 													<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
 												</div> 
+												<div class="form-group col-md-12">
+													<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>(Opcional)</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones <b>Opcional</b></label>
+													<small id="caracteresrestantesrepetir" class="help-block with-errors"></small>
+													<textarea onchange="updatecaracteresrepetir()" id="textDescriptionrepetir" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
+												</div>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-												<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
 													<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
-												</form>
-											</div>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -1268,6 +1274,23 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		$('#myModal'+slug).modal();
 	}
 	var observacion = `{!!$SolicitudServicio->SolSerDescript!!}`;
+	function updatecaracteres() {
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		observacion = area.value;
+		
+	}
+	
+	$(document).ready(function(){
+		var area = document.getElementById("textDescriptionrepetir");
+		var message = document.getElementById("caracteresrestantesrepetir");
+		var maxLength = 4000;
+		$('#textDescriptionrepetir').keyup(function updatecaracteresrepetir() {
+			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		});
+	})
 	function ModalStatus(slug, status){
 		$('#ModalStatus').empty();
 		$('#ModalStatus').append(`
@@ -1287,7 +1310,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div class="form-group col-md-12">
 									<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
 									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
-									<textarea id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript">`+observacion+`</textarea>
+									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript">`+observacion+`</textarea>
 								</div>
 								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
@@ -1303,14 +1326,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			</div>
 		`);
 		$('#SolSer').validator('update');
+		popover();
 		var area = document.getElementById("textDescription");
 		var message = document.getElementById("caracteresrestantes");
 		var maxLength = 4000;
-		$('#textDescription').keyup(function() {
+		$('#textDescription').keyup(function () {
 			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 			observacion = area.value;
 		});
-		popover();
 		envsubmit();
 		$('#myModal').modal();
 	}
