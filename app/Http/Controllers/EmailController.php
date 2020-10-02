@@ -116,7 +116,32 @@ class EmailController extends Controller
                 ->cc(json_decode($SolSer->SolServMailCopia))
                 ->send(new SolSerEmail($email));
             }
+        
+        }elseif ($SolSer->SolSerStatus === 'Corregido') {
             
+            $email = DB::table('solicitud_servicios')
+                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.*')
+                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                ->first();
+            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+            $destinatarios = ['logistica@prosarc.com.co',
+                                'gerenteplanta@prosarc.com.co',
+                                'recepcionpda@prosarc.com.co',
+                                $comercial->PersEmail
+                            ];
+
+            if ($SolSer->SolServMailCopia == "null") {
+                Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+            }else{
+                foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                    array_push($destinatarios, $value);
+                }
+                Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+            }
+
         }else{
             $email = DB::table('solicitud_servicios')
                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
