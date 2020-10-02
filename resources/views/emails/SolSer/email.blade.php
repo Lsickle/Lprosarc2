@@ -71,10 +71,37 @@
 
 En estos momentos la Solicitud de Servicio N° {{$email->ID_SolSer}} {{$text}}.<br>
 
-@if ($email->SolSerStatus === 'No Conciliado')
-## @lang('¿Por qué?')
+@switch($email->SolSerStatus)
+@case('Aprobado')
+# Observaciones del Cliente: 
+@break
 
-*@lang($email->SolSerDescript)*<br><br>
+@case('Programado')
+@case('Notificado')
+@case('Cerrada')
+# Observaciones de Logistica
+@break
+
+@case('Completado')
+# Observaciones de RecepciónPDA
+@break
+
+@case('No Conciliado')
+@case('Conciliado')
+# Observaciones del Cliente: 
+@break
+
+@case('Certificacion')
+# Observaciones de Prosarc S.A.ESP: 
+@break
+
+@default
+# Observaciones
+@endswitch
+
+<p style="background-color:#f0f3f8;"><i>{!!nl2br($email->SolSerDescript)!!}</i></p>
+
+@if ($email->SolSerStatus === 'No Conciliado')
 
 @lang("Puede comunicarse con:")<br>
 
