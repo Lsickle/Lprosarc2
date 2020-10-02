@@ -286,6 +286,7 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->SolSerCityTrans = $transportadorcity;
 		$SolicitudServicio->SolSerConductor = $conductor;
 		$SolicitudServicio->SolSerVehiculo = $vehiculo;
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->SolSerTypeCollect = $request->input('SolSerTypeCollect');
 		$SolicitudServicio->SolSerCollectAddress = $direccioncollect;
 		if($request->input('SolSerBascula')){
