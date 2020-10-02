@@ -780,7 +780,7 @@ class SolicitudServicioController extends Controller
 		}
 	}
 
-	public function repeat($slug)
+	public function repeat(Request $request, $slug)
 	{
 		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
 		if (!$SolicitudOld) {
@@ -841,6 +841,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudNew->SolServMailCopia = $SolicitudOld->SolServMailCopia;
 			$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
 			$SolicitudNew->SolSerDelete = 0;
+			$SolicitudNew->SolSerDescript = $request->input('solserdescript');
 			$SolicitudNew->save();
 
 			foreach ($SolResOlds as $SolResOld) {

@@ -538,19 +538,26 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
+											<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="POST" id="SolSerRepeat">
+											@csrf
+											@method('PUT')
 											<div class="modal-body">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 													<i class="fas fa-exclamation-triangle"></i>
 													<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
 												</div> 
+												<div class="form-group col-md-12">
+													<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>(Opcional)</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones <b>Opcional</b></label>
+													<small id="caracteresrestantesrepetir" class="help-block with-errors"></small>
+													<textarea onchange="updatecaracteresrepetir()" id="textDescriptionrepetir" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
+												</div>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-												<form action="/solicitud-servicio/repeat/{{$SolicitudServicio->SolSerSlug}}" method="GET" id="SolSerRepeat">
 													<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
-												</form>
-											</div>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -1276,7 +1283,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		
 	}
 	
-	
+	$(document).ready(function(){
+		var area = document.getElementById("textDescriptionrepetir");
+		var message = document.getElementById("caracteresrestantesrepetir");
+		var maxLength = 4000;
+		$('#textDescriptionrepetir').keyup(function updatecaracteresrepetir() {
+			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		});
+	})
 	function ModalStatus(slug, status){
 		$('#ModalStatus').empty();
 		$('#ModalStatus').append(`
