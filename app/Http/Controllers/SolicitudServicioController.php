@@ -722,7 +722,7 @@ class SolicitudServicioController extends Controller
 						break;
 					case 'Conciliación':
 						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
-							$Solicitud->SolSerStatus = 'Completado';
+							$Solicitud->SolSerStatus = 'Corregido';
 						}
 						break;
 					case 'Tratada':

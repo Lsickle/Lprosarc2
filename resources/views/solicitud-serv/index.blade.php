@@ -149,6 +149,10 @@
 												@case('No Conciliado')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status No Conciliado</b>" data-content="<p style='width: 50%'>Alguna de las cantidades recibidas no corresponde con los valores esperados y se realizaran las respectivas validaciones entre <b>Prosarc S.A. ESP.</b> y la persona de Contacto adicionalmente puede revisar el registro fotográfico ingresando a los detalles de cada residuo... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
+												{{-- aplica cuando se corrige la cant conciliada de algun residuo --}}
+												@case('Corregido')
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Corregido</b>" data-content="<p style='width: 50%'>Todos los residuos de esta solicitud de servicio han sido revisados para ajustar las cantidades según acuerdo con el Cliente...  adicionalmente se envió un correo electrónico a la persona de contacto de esta solicitud para que revise las cantidades conciliadas... se deberá esperar a que el cliente acepte o rechace los pesos enviados a conciliación <br>Para más detalles comuníquese con <b>Logistica</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													@break
 												{{-- Información Revisado --}}
 												@case('Tratado')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Tratado</b>" data-content="<p style='width: 50%'>Todos los residuos de esta solicitud de servicio han sido tratados satisfactoriamente y en breve se cargarán en el sistema <b>SisPRO</b> los archivos de Certificados/Manifiestos Según Corresponda... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}</td>
@@ -198,6 +202,10 @@
 												{{-- falta la TDE --}}
 												@case('No Conciliado')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status No Conciliado</b>" data-content="<p style='width: 50%'>Algunas de las cantidades de residuos enviadas a conciliación han sido rechazada por el cliente... y se ha enviado un correo de notificación al Asistente de Logistica para la revisión de las cantidades <br>Para más detalles comuníquese con el <b>Asesor Comercial o Asistente de Logistica</b> según corresponda</p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													@break
+												{{-- aplica cuando se corrige la cant conciliada de algun residuo --}}
+												@case('Corregido')
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Corregido</b>" data-content="<p style='width: 50%'>Todos los residuos de esta solicitud de servicio han sido revisados para ajustar las cantidades según acuerdo con el Cliente...  adicionalmente se envió un correo electrónico a la persona de contacto de esta solicitud para que revise las cantidades conciliadas... se deberá esperar a que el cliente acepte o rechace los pesos enviados a conciliación <br>Para más detalles comuníquese con <b>Logistica</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												{{-- TDE actualizada --}}
 												@case('Tratado')

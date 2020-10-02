@@ -1456,6 +1456,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><spam>{{$TextProgramacion}}</spam>
 			`);
 		@break
+		@case('Corregido')
 		@case('Completado')
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
