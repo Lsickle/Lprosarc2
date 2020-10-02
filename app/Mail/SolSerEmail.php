@@ -33,8 +33,28 @@ class SolSerEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        switch ($this->email->SolSerStatus) {
+            case 'Notificado':
+                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ya cuenta con fecha PROGRAMADA";
+                break;
+            case 'Completado':
+                $asuntoStatus = 'En la Solicitud de Servicio #'.$this->email->ID_SolSer." se ha COMPLETADO la recepción de los residuos";
+                break;
+            case 'Conciliado':
+                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CONCILIADA por el cliente";
+                break;
+            case 'No Conciliado':
+                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido RECHAZADA por el cliente";
+                break;
+            case 'Certificacion':
+                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CERTIFICADA por Prosarc S.A. ESP";
+                break;
+            default:
+                $asuntoStatus = "Solicitud de Servicio";
+                break;
+        }
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                        ->subject('Solicitud de Servicio')
+                        ->subject($asuntoStatus)
                         ->markdown('emails.SolSer.email');
     }
 }

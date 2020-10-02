@@ -326,6 +326,7 @@ class SolicitudServicioController extends Controller
 								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
+								'recepcionpda@prosarc.com.co',
 								$comercial->PersEmail
 							 ];
 		}else{
@@ -335,7 +336,8 @@ class SolicitudServicioController extends Controller
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
-								'subgerencia@prosarc.com.co'
+								'subgerencia@prosarc.com.co',
+								'recepcionpda@prosarc.com.co'
 							 ];	
 		}
 
@@ -784,205 +786,202 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudOld = SolicitudServicio::where('SolSerSlug', $slug)->first();
 		if (!$SolicitudOld) {
-			abort(404);
+			abort(404, 'la solicitud que esta tratando de repetir no se encuentra en la base de datos');
 		}
 
 		$Cliente = Cliente::where('ID_Cli', $SolicitudOld->FK_SolSerCliente)->first();
         $Requerimiento = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->first();
 
 		if(!is_null($SolicitudOld)){
-			$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
-			$SolicitudNew = new SolicitudServicio();
-			$SolicitudNew->SolSerStatus = 'Aprobado';
-			$SolicitudNew->SolSerAuditable = $SolicitudOld->SolSerAuditable;
-			$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
-			$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
-			$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
-			$SolicitudNew->SolSerNitTrans = $SolicitudOld->SolSerNitTrans;
-			$SolicitudNew->SolSerAdressTrans = $SolicitudOld->SolSerAdressTrans;
-			$SolicitudNew->SolSerCityTrans = $SolicitudOld->SolSerCityTrans;
-			$SolicitudNew->SolSerConductor = $SolicitudOld->SolSerConductor;
-			$SolicitudNew->SolSerVehiculo = $SolicitudOld->SolSerVehiculo;
-			$SolicitudNew->SolSerTypeCollect = $SolicitudOld->SolSerTypeCollect;
-			$SolicitudNew->SolSerCollectAddress = $SolicitudOld->SolSerCollectAddress;
-			if ($Requerimiento->RequeCliBascula==0) {
-				$SolicitudNew->SolSerBascula = 0;
-			}else{
-				$SolicitudNew->SolSerBascula = $SolicitudOld->SolSerBascula;
-			}
-
-			if ($Requerimiento->RequeCliCapacitacion==0) {
-				$SolicitudNew->SolSerCapacitacion = 0;
-			}else{
-				$SolicitudNew->SolSerCapacitacion = $SolicitudOld->SolSerCapacitacion;
-			}
-
-			if ($Requerimiento->RequeCliMasPerson==0) {
-				$SolicitudNew->SolSerMasPerson = 0;
-			}else{
-				$SolicitudNew->SolSerMasPerson = $SolicitudOld->SolSerMasPerson;
-			}
-
-			if ($Requerimiento->RequeCliVehicExclusive==0) {
-				$SolicitudNew->SolSerVehicExclusive = 0;
-			}else{
-				$SolicitudNew->SolSerVehicExclusive = $SolicitudOld->SolSerVehicExclusive;
-			}
-
-			if ($Requerimiento->RequeCliPlatform==0) {
-				$SolicitudNew->SolSerPlatform = 0;
-			}else{
-				$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
-			}
-			$SolicitudNew->SolSerDevolucion = $SolicitudOld->SolSerDevolucion;
-			$SolicitudNew->SolSerDevolucionTipo = $SolicitudOld->SolSerDevolucionTipo;
-			$SolicitudNew->FK_SolSerPersona = $SolicitudOld->FK_SolSerPersona;
-			$SolicitudNew->FK_SolSerCliente = $SolicitudOld->FK_SolSerCliente;
-			$SolicitudNew->SolServMailCopia = $SolicitudOld->SolServMailCopia;
-			$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
-			$SolicitudNew->SolSerDelete = 0;
-			$SolicitudNew->SolSerDescript = $request->input('solserdescript');
-			$SolicitudNew->save();
-
-			foreach ($SolResOlds as $SolResOld) {
-				$SolResNew = new SolicitudResiduo();
-				$SolResNew->SolResKgEnviado = $SolResOld->SolResKgEnviado;
-				$SolResNew->SolResKgRecibido = 0;
-				$SolResNew->SolResKgConciliado = 0;
-				$SolResNew->SolResKgTratado = 0;
-				$SolResNew->SolResDelete = 0;
-				$SolResNew->SolResTypeUnidad = $SolResOld->SolResTypeUnidad;
-				$SolResNew->SolResCantiUnidad = $SolResOld->SolResCantiUnidad;
-				$SolResNew->SolResEmbalaje = $SolResOld->SolResEmbalaje;
-				$SolResNew->SolResAlto = $SolResOld->SolResAlto;
-				$SolResNew->SolResAncho = $SolResOld->SolResAncho;
-				$SolResNew->SolResProfundo = $SolResOld->SolResProfundo;
-				$SolResNew->SolResSlug = hash('sha256', rand().time().$SolResNew->SolResKgEnviado);
-				$SolResNew->FK_SolResRg = $SolResOld->FK_SolResRg;
-				$SolResNew->FK_SolResSolSer = $SolicitudNew->ID_SolSer;
-				/*se verifica el requerimiento actualmente ofertado para el residuo*/
-				$respelgener= ResiduosGener::find($SolResOld->FK_SolResRg);
-
-				$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
-			        ->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
-			        ->where('ofertado', '=', 1)
-			        ->where('forevaluation', '=', 1)
-					->first();
-					
-				if ($requerimientoOfertado == null) {
-					$SolicitudNew->delete();
-
-					$log = new audit();
-					$log->AuditTabla="solicitud_servicios";
-					$log->AuditType="repetir fallido";
-					$log->AuditRegistro=$SolicitudNew->ID_SolSer;
-					$log->AuditUser=Auth::user()->email;
-					$log->Auditlog=$SolicitudNew;
-					$log->save();
-					
-					abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
-				}
-				if ($requerimientoOfertado->ReqFotoDescargue==0) {
-					$SolResNew->SolResFotoDescargue_Pesaje = 0;
+				$SolResOlds = SolicitudResiduo::where('FK_SolResSolSer', $SolicitudOld->ID_SolSer)->get();
+				$SolicitudNew = new SolicitudServicio();
+				$SolicitudNew->SolSerStatus = 'Aprobado';
+				$SolicitudNew->SolSerAuditable = $SolicitudOld->SolSerAuditable;
+				$SolicitudNew->SolResAuditoriaTipo = $SolicitudOld->SolResAuditoriaTipo;
+				$SolicitudNew->SolSerTipo = $SolicitudOld->SolSerTipo;
+				$SolicitudNew->SolSerNameTrans = $SolicitudOld->SolSerNameTrans;
+				$SolicitudNew->SolSerNitTrans = $SolicitudOld->SolSerNitTrans;
+				$SolicitudNew->SolSerAdressTrans = $SolicitudOld->SolSerAdressTrans;
+				$SolicitudNew->SolSerCityTrans = $SolicitudOld->SolSerCityTrans;
+				$SolicitudNew->SolSerConductor = $SolicitudOld->SolSerConductor;
+				$SolicitudNew->SolSerVehiculo = $SolicitudOld->SolSerVehiculo;
+				$SolicitudNew->SolSerTypeCollect = $SolicitudOld->SolSerTypeCollect;
+				$SolicitudNew->SolSerCollectAddress = $SolicitudOld->SolSerCollectAddress;
+				if ($Requerimiento->RequeCliBascula==0) {
+					$SolicitudNew->SolSerBascula = 0;
 				}else{
-					$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
+					$SolicitudNew->SolSerBascula = $SolicitudOld->SolSerBascula;
 				}
 
-				if ($requerimientoOfertado->ReqFotoDestruccion==0) {
-					$SolResNew->SolResFotoTratamiento = 0;
+				if ($Requerimiento->RequeCliCapacitacion==0) {
+					$SolicitudNew->SolSerCapacitacion = 0;
 				}else{
-					$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
+					$SolicitudNew->SolSerCapacitacion = $SolicitudOld->SolSerCapacitacion;
 				}
 
-				if ($requerimientoOfertado->ReqVideoDescargue==0) {
-					$SolResNew->SolResVideoDescargue_Pesaje = 0;
+				if ($Requerimiento->RequeCliMasPerson==0) {
+					$SolicitudNew->SolSerMasPerson = 0;
 				}else{
-					$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
+					$SolicitudNew->SolSerMasPerson = $SolicitudOld->SolSerMasPerson;
 				}
 
-				if ($requerimientoOfertado->ReqVideoDestruccion==0) {
-					$SolResNew->SolResVideoTratamiento = 0;
+				if ($Requerimiento->RequeCliVehicExclusive==0) {
+					$SolicitudNew->SolSerVehicExclusive = 0;
 				}else{
+					$SolicitudNew->SolSerVehicExclusive = $SolicitudOld->SolSerVehicExclusive;
+				}
+
+				if ($Requerimiento->RequeCliPlatform==0) {
+					$SolicitudNew->SolSerPlatform = 0;
+				}else{
+					$SolicitudNew->SolSerPlatform = $SolicitudOld->SolSerPlatform;
+				}
+				$SolicitudNew->SolSerDevolucion = $SolicitudOld->SolSerDevolucion;
+				$SolicitudNew->SolSerDevolucionTipo = $SolicitudOld->SolSerDevolucionTipo;
+				$SolicitudNew->FK_SolSerPersona = $SolicitudOld->FK_SolSerPersona;
+				$SolicitudNew->FK_SolSerCliente = $SolicitudOld->FK_SolSerCliente;
+				$SolicitudNew->SolServMailCopia = $SolicitudOld->SolServMailCopia;
+				$SolicitudNew->SolSerSlug = hash('sha256', rand().time().$SolicitudNew->SolSerNameTrans);
+				$SolicitudNew->SolSerDelete = 0;
+				$SolicitudNew->SolSerDescript = $request->input('solserdescript');
+				$SolicitudNew->save();
+
+				foreach ($SolResOlds as $SolResOld) {
+					$SolResNew = new SolicitudResiduo();
+					$SolResNew->SolResKgEnviado = $SolResOld->SolResKgEnviado;
+					$SolResNew->SolResKgRecibido = 0;
+					$SolResNew->SolResKgConciliado = 0;
+					$SolResNew->SolResKgTratado = 0;
+					$SolResNew->SolResDelete = 0;
+					$SolResNew->SolResTypeUnidad = $SolResOld->SolResTypeUnidad;
+					$SolResNew->SolResCantiUnidad = $SolResOld->SolResCantiUnidad;
+					$SolResNew->SolResEmbalaje = $SolResOld->SolResEmbalaje;
+					$SolResNew->SolResAlto = $SolResOld->SolResAlto;
+					$SolResNew->SolResAncho = $SolResOld->SolResAncho;
+					$SolResNew->SolResProfundo = $SolResOld->SolResProfundo;
+					$SolResNew->SolResSlug = hash('sha256', rand().time().$SolResNew->SolResKgEnviado);
+					$SolResNew->FK_SolResRg = $SolResOld->FK_SolResRg;
+					$SolResNew->FK_SolResSolSer = $SolicitudNew->ID_SolSer;
+					/*se verifica el requerimiento actualmente ofertado para el residuo*/
+					$respelgener= ResiduosGener::find($SolResOld->FK_SolResRg);
+
+					$requerimientoOfertado = Requerimiento::with(['pretratamientosSelected'])
+						->where('FK_ReqRespel', '=', $respelgener->FK_Respel)
+						->where('ofertado', '=', 1)
+						->where('forevaluation', '=', 1)
+						->first();
+						
+					if ($requerimientoOfertado == null) {
+						$SolicitudNew->delete();
+
+						$log = new audit();
+						$log->AuditTabla="solicitud_servicios";
+						$log->AuditType="repetir fallido";
+						$log->AuditRegistro=$SolicitudNew->ID_SolSer;
+						$log->AuditUser=Auth::user()->email;
+						$log->Auditlog=$SolicitudNew;
+						$log->save();
+						
+						abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
+					}
+					if ($requerimientoOfertado->ReqFotoDescargue==0) {
+						$SolResNew->SolResFotoDescargue_Pesaje = 0;
+					}else{
+						$SolResNew->SolResFotoDescargue_Pesaje = $SolResOld->SolResFotoDescargue_Pesaje;
+					}
+
+					if ($requerimientoOfertado->ReqFotoDestruccion==0) {
+						$SolResNew->SolResFotoTratamiento = 0;
+					}else{
+						$SolResNew->SolResFotoTratamiento = $SolResOld->SolResFotoTratamiento;
+					}
+
+					if ($requerimientoOfertado->ReqVideoDescargue==0) {
+						$SolResNew->SolResVideoDescargue_Pesaje = 0;
+					}else{
+						$SolResNew->SolResVideoDescargue_Pesaje = $SolResOld->SolResVideoDescargue_Pesaje;
+					}
+
+					if ($requerimientoOfertado->ReqVideoDestruccion==0) {
+						$SolResNew->SolResVideoTratamiento = 0;
+					}else{
+						$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+					}
+
+					if ($requerimientoOfertado->ReqDevolucion==0) {
+						$SolResNew->SolResDevolucion = 0;
+					}else{
+						$SolResNew->SolResDevolucion = $SolResOld->SolResDevolucion;
+					}
+
+					if ($requerimientoOfertado->ReqAuditoria==0) {
+						$SolResNew->SolResAuditoria = 0;
+					}else{
+						$SolResNew->SolResAuditoria = $SolResOld->SolResAuditoria;
+					}
 					$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
+					$SolResNew->SolResDevolucion = $SolResOld->SolResVideoTratamiento;
+					$SolResNew->SolResDevolCantidad = $SolResOld->SolResVideoTratamiento;
+					$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
+					$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
+					/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
+					
+					$nuevorequerimiento = $requerimientoOfertado->replicate();
+					$nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
+					$nuevorequerimiento->forevaluation=0;
+					$nuevorequerimiento->ofertado=0;
+					$nuevorequerimiento->save();
+					$nuevorequerimiento->pretratamientosSelected()->attach($requerimientoOfertado['pretratamientosSelected']);
+
+					$tarifaparacopiar = Tarifa::with(['rangos'])
+					->where('FK_TarifaReq', $requerimientoOfertado->ID_Req)->first();
+					$nuevatarifa = $tarifaparacopiar->replicate();
+					$nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+					$nuevatarifa->save();
+
+					foreach ($tarifaparacopiar->rangos as $rango) {
+						$rangoparacopiar = Rango::find($rango->ID_Rango);
+						$nuevarango = $rangoparacopiar->replicate();
+						$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+						$nuevarango->save();
+					}
+					$SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
+					$SolResNew->save();
 				}
-
-				if ($requerimientoOfertado->ReqDevolucion==0) {
-					$SolResNew->SolResDevolucion = 0;
-				}else{
-					$SolResNew->SolResDevolucion = $SolResOld->SolResDevolucion;
-				}
-
-				if ($requerimientoOfertado->ReqAuditoria==0) {
-					$SolResNew->SolResAuditoria = 0;
-				}else{
-					$SolResNew->SolResAuditoria = $SolResOld->SolResAuditoria;
-				}
-				$SolResNew->SolResVideoTratamiento = $SolResOld->SolResVideoTratamiento;
-				$SolResNew->SolResDevolucion = $SolResOld->SolResVideoTratamiento;
-				$SolResNew->SolResDevolCantidad = $SolResOld->SolResVideoTratamiento;
-				$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
-				$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
-				/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
-				
-				$nuevorequerimiento = $requerimientoOfertado->replicate();
-                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
-                $nuevorequerimiento->forevaluation=0;
-                $nuevorequerimiento->ofertado=0;
-                $nuevorequerimiento->save();
-                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoOfertado['pretratamientosSelected']);
-
-                $tarifaparacopiar = Tarifa::with(['rangos'])
-                ->where('FK_TarifaReq', $requerimientoOfertado->ID_Req)->first();
-                $nuevatarifa = $tarifaparacopiar->replicate();
-                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
-                $nuevatarifa->save();
-
-                foreach ($tarifaparacopiar->rangos as $rango) {
-                	$rangoparacopiar = Rango::find($rango->ID_Rango);
-                	$nuevarango = $rangoparacopiar->replicate();
-                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
-                	$nuevarango->save();
-                }
-                $SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
-				$SolResNew->save();
+			
+			$SolicitudServicio = $SolicitudNew;
+						// se verifica si el cliente tiene comercial asignado
+			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
+			// se establece la lista de destinatarios
+			if ($SolicitudServicio['cliente']->CliComercial <> null) {
+				$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+				$destinatarios = ['dirtecnica@prosarc.com.co',
+									'logistica@prosarc.com.co',
+									'asistentelogistica@prosarc.com.co',
+									'auxiliarlogistico@prosarc.com.co',
+									'gerenteplanta@prosarc.com.co',
+									'subgerencia@prosarc.com.co',
+									$comercial->PersEmail
+								];
+			}else{
+				$comercial = "";
+				$destinatarios = ['dirtecnica@prosarc.com.co',
+									'logistica@prosarc.com.co',
+									'asistentelogistica@prosarc.com.co',
+									'auxiliarlogistico@prosarc.com.co',
+									'gerenteplanta@prosarc.com.co',
+									'subgerencia@prosarc.com.co'
+								];	
 			}
-		
-		$SolicitudServicio = $SolicitudNew;
-					// se verifica si el cliente tiene comercial asignado
-		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
-		// se establece la lista de destinatarios
-		if ($SolicitudServicio['cliente']->CliComercial <> null) {
-			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
-								'gerenteplanta@prosarc.com.co',
-								'subgerencia@prosarc.com.co',
-								$comercial->PersEmail
-							 ];
-		}else{
-			$comercial = "";
-			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
-								'gerenteplanta@prosarc.com.co',
-								'subgerencia@prosarc.com.co'
-							 ];	
-		}
 
-		$SolicitudServicio['comercial'] = $comercial;
-		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
+			$SolicitudServicio['comercial'] = $comercial;
+			$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
 
-
-		// se envia un correo por cada residuo registrado
-		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
-
+			Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
 		else{
-			abort(404);
+			abort(404, 'la solicitud que esta tratando de repetir no se encuentra en la base de datos');
 		}
 	}
 

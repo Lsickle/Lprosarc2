@@ -1024,8 +1024,9 @@ class VehicProgController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function updateStatus($id)
+	public function updateStatus(Request $request, $id)
 	{
+
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
 			abort(404, 'la programación de vehículo que trata de actualizar no se encuentra en la base de datos');
@@ -1036,6 +1037,7 @@ class VehicProgController extends Controller
 		->get();
 
 		$SolicitudServicio->SolSerStatus='Notificado';
+		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
         $SolicitudServicio->save();
 		// return $programaciones;
 		

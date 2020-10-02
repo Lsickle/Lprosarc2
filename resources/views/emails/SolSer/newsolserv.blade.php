@@ -7,6 +7,12 @@ El cliente {{$SolicitudServicio['cliente']->CliName}} ha creado una nueva Solici
     <li>teléfono: {{$SolicitudServicio['personalcliente']->PersCellphone}}</li>
     <li>correo: {{$SolicitudServicio['personalcliente']->PersEmail}}</li>
 </ul>
+<br>
+# Observaciones:
+
+<p style="background-color:#f0f3f8;"><i>{!!nl2br($SolicitudServicio->SolSerDescript)!!}</i></p>
+
+
 
 @component('mail::button', ['url' => url('/solicitud-servicio', [$SolicitudServicio->SolSerSlug])])
 Ver Solicitud de Servicio

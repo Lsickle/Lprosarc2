@@ -100,7 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');
 	Route::resource('/vehicle-programacion','VehicProgController');
-	Route::get('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
+	Route::put('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
 	Route::post('/vehicle-programacion/{id}/añadirVehiculo','VehicProgController@añadirVehiculo');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
