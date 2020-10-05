@@ -417,9 +417,33 @@
 					<div class="modal-header">
 						<div class="col-md-6" style="text-align: center;">
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+								<label for="main_RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="testswitch" id="main_RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
 								<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
 								<div style="width: 100%; height: 34px;">
 									<input type="checkbox" class="testswitch" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="auto_RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
 								</div>
 							</label>
 						</div>
@@ -432,10 +456,26 @@
 							</label>
 						</div>
 						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="auto_RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
 								<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
 								<div style="width: 100%; height: 34px;">
 									<input type="checkbox" class="testswitch" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="auto_RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
 								</div>
 							</label>
 						</div>
@@ -447,11 +487,27 @@
 								</div>
 							</label>
 						</div>
-						<div class="col-md-12" style="text-align: center;">
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="auto_RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
 								<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
 								<div style="width: 100%; height: 34px;">
 									<input type="checkbox" class="testswitch" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
+								</div>
+							</label>
+						</div>
+						<div class="col-md-6" style="text-align: center;">
+							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+								<label for="auto_RequeCliBascula">Activación</label>
+								<div style="width: 100%; height: 34px;">
+									<input type="checkbox" class="autoswitch" id="auto_RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
 								</div>
 							</label>
 						</div>
@@ -496,4 +552,24 @@
 			}
 		</script>
 	@endif
+	<script type="text/javascript">
+		function SwitchAuto() {
+			$(".autoswitch").bootstrapSwitch({
+				animate: true,
+				labelText: 'Auto',
+				onText: 'On',
+				offText: 'Off',
+				onColor: 'success',
+				offColor: 'danger',
+				onSwitchChange: function onSwitchChange() {
+					var main = $('#main_'+this.id);
+					if (this.checked) {	
+						main.checked = true;
+					}
+					console.log(main.$on);
+				}
+			});
+		}
+		$(document).ready(SwitchAuto());
+	</script>
 @endsection
