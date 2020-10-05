@@ -195,7 +195,15 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								
 							@endif
 							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
-								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
+							@php
+							$alertaRequerimientos = 0;
+							foreach ($Residuos as $key => $Residuo) {
+								if ($Residuo->SolResFotoDescargue_Pesaje == 1||$Residuo->SolResVideoDescargue_Pesaje == 1||$Residuo->SolResFotoTratamiento == 1||$Residuo->SolResVideoTratamiento == 1||$Residuo->SolResDevolucion == 1||$Residuo->SolResAuditoria == 1) {
+									$alertaRequerimientos = $alertaRequerimientos + 1;
+								}
+							}
+							@endphp
+								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn {{$alertaRequerimientos > 0 ? 'btn-warning' : 'btn-default'}} pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
 							@endif
 							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
 								@if($SolicitudServicio->SolSerSupport <> null)
