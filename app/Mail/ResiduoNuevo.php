@@ -30,7 +30,7 @@ class ResiduoNuevo extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
+        return $this->from('notificaciones@prosarc.com.co', $this->respel['cliente']->CliName)
                     ->subject('Se ha registrado el residuo '.$this->respel->RespelName)
                     ->markdown('emails.residuo.nuevo');
     }
