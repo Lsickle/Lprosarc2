@@ -661,7 +661,6 @@
 					auto.bootstrapSwitch('state', false);
 				}
 			}
-
 		}
 		$(document).ready(SwitchAuto());
 		$(document).ready(SwitchMain());
