@@ -49,7 +49,7 @@ Residuos Comunes
 								<div class="col-md-6 form-group has-feedback">
 									<label>Categoría</label><small class="help-block with-errors">*</small>
 									<select id="selectCategory" class="form-control" data-dependent="FK_SubCategoryRP">
-										<option disabled>seleccione una categoria...</option>
+										<option selected disabled>seleccione una categoria...</option>
 										@foreach($categories as $category)
 										<option value="{{$category->ID_CategoryRP}}">{{$category->CategoryRpName}}</option>
 										@endforeach
