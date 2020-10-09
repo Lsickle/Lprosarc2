@@ -444,11 +444,9 @@
 			ChangeSelect();
 			SelectsRangoTipo(contador);
 			Selects();
-			Switch2();
-			Switch3();
-			Switch6();
+			SwitchMain();
+			SwitchAuto();
 			Switch7();
-			Switch8();
 			validarprevent(contador);
 			contador = parseInt(contador)+1;
 
@@ -502,6 +500,79 @@
 			ChangeSelect();
 			Selects();
 		});
+	</script>
+	<script type="text/javascript">
+		function SwitchAuto() {
+			$(".autoswitch").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-power-off"></i>',
+				onText: 'A',
+				offText: 'M',
+				onColor: 'success',
+				offColor: 'danger',
+				onSwitchChange: function () {
+					updateMain($(this).data("switch"));
+				}
+			});
+		}
+		function updateMain(id) {
+			main = $('#main_'+id);
+			auto = $('#auto_'+id);
+			if (auto.prop("checked")) {
+				if (!main.prop("checked")) {
+					main.bootstrapSwitch('state', true);
+				}
+			}
+		}
+		function SwitchMain() {
+			$(".fotoswitchedit").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-camera"></i>',
+				onText: '<i class="fas fa-check"></i>',
+				offText: '<i class="fas fa-times"></i>',
+				onSwitchChange: function () {
+					updateAuto($(this).data("switch"));
+				}
+			});
+			$(".videoswitchedit").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-video"></i>',
+				onText: '<i class="fas fa-check"></i>',
+				offText: '<i class="fas fa-times"></i>',
+				onSwitchChange: function () {
+					updateAuto($(this).data("switch"));
+				}
+			});
+			$(".embalajeswitchedit").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-trash"></i>',
+				onText: '<i class="fas fa-check"></i>',
+				offText: '<i class="fas fa-times"></i>',
+				onSwitchChange: function () {
+					updateAuto($(this).data("switch"));
+				}
+			});
+			$(".auditoriaswitchedit").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-eye"></i>',
+				onText: '<i class="fas fa-check"></i>',
+				offText: '<i class="fas fa-times"></i>',
+				onSwitchChange: function () {
+					updateAuto($(this).data("switch"));
+				}
+			});
+		}
+		function updateAuto(name) {
+			var main = $('#main_'+name);
+			var auto = $('#auto_'+name);
+			if (!main.prop("checked")) {
+				if (auto.prop("checked")) {
+					auto.bootstrapSwitch('state', false);
+				}
+			}
+		}
+		$(document).ready(SwitchAuto());
+		$(document).ready(SwitchMain());
 	</script>
 @endsection
 @endif

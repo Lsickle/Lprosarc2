@@ -49,7 +49,7 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<th>{{ trans('adminlte_lang::message.clientmenu') }}</th>
 									@endif
-									<th>Contacto de facturación</th>
+									{{-- <th>Contacto de facturación</th> --}}
 									<th>{{ trans('adminlte_lang::message.see') }}</th>
 								</tr>
 							</thead>
@@ -65,7 +65,7 @@
 									@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 										<td>{{$Personal->CliName}}</td>
 									@endif
-									<td>{{$Personal->PersFactura==1 ? "Si" : "No"}}</td>
+									{{-- <td>{{$Personal->PersFactura==1 ? "Si" : "No"}}</td> --}}
 									<td><a method='get' href='/personal/{{$Personal->PersSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>
 								@endforeach

@@ -94,7 +94,7 @@
 						<li class="list-group-item">
 							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> <a class="pull-right">{{$cliente->CliNit}}</a>
 						</li>
-						<li class="list-group-item">
+						{{-- <li class="list-group-item">
 							<div class="col-sm-16">
 								<div class="row">
 									<div class="col-sm-6">
@@ -207,7 +207,7 @@
 									</div>
 								</div>
 							</div>
-						</li>
+						</li> --}}
 					</ul>
 				</div>
 			</div>
@@ -283,46 +283,86 @@
 							<h3 class="profile-username text-center textolargo">Requerimientos permitidos</h3>
 							<div style='overflow-y:auto; max-height:503px;'>
 								@if(isset($Requerimientos))
-									<div class="col-md-6" style="text-align: center;">
-										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
-											<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
-											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="testswitch disabled" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
-											</div>
-										</label>
-									</div>
-									<div class="col-md-6" style="text-align: center;">
-										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
-											<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
-											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="testswitch disabled" id="RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
-											</div>
-										</label>
-									</div>
-									<div class="col-md-6" style="text-align: center;">
-										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
-											<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
-											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="testswitch disabled" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
-											</div>
-										</label>
-									</div>
-									<div class="col-md-6" style="text-align: center;">
-										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
-											<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
-											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="testswitch disabled" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
-											</div>
-										</label>
-									</div>
-									<div class="col-md-12" style="text-align: center;">
-										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
-											<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
-											<div style="width: 100%; height: 34px;">
-												<input type="checkbox" class="testswitch disabled" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
-											</div>
-										</label>
-									</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+										<label for="main_RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="mainswitch" disabled {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+										<label for="auto_RequeCliBascula">Activación</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="autoswitch" disabled {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+										<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="mainswitch" disabled {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+										<label for="auto_RequeCliBascula">Activación</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="autoswitch" disabled {{$Requerimientos->auto_RequeCliCapacitacion == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+										<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="mainswitch" disabled {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+										<label for="auto_RequeCliBascula">Activación</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="autoswitch" disabled {{$Requerimientos->auto_RequeCliMasPerson == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
+										<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="mainswitch" disabled {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+										<label for="auto_RequeCliBascula">Activación</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="autoswitch" disabled {{$Requerimientos->auto_RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+										<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="mainswitch" disabled {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
+								<div class="col-md-6" style="text-align: center;">
+									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+										<label for="auto_RequeCliBascula">Activación</label>
+										<div style="width: 100%; height: 34px;">
+											<input type="checkbox" class="autoswitch" disabled {{$Requerimientos->auto_RequeCliPlatform == 1 ? 'checked' : ''}}>
+										</div>
+									</label>
+								</div>
 								@else
 									<center><a href='#' data-toggle='modal' data-target='#createReque' class="btn btn-success"><i class="fas fa-plus"></i> Agregar Requerimientos</a></center>
 								@endif
@@ -335,137 +375,220 @@
 	</div>
 </div>
 @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-{{-- Start Modal Create Requerimientos--}}
-	<div class="modal modal-default fade in create" id="createReque" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-						<i class="fas fa-plus-circle"></i>
-						<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
-					</div> 
-				</div>
-				<form action="/requeri-client" method="POST">
-					@csrf
+	@if(!isset($Requerimientos))
+	{{-- Start Modal Create Requerimientos--}}
+		<div class="modal modal-default fade in create" id="createReque" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
-								<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliBascula" name="RequeCliBascula">
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
-								<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliCapacitacion" name="RequeCliCapacitacion">
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
-								<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliMasPerson" name="RequeCliMasPerson">
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
-								<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive">
-								</div>
-							</label>
-						</div>
-						<div class="col-md-12" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
-								<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliPlatform" name="RequeCliPlatform">
-								</div>
-							</label>
-						</div>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
+							<i class="fas fa-plus-circle"></i>
+							<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
+						</div> 
 					</div>
-					<input type="text" hidden value="{{$cliente->ID_Cli}}" name="FK_RequeClient">
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
-					</div>
-				</form>
+					<form action="/requeri-client" method="POST">
+						@csrf
+						<div class="modal-header">
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+									<label for="main_RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliBascula" name="RequeCliBascula">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliBascula" name="auto_RequeCliBascula">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+									<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliCapacitacion" name="RequeCliCapacitacion">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliCapacitacion" name="auto_RequeCliCapacitacion">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+									<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliMasPerson" name="RequeCliMasPerson">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliMasPerson" name="auto_RequeCliMasPerson">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
+									<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliVehicExclusive" name="RequeCliVehicExclusive">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliVehicExclusive" name="auto_RequeCliVehicExclusive">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+									<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliPlatform" name="RequeCliPlatform">
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliPlatform" name="auto_RequeCliPlatform">
+									</div>
+								</label>
+							</div>
+						</div>
+						<input type="text" hidden value="{{$cliente->ID_Cli}}" name="FK_RequeClient">
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+						</div>
+					</form> 
+				</div>
 			</div>
 		</div>
-	</div>
-{{-- End Modal Create Requerimientos--}}
-{{-- Start Modal Edit Requerimientos--}}
-	<div class="modal modal-default fade in create" id="editReque" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-						<i class="fas fa-exclamation-triangle"></i>
-						<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
-					</div> 
-				</div>
-				@if(isset($Requerimientos))
-				<form action="/requeri-client/{{$Requerimientos->ID_RequeCli}}" method="POST">
-					@csrf
-					@method('PUT')
+	{{-- End Modal Create Requerimientos--}}
+	@else
+	{{-- Start Modal Edit Requerimientos--}}
+		<div class="modal modal-default fade in create" id="editReque" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
-								<label for="RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
-								<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
-								<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
-								</div>
-							</label>
-						</div>
-						<div class="col-md-6" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
-								<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
-								</div>
-							</label>
-						</div>
-						<div class="col-md-12" style="text-align: center;">
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
-								<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
-								<div style="width: 100%; height: 34px;">
-									<input type="checkbox" class="testswitch" id="RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
-								</div>
-							</label>
-						</div>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+							<i class="fas fa-exclamation-triangle"></i>
+							<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
+						</div> 
 					</div>
-					<input type="text" hidden value="{{$cliente->ID_Cli}}" name="FK_RequeClient">
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
-					</div>
-				</form>
-				@endif
+					@if(isset($Requerimientos))
+					<form action="/requeri-client/{{$Requerimientos->ID_RequeCli}}" method="POST">
+						@csrf
+						@method('PUT')
+						<div class="modal-header">
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserticket') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserticketdescrit') }} </p>">
+									<label for="main_RequeCliBascula">{{ trans('adminlte_lang::message.solserticket') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliBascula" name="RequeCliBascula" {{$Requerimientos->RequeCliBascula == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliBascula" name="auto_RequeCliBascula" {{$Requerimientos->auto_RequeCliBascula == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserperscapa') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solserperscapadescrit') }} </p>">
+									<label for="RequeCliCapacitacion">{{ trans('adminlte_lang::message.solserperscapa') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliCapacitacion" name="RequeCliCapacitacion" {{$Requerimientos->RequeCliCapacitacion == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliCapacitacion" name="auto_RequeCliCapacitacion" {{$Requerimientos->auto_RequeCliCapacitacion == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsermaspers') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solsermaspersdescrit') }} </p>">
+									<label for="RequeCliMasPerson">{{ trans('adminlte_lang::message.solsermaspers') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliMasPerson" name="RequeCliMasPerson" {{$Requerimientos->RequeCliMasPerson == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliMasPerson" name="auto_RequeCliMasPerson" {{$Requerimientos->auto_RequeCliMasPerson == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicexclusi') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicexclusidescrit') }} </p>">
+									<label for="RequeCliVehicExclusive">{{ trans('adminlte_lang::message.solservehicexclusi') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliVehicExclusive" name="RequeCliVehicExclusive" {{$Requerimientos->RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliVehicExclusive" name="auto_RequeCliVehicExclusive" {{$Requerimientos->auto_RequeCliVehicExclusive == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solservehicplata') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.solservehicplatadescrit') }} </p>">
+									<label for="RequeCliPlatform">{{ trans('adminlte_lang::message.solservehicplata') }}</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="mainswitch" id="main_RequeCliPlatform" name="RequeCliPlatform" {{$Requerimientos->RequeCliPlatform == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+							<div class="col-md-6" style="text-align: center;">
+								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tipo de activación</b>" data-content="<p style='width: 50%'> Seleccione automático para que el requerimiento se active automáticamente en las nuevas solicitudes de servicio o manual para que el cliente sea quien deba activarlo cuando lo requiera <br><b>Nota:</b> si coloca la activacion en automatica el cliente aun podra desactivar el requerimiento cuando este creando o editando la solicitud de servicio</p>">
+									<label for="auto_RequeCliBascula">Activación</label>
+									<div style="width: 100%; height: 34px;">
+										<input type="checkbox" class="autoswitch" id="RequeCliPlatform" name="auto_RequeCliPlatform" {{$Requerimientos->auto_RequeCliPlatform == 1 ? 'checked' : ''}}>
+									</div>
+								</label>
+							</div>
+						</div>
+						<input type="text" hidden value="{{$cliente->ID_Cli}}" name="FK_RequeClient">
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
+						</div>
+					</form>
+					@endif
+				</div>
 			</div>
 		</div>
-	</div>
-{{-- End Modal Edit Requerimientos--}}
+	{{-- End Modal Edit Requerimientos--}}
+	@endif
 @endif
 @endsection
 @section('NewScript')
@@ -496,4 +619,50 @@
 			}
 		</script>
 	@endif
+	<script type="text/javascript">
+		function SwitchAuto() {
+			$(".autoswitch").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-power-off"></i>',
+				onText: 'Automatico',
+				offText: 'Manual',
+				onColor: 'success',
+				offColor: 'danger',
+				onSwitchChange: function () {
+					updateMain(this.id);
+				}
+			});
+		}
+		function updateMain(id) {
+			var main = $('#main_'+id);
+			var auto = $('#'+id);
+			if (auto.prop("checked")) {
+				if (!main.prop("checked")) {
+					main.bootstrapSwitch('state', true);
+				}
+			}
+		}
+		function SwitchMain() {
+			$(".mainswitch").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-arrows-alt-h"></i>',
+				onText: 'Habilitado',
+				offText: 'Bloqueado',
+				onSwitchChange: function () {
+					updateAuto(this.name);
+				}
+			});
+		}
+		function updateAuto(name) {
+			var main = $('#main_'+name);
+			var auto = $('#'+name);
+			if (!main.prop("checked")) {
+				if (auto.prop("checked")) {
+					auto.bootstrapSwitch('state', false);
+				}
+			}
+		}
+		$(document).ready(SwitchAuto());
+		$(document).ready(SwitchMain());
+	</script>
 @endsection

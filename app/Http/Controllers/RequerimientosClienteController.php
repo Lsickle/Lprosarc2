@@ -68,6 +68,38 @@ class RequerimientosClienteController extends Controller
 		else{
 			$requerimiento->RequeCliPlatform = 0;
 		}
+
+		if(!is_null($request->input('auto_RequeCliBascula'))){
+			$requerimiento->auto_RequeCliBascula = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliBascula = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliCapacitacion'))){
+			$requerimiento->auto_RequeCliCapacitacion = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliCapacitacion = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliMasPerson'))){
+			$requerimiento->auto_RequeCliMasPerson = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliMasPerson = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliVehicExclusive'))){
+			$requerimiento->auto_RequeCliVehicExclusive = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliVehicExclusive = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliPlatform'))){
+			$requerimiento->auto_RequeCliPlatform = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliPlatform = 0;
+		}
+
 		$requerimiento->FK_RequeClient = $request->input('FK_RequeClient');
 		$requerimiento->save();
 
@@ -136,6 +168,38 @@ class RequerimientosClienteController extends Controller
 		else{
 			$requerimiento->RequeCliPlatform = 0;
 		}
+		
+		if(!is_null($request->input('auto_RequeCliBascula'))){
+			$requerimiento->auto_RequeCliBascula = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliBascula = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliCapacitacion'))){
+			$requerimiento->auto_RequeCliCapacitacion = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliCapacitacion = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliMasPerson'))){
+			$requerimiento->auto_RequeCliMasPerson = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliMasPerson = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliVehicExclusive'))){
+			$requerimiento->auto_RequeCliVehicExclusive = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliVehicExclusive = 0;
+		}
+		if(!is_null($request->input('auto_RequeCliPlatform'))){
+			$requerimiento->auto_RequeCliPlatform = 1;
+		}
+		else{
+			$requerimiento->auto_RequeCliPlatform = 0;
+		}
+
 		$requerimiento->FK_RequeClient = $request->input('FK_RequeClient');
 		$requerimiento->save();
 
