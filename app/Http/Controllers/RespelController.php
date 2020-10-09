@@ -139,6 +139,7 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede', 'clientes.CliName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
+            $tratamientos = Tratamiento::where('FK_TratProv', 1)->get();
             $categories = Categoryrespelpublic::all();
             return view('respels.create', compact('Sedes', 'categories', 'tratamientos'));
         }else{
