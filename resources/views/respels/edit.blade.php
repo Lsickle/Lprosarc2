@@ -503,5 +503,52 @@
 			Selects();
 		});
 	</script>
+	<script type="text/javascript">
+		function SwitchAuto() {
+			$(".autoswitch").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-power-off"></i>',
+				onText: 'A',
+				offText: 'M',
+				onColor: 'success',
+				offColor: 'danger',
+				onSwitchChange: function () {
+					updateMain(this.id);
+				}
+			});
+		}
+		function updateMain(id) {
+			main = $('#main_'+id+'');
+			auto = $('#'+id);
+			console.log(main.prop("checked"));
+			if (auto.prop("checked")) {
+				if (!main.prop("checked")) {
+					main.bootstrapSwitch('state', true);
+				}
+			}
+		}
+		function SwitchMain() {
+			$(".fotoswitchedit").bootstrapSwitch({
+				animate: true,
+				labelText: '<i class="fas fa-camera"></i>',
+				onText: '<i class="fas fa-check"></i>',
+				offText: '<i class="fas fa-times"></i>',
+				onSwitchChange: function () {
+					updateAuto(this.name);
+				}
+			});
+		}
+		function updateAuto(name) {
+			var main = $('#main_'+name);
+			var auto = $('#'+name);
+			if (!main.prop("checked")) {
+				if (auto.prop("checked")) {
+					auto.bootstrapSwitch('state', false);
+				}
+			}
+		}
+		$(document).ready(SwitchAuto());
+		$(document).ready(SwitchMain());
+	</script>
 @endsection
 @endif
