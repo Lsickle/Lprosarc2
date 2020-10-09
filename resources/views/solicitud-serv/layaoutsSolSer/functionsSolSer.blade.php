@@ -259,7 +259,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 		},
 		success: function(res){
 			if(res != ''){
-				console.log(res);
+				// console.log(res);
 				if(res.ReqFotoDescargue === 1){
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
 					if(res.auto_ReqFotoDescargue === 1){
