@@ -261,40 +261,60 @@ function RequeRespel(id_div, contador, Id_Respel){
 			if(res != ''){
 				// console.log(res);
 				if(res.ReqFotoDescargue === 1){
-					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqFotoDescargue === 1){
+						$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					}
 				}
 				else{
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
 				if(res.ReqFotoDestruccion === 1){
-					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqFotoDestruccion === 1){
+						$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					}
 				}
 				else{
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
 				if(res.ReqVideoDescargue === 1){
-					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqVideoDescargue === 1){
+						$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);	
+					}
 				}
 				else{
-					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);	
 					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
 				if(res.ReqVideoDestruccion === 1){
-					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqVideoDestruccion === 1){
+						$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);	
+					}
 				}
 				else{
-					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
+					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);	
 					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
 				}
 				if(res.ReqDevolucion === 1){
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqDevolucion === 1){
+						$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);	
+					}
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
@@ -307,8 +327,12 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
 				}
 				if(res.ReqAuditoria === 1){
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);
 					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',false);
+					if(res.auto_ReqAuditoria === 1){
+						$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',true);
+					}else{
+						$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);	
+					}
 					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-eye"></i>');
 					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
 					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');

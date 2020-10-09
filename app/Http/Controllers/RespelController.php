@@ -139,6 +139,7 @@ class RespelController extends Controller
                 ->select('sedes.ID_Sede', 'clientes.CliName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
+            $tratamientos = Tratamiento::where('FK_TratProv', 1)->get();
             $categories = Categoryrespelpublic::all();
             return view('respels.create', compact('Sedes', 'categories', 'tratamientos'));
         }else{
@@ -656,7 +657,7 @@ class RespelController extends Controller
      */
     public function updateStatusRespel(Request $request, $id)
     {      
-        // return $request->Opcion[0]['TarifaFrecuencia'];
+        // return $request;
         $respel = Respel::where('RespelSlug', $id)->first();
         $opciones = $request->Opcion;
 
@@ -698,6 +699,26 @@ class RespelController extends Controller
                                 if (isset($opciones[$key]['ReqAuditoria'])) {
                                     $requerimientoparaActualizar->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
                                 }
+                                // requerimietnos automaticos?
+                                if (isset($opciones[$key]['auto_ReqFotoDescargue'])) {
+                                    $requerimientoparaActualizar->auto_ReqFotoDescargue=$opciones[$key]['auto_ReqFotoDescargue'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqFotoDestruccion'])) {
+                                    $requerimientoparaActualizar->auto_ReqFotoDestruccion=$opciones[$key]['auto_ReqFotoDestruccion'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqVideoDescargue'])) {
+                                    $requerimientoparaActualizar->auto_ReqVideoDescargue=$opciones[$key]['auto_ReqVideoDescargue'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqVideoDestruccion'])) {
+                                     $requerimientoparaActualizar->auto_ReqVideoDestruccion=$opciones[$key]['auto_ReqVideoDestruccion'];   
+                                }
+                                if (isset($opciones[$key]['auto_ReqDevolucion'])) {
+                                    $requerimientoparaActualizar->auto_ReqDevolucion=$opciones[$key]['auto_ReqDevolucion'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqAuditoria'])) {
+                                    $requerimientoparaActualizar->auto_ReqAuditoria=$opciones[$key]['auto_ReqAuditoria'];
+                                }
+
                                 /*se adjunta los elementos relacionados al requerimiento*/
                                 if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
                                     $requerimientoparaActualizar->ofertado=1;
@@ -776,6 +797,26 @@ class RespelController extends Controller
                                 if (isset($opciones[$key]['ReqAuditoria'])) {
                                     $requerimiento->ReqAuditoria=$opciones[$key]['ReqAuditoria'];
                                 }
+
+                                if (isset($opciones[$key]['auto_ReqFotoDescargue'])) {
+                                    $requerimiento->auto_ReqFotoDescargue=$opciones[$key]['auto_ReqFotoDescargue'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqFotoDestruccion'])) {
+                                    $requerimiento->auto_ReqFotoDestruccion=$opciones[$key]['auto_ReqFotoDestruccion'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqVideoDescargue'])) {
+                                    $requerimiento->auto_ReqVideoDescargue=$opciones[$key]['auto_ReqVideoDescargue'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqVideoDestruccion'])) {
+                                     $requerimiento->auto_ReqVideoDestruccion=$opciones[$key]['auto_ReqVideoDestruccion'];   
+                                }
+                                if (isset($opciones[$key]['auto_ReqDevolucion'])) {
+                                    $requerimiento->auto_ReqDevolucion=$opciones[$key]['auto_ReqDevolucion'];
+                                }
+                                if (isset($opciones[$key]['auto_ReqAuditoria'])) {
+                                    $requerimiento->auto_ReqAuditoria=$opciones[$key]['auto_ReqAuditoria'];
+                                }
+
                                 /*se adjunta los elementos relacionados al requerimiento*/
                                 if (isset($request->TratOfertado) && $key == $request->TratOfertado) {
                                     $requerimiento->ofertado=1;

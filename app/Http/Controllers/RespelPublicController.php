@@ -62,17 +62,18 @@ class RespelPublicController extends Controller
                 ->select('sedes.ID_Sede')
                 ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
                 ->get();
-            return view('respels.create', compact('Sede'));
+                $tratamientos = Tratamiento::where('FK_TratProv', 1)->get();
+            return view('respels.create', compact('Sede', 'tratamientos'));
         }elseif(in_array(Auth::user()->UsRol, Permisos::RESPELPUBLIC) || in_array(Auth::user()->UsRol2, Permisos::RESPELPUBLIC)){
 
             $categories = Categoryrespelpublic::all();
-
+            $tratamientos = Tratamiento::where('FK_TratProv', 1)->get();
             $Sedes = DB::table('clientes')
                 ->join('sedes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
                 ->select('sedes.ID_Sede', 'clientes.CliName')
                 ->where('clientes.ID_Cli', '<>', 1) 
                 ->get();
-            return view('publicrespel.create', compact('Sedes', 'categories'));
+            return view('publicrespel.create', compact('Sedes', 'categories', 'tratamientos'));
         }else{
             abort(403);
         }
@@ -252,7 +253,9 @@ class RespelPublicController extends Controller
 
             $Subcategory = Subcategoryrespelpublic::where('ID_SubCategoryRP', $Respels->FK_SubCategoryRP)->first();
             // return $Subcategory;
-            return view('publicrespel.edit', compact('Respels', 'categories', 'Subcategory'));
+            $tratamientos = Tratamiento::where('FK_TratProv', 1)->get();
+
+            return view('publicrespel.edit', compact('Respels', 'categories', 'Subcategory', 'tratamientos'));
         }else{
             abort(403);
         }
