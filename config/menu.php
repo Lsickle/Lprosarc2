@@ -53,6 +53,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 						->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE),(Link::toUrl('/personal', '<i class="fas fa-id-card"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>')))
 						/*PESTAÑA DE GENERADORES*/
 						->addIf(in_array(Auth::user()->UsRol, Permisos::LISTAGENERADORES) || in_array(Auth::user()->UsRol2, Permisos::LISTAGENERADORES),(Link::toUrl('/generadores', '<i class="fa fa-industry"></i> <span>'. trans('adminlte_lang::message.MenuGenerClien').'</span>')))
+						->addIf(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR), (Link::toUrl('/UsersClientes', '<i class="fas fa-user-tag"></i> <span>'. /*trans('adminlte_lang::message.MenuContactos')*/'Usuarios Externos'.'</span>')))
 						->addClass('treeview-menu')
 					)
 				)
