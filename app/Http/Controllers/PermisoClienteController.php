@@ -44,20 +44,7 @@ class PermisoClienteController extends Controller
 			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
 				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
 			}
-
-			/*se continua con el proceso si es el admisnitrador*/// usuarios sin personal
-            $UsersSinPersonal = DB::table('users')
-                ->where('users.UsRol', 'Cliente')
-                ->where('FK_UserPers', null)
-                ->where(function ($query){
-                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                    }else{
-                        $query->where('DeleteUser', 0);
-                    }
-                })
-                ->select('users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
-                ->get();
-
+            
             // personal de mi sede
             $Personal = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -80,7 +67,7 @@ class PermisoClienteController extends Controller
                 ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
                 ->get();
            
-            return view('usuariosexternos.index', compact('Users', 'UsersSinPersonal'));
+            return view('usuariosexternos.index', compact('Users'));
         } else {
             abort(403,'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
