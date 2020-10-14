@@ -447,7 +447,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														 Pesos
 													</td>
 												@endif
-												<td style="text-align: center;">{{$Residuo->SolResKgEnviado}} Kilogramos</td>
+												<td style="text-align: center;">{{number_format($Residuo->SolResKgEnviado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} Kilogramos</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
 													<td>{{$GenerResiduo->GSedeAddress}}</td>
 												@else
@@ -455,9 +455,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 															@if(($SolicitudServicio->SolSerStatus === 'Programado'||$SolicitudServicio->SolSerStatus === 'Notificado') && (count($Programaciones)>$ProgramacionesActivas))
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : $Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -469,7 +469,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 
 														@else
-															{{' '.$Residuo->SolResKgRecibido}}
+															{{' '.number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
 														@endif
 														 {{$TypeUnidad}}
 													</td>
@@ -477,9 +477,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 															@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{$TypeUnidad}}`, null, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -489,9 +489,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if(in_array(Auth::user()->UsRol, Permisos::UpdateCantConciliada) || in_array(Auth::user()->UsRol2, Permisos::UpdateCantConciliada))
 															@if($SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Conciliado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
-																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgRecibido}}`, `{{$Residuo->SolResKgConciliado}}`, `{{$TypeUnidad}}`, null, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
+																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{$TypeUnidad}}`, null, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -501,18 +501,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 															{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
 														@else
-															{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}
+															{{$Residuo->SolResKgConciliado === null ? 'N/A' : number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.') }}
 														@endif
 														 {{$TypeUnidad}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
 															@if($SolicitudServicio->SolSerStatus === 'Conciliado' || ($SolicitudServicio->SolSerStatus === 'Certificacion' && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado))
-																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">  --}}
+																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">  --}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)">
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">
 																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgTratado}}`, `{{$Residuo->SolResKgConciliado}}`)"> 
+																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)"> 
 																@endif
 															@else
 																<a style="color: black">
@@ -521,7 +521,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
 															@else
-																{{$Residuo->SolResKgTratado === null ? 'N/A' : $Residuo->SolResKgTratado }}
+																{{$Residuo->SolResKgTratado === null ? 'N/A' : number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.') }}
 															@endif
 															 {{$TypeUnidad}}
 														</td>
@@ -631,41 +631,43 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="modal-body">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<span style="font-size: 1.5em;"><p>Totales por Tratamiento</p></span>
-												<div class="box box-info col-md-16" style="text-align: center;">
-													<table id="totalesTable">
-														<thead>
-															<tr>
-																<th>Tratamiento</th>
-																<th>estimado</th>
-																<th>recibido</th>
-																<th>conciliado</th>
-																<th>tratado</th>
-																<th>pendiente</th>
-															</tr>
-														</thead>
-														<tbody>
-															@foreach ($cantidadesXtratamiento as $key => $value)
-															<tr>
-																<th>{{$key}}</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$value['estimado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$value['recibido']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$value['tratado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$value['conciliado'] - $value['tratado']}} kg</th>
-															</tr>
-															@endforeach
-														</tbody>
-														<tfoot>
-															<tr>
-																<th>{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$total['estimado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$total['recibido']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$total['tratado']}} kg</th>
-																<th style="text-align: right; white-space: nowrap;"> {{$total['conciliado'] - $total['tratado']}} kg</th>
-															</tr>
-														</tfoot>
-													</table>
+												<div class="row">
+													<div class="box box-info col-md-16" style="text-align: right;">
+														<table id="totalesTable">
+															<thead>
+																<tr>
+																	<th>Tratamiento</th>
+																	<th>estimado</th>
+																	<th>recibido</th>
+																	<th>conciliado</th>
+																	<th>tratado</th>
+																	<th>pendiente</th>
+																</tr>
+															</thead>
+															<tbody>
+																@foreach ($cantidadesXtratamiento as $key => $value)
+																<tr>
+																	<th>{{$key}}</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($value['estimado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($value['recibido'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($value['conciliado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($value['tratado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($value['conciliado'] - $value['tratado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																</tr>
+																@endforeach
+															</tbody>
+															<tfoot>
+																<tr>
+																	<th>{{trans('adminlte_lang::message.solsershowcantitotal')}}</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($total['estimado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($total['recibido'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($total['conciliado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($total['tratado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																	<th style="text-align: right; white-space: nowrap; padding: 10px;">{{number_format($total['conciliado'] - $total['tratado'], $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} kg</th>
+																</tr>
+															</tfoot>
+														</table>
+													</div>
 												</div>
 											</div>
 											<div class="modal-footer">
