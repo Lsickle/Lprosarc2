@@ -87,6 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
 	Route::resource('/UsuariosCliente', 'PermisoClienteController');
+	Route::get('/UsersClientes', 'PermisoClienteController@usersclientes')->name('users-clientes');
 	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit'); 
 	Route::put('/UsuarioCliente/{id}','PermisoClienteController@updatepassword');
 	Route::resource('/audits', 'auditController');

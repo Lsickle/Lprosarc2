@@ -38,16 +38,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            @foreach($UsersSinPersonal as $UserSinPersonal)
-                                <tr style="{{$UserSinPersonal->DeleteUser == 1 ? "color:red;"  : ''}}">
-                                    <td>{{$UserSinPersonal->name}}</td>
-                                    <td></td>
-                                    <td>{{$UserSinPersonal->email}}</td>
-                                    <td>
-                                        <a method='get' href='/UsuariosCliente/{{$UserSinPersonal->UsSlug}}' class='btn btn-info btn-block'><i class="fas fa-search"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
                             </tbody>
                         </table>
                     </div>
