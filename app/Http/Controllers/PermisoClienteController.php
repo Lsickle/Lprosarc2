@@ -391,29 +391,91 @@ class PermisoClienteController extends Controller
      */
     public function destroy($id)
     {
-        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+        switch (Auth::user()->UsRol) {
+            case 'Cliente':
+                $User = User::where('UsSlug', $id)->first();
+                if (!$User) {
+                    abort(404, 'el usuario no se existe en la base de datos');
+                }
+                if($User->DeleteUser == 0){
+                    $User->DeleteUser = 1;
+                    $User->save();
 
-            $User = User::where('UsSlug', $id)->first();
-            if (!$User) {
-                abort(404);
-            }
-            if($User->DeleteUser == 0){
-                $User->DeleteUser = 1;
-                $User->save();
+                    AuditRequest::auditDelete($this->table, $User->id, 1);
 
-                AuditRequest::auditDelete($this->table, $User->id, 1);
+                    return redirect()->route('UsuariosCliente.index');
+                }else{
+                    $User->DeleteUser = 0;
+                    $User->save();
 
-                return redirect()->route('UsuariosCliente.index');
-            }else{
-                $User->DeleteUser = 0;
-                $User->save();
+                    AuditRequest::auditRestored($this->table, $User->id, 0);
 
-                AuditRequest::auditRestored($this->table, $User->id, 0);
+                    return redirect()->route('UsuariosCliente.show', compact('id'));
+                }
+                break;
+            case 'Programador':
+                $User = User::where('UsSlug', $id)->first();
+                if (!$User) {
+                    abort(404, 'el usuario no se existe en la base de datos');
+                }
+                if ($User->FK_UserPers == null) {
+                    $User->delete();
 
-                return redirect()->route('UsuariosCliente.show', compact('id'));
-            }
-        }else{
-            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
+                    $log = new audit();
+                    $log->AuditTabla = "usuarios";
+                    $log->AuditType = "Eliminado Definitivo";
+                    $log->AuditRegistro = $User->id;
+                    $log->AuditUser = Auth::user()->email;
+                    $log->Auditlog = $User;
+                    $log->save();
+        
+                    return redirect()->route('users-clientes');
+
+                }else{
+                    if($User->DeleteUser == 0){
+                        $User->DeleteUser = 1;
+                        $User->save();
+    
+                        AuditRequest::auditDelete($this->table, $User->id, 1);
+    
+                        return redirect()->route('users-clientes');
+                    }else{
+                        $User->DeleteUser = 0;
+                        $User->save();
+    
+                        AuditRequest::auditRestored($this->table, $User->id, 0);
+    
+                        return redirect()->route('users-clientes');
+                    }
+                }
+            default:
+                abort(403, 'no tiene acceso a la gestión de usuarios externos');
+                break;
+        }
+        
+    }
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function usersclientes()
+    {
+        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            $UsersSinPersonal = DB::table('users')
+                ->leftjoin('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->leftjoin('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')   
+                ->leftjoin('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->leftjoin('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->leftjoin('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->where('users.UsRol', 'Cliente')
+                ->select('personals.*', 'users.*', 'cargos.*', 'areas.*', 'sedes.*', 'clientes.*')
+                // ->where('FK_UserPers', null)
+                ->get();
+            // return $UsersSinPersonal;
+            return view('usersinpersonal.index', compact('UsersSinPersonal'));
+        } else {
+            abort(403,'No tiene acceso a lista general de usuarios');
         }
     }
 }
