@@ -61,7 +61,7 @@ class sgenercontroller extends Controller
                 ->join('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
                 ->where('clientes.ID_Cli', '=', $ID_Cli)
                 ->where('respels.RespelDelete', '=', 0)
-                ->whereIn('respels.RespelStatus', ['Aprobado', 'Incompleto'])
+                ->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada'])
                 ->get();
 
             if (old('FK_GSedeMun') !== null){
