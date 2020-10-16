@@ -152,10 +152,7 @@ class AjaxController extends Controller
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
 				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
-				->where(function ($query) {
-					$query->where('respels.RespelStatus', '=', 'aprobado')
-						->orWhere('respels.RespelStatus', '=', 'revisado');
-				})
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
 				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $slug)
 				->where('residuos_geners.DeleteSGenerRes', '=', 0)

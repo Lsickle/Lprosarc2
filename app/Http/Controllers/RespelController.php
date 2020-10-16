@@ -343,10 +343,10 @@ class RespelController extends Controller
         $ResiduoConDependencia1 = ResiduosGener::where('FK_Respel', $Respels->ID_Respel)->first();
         $ResiduoConDependencia2 = Requerimiento::where('FK_ReqRespel', $Respels->ID_Respel)->first();
 
-        if ($ResiduoConDependencia1||$ResiduoConDependencia2) {
-            $deleteButton = 'No borrable';
-        }else{
+        if ($Respels->RespelStatus=='Rechazado'||$Respels->RespelStatus=='Incompleto'||$Respels->RespelStatus=='Pendiente') {
             $deleteButton = 'borrable';
+        }else{
+            $deleteButton = 'No borrable';
         }
 
         if (in_array(Auth::user()->UsRol, Permisos::CLIENTE))
