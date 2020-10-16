@@ -44,20 +44,7 @@ class PermisoClienteController extends Controller
 			if ($IdPersonaAdmin[0]->ID_Pers != Auth::user()->FK_UserPers) {
 				abort(403, 'solo el administrador puede usar el control de usuarios en el sistema');
 			}
-
-			/*se continua con el proceso si es el admisnitrador*/// usuarios sin personal
-            $UsersSinPersonal = DB::table('users')
-                ->where('users.UsRol', 'Cliente')
-                ->where('FK_UserPers', null)
-                ->where(function ($query){
-                    if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-                    }else{
-                        $query->where('DeleteUser', 0);
-                    }
-                })
-                ->select('users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
-                ->get();
-
+            
             // personal de mi sede
             $Personal = DB::table('personals')
                 ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -80,7 +67,7 @@ class PermisoClienteController extends Controller
                 ->select('personals.PersFirstName', 'personals.PersLastName', 'users.name', 'users.email', 'users.UsSlug', 'users.UsRolDesc', 'users.UsRolDesc2', 'users.id', 'users.DeleteUser')
                 ->get();
            
-            return view('usuariosexternos.index', compact('Users', 'UsersSinPersonal'));
+            return view('usuariosexternos.index', compact('Users'));
         } else {
             abort(403,'solo los clientes tienen acceso a la gestion de usuarios externos');
         }
@@ -404,29 +391,91 @@ class PermisoClienteController extends Controller
      */
     public function destroy($id)
     {
-        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+        switch (Auth::user()->UsRol) {
+            case 'Cliente':
+                $User = User::where('UsSlug', $id)->first();
+                if (!$User) {
+                    abort(404, 'el usuario no se existe en la base de datos');
+                }
+                if($User->DeleteUser == 0){
+                    $User->DeleteUser = 1;
+                    $User->save();
 
-            $User = User::where('UsSlug', $id)->first();
-            if (!$User) {
-                abort(404);
-            }
-            if($User->DeleteUser == 0){
-                $User->DeleteUser = 1;
-                $User->save();
+                    AuditRequest::auditDelete($this->table, $User->id, 1);
 
-                AuditRequest::auditDelete($this->table, $User->id, 1);
+                    return redirect()->route('UsuariosCliente.index');
+                }else{
+                    $User->DeleteUser = 0;
+                    $User->save();
 
-                return redirect()->route('UsuariosCliente.index');
-            }else{
-                $User->DeleteUser = 0;
-                $User->save();
+                    AuditRequest::auditRestored($this->table, $User->id, 0);
 
-                AuditRequest::auditRestored($this->table, $User->id, 0);
+                    return redirect()->route('UsuariosCliente.show', compact('id'));
+                }
+                break;
+            case 'Programador':
+                $User = User::where('UsSlug', $id)->first();
+                if (!$User) {
+                    abort(404, 'el usuario no se existe en la base de datos');
+                }
+                if ($User->FK_UserPers == null) {
+                    $User->delete();
 
-                return redirect()->route('UsuariosCliente.show', compact('id'));
-            }
-        }else{
-            abort(403, 'solo los clientes tienen acceso a la gestion de usuarios externos');
+                    $log = new audit();
+                    $log->AuditTabla = "usuarios";
+                    $log->AuditType = "Eliminado Definitivo";
+                    $log->AuditRegistro = $User->id;
+                    $log->AuditUser = Auth::user()->email;
+                    $log->Auditlog = $User;
+                    $log->save();
+        
+                    return redirect()->route('users-clientes');
+
+                }else{
+                    if($User->DeleteUser == 0){
+                        $User->DeleteUser = 1;
+                        $User->save();
+    
+                        AuditRequest::auditDelete($this->table, $User->id, 1);
+    
+                        return redirect()->route('users-clientes');
+                    }else{
+                        $User->DeleteUser = 0;
+                        $User->save();
+    
+                        AuditRequest::auditRestored($this->table, $User->id, 0);
+    
+                        return redirect()->route('users-clientes');
+                    }
+                }
+            default:
+                abort(403, 'no tiene acceso a la gestión de usuarios externos');
+                break;
+        }
+        
+    }
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function usersclientes()
+    {
+        if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) {
+            $UsersSinPersonal = DB::table('users')
+                ->leftjoin('personals', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->leftjoin('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')   
+                ->leftjoin('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+                ->leftjoin('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+                ->leftjoin('clientes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+                ->where('users.UsRol', 'Cliente')
+                ->select('personals.*', 'users.*', 'cargos.*', 'areas.*', 'sedes.*', 'clientes.*')
+                // ->where('FK_UserPers', null)
+                ->get();
+            // return $UsersSinPersonal;
+            return view('usersinpersonal.index', compact('UsersSinPersonal'));
+        } else {
+            abort(403,'No tiene acceso a lista general de usuarios');
         }
     }
 }
