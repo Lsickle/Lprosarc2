@@ -6,7 +6,7 @@
 <script type="text/javascript" src="{{ url (mix('/js/dependencias.js')) }}"></script>
 {{-- Dependencias pdfmake --}}
 @if(Auth::user()->UsRol == 'Programador')
-<script type="text/javascript" src="{{ url (mix('/js/dependencias2.js')) }}"></script>
+{{-- <script type="text/javascript" src="{{ url (mix('/js/dependencias2.js')) }}"></script> --}}
 @endif
 <!-- DataTables -->
 <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
@@ -17,7 +17,10 @@
 	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
 @endif
 {{-- Chart --}}
-<script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
+@if(Route::currentRouteName()=='home')
+	{{-- fullcalendar --}}
+	<script type="text/javascript" src="{{ url (mix('/js/chart.js')) }}"></script>
+@endif
 
 {{-- Moment --}}
 {{-- <script type="text/javascript" src="{{ url (mix('js/moment.js')) }}"></script> --}}
