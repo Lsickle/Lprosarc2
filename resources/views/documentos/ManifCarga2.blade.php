@@ -516,7 +516,7 @@ style='width:100.0%;border-collapse:collapse;border:none'>
   padding:0cm 1.4pt 0cm 1.4pt;height:22.8pt'>
   <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
   line-height:normal'><span style='font-size:7.0pt;font-family:"Arial",sans-serif'>
-  {{$Residuo->SolResKgEnviado}} Kilogramos
+  {{number_format($Residuo->SolResKgEnviado, $decimals = 2, $dec_point = ",", $thousands_sep = "." )}} Kilogramos
   </span></p>
   </td>
   <td width="7%" style='width:7.88%;border-top:none;border-left:none;
