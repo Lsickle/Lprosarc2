@@ -1013,6 +1013,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="form-group col-md-12">	
 													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
 											</div>
+											<div class="col-md-12 form-group has-feedback">
+												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
+												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
+												</select>
+											</div>
 												@break
 											@case('Conciliado')
 											@case('Certificacion')
@@ -1026,10 +1031,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<div id="conciliadokg"></div>
 													</div>
 												</div>
-
 											</div>
 											<div class="form-group col-md-12">	
 												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadTratada">Cantidad Tratada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadTratada" name="SolResCantiUnidadTratada" maxlength="5" max="'+cantidadmax+'" value="'+cantidad+'" required>' : '')+`
+											</div>
+											<div class="col-md-12 form-group has-feedback">
+												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
+												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
+												</select>
 											</div>
 												@break
 										@endswitch
@@ -1175,6 +1184,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										</div>
 										<div class="form-group col-md-12">	
 												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
+										</div>
+										<div class="col-md-12 form-group has-feedback">
+											<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
+											<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
+											</select>
 										</div>
 											@break
 									@endswitch

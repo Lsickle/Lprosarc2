@@ -147,6 +147,7 @@ class SolicitudResiduoController extends Controller
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
+				$SolRes->SolResRM = $request->input('SolResRM');
 				break;
 			case 'Conciliado':
 			case 'Certificacion':
@@ -160,7 +161,7 @@ class SolicitudResiduoController extends Controller
 				}else{
 					$SolRes->SolResKgTratado = $request->input('ValorConciliado');
 				}
-
+				$SolRes->SolResRM = $request->input('SolResRM');
 				break;
 			default:
 				abort(500);
@@ -417,7 +418,7 @@ class SolicitudResiduoController extends Controller
 				}else{
 					$SolRes->SolResKgConciliado = $request->input('SolResKg');
 				}
-				
+				$SolRes->SolResRM = $request->input('SolResRM');
 				break;
 			default:
 				abort(500);
