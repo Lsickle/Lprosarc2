@@ -1330,8 +1330,7 @@ class SolicitudServicioController extends Controller
 			    ->value('clientes.ID_Cli');
 
 			    $query->where('FK_CertCliente', $UserSedeID);
-			    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
-			    $query->where('CertAuthHseq', '!=', 0);
+			    $query->where('CertAuthJo', '!=', 0);
 			    $query->where('CertAuthJl', '!=', 0);
 			    $query->where('CertAuthDp', '!=', 0);
 			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
@@ -1349,13 +1348,6 @@ class SolicitudServicioController extends Controller
 				abort(404);
 			}
 
-			/* validacion para encontrar la fecha de recepción en planta del servicio */
-			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
-			if($fechaRecepcion){
-				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
-			}else{
-				$SolicitudServicio->recepcion = null;
-			}
 
 			$SolicitudServicio->cliente = Cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
@@ -1364,7 +1356,13 @@ class SolicitudServicioController extends Controller
 			->get();
 
 		}
-		
+		/* validacion para encontrar la fecha de recepción en planta del servicio */
+		$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
+		if($fechaRecepcion){
+			$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
+		}else{
+			$SolicitudServicio->recepcion = null;
+		}
 
 		// return $certificados;
 		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados'));
