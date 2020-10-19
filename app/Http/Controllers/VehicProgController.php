@@ -1038,15 +1038,8 @@ class VehicProgController extends Controller
 
 		$SolicitudServicio->SolSerStatus='Notificado';
 		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
-        $SolicitudServicio->save();
-		// return $programaciones;
+		$SolicitudServicio->save();
 		
-		// foreach ($programaciones as $vehiculo) {
-		// 	// $vehiculo = ProgramacionVehiculo::where('ID_ProgVeh', $vehiculo->ID_ProgVeh)->first();
-		// 	$vehiculo->ProgVehStatus = "Autorizado";
-		// 	$vehiculo->save();
-		// }
-
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="Notificado";

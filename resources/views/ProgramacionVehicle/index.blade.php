@@ -119,10 +119,10 @@
 
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 									@php
-										$Status = ['Aprobado', 'Programado'];
+										$Status = ['Aprobado', 'Programado', 'Notificado'];
 									@endphp
 									<td>
-										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" {{in_array($programacion->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-{{in_array($programacion->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
+										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" style="text-align: center;" class="btn btn-{{in_array($programacion->SolSerStatus, ['Aprobado', 'Programado']) ? 'success' : 'default'}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
 									</td>
 									@endif
 								</tr>
