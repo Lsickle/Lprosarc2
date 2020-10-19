@@ -47,9 +47,7 @@ class CertificadoController extends Controller
                     ->where('SolServCertStatus', 2)
                     ->get('ID_SolSer');
 
-                    // return $UserSedeID;
                     $query->where('FK_CertCliente', $UserSedeID);
-                    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
                     $query->where('CertAuthJo', '!=', 0);
                     $query->where('CertAuthJl', '!=', 0);
                     $query->where('CertAuthDp', '!=', 0);
@@ -81,6 +79,7 @@ class CertificadoController extends Controller
             $certificado->cliente = $certificado->SolicitudServicio->cliente()->first('CliName')->CliName;
             return $certificado ;
         });
+        // return $certificados;
         return view('certificados.index', compact('certificados')); 
     }
 
@@ -187,11 +186,6 @@ class CertificadoController extends Controller
             
             $ultimoManif = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
 			$proximoManif = ($ultimoManif == NULL) ? 1 : ($ultimoManif->CertManifNumero+1);
-            // foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $value) {
-            //     $arrayDeRms = [];
-
-            //     return $value;
-            // }
             $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
                 $rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
                 $item->SolResRM2 = $rm->SolResRM;
