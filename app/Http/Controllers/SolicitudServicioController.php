@@ -679,11 +679,6 @@ class SolicitudServicioController extends Controller
 			$tratamientos = 'NoAutorizado';
 		}
 
-		// foreach ($Residuos->SolResRM as $key => $value) {
-		// 	$Residuos->SolResRM[$key] = explode($value);
-		// }
-		// return $Programaciones->count();
-		// return $cantidadesXtratamiento;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos'));
 	}
 
