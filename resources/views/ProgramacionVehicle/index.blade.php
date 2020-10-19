@@ -159,7 +159,7 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<div text-align: center; margin: auto;">
 									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
-									<form action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+									<form action="/vehicle-programacion/`+slug+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
 										@csrf
 										@method('PUT')
 										<div class="form-group col-md-12">
