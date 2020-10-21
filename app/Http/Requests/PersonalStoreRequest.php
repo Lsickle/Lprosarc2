@@ -34,19 +34,6 @@ class PersonalStoreRequest extends FormRequest
             'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo|min:4|nullable',
 
             'PersDocType'   => 'nullable|in:CC,CE,NIT,RUT',
-            // 'PersDocNumber' => ['nullable','max:25',Rule::unique('personals')->where(function($query) use ($request){
-            //     $Personal = DB::table('personals')
-            //         ->select('PersDocNumber', 'PersDelete')
-            //         ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
-            //         ->first();
-            //     if(isset($Personal)){
-            //         $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
-            //         $query->where('PersDelete', '=', 0);
-            //     }
-            //     else{
-            //         $query->where('PersDocNumber', '=', null);
-            //     }
-            // })],
             'PersDocNumber' => 'nullable|max:25|unique:personals,PersDocNumber, ,PersSlug,PersDelete,0',
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
