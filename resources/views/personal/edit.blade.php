@@ -184,6 +184,7 @@
 														<label for="PersAddress" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodir') }} <b>(Opcional)</b>"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.address') }}</label>
 														<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{$Persona->PersAddress}}">
 													</div>
+													<input name="PersSlug" hidden value="{{$Persona->PersSlug}}">
 												</div>
 												<div class="box-footer">
 													<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.update') }}</button>

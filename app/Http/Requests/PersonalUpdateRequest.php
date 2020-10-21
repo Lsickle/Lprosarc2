@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Personal;
+
 
 class PersonalUpdateRequest extends FormRequest
 {
@@ -33,18 +35,7 @@ class PersonalUpdateRequest extends FormRequest
             'NewArea'       => 'required_if:CargArea,NewArea|min:4|nullable',
             'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo|min:4|nullable',
             'PersDocType'   => 'nullable|in:CC,CE,NIT,RUT',
-            'PersDocNumber' => ['nullable','max:25',Rule::unique('personals')->where(function($query) use ($request){
-                $Personal = DB::table('personals')
-                    ->select('PersDocNumber', 'PersDelete')
-                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
-                    ->first();
-                if(isset($Personal)){
-                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
-                    $query->where('PersDelete', '=', 0);
-                }
-                else
-                    $query->where('PersDocNumber', '=', null);
-            })],
+            'PersDocNumber' => 'nullable|max:25|unique:personals,PersDocNumber,'.$this->PersSlug.',PersSlug,PersDelete,0',
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',
@@ -80,7 +71,7 @@ class PersonalUpdateRequest extends FormRequest
             'NewArea.required_if'         => 'El campo :attribute es inválido.',
             'NewCargo.required_if'        => 'El campo :attribute es inválido.',
             'FK_PersCargo.required_unless'=> 'El campo :attribute es inválido.',
-            'PersDocNumber.unique'        => 'El valor del campo :attribute ya esta registrado con otra persona.',
+            'PersDocNumber.unique'        => 'El valor del campo :attribute ya se encuentra registrado con otra persona.',
         ];
     }
 }
