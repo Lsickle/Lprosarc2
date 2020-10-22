@@ -344,7 +344,9 @@ class CertificadoController extends Controller
         $log->save();
 
         // return view('certificados.edit', compact('certificado')); 
-        return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
+        // return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
+        return redirect()->route('certificados.index');
+
     }
 
     /**
