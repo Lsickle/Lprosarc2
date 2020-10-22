@@ -106,6 +106,7 @@ class EmailController extends Controller
                 ->first();
             
             $destinatarios = ['asistentelogistica@prosarc.com.co',
+                            'recepcionpda@prosarc.com.co',
                             $email->PersEmail];
 
             if ($SolSer->SolServMailCopia == "null") {
