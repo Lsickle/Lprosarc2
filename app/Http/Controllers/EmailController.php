@@ -78,7 +78,6 @@ class EmailController extends Controller
                                 'logistica@prosarc.com.co',
                                 'asistentelogistica@prosarc.com.co',
                                 'auxiliarlogistico@prosarc.com.co',
-                                'gerenteplanta@prosarc.com.co',
                                 'subgerencia@prosarc.com.co',
                                 'recepcionpda@prosarc.com.co',
                                 $comercial->PersEmail
