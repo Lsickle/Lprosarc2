@@ -535,7 +535,7 @@ function copiarAlPortapapeles(id_elemento) {
 <script type="text/javascript">
 toastr.options = {
 	"closeButton": true,
-	"debug": true,
+	"debug": false,
 	"newestOnTop": false,
 	"progressBar": true,
 	"positionClass": "toast-top-right",
