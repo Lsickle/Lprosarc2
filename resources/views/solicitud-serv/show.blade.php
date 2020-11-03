@@ -744,6 +744,28 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<small class="help-block with-errors">*</small>
 											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[3]+`">
 										</div>
+
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[4]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[5]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[6]+`">
+										</div>
+										<div class="form-group col-md-3">
+											<label for="SolResRM"># RM</label>
+											<small class="help-block with-errors">*</small>
+											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[7]+`">
+										</div>
+										
 										<input type="text" hidden name="SolServ" value="`+slug+`">
 								</div>
 								<div class="modal-footer">
