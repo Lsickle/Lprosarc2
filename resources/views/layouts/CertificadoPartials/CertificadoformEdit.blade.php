@@ -151,7 +151,7 @@ if ($collection2->isNotEmpty()) {
 			<label>Codigo</label>
 			<div class="input-group" id="divQrCode">
 				<input id="inputQrCode" readonly  type="text" class="form-control" placeholder="Clave para generar codigo QR" value="https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf">
-				<span class="btn btn-success input-group-addon" id="copiarCodigo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+				<span class="btn btn-success input-group-addon" id="copiarURL"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 			</div>
 		</div>
 
@@ -261,7 +261,13 @@ if ($collection2->isNotEmpty()) {
 			id=$("#CertTypeSelect").val();
 			e.preventDefault();
 			copiarCertNum("docNumberInput", id);
-			
+		});
+	});
+	$(document).ready(function(){
+		$("#copiarURL").click(function(e){
+			id=$("#inputQrCode").val();
+			e.preventDefault();
+			copiarURL("inputQrCode");
 		});
 	});
 </script>
@@ -292,6 +298,16 @@ if ($collection2->isNotEmpty()) {
 		document.execCommand("copy");
 		document.body.removeChild(aux);
 		NotifiTrue(Mensaje);
+	}
+	function copiarURL(id_elemento) {
+		var qrCode = document.createElement("input");
+		qrCode.setAttribute("value", document.getElementById(id_elemento).value);
+		var Mensaje2 = "¡URL para CódigoQR Copiada!";
+		document.body.appendChild(qrCode);
+		qrCode.select();
+		document.execCommand("copy");
+		document.body.removeChild(qrCode);
+		NotifiTrue(Mensaje2);
 	}
 </script>
 <script>
