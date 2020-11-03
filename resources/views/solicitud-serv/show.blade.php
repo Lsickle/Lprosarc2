@@ -249,7 +249,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 
 							<div class="col-md-12" style="margin: 10px 0;">
 								<center>
-									<label>Requerimientos de la solicitud</label>
+								<label {{($SolicitudServicio->SolSerBascula == 1 || $SolicitudServicio->SolSerCapacitacion == 1 || $SolicitudServicio->SolSerMasPerson == 1 || $SolicitudServicio->SolSerVehicExclusive == 1 || $SolicitudServicio->SolSerPlatform == 1) ? 'style=color:red;' : ''}}>Requerimientos de la solicitud</label>
 									<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 								</center>
 								<div class="col-md-12 collapse Requerimientos" style="border: 2px dashed #00c0ef">
