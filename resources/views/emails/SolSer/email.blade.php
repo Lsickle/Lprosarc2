@@ -49,7 +49,7 @@
         @break
     @case('Completado')
         @php
-            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el botón (Conciliado) para dar inicio al tratamiento de los residuos';
+            $text = "esta lista para realizar una conciliación, el cliente $email->CliName, debe revisar los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el botón (Conciliado) para dar inicio al tratamiento de los residuos";
         @endphp
         @break
     @case('No Conciliado')
