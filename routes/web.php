@@ -166,6 +166,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/preTratamientoDinamico/{id}', 'AjaxController@preTratamientoDinamico');
 	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
+	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */

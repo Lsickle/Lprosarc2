@@ -13,6 +13,11 @@ use App\Tratamiento;
 use App\Pretratamientos;
 use App\GenerSede;
 use App\Certificado;
+use App\SolicitudServicio;
+use App\Permisos;
+use App\audit;
+
+
 
 class AjaxController extends Controller
 {
@@ -258,6 +263,55 @@ class AjaxController extends Controller
 				$numeroexiste = false;
 			}
 			return response()->json($numeroexiste);
+		}
+	}
+
+	/*Funcion para certtificacion de servicios via ajax*/
+	public function certificarServicio(Request $request, $servicio)
+	{
+		if ($request->ajax()) {
+			if (in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)) {
+				$Solicitud = SolicitudServicio::where('SolSerSlug', $servicio)->first();
+				if (!$Solicitud) {
+					abort(404);
+				}
+				switch ($Solicitud->SolSerStatus) {
+					case 'Conciliado':
+					case 'Tratado':
+						$Solicitud->SolSerStatus = 'Certificacion';
+						$Solicitud->SolServCertStatus = 2;
+						$Solicitud->SolSerDescript = $request->input('solserdescript');
+						$Solicitud->save();
+
+						$log = new audit();
+						$log->AuditTabla="solicitud_servicios";
+						$log->AuditType="Modificado Status";
+						$log->AuditRegistro=$Solicitud->ID_SolSer;
+						$log->AuditUser=Auth::user()->email;
+						$log->Auditlog=$Solicitud->SolSerStatus;
+						$log->save();
+
+						$resCode = 200;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente xxx certificada con exito';
+						break;
+						
+					case 'Certificacion':
+						$resCode = 400;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada';
+						break;
+					
+					default:
+						$resCode = 403;
+						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede certificar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
+						break;
+				}
+				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
+
+			}else{
+				return response()->json(['error' => 'Usuario no autorizado'], 401);
+			}
+			
+
 		}
 	}
 }
