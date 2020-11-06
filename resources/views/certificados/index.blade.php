@@ -311,7 +311,6 @@ Lista de Certificados
 								});
 								$(this).disabled = true;
 								$(this).prop('disabled', true);
-								console.log($(this));
 							});
 					buttonsubmit.empty();
 					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
@@ -349,7 +348,6 @@ Lista de Certificados
 							toastr.error(res['error']);
 							break;
 					}
-					console.log('success code is '+error['code']);
 				},
 				error: function(error){
 					let buttonsubmit = $('.classCertStatus'+slug);
@@ -382,7 +380,6 @@ Lista de Certificados
 
 							break;
 					}
-					console.log('error code is '+error['responseJSON']['code']);
 					toastr.error(error['responseJSON']['message']);
 				},
 				complete: function(){
