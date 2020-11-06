@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
@@ -16,6 +17,9 @@ use App\Certificado;
 use App\SolicitudServicio;
 use App\Permisos;
 use App\audit;
+use App\Mail\SolSerEmail;
+
+
 
 
 
@@ -304,6 +308,22 @@ class AjaxController extends Controller
 						$resCode = 403;
 						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede certificar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
 						break;
+				}
+				if ($resCode == 200) {
+					$email = DB::table('solicitud_servicios')
+						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+						->select('personals.PersEmail', 'solicitud_servicios.*')
+						->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+						->first();
+						
+					if ($Solicitud->SolServMailCopia == "null") {
+						Mail::to($email->PersEmail)
+						->send(new SolSerEmail($email));
+					}else{
+						Mail::to($email->PersEmail)
+						->cc(json_decode($Solicitud->SolServMailCopia))
+						->send(new SolSerEmail($email));
+					}
 				}
 				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
 
