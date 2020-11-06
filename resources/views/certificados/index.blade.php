@@ -32,7 +32,7 @@ Lista de Certificados
 								<th>Observación</th>
 								<th>Archivo</th>
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-									<th>Aprobación Director Planta</th>
+									<th>Aprobación Dirección</th>
 									<th>Aprobación Logística</th>
 									<th>Aprobación Operaciones</th>
 								@endif
@@ -148,25 +148,6 @@ Lista de Certificados
 												<p>Error en Firma Digital</p>
 											@endswitch
 										</td>
-										{{-- <td class="text-center">
-											@if($certificado->CertAuthJo !== 0)
-												<i class='fas fa-signature fa-lg'></i>
-												@switch($certificado->CertAuthJo)
-													@case(1)
-														<i class='fas fa-signature fa-lg'></i>
-														@break
-		
-													@case(2)
-														Second case...
-														@break
-
-													@default
-														Default case...
-												@endswitch
-											@else
-												<p>Pendiente </p>
-											@endif
-										</td> --}}
 										<td class="text-center">
 											@switch($certificado->CertAuthJl)
 												@case(0)
@@ -271,7 +252,7 @@ Lista de Certificados
 									@endphp
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 										<td>
-											<a onclick="ModalStatus('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</a>
+											<button id="{{'buttonCertStatus'.$certificado->SolicitudServicio->SolSerSlug}}" onclick="ModalStatus('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="{{'classCertStatus'.$certificado->SolicitudServicio->SolSerSlug}} btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
 										</td>
 									@endif
 									<td>{{$certificado->updated_at}}</td>
@@ -299,26 +280,113 @@ Lista de Certificados
 								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 									<i class="fas fa-exclamation-triangle"></i>
 									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-									<form action="/solicitud-servicio/changestatus" method="POST" data-toggle="validator" id="SolSer">
-										@csrf
-										<input type="submit" id="Cambiar`+slug+`" style="display: none;">
-										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
-										<input type="text" name="solserstatus" value="`+value+`" style="display: none;">
-									</form>
 								</div> 
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-								<label for="Cambiar`+slug+`" class='btn btn-success'>Si, acepto</label>
+								<button type="button" id="buttonCertStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			`);
-			$('#SolSer').validator('update');
 			popover();
 			envsubmit();
 			$('#myModal').modal();
+			$('#buttonCertStatusOK'+slug).on( "click", function() {
+				$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+				});
+				$.ajax({
+				url: "{{url('/certificarservicio')}}/"+slug,
+				method: 'GET',
+				data:{},
+				beforeSend: function(){
+					let buttonsubmit = $('.classCertStatus'+slug);
+					buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
+				},
+				success: function(res){
+					let buttonsubmit = $('.classCertStatus'+slug);
+					switch (res['code']) {
+						case 200:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+							buttonsubmit.prop('class', 'btn btn-default');
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
+
+							toastr.success(res['message']);
+							break;
+					
+						default:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = false;
+								$(this).prop('disabled', false);
+							});
+							buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
+
+							toastr.error(res['error']);
+							break;
+					}
+				},
+				error: function(error){
+					let buttonsubmit = $('.classCertStatus'+slug);
+					switch (error['responseJSON']['code']) {
+						case 400:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+							buttonsubmit.prop('class', 'btn btn-default');
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
+							
+							break;
+					
+						default:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = false;
+								$(this).prop('disabled', false);
+							});
+							buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
+
+							break;
+					}
+					toastr.error(error['responseJSON']['message']);
+				},
+				complete: function(){
+					//
+				}
+				})
+			});;
 		}
 	}
 </script>

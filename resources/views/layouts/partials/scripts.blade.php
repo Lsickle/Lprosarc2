@@ -650,6 +650,21 @@ function NotifiFalse(Mensaje) {
 			}
 		});
 	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('.table').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
 </script>
 <script type="text/javascript">
 	function AnimationMenusForm(target){
