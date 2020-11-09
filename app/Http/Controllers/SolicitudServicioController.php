@@ -52,7 +52,37 @@ class SolicitudServicioController extends Controller
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
-			->select('solicitud_servicios.*', 'clientes.CliName', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
+			->select('solicitud_servicios.ID_SolSer',
+			'solicitud_servicios.SolSerStatus',
+			'solicitud_servicios.SolSerTipo',
+			'solicitud_servicios.SolSerAuditable',
+			'solicitud_servicios.SolSerConductor',
+			'solicitud_servicios.SolSerVehiculo',
+			'solicitud_servicios.SolSerSlug',
+			'solicitud_servicios.created_at',
+			'solicitud_servicios.updated_at',
+			'solicitud_servicios.SolSerDelete',
+			'solicitud_servicios.SolResAuditoriaTipo',
+			'solicitud_servicios.SolSerNameTrans',
+			'solicitud_servicios.SolSerNitTrans',
+			'solicitud_servicios.SolSerAdressTrans',
+			'solicitud_servicios.SolSerTypeCollect',
+			'solicitud_servicios.SolSerCollectAddress',
+			'solicitud_servicios.SolServCertStatus',
+			'clientes.CliName',
+			'clientes.CliSlug',
+			'clientes.CliStatus',
+			'clientes.TipoFacturacion',
+			'personals.PersFirstName',
+			'personals.PersLastName',
+			'personals.PersSlug',
+			'personals.PersEmail',
+			'personals.PersCellphone',
+			'Comercial.PersFirstName as ComercialPersFirstName',
+			'Comercial.PersLastName as ComercialPersLastName',
+			'Comercial.PersSlug as ComercialPersSlug',
+			'Comercial.PersEmail as ComercialPersEmail',
+			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -60,18 +90,9 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
-						// $query->whereIn('solicitud_servicios.SolSerStatus', ['Pendiente']);
-						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
-				// if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-				// 	if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-				// 		$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
-				// 		// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
-				// 		$query->where('solicitud_servicios.SolServCertStatus', 1);
-				// 	}
-				// }
 			})
 			->orderBy('created_at', 'desc')
 			->get();
@@ -90,16 +111,11 @@ class SolicitudServicioController extends Controller
 				$servicio->recepcion = null;
 			}
 		}
-		// $Comerciales = DB::table('personals')
-		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-		// 				->select('personals.*')
-		// 				->where('personals.PersDelete', 0)
-		// 				->where('users.UsRol', 'Comercial')
-		// 				->orWhere('users.UsRol2', 'Comercial')
-		// 				->get();
-		
-		// return $Servicios;
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+			return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+		}else{
+			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Residuos', 'Cliente'));
+		}
 	}
 
 
