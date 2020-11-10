@@ -294,11 +294,11 @@ $(document).ready(function() {
 	var rol = "<?php echo Auth::user()->UsRol; ?>";
 
 	/*var botoncito define los botones que se usaran si el usuario es programador*/
-	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
+	var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excelHtml5', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
 					extend: 'collection',
 					text: 'Selector',
 					buttons: ['selectRows', 'selectCells']
-				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excelHtml5', text: 'Excel'}];
 
 	/*funcion para renderizar la tabla de cotizacion.index*/
 	$('#tarifasTable').DataTable({
