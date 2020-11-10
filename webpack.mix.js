@@ -81,6 +81,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
 				'resources/js/validator.js',
 				'node_modules/select2/dist/js/select2.full.js',
+				'node_modules/jszip/dist/jszip.js',
 				'node_modules/toastr/toastr.js',
 				'resources/js/jquery.highlight.js'
 		], 'public/js/dependencias.js')
@@ -99,6 +100,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net/js/jquery.dataTables.js',
 				'node_modules/datatables.net-dt/js/dataTables.dataTables.js',
 				'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
+				'node_modules/datatables.net-buttons/js/buttons.html5.js',
+				'node_modules/datatables.net-buttons/js/buttons.flash.js',	
 				'node_modules/datatables.net-buttons/js/buttons.colVis.js',
 				'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
 				'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
@@ -109,6 +112,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
 				'node_modules/datatables.net-select/js/dataTables.select.js',
 				'node_modules/datatables.net-dt/css/jquery.dataTables.js',
+				'node_modules/datatables.net-buttons-dt/js/buttons.dataTables.js',
+				'node_modules/datatables.net-keytable-dt/js/keyTable.dataTables.js',
 				'node_modules/datatables.net-scroller-dt/js/scroller.dataTables.js',
 				'node_modules/datatables.net-select-dt/js/select.dataTables.js'
 		], 'public/js/datatable-depen.js')
