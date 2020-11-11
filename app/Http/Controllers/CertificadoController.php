@@ -196,7 +196,9 @@ class CertificadoController extends Controller
                 return $item;
             });
 
-            	$qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            $qrCode->setLogoPath(asset('img/LogoQR.png'));
+            $qrCode->setLogoSize(60, 60);
 
                 // return $qrCode->writeDataUri();
             return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif', 'qrCode']))->withHeaders('Content-Type', $qrCode->getContentType()); 

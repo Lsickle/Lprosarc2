@@ -31,11 +31,6 @@ if ($collection2->isNotEmpty()) {
 }
 @endphp
 <div id="">
-	{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label>Tipo</label>
-			<input maxlength="128" name="CertType" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$certificado->CertType}}">
-		</div> --}}
 		<div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Tipo de documento<b>" data-content="Elija el tipo de documentos que corresponda para su creación…<br><ul>
 				<li>Certificado Prosarc</li>
@@ -132,16 +127,6 @@ if ($collection2->isNotEmpty()) {
 			@endswitch
 		</div>
 
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label>Dato especial</label>
-			<input maxlength="32" name="CertiEspName" type="text" class="form-control" placeholder="Dato especial según requerimiento del cliente" value="{{$certificado->CertiEspName}}">
-		</div>
-
-		<div class="col-md-6 form-group has-feedback">
-			<label>Valor del Dato especial</label>
-			<input maxlength="32" name="CertiEspValue" type="text" class="form-control" placeholder="Valor del Dato especial" value="{{$certificado->CertiEspValue}}">
-		</div> --}}
-
 		<div class="col-md-6 form-group has-feedback">
 			<label>Observación</label>
 			<input maxlength="200" name="CertObservacion" type="text" class="form-control" placeholder="campo de observación" value="{{$certificado->CertObservacion}}">
@@ -174,16 +159,6 @@ if ($collection2->isNotEmpty()) {
 				</div>
 			</div>
 		</div>
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>CertAnexo</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Anexos del certificado</label>
-			<small class="help-block with-errors">*</small>
-			<div class="input-group">
-				<input  type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
-				<div class="input-group-btn">
-					<a method='get' href='/img/TarjetaEmergencia/' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
-				</div>
-			</div>
-		</div> --}}
 		<div class="col-md-6 form-group has-feedback">
 			<div class="input-group copyable" id="inputQR">
 				<img src="{{$qrCode->writeDataUri()}}" alt="" id="inputQrImg">
@@ -325,7 +300,6 @@ if ($collection2->isNotEmpty()) {
 		document.body.removeChild(qrCode);
 		NotifiTrue(Mensaje2);
 	}
-	//Cross-browser function to select content
 	function SelectText(element) {
 		var doc = document;
 		if (doc.body.createTextRange) {
