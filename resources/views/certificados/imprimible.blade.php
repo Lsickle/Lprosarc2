@@ -92,7 +92,7 @@ color:#0D0D0D'>&nbsp;</span></b></p>
   <td width=397 valign=top style='width:297.45pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} (Municipio:{{$certificado->sedegenerador->municipio->MunName}}) (Sede:{{$certificado->sedegenerador->GSedeName}})</b></span></p>
+  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} (Municipio:{{$certificado->sedegenerador->municipio->MunName}}) ({{$certificado->sedegenerador->GSedeName}})</b></span></p>
   </td>
   <td width=113 style='width:3.0cm;border-top:none;border-left:none;border-bottom:
   solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
