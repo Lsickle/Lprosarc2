@@ -11,10 +11,11 @@
         "php": "^7.2.11",
         "acacha/admin-lte-template-laravel": "^6.0",
         "anhskohbo/no-captcha": "^3.0",
-        "barryvdh/laravel-dompdf": "^0.8.4",
+        "barryvdh/laravel-dompdf": "^0.8.7",
         "doctrine/dbal": "^2.9",
+        "endroid/qr-code": "^3.9",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "5.8.38",
         "laravel/tinker": "^1.0",
         "nesbot/carbon": "2.17.*",
         "spatie/laravel-menu": "^3.3"

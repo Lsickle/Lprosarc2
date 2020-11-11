@@ -32,6 +32,14 @@ Route::get('/preguntas-frecuentes', function () {
     return view('preguntas.index');
 });
 
+Route::get('qr-code', function () 
+{
+  return  QRCode::url('werneckbh.github.io/qr-code/')
+                  ->setSize(8)
+                  ->setMargin(2)
+                  ->svg();
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
@@ -44,8 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
-	Route::resource('/clientes', 'clientcontoller');
-	Route::post('/clientes/{id}/changeComercial', 'clientcontoller@changeComercial');
+	Route::resource('/clientes', 'ClientController');
+	Route::post('/clientes/{id}/changeComercial', 'ClientController@changeComercial');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');

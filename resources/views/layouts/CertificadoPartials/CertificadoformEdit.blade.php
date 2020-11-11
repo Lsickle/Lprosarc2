@@ -184,6 +184,10 @@ if ($collection2->isNotEmpty()) {
 				</div>
 			</div>
 		</div> --}}
+		<div class="col-md-6 form-group has-feedback">
+			<label id="srcLabel">Archivo Pdf del Certificado</label>
+			
+		</div>
 </div>
 @section('NewScript')
 <script type="text/javascript">
