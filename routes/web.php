@@ -34,10 +34,12 @@ Route::get('/preguntas-frecuentes', function () {
 
 Route::get('qr-code', function () 
 {
-  return  QRCode::url('werneckbh.github.io/qr-code/')
-                  ->setSize(8)
-                  ->setMargin(2)
-                  ->svg();
+
+	$qrCode = new Endroid\QrCode\QrCode('https://sispro.prosarc.com');
+
+	header('Content-Type: '.$qrCode->getContentType());
+	// return $qrCode->writeDataUri();
+	echo "<img src='".$qrCode->writeDataUri()."'>";
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

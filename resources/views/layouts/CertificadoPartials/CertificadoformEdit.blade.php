@@ -185,9 +185,13 @@ if ($collection2->isNotEmpty()) {
 			</div>
 		</div> --}}
 		<div class="col-md-6 form-group has-feedback">
-			<label id="srcLabel">Archivo Pdf del Certificado</label>
-			
+			<div class="input-group copyable" id="inputQR">
+				<img src="{{$qrCode->writeDataUri()}}" alt="" id="inputQrImg">
+				<span class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;"
+						class="fas fa-copy fa-2x"></i>Copiar QR</span>
+			</div>
 		</div>
+		
 </div>
 @section('NewScript')
 <script type="text/javascript">
@@ -274,6 +278,14 @@ if ($collection2->isNotEmpty()) {
 			copiarURL("inputQrCode");
 		});
 	});
+	$(".copyable").click(function (e) {
+		$(this).attr("contenteditable", true);
+		SelectText($(this).get(0));
+		document.execCommand('copy');
+		window.getSelection().removeAllRanges();
+		$(this).removeAttr("contenteditable");
+		NotifiTrue('Qr Copiado');
+	});
 </script>
 <script type="text/javascript">
 	function copiarCertNum(id_elemento, tipo) {
@@ -312,6 +324,21 @@ if ($collection2->isNotEmpty()) {
 		document.execCommand("copy");
 		document.body.removeChild(qrCode);
 		NotifiTrue(Mensaje2);
+	}
+	//Cross-browser function to select content
+	function SelectText(element) {
+		var doc = document;
+		if (doc.body.createTextRange) {
+			var range = document.body.createTextRange();
+			range.moveToElementText(element);
+			range.select();
+		} else if (window.getSelection) {
+			var selection = window.getSelection();
+			var range = document.createRange();
+			range.selectNodeContents(element);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
 	}
 </script>
 <script>
