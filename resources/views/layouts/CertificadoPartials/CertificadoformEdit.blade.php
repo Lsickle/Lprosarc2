@@ -126,12 +126,10 @@ if ($collection2->isNotEmpty()) {
 					
 			@endswitch
 		</div>
-
 		<div class="col-md-6 form-group has-feedback">
 			<label>Observación</label>
 			<input maxlength="200" name="CertObservacion" type="text" class="form-control" placeholder="campo de observación" value="{{$certificado->CertObservacion}}">
 		</div>
-		
 		<div class="col-md-6 form-group has-feedback">
 			<label>Codigo</label>
 			<div class="input-group" id="divQrCode">
@@ -139,12 +137,10 @@ if ($collection2->isNotEmpty()) {
 				<span class="btn btn-success input-group-addon" id="copiarURL"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 			</div>
 		</div>
-
 		<div class="col-md-6 form-group has-feedback">
 			<label># Recibo de materiales</label>
 			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="{{$uniquestring}}">
 		</div>
-
 		<div class="col-md-6 form-group has-feedback">
 			<label id="srcLabel">Archivo Pdf del Certificado</label>
 			<small class="help-block with-errors"></small>
@@ -162,11 +158,9 @@ if ($collection2->isNotEmpty()) {
 		<div class="col-md-6 form-group has-feedback">
 			<div class="input-group copyable" id="inputQR">
 				<img src="{{$qrCode->writeDataUri()}}" alt="" id="inputQrImg">
-				<span class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;"
-						class="fas fa-copy fa-2x"></i>Copiar QR</span>
+				<span class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;" class="fas fa-copy fa-2x"></i>Copiar QR</span>
 			</div>
 		</div>
-		
 </div>
 @section('NewScript')
 <script type="text/javascript">
