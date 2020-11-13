@@ -19,6 +19,10 @@ use App\Permisos;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\Http\Requests\CertificadoUpdateRequest;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\LabelAlignment;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Response\QrCodeResponse;
 
 
 class CertificadoController extends Controller
@@ -191,7 +195,16 @@ class CertificadoController extends Controller
                 $item->SolResRM2 = $rm->SolResRM;
                 return $item;
             });
-            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif'])); 
+
+            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            $qrCode->setLogoPath(asset('img/LogoQR.png'));
+            $qrCode->setLogoSize(30, 30);
+            $qrCode->setSize(150);
+            $qrCode->setMargin(0);
+            $qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
+
+                // return $qrCode->writeDataUri();
+            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif', 'qrCode']))->withHeaders('Content-Type', $qrCode->getContentType()); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");
         }

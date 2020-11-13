@@ -26,7 +26,7 @@ use App\Permisos;
 use App\RequerimientosCliente;
 
 
-class clientcontoller extends Controller
+class ClientController extends Controller
 {
     public function __construct()
     {

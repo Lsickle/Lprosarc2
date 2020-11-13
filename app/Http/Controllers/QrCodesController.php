@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\QrCode;
+use App\QrCode2;
 
 class QrCodesController extends Controller
 {
