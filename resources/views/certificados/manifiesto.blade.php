@@ -91,7 +91,7 @@ el generador:</span></p>
   <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} ({{$certificado->sedegenerador->municipio->MunName}})</b></span></p>
+  7.5pt;font-family:"Arial",sans-serif'>Dirección: <b>{{$certificado->sedegenerador->GSedeAddress}} (Municipio:{{$certificado->sedegenerador->municipio->MunName}}) ({{$certificado->sedegenerador->GSedeName}})</b></span></p>
   </td>
   <td width=123 style='width:92.15pt;border-top:none;border-left:none;
   border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
