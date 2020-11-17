@@ -156,9 +156,9 @@ if ($collection2->isNotEmpty()) {
 			</div>
 		</div>
 		<div class="col-md-6 form-group has-feedback">
-			<div class="input-group copyable" id="inputQR">
+			<div class="input-group copyable" id="inputQR" style="cursor: pointer;">
 				<img src="{{$qrCode->writeDataUri()}}" alt="" id="inputQrImg">
-				<span class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;" class="fas fa-copy fa-2x"></i>Copiar QR</span>
+				{{-- <button class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;" class="fas fa-copy fa-2x"></i>Copiar QR</button> --}}
 			</div>
 		</div>
 </div>
