@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CertUpdated;
 use App\Mail\CertUpdatedComercial;
 use App\Certificado;
-use App\cliente;
+use App\Cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
@@ -335,17 +335,10 @@ class CertificadoController extends Controller
                                     'gerenteplanta@prosarc.com.co'
                                     ];
 
-            Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
             
-                        // se verifica si el cliente tiene comercial asignado
+            Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio, $cliente));
 
-            $servicio['cliente'] = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
-            // se establece la lista de destinatarios
-            if ($servicio['cliente']->CliComercial <> null) {
-                $comercial = Personal::where('ID_Pers', $servicio['cliente']->CliComercial)->first();
-                $destinatariosComercial = [$comercial->PersEmail];
-                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio));
-            }
         }
         
         $log = new audit();
@@ -592,6 +585,19 @@ class CertificadoController extends Controller
         $log->Auditlog=json_encode($id);
         $log->save();
 
+        if ($certificado->CertAuthJo != 0 && $certificado->CertAuthJl != 0 && $certificado->CertAuthDp != 0 ) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+            // se verifica si el cliente tiene comercial asignado
+            if ($cliente->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $cliente->CliComercial)->first();
+                // se establece la lista de destinatarios
+                $destinatariosComercial = [$comercial->PersEmail];
+                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
+            }
+        }
+                  
+
         return redirect()->route('solicitud-servicio.documentos', [$servicio]);
     }
 
@@ -815,6 +821,18 @@ class CertificadoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($id);
         $log->save();
+
+        if ($certificado->CertAuthJo != 0 && $certificado->CertAuthJl != 0 && $certificado->CertAuthDp != 0 ) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+            // se verifica si el cliente tiene comercial asignado
+            if ($cliente->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $cliente->CliComercial)->first();
+                // se establece la lista de destinatarios
+                $destinatariosComercial = [$comercial->PersEmail];
+                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
+            }
+        }
 
         return redirect()->route('certificados.index');
     }
