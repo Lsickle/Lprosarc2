@@ -31,7 +31,7 @@ class NewSolServEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('notificaciones@prosarc.com.co', $this->SolicitudServicio['cliente']->CliName)
-                    ->subject('Nueva Solicitud de Servicio del cliente: '.$this->SolicitudServicio['cliente']->CliName)
+                    ->subject('Nueva Solicitud de Servicio '.'#'.$this->SolicitudServicio->ID_SolSer.' del cliente: '.$this->SolicitudServicio['cliente']->CliName)
                     ->markdown('emails.SolSer.newsolserv');
     }
 }
