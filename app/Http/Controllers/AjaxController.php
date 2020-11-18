@@ -312,7 +312,8 @@ class AjaxController extends Controller
 				if ($resCode == 200) {
 					$email = DB::table('solicitud_servicios')
 						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-						->select('personals.PersEmail', 'solicitud_servicios.*')
+                		->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+						->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 						->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 						->first();
 						
