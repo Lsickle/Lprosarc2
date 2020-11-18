@@ -17,6 +17,7 @@ use App\Certificado;
 use App\SolicitudServicio;
 use App\Permisos;
 use App\audit;
+use App\Personal;
 use App\Mail\SolSerEmail;
 
 
@@ -316,7 +317,9 @@ class AjaxController extends Controller
 						->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 						->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 						->first();
-						
+					
+					$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+
 					if ($Solicitud->SolServMailCopia == "null") {
 						Mail::to($email->PersEmail)
 						->send(new SolSerEmail($email));
