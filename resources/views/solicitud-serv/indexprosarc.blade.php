@@ -18,17 +18,6 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">{{ trans('adminlte_lang::message.solsertitleindex') }}</h3>
-                    @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-                        @if(isset($Cliente)&&($Cliente->CliStatus=="Autorizado"))
-                        <a href="solicitud-servicio/create"
-                            class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
-                        @else
-                        <a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover"
-                            data-html="true" data-toggle="popover" data-delay='{"show": 200}'
-                            title="<b>Solicitudes nuevas deshabilitadas</b>"
-                            data-content="<p style='width: 50%'> Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>">{{ trans('adminlte_lang::message.create') }}</a>
-                        @endif
-                    @endif
                 </div>
                 <div class="box box-info">
                     <div class="box-body">
@@ -41,6 +30,7 @@
                                     <th>N°</th>
                                     <th nowrap>Status</th>
                                     <th>{{trans('adminlte_lang::message.clientcliente')}}</th>
+                                    <th>Contacto</th>
                                     <th>Comercial Asignado</th>
                                     <th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
                                     <th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
@@ -114,12 +104,14 @@
                                         @default
                                         <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
                                     @endswitch
-                                    <td><a data-placement="auto" data-trigger="hover" data-html="true"
-                                            data-toggle="popover" data-delay='{"show": 200}'
-                                            title="<b>Persona de Contacto</b>"
-                                            data-content="<p>Datos de la persona de Contacto para esta Solicitud de Servicio</p><ul><li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li><li>{{$Servicio->PersEmail}}</li><li>{{$Servicio->PersCellphone}}</li></ul><p>Haga click para ver detalles adicionales de este cliente..."
-                                            href="/clientes/{{$Servicio->CliSlug}}" target="_blank"><i
-                                                class="fas fa-user"></i></a>{{$Servicio->CliName}}</td>
+                                    <td>{{$Servicio->CliName}}</td>
+                                    <td>
+                                        <ul>
+                                            <li>{{$Servicio->PersFirstName}} {{$Servicio->PersLastName}}</li>
+                                            <li>{{$Servicio->PersEmail}}</li>
+                                            <li>{{$Servicio->PersCellphone}}</li>
+                                        </ul>
+                                    </td>
                                     <td>{{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
                                     <td>{{$Servicio->SolSerNameTrans}}</td>
                                     <td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}
@@ -127,9 +119,9 @@
                                     <td style="text-align: center;"><a
                                             href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"
                                             title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
-                                                class="fas fa-search"></i></a></td>
-                                    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) ||
-                                    in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+                                                class="fas fa-search"></i></a>
+                                    </td>
+                                    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                     @php
                                     $Status = ['Conciliado', 'Tratado'];
                                     @endphp
@@ -155,127 +147,128 @@
 </div>
 @endsection
 @section('NewScript')
-<script>
-    function ModalCertificacion(slug, id, boolean, value, text){
-		if(boolean == 1){
-			$('#ModalStatus').empty();
-			$('#ModalStatus').append(`
-				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-body">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-									<i class="fas fa-exclamation-triangle"></i>
-									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-								</div> 
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-								<button type="button" id="buttonCertStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			`);
-			popover();
-			envsubmit();
-			$('#myModal').modal();
-			$('#buttonCertStatusOK'+slug).on( "click", function() {
-				$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-				}
-				});
-				$.ajax({
-				url: "{{url('/certificarservicio')}}/"+slug,
-				method: 'GET',
-				data:{},
-				beforeSend: function(){
-					let buttonsubmit = $('.classCertStatus'+slug);
-					buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = true;
-								$(this).prop('disabled', true);
-							});
-					buttonsubmit.empty();
-					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
-				},
-				success: function(res){
-					let buttonsubmit = $('.classCertStatus'+slug);
-					switch (res['code']) {
-						case 200:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = true;
-								$(this).prop('disabled', true);
-							});
-							buttonsubmit.prop('class', 'btn btn-default');
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
+    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+        <script>    
+            function ModalCertificacion(slug, id, boolean, value, text){
+                if(boolean == 1){
+                    $('#ModalStatus').empty();
+                    $('#ModalStatus').append(`
+                        <div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
+                                        </div> 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+                                        <button type="button" id="buttonCertStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                    envsubmit();
+                    $('#myModal').modal();
+                    $('#buttonCertStatusOK'+slug).on( "click", function() {
+                        $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                        });
+                        $.ajax({
+                        url: "{{url('/certificarservicio')}}/"+slug,
+                        method: 'GET',
+                        data:{},
+                        beforeSend: function(){
+                            let buttonsubmit = $('.classCertStatus'+slug);
+                            buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                            buttonsubmit.empty();
+                            buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
+                        },
+                        success: function(res){
+                            let buttonsubmit = $('.classCertStatus'+slug);
+                            switch (res['code']) {
+                                case 200:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-default');
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
 
-							toastr.success(res['message']);
-							break;
-					
-						default:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = false;
-								$(this).prop('disabled', false);
-							});
-							buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
+                                    toastr.success(res['message']);
+                                    break;
+                            
+                                default:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = false;
+                                        $(this).prop('disabled', false);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
 
-							toastr.error(res['error']);
-							break;
-					}
-				},
-				error: function(error){
-					let buttonsubmit = $('.classCertStatus'+slug);
-					switch (error['responseJSON']['code']) {
-						case 400:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = true;
-								$(this).prop('disabled', true);
-							});
-							buttonsubmit.prop('class', 'btn btn-default');
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-							
-							break;
-					
-						default:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = false;
-								$(this).prop('disabled', false);
-							});
-							buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
+                                    toastr.error(res['error']);
+                                    break;
+                            }
+                        },
+                        error: function(error){
+                            let buttonsubmit = $('.classCertStatus'+slug);
+                            switch (error['responseJSON']['code']) {
+                                case 400:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-default');
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
+                                    
+                                    break;
+                            
+                                default:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = false;
+                                        $(this).prop('disabled', false);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
 
-							break;
-					}
-					toastr.error(error['responseJSON']['message']);
-				},
-				complete: function(){
-					//
-				}
-				})
-			});;
-		}
-	}
-</script>
+                                    break;
+                            }
+                            toastr.error(error['responseJSON']['message']);
+                        },
+                        complete: function(){
+                            //
+                        }
+                        })
+                    });;
+                }
+            }
+        </script>
+    @endif
 @endsection
