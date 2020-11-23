@@ -134,6 +134,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::put('/solicitud-servicio/{id}/updateRms', 'SolicitudServicioController@updateRms');
 	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
+	Route::get('/solicitud-servicio/{id}/add-respel', 'SolicitudServicioController@addRespel');
+	Route::put('/solicitud-servicio/{id}/update-respel', 'SolicitudServicioController@updateRespel');
 	Route::put('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');

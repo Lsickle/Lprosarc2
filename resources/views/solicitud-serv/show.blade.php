@@ -1468,11 +1468,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					
 				@elseif($ProgramacionesActivas == 0)
 					$('#titulo').append(`
-						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+					`);
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
 					`);
 				@else
 					$('#titulo').append(`
 						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Faltan Vehiculos por Recibir</b>" data-content="<p style='width: 50%'>Asegúrese de que todos los vehículos correspondientes a la solicitud de servicio <b>#{{$SolicitudServicio->ID_SolSer}}</b> hayan sido recibidos por el área de Logística antes de marcar solicitud de servicio como <b>recibida</b><br>Para mas detalles comuníquese con el <b>Jefe de Logística</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-warning pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}-Faltan Vehiculos</a>
+					`);
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
 					`);
 				@endif
 			@endif
@@ -1489,7 +1495,38 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					
 				@elseif($ProgramacionesActivas == 0)
 					$('#titulo').append(`
-						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Recibir Residuos</b>" data-content="<p style='width: 50%'>Asegúrese de haber marcado todas las cantidades correspondientes en cada uno de los residuos antes de dar click a este botón, ya que las cantidades especificadas serán enviadas automáticamente a proceso de conciliación <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
+					`);
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
+					`);
+				@else
+					$('#titulo').append(`
+						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Faltan Vehiculos por Recibir</b>" data-content="<p style='width: 50%'>Asegúrese de que todos los vehículos correspondientes a la solicitud de servicio <b>#{{$SolicitudServicio->ID_SolSer}}</b> hayan sido recibidos por el área de Logística antes de marcar solicitud de servicio como <b>recibida</b><br>Para mas detalles comuníquese con el <b>Jefe de Logística</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-warning pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}-Faltan Vehiculos</a>
+					`);
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
+					`);
+				@endif
+			@endif
+
+			$('#titulo').append(`
+				<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><span>{{$TextProgramacion}}</span>
+			`);
+		@break
+		@case('Residuo Faltante')
+			$('#titulo').empty();
+			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+				$('#titulo').append(`
+					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/add-respel" class="btn btn-primary pull-right"><i class="fas fa-plus"></i><b> Añadir Residuo</b></a>
+				`);
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+				@if($ProgramacionesActivas == count($Programaciones))
+					
+				@elseif($ProgramacionesActivas == 0)
+					$('#titulo').append(`
+						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
 					`);
 				@else
 					$('#titulo').append(`
@@ -1499,7 +1536,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 
 			$('#titulo').append(`
-				<b>{{trans('adminlte_lang::message.solsershowprograma')}}</b><spam>{{$TextProgramacion}}</spam>
+				<b>Faltan residuos por incluir en esta solicitud de servicio</b><span>{{$TextProgramacion}}</span>
 			`);
 		@break
 		@case('Corregido')

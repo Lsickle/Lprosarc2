@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
+use App\Mail\SolSerLeftRespel;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -533,6 +534,7 @@ class SolicitudServicioController extends Controller
 		$TextProgramacion = null;
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Notificado':
+			case 'Programado':
 				setlocale(LC_ALL, "es_CO.UTF-8");
 				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
 				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
@@ -552,7 +554,7 @@ class SolicitudServicioController extends Controller
 				// $ProgramacionesActivas = ($Programaciones);
 				break;
 
-			case 'Programado':
+			case 'Residuo Faltante':
 				setlocale(LC_ALL, "es_CO.UTF-8");
 				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
 				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
@@ -561,9 +563,8 @@ class SolicitudServicioController extends Controller
 				else{
 					$horas = " en las horas de la mañana";
 				}
-				$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+				$TextProgramacion = "";
 				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
 				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
@@ -705,16 +706,24 @@ class SolicitudServicioController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-			if($request->input('solserstatus') == 'No Deacuerdo'){
-				$Solicitud->SolSerStatus = 'No Conciliado';
+		if ($Solicitud->SolSerStatus <> 'Certificacion') {
+			if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+				if($request->input('solserstatus') == 'No Deacuerdo'){
+					if ($Solicitud->SolSerStatus == 'Completado') {
+						$Solicitud->SolSerStatus = 'No Conciliado';
+					} else {
+						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
+					}
+				}
+				if($request->input('solserstatus') == 'Conciliada'){
+					if ($Solicitud->SolSerStatus == 'Completado') {
+						$Solicitud->SolSerStatus = 'Conciliado';
+					} else {
+						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
+					}
+				}
 			}
-			if($request->input('solserstatus') == 'Conciliada'){
-				$Solicitud->SolSerStatus = 'Conciliado';
-			}
-		}
-		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
-			if($Solicitud->SolSerStatus <> 'Certificacion'){
+			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
 						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2 ) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2 )){
@@ -729,6 +738,11 @@ class SolicitudServicioController extends Controller
 					case 'Recibida':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
 							$Solicitud->SolSerStatus = 'Completado';
+						}
+						break;
+					case 'Residuo Faltante':
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Residuo Faltante';
 						}
 						break;
 					case 'Conciliación':
@@ -764,6 +778,8 @@ class SolicitudServicioController extends Controller
 						break;
 				}
 			}
+		}else{
+			abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
@@ -1329,7 +1345,7 @@ class SolicitudServicioController extends Controller
 			->where('solicitud_servicios.SolSerStatus', 'Certificacion')
 			->first();
 			if (!$SolicitudServicio) {
-				abort(403,	'Sus residuos aun no han sido certificados');
+				abort(403,'Sus residuos aun no han sido certificados');
 			}
 			$certificados = Certificado::where(function($query) use ($SolicitudServicio){
 			    $UserSedeID = DB::table('personals')
@@ -1400,7 +1416,7 @@ class SolicitudServicioController extends Controller
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
-		public function updateRms(Request $request, $id)
+	public function updateRms(Request $request, $id)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
 		if (!$Solicitud) {
@@ -1577,4 +1593,127 @@ class SolicitudServicioController extends Controller
 		}
 	}
 
+	/**
+	 * muestra el formulario para añadir residuos adicionales al servicio en status Residuo Faltante.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function addRespel($id)
+	{
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if (!$Solicitud) {
+				abort(404);
+			}
+			if($Solicitud->SolSerStatus !== 'Residuo Faltante'){
+				abort(403, 'el servicio no se encuentra en el status correcto para añadir residuos');
+			}
+			if($Solicitud->SolSerCityTrans <> null){
+				$Municipio = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->SolSerCityTrans)->first();
+				$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+				$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			}
+			if($Solicitud->FK_SolSerCollectMun <> null){
+				$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
+				$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
+				$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
+			}
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
+			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
+				->select('PersSlug','PersFirstName','PersLastName')
+				->first();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->where('personals.PersDelete', 0)
+				->get();
+			$KGenviados = DB::table('solicitud_residuos')
+				->select('SolResKgEnviado')
+				->where('FK_SolResSolSer', $Solicitud->ID_SolSer)
+				->get();
+			$totalenviado = 0;
+			foreach ($KGenviados as $KGenviado) {
+				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+		}
+		else{
+			abort(403);
+		}
+	}
+
+	/**
+	 * ingresa los residuos adicionales a la base de datos.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateRespel(Request $request, $id)
+	{
+		// return $request;
+		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$SolicitudServicio) {
+			abort(404, 'solicitud de servicio no encontrada');
+		}
+
+		if(!is_null($request->input('SGenerador'))){
+			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+		}
+
+
+		$SolicitudServicio->SolSerStatus = 'Notificado';
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
+		$SolicitudServicio->save();
+
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="residuos adicionales";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		$destinatarios = ['recepcionpda@prosarc.com.co'];
+		$destinatarioscc = [];
+
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			array_push($destinatarioscc, $comercial->PersEmail);
+		}else{
+			$comercial = "";
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+		// añadir destinatarios para copia del cliente
+		if ($SolicitudServicio->SolServMailCopia !== "null") {
+			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+				array_push($destinatarioscc, $value);
+			}
+		}
+
+		Mail::to($destinatarios)->cc($destinatarioscc)->send(new SolSerLeftRespel($SolicitudServicio));
+
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
 }
