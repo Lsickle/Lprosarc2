@@ -132,7 +132,7 @@ if ($collection2->isNotEmpty()) {
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label>tratamiento</label>
-			<input disabled readonly type="text" class="form-control" placeholder="{{$certificado->tratamiento->TratName}}" value="{{$certificado->tratamiento->TratName}}">
+			<input disabled readonly type="text" class="form-control" placeholder="{{$certificado->tratamiento->TratName}}">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label>Codigo</label>
