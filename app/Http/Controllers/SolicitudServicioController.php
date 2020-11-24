@@ -708,19 +708,15 @@ class SolicitudServicioController extends Controller
 		}
 		if ($Solicitud->SolSerStatus <> 'Certificacion') {
 			if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-				if($request->input('solserstatus') == 'No Deacuerdo'){
-					if ($Solicitud->SolSerStatus == 'Completado') {
+				if ($Solicitud->SolSerStatus == 'Completado' || $Solicitud->SolSerStatus == 'Corregido') {
+					if($request->input('solserstatus') == 'No Deacuerdo'){
 						$Solicitud->SolSerStatus = 'No Conciliado';
-					} else {
-						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
 					}
-				}
-				if($request->input('solserstatus') == 'Conciliada'){
-					if ($Solicitud->SolSerStatus == 'Completado') {
+					if($request->input('solserstatus') == 'Conciliada'){
 						$Solicitud->SolSerStatus = 'Conciliado';
-					} else {
-						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
 					}
+				} else {
+					abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
 				}
 			}
 			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
