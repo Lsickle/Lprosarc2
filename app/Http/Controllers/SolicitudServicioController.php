@@ -37,6 +37,7 @@ use App\Documento;
 use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
+use App\Observacion;
 use Permisos;
 
 
@@ -332,6 +333,19 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 
+
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+		
 		// se verifica si el cliente tiene comercial asignado
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios
@@ -507,6 +521,9 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
+
+		$Observaciones = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)->orderBy('ObsDate', 'desc')->get();
+		
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
@@ -696,7 +713,7 @@ class SolicitudServicioController extends Controller
 			$tratamientos = 'NoAutorizado';
 		}
 
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos'));
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
 	}
 
 
@@ -716,9 +733,12 @@ class SolicitudServicioController extends Controller
 						$Solicitud->SolSerStatus = 'Conciliado';
 					}
 				} else {
-					abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
+					if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
+					}
 				}
 			}
+			
 			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
@@ -792,6 +812,63 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		switch ($Solicitud->SolSerStatus) {
+			case 'Aprobado':
+				$Observacion->ObsTipo = 'cliente';
+				break;
+			
+			case 'Programado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Notificado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Completado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Conciliado':
+				$Observacion->ObsTipo = 'cliente';
+				break;
+			
+			case 'No Conciliado':
+				$Observacion->ObsTipo = 'cliente';
+				break;
+			
+			case 'Tratado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Certificacion':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Corregido':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Residuo Faltante':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			default:
+			$Observacion->ObsTipo = 'prosarc';
+				break;
+		}
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
 				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
@@ -973,6 +1050,20 @@ class SolicitudServicioController extends Controller
 				}
 			
 			$SolicitudServicio = $SolicitudNew;
+
+			
+			/*se guarda la observacion inicial del servicio repetido*/
+			$Observacion = new Observacion();
+			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+			$Observacion->ObsTipo = 'cliente';
+			$Observacion->ObsRepeat = 1;
+			$Observacion->ObsDate = now();
+			$Observacion->ObsUser = Auth::user()->email;
+			$Observacion->ObsRol = Auth::user()->UsRol;
+			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+			$Observacion->save();
+		
 						// se verifica si el cliente tiene comercial asignado
 			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
 			// se establece la lista de destinatarios
@@ -1127,6 +1218,18 @@ class SolicitudServicioController extends Controller
 			$log->Auditlog=json_encode($request->all());
 			$log->save();
 
+			/*se guarda la observacion de la modificacion del servicio*/
+			$Observacion = new Observacion();
+			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+			$Observacion->ObsTipo = 'cliente';
+			$Observacion->ObsRepeat = 1;
+			$Observacion->ObsDate = now();
+			$Observacion->ObsUser = Auth::user()->email;
+			$Observacion->ObsRol = Auth::user()->UsRol;
+			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+			$Observacion->save();
+			
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 		}
 		switch ($request->input('SolResAuditoriaTipo')) {
@@ -1270,6 +1373,18 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+		
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
@@ -1685,6 +1800,22 @@ class SolicitudServicioController extends Controller
 		$log->AuditUser=Auth::user()->email;
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
+
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		if ($SolicitudServicio->SolSerDescript = "") {
+			$Observacion->ObsMensaje = 'Residuos faltantes ya incluidos por el cliente';
+		}else{
+			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		}
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
 
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios

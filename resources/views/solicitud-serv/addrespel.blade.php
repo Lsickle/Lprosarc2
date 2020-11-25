@@ -185,7 +185,7 @@
 									</center>
 									<div class="form-group col-md-12 collapse Observaciones" style="margin-bottom: 1em;">
 										<small id="caracteresrestantes" class="help-block with-errors"></small>
-										<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="SolSerDescript">{!!$Solicitud->SolSerDescript!!}</textarea>
+										<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="SolSerDescript"></textarea>
 									</div>
 									<div id="requirimientos" class="col-md-12 collapse Requerimientos" style="margin: 10px 0;">
 										<div class="col-md-12" style="border: 2px dashed #00c0ef">
