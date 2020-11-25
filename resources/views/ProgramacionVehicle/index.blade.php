@@ -122,7 +122,7 @@
 										$Status = ['Aprobado', 'Programado', 'Notificado'];
 									@endphp
 									<td>
-										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" style="text-align: center;" class="btn btn-{{in_array($programacion->SolSerStatus, ['Aprobado', 'Programado']) ? 'success' : 'default'}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
+										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" style="text-align: center;" class="btn btn-{{$programacion->SolSerStatus == 'Programado' ? 'success' : ($programacion->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
 									</td>
 									@endif
 								</tr>
