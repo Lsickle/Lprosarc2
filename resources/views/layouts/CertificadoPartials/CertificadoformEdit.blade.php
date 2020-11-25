@@ -131,6 +131,10 @@ if ($collection2->isNotEmpty()) {
 			<input maxlength="200" name="CertObservacion" type="text" class="form-control" placeholder="campo de observación" value="{{$certificado->CertObservacion}}">
 		</div>
 		<div class="col-md-6 form-group has-feedback">
+			<label>tratamiento</label>
+			<input disabled readonly type="text" class="form-control" placeholder="{{$certificado->tratamiento->TratName}}">
+		</div>
+		<div class="col-md-6 form-group has-feedback">
 			<label>Codigo</label>
 			<div class="input-group" id="divQrCode">
 				<input id="inputQrCode" readonly  type="text" class="form-control" placeholder="Clave para generar codigo QR" value="https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf">

@@ -365,6 +365,48 @@ $(document).ready(function() {
 });
 
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+	/*funcion para renderizar la tabla de observaciones del solser.show*/
+	$('#observacionesTable').DataTable({
+		responsive: false,
+		select: true,
+		ordering: false,
+		autoWith: true,
+		pageLength: 2,
+		searchHighlight: true,
+		"language": {
+			"sLengthMenu": "Mostrar _MENU_",
+			"sZeroRecords": "Aun No hay observaciones para este Servicio",
+			"sEmptyTable": "Ningún dato disponible en esta tabla",
+			"sInfo": "_START_ al _END_ de _TOTAL_ observaciones",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 observaciones",
+			"sInfoFiltered": "",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar:",
+			"sUrl": "",
+			"sInfoThousands": ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+			}
+		}
+	});
+
+	/*funcion para resaltar las busquedas*/
+	var table = $('#observacionesTable').DataTable();
+
+	table.on('draw', function() {
+		var body = $(table.table().body());
+		body.unhighlight();
+		body.highlight(table.search());
+	});
+});
+</script>
 @endif
 
 <script type="text/javascript">

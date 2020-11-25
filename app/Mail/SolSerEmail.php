@@ -52,6 +52,9 @@ class SolSerEmail extends Mailable implements ShouldQueue
             case 'Corregido':
                 $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CORREGIDO en las cantidades conciliadas que corresponden";
                 break;
+            case 'Residuo Faltante':
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido habilitado para añadir el RESIDUO FALTANTE";
+                break;
             default:
                 $asuntoStatus = "Solicitud de Servicio";
                 break;

@@ -18,6 +18,7 @@ use App\SolicitudServicio;
 use App\Permisos;
 use App\audit;
 use App\Personal;
+use App\Observacion;
 use App\Mail\SolSerEmail;
 
 
@@ -311,6 +312,23 @@ class AjaxController extends Controller
 						break;
 				}
 				if ($resCode == 200) {
+
+					/*se guarda la observacion inicial de la creación del servicio*/
+					$Observacion = new Observacion();
+					$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+					if ($Solicitud->SolSerDescript == "" || $Solicitud->SolSerDescript == null) {
+						$Observacion->ObsMensaje = 'Servicio Certificado';
+					}else{
+						$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+					}
+					$Observacion->ObsTipo = 'prosarc';
+					$Observacion->ObsRepeat = 1;
+					$Observacion->ObsDate = now();
+					$Observacion->ObsUser = Auth::user()->email;
+					$Observacion->ObsRol = Auth::user()->UsRol;
+					$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+					$Observacion->save();
+
 					$email = DB::table('solicitud_servicios')
 						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
                 		->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
