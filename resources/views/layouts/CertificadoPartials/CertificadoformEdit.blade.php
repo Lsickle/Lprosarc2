@@ -165,6 +165,9 @@ if ($collection2->isNotEmpty()) {
 				{{-- <button class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;" class="fas fa-copy fa-2x"></i>Copiar QR</button> --}}
 			</div>
 		</div>
+		<div class="col-md-12 pull-center">
+			<iframe src="/certificados/{{$certificado->CertSlug}}/wordtemplate" style="width: 100%;" title="plantilla"></iframe>
+		</div>
 </div>
 @section('NewScript')
 <script type="text/javascript">
