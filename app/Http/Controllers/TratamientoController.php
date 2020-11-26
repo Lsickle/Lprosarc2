@@ -224,7 +224,11 @@ class TratamientoController extends Controller
         if ($tratamiento->TratName !== 'Posconsumo luminarias') {
             $tratamiento->TratName = $request->input('TratName');
         }else{
-            abort(403, 'no esta permtida la edición del nombre para este tratamiento');
+            if ($request->input('TratName') !== 'Posconsumo luminarias') {
+                abort(403, 'no esta permtida la edición del nombre para este tratamiento');
+            }else{
+                $tratamiento->TratName = $request->input('TratName');
+            }
         }
         /*determinar el tipo de tratamiento segun el gestor*/
         if ($request->input('FK_TratProv') == 1) {
