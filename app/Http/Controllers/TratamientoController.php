@@ -309,12 +309,18 @@ class TratamientoController extends Controller
 
         
         $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-            if ($tratamiento->TratDelete == 0) {
-                $tratamiento->TratDelete = 1;
-            }
-            else{
-                $tratamiento->TratDelete = 0;
-            }
+
+        if ($tratamiento->TratName == 'Posconsumo luminarias') {
+            abort(403, 'no esta permtido eliminar este tratamiento');
+        }
+
+        if ($tratamiento->TratDelete == 0) {
+            $tratamiento->TratDelete = 1;
+        }
+        else{
+            $tratamiento->TratDelete = 0;
+        }
+
         $tratamiento->update();
 
         // se elimina el tratamiento de la base de datos
