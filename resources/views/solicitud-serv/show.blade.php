@@ -212,36 +212,54 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								@else
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
 								@endif
-								@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-								@if ($SolicitudServicio->Repetible == 0)
-								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir <i class="fas fa-redo-alt"></i></a></label>
-								@else
-								<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>" data-content="alguno de los residuos de este servicio no tiene un tratamiento ofertado por lo cual no puede repetir esta solicitud"><a disabled href='#' data-toggle='' style="margin: 10px  30px;" data-target='' class="btn btn-default">Repetir <i class="fas fa-redo-alt"></i></a></label>
-								@endif
-								@switch($SolicitudServicio->SolSerStatus)
-									@case('Completado')
-								    @case('Recibida')
-								    @case('Notificado')
-								    @case('Aceptado')
-								    @case('Aprobado')
-								    @case('Conciliado')
-								    @case('Pendiente')
-								    @case('Notificado')
-								    @case('Programado')
-								    @case('No Conciliado')
-								    @case('Tratado')
-								       <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('Certificacion')
-								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-
-								    @default
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								@endswitch
-								@endif
+								
+							@endif
+							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
+							@if ($SolicitudServicio->Repetible == 0)
+							<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover"
+								data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>"
+								data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a
+									href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir
+									<i class="fas fa-redo-alt"></i></a></label>
+							@else
+							<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover"
+								data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>"
+								data-content="alguno de los residuos de este servicio no tiene un tratamiento ofertado por lo cual no puede repetir esta solicitud"><a
+									disabled href='#' data-toggle='' style="margin: 10px  30px;" data-target='' class="btn btn-default">Repetir <i
+										class="fas fa-redo-alt"></i></a></label>
+							@endif
+							@switch($SolicitudServicio->SolSerStatus)
+							@case('Completado')
+							@case('Recibida')
+							@case('Notificado')
+							@case('Aceptado')
+							@case('Aprobado')
+							@case('Conciliado')
+							@case('Pendiente')
+							@case('Notificado')
+							@case('Programado')
+							@case('No Conciliado')
+							@case('Tratado')
+							<a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}'
+								title="<b>Certificaciones/Manifiestos</b>"
+								data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria"
+								style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i>
+								<b>Certificaciones/Manifiestos</b></a>
+							@break
+							
+							@case('Certificacion')
+							<a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i
+									class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
+							@break
+							
+							
+							@default
+							<a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}'
+								title="<b>Certificaciones/Manifiestos</b>"
+								data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria"
+								style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i>
+								<b>Certificaciones/Manifiestos</b></a>
+							@endswitch
 							@endif
 							
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
