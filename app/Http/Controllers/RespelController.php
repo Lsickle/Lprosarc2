@@ -181,7 +181,6 @@ class RespelController extends Controller
 
         for ($x=0; $x < count($request['RespelName']); $x++) {
             /*validar si el formulario incluye archivos de tarjeta de emergencia u hoja de seguridad*/
-
             $respel = new Respel();
 
             if (isset($request['RespelHojaSeguridad'][$x])) {
@@ -270,10 +269,16 @@ class RespelController extends Controller
             $requerimiento->ReqSlug= hash('md5', rand().time().$respel->ID_Respel);
             $requerimiento->save();
 
+            $tratamiento = Tratamiento::where('ID_Trat', $request['RespelTratamiento'][$x])->first();
+
             $tarifa = new Tarifa();
             $tarifa->TarifaFrecuencia='Servicio';
             $tarifa->TarifaVencimiento='2025-11-15';
-            $tarifa->Tarifatipo='Kg';
+            if ($tratamiento->TratName == 'Posconsumo luminarias') {
+                $tarifa->Tarifatipo='Unid';
+            }else{
+                $tarifa->Tarifatipo='Kg';
+            }
             $tarifa->TarifaDelete=0;
             $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
             $tarifa->save();

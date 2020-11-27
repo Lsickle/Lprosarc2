@@ -18,6 +18,7 @@ use App\SolicitudServicio;
 use App\Permisos;
 use App\audit;
 use App\Personal;
+use App\Tarifa;
 use App\Observacion;
 use App\Mail\SolSerEmail;
 
@@ -162,7 +163,7 @@ class AjaxController extends Controller
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
-				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado', 'requerimientos.ID_Req')
 				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
 				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $slug)
@@ -176,6 +177,19 @@ class AjaxController extends Controller
 					$tratamiento = Tratamiento::where('ID_Trat', $Respels[$key]->FK_ReqTrata)->first('TratName');
 					if (isset($tratamiento->TratName)) {
 						$Respels[$key]->TratName = $tratamiento->TratName;
+						if ($tratamiento->TratName == 'Posconsumo luminarias') {
+							$tarifa = Tarifa::where('FK_TarifaReq', $Respels[$key]->ID_Req)->first();
+							$tarifa->Tarifatipo = 'Unid';
+							$tarifa->save();
+
+							$log = new audit();
+							$log->AuditTabla="tarifas";
+							$log->AuditType="fix luminarias";
+							$log->AuditRegistro=$tarifa->ID_Tarifa;
+							$log->AuditUser=Auth::user()->email;
+							$log->Auditlog=$tarifa->Tarifatipo;
+							$log->save();
+						}
 					}else{
 						$Respels[$key]->TratName = '';
 					}
