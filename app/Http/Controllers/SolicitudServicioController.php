@@ -1051,19 +1051,50 @@ class SolicitudServicioController extends Controller
 			
 			$SolicitudServicio = $SolicitudNew;
 
+			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+				$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+				$Observacion->ObsTipo = 'cliente';
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = now();
+				$Observacion->ObsUser = Auth::user()->email;
+				$Observacion->ObsRol = Auth::user()->UsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
 			
-			/*se guarda la observacion inicial del servicio repetido*/
-			$Observacion = new Observacion();
-			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
-			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
-			$Observacion->ObsTipo = 'cliente';
-			$Observacion->ObsRepeat = 1;
-			$Observacion->ObsDate = now();
-			$Observacion->ObsUser = Auth::user()->email;
-			$Observacion->ObsRol = Auth::user()->UsRol;
-			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
-			$Observacion->save();
-		
+			} else {
+
+				/* se incluye la primera observacion del cliente del servicio original */
+				$observacionOriginal = Observacion::where('FK_ObsSolSer', $SolicitudOld->ID_SolSer)->first();
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $observacionOriginal->ObsStatus;
+				$Observacion->ObsMensaje = $observacionOriginal->ObsMensaje;
+				$Observacion->ObsTipo = $observacionOriginal->ObsTipo;
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = $observacionOriginal->ObsDate;
+				$Observacion->ObsUser = $observacionOriginal->ObsUser;
+				$Observacion->ObsRol = $observacionOriginal->ObsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
+
+
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+				$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+				$Observacion->ObsTipo = 'prosarc';
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = now();
+				$Observacion->ObsUser = Auth::user()->email;
+				$Observacion->ObsRol = Auth::user()->UsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
+			}
+			
+			
 						// se verifica si el cliente tiene comercial asignado
 			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
 			// se establece la lista de destinatarios
@@ -1091,7 +1122,14 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio['comercial'] = $comercial;
 			$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
 
-			Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+			if ($SolicitudServicio->SolServMailCopia != "null") {
+				foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+			}
+
+			Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+					
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
 		else{
