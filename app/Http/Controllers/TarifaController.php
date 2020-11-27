@@ -27,11 +27,12 @@ class TarifaController extends Controller
 				->where('tratamientos.TratName', 'Posconsumo luminarias')
 				->where('requerimientos.ofertado', 1)
 				->where('requerimientos.forevaluation', 1)
-                ->first();
-                
+                ->get();
+        // return $Requerimientos;
+        $conteo = 0;
+        
         foreach ($Requerimientos as $key => $requerimiento) {
-            $tarifa = Tarifa::where('FK_TarifaReq', $Requerimientos->ID_Req)->first();
-            $conteo = 0;
+            $tarifa = Tarifa::where('FK_TarifaReq', $requerimiento->ID_Req)->first();
             if ($tarifa->Tarifatipo == 'Kg') {
                 $tarifa->Tarifatipo = 'Unid';
                 $conteo++;
