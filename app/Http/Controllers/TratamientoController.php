@@ -221,8 +221,15 @@ class TratamientoController extends Controller
         $tratamiento = Tratamiento::find($id);
 
 
-
-        $tratamiento->TratName = $request->input('TratName');
+        if ($tratamiento->TratName !== 'Posconsumo luminarias') {
+            $tratamiento->TratName = $request->input('TratName');
+        }else{
+            if ($request->input('TratName') !== 'Posconsumo luminarias') {
+                abort(403, 'no esta permtida la edición del nombre para este tratamiento');
+            }else{
+                $tratamiento->TratName = $request->input('TratName');
+            }
+        }
         /*determinar el tipo de tratamiento segun el gestor*/
         if ($request->input('FK_TratProv') == 1) {
             $tratamiento->TratTipo = 0; //interno
@@ -302,12 +309,18 @@ class TratamientoController extends Controller
 
         
         $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-            if ($tratamiento->TratDelete == 0) {
-                $tratamiento->TratDelete = 1;
-            }
-            else{
-                $tratamiento->TratDelete = 0;
-            }
+
+        if ($tratamiento->TratName == 'Posconsumo luminarias') {
+            abort(403, 'no esta permtido eliminar este tratamiento');
+        }
+
+        if ($tratamiento->TratDelete == 0) {
+            $tratamiento->TratDelete = 1;
+        }
+        else{
+            $tratamiento->TratDelete = 0;
+        }
+
         $tratamiento->update();
 
         // se elimina el tratamiento de la base de datos
