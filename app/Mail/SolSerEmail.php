@@ -44,7 +44,7 @@ class SolSerEmail extends Mailable implements ShouldQueue
                 $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CONCILIADO";
                 break;
             case 'No Conciliado':
-                $asuntoStatus = 'Peso(s) del Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." han sido RECHAZADOS";
+                $asuntoStatus = 'Algunos Peso(s) del Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." han sido RECHAZADOS";
                 break;
             case 'Certificacion':
                 $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CERTIFICADO por Prosarc S.A. ESP";
