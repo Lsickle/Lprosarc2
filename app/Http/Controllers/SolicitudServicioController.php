@@ -13,6 +13,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
+use App\Mail\NewSolServProsarcEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -1123,12 +1124,16 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
 
 			if ($SolicitudServicio->SolServMailCopia != "null") {
-				foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
 					array_push($destinatarios, $value);
 				}
 			}
 
-			Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+			}else{
+				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServProsarcEmail($SolicitudServicio));
+			}
 					
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
