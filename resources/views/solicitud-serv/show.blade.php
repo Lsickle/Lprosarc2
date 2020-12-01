@@ -263,7 +263,21 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@endif
 							
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
-							<label><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalObservaciones' class='btn btn-info pull-right'><i class="fas fa-comments fa-1x"></i> <b>Historial</b></a></label>
+							<label>
+								<div class="btn-group pull-right" style="margin: 10px 10px;">
+									<a type=button href='#' data-toggle='modal' data-target='#ModalObservaciones' class='btn btn-info'><i class="fas fa-comments fa-1x"></i> <b>Historial</b></a>
+									<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu">
+										<li class="dropdown-header">Historial de Observaciones</li>
+										<li role="separator" class="divider"></li>
+										<li><a data-toggle='modal' data-target='#ModalNewObserv'>Añadir Observación</a></li>
+									</ul>
+								</div>
+							</label>
 							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>RMs</b>" data-content="Haga click para visualizar los Números de Recibo de Materiales (<b>RM</b>) relacionados con esta Solicitud de Servicio"><a onclick="updateRMs(`{{$SolicitudServicio->SolSerSlug}}`)" style="margin: 10px 10px;" class='btn btn-info pull-right'><i class="fas fa-list-ol"></i><b> RMs</b></a></label>
 
 							<div class="col-md-12" style="margin: 10px 0;">
@@ -589,6 +603,43 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									</div>
 								</div>
 							{{-- END Modal --}}
+							{{--  Modal --}}
+							<div class="modal modal-default fade in" id="ModalNewObserv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<form action="/observacion" method="POST" id="NewObservForm">
+											@csrf
+											<input type='hidden' name='solserslug' value="{{$SolicitudServicio->SolSerSlug}}">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+														aria-hidden="true">&times;</span></button>
+												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+													<i class="fas fa-exclamation-triangle"></i>
+													<span style="font-size: 0.3em; color: black;">
+														<p>escriba la observación que desea añadir a la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p>
+													</span>
+												</div>
+												<div class="form-group col-md-12">
+													<label color: black; text-align: left;" data-placement="auto" data-trigger="hover"
+														data-html="true" data-toggle="popover" title="Observaciones"
+														data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i
+															style="font-size: 1.8rem; color: Dodgerblue;"
+															class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
+													<small id="caracteresrestantesrepetirObs" class="help-block with-errors"></small>
+													<textarea onchange="updatecaracteresrepetirObs()" id="textDescriptionrepetirObs" rows="5"
+														style="resize: vertical;" maxlength="4000" class="form-control col-xs-12"
+														`+(status=='No Deacuerdo' ? 'required' : '' )+` name="solserdescript"></textarea>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+												<button form="NewObservForm" type="submit" class="btn btn-success">enviar</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							{{-- END Modal --}}
 								{{--  Modal --}}
 								<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -752,7 +803,25 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 </div>
 @endsection
 @section('NewScript')
-
+<script>
+	function updatecaracteresObs() {
+		var area = document.getElementById("textDescriptionObs");
+		var message = document.getElementById("caracteresrestantesObs");
+		var maxLength = 4000;
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		observacion = area.value;
+		
+	}
+	
+	$(document).ready(function(){
+		var area = document.getElementById("textDescriptionrepetirObs");
+		var message = document.getElementById("caracteresrestantesrepetirObs");
+		var maxLength = 4000;
+		$('#textDescriptionrepetir').keyup(function updatecaracteresrepetirObs() {
+			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		});
+	})
+</script>
 
 {{-- funciones para el modal de RMs --}}
 @if(in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
@@ -1399,6 +1468,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 		});
 	})
+	
 	function ModalStatus(slug, status){
 		$('#ModalStatus').empty();
 		$('#ModalStatus').append(`
