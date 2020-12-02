@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewObservationClient extends Mailable implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, SerializesModels;
 
     public $email;
     public $Observacion;

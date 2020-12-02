@@ -9,20 +9,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewObservation extends Mailable implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, SerializesModels;
 
     public $email;
-    public $remitente;
+    public $Observacion;
 
     /**
-     * Create a new message instance.
+     * Create a |new message instance.
      *
      * @return void
      */
-    public function __construct($email, $remitente)
+    public function __construct($email, $Observacion)
     {   
         $this->email = $email;
-        $this->remitente = $remitente;
+        $this->Observacion = $Observacion;
     }
 
     /**
