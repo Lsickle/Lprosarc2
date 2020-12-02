@@ -271,8 +271,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										<span class="caret"></span>
 										<span class="sr-only">Toggle Dropdown</span>
 									</button>
-									<ul class="dropdown-menu">
-										<li class="dropdown-header">Historial de Observaciones</li>
+									<ul class="dropdown-menu" style="left:0">
+										<li class="dropdown-header">Observaciones</li>
 										<li role="separator" class="divider"></li>
 										<li><a data-toggle='modal' data-target='#ModalNewObserv'>Añadir Observación</a></li>
 									</ul>

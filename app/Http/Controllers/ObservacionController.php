@@ -11,6 +11,7 @@ use App\SolicitudServicio;
 use App\Personal;
 use App\Mail\NewObservationClient;
 use App\Mail\NewObservation;
+use App\Mail\ConcilacionRecordatorio;
 use Permisos;
 use App\audit;
 
@@ -193,8 +194,25 @@ class ObservacionController extends Controller
                 break;
             
             case 'Completado':
-                $slug = $Solicitud->SolSerSlug;
-                return redirect()->route('email-solser', compact('slug'));
+                $email = DB::table('solicitud_servicios')
+                    ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                    ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                    ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName')
+                    ->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+                    ->first();
+                
+                $destinatarios = ['asistentelogistica@prosarc.com.co',
+                                'recepcionpda@prosarc.com.co',
+                                $email->PersEmail];
+
+                if ($Solicitud->SolServMailCopia == "null") {
+                    Mail::to($destinatarios)
+                    ->send(new ConcilacionRecordatorio($email, $Observacion));
+                }else{
+                    Mail::to($destinatarios)
+                    ->cc(json_decode($Solicitud->SolServMailCopia))
+                    ->send(new ConcilacionRecordatorio($email, $Observacion));
+                }
                 break;
             
             case 'Corregido':
