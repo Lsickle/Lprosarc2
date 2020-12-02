@@ -81,7 +81,7 @@ class ObservacionController extends Controller
 		$log->AuditRegistro=$Observacion->ID_Obs;
 		$log->AuditUser=Auth::user()->email;
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
-		$log->save();
+        $log->save();
 
         switch ($Solicitud->SolSerStatus) {
 
@@ -103,7 +103,7 @@ class ObservacionController extends Controller
                     $destinatarioscc = ['logistica@prosarc.com.co'];
                     Mail::to($destinatarios)
                     ->cc($destinatarioscc)
-                    ->send(new NewObservationClient($email));
+                    ->send(new NewObservationClient($email, $Observacion));
                 }
                 break;
 
@@ -133,7 +133,7 @@ class ObservacionController extends Controller
                                     ];
                     Mail::to($destinatarios)
                     ->cc($destinatarioscc)
-                    ->send(new NewObservationClient($email));
+                    ->send(new NewObservationClient($email, $Observacion));
                 }
                 break;
 
@@ -150,11 +150,11 @@ class ObservacionController extends Controller
 
                 if ($Solicitud->SolServMailCopia == "null") {
                     Mail::to($email->PersEmail)
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }else{
                     Mail::to($email->PersEmail)
                     ->cc(json_decode($Solicitud->SolServMailCopia))
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }
                 break;
             
@@ -180,14 +180,14 @@ class ObservacionController extends Controller
                 if ($Solicitud->SolServMailCopia == "null") {
                     Mail::to($email->PersEmail)
                     ->cc($destinatarios)
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }else{
                     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
                         array_push($destinatarios, $value);
                     }
                     Mail::to($email->PersEmail)
                     ->cc($destinatarios)
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }
                 return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
                 break;
@@ -218,7 +218,7 @@ class ObservacionController extends Controller
                         array_push($destinatarios, $value);
                     }
                 }
-                Mail::to($email->PersEmail)->cc($destinatarios)->send(new NewObservation($email));
+                Mail::to($email->PersEmail)->cc($destinatarios)->send(new NewObservation($email, $Observacion));
                 break;
             
             case 'Residuo Faltante':
@@ -241,7 +241,7 @@ class ObservacionController extends Controller
                     }
                 }
 
-                Mail::to($email->PersEmail)->cc($destinatarios)->send(new NewObservation($email));
+                Mail::to($email->PersEmail)->cc($destinatarios)->send(new NewObservation($email, $Observacion));
                 break;
             default:
                 $email = DB::table('solicitud_servicios')
@@ -253,11 +253,11 @@ class ObservacionController extends Controller
                     
                 if ($Solicitud->SolServMailCopia == "null") {
                     Mail::to($email->PersEmail)
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }else{
                     Mail::to($email->PersEmail)
                     ->cc(json_decode($Solicitud->SolServMailCopia))
-                    ->send(new NewObservation($email));
+                    ->send(new NewObservation($email, $Observacion));
                 }
                 break;
         }

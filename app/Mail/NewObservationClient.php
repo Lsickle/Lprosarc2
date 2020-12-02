@@ -9,9 +9,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NewObservationClient extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
 
     public $email;
+    public $Observacion;
 
 
     /**
@@ -19,9 +20,10 @@ class NewObservationClient extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($email)
+    public function __construct($email, $Observacion)
     {
         $this->email = $email;
+        $this->Observacion = $Observacion;
     }
 
     /**
