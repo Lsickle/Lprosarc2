@@ -84,6 +84,16 @@ class SolicitudServicio extends Model
 		return $this->programaciones()->whereNotNull('ProgVehEntrada')->where('ProgVehDelete', 0);
 	}
 
+	public function ultimorecordatorio()
+	{
+		return $this->Observaciones()->where('ObsStatus', 'Recordatorio+')->orderBy('ObsDate', 'desc')->first();
+	}
+
+	public function fechacompletado()
+	{
+		return $this->Observaciones()->where('ObsStatus', 'Completado')->orderBy('ObsDate', 'desc')->first();
+	}
+
 	protected $casts = [
         'SolSerRMs' => 'array',
     ];

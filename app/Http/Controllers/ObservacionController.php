@@ -60,7 +60,7 @@ class ObservacionController extends Controller
 
         $conteoRecordatorio = Observacion::where('FK_ObsSolSer', $Solicitud->ID_SolSer)->where('ObsStatus', 'Completado+')->get();
 
-        /*se guarda la observacion de la modificacion del servicio*/
+        /*se guarda la observación de la modificación del servicio*/
         $Observacion = new Observacion();
         $Observacion->ObsStatus = $Solicitud->SolSerStatus.'+';
         $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
@@ -94,7 +94,7 @@ class ObservacionController extends Controller
         $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
         
         if ($comercial == null) {
-            $comercial = 'subgerencia@prosarc.com.co';
+            $comercial->PersEmail = 'subgerencia@prosarc.com.co';
         }
 
         $copy = ['asistentelogistica@prosarc.com.co',
@@ -191,5 +191,85 @@ class ObservacionController extends Controller
     public function destroy(Observacion $observacion)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendRecordatorio(Request $request)
+    {
+        $Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404, 'no se encuentra las solicitud de servicio');
+        }
+        if ($Solicitud->SolSerStatus != 'Completado') {
+			abort(403, 'el servicio debe estar en status de (completado) para poder enviar recordatorios de conciliación');
+		}
+
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+        $Solicitud->save();
+        
+        $observacionesServicio = Observacion::where('FK_ObsSolSer', $Solicitud->ID_SolSer)->get();
+
+        $conteoRecordatorio = Observacion::where('FK_ObsSolSer', $Solicitud->ID_SolSer)->where('ObsStatus', 'Recordatorio+')->get();
+
+        /*se guarda la observación de la modificación del servicio*/
+        $Observacion = new Observacion();
+        $Observacion->ObsStatus = 'Recordatorio+';
+        $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+        $Observacion->ObsTipo = 'prosarc';
+        if ($conteoRecordatorio->count() > 0) {
+            $Observacion->ObsRepeat = $conteoRecordatorio->count() + 1;
+        }else{
+            $Observacion->ObsRepeat = 1;
+        }
+        $Observacion->ObsDate = now();
+        $Observacion->ObsUser = Auth::user()->email;
+        $Observacion->ObsRol = Auth::user()->UsRol;
+        $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+        $Observacion->save();
+
+        $log = new audit();
+		$log->AuditTabla="observaciones";
+		$log->AuditType="Add observacion";
+		$log->AuditRegistro=$Observacion->ID_Obs;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+        $log->save();
+
+        $email = DB::table('solicitud_servicios')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+                        ->first();
+
+        $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+        
+        if ($comercial == null) {
+            $comercial->PersEmail = 'subgerencia@prosarc.com.co';
+        }
+
+        $copy = ['logistica@prosarc.com.co',
+                    'recepcionpda@prosarc.com.co',
+                    'asistentelogistica@prosarc.com.co',
+                    $comercial->PersEmail
+                ];
+
+        $recipient = [$email->PersEmail];
+
+        if ($Solicitud->SolServMailCopia !== "null") {
+            foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                array_push($copy, $value);
+            }
+        }
+
+        Mail::to($recipient)->cc($copy)->send(new ConcilacionRecordatorio($email, $Observacion));
+
+        return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+
     }
 }
