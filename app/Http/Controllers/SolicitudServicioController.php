@@ -524,6 +524,21 @@ class SolicitudServicioController extends Controller
 		}
 
 		$Observaciones = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)->orderBy('ObsDate', 'desc')->get();
+
+		if($SolicitudServicio->SolSerStatus == 'Completado'){
+			$ultimoRecordatorio = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)
+								->where('ObsStatus', 'Recordatorio+')
+								->orderBy('ObsDate', 'desc')
+								->first();
+			if(!$ultimoRecordatorio){
+				$ultimoRecordatorio = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)
+								->where('ObsStatus', 'Completado')
+								->orderBy('ObsDate', 'asc')
+								->first();
+				$ultimoRecordatorio->ObsRepeat = 0;
+			}
+		}
+
 		
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
@@ -714,7 +729,7 @@ class SolicitudServicioController extends Controller
 			$tratamientos = 'NoAutorizado';
 		}
 
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
 	}
 
 
@@ -1885,5 +1900,73 @@ class SolicitudServicioController extends Controller
 		Mail::to($destinatarios)->cc($destinatarioscc)->send(new SolSerLeftRespel($SolicitudServicio));
 
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function serviciosCompletados()
+	{
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+			abort(401, 'no tiene autorización para acceder a esta página');
+		}
+
+		$Servicios = DB::table('solicitud_servicios')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
+			->select('solicitud_servicios.ID_SolSer',
+			'solicitud_servicios.SolSerStatus',
+			'solicitud_servicios.SolSerTipo',
+			'solicitud_servicios.SolSerAuditable',
+			'solicitud_servicios.SolSerConductor',
+			'solicitud_servicios.SolSerVehiculo',
+			'solicitud_servicios.SolSerSlug',
+			'solicitud_servicios.created_at',
+			'solicitud_servicios.updated_at',
+			'solicitud_servicios.SolSerDelete',
+			'solicitud_servicios.SolResAuditoriaTipo',
+			'solicitud_servicios.SolSerNameTrans',
+			'solicitud_servicios.SolSerNitTrans',
+			'solicitud_servicios.SolSerAdressTrans',
+			'solicitud_servicios.SolSerTypeCollect',
+			'solicitud_servicios.SolSerCollectAddress',
+			'solicitud_servicios.SolServCertStatus',
+			'clientes.CliName',
+			'clientes.CliSlug',
+			'clientes.CliStatus',
+			'clientes.TipoFacturacion',
+			'personals.PersFirstName',
+			'personals.PersLastName',
+			'personals.PersSlug',
+			'personals.PersEmail',
+			'personals.PersCellphone',
+			'Comercial.PersFirstName as ComercialPersFirstName',
+			'Comercial.PersLastName as ComercialPersLastName',
+			'Comercial.PersSlug as ComercialPersSlug',
+			'Comercial.PersEmail as ComercialPersEmail',
+			'Comercial.PersCellphone as ComercialPersCellphone')
+			->where('solicitud_servicios.SolSerStatus', 'Completado')
+			->orderBy('created_at', 'desc')
+			->get();
+
+		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+		foreach ($Servicios as $servicio) {
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
+			}else{
+				$servicio->recepcion = null;
+			}
+			$servicio->ultimoRecordatorio = SolicitudServicio::find($servicio->ID_SolSer)->ultimorecordatorio();
+			$servicio->fechaCompletado = SolicitudServicio::find($servicio->ID_SolSer)->fechacompletado();
+		}
+
+		// return $Servicios;
+		
+		return view('solicitud-serv.indexrecordatorios', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 }

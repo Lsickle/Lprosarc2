@@ -20,6 +20,7 @@ use App\audit;
 use App\Personal;
 use App\Observacion;
 use App\Mail\SolSerEmail;
+use App\Mail\ConcilacionRecordatorio;
 
 
 
@@ -356,4 +357,90 @@ class AjaxController extends Controller
 
 		}
 	}
+
+	/* envio de recordatorios via ajax*/
+    public function sendRecordatorio(Request $request)
+    {
+		session()->regenerate();
+		
+        $Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first(['ID_SolSer', 'SolSerStatus', 'SolSerDescript', 'SolSerSlug', 'SolServMailCopia']);
+		if (!$Solicitud) {
+			abort(404, 'No se encuentra el servicio');
+        }
+        if ($Solicitud->SolSerStatus != 'Completado') {
+			abort(
+				response()->json([
+						'message' => 'El servicio NO está en status (COMPLETADO)',
+						'newtoken' => csrf_token()
+				], 403)
+			);
+		}
+
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+        $Solicitud->save();
+
+        $conteoRecordatorio = Observacion::where('FK_ObsSolSer', $Solicitud->ID_SolSer)->where('ObsStatus', 'Recordatorio+')->get(['ObsStatus', 'ID_Obs']);
+
+        /*se guarda la observación de la modificación del servicio*/
+        $Observacion = new Observacion();
+        $Observacion->ObsStatus = 'Recordatorio+';
+        $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+        $Observacion->ObsTipo = 'prosarc';
+        if ($conteoRecordatorio->count() > 0) {
+            $Observacion->ObsRepeat = $conteoRecordatorio->count() + 1;
+        }else{
+            $Observacion->ObsRepeat = 1;
+        }
+        $Observacion->ObsDate = now();
+        $Observacion->ObsUser = Auth::user()->email;
+        $Observacion->ObsRol = Auth::user()->UsRol;
+        $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+        $Observacion->save();
+
+        $log = new audit();
+		$log->AuditTabla="observaciones";
+		$log->AuditType="Add observacion";
+		$log->AuditRegistro=$Observacion->ID_Obs;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+        $log->save();
+
+        $email = DB::table('solicitud_servicios')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+                        ->first();
+
+        $comercial = Personal::where('ID_Pers', $email->CliComercial)->first('PersEmail');
+        
+        if ($comercial == null) {
+            $comercial->PersEmail = 'subgerencia@prosarc.com.co';
+        }
+
+        $copy = ['logistica@prosarc.com.co',
+                    'recepcionpda@prosarc.com.co',
+                    'asistentelogistica@prosarc.com.co',
+                    $comercial->PersEmail
+                ];
+
+        $recipient = [$email->PersEmail];
+
+        if ($Solicitud->SolServMailCopia !== "null") {
+            foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                array_push($copy, $value);
+            }
+        }
+
+		Mail::to($recipient)->cc($copy)->send(new ConcilacionRecordatorio($email, $Observacion));
+		
+		$Response['newtoken'] = csrf_token();
+		$Response['Observacion'] = $Observacion;
+		$Response['Solicitud'] = $Solicitud;
+		$Response['ultimorecordatorio'] = \Carbon\Carbon::parse($Solicitud->ultimorecordatorio()->ObsDate)->diffForhumans();;
+		$Response['message'] = 'recordatorio enviado correctamente';
+
+		return response()->json($Response);
+
+    }
 }

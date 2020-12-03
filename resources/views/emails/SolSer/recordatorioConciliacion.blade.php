@@ -1,6 +1,6 @@
 @component('mail::message')
 
-# Recordatorio de conciliación<br>
+# Recordatorio {{$Observacion->ObsRepeat}} de conciliación<br>
 
 la Solicitud de Servicio N° {{$email->ID_SolSer}} esta lista para realizar una conciliación, el cliente {{$email->CliName}}, debe revisar los
 pesos y/o cantidades conciliadas en cada uno de los residuos, y luego usar el botón (Conciliado) para dar inicio al

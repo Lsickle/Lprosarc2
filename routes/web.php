@@ -139,6 +139,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
+	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');
+	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');
 	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
 	Route::resource('/certificados', 'CertificadoController');
@@ -180,6 +182,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
 	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
+	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
