@@ -75,7 +75,7 @@
                                             style="text-align: center;"
                                             class="{{'classSendRecordatorio'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Completado' ? 'success' : 'default'}}">
                                             <i class="fas fa-envelope"></i>
-                                            Recordatorio</button>
+                                        Recordatorio {{$Servicio->ultimoRecordatorio != null ? $Servicio->ultimoRecordatorio->ObsRepeat + 1 : ($Servicio->fechaCompletado != null ? $Servicio->fechaCompletado->ObsRepeat : "")  }}</button>
                                     </td>
                                     @endif
                                 </tr>
