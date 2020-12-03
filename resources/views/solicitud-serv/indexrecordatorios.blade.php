@@ -33,7 +33,7 @@
                                     <th>Contacto</th>
                                     <th>Comercial Asignado</th>
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
-                                    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+                                    @if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
                                         <th>Enviar</th>
                                     @endif
                                 </tr>
