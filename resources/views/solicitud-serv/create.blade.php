@@ -40,7 +40,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="form-group col-md-12">
+								<div class="form-group col-md-12 select-multiple-contenedor">
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
 									<small class="help-block with-errors"></small>
 									<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">

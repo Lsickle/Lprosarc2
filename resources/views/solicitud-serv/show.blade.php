@@ -646,7 +646,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							</div>
 							{{-- END Modal --}}
 							{{--  Modal --}}
-							@if ($SolicitudServicio->SolSerStatus == 'Completado' && true)
+							@if ($SolicitudServicio->SolSerStatus == 'Completado' && in_array(Auth::user()->UsRol, Permisos::ProgVehic2))
 								<div class="modal modal-default fade in" id="ModalSendRecordatorio" tabindex="-1" role="dialog"
 									aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -686,7 +686,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								</div>
 							@endif
 							{{-- END Modal --}}
-								{{--  Modal --}}
+							{{--  Modal --}}
 								<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">

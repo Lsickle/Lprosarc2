@@ -874,5 +874,39 @@ class CertificadoController extends Controller
     }
 
 
+    public function independiente(Request $request, $id)
+	{        
+        $certificadoOld = Certificado::where('ID_Cert', $id)->first();
+
+        $certificadoNew = $certificadoOld->replicate()->fill([
+            'CertSlug' => hash('sha256', rand().time()),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'CertNumero' => 0,
+            'CertObservacion' => 'certificado con observacion generica',
+            'CertSrc' => 'CertificadoDefault.pdf',
+            'CertAuthHseq' => 0,
+            'CertAuthJo' => 0,
+            'CertAuthJl' => 0,
+            'CertAuthDp' => 0,
+        ]);
+        $certificadoNew->save();
+        
+        foreach ($request->input('residuos') as $key => $value) {
+            $certdato = Certdato::where('ID_CertDato', $value)->first();
+            $certdato->FK_DatoCert = $certificadoNew->ID_Cert;
+            $certdato->save();
+        }
+
+        $log = new audit();
+        $log->AuditTabla="certificados";
+        $log->AuditType="generado Cert independiente";
+        $log->AuditRegistro=$certificadoOld->ID_Cert;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request);
+        $log->save();
+        
+        return redirect()->route('certificados.show', ['id' => $certificadoNew->CertSlug]);
+	}
 
 }
