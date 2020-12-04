@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use App\Mail\VehiculoRecibidoEmail;
 use App\Mail\CancelSolServEmail;
+use App\Mail\SolSerEmail;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -546,7 +547,8 @@ class VehicProgController extends Controller
 		}
 		$SolicitudServicio->save();
 		
-		return redirect()->route('vehicle-programacion.create');
+		// return redirect()->route('vehicle-programacion.create');
+		return redirect()->route('vehicle-programacion.edit' , ['id' => $programacion->ID_ProgVeh]);
 	}
 
 	/**
@@ -681,7 +683,7 @@ class VehicProgController extends Controller
 	public function edit($id)
 	{
 		if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
-			$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+			$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->with('servicio')->first();
 			if (!$programacion) {
 				abort(404);
 			}
@@ -1177,7 +1179,43 @@ class VehicProgController extends Controller
 		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 		$Observacion->save();
 
-		return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
+		if($request->input('destino') == 'vehiprog-edit'){
+			$email = DB::table('solicitud_servicios')
+				->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+				->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+				->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
+				->where('progvehiculos.FK_ProgServi', '=', $SolicitudServicio->ID_SolSer)
+				->where('progvehiculos.ProgVehDelete', 0)
+				->first();
+			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+			$destinatarios = ['dirtecnica@prosarc.com.co',
+								'logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								'auxiliarlogistico@prosarc.com.co',
+								'auxiliarpda@prosarc.com.co',
+								'recepcionpda@prosarc.com.co',
+								$comercial->PersEmail
+							];
+
+			if ($SolicitudServicio->SolServMailCopia == "null") {
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new SolSerEmail($email));
+			}else{
+				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new SolSerEmail($email));
+			}
+
+			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
+		}else{
+			return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
+		}
 
 		
 	}
