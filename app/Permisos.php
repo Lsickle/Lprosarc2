@@ -201,6 +201,11 @@ class Permisos{
 	/* Using ->
 		respel/index
 	*/
+	const ADMINPLANTA = ['AdministradorPlanta'];
+	/* Using ->
+		solicitudServicio/show
+	*/
+
 	const TESORERIA = ['Tesorería'];
 	/* Using ->
 		vehicle-programacion/index
