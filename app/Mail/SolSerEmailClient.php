@@ -53,6 +53,6 @@ class SolSerEmailClient extends Mailable implements ShouldQueue
         }
         return $this->from('notificaciones@prosarc.com.co', $this->email->CliName)
                         ->subject($asuntoStatus)
-                        ->markdown('emails.SolSer.email');
+                        ->markdown('emails.SolSer.emailClient');
     }
 }

@@ -1744,6 +1744,12 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'No Deacuerdo')" class='btn btn-danger pull-left'> <i class="fas fa-calendar-times"></i> <b>{{trans('adminlte_lang::message.solserstatusnoconciliado')}}</b></a>
 				`);
 			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::ADMINPLANTA) && $ultimoRecordatorio->ObsRepeat > 3)
+				$('#titulo').append(`
+					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
+				`);
+			@endif
+
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcomple')}}</b>
 			`);

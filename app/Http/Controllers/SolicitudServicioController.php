@@ -787,6 +787,11 @@ class SolicitudServicioController extends Controller
 							$Solicitud->SolSerStatus = 'Tratado';
 						}
 						break;
+					case 'Conciliada':
+						if(in_array(Auth::user()->UsRol, Permisos::ADMINPLANTA) || in_array(Auth::user()->UsRol2, Permisos::ADMINPLANTA)){
+							$Solicitud->SolSerStatus = 'Conciliado';
+						}
+						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 							$Solicitud->SolSerStatus = 'Certificacion';
@@ -851,7 +856,11 @@ class SolicitudServicioController extends Controller
 				break;
 
 			case 'Conciliado':
-				$Observacion->ObsTipo = 'cliente';
+				if (in_array(Auth::user()->UsRol, Permisos::ADMINPLANTA) || in_array(Auth::user()->UsRol2, Permisos::ADMINPLANTA)) {
+					$Observacion->ObsTipo = 'prosarc';
+				}else{
+					$Observacion->ObsTipo = 'cliente';
+				}
 				break;
 			
 			case 'No Conciliado':
