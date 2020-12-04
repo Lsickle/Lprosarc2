@@ -897,6 +897,14 @@ class CertificadoController extends Controller
             $certdato->FK_DatoCert = $certificadoNew->ID_Cert;
             $certdato->save();
         }
+
+        $log = new audit();
+        $log->AuditTabla="certificados";
+        $log->AuditType="generado Cert independiente";
+        $log->AuditRegistro=$certificadoOld->ID_Cert;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request);
+        $log->save();
         
         return redirect()->route('certificados.show', ['id' => $certificadoNew->CertSlug]);
 	}
