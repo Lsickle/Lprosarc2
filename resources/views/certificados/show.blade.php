@@ -104,7 +104,9 @@
 								<a target="_blank" href="/certificados/{{$certificado->CertSlug}}/wordtemplate" class="btn btn-primary pull-right" style="margin-right: 1em"> <i class="fas fa-file-word"></i> <b>Plantilla</b></a>
 							@endif
 							@if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT) ||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
-								<a data-toggle='modal' data-target='#ModalIndependiente' class="btn btn-success pull-right" style="margin-right: 1em"><i class="fas fa-file-import"></i><b>Independiente</b></a>
+								@if ($certificado->SolicitudServicio->SolSerStatus == 'Conciliado' || $certificado->SolicitudServicio->SolSerStatus == 'Tratado')
+									<a data-toggle='modal' data-target='#ModalIndependiente' class="btn btn-success pull-right" style="margin-right: 1em"><i class="fas fa-file-import"></i><b>Independiente</b></a>
+								@endif
 							@endif
 						</div>
 					</div>
