@@ -103,6 +103,9 @@
 							@if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT) ||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
 								<a target="_blank" href="/certificados/{{$certificado->CertSlug}}/wordtemplate" class="btn btn-primary pull-right" style="margin-right: 1em"> <i class="fas fa-file-word"></i> <b>Plantilla</b></a>
 							@endif
+							@if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT) ||in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+								<a data-toggle='modal' data-target='#ModalIndependiente' class="btn btn-success pull-right" style="margin-right: 1em"><i class="fas fa-file-import"></i><b>Independiente</b></a>
+							@endif
 						</div>
 					</div>
 
@@ -162,6 +165,73 @@
 								</div>
 
 								<div id="modalrango"></div>
+								<div id="modal2">
+									{{--  Modal --}}
+									@if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT))
+										<div class="modal modal-default fade in" id="ModalIndependiente" tabindex="-1" role="dialog"
+											aria-labelledby="myModalLabel">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<form action="/certificados/{{$certificado->ID_Cert}}/independiente" method="POST" id="certindependienteForm">
+														@csrf
+														<div class="modal-body">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+																	aria-hidden="true">&times;</span></button>
+															<div style="font-size: 1.5em; text-align: center; margin: auto;">
+																<span>
+																	<p>Escoja los residuos que desea <b>mover</b><br> hacia un <i>certificado independiente</i></p>
+																</span>
+															</div>
+															<div class="form-group col-md-12 select-multiple-contenedor">
+																<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Residuos a separar" data-content="Escoja los residuos que desea quitar de este certificado y añadirlos en un certificado independiente"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Residuos</label>
+																<small id="caracteresrestantesrepetirSR" class="help-block with-errors"></small>
+																<select multiple name="residuos[]" id="residuos">
+																	@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
+																	@foreach ($certificado->certdato as $certdato)
+																	@if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
+																	@php
+																	// $TotalEnv = $Residuo->generespel->respels->SolResKgEnviado+$TotalEnv;
+																	// $TotalRec = $Residuo->generespel->respels->SolResKgRecibido+$TotalRec;
+																	// $TotalCons = $Residuo->generespel->respels->SolResKgConciliado+$TotalCons;
+																	// $TotalTrat = $Residuo->generespel->respels->SolResKgTratado+$TotalTrat;
+																	switch ($Residuo->SolResTypeUnidad) {
+																	case 'Unidad':
+																	$TypeUnidad = 'Unid.';
+																	break;
+																	case 'Litros':
+																	$TypeUnidad = 'Lt.';
+																	break;
+																	default:
+																	$TypeUnidad = 'Kg.';
+																	break;
+																	}
+																	@endphp
+																	<option value="{{$certdato->ID_CertDato}}">{{$Residuo->generespel->respels->RespelName}} / {{$Residuo->SolResEmbalaje}} /
+																	@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																	{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}
+																	@else
+																	{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }}
+																	@endif
+																	{{$TypeUnidad}}
+																	</option>
+																	@endif
+																	@endforeach
+																	@endforeach
+																</select>
+																<input type="hidden" name="ID_Cert" id="ID_Cert" value="{{$certificado->ID_Cert}}">
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+															<button form="certindependienteForm" type="submit" class="btn btn-success">enviar</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									@endif
+									{{-- END Modal --}}
+								</div>
 								<!-- /.tab-pane fade -->
 							</div>
 							<!-- /.tab-content -->
