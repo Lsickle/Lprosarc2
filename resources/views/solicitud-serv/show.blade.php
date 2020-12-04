@@ -275,7 +275,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										<li class="dropdown-header">Observaciones</li>
 										<li role="separator" class="divider"></li>
 										<li><a data-toggle='modal' data-target='#ModalNewObserv'>Añadir Observación</a></li>
-										@if ($SolicitudServicio->SolSerStatus == 'Completado' && true )
+										@if ($SolicitudServicio->SolSerStatus == 'Completado' && in_array(Auth::user()->UsRol, Permisos::ProgVehic2))
 										<li>
 											<a data-toggle='modal' data-target='#ModalSendRecordatorio'>Enviar Recordatorio {{$ultimoRecordatorio->ObsRepeat + 1 }} <br>Ultimo: {{date('d-m-Y',strtotime($ultimoRecordatorio->ObsDate))}}</a>										
 										</li>
