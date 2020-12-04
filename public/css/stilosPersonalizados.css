@@ -324,3 +324,7 @@ button:disabled {
 		margin-right: 15%;
 	}
 }
+.select-multiple-contenedor > .select2-container--classic {
+    height: auto !important;
+    padding: 0;
+}
