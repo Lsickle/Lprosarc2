@@ -169,3 +169,7 @@ button:disabled {
 	margin: 0px 0px 0px -30px;
 	padding: 6px 18px 6px 18px;
 }
+.select-multiple-contenedor > .select2-container--classic {
+    height: auto !important;
+    padding: 0;
+}

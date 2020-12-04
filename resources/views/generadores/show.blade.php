@@ -141,7 +141,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="col-md-12 form-group">
+								<div class="col-md-12 form-group select-multiple-contenedor">
 									<label for="FK_Respel">{{ trans('adminlte_lang::message.MenuRespel') }} <a id="load"></a></label><small class="help-block with-errors">*</small>
 									<select class="form-control select-multiple" id="FK_Respel" name="FK_Respel[]" multiple required>
 										@if(isset($Residuos))
