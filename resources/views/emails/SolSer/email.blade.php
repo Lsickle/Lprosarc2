@@ -59,7 +59,7 @@
         @break
     @case('Conciliado')
         @php
-            $text = "ha sido aceptada satisfactoriamente por el cliente $email->CliName, según las cantidades enviadas a conciliación... esto permite dar inicio al registro de las cantidades tratadas para cada residuo de la solicitud de servicio";
+            $text = "ha sido Conciliada por Prosarc S.A. ESP, según las cantidades recibidas... esto permite dar inicio al proceso de tratamiento y certificación para cada residuo de la solicitud de servicio";
         @endphp
         @break
     @case('Corregido')
@@ -98,8 +98,11 @@ En estos momentos la Solicitud de Servicio N° {{$email->ID_SolSer}} {{$text}}.<
 # Observaciones de RecepciónPDA
 @break
 
-@case('No Conciliado')
 @case('Conciliado')
+# Observaciones Gerente Planta:
+@break
+
+@case('No Conciliado')
 # Observaciones del Cliente: 
 @break
 

@@ -70,7 +70,42 @@ class EmailController extends Controller
                         Mail::to($destinatarios)
                         ->cc($destinatarioscc)
                         ->send(new SolSerEmailClient($email));
+                    }else{
+                        if (Auth::user()->UsRol === 'AdministradorPlanta') {
+                            $email = DB::table('solicitud_servicios')
+                                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                                ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                                ->first();
+
+                            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                            $destinatarios = ['asistentelogistica@prosarc.com.co',
+                                                'auxiliarlogistico@prosarc.com.co',
+                                                $comercial->PersEmail
+                                            ];
+                            $destinatarioscc = ['auxiliarpda@prosarc.com.co',
+                                                'ingtratamiento1@prosarc.com.co',
+                                                'ingtratamiento2@prosarc.com.co',
+                                                'ingtratamiento3@prosarc.com.co',
+                                                'conciliaciones@prosarc.com.co',
+                                                'recepcionpda@prosarc.com.co',
+                                                'gerenteplanta@prosarc.com.co',
+                                                'logistica@prosarc.com.co'
+                                            ];
+
+                            if ($SolSer->SolServMailCopia !== "null") {
+                                foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                                    array_push($destinatarioscc, $value);
+                                }
+                            }
+
+                            Mail::to($destinatarios)
+                            ->cc($destinatarioscc)
+                            ->send(new SolSerEmail($email));
+                        }
                     }
+                    
                     break;
 
                 case 'Programado':
