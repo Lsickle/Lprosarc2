@@ -16,7 +16,16 @@
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.progvehicedit') }}</h3>
 					@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
-						<a href="/vehicle-programacion/create" class="btn btn-info col-md-offset-3"><i class="fas fa-calendar-alt"></i> {{ trans('adminlte_lang::message.progvehiccreatetext') }}</a>
+						@php
+							$Status = ['Aprobado', 'Programado', 'Notificado'];
+						@endphp
+						<td>
+							<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->servicio->ID_SolSer}}', '{{in_array($programacion->servicio->SolSerStatus, $Status)}}', 'vehiprog-edit', 'Notificar')"
+								style="text-align: center;"
+								class="btn col-md-offset-3 btn-{{$programacion->servicio->SolSerStatus == 'Programado' ? 'success' : ($programacion->servicio->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i
+									class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
+						</td>
+
 						@component('layouts.partials.modal')
 							@slot('slug')
 								{{$programacion->ID_ProgVeh}}
@@ -663,6 +672,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="ModalStatus"></div>
 </div>
 @endsection
 @section('NewScript')
@@ -916,5 +926,54 @@
 			var id = $('#precintos'+id).remove();
 		};
 
+	</script>
+	<script>
+		var observacion = ``;
+	function updatecaracteres() {
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+		observacion = area.value;
+		
+	}
+	function ModalStatus(idvehiprog, idServicio, boolean, destino, text){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div text-align: center; margin: auto;">
+									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
+									<form action="/vehicle-programacion/`+idvehiprog+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+										@csrf
+										@method('PUT')
+										<div class="form-group col-md-12">
+											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>
+											<small id="caracteresrestantes" class="help-block with-errors">*</small>
+											<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required name="solserdescript">`+observacion+`</textarea>
+										</div>
+										<input type="submit" id="Cambiar`+idvehiprog+`" style="display: none;">
+										<input type="text" name="destino" value="`+destino+`" style="display: none;">
+									</form>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+idvehiprog+`" class='btn btn-success'>Enviar</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			$('#SolSer').validator('update');
+			popover();
+			envsubmit();
+			$('#myModal').modal();
+		}
+	}
 	</script>
 @endsection

@@ -109,7 +109,7 @@ class EmailController extends Controller
                                         'logistica@prosarc.com.co',
                                         'asistentelogistica@prosarc.com.co',
                                         'auxiliarlogistico@prosarc.com.co',
-                                        'subgerencia@prosarc.com.co',
+                                        'auxiliarpda@prosarc.com.co',
                                         'recepcionpda@prosarc.com.co',
                                         $comercial->PersEmail
                                     ];
@@ -173,8 +173,7 @@ class EmailController extends Controller
                         }
                     }
                     Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
-                    break;
-                
+                    break;               
                 case 'Residuo Faltante':
                     $email = DB::table('solicitud_servicios')
                         ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
