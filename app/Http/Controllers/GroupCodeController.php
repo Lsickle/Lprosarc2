@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\VerificationCode;
+use App\GroupCode;
 use Illuminate\Http\Request;
 
-class VerificationCodeController extends Controller
+class GroupCodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class VerificationCodeController extends Controller
      */
     public function index()
     {
-        return "index de códigos de verificación";
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class VerificationCodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\VerificationCode  $verificationCode
+     * @param  \App\GroupCode  $groupCode
      * @return \Illuminate\Http\Response
      */
-    public function show(VerificationCode $verificationCode)
+    public function show(GroupCode $groupCode)
     {
         //
     }
@@ -52,10 +52,10 @@ class VerificationCodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\VerificationCode  $verificationCode
+     * @param  \App\GroupCode  $groupCode
      * @return \Illuminate\Http\Response
      */
-    public function edit(VerificationCode $verificationCode)
+    public function edit(GroupCode $groupCode)
     {
         //
     }
@@ -64,10 +64,10 @@ class VerificationCodeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\VerificationCode  $verificationCode
+     * @param  \App\GroupCode  $groupCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VerificationCode $verificationCode)
+    public function update(Request $request, GroupCode $groupCode)
     {
         //
     }
@@ -75,10 +75,10 @@ class VerificationCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\VerificationCode  $verificationCode
+     * @param  \App\GroupCode  $groupCode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VerificationCode $verificationCode)
+    public function destroy(GroupCode $groupCode)
     {
         //
     }

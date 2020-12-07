@@ -15,6 +15,12 @@ class VerificationCode extends Model
     public function servicio(){
     	return $this->belongsTo('App\SolicitudServicio', 'FK_VCSolSer', 'ID_SolSer');
     }
+
+    public function grupo(){
+    	return $this->belongsTo('App\GroupCode', 'FK_VCGroup', 'ID_GCode');
+    }
+
+
     protected $casts = [
         'VC_RM' => 'array',
     ];
