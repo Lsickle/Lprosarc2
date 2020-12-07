@@ -17,28 +17,36 @@ Códigos de Verificación
         <div class="col-md-16 col-md-offset-0">
             <div class="box">
                 <div class="box-header with-border">
-                    <a href="{{route('groupcodes.create')}}" class="btn btn-primary pull-right"><i class="fas fa-plus"></i> Añadir Codigos</a>
+                    <a href="{{route('groupcodes.create')}}" class="btn btn-primary pull-right"><i
+                            class="fas fa-plus"></i> Añadir Codigos</a>
                 </div>
                 <div class="box-body">
-                    <div id="ModalStatus"></div>
                     <table class="table table-compact table-bordered table-striped">
                         <thead>
-                            <th>id</th>
+                        <th>id {{$groupCode}}</th>
                             <th>empresa</th>
-                            <th>Cantidad</th>
+                            <th>código</th>
+                            <th>Servicio</th>
+                            <th>Rm´s</th>
                             <th>creado el:</th>
-                            <th>ver</th>
                         </thead>
                         <tbody>
-                            @foreach($groupCodes as $groupCode)
+                            @foreach($groupCode->codigos() as $code)
                             <tr>
-                                <td>{{$groupCode->ID_GCode}}</td>
-                                <td>{{$groupCode->GC_Empresa}}</td>
-                                <td>{{$groupCode->codigos->count()}}</td>
-                                <td>{{$groupCode->created_at}}</td>
+                                <td>{{$code}}</td>
+                                <td>{{$code->GC_Empresa}}</td>
+                                <td>{{$code->VCode}}</td>
+                                <td>{{$code->FK_VCSolSer}}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{{route('groupcodes.show', [$groupCode])}}" target="_blank" rel="noopener noreferrer">Ver</a>
+                                    <ul>
+                                        @foreach ($code->FK_VCSolSer as $item)
+                                        <li>
+                                            {{$item}}
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                 </td>
+                                <td>{{$code->created_at}}</td>
                             </tr>
                             @endforeach
                         </tbody>

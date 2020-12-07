@@ -81,7 +81,10 @@ class GroupCodeController extends Controller
      */
     public function show(GroupCode $groupCode)
     {
-        //
+        $group = GroupCode::find($groupCode);
+
+        return $group;
+        return view('groupcodes.show', compact('groupCode'));
     }
 
     /**
