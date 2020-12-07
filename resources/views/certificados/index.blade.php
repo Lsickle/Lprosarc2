@@ -242,10 +242,10 @@ Lista de Certificados
 									@endif
 
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Información Adicional</b>" data-content="<p style='width: 50%'>Puede ver la información adicional relevante para la generación del certificado </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
-									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}/firmar' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Firmar Certificado</b>" data-content="<p style='width: 50%'>Este boton le permite marcar el certificado como firmado en la Base de datos </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
+									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}/firmar' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-signature'></i></a></td>
 									@endif
 									@php
 										$Status = ['Conciliado', 'Tratado'];
@@ -290,7 +290,6 @@ Lista de Certificados
 					</div>
 				</div>
 			`);
-			popover();
 			envsubmit();
 			$('#myModal').modal();
 			$('#buttonCertStatusOK'+slug).on( "click", function() {
