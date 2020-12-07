@@ -16,7 +16,7 @@ class GroupCodeController extends Controller
      */
     public function index()
     {
-        $groupCodes = GroupCode::with('codigos')->get();
+        $groupCodes = GroupCode::with('codigos')->orderBy('created_at','desc')->get();
 
 		return view('groupcodes.index', compact('groupCodes'));
     }
@@ -57,12 +57,6 @@ class GroupCodeController extends Controller
 
         foreach ($words as $w) {
         $acronym .= $w[0];
-        }
-
-        $servicio = SolicitudServicio::find();
-
-        if (!SolicitudServicio::find($request->input('FK_VCSolSer'))) {
-            # code...
         }
 
         for ($i=0; $i < $request->input('VC_cantidad'); $i++) { 
