@@ -15,6 +15,7 @@ class CreateGroupCodesTable extends Migration
     {
         Schema::create('group_codes', function (Blueprint $table) {
             $table->bigIncrements('ID_GCode');
+            $table->string('GC_Empresa');
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
