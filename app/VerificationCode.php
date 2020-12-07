@@ -8,7 +8,7 @@ class VerificationCode extends Model
 {
     protected $table = 'verification_codes';
 
-    protected $fillable = ['VC_Empresa', 'VC_RM', 'FK_VCSolSer'];
+    protected $fillable = ['VC_Empresa', 'VC_RM', 'FK_VCSolSer', 'FK_VCGroup'];
 
     public $primaryKey = 'ID_VCode';
 

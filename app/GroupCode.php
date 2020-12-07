@@ -8,7 +8,7 @@ class GroupCode extends Model
 {
     protected $table = 'group_codes';
 
-    protected $fillable = ['VC_Empresa', 'VC_RM', 'FK_VCSolSer'];
+    protected $fillable = ['GC_Empresa'];
 
     public $primaryKey = 'ID_GCode';
 
