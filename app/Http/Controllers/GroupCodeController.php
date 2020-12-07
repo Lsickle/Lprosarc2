@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\GroupCode;
+use App\VerificationCode;
+use App\SolicitudServicio;
 use Illuminate\Http\Request;
 
 class GroupCodeController extends Controller
@@ -14,7 +16,9 @@ class GroupCodeController extends Controller
      */
     public function index()
     {
-        //
+        $groupCodes = GroupCode::with('codigos')->get();
+
+		return view('groupcodes.index', compact('groupCodes'));
     }
 
     /**
@@ -24,7 +28,7 @@ class GroupCodeController extends Controller
      */
     public function create()
     {
-        //
+        return view('groupcodes.create', compact('groupCodes'));
     }
 
     /**
@@ -35,7 +39,44 @@ class GroupCodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $validate = $request->validate([
+			'FK_VCSolSer' => 'exists:solicitud_servicios,ID_SolSer'
+        ],
+        [
+            'FK_VCSolSer.exists' => 'El Número de Servicio :input no existe...',
+        ]);
+
+        $groupcode = new GroupCode();
+        $groupcode->GC_Empresa = $request->input('GC_Empresa');
+        $groupcode->save();
+
+
+        $words = explode(" ", $request->input('GC_Empresa'));
+        $acronym = "";
+
+        foreach ($words as $w) {
+        $acronym .= $w[0];
+        }
+
+        $servicio = SolicitudServicio::find();
+
+        if (!SolicitudServicio::find($request->input('FK_VCSolSer'))) {
+            # code...
+        }
+
+        for ($i=0; $i < $request->input('VC_cantidad'); $i++) { 
+            $verCode = new VerificationCode();
+            $verCode->VC_RM = $request->input('VC_RM');
+            $verCode->VC_Empresa = $request->input('GC_Empresa');
+            $verCode->VCode = $groupcode->ID_GCode.$acronym.hash('sha256', rand().time().$groupcode->ID_GCode);
+            $verCode->FK_VCSolSer = $request->input('FK_VCSolSer');
+            $verCode->FK_VCGroup = $groupcode->ID_GCode;
+            $verCode->save();
+        }
+
+        return redirect()->route('groupcodes.index');
+
     }
 
     /**

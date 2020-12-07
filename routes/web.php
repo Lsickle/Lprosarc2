@@ -149,6 +149,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/certificados/{id}/wordtemplate', 'CertificadoController@wordtemplate');
 	Route::post('/certificados/{id}/independiente', 'CertificadoController@independiente');
 	Route::resource('/verificationcodes', 'VerificationCodeController');
+	Route::resource('/groupcodes', 'GroupCodeController');
 	Route::resource('/manifiestos', 'ManifiestoController');
 	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
 	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');

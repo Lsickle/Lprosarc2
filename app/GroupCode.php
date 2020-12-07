@@ -13,7 +13,7 @@ class GroupCode extends Model
     public $primaryKey = 'ID_GCode';
 
     public function codigos(){
-    	return $this->haMany('App\VerificationCode', 'FK_VCGroup', 'ID_GCode');
+    	return $this->hasMany('App\VerificationCode', 'FK_VCGroup', 'ID_GCode');
     }
 
 

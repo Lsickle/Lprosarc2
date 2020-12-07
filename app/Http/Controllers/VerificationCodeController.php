@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\VerificationCode;
+use App\GroupCode;
 use Illuminate\Http\Request;
 
 class VerificationCodeController extends Controller
@@ -14,7 +15,7 @@ class VerificationCodeController extends Controller
      */
     public function index()
     {
-        return "index de códigos de verificación";
+        //
     }
 
     /**
