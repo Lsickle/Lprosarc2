@@ -27,7 +27,9 @@ Códigos de Verificación
                             <th>id</th>
                             <th>empresa</th>
                             <th>Código</th>
+                            <th>Servicio</th>
                             <th>Rm´s</th>
+                            <th>custom</th>
                             <th>actualizado:</th>
                             <th>Grupo</th>
                             <th>editar</th>
@@ -38,6 +40,7 @@ Códigos de Verificación
                                 <td>{{$code->ID_VCode}}</td>
                                 <td>{{$code->VC_Empresa}}</td>
                                 <td>{{$code->VCode}}</td>
+                                <td>{{$code->FK_VCSolSer}}</td>
                                 <td>
                                     <ul>
                                         @foreach ($code->VC_RM as $rm)
@@ -45,10 +48,10 @@ Códigos de Verificación
                                         @endforeach
                                     </ul>
                                 </td>
+                                <td>{{$code->custom}}</td>
                                 <td>{{$code->updated_at}}</td>
                                 <td>
-                                    <a class="btn btn-info"
-                                        href="{{route('groupcodes.show', ['id' => $code->FK_VCGroup])}}" target="_blank">{{$code->grupo->ID_GCode}}</a>
+                                    <a class="btn btn-info" href="{{route('groupcodes.show', ['id' => $code->FK_VCGroup])}}" target="_blank">{{$code->grupo->ID_GCode}}</a>
                                 </td>
                                 <td>
                                     <a class="btn btn-warning" href="{{route('verifycodes.edit', ['id' => $code->ID_VCode])}}" target="_blank">Editar {{$code->ID_VCode}}</a>

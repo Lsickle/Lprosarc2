@@ -63,13 +63,14 @@ class GroupCodeController extends Controller
             $verCode = new VerificationCode();
             $verCode->VC_RM = $request->input('VC_RM');
             $verCode->VC_Empresa = $request->input('GC_Empresa');
+            $verCode->custom = $request->input('custom');
             $verCode->VCode = $groupcode->ID_GCode.$acronym.hash('sha256', rand().time().$groupcode->ID_GCode);
             $verCode->FK_VCSolSer = $request->input('FK_VCSolSer');
             $verCode->FK_VCGroup = $groupcode->ID_GCode;
             $verCode->save();
         }
 
-        return redirect()->route('groupcodes.index');
+        return redirect()->route('verifycodes.index');
 
     }
 
@@ -82,6 +83,10 @@ class GroupCodeController extends Controller
     public function show($id)
     {
         $groupCode = GroupCode::find($id);
+
+        if (! $groupCode) {
+            abort(404, 'el grupo no se encuentra en la base de datos');
+        }
 
         // return $groupCode->codigos;
         return view('groupcodes.show', compact('groupCode'));

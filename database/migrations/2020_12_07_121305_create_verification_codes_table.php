@@ -18,6 +18,8 @@ class CreateVerificationCodesTable extends Migration
             $table->json('VC_RM')->nullable();
             $table->string('VC_Empresa');
             $table->string('VCode');
+            $table->string('custom')->nullable();
+            $table->string('observacion')->nullable();
             $table->unsignedInteger('FK_VCSolSer')->nullable();
             $table->unsignedBigInteger('FK_VCGroup')->nullable();
             $table->timestamps();

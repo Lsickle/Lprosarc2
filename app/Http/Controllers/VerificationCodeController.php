@@ -58,9 +58,11 @@ class VerificationCodeController extends Controller
      * @param  \App\VerificationCode  $verificationCode
      * @return \Illuminate\Http\Response
      */
-    public function edit(VerificationCode $verificationCode)
+    public function edit($id)
     {
-        //
+        $verificationCode = VerificationCode::with('grupo')->where('ID_VCode', $id)->first();
+
+		return view('verifycodes.edit', compact('verificationCode'));
     }
 
     /**
@@ -70,9 +72,17 @@ class VerificationCodeController extends Controller
      * @param  \App\VerificationCode  $verificationCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VerificationCode $verificationCode)
+    public function update(Request $request, $id)
     {
-        //
+
+        $verificationCode = VerificationCode::with('grupo')->where('ID_VCode', $id)->first();
+        $verificationCode->VC_Empresa = $request->input('VC_Empresa');
+        $verificationCode->FK_VCSolSer = $request->input('FK_VCSolSer');
+        $verificationCode->custom = $request->input('custom');
+        $verificationCode->VC_RM = $request->input('VC_RM');
+        $verificationCode->save();
+
+        return redirect()->route('verifycodes.index');
     }
 
     /**
