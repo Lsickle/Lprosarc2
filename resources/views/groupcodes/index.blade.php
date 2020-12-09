@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Códigos de Verificación
+Grupos de códigos
 @endsection
 @section('contentheader_title')
 <span
     style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
-    Códigos de Verificación
+    Grupos de códigos
     <div
         style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;">
     </div>
@@ -37,7 +37,7 @@ Códigos de Verificación
                                 <td>{{$groupCode->codigos->count()}}</td>
                                 <td>{{$groupCode->created_at}}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{{route('groupcodes.show', [$groupCode])}}" target="_blank" rel="noopener noreferrer">Ver</a>
+                                    <a class="btn btn-info" href="{{route('groupcodes.show', ['id' => $groupCode->ID_GCode])}}" target="_blank">Ver</a>
                                 </td>
                             </tr>
                             @endforeach

@@ -42,15 +42,13 @@ Route::get('qr-code', function ()
 	echo "<img src='".$qrCode->writeDataUri()."'>";
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     //    Route::get('/link1', function ()    {
-//        // Uses Auth Middleware
-//    });
-// Route::get('/', function () {
+	//        // Uses Auth Middleware
+	//    });
+	// Route::get('/', function () {
 	// Only verified users may enter...
 	
-
-
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
@@ -150,6 +148,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/certificados/{id}/independiente', 'CertificadoController@independiente');
 	Route::resource('/verificationcodes', 'VerificationCodeController');
 	Route::resource('/groupcodes', 'GroupCodeController');
+	Route::resource('/verifycodes', 'VerificationCodeController');
 	Route::resource('/manifiestos', 'ManifiestoController');
 	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
 	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');

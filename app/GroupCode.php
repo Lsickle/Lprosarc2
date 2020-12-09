@@ -16,5 +16,8 @@ class GroupCode extends Model
     	return $this->hasMany('App\VerificationCode', 'FK_VCGroup', 'ID_GCode');
     }
 
-
+    public function getRouteKeyName()
+    {
+        return 'ID_GCode';
+    }
 }

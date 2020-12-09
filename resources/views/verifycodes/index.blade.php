@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-Grupos de códigos
+Códigos de Verificación
 @endsection
 @section('contentheader_title')
 <span
     style="background-image: linear-gradient(40deg, #F1B378, #D66841); padding-right:30vw; position:relative; overflow:hidden;">
-    Grupos de códigos
+    Códigos de Verificación
     <div
         style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;">
     </div>
@@ -21,32 +21,38 @@ Grupos de códigos
                             class="fas fa-plus"></i> Añadir Codigos</a>
                 </div>
                 <div class="box-body">
+                    <div id="ModalStatus"></div>
                     <table class="table table-compact table-bordered table-striped">
                         <thead>
-                        <th>id {{$groupCode->ID_GCode}}</th>
+                            <th>id</th>
                             <th>empresa</th>
-                            <th>código</th>
-                            <th>Servicio</th>
+                            <th>Código</th>
                             <th>Rm´s</th>
-                            <th>creado el:</th>
+                            <th>actualizado:</th>
+                            <th>Grupo</th>
+                            <th>editar</th>
                         </thead>
                         <tbody>
-                            @foreach($groupCode->codigos as $code)
+                            @foreach($codes as $code)
                             <tr>
                                 <td>{{$code->ID_VCode}}</td>
                                 <td>{{$code->VC_Empresa}}</td>
                                 <td>{{$code->VCode}}</td>
-                                <td>{{$code->FK_VCSolSer}}</td>
                                 <td>
                                     <ul>
-                                        @foreach ($code->VC_RM as $item)
-                                        <li>
-                                            {{$item}}
-                                        </li>
+                                        @foreach ($code->VC_RM as $rm)
+                                        <li>{{$rm}}</li>
                                         @endforeach
                                     </ul>
                                 </td>
-                                <td>{{$code->created_at}}</td>
+                                <td>{{$code->updated_at}}</td>
+                                <td>
+                                    <a class="btn btn-info"
+                                        href="{{route('groupcodes.show', ['id' => $code->FK_VCGroup])}}" target="_blank">{{$code->grupo->ID_GCode}}</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" href="{{route('verifycodes.edit', ['id' => $code->ID_VCode])}}" target="_blank">Editar {{$code->ID_VCode}}</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

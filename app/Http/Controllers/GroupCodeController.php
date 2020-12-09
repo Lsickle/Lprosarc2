@@ -41,7 +41,7 @@ class GroupCodeController extends Controller
     {
         // return $request;
         $validate = $request->validate([
-			'FK_VCSolSer' => 'exists:solicitud_servicios,ID_SolSer'
+			'FK_VCSolSer' => 'nullable|exists:solicitud_servicios,ID_SolSer'
         ],
         [
             'FK_VCSolSer.exists' => 'El Número de Servicio :input no existe...',
@@ -79,11 +79,11 @@ class GroupCodeController extends Controller
      * @param  \App\GroupCode  $groupCode
      * @return \Illuminate\Http\Response
      */
-    public function show(GroupCode $groupCode)
+    public function show($id)
     {
-        $group = GroupCode::find($groupCode);
+        $groupCode = GroupCode::find($id);
 
-        return $group;
+        // return $groupCode->codigos;
         return view('groupcodes.show', compact('groupCode'));
     }
 
