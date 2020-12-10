@@ -32,10 +32,10 @@ class FechaErrada extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $asuntoStatus = 'Recordatorio de conciliación para el Servicio #'.$this->email->ID_SolSer.' del cliente '.$this->email->CliName;
+        $asuntoStatus = 'fecha de recepción errada para el Servicio #'.$this->email->ID_SolSer.' del cliente '.$this->email->CliName;
 
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                         ->subject($asuntoStatus)
-                        ->markdown('emails.SolSer.recordatorioConciliacion');
+                        ->markdown('emails.progvehiculo.errada');
     }
 }

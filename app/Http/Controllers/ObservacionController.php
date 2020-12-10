@@ -11,6 +11,7 @@ use App\SolicitudServicio;
 use App\Personal;
 use App\Mail\NewObservationClient;
 use App\Mail\NewObservation;
+use App\Mail\FechaErrada;
 use App\Mail\ConcilacionRecordatorio;
 use Permisos;
 use App\audit;
@@ -281,7 +282,6 @@ class ObservacionController extends Controller
      */
     public function recepcionErrada(Request $request)
     {
-        return $request;
         $Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404, 'no se encuentra las solicitud de servicio');
@@ -336,11 +336,6 @@ class ObservacionController extends Controller
                     'asistentelogistica@prosarc.com.co'
                     ];
 
-        if ($Solicitud->SolServMailCopia !== "null") {
-            foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
-                array_push($copy, $value);
-            }
-        }
 
         Mail::to($recipient)->cc($copy)->send(new FechaErrada($email, $Observacion));
 
