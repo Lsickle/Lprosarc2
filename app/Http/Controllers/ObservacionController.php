@@ -272,4 +272,79 @@ class ObservacionController extends Controller
         return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function recepcionErrada(Request $request)
+    {
+        return $request;
+        $Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404, 'no se encuentra las solicitud de servicio');
+        }
+        if ($Solicitud->SolSerStatus == 'Aprobado') {
+			abort(403, 'el servicio no debe estar en status de (Aprobado) para notificar fecha de recepcion errada');
+		}
+
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+        $Solicitud->save();
+
+        /*se guarda la observación de la modificación del servicio*/
+        $Observacion = new Observacion();
+        $Observacion->ObsStatus = 'FechaErrada+';
+        $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+        $Observacion->ObsTipo = 'prosarc';
+        $Observacion->ObsRepeat = 1;
+        $Observacion->ObsDate = now();
+        $Observacion->ObsUser = Auth::user()->email;
+        $Observacion->ObsRol = Auth::user()->UsRol;
+        $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+        $Observacion->save();
+
+        $log = new audit();
+		$log->AuditTabla="observaciones";
+		$log->AuditType="Add observacion";
+		$log->AuditRegistro=$Observacion->ID_Obs;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+        $log->save();
+
+        $email = DB::table('solicitud_servicios')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+                        ->first();
+
+        $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+        
+        if ($comercial == null) {
+            $comercial->PersEmail = 'subgerencia@prosarc.com.co';
+        }
+
+        $copy = [
+                $comercial->PersEmail
+                ];
+
+        $recipient = [
+                    'logistica@prosarc.com.co',
+                    'recepcionpda@prosarc.com.co',
+                    'asistentelogistica@prosarc.com.co'
+                    ];
+
+        if ($Solicitud->SolServMailCopia !== "null") {
+            foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                array_push($copy, $value);
+            }
+        }
+
+        Mail::to($recipient)->cc($copy)->send(new FechaErrada($email, $Observacion));
+
+        return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+
+    }
 }

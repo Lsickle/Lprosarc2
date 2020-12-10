@@ -280,6 +280,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<a data-toggle='modal' data-target='#ModalSendRecordatorio'>Enviar Recordatorio {{$ultimoRecordatorio->ObsRepeat + 1 }} <br>Ultimo: {{date('d-m-Y',strtotime($ultimoRecordatorio->ObsDate))}}</a>										
 										</li>
 										@endif
+										@if ($SolicitudServicio->SolSerStatus !== 'Aprobado' && in_array(Auth::user()->UsRol, Permisos::SolSer2))
+										<li>
+											<a data-toggle='modal' data-target='#ModalRecepcionErrada'>Recepcion Errada</a>										
+										</li>
+										@endif
 									</ul>
 								</div>
 							</label>
@@ -665,7 +670,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														</span>
 													</div>
 													<div class="form-group col-md-12">
-														<label color: black; text-align: left;" data-placement="auto" data-trigger="hover"
+														<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover"
 															data-html="true" data-toggle="popover" title="Observaciones"
 															data-content="En este campo puede redactar sus observaciones con relación al recordatorio de conciliación para esta solicitud de servicio"><i
 																style="font-size: 1.8rem; color: Dodgerblue;"
@@ -684,6 +689,47 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										</div>
 									</div>
 								</div>
+							@endif
+							{{-- END Modal --}}
+							{{--  Modal --}}
+							@if ($SolicitudServicio->SolSerStatus !== 'Aprobado' && in_array(Auth::user()->UsRol, Permisos::SolSer2))
+							<div class="modal modal-default fade in" id="ModalRecepcionErrada" tabindex="-1" role="dialog"
+								aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<form action="/recepcionerrada" method="POST" id="recepcionerradaForm">
+											@csrf
+											<input type='hidden' name='solserslug' value="{{$SolicitudServicio->SolSerSlug}}">
+											<div class="modal-body">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+														aria-hidden="true">&times;</span></button>
+												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+													<i class="fas fa-exclamation-triangle"></i>
+													<span style="font-size: 0.3em; color: black;">
+														<p>Enviar notificación de fecha de recepción errada para el servicio <b>N°
+																{{$SolicitudServicio->ID_SolSer}}</b>?</p>
+													</span>
+												</div>
+												<div class="form-group col-md-12">
+													<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover"
+														data-html="true" data-toggle="popover" title="Observaciones"
+														data-content="En este campo puede redactar sus observaciones con relación al recordatorio de conciliación para esta solicitud de servicio"><i
+															style="font-size: 1.8rem; color: Dodgerblue;"
+															class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
+													<small id="caracteresrestantesrepetirSR" class="help-block with-errors"></small>
+													<textarea onchange="updatecaracteresrepetirObs()" id="textDescriptionrepetirSR" rows="5"
+														style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required
+														name="solserdescript"></textarea>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+												<button form="recepcionerradaForm" type="submit" class="btn btn-success">enviar</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
 							@endif
 							{{-- END Modal --}}
 							{{--  Modal --}}
