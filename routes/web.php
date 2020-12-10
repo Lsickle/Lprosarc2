@@ -137,6 +137,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
+	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');
 	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');
 	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');
 	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');
