@@ -1,17 +1,14 @@
 @component('mail::message')
+# Vehículo recibido
 
-# Fecha de recepción Errada para la Solicitud de Servicio N° {{$email->ID_SolSer}}<br>
+Uno de los vehículos programados para la solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}} ha sido recibida en planta de procesos. 
+El personal encargado de bodegaje deberá comenzar a marcar las cantidades recibidas para cada residuo
+<br>
+tenga en cuenta que, si aun faltan vehículos por recibir en planta correspondientes a este servicio, el botón para marcar la solicitud como <i>recibida</i> aparecerá de color naranja
 
-debe corregir la fecha de las programaciones de vehiculos relacionadas con este servicio, para que coincida con la fecha indicada
-
-<p style="background-color:#f0f3f8;"><i>{!!nl2br($email->SolSerDescript)!!}</i> <br>
-    <h5 style="text-align: right">{{$Observacion->ObsUser}}</h5>
-</p>
-
-
-@component('mail::button', ['url' => url('/solicitud-servicio', [$email->SolSerSlug])])
-{{-- {{$nameButton}} --}}
-Ver Solicitud
+@component('mail::button', ['url' => url('/solicitud-servicio', [$SolicitudServicio->SolSerSlug])])
+ver solicitud de servicio
 @endcomponent
 
+Saludos, <br>Prosarc S.A. ESP.
 @endcomponent
