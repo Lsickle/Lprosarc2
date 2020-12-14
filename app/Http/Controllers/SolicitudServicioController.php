@@ -535,7 +535,12 @@ class SolicitudServicioController extends Controller
 								->where('ObsStatus', 'Completado')
 								->orderBy('ObsDate', 'asc')
 								->first();
-				$ultimoRecordatorio->ObsRepeat = 0;
+				if($ultimoRecordatorio){
+					$ultimoRecordatorio->ObsRepeat = 0;
+				}else{
+					$ultimoRecordatorio->ObsRepeat = 0;
+					$ultimoRecordatorio->ObsDate = $SolicitudServicio->updated_at;
+				}
 			}
 		}
 
