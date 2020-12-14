@@ -525,7 +525,7 @@ class SolicitudServicioController extends Controller
 
 		$Observaciones = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)->orderBy('ObsDate', 'desc')->get();
 
-		if($SolicitudServicio->SolSerStatus == 'Completado'){
+		if($SolicitudServicio->SolSerStatus == 'Completado'||$SolicitudServicio->SolSerStatus == 'Corregido'){
 			$ultimoRecordatorio = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)
 								->where('ObsStatus', 'Recordatorio+')
 								->orderBy('ObsDate', 'desc')
