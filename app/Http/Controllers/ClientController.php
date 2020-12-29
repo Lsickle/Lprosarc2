@@ -80,7 +80,6 @@ class ClientController extends Controller
                         ->select('personals.*')
                         ->where('personals.PersDelete', 0)
                         ->where('users.UsRol', 'Comercial')
-                        ->orWhere('users.UsRol2', 'Comercial')
                         ->get();
                 }
                 return view('clientes.index', compact('clientes', 'personals'));
