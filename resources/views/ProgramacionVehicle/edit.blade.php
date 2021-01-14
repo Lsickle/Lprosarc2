@@ -984,9 +984,8 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<div text-align: center; margin: auto;">
 									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
-									<form action="/vehicle-programacion/`+idvehiprog+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+									<form action="/vehicle-programacion/`+idvehiprog+`/sendParafiscales" method="POST" data-toggle="validator" id="SolSer">
 										@csrf
-										@method('PUT')
 										<div class="form-group col-md-12">
 											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>
 											<small id="caracteresrestantes" class="help-block with-errors">*</small>
@@ -995,8 +994,8 @@
 										</div>
 										<div class="form-group col-md-12">
 										<label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Parafiscales a enviar:</label>
-										<select class="form-control col-md-12 select" id="select2parafiscales" name="ProgGenerSedes[]" multiple="multiple">
-											@foreach($ayudantes as $ayudante)
+										<select class="form-control col-md-12 select" id="select2parafiscales" name="personalParafiscales[]" multiple="multiple">
+											@foreach($personalconparafiscales as $ayudante)
 											<option @if($ayudante->ID_Pers == $programacion->FK_ProgAyudante || $ayudante->ID_Pers == $programacion->FK_ProgConductor)
 												selected="true"
 												@endif
