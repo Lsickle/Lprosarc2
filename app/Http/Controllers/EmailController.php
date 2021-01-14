@@ -34,6 +34,7 @@ class EmailController extends Controller
                         $destinatarios = ['asistentelogistica@prosarc.com.co',
                                             'recepcionpda@prosarc.com.co',
                                             'auxiliarpda@prosarc.com.co',
+                                            'conciliaciones@prosarc.com.co',
                                             $comercial->PersEmail
                                         ];
                         $destinatarioscc = ['logistica@prosarc.com.co'];
@@ -174,6 +175,7 @@ class EmailController extends Controller
                     
                     $destinatarios = ['asistentelogistica@prosarc.com.co',
                                     'recepcionpda@prosarc.com.co',
+                                    'conciliaciones@prosarc.com.co',
                                     $email->PersEmail];
 
                     if ($SolSer->SolServMailCopia == "null") {
@@ -199,6 +201,8 @@ class EmailController extends Controller
                                         'gerenteplanta@prosarc.com.co',
                                         'recepcionpda@prosarc.com.co',
                                         'dirtecnica@prosarc.com.co',
+                                        'conciliaciones@prosarc.com.co',
+                                        'asistentelogistica@prosarc.com.co',
                                         $comercial->PersEmail
                                     ];
 
@@ -221,6 +225,7 @@ class EmailController extends Controller
                     
                     $destinatarios = ['asistentelogistica@prosarc.com.co',
                                     'recepcionpda@prosarc.com.co',
+                                    'conciliaciones@prosarc.com.co',
                                     $comercial->PersEmail];
 
                     if ($SolSer->SolServMailCopia !== "null") {

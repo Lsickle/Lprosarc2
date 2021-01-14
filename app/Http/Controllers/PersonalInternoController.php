@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use App\Area;
 use App\Cargo;
 use App\Personal;
@@ -223,6 +224,7 @@ class PersonalInternoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id){
+		// return $request;
 		$Persona = Personal::where('PersSlug', $id)->first();
 		if (!$Persona) {
 			abort(404);
@@ -292,8 +294,23 @@ class PersonalInternoController extends Controller
 			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 		
-		$Persona->fill($request->except('FK_PersCargo'));
+		$Persona->fill($request->except(['FK_PersCargo']));
 		$Persona->FK_PersCargo = $Cargo;
+
+
+		if ($request->hasFile('photo')) {
+			// $path = $request->file('PersParafiscales')->store('parafiscales');
+			Storage::->put('parafiscales/'.$Persona->PersDocNumber, $request->file('PersParafiscales'));
+			$Persona->PersParafiscales = Storage::url('parafiscales/'.$Persona->PersDocNumber);
+			$Persona->PersParafiscalesExpire = $request->input('PersParafiscalesExpire');
+		}
+
+		if ($request->hasFile('photo')) {
+			$path = $request->file('PersDocOpcional')->store('documentosOpcionales');
+			$Persona->PersDocOpcional = $path;
+		}
+
+
 		$Persona->save();
 
 		$log = new audit();
@@ -304,7 +321,7 @@ class PersonalInternoController extends Controller
 		$log->Auditlog = $request->all();
 		$log->save();
 
-		return redirect()->route('personalInterno.show',['id' => $id]);
+		return redirect()->route('personalInterno.edit',['id' => $id]);
 	}
 
 	/**

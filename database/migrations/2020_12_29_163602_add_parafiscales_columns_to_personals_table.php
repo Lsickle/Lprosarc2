@@ -15,6 +15,7 @@ class AddParafiscalesColumnsToPersonalsTable extends Migration
     {
         Schema::table('personals', function (Blueprint $table) {
             $table->string('PersParafiscales')->nullable();
+            $table->date('PersParafiscalesExpire')->nullable();
             $table->string('PersDocOpcional')->nullable();
         });
     }
@@ -28,6 +29,7 @@ class AddParafiscalesColumnsToPersonalsTable extends Migration
     {
         Schema::table('personals', function (Blueprint $table) {
             $table->dropColumn('PersParafiscales');
+            $table->dropColumn('PersParafiscalesExpire');
             $table->dropColumn('PersDocOpcional');
         });
     }
