@@ -347,7 +347,7 @@ class PersonalInternoController extends Controller
 		$log->Auditlog = $request->all();
 		$log->save();
 
-		return redirect()->route('personalInterno.edit',['id' => $id]);
+		return redirect()->route('personalInterno.show',['id' => $id]);
 	}
 
 	/**

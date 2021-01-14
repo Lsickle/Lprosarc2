@@ -724,7 +724,7 @@ class VehicProgController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('ID_Pers', 'PersFirstName', 'PersLastName')
+				->select('ID_Pers', 'PersFirstName', 'PersLastName', 'PersDocNumber')
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
 				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)

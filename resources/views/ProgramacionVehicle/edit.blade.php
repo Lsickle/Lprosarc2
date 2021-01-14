@@ -22,6 +22,9 @@
 					<td>
 						<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->servicio->ID_SolSer}}', '{{in_array($programacion->servicio->SolSerStatus, $Status)}}', 'vehiprog-edit', 'Notificar')" style="text-align: center;" class="btn col-md-offset-3 btn-{{$programacion->servicio->SolSerStatus == 'Programado' ? 'success' : ($programacion->servicio->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
 					</td>
+					<td>
+						<a onclick="ModalParafiscales('{{$programacion->ID_ProgVeh}}', '{{$programacion->servicio->ID_SolSer}}', '{{in_array($programacion->servicio->SolSerStatus, $Status)}}', 'vehiprog-edit', 'Notificar')" style="text-align: center;" class="btn col-md-offset-3 btn-{{$programacion->servicio->SolSerStatus == 'Programado' ? 'success' : ($programacion->servicio->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> Enviar parafiscales</a>
+					</td>
 
 					@component('layouts.partials.modal')
 					@slot('slug')
@@ -965,6 +968,66 @@
 			$('#SolSer').validator('update');
 			popover();
 			envsubmit();
+			$('#myModal').modal();
+		}
+	}
+</script>
+<script>
+	function ModalParafiscales(idvehiprog, idServicio, boolean, destino, text){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div text-align: center; margin: auto;">
+									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
+									<form action="/vehicle-programacion/`+idvehiprog+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+										@csrf
+										@method('PUT')
+										<div class="form-group col-md-12">
+											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>
+											<small id="caracteresrestantes" class="help-block with-errors">*</small>
+											<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required name="solserdescript">`+observacion+`</textarea>
+											
+										</div>
+										<div class="form-group col-md-12">
+										<label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Parafiscales a enviar:</label>
+										<select class="form-control col-md-12 select" id="select2parafiscales" name="ProgGenerSedes[]" multiple="multiple">
+											@foreach($ayudantes as $ayudante)
+											<option @if($ayudante->ID_Pers == $programacion->FK_ProgAyudante || $ayudante->ID_Pers == $programacion->FK_ProgConductor)
+												selected="true"
+												@endif
+												title="{{$ayudante->PersDocNumber}}" value="{{$ayudante->ID_Pers}}">{{$ayudante->PersFirstName}} {{$ayudante->PersLastName}}</option>
+											@endforeach
+										</select>
+										</div>
+										<input type="submit" id="Cambiar`+idvehiprog+`" style="display: none;">
+										<input type="text" name="destino" value="`+destino+`" style="display: none;">
+									</form>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+idvehiprog+`" class='btn btn-success'>Enviar</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			$('#SolSer').validator('update');
+			popover();
+			envsubmit();
+			$('#select2parafiscales').select2({
+				placeholder: "Seleccione...",
+				allowClear: true,
+				tags: true,
+				width: 'resolve',
+				width: '100%',
+				theme: "classic"
+			});
 			$('#myModal').modal();
 		}
 	}
