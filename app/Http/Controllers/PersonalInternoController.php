@@ -188,6 +188,7 @@ class PersonalInternoController extends Controller
 		if (!$Personas) {
 			abort(404);
 		}
+		// return $Personas;
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 		 return view('personal.personalInterno.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
