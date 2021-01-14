@@ -192,15 +192,36 @@
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersParafiscales">Parafiscales (PDF)</label>
-														<input name="PersParafiscales" type="file" accept=".pdf" class="form-control" id="PersParafiscales" value="">
-													</div>
-													<div class="form-group col-md-6">
-														<label for="PersParafiscalesExpire">Parafiscales (vencimiento)</label>
-														<input name="PersParafiscalesExpire" type="date" class="form-control" id="PersParafiscalesExpire">
+														<small class="help-block with-errors">*</small>
+														<div class="input-group">
+															<input id="PersParafiscales" name="PersParafiscales" type="file" data-filesize="1024" class="form-control" data-accept="pdf" accept=".pdf">
+															<div class="input-group-btn">
+																@if($Persona->PersParafiscales !== null)
+																<a method='get' href='{{Storage::url($Persona->PersParafiscales)}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+																@else
+																<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+																@endif
+															</div>
+														</div>
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersDocOpcional">Documento Opcional (PDF)</label>
-														<input name="PersDocOpcional" type="file" accept=".pdf" class="form-control" id="PersDocOpcional" value="">
+														<small class="help-block with-errors"></small>
+														<div class="input-group">
+															<input id="PersDocOpcional" name="PersDocOpcional" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+															<div class="input-group-btn">
+																@if($Persona->PersDocOpcional !== null)
+																<a method='get' href='{{Storage::url($Persona->PersDocOpcional)}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+																@else
+																<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+																@endif
+															</div>
+														</div>
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersParafiscalesExpire">Parafiscales (vencimiento)</label>
+														<small class="help-block with-errors"></small>
+														<input name="PersParafiscalesExpire" type="date" min="{{date('Y-m-d', strtotime(today()))}}" class="form-control" id="PersParafiscalesExpire" value="{{$Persona->PersParafiscalesExpire <> null ? date('Y-m-d', strtotime($Persona->PersParafiscalesExpire)) : ''}}">
 													</div>
 												</div>
 												<div class="box-footer">
