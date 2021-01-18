@@ -103,7 +103,7 @@ class ObservacionController extends Controller
                     'auxiliarpda@prosarc.com.co'
                     ];
 
-        $recipient = ['logistica@prosarc.com.co',
+        $recipient = ['conciliaciones@prosarc.com.co',
                             'recepcionpda@prosarc.com.co',
                             $comercial->PersEmail
                         ];  
@@ -126,7 +126,6 @@ class ObservacionController extends Controller
                 break;
             case 'No Conciliado':
             case 'Conciliado':
-                array_push($copy, 'conciliaciones@prosarc.com.co');               
                 break;
             default:
                 break;
