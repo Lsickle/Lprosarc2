@@ -740,7 +740,7 @@ class VehicProgController extends Controller
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
 				->whereNotIn('CargName', ['Jefe'])
 				->where('ID_Cli', 1)
-				// ->where('PersParafiscales')
+				->where('PersParafiscales')
 				->get();
 
 			$transportadores = DB::table('clientes')
@@ -960,7 +960,6 @@ class VehicProgController extends Controller
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
@@ -971,7 +970,6 @@ class VehicProgController extends Controller
 						}else{
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
@@ -1065,7 +1063,6 @@ class VehicProgController extends Controller
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
@@ -1076,7 +1073,6 @@ class VehicProgController extends Controller
 						}else{
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
@@ -1205,7 +1201,6 @@ class VehicProgController extends Controller
 				->first();
 			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
 			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
 								'auxiliarpda@prosarc.com.co',
@@ -1376,8 +1371,7 @@ class VehicProgController extends Controller
 				->where('progvehiculos.ProgVehDelete', 0)
 				->first();
 			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-			$destinatarios = ['logistica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
+			$destinatarios = ['asistentelogistica@prosarc.com.co',
 								$comercial->PersEmail
 							];
 
