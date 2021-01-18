@@ -103,7 +103,7 @@ class ObservacionController extends Controller
                     'auxiliarpda@prosarc.com.co'
                     ];
 
-        $recipient = ['logistica@prosarc.com.co',
+        $recipient = ['conciliaciones@prosarc.com.co',
                             'recepcionpda@prosarc.com.co',
                             $comercial->PersEmail
                         ];  
