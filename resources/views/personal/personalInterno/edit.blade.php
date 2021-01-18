@@ -5,7 +5,7 @@
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #FFFFFF, #A3A2AE); padding-right:30vw; position:relative; overflow:hidden;">
 	{{ trans('adminlte_lang::message.personalhtmlheader_title') }}
-  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+	<div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
 @section('main-content')
@@ -23,13 +23,13 @@
 					@method('PATCH')
 					@csrf
 					@if ($errors->any())
-						<div class="alert alert-danger" role="alert">
-							<ul>
-								@foreach ($errors->all() as $error)
-									<p>{{$error}}</p>
-								@endforeach
-							</ul>
-						</div>
+					<div class="alert alert-danger" role="alert">
+						<ul>
+							@foreach ($errors->all() as $error)
+							<p>{{$error}}</p>
+							@endforeach
+						</ul>
+					</div>
 					@endif
 					<div class="box box-info">
 						<div class="box-body" id="readyTable">
@@ -52,7 +52,7 @@
 														<select name="Sede" id="Sede" class="form-control select" required>
 															<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 															@foreach($Sedes as $Sede1)
-																<option value="{{$Sede1->SedeSlug}}" {{$Sede->ID_Sede == $Sede1->ID_Sede ? 'selected' : ''}}>{{$Sede1->SedeName}}</option>
+															<option value="{{$Sede1->SedeSlug}}" {{$Sede->ID_Sede == $Sede1->ID_Sede ? 'selected' : ''}}>{{$Sede1->SedeName}}</option>
 															@endforeach
 														</select>
 													</div>
@@ -62,18 +62,18 @@
 														<select name="CargArea" id="CargArea" class="form-control" required>
 															<option onclick="HiddenNewInputA()" value="">{{ trans('adminlte_lang::message.select') }}</option>
 															@foreach($Areas as $Area)
-																<option value="{{$Area->AreaSlug}}" {{$Sede->ID_Area == $Area->ID_Area ? 'selected' : ''}} onclick="HiddenNewInputA()">{{$Area->AreaName}}</option>
+															<option value="{{$Area->AreaSlug}}" {{$Sede->ID_Area == $Area->ID_Area ? 'selected' : ''}} onclick="HiddenNewInputA()">{{$Area->AreaName}}</option>
 															@endforeach
 															<option onclick="NewInputA()" value="NewArea">{{ trans('adminlte_lang::message.newarea') }}</option>
 														</select>
 													</div>
-													<div class="form-group col-md-6" id="divFK_PersCargo" >
+													<div class="form-group col-md-6" id="divFK_PersCargo">
 														<label for="FK_PersCargo" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.cargoname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfocargo') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.cargoname') }}</label><a class="loadFK_PersCargo"></a>
 														<small class="help-block with-errors">*</small>
 														<select name="FK_PersCargo" id="FK_PersCargo" class="form-control" required>
 															<option onclick="HiddenNewInputC()" value="">{{ trans('adminlte_lang::message.select') }}</option>
 															@foreach($Cargos as $Cargo)
-																<option value="{{$Cargo->CargSlug}}" {{$Sede->ID_Carg == $Cargo->ID_Carg ? 'selected' : ''}} onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
+															<option value="{{$Cargo->CargSlug}}" {{$Sede->ID_Carg == $Cargo->ID_Carg ? 'selected' : ''}} onclick="HiddenNewInputC()">{{$Cargo->CargName}}</option>
 															@endforeach
 															<option onclick="NewInputC()" value="NewCargo">{{ trans('adminlte_lang::message.newcargo') }}</option>
 														</select>
@@ -112,16 +112,16 @@
 													<div class="form-group col-md-6">
 														<label for="PersFirstName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persfirstname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfofirstname') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persfirstname') }}</label>
 														<small class="help-block with-errors">*</small>
-														<input  required name="PersFirstName" autofocus="true" type="text" class="form-control nombres" id="PersFirstName" value="{{$Persona->PersFirstName}}">
+														<input required name="PersFirstName" type="text" class="form-control nombres" id="PersFirstName" value="{{$Persona->PersFirstName}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersSecondName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perssecondtname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfosecondname') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perssecondtname') }}</label>
-														<input name="PersSecondName" autofocus="true" type="text" class="form-control nombres" id="PersSecondName" value="{{$Persona->PersSecondName}}">
+														<input name="PersSecondName" type="text" class="form-control nombres" id="PersSecondName" value="{{$Persona->PersSecondName}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersLastName" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perslastname') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfolastname') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perslastname') }}</label>
 														<small class="help-block with-errors">*</small>
-														<input  required name="PersLastName" autofocus="true" type="text" class="form-control nombres" id="PersLastName" value="{{$Persona->PersLastName}}">
+														<input required name="PersLastName" type="text" class="form-control nombres" id="PersLastName" value="{{$Persona->PersLastName}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersEmail" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.emailaddress') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoemailprosarc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.emailaddress') }}</label>
@@ -133,12 +133,12 @@
 														<small class="help-block with-errors">*</small>
 														<div class="input-group">
 															<span class="input-group-addon">(+57)</span>
-															<input data-minlength="12" required name="PersCellphone" autofocus="true" type="tel" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{$Persona->PersCellphone}}">
+															<input data-minlength="12" required name="PersCellphone" type="tel" class="form-control mobile" id="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" value="{{$Persona->PersCellphone}}">
 														</div>
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersAddress" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.address') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfodir') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.address') }}</label>
-														<input name="PersAddress" autofocus="true" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{$Persona->PersAddress}}">
+														<input name="PersAddress" type="text" class="form-control" id="PersAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" value="{{$Persona->PersAddress}}">
 													</div>
 												</div>
 											</div>
@@ -148,47 +148,80 @@
 												<div id="form-step-2" role="form" data-toggle="validator">
 													<div class="form-group col-md-6">
 														<label for="PersBirthday" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persbirthday') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfobirthday') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persbirthday') }}</label>
-														<input name="PersBirthday" autofocus="true" type="date" class="form-control fechas" id="PersBirthday" value="{{$Persona->PersBirthday <> null ? date('Y-m-d', strtotime($Persona->PersBirthday)) : ''}}">
+														<input name="PersBirthday" type="date" class="form-control fechas" id="PersBirthday" value="{{$Persona->PersBirthday <> null ? date('Y-m-d', strtotime($Persona->PersBirthday)) : ''}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersPhoneNumber" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persphone') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfotelloc') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persphone') }}</label>
-														<input name="PersPhoneNumber" autofocus="true" type="text" class="form-control phone" id="PersPhoneNumber" value="{{$Persona->PersPhoneNumber}}">
+														<input name="PersPhoneNumber" type="text" class="form-control phone" id="PersPhoneNumber" value="{{$Persona->PersPhoneNumber}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersEPS" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perseps') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoeps') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perseps') }}</label>
 														<small class="help-block with-errors dir">*</small>
-														<input data-minlength="5" name="PersEPS"  autofocus="true" type="text" class="form-control" id="PersEPS" required value="{{$Persona->PersEPS}}">
+														<input data-minlength="5" name="PersEPS" type="text" class="form-control" id="PersEPS" required value="{{$Persona->PersEPS}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersARL" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persarl') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoarl') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persarl') }}</label>
 														<small class="help-block with-errors dir">*</small>
-														<input data-minlength="4" name="PersARL" autofocus="true" type="text" class="form-control" id="PersARL" required value="{{$Persona->PersARL}}">
+														<input data-minlength="4" name="PersARL" type="text" class="form-control" id="PersARL" required value="{{$Persona->PersARL}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersLibreta" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perslibreta') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfolibreta') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perslibreta') }}</label>
-														<input name="PersLibreta" autofocus="true" type="text" class="form-control" id="PersLibreta" value="{{$Persona->PersLibreta}}">
+														<input name="PersLibreta" type="text" class="form-control" id="PersLibreta" value="{{$Persona->PersLibreta}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersPase" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perspase') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfopase') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perspase') }}</label>
-														<input name="PersPase" autofocus="true" type="text" class="form-control" id="PersPase" value="{{$Persona->PersPase}}">
+														<input name="PersPase" type="text" class="form-control" id="PersPase" value="{{$Persona->PersPase}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersBank" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persbank') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfobank') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persbank') }}</label>
-														<input name="PersBank" autofocus="true" type="text" class="form-control" id="PersBank" value="{{$Persona->PersBank}}">
+														<input name="PersBank" type="text" class="form-control" id="PersBank" value="{{$Persona->PersBank}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersBankAccaunt" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persbankaccaunt') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfobankaccaunt') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persbankaccaunt') }}</label>
 														<small class="help-block with-errors"></small>
-														<input data-minlength="19" name="PersBankAccaunt" autofocus="true" type="text" class="form-control bank" id="PersBankAccaunt" value="{{$Persona->PersBankAccaunt}}">
+														<input data-minlength="19" name="PersBankAccaunt" type="text" class="form-control bank" id="PersBankAccaunt" value="{{$Persona->PersBankAccaunt}}">
 													</div>
 													<div class="form-group col-md-6">
 														<label for="PersIngreso" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.persingreso') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfoingrso') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.persingreso') }}</label>
 														<small class="help-block with-errors dir">*</small>
-														<input name="PersIngreso" autofocus="true" type="date" class="form-control" id="PersIngreso" required value="{{$Persona->PersIngreso <> null ? date('Y-m-d', strtotime($Persona->PersIngreso)) : ''}}">
+														<input name="PersIngreso" type="date" class="form-control" id="PersIngreso" required value="{{$Persona->PersIngreso <> null ? date('Y-m-d', strtotime($Persona->PersIngreso)) : ''}}">
 													</div>
 													<div class="form-group col-md-6">
-														<label for="PersIngreso" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perssalida') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfosalida') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perssalida') }}</label>
-														<input name="PersSalida" autofocus="true" type="date" class="form-control" id="PersSalida" value="{{$Persona->PersSalida <> null ? date('Y-m-d', strtotime($Persona->PersSalida)) : ''}}">
+														<label for="PersSalida" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.perssalida') }}</b>" data-content="{{ trans('adminlte_lang::message.persinfosalida') }}"><i style="font-size: 1.7rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.perssalida') }}</label>
+														<input name="PersSalida" type="date" class="form-control" id="PersSalida" value="{{$Persona->PersSalida <> null ? date('Y-m-d', strtotime($Persona->PersSalida)) : ''}}">
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersParafiscales">Parafiscales (PDF)</label>
+														<small class="help-block with-errors">*</small>
+														<div class="input-group">
+															<input id="PersParafiscales" name="PersParafiscales" type="file" data-filesize="1024" class="form-control" data-accept="pdf" accept=".pdf">
+															<div class="input-group-btn">
+																@if($Persona->PersParafiscales !== null)
+																<a method='get' href='{{Storage::url($Persona->PersParafiscales)}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+																@else
+																<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+																@endif
+															</div>
+														</div>
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersDocOpcional">Documento Opcional (PDF)</label>
+														<small class="help-block with-errors"></small>
+														<div class="input-group">
+															<input id="PersDocOpcional" name="PersDocOpcional" type="file" data-filesize="2048" class="form-control" data-accept="pdf" accept=".pdf">
+															<div class="input-group-btn">
+																@if($Persona->PersDocOpcional !== null)
+																<a method='get' href='{{Storage::url($Persona->PersDocOpcional)}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+																@else
+																<a method='get' target='_blank' class='btn btn-default'><i class='fas fa-ban fa-lg'></i></a>
+																@endif
+															</div>
+														</div>
+													</div>
+													<div class="form-group col-md-6">
+														<label for="PersParafiscalesExpire">Parafiscales (vencimiento)</label>
+														<small class="help-block with-errors"></small>
+														<input name="PersParafiscalesExpire" type="date" min="{{date('Y-m-d', strtotime(today()))}}" class="form-control" id="PersParafiscalesExpire" value="{{$Persona->PersParafiscalesExpire <> null ? date('Y-m-d', strtotime($Persona->PersParafiscalesExpire)) : ''}}">
 													</div>
 												</div>
 												<div class="box-footer">
@@ -210,8 +243,8 @@
 </div>
 @endsection
 @section('NewScript')
-	<script>
-		$(document).ready(function(){
+<script>
+	$(document).ready(function(){
 			$('#Sede').on('change', function() { 
 				var id = $('#Sede').val();
 				if(id != 0){
@@ -340,5 +373,5 @@
 				$("#PersAddress").before('<small class="help-block with-errors dir">*</small>');
 			}
 		});
-	</script>
+</script>
 @endsection

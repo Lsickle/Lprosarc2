@@ -108,6 +108,34 @@
 										<div class="col-md-6 col-xs-12">
 											<label>{{ trans('adminlte_lang::message.perspase') }}</label><h5><a>{{$Persona->PersPase <> null ? $Persona->PersPase : 'N/A'}}</a></h5>
 										</div>
+										<div class="col-md-6 col-xs-12">
+											<label>parafiscales</label>
+											<h5>
+											@if($Persona->PersParafiscales !== null)
+												@if ($Persona->PersParafiscalesExpire >= today())
+													<a method='get' href='{{Storage::url($Persona->PersParafiscales)}}' target='_blank'>{{$Persona->PersParafiscales}} <i class='far fa-file-alt fa-lg'></i> </a>
+												@else
+													<a style="color:red;"method='get' href='{{Storage::url($Persona->PersParafiscales)}}' target='_blank'>{{$Persona->PersParafiscales}} <i class='far fa-file fa-lg'></i> </a>
+												@endif
+											@else
+												<a>N/A</a>
+											@endif
+											</h5>
+										</div>
+										<div class="col-md-6 col-xs-12">
+											<label>documentos opcionales</label>
+											<h5>
+												@if($Persona->PersDocOpcional !== null)
+													<a method='get' href='{{Storage::url($Persona->PersDocOpcional)}}' target='_blank'>{{$Persona->PersDocOpcional}} <i class='far fa-file-alt fa-lg'></i></a>
+												@else
+													<a>N/A</a>
+												@endif
+											</h5>
+										</div>
+										<div class="col-md-6 col-xs-12">
+											<label>vencimiento de parafiscales</label>
+											<h5><a>{{$Persona->PersParafiscalesExpire !== null ? date('Y-m-d', strtotime($Persona->PersParafiscalesExpire)) : 'N/A'}}</a></h5>
+										</div>
 									</div>
 								</div>
 							</div>

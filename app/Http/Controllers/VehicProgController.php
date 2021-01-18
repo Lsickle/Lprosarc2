@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use App\Mail\VehiculoRecibidoEmail;
 use App\Mail\CancelSolServEmail;
 use App\Mail\SolSerEmail;
+use App\Mail\ProgramacionParafiscales;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -724,11 +725,24 @@ class VehicProgController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('ID_Pers', 'PersFirstName', 'PersLastName')
+				->select('ID_Pers', 'PersFirstName', 'PersLastName', 'PersDocNumber')
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
 				->whereNotIn('CargName', ["Asistente", 'Jefe'])
 				->where('ID_Cli', 1)
 				->get();
+
+			$personalconparafiscales = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('ID_Pers', 'PersFirstName', 'PersLastName', 'PersDocNumber', 'PersParafiscales', 'PersParafiscalesExpire')
+				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
+				->whereNotIn('CargName', ['Jefe'])
+				->where('ID_Cli', 1)
+				->where('PersParafiscales')
+				->get();
+
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
 				->where('CliCategoria', 'Transportador')
@@ -767,7 +781,7 @@ class VehicProgController extends Controller
 
 			/*return $programacion*/;
 
-			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg'));
+			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg', 'personalconparafiscales'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -946,7 +960,6 @@ class VehicProgController extends Controller
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
@@ -957,7 +970,6 @@ class VehicProgController extends Controller
 						}else{
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
@@ -1051,7 +1063,6 @@ class VehicProgController extends Controller
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
@@ -1062,7 +1073,6 @@ class VehicProgController extends Controller
 						}else{
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
-												'logistica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
 												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
@@ -1191,7 +1201,6 @@ class VehicProgController extends Controller
 				->first();
 			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
 			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
 								'auxiliarlogistico@prosarc.com.co',
 								'auxiliarpda@prosarc.com.co',
@@ -1312,5 +1321,85 @@ class VehicProgController extends Controller
 		
 		return redirect()->route('vehicle-programacion.index');
 		
+	}
+
+			/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function sendParafiscales(Request $request, $id)
+	{
+		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		// return $request;
+		if (!$programacion) {
+			abort(404, 'la programación de vehículo que trata de notificar no se encuentra en la base de datos');
+		}
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
+		$SolicitudServicio->save();
+		
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="parafiscales";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$SolicitudServicio->SolSerStatus;
+		$log->save();
+
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = 'Parafiscales Enviados';
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+
+		if($request->input('destino') == 'vehiprog-edit'){
+			$email = DB::table('solicitud_servicios')
+				->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+				->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+				->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
+				->where('progvehiculos.FK_ProgServi', '=', $SolicitudServicio->ID_SolSer)
+				->where('progvehiculos.ProgVehDelete', 0)
+				->first();
+			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+			$destinatarios = ['asistentelogistica@prosarc.com.co',
+								$comercial->PersEmail
+							];
+
+			$Parafiscales = [];
+
+			foreach ($request->input('personalParafiscales') as $key => $value) {
+				$pdf = Personal::where('ID_Pers', $value)->first('PersParafiscales');
+				if ($pdf) {
+					$Parafiscales = Arr::prepend($Parafiscales, $pdf->PersParafiscales);
+				}
+			}
+
+			if ($SolicitudServicio->SolServMailCopia == "null") {
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new ProgramacionParafiscales($email, $Observacion, $programacion, $Parafiscales));
+			}else{
+				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new ProgramacionParafiscales($email, $Observacion, $programacion, $Parafiscales));
+			}
+
+			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
+		}else{
+			return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
+		}
 	}
 }
