@@ -739,8 +739,9 @@ class VehicProgController extends Controller
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
 				->whereNotIn('CargName', ['Jefe'])
 				->where('ID_Cli', 1)
-				->where('PersParafiscales')
+				// ->where('PersParafiscales')
 				->get();
+
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
 				->where('CliCategoria', 'Transportador')

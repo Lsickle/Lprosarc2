@@ -23,7 +23,11 @@
 						<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->servicio->ID_SolSer}}', '{{in_array($programacion->servicio->SolSerStatus, $Status)}}', 'vehiprog-edit', 'Notificar')" style="text-align: center;" class="btn col-md-offset-3 btn-{{$programacion->servicio->SolSerStatus == 'Programado' ? 'success' : ($programacion->servicio->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
 					</td>
 					<td>
+						@if($programacion->ProgVehtipo == 1)
 						<a onclick="ModalParafiscales('{{$programacion->ID_ProgVeh}}', '{{$programacion->servicio->ID_SolSer}}', '{{in_array($programacion->servicio->SolSerStatus, $Status)}}', 'vehiprog-edit', 'Notificar')" style="text-align: center;" class="btn col-md-offset-3 btn-{{$programacion->servicio->SolSerStatus == 'Programado' ? 'success' : ($programacion->servicio->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> Enviar parafiscales</a>
+						@else
+						<a disabled style="text-align: center;" class="btn col-md-offset-3 btn-default"><i class="fas fa-sign-out-alt"></i> Enviar parafiscales</a>
+						@endif
 					</td>
 
 					@component('layouts.partials.modal')
