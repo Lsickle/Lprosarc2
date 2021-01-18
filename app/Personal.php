@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Personal extends Model{
     protected $table='personals';
-    protected $fillable = ['PersType','PersDocType','PersDocNumber','PersFirstName','PersSecondName','PersLastName','PersEmail','PersLibreta','PersPase','PersBirthday','PersPhoneNumber','PersCellphone','PersAddress','PersEPS','PersARL','PersBank','PersBankAccaunt','PersIngreso','PersSalida','PersDelete', 'FK_PersCargo'];
+    protected $fillable = ['PersType','PersDocType','PersDocNumber','PersFirstName','PersSecondName','PersLastName','PersEmail','PersLibreta','PersPase','PersBirthday','PersPhoneNumber','PersCellphone','PersAddress','PersEPS','PersARL','PersBank','PersBankAccaunt','PersIngreso','PersSalida','PersDelete', 'FK_PersCargo', 'PersParafiscales', 'PersDocOpcional', 'PersParafiscalesExpire'];
     protected $primaryKey = 'ID_Pers';
 
     public function cargo(){
