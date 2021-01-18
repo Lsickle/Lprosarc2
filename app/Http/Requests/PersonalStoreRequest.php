@@ -52,6 +52,9 @@ class PersonalStoreRequest extends FormRequest
             'PersIngreso'   => 'date',
             'PersSalida'    => 'date|after:PersIngreso|nullable',
             'Persfactura'   => 'max:2|nullable',
+            'PersParafiscales'    => 'sometimes|max:1024|mimes:pdf',
+			'PersDocOpcional'    => 'sometimes|max:2048|mimes:pdf',
+			'PersParafiscalesExpire'    => 'date|after:yesterday|nullable',
         ];
     }
 
@@ -70,6 +73,11 @@ class PersonalStoreRequest extends FormRequest
             'NewCargo.required_if'        => 'El campo :attribute es inválido.',
             'FK_PersCargo.required_unless'=> 'El campo :attribute es inválido.',
             'PersDocNumber.unique'=> 'El valor del campo :attribute ya se encuentra registrado con otra persona.',
+            'PersParafiscalesExpire.after' => 'la fecha de Parafiscales (vencimiento) debe ser a partir del dia de hoy...',
+			'PersParafiscales.max' => 'el peso del archivo Parafiscales (PDF) debe ser a menor a :max Mb',
+			'PersDocOpcional.max' => 'el peso del archivo Documento Opcional (PDF) debe ser a menor a :max Mb',
+			'PersParafiscales.mimes' => 'el tipo del archivo Parafiscales debe ser .pdf',
+			'PersDocOpcional.mimes' => 'el tipo del archivo Documento Opcional debe ser .pdf',
         ];
     }
 }

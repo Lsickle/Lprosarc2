@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use App\Area;
 use App\Cargo;
 use App\Personal;
@@ -31,7 +32,7 @@ class PersonalInternoController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'areas.AreaName', 'clientes.ID_Cli')
+				->select('personals.PersDocType','personals.PersDocNumber','personals.PersFirstName','personals.PersSecondName','personals.PersLastName','personals.PersCellphone','personals.PersSlug','personals.PersEmail','cargos.CargName','personals.PersDelete','personals.ID_Pers', 'personals.PersParafiscales', 'personals.PersParafiscalesExpire', 'areas.AreaName', 'clientes.ID_Cli')
 				->where(function($query){
 					$id = userController::IDClienteSegunUsuario();
 					/*Validacion del Programador para ver todo el personal interno aun asi este eliminado*/
@@ -148,6 +149,22 @@ class PersonalInternoController extends Controller
 		$Personal->PersPase = $request->input('PersPase');
 		$Personal->PersDelete = 0;
 		$Personal->PersSlug = hash('sha256', rand().time().$Personal->PersDocNumber);
+
+		if($request->hasFile('PersParafiscales')) {
+			if (Storage::disk('public')->exists($Personal->PersParafiscales)) {
+				Storage::delete($Personal->PersParafiscales);
+			}
+			$Personal->PersParafiscales = Storage::putFileAs('parafiscales', $request->file('PersParafiscales'), $Personal->PersDocNumber.'.pdf');
+			$Personal->PersParafiscalesExpire = $request->input('PersParafiscalesExpire');
+		}
+
+		if($request->hasFile('PersDocOpcional')) {
+			if (Storage::disk('public')->exists($Personal->PersDocOpcional)) {
+				Storage::delete($Personal->PersDocOpcional);
+			}
+			$Personal->PersDocOpcional = Storage::putFileAs('documentosOpcionales', $request->file('PersDocOpcional'), $Personal->PersDocNumber.'.pdf');
+		}
+
 		$Personal->save();
 
 		return redirect()->route('personalInterno.index');
@@ -171,6 +188,7 @@ class PersonalInternoController extends Controller
 		if (!$Personas) {
 			abort(404);
 		}
+		// return $Personas;
 		$IDClienteSegunUsuario = userController::IDClienteSegunUsuario();
 		 return view('personal.personalInterno.show', compact('Personas', 'IDClienteSegunUsuario'));
 	}
@@ -223,6 +241,7 @@ class PersonalInternoController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id){
+		// return $request;
 		$Persona = Personal::where('PersSlug', $id)->first();
 		if (!$Persona) {
 			abort(404);
@@ -250,7 +269,19 @@ class PersonalInternoController extends Controller
 			'PersBankAccaunt' => 'max:64',
 			'PersIngreso'   => 'date',
 			'PersSalida'    => 'date|after:PersIngreso|nullable',
-		]);
+			'PersSalida'    => 'date|after:PersIngreso|nullable',
+			'PersParafiscales'    => 'sometimes|max:1024|mimes:pdf',
+			'PersDocOpcional'    => 'sometimes|max:2048|mimes:pdf',
+			'PersParafiscalesExpire'    => 'date|after:yesterday|nullable',
+		],
+		[
+			'PersParafiscalesExpire.after' => 'la fecha de Parafiscales (vencimiento) debe ser a partir del dia de hoy...',
+			'PersParafiscales.max' => 'el peso del archivo Parafiscales (PDF) debe ser a menor a :max Mb',
+			'PersDocOpcional.max' => 'el peso del archivo Documento Opcional (PDF) debe ser a menor a :max Mb',
+			'PersParafiscales.mimes' => 'el tipo del archivo Parafiscales debe ser .pdf',
+			'PersDocOpcional.mimes' => 'el tipo del archivo Documento Opcional debe ser .pdf',
+		]
+		);
 		$NuevaArea = $request->input('NewArea');
 		$NuevoCargo =  $request->input('NewCargo');
 		if($request->input('CargArea') <> "NewArea"){
@@ -292,8 +323,20 @@ class PersonalInternoController extends Controller
 			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
 		
-		$Persona->fill($request->except('FK_PersCargo'));
+		$Persona->fill($request->except(['FK_PersCargo']));
 		$Persona->FK_PersCargo = $Cargo;
+
+
+		if($request->hasFile('PersParafiscales')) {
+			$Persona->PersParafiscales = Storage::putFileAs('parafiscales', $request->file('PersParafiscales'), $Persona->PersDocNumber.'.pdf');
+			$Persona->PersParafiscalesExpire = $request->input('PersParafiscalesExpire');
+		}
+
+		if($request->hasFile('PersDocOpcional')) {
+			$Persona->PersDocOpcional = Storage::putFileAs('documentosOpcionales', $request->file('PersDocOpcional'), $Persona->PersDocNumber.'.pdf');
+		}
+
+
 		$Persona->save();
 
 		$log = new audit();
