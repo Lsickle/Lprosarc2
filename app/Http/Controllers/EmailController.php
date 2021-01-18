@@ -143,6 +143,7 @@ class EmailController extends Controller
                                         'auxiliarlogistico@prosarc.com.co',
                                         'auxiliarpda@prosarc.com.co',
                                         'recepcionpda@prosarc.com.co',
+                                        'conciliaciones@prosarc.com.co',
                                         $comercial->PersEmail
                                     ];
 
