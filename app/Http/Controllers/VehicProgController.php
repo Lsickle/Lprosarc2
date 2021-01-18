@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use App\Mail\VehiculoRecibidoEmail;
 use App\Mail\CancelSolServEmail;
 use App\Mail\SolSerEmail;
+use App\Mail\ProgramacionParafiscales;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -735,7 +736,7 @@ class VehicProgController extends Controller
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('ID_Pers', 'PersFirstName', 'PersLastName', 'PersDocNumber', 'PersParafiscales')
+				->select('ID_Pers', 'PersFirstName', 'PersLastName', 'PersDocNumber', 'PersParafiscales', 'PersParafiscalesExpire')
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
 				->whereNotIn('CargName', ['Jefe'])
 				->where('ID_Cli', 1)
@@ -1335,89 +1336,76 @@ class VehicProgController extends Controller
 	 */
 	public function sendParafiscales(Request $request, $id)
 	{
-		return $request;
-		$programacion = new ProgramacionVehiculo();
-		if(date('H', strtotime($request->input('ProgVehSalida'))) >= 12){
-			$turno = "0";
+		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
+		// return $request;
+		if (!$programacion) {
+			abort(404, 'la programación de vehículo que trata de notificar no se encuentra en la base de datos');
 		}
-		else{
-			$turno = "1";
-		}
-		$programacion->ProgVehTurno = $turno;
-		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
-		$programacion->ProgVehSalida = $request->input('ProgVehFecha').' '.date('H:i:s', strtotime($request->input('ProgVehSalida')));
-		/*typetransportador = 0 -> transporte prosarc*/
-		/*typetransportador = 1 -> transporte alquilado*/
-		if(!is_null($request->input('typetransportador'))){
-			if($request->input('typetransportador') == 0){
-				/*ProgVehtipo = 0 -> transporte externo*/
-				/*ProgVehtipo = 1 -> transporte interno prosarc*/
-				/*ProgVehtipo = 2 -> transporte alquilado*/
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
+		$SolicitudServicio->save();
+		
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="parafiscales";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=$SolicitudServicio->SolSerStatus;
+		$log->save();
 
-				$programacion->ProgVehtipo = 1;
-				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
-				$programacion->ProgVehColor = $request->input('ProgVehColor');
-				$programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
-				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
-				$conductor = Personal::select('PersFirstName', 'PersLastName')->where('ID_Pers', $request->input('FK_ProgConductor'))->first();
-				$nomConduct = $conductor->PersFirstName." ".$conductor->PersLastName;
-				$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first()->VehicPlaca;
-				$transportador = DB::table('clientes')
-					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
-					->where('ID_Cli', 1)
-					->first();
-			}
-			else{
-				$programacion->ProgVehtipo = 2;
-				$programacion->FK_ProgVehiculo = $request->input('vehicalqui');
-				$programacion->FK_ProgAyudante = $request->input('FK_ProgAyudante');
-				$programacion->ProgVehDocConductorEXT = $request->input('ProgVehDocConductorEXT');
-				$programacion->ProgVehNameConductorEXT = $request->input('ProgVehNameConductorEXT');
-				$programacion->ProgVehDocAuxiliarEXT = $request->input('ProgVehDocAuxiliarEXT');
-				$programacion->ProgVehNameAuxiliarEXT = $request->input('ProgVehNameAuxiliarEXT');
-				$programacion->ProgVehPlacaEXT = $request->input('ProgVehPlacaEXT');
-				$programacion->ProgVehTipoEXT = $request->input('ProgVehTipoEXT');
-				$programacion->ProgVehColor = '#FFFF00';
-				if ($request->input('vehicalqui')!=null) {
-					$vehiculo = Vehiculo::select('VehicPlaca')->where('ID_Vehic', $request->input('vehicalqui'))->first()->VehicPlaca;
-				}else{
-					$vehiculo = null;
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = 'Parafiscales Enviados';
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+
+		if($request->input('destino') == 'vehiprog-edit'){
+			$email = DB::table('solicitud_servicios')
+				->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+				->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+				->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
+				->where('progvehiculos.FK_ProgServi', '=', $SolicitudServicio->ID_SolSer)
+				->where('progvehiculos.ProgVehDelete', 0)
+				->first();
+			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+			$destinatarios = ['logistica@prosarc.com.co',
+								'asistentelogistica@prosarc.com.co',
+								$comercial->PersEmail
+							];
+
+			$Parafiscales = [];
+
+			foreach ($request->input('personalParafiscales') as $key => $value) {
+				$pdf = Personal::where('ID_Pers', $value)->first('PersParafiscales');
+				if ($pdf) {
+					$Parafiscales = Arr::prepend($Parafiscales, $pdf->PersParafiscales);
 				}
-				
-				$nomConduct = null;
-				$transportador = DB::table('clientes')
-					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.MunName', 'municipios.ID_Mun')
-					->where('CliSlug', $request->input('transport'))
-					->first();
 			}
-		}
-		else{
-			$nomConduct = null;
-			$vehiculo = null;
-			$programacion->ProgVehtipo = 0;
-		}
-		$programacion->FK_ProgServi = $id;
-		$programacion->ProgVehDelete = 0;
-		$programacion->ProgVehStatus =  $request->input('StatusProgServi');
-		$programacion->save();
 
-		// $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
-		// $SolicitudServicio->SolSerStatus = 'Programado';
-		// if(!is_null($request->input('typetransportador'))){
-		// 	$SolicitudServicio->SolSerConductor = $nomConduct;
-		// 	$SolicitudServicio->SolSerVehiculo = $vehiculo;
-		// 	$SolicitudServicio->SolSerNameTrans = $transportador->CliName;
-		// 	$SolicitudServicio->SolSerNitTrans = $transportador->CliNit;
-		// 	$SolicitudServicio->SolSerAdressTrans = $transportador->SedeAddress;
-		// 	$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
-		// }
-		// $SolicitudServicio->save();
-		
-		return redirect()->route('vehicle-programacion.index');
-		
+			if ($SolicitudServicio->SolServMailCopia == "null") {
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new ProgramacionParafiscales($email, $Observacion, $programacion, $Parafiscales));
+			}else{
+				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new ProgramacionParafiscales($email, $Observacion, $programacion, $Parafiscales));
+			}
+
+			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
+		}else{
+			return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
+		}
 	}
 }
