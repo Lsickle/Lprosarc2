@@ -796,6 +796,38 @@ class SolicitudServicioController extends Controller
 							$Solicitud->SolSerStatus = 'Conciliado';
 						}
 						break;
+					case 'reversar':
+						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
+							$Solicitud->SolSerStatus = 'Completado';
+							$Solicitud->SolServCertStatus = 0;
+							$Solicitud->SolSerDescript = $request->input('solserdescript');
+							$Solicitud->save();
+
+							$log = new audit();
+							$log->AuditTabla="solicitud_servicios";
+							$log->AuditType="conciliacion reversada";
+							$log->AuditRegistro=$Solicitud->ID_SolSer;
+							$log->AuditUser=Auth::user()->email;
+							$log->Auditlog=$Solicitud->SolSerStatus;
+							$log->save();
+
+							/*se guarda la observacion de la modificacion del servicio*/
+							$Observacion = new Observacion();
+							$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+							$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+							$Observacion->ObsTipo = 'prosarc';
+							$Observacion->ObsRepeat = 1;
+							$Observacion->ObsDate = now();
+							$Observacion->ObsUser = Auth::user()->email;
+							$Observacion->ObsRol = Auth::user()->UsRol;
+							$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+							$Observacion->save();
+
+							// return redirect()->route('solicitud-servicio.index');
+							$slug = $Solicitud->SolSerSlug;
+							return redirect()->route('email-solser', compact('slug'));
+						}
+						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 							$Solicitud->SolSerStatus = 'Certificacion';
