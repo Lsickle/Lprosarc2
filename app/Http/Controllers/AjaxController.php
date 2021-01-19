@@ -418,8 +418,7 @@ class AjaxController extends Controller
             $comercial->PersEmail = 'subgerencia@prosarc.com.co';
         }
 
-        $copy = ['logistica@prosarc.com.co',
-                    'recepcionpda@prosarc.com.co',
+        $copy = ['recepcionpda@prosarc.com.co',
                     'asistentelogistica@prosarc.com.co',
                     $comercial->PersEmail
                 ];
