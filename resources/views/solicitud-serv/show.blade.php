@@ -43,7 +43,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						@endif
 						<div class="box box-info">
 							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
-								<div class="col-md-4 col-span">
+								<div class="col-md-2">
 									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
 								</div>
@@ -77,6 +77,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div class="col-md-2">
 									<label>{{'Vehiculos'}}: </label>
 									<span>{{$Programaciones->Count()}}</span>
+								</div>
+								<div class="col-md-2">
+									<label>Fecha de Recepción:</label>
+									@if ($SolicitudServicio->recepcion !== null)
+										<span>{{date('Y-m-d',strtotime($SolicitudServicio->recepcion))}}</span>
+									@else
+									 	<br><span>{{'No Programado'}}</span>
+									@endif
 								</div>
 								<hr>
 							</div>
