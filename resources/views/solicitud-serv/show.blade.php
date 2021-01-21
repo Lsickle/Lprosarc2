@@ -585,6 +585,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
+								<div id="ModalReversar"></div>
 							{{--  Modal --}}
 								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -1763,6 +1764,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/add-respel" class="btn btn-primary pull-right"><i class="fas fa-plus"></i><b> Añadir Residuo</b></a>
 				`);
 			@endif
+			@if(n_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+					<div class="btn-group" style="float: left;">
+						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Reversar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+						</ul>
+					</div>
+				`);
+			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 				@if($ProgramacionesActivas == count($Programaciones))
 					
@@ -1784,6 +1797,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@case('Corregido')
 		@case('Completado')
 			$('#titulo').empty();
+			@if(n_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co')
+			$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Reversar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+					</ul>
+				</div>
+			`);
+			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
@@ -1802,6 +1827,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('No Conciliado')
 			$('#titulo').empty();
+			@if(n_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+					<div class="btn-group" style="float: left;">
+						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Reversar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+						</ul>
+					</div>
+				`);
+			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliación')" style="float: right;" class="btn btn-success"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatusconciliacion')}}</a>
@@ -1818,6 +1855,22 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Conciliado')
 			$('#titulo').empty();
+			@if(n_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+					<div class="btn-group" style="float: left;">
+						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Reversar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+						</ul>
+					</div>
+				`);
+			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 				$('#titulo').append(`
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Tratada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatustratado')}}</a>
@@ -1843,6 +1896,24 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Tratado')
 			$('#titulo').empty();
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co')
+			$('#titulo').append(`
+			<div class="btn-group" style="float: left;">
+				<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Reversar <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
+				</ul>
+			</div>
+			`);
+			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowtrata')}}</b>
 			`);
@@ -1863,24 +1934,91 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Certificacion')
 			$('#titulo').empty();
+			@if(in_array(Auth::user()->UsRol, Permisos::REVERSARADMIN) || in_array(Auth::user()->UsRol2, Permisos::REVERSARADMIN))
+				$('#titulo').append(`
+					<div class="btn-group" style="float: left;">
+						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Reversar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
+						</ul>
+					</div>
+				`);
+			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>
 			`);
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
 				@else
-				@if ($SolicitudServicio->SolServCertStatus == 0)
-				$('#titulo').append(`
-					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
-				`);
-				@else
-				$('#titulo').append(`
-					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Certificados/Manifiestos Enviados</b>" data-content="<p style='width: 50%'>Toda la documentación correspondiente a los certificados y/o manifiestos ya esta disponible para facturación... Aun puede modificar los archivos cargados en el sistema, sin ambargo, es conveniente que notifique los cambios al área encargada de facturación</p>" class="btn btn-default pull-right"><i class="fas fa-file-invoice-dollar"></i><b>Certificados/Manifiestos Enviados</b></a>
-				`);
-				@endif
+					@if ($SolicitudServicio->SolServCertStatus == 0)
+					$('#titulo').append(`
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+					`);
+					@else
+					$('#titulo').append(`
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Certificados/Manifiestos Enviados</b>" data-content="<p style='width: 50%'>Toda la documentación correspondiente a los certificados y/o manifiestos ya esta disponible para facturación... Aun puede modificar los archivos cargados en el sistema, sin ambargo, es conveniente que notifique los cambios al área encargada de facturación</p>" class="btn btn-default pull-right"><i class="fas fa-file-invoice-dollar"></i><b>Certificados/Manifiestos Enviados</b></a>
+					`);
+					@endif
 				@endif
 			@endif
 		@break
 	@endswitch
+
+	function ModalReversar(slug, status){
+	$('#ModalReversar').empty();
+	$('#ModalReversar').append(`
+	<div class="modal modal-default fade in" id="myModalreversar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+						<i class="fas fa-exclamation-triangle"></i>
+						<span style="font-size: 0.3em; color: black;">
+							<p>Desea devolver la solicitud de servicio al status <b>`+status+`</b>?</p>
+						</span>
+					</div>
+				</div>
+				<form action="/solicitud-servicio/reversarStatus" method="POST" data-toggle="validator" id="SolSerReversar">
+					<div class="modal-header">
+						@csrf
+						<div class="form-group col-md-12">
+							<label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
+							<small id="caracteresrestantesReversar" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
+							<textarea onchange="updatecaracteres()" id="textDescriptionReversar" rows="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status=='No Deacuerdo' ? 'required' : '' )+` name="solserdescript"></textarea>
+						</div>
+						<input type="submit" id="Reversar`+slug+`" style="display: none;">
+						<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+						<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+						<label for="Reversar`+slug+`" class='btn btn-success'>Enviar</label>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	`);
+	$('#SolSerReversar').validator('update');
+	popover();
+	var area = document.getElementById("textDescriptionReversar");
+	var message = document.getElementById("caracteresrestantesReversar");
+	var maxLength = 4000;
+	$('#textDescriptionReversar').keyup(function () {
+	message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+	observacion = area.value;
+	});
+	envsubmit();
+	$('#myModalreversar').modal();
+	}
 </script>
 @endsection
