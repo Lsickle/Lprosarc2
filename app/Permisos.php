@@ -262,6 +262,16 @@ class Permisos{
 		solicitud-serv/show/documentos
 	*/
 
+	const REVERSAR = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica','AdministradorPlanta'];
+	/* Using ->
+		solserv/show
+	*/
+
+	const REVERSARADMIN = ['Programador','AdministradorPlanta'];
+	/* Using ->
+		solserv/show
+	*/
+
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
 	const CARGOS = ['Programador','AdministradorPlanta','AdministradorBogota'];

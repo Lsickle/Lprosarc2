@@ -796,38 +796,6 @@ class SolicitudServicioController extends Controller
 							$Solicitud->SolSerStatus = 'Conciliado';
 						}
 						break;
-					case 'reversar':
-						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
-							$Solicitud->SolSerStatus = 'Completado';
-							$Solicitud->SolServCertStatus = 0;
-							$Solicitud->SolSerDescript = $request->input('solserdescript');
-							$Solicitud->save();
-
-							$log = new audit();
-							$log->AuditTabla="solicitud_servicios";
-							$log->AuditType="conciliacion reversada";
-							$log->AuditRegistro=$Solicitud->ID_SolSer;
-							$log->AuditUser=Auth::user()->email;
-							$log->Auditlog=$Solicitud->SolSerStatus;
-							$log->save();
-
-							/*se guarda la observacion de la modificacion del servicio*/
-							$Observacion = new Observacion();
-							$Observacion->ObsStatus = $Solicitud->SolSerStatus;
-							$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
-							$Observacion->ObsTipo = 'prosarc';
-							$Observacion->ObsRepeat = 1;
-							$Observacion->ObsDate = now();
-							$Observacion->ObsUser = Auth::user()->email;
-							$Observacion->ObsRol = Auth::user()->UsRol;
-							$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
-							$Observacion->save();
-
-							// return redirect()->route('solicitud-servicio.index');
-							$slug = $Solicitud->SolSerSlug;
-							return redirect()->route('email-solser', compact('slug'));
-						}
-						break;
 					case 'Certificada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
 							$Solicitud->SolSerStatus = 'Certificacion';
@@ -2013,5 +1981,67 @@ class SolicitudServicioController extends Controller
 		// return $Servicios;
 		
 		return view('solicitud-serv.indexrecordatorios', compact('Servicios', 'Residuos', 'Cliente'));
+	}
+
+	public function reversarStatus(Request $request)
+	{
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+		if ($Solicitud->SolSerStatus == 'Certificacion') {
+			if (!in_array(Auth::user()->UsRol, Permisos::REVERSARADMIN) && !in_array(Auth::user()->UsRol2, Permisos::REVERSARADMIN)) {
+				abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
+			}
+		}
+		if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion') {
+			$certificadosDelete = Certificado::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
+			foreach ($certificadosDelete as $key => $value) {
+				foreach ($value->certdato as $key2 => $value2) {
+					$value2->delete();
+				}
+				$value->delete();
+			}
+		}
+		switch ($request->input('solserstatus')) {
+			case 'Notificado':
+				$Solicitud->SolSerStatus = 'Notificado';
+				break;
+			case 'Completado':
+				$Solicitud->SolSerStatus = 'Completado';
+				break;
+			case 'Residuo Faltante':
+				$Solicitud->SolSerStatus = 'Residuo Faltante';
+				break;
+			case 'Conciliado':
+				$Solicitud->SolSerStatus = 'Conciliado';
+				break;
+		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Reversado Status";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = 'Devuelto a status: '.$Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		
+		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+
 	}
 }
