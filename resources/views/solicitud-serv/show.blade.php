@@ -1764,7 +1764,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/add-respel" class="btn btn-primary pull-right"><i class="fas fa-plus"></i><b> Añadir Residuo</b></a>
 				`);
 			@endif
-			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co'))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
 				$('#titulo').append(`
 					<div class="btn-group" style="float: left;">
 						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1797,7 +1797,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@case('Corregido')
 		@case('Completado')
 			$('#titulo').empty();
-			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co'))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
 			$('#titulo').append(`
 				<div class="btn-group" style="float: left;">
 					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1827,7 +1827,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('No Conciliado')
 			$('#titulo').empty();
-			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co'))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
 				$('#titulo').append(`
 					<div class="btn-group" style="float: left;">
 						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1855,7 +1855,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Conciliado')
 			$('#titulo').empty();
-			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co'))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
 				$('#titulo').append(`
 					<div class="btn-group" style="float: left;">
 						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1896,7 +1896,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Tratado')
 			$('#titulo').empty();
-			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->email, 'logistica@prosarc.com.co'))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
 			$('#titulo').append(`
 			<div class="btn-group" style="float: left;">
 				<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
