@@ -18,7 +18,7 @@ use App\Requerimiento;
 use App\ProgramacionVehiculo;
 use App\Cliente;
 use App\Personal;
-use App\DocDato;
+use App\Docdato;
 use Permisos;
 
 class SolicitudResiduoController extends Controller
@@ -382,11 +382,11 @@ class SolicitudResiduoController extends Controller
 			rmdir(public_path("img/Recursos/").$Recursos[0]->RecSrc);
 		}
 
-		$datos = DocDato::where('FK_DatoSolRes', $SolRes->ID_SolRes)->get();
+		$datos = Docdato::where('FK_DatoSolRes', $SolRes->ID_SolRes)->get();
 
 		if(!is_null($datos)){
 			foreach($datos as $dato){
-				DocDato::destroy($dato->ID_Dato);
+				Docdato::destroy($dato->ID_Dato);
 			}
 		}
 
