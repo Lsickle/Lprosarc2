@@ -95,6 +95,9 @@
 												@case('Certificacion')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Certificación</b>" data-content="<p style='width: 50%'>Los archivos correspondientes a Certificados ya se encuentran disponibles para su visualización y descarga... se le enviara una notificación por correo en el momento que los Manifiestos ya estén disponibles para su descarga desde el sistema <b>SisPRO</b>... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
+												@case('Cancelado')
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Cancelado</b>" data-content="<p style='width: 50%'>Ingrese en las Observaciones del Servicio para validar el motivo de la cancelación... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													@break
 												@default
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Indefinido</b>" data-content="<p style='width: 50%'>Status Indefinido... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 											@endswitch
@@ -115,6 +118,7 @@
 												@case('Notificado')
 													<td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
+												@case('Cancelado')
 												@case('Recibido')
 													<td class="text-center"><a class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
@@ -136,7 +140,6 @@
 												@case('Certificacion')
 													<td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
-													<b></b>
 												@default
 													<td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 											@endswitch

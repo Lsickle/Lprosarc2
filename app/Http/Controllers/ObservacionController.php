@@ -109,13 +109,13 @@ class ObservacionController extends Controller
                         ];  
 
         if (Auth::user()->UsRol !== trans('adminlte_lang::message.Cliente')) {
-            array_push($recipient, $email->PersEmail);               
+            array_push($recipient, $email->PersEmail);
         }
 
         switch ($Solicitud->SolSerStatus) {
 
             case 'Aprobado':
-                array_push($copy, 'gerenteplanta@prosarc.com.co');                             
+                array_push($copy, 'gerenteplanta@prosarc.com.co');
                 break;
             case 'Programado':
             case 'Notificado':
