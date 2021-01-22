@@ -14,6 +14,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RespelMail;
 use App\Mail\incompleteRespel;
 use App\Mail\ResiduoNuevo;
+use App\Mail\RespelCorregido;
 use App\audit;
 use App\Respel;
 use App\Sede;
@@ -520,96 +521,130 @@ class RespelController extends Controller
     {
         // return $request;
         $respel = Respel::where('RespelSlug', $id)->first();
+
         if (!$respel) {
             abort(404);
         }
-            if (isset($request['RespelHojaSeguridad'])) {
-                if($respel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad)){
-                    unlink(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad);
-                }
-                $file1 = $request['RespelHojaSeguridad'];
-                $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
-                $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
-            }
-            else{
-                $hoja = $respel->RespelHojaSeguridad;
-            }
 
-             /*verificar si se cargo un documento en este campo*/
-            if (isset($request['RespelTarj'])) {
-                if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
-                    unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
-                }
-                $file2 = $request['RespelTarj'];
-                $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
-                $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
-            }else{
-                $tarj = $respel->RespelTarj;
-            }
+        $originalAttributes = $respel->getOriginal();
+        // $originalUsername = $originalAttributes['username']; 
 
-             /*verificar si se cargo un documento en este campo*/
-            if (isset($request['RespelFoto'])) {
-                if($respel->RespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto)){
-                    unlink(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto);
-                }
-                $file3 = $request['RespelFoto'];
-                $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
-                $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
-            }else{
-                $foto = $respel->RespelFoto;
+        if (isset($request['RespelHojaSeguridad'])) {
+            if($respel->RespelHojaSeguridad <> null && file_exists(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad)){
+                unlink(public_path().'/img/HojaSeguridad/'.$respel->RespelHojaSeguridad);
             }
-            
+            $file1 = $request['RespelHojaSeguridad'];
+            $hoja = hash('sha256', rand().time().$file1->getClientOriginalName()).'.pdf';
+            $file1->move(public_path().'/img/HojaSeguridad/',$hoja);
+        }
+        else{
+            $hoja = $respel->RespelHojaSeguridad;
+        }
+
             /*verificar si se cargo un documento en este campo*/
-            if (isset($request['SustanciaControladaDocumento'])) {
-                if($respel->SustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento)){
-                    unlink(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento);
-                }
-                $file4 = $request['SustanciaControladaDocumento'];
-                $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
-                $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
-            }else{
-                $ctrlDoc = $respel->SustanciaControladaDocumento;
+        if (isset($request['RespelTarj'])) {
+            if($respel->RespelTarj <> null && file_exists(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj)){
+                unlink(public_path().'/img/TarjetaEmergencia/'.$respel->RespelTarj);
             }
-            if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
-                $respel->RespelStatus = "Pendiente";
-            }else{
-                $respel->RespelStatus = $request['RespelStatus'];
-            }
-            $respel->RespelName = $request['RespelName'];
-            $respel->RespelDescrip = $request['RespelDescrip'];
-            $respel->RespelIgrosidad = $request['RespelIgrosidad'];
-            $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
-            $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
-            $respel->RespelEstado = $request['RespelEstado'];
-            $respel->SustanciaControlada = $request['SustanciaControlada'];
-            $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
-            $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'];
-            $respel->RespelHojaSeguridad = $hoja;
-            $respel->RespelTarj = $tarj;
-            $respel->RespelFoto = $foto;
-            $respel->SustanciaControladaDocumento = $ctrlDoc;
-            $respel->RespelDeclaracion = $request['RespelDeclaracion'];
-            $respel->update();
+            $file2 = $request['RespelTarj'];
+            $tarj = hash('sha256', rand().time().$file2->getClientOriginalName()).'.pdf';
+            $file2->move(public_path().'/img/TarjetaEmergencia/',$tarj);
+        }else{
+            $tarj = $respel->RespelTarj;
+        }
 
-            if (isset($request['RespelTratamiento'])) {
-                $requerimiento = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)
-                ->where('ofertado', 1)
-                ->where('forevaluation', 1)
+            /*verificar si se cargo un documento en este campo*/
+        if (isset($request['RespelFoto'])) {
+            if($respel->RespelFoto <> null && file_exists(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto)){
+                unlink(public_path().'/img/fotoRespelCreate/'.$respel->RespelFoto);
+            }
+            $file3 = $request['RespelFoto'];
+            $foto = hash('sha256', rand().time().$file3->getClientOriginalName()).'.png';
+            $file3->move(public_path().'/img/fotoRespelCreate/',$foto);
+        }else{
+            $foto = $respel->RespelFoto;
+        }
+        
+        /*verificar si se cargo un documento en este campo*/
+        if (isset($request['SustanciaControladaDocumento'])) {
+            if($respel->SustanciaControladaDocumento <> null && file_exists(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento)){
+                unlink(public_path().'/img/SustanciaControlDoc/'.$respel->SustanciaControladaDocumento);
+            }
+            $file4 = $request['SustanciaControladaDocumento'];
+            $ctrlDoc = hash('sha256', rand().time().$file4->getClientOriginalName()).'.pdf';
+            $file4->move(public_path().'/img/SustanciaControlDoc/',$ctrlDoc);
+        }else{
+            $ctrlDoc = $respel->SustanciaControladaDocumento;
+        }
+
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+            $respel->RespelStatus = "Pendiente";
+        }else{
+            $respel->RespelStatus = $request['RespelStatus'];
+        }
+
+        $respel->RespelName = $request['RespelName'];
+        $respel->RespelDescrip = $request['RespelDescrip'];
+        $respel->RespelIgrosidad = $request['RespelIgrosidad'];
+        $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
+        $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+        $respel->RespelEstado = $request['RespelEstado'];
+        $respel->SustanciaControlada = $request['SustanciaControlada'];
+        $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
+        $respel->SustanciaControladaNombre = $request['SustanciaControladaNombre'];
+        $respel->RespelHojaSeguridad = $hoja;
+        $respel->RespelTarj = $tarj;
+        $respel->RespelFoto = $foto;
+        $respel->SustanciaControladaDocumento = $ctrlDoc;
+        $respel->RespelDeclaracion = $request['RespelDeclaracion'];
+        $respel->update();
+
+        if (isset($request['RespelTratamiento'])) {
+            $requerimiento = Requerimiento::where('FK_ReqRespel', $respel->ID_Respel)
+            ->where('ofertado', 1)
+            ->where('forevaluation', 1)
+            ->first();
+            $requerimiento->FK_ReqTrata=$request['RespelTratamiento'];
+            $requerimiento->update();
+        }
+
+        $log = new audit();
+        $log->AuditTabla="respels";
+        $log->AuditType="Modificado";
+        $log->AuditRegistro=$respel->ID_Respel;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
+        if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) && $originalAttributes['RespelStatus'] === 'Incompleto' && $respel->RespelStatus === 'Pendiente') {
+            /*se verifican los datos de las sede y y cliente segun el usuarios que registra el residuo*/
+            $respel['cliente'] = DB::table('personals')
+                ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+                ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+                ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+                ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+                ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                ->select(['sedes.SedeName', 'clientes.CliName', 'clientes.CliComercial'])
                 ->first();
-                $requerimiento->FK_ReqTrata=$request['RespelTratamiento'];
-                $requerimiento->update();
-            }
 
-            $log = new audit();
-            $log->AuditTabla="respels";
-            $log->AuditType="Modificado";
-            $log->AuditRegistro=$respel->ID_Respel;
-            $log->AuditUser=Auth::user()->email;
-            $log->Auditlog=json_encode($request->all());
-            $log->save();
+            // se establece la lista de destinatarios
+            if ($respel['cliente']->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $respel['cliente']->CliComercial)->first();
+                $destinatarios = ['dirtecnica@prosarc.com.co', $comercial->PersEmail];
+            }else{
+                $comercial = "";
+                $destinatarios = ['dirtecnica@prosarc.com.co'];
+            }
             
-            return redirect()->route('respels.show', [$respel->RespelSlug]);
-            
+            $respel['comercial'] = $comercial;
+            $respel['personalcliente'] = Personal::where('ID_Pers', Auth::user()->FK_UserPers)->first();
+
+            // se envia un correo por cada residuo registrado
+            Mail::to($destinatarios)->send(new RespelCorregido($respel));
+        }
+        
+        return redirect()->route('respels.show', [$respel->RespelSlug]);
+        
     }
 
     /**
