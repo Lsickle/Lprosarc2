@@ -1478,7 +1478,8 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 
 		switch ($SolicitudServicio->SolSerStatus) {
-			case 'Aprobado':
+			case 'Pendiente':
+			case 'Aceptado':
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
@@ -2051,5 +2052,77 @@ class SolicitudServicioController extends Controller
 		
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 
+	}
+
+	public function CancelarServicio(Request $request)
+	{
+		// return $request;	
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+
+		$statusAllowingCancel = ['Pendiente',
+								'Cancelado',
+								'Aceptado',
+								'Aprobado',
+								'Programado',
+								'Notificado'];
+
+		if (!in_array($Solicitud->SolSerStatus, $statusAllowingCancel)) {
+			abort(403, 'el servicio #'.$Solicitud->ID_SolSer.' no debe ser cancelado, ya que se encuentra en status '.$Solicitud->SolSerStatus);
+		}
+
+		// eliminar las programaciones relacionadas con el servicio
+		$programacionesDelete = ProgramacionVehiculo::where('FK_ProgServi', $Solicitud->ID_SolSer)
+		->where('ProgVehDelete', 0)
+		->get();
+
+		foreach ($programacionesDelete as $key => $value) {
+			$value->ProgVehDelete = 1;
+			$value->save();
+		}
+
+		// cabiar el status del servicio
+		switch ($request->input('solserstatus')) {
+			case 'Aprobado':
+				$Solicitud->SolSerStatus = 'Aprobado';
+				break;
+			case 'Cancelado':
+				$Solicitud->SolSerStatus = 'Cancelado';
+				break;
+		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Servicio cancelado";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		// cabiar el status de la observación
+		switch ($request->input('solserstatus')) {
+			case 'Aprobado':
+				$Observacion->ObsStatus = 'Reactivado';
+				break;
+			case 'Cancelado':
+				$Observacion->ObsStatus = 'Cancelado';
+				break;
+		}
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		return redirect()->route('solicitud-servicio.index');
 	}
 }

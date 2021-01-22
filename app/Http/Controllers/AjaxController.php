@@ -338,15 +338,27 @@ class AjaxController extends Controller
 						->first();
 					
 					$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-
-					if ($Solicitud->SolServMailCopia == "null") {
-						Mail::to($email->PersEmail)
-						->send(new SolSerEmail($email));
-					}else{
-						Mail::to($email->PersEmail)
-						->cc(json_decode($Solicitud->SolServMailCopia))
-						->send(new SolSerEmail($email));
+					
+					if ($comercial) {
+						$destinatarios = [$comercial->PersEmail];
+					} else {
+						$destinatarios = [];
 					}
+					
+
+					$destinatarios = [$comercial->PersEmail];
+					if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                            array_push($destinatarios, $value);
+                        }
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }
 				}
 				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
 
