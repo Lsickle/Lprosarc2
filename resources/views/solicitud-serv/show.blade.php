@@ -594,6 +594,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div id="ModalDeleteRespel"></div>
 								<div id="ModalStatus"></div>
 								<div id="ModalReversar"></div>
+								<div id="ModalCancelar"></div>
 							{{--  Modal --}}
 								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -1639,12 +1640,42 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	$('.videoswitch').bootstrapSwitch('disabled',true);
 
 	@switch($SolicitudServicio->SolSerStatus)
+		@case('Cancelado')
+			$('#titulo').empty();
+			$('#titulo').append(`
+				<h4><b>{{'Solicitud de Servicio Cancelada'}}</b></h4>
+			`);
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Reactivar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Aprobado')" href="#">Reactivar Solicitud de Servicio</a></li>
+					</ul>
+				</div>
+				`);
+			@endif
+		@break
 		@case('Pendiente')
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
+				`);
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Cancelar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Cancelado')" href="#">Cancelar Servicio</a></li>
+					</ul>
+				</div>
 				`);
 			@endif
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
@@ -1668,6 +1699,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Cancelar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Cancelado')" href="#">Cancelar Servicio</a></li>
+					</ul>
+				</div>
+				`);
+			@endif
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 					$('#titulo').append(`
@@ -1689,6 +1732,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Cancelar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Cancelado')" href="#">Cancelar Servicio</a></li>
+					</ul>
+				</div>
+				`);
+			@endif
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
 					$('#titulo').append(`
@@ -1707,6 +1762,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
 						<h4><b>{{trans('adminlte_lang::message.solsertitle')}}</b></h4>
+				`);
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Cancelar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Cancelado')" href="#">Cancelar Servicio</a></li>
+					</ul>
+				</div>
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
@@ -1739,6 +1806,18 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+				`);
+			@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
+				$('#titulo').append(`
+				<div class="btn-group" style="float: left;">
+					<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Cancelar <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a onclick="ModalCancelar('{{$SolicitudServicio->SolSerSlug}}', 'Cancelado')" href="#">Cancelar Servicio</a></li>
+					</ul>
+				</div>
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
@@ -2027,6 +2106,60 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	});
 	envsubmit();
 	$('#myModalreversar').modal();
+	}
+
+	function ModalCancelar(slug, status){
+	$('#ModalCancelar').empty();
+	$('#ModalCancelar').append(`
+	<div class="modal modal-default fade in" id="myModalCancelar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+						<i class="fas fa-exclamation-triangle"></i>
+						<span style="font-size: 0.3em; color: black;">
+							<p>Desea Cambiar la solicitud de servicio al status <b>`+status+`</b>?</p>
+							<ul class="list-group" style="font-size: 0.8em; font-style: oblique;">
+								<li class="list-group-item">Serán eliminadas las programaciones de vehículos</li>
+								<li class="list-group-item">No se genera notificación por correo</li>
+								<li class="list-group-item">debe especificar las razones de la cancelación</li>
+							</ul>
+						</span>
+					</div>
+				</div>
+				<form action="/solicitud-servicio/cancelarServicio" method="POST" data-toggle="validator" id="SolSerCancelar">
+					<div class="modal-header">
+						@csrf
+						<div class="form-group col-md-12">
+							<label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
+							<small id="caracteresrestantesCancelar" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
+							<textarea onchange="updatecaracteres()" id="textDescriptionCancelar" rows="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required name="solserdescript"></textarea>
+						</div>
+						<input type="submit" id="Cancelar`+slug+`" style="display: none;">
+						<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+						<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+						<label for="Cancelar`+slug+`" class='btn btn-success'>Enviar</label>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	`);
+	$('#SolSerCancelar').validator('update');
+	popover();
+	var area = document.getElementById("textDescriptionCancelar");
+	var message = document.getElementById("caracteresrestantesCancelar");
+	var maxLength = 4000;
+	$('#textDescriptionCancelar').keyup(function () {
+	message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+	observacion = area.value;
+	});
+	envsubmit();
+	$('#myModalCancelar').modal();
 	}
 </script>
 @endsection
