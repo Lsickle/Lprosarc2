@@ -132,6 +132,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
 	Route::post('/solicitud-servicio/reversarStatus', 'SolicitudServicioController@reversarStatus');
+	Route::post('/solicitud-servicio/cancelarServicio', 'SolicitudServicioController@cancelarServicio');
 	Route::put('/solicitud-servicio/{id}/updateRms', 'SolicitudServicioController@updateRms');
 	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
 	Route::get('/solicitud-servicio/{id}/add-respel', 'SolicitudServicioController@addRespel');

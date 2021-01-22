@@ -73,6 +73,7 @@
                                         <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}
                                         </td>
                                         @break
+                                        @case('Cancelado')
                                         @case('Recibido')
                                         <td class="text-center"><a class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}
                                         </td>
