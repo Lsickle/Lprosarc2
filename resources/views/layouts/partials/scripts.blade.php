@@ -69,7 +69,7 @@ $('form[data-toggle="validator"]').validator({
 		$('select').select2({
 			placeholder: "Seleccione...",
 			allowClear: true,
-			tags: true,
+			tags: false,
 			width: 'resolve',
 			width: '100%',
 			theme: "classic"
