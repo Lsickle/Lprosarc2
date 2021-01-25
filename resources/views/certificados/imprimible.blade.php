@@ -352,11 +352,19 @@ de 2006, expedida por la CAR.</span></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
 7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></p>
-
+@php 
+if($certificado->recepcion != ""){
+  $año=date('Y', strtotime(now()));
+  $mes=date('m', strtotime(now()));
+  $dia=date('d', strtotime(now()));
+  $fechafirma= gmmktime(12,0,0,$mes,$dia,$año);
+  setlocale(LC_TIME, "Spanish_Colombia.1252" ); 
+}
+@endphp
 <p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-indent:
 -35.4pt'><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-color:#0D0D0D'>Para constancia se firma en Mosquera, el día 21 de Agosto de
-2020.</span></b></p>
+color:#0D0D0D'>Para constancia se firma en Mosquera, el día {{strftime("%d de %B del %Y", $fechafirma)
+}}.</span></b></p>
 
 </div>
 
