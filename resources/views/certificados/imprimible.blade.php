@@ -187,10 +187,42 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
   color:#0D0D0D'>Número de Recibo de Materiales </span></p>
   </td>
+  @php
+  $collection2 = collect([]);
+  @endphp
+  @foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
+  @if($Residuo->requerimiento->FK_ReqTrata == $certificado->FK_CertTrat&&$Residuo->generespel->gener_sedes->ID_GSede == $certificado->FK_CertGenerSede)
+  @if($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
+  @foreach ($Residuo->SolResRM2 as $rm2 => $value2)
+  @php
+  $collection2 = $collection2->concat([$value2]);
+  @endphp
+  @endforeach
+  @else
+  @if (is_Array($Residuo->SolResRM))
+  @foreach ($Residuo->SolResRM as $rm => $value)
+  @php
+  $collection2 = $collection2->concat([$value]);
+  @endphp
+  @endforeach
+  @else
+  @php
+  $uniquestring = 'RM Invalido -> '.$Residuo->SolResRM;
+  @endphp
+  @endif
+  @endif
+  @endif
+  @endforeach
+  @php
+  if ($collection2->isNotEmpty()) {
+  $unicos = collect($collection2->unique());
+  $uniquestring = $unicos->values()->join(', ');
+  }
+  @endphp
   <td width=76 style='width:56.65pt;border-top:none;border-left:none;
   border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
-  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>36329</span></b></p>
+  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>{{$uniquestring}}</span></b></p>
   </td>
   <td width=198 colspan=2 style='width:148.75pt;border-top:none;border-left:
   none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
@@ -202,7 +234,7 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
   <td width=66 style='width:49.8pt;border-top:none;border-left:none;border-bottom:
   solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span lang=ES
-  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>36329</span></b></p>
+  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>{{$uniquestring}}</span></b></p>
   </td>
  </tr>
  <tr>
@@ -352,11 +384,19 @@ de 2006, expedida por la CAR.</span></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
 7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></p>
-
+@php 
+if($certificado->recepcion != ""){
+  $año=date('Y', strtotime(now()));
+  $mes=date('m', strtotime(now()));
+  $dia=date('d', strtotime(now()));
+  $fechafirma= gmmktime(12,0,0,$mes,$dia,$año);
+  setlocale(LC_TIME, "Spanish_Colombia.1252" ); 
+}
+@endphp
 <p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-indent:
 -35.4pt'><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-color:#0D0D0D'>Para constancia se firma en Mosquera, el día 21 de Agosto de
-2020.</span></b></p>
+color:#0D0D0D'>Para constancia se firma en Mosquera, el día {{strftime("%d de %B del %Y", $fechafirma)
+}}.</span></b></p>
 
 </div>
 
