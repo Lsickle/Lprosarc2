@@ -345,10 +345,13 @@ function RequeRespel(id_div, contador, Id_Respel){
 					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
 				}
 				switch (res.Tarifatipo) { 
-					case 'Kg': 
+					case 'Kg':
+						$('#SolResTypeUnidad'+id_div+contador).prop('required',false);
+						$('#SolResTypeUnidad'+id_div+contador).val('');
 						$('#RespelCantidadTipo'+id_div+contador).hide();
 						break;
-					case 'Unid': 
+					case 'Unid':
+						$('#SolResTypeUnidad'+id_div+contador).prop('required',true);
 						$('#RespelCantidadTipo'+id_div+contador).hide();
 						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
 						$('#SolResTypeUnidad'+id_div+contador).empty();
@@ -356,7 +359,8 @@ function RequeRespel(id_div, contador, Id_Respel){
 						Selects();
 						$('#RespelCantidadTipo'+id_div+contador).show();
 						break;
-					case 'Lt': 
+					case 'Lt':
+						$('#SolResTypeUnidad'+id_div+contador).prop('required',true);
 						$('#RespelCantidadTipo'+id_div+contador).hide();
 						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
 						$('#SolResTypeUnidad'+id_div+contador).empty();
@@ -364,8 +368,10 @@ function RequeRespel(id_div, contador, Id_Respel){
 						Selects();
 						$('#RespelCantidadTipo'+id_div+contador).show();
 
-						break;		
+						break;
 					default:
+						$('#SolResTypeUnidad'+id_div+contador).prop('required',false);
+						$('#SolResTypeUnidad'+id_div+contador).val('');
 						$('#RespelCantidadTipo'+id_div+contador).hide();
 						$('#SolResTypeUnidad'+id_div+contador).select2("destroy");
 						$('#SolResTypeUnidad'+id_div+contador).empty();

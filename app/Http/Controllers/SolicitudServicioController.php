@@ -399,14 +399,22 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
-				if (isset($request['SolResCantiUnidad'][$Generador][$y])&&(isset($request['SolResTypeUnidad'][$Generador][$y]))){
+				if ((isset($request['SolResTypeUnidad'][$Generador][$y]))){
 					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
 					}
 					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
 						$SolicitudResiduo->SolResTypeUnidad = "Litros";
 					}
-					$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+					if (isset($request['SolResCantiUnidad'][$Generador][$y])&&$request['SolResCantiUnidad'][$Generador][$y] != null) {
+						$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}else {
+						$SolicitudResiduo->SolResCantiUnidad = 0;
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}
 				}
 				
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
