@@ -80,7 +80,16 @@
 									@endif
 									{{-- <td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td> --}}
 									<td>{{ $respel->updated_at }}</td>
-									<td class="text-center">{{$respel->RespelName}}</td>
+									<td class="text-center">
+										@if($respel->SustanciaControlada == 1)
+											@if ($respel->SustanciaControladaTipo == 0)
+												<a title="Sustancia Controlada"><i class="fas fa-flask" style="color: green"></i></a>
+											@endif
+											@if ($respel->SustanciaControladaTipo == 1)
+												<a title="Sustancia de uso masivo"><i class="fas fa-flask" style="color: blue"></i></a>
+											@endif
+										@endif
+										{{$respel->RespelName}}</td>
 									<td class="text-center">{{$respel->TratName}}</td>
 
 									@if($respel->YRespelClasf4741 <> null)
