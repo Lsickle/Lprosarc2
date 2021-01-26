@@ -995,7 +995,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<small class="help-block with-errors">*</small>
 											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[3]+`">
 										</div>
-
 										<div class="form-group col-md-3">
 											<label for="SolResRM"># RM</label>
 											<small class="help-block with-errors">*</small>
@@ -1350,7 +1349,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				}
 			}
 
-			if (nulos == 4) {
+			if (nulos == 8) {
 				$('#SolResRMselect').empty();
 				$('#SolResRMselect').append(`<option disabled value="">debe cargar un numero de RM en el boton azul "RMs" para poder luego elegirlo en este formulario...</option>`);
 			}else{
