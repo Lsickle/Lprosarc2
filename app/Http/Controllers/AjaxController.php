@@ -347,12 +347,12 @@ class AjaxController extends Controller
 					
 
 					$destinatarios = [$comercial->PersEmail];
-					if ($SolSer->SolServMailCopia == "null") {
+					if ($Solicitud->SolServMailCopia == "null") {
                         Mail::to($email->PersEmail)
                         ->cc($destinatarios)
                         ->send(new SolSerEmail($email));
                     }else{
-                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                        foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
                             array_push($destinatarios, $value);
                         }
                         Mail::to($email->PersEmail)
