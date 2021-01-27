@@ -1,11 +1,32 @@
 @component('mail::message')
-# Solicitud de Servicio N° {{$SolicitudServicio->ID_SolSer}} contiene una o mas sustancias controladas
+@php
+setlocale(LC_ALL, "es_CO.UTF-8");
+if(date('H', strtotime($email->ProgVehSalida)) >= 12){
+$horas = " en las horas de la tarde";
+}else{
+$horas = " en las horas de la mañana";
+}
+$TextProgramacion = "el día ".strftime("%d", strtotime($email->ProgVehSalida))." del mes de ".strftime("%B", strtotime($email->ProgVehSalida)).$horas;
+$text = "ha sido Programada para $TextProgramacion";
+@endphp
+# La solicitud de Servicio N° {{$SolicitudServicio->ID_SolSer}} programada para {{$TextProgramacion}} contiene las siguientes sustancias controladas
 
-El cliente {{$SolicitudServicio['cliente']->CliName}} ha creado una nueva Solicitud de Servicio para detalles adicionales comuniquese con la persona de contacto con los siguientes datos:<br>
+@component('mail::table')
+| Residuo | Tipo | Nombre |
+| :------------- | :------------: | --------: |
+@foreach ($SolicitudServicio->SolicitudResiduo as $value)
+@if ($value->requerimiento->respel->SustanciaControlada == 1)
+| {{$value->requerimiento->respel->RespelName}} | {{$value->requerimiento->respel->SustanciaControladaNombre == 1 ? 'Uso Masivo' : 'Controlada'}} | {{$value->requerimiento->respel->SustanciaControladaNombre}} |
+@endif
+@endforeach
+@endcomponent
+
+
+Para detalles adicionales comuniquese con la persona de contacto con los siguientes datos:<br>
 <ul>
-    <li>Nombre: {{$SolicitudServicio['personalcliente']->PersFirstName.' '.$SolicitudServicio['personalcliente']->PersLastName}} </li>
-    <li>teléfono: {{$SolicitudServicio['personalcliente']->PersCellphone}}</li>
-    <li>correo: {{$SolicitudServicio['personalcliente']->PersEmail}}</li>
+    <li>Nombre: {{$email->PersFirstName.' '.$email->PersLastName}} </li>
+    <li>teléfono: {{$email->PersCellphone}}</li>
+    <li>correo: {{$email->PersEmail}}</li>
 </ul>
 <br>
 # Observaciones:

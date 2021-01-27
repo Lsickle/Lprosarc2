@@ -7,10 +7,11 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SustanciaControladaProgramada extends Mailable
+class SustanciaControladaProgramada extends Mailable implements ShouldQueue
 {
     use Queueable;
 
+    public $email;
     public $SolicitudServicio;
 
     /**
@@ -18,8 +19,9 @@ class SustanciaControladaProgramada extends Mailable
      *
      * @return void
      */
-    public function __construct($SolicitudServicio)
+    public function __construct($email, $SolicitudServicio)
     {
+        $this->email = $email;
         $this->SolicitudServicio = $SolicitudServicio;
     }
 
@@ -30,8 +32,8 @@ class SustanciaControladaProgramada extends Mailable
      */
     public function build()
     {
-        return $this->from('notificaciones@prosarc.com.co', $this->SolicitudServicio['cliente']->CliName)
-                    ->subject('Nueva Solicitud de Servicio '.'#'.$this->SolicitudServicio->ID_SolSer.' del cliente: '.$this->SolicitudServicio['cliente']->CliName)
+        return $this->from('notificaciones@prosarc.com.co', $this->email->CliName)
+                    ->subject('Sustancias Controladas en el Servicio '.'#'.$this->SolicitudServicio->ID_SolSer.' del cliente: '.$this->SolicitudServicio['cliente']->CliName)
                     ->markdown('emails.SolSer.sustanciaControladaProgramada');
     }
 }
