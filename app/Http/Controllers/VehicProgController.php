@@ -15,6 +15,7 @@ use App\Mail\VehiculoRecibidoEmail;
 use App\Mail\CancelSolServEmail;
 use App\Mail\SolSerEmail;
 use App\Mail\ProgramacionParafiscales;
+use App\Mail\SustanciaControladaProgramada;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -1155,12 +1156,12 @@ class VehicProgController extends Controller
 	 */
 	public function updateStatus(Request $request, $id)
 	{
-
 		$programacion = ProgramacionVehiculo::where('ID_ProgVeh', $id)->first();
 		if (!$programacion) {
 			abort(404, 'la programación de vehículo que trata de actualizar no se encuentra en la base de datos');
 		}
-		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
+		$SolicitudServicio = SolicitudServicio::with(['SolicitudResiduo.requerimiento.respel'])
+		->where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 		->where('ProgVehDelete', 0)
 		->get();
@@ -1168,6 +1169,19 @@ class VehicProgController extends Controller
 		$SolicitudServicio->SolSerStatus='Notificado';
 		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
 		$SolicitudServicio->save();
+
+		// $residuosdelservicio = $SolicitudServicio->SolicitudResiduo()->requerimiento()->respel()->get();
+
+		$cantidadDeResiduosControlados = 0;
+
+		foreach ($SolicitudServicio->SolicitudResiduo as $key => $value) {
+			$respel = $value->requerimiento->respel;
+			if ($respel->SustanciaControlada == 1) {
+				$cantidadDeResiduosControlados++;
+			}
+		}
+
+		// return $cantidadDeResiduosControlados;
 		
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -1189,41 +1203,47 @@ class VehicProgController extends Controller
 		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 		$Observacion->save();
 
-		if($request->input('destino') == 'vehiprog-edit'){
-			$email = DB::table('solicitud_servicios')
-				->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-				->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
-				->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
-				->where('progvehiculos.FK_ProgServi', '=', $SolicitudServicio->ID_SolSer)
-				->where('progvehiculos.ProgVehDelete', 0)
-				->first();
-			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
-								'auxiliarpda@prosarc.com.co',
-								'recepcionpda@prosarc.com.co',
-								$comercial->PersEmail
-							];
+		$email = DB::table('solicitud_servicios')
+			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->select('personals.*', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+			->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
+			->where('progvehiculos.FK_ProgServi', '=', $SolicitudServicio->ID_SolSer)
+			->where('progvehiculos.ProgVehDelete', 0)
+			->first();
+		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+		$destinatarios = ['asistentelogistica@prosarc.com.co',
+							'auxiliarlogistico@prosarc.com.co',
+							'auxiliarpda@prosarc.com.co',
+							'recepcionpda@prosarc.com.co',
+							'conciliaciones@prosarc.com.co',
+							$comercial->PersEmail
+						];
+		if ($cantidadDeResiduosControlados > 0) {
+			//enviar notificacion de servicion con sustancia controladas
+			Mail::to('dirtecnica@prosarc.com.co')->cc('sistemas@prosarc.com.co')->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
+		}else{
+			array_push($destinatarios, 'dirtecnica@prosarc.com.co');
+		}
 
-			if ($SolicitudServicio->SolServMailCopia == "null") {
-				Mail::to($email->PersEmail)
-				->cc($destinatarios)
-				->send(new SolSerEmail($email));
-			}else{
-				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
-					array_push($destinatarios, $value);
-				}
-				Mail::to($email->PersEmail)
-				->cc($destinatarios)
-				->send(new SolSerEmail($email));
+		if ($SolicitudServicio->SolServMailCopia == "null") {
+			Mail::to($email->PersEmail)
+			->cc($destinatarios)
+			->send(new SolSerEmail($email));
+		}else{
+			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+				array_push($destinatarios, $value);
 			}
+			Mail::to($email->PersEmail)
+			->cc($destinatarios)
+			->send(new SolSerEmail($email));
+		}
 
+		if($request->input('destino') == 'vehiprog-edit'){
 			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
 		}else{
-			return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
+			return redirect()->route('vehicle-programacion.index');
 		}
 
 		
