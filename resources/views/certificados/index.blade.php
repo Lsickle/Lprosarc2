@@ -248,12 +248,12 @@ Lista de Certificados
 										$Status = ['Conciliado', 'Tratado'];
 									@endphp
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT)&&in_array($certificado->SolicitudServicio->SolSerStatus, $Status))
-										<td id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class="text-center">
-											<button class='classSignDocument{{$certificado->CertSlug}} btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
+										<td class="text-center">
+											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
 									@else
-										<td id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class="text-center">
-											<button class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
+										<td class="text-center">
+											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
@@ -406,249 +406,247 @@ function renewtoken(token) {
 	});
 }
 function firmarDocumento(CertSlug){
-	$('#buttonfirmarDoc'+CertSlug).on( "click", function() {
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-		$.ajax({
-			url: "{{url('/firmarCertificado')}}/"+CertSlug,
-			method: 'PUT',
-			data:{},
-			beforeSend: function(){
-				let buttonsubmit = $('.classSignDocument'+CertSlug);
-				buttonsubmit.each(function() {
-							$(this).on('click', function(event) {
-								event.preventDefault();
-							});
-							$(this).disabled = true;
-							$(this).prop('disabled', true);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{url('/firmarCertificado')}}/"+CertSlug,
+		method: 'PUT',
+		data:{},
+		beforeSend: function(){
+			let buttonsubmit = $('#buttonfirmarDoc'+CertSlug);
+			buttonsubmit.each(function() {
+						$(this).on('click', function(event) {
+							event.preventDefault();
 						});
-				buttonsubmit.empty();
-				buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i>`);
-			},
-			success: function(data, textStatus, jqXHR){
-    			renewtoken(data.newtoken);
-				console.log(data);
-				let buttonsubmit = $('.classSignDocument'+CertSlug);
-				buttonsubmit.each(function() {
-					$(this).on('click', function(event) {
-						event.preventDefault();
+						$(this).disabled = true;
+						$(this).prop('disabled', true);
 					});
-					$(this).disabled = false;
-					$(this).prop('disabled', false);
+			buttonsubmit.empty();
+			buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i>`);
+		},
+		success: function(data, textStatus, jqXHR){
+			renewtoken(data.newtoken);
+			console.log(data);
+			let buttonsubmit = $('#buttonfirmarDoc'+CertSlug);
+			buttonsubmit.each(function() {
+				$(this).on('click', function(event) {
+					event.preventDefault();
 				});
-				buttonsubmit.prop('class', 'btn btn-success buttonfirmarDoc'+CertSlug);
-				buttonsubmit.empty();
-				buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
+				$(this).disabled = false;
+				$(this).prop('disabled', false);
+			});
+			buttonsubmit.prop('class', 'btn btn-primary');
+			buttonsubmit.empty();
+			buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
 
-				adireccion = $('#AD'+CertSlug);
-				alogisica = $('#AL'+CertSlug);
-				aoperaciones = $('#AO'+CertSlug);
+			adireccion = $('#AD'+CertSlug);
+			alogisica = $('#AL'+CertSlug);
+			aoperaciones = $('#AO'+CertSlug);
 
-				ADfirmaCorrespondiente = "";
-				ALfirmaCorrespondiente = "";
-				AOfirmaCorrespondiente = "";
-				switch (data.Documento['CertAuthDp']) {
-					case 0:
-					ADfirmaCorrespondiente = `<p>Pendiente</p>`;
-						break;
-					
-					case 1:
-					ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Director de Planta</p>`;
-						break;
-					
-					case 2:
-					ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Logística</p>`;
-						break;
-					
-					case 3:
-					ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Operaciones</p>`;
-						break;
-					
-					case 4:
-					ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Supervisor de Turno</p>`;
-						break;
-					
-					case 5:
-					ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Ingeniero HSEQ</p>`;
-						break;
-					
-					case 6:
-					ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Asistente de Logística</p>`;
-						break;
-					
-					case 7:
-					ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Programador</p>`;
-						break;
-					
-					default:
-					ADfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
-						break;
-				}
-
-				switch (data.Documento['CertAuthJl']) {
-					case 0:
-					ALfirmaCorrespondiente = `<p>Pendiente</p>`;
-						break;
-					
-					case 1:
-					ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Director de Planta</p>`;
-						break;
-					
-					case 2:
-					ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Logística</p>`;
-						break;
-					
-					case 3:
-					ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Operaciones</p>`;
-						break;
-					
-					case 4:
-					ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Supervisor de Turno</p>`;
-						break;
-					
-					case 5:
-					ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Ingeniero HSEQ</p>`;
-						break;
-					
-					case 6:
-					ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Asistente de Logística</p>`;
-						break;
-					
-					case 7:
-					ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Programador</p>`;
-						break;
-					
-					default:
-					ALfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
-						break;
-				}
-
-				switch (data.Documento['CertAuthJo']) {
-					case 0:
-					AOfirmaCorrespondiente = `<p>Pendiente</p>`;
-						break;
-					
-					case 1:
-					AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Director de Planta</p>`;
-						break;
-					
-					case 2:
-					AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Logística</p>`;
-						break;
-					
-					case 3:
-					AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Jefe de Operaciones</p>`;
-						break;
-					
-					case 4:
-					AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Supervisor de Turno</p>`;
-						break;
-					
-					case 5:
-					AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Ingeniero HSEQ</p>`;
-						break;
-					
-					case 6:
-					AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Asistente de Logística</p>`;
-						break;
-					
-					case 7:
-					AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
-					<p>Programador</p>`;
-						break;
-					
-					default:
-					AOfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
-						break;
-				}
-
-				adireccion.empty();
-				adireccion.append(ADfirmaCorrespondiente);
-
-				alogisica.empty();
-				alogisica.append(ALfirmaCorrespondiente);
-
-				aoperaciones.empty();
-				aoperaciones.append(AOfirmaCorrespondiente);
-
-				toastr.success(data['message']);
-			},
-			error: function(xhr, textStatus, jqXHR){
-				renewtoken(xhr.newtoken);
-				console.log(xhr);
-				console.log(textStatus);
-				console.log(jqXHR);
-				console.log(xhr['responseJSON']['status']);
-				let buttonsubmit = $('.classSignDocument'+CertSlug);
-				switch (xhr['status']) {
-					case 400:
-						buttonsubmit.each(function() {
-							$(this).on('click', function(event) {
-								event.preventDefault();
-							});
-							$(this).disabled = true;
-							$(this).prop('disabled', true);
-						});
-						buttonsubmit.prop('class', 'btn btn-default');
-						buttonsubmit.empty();
-						buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
-						break;
-					case 404:
-						buttonsubmit.each(function() {
-							$(this).on('click', function(event) {
-								event.preventDefault();
-							});
-							$(this).disabled = true;
-							$(this).prop('disabled', true);
-						});
-						buttonsubmit.prop('class', 'btn btn-danger');
-						buttonsubmit.empty();
-						buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
-						break;
+			ADfirmaCorrespondiente = "";
+			ALfirmaCorrespondiente = "";
+			AOfirmaCorrespondiente = "";
+			switch (data.Documento['CertAuthDp']) {
+				case 0:
+				ADfirmaCorrespondiente = `<p>Pendiente</p>`;
+					break;
 				
-					default:
-						buttonsubmit.each(function() {
-							$(this).on('click', function(event) {
-								event.preventDefault();
-							});
-							$(this).disabled = false;
-							$(this).prop('disabled', false);
-						});
-						buttonsubmit.prop('class', 'btn btn-default buttonfirmarDoc'+CertSlug);
-						buttonsubmit.empty();
-						buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
-						break;
-				}
-				toastr.error(xhr['responseJSON']['message']);
-			},
-			complete: function(){
-
-				//
+				case 1:
+				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Director de Planta</p>`;
+					break;
+				
+				case 2:
+				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Logística</p>`;
+					break;
+				
+				case 3:
+				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Operaciones</p>`;
+					break;
+				
+				case 4:
+				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Supervisor de Turno</p>`;
+					break;
+				
+				case 5:
+				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Ingeniero HSEQ</p>`;
+					break;
+				
+				case 6:
+				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Asistente de Logística</p>`;
+					break;
+				
+				case 7:
+				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Programador</p>`;
+					break;
+				
+				default:
+				ADfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
+					break;
 			}
-		});
+
+			switch (data.Documento['CertAuthJl']) {
+				case 0:
+				ALfirmaCorrespondiente = `<p>Pendiente</p>`;
+					break;
+				
+				case 1:
+				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Director de Planta</p>`;
+					break;
+				
+				case 2:
+				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Logística</p>`;
+					break;
+				
+				case 3:
+				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Operaciones</p>`;
+					break;
+				
+				case 4:
+				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Supervisor de Turno</p>`;
+					break;
+				
+				case 5:
+				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Ingeniero HSEQ</p>`;
+					break;
+				
+				case 6:
+				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Asistente de Logística</p>`;
+					break;
+				
+				case 7:
+				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Programador</p>`;
+					break;
+				
+				default:
+				ALfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
+					break;
+			}
+
+			switch (data.Documento['CertAuthJo']) {
+				case 0:
+				AOfirmaCorrespondiente = `<p>Pendiente</p>`;
+					break;
+				
+				case 1:
+				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Director de Planta</p>`;
+					break;
+				
+				case 2:
+				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Logística</p>`;
+					break;
+				
+				case 3:
+				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Jefe de Operaciones</p>`;
+					break;
+				
+				case 4:
+				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Supervisor de Turno</p>`;
+					break;
+				
+				case 5:
+				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Ingeniero HSEQ</p>`;
+					break;
+				
+				case 6:
+				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Asistente de Logística</p>`;
+					break;
+				
+				case 7:
+				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
+				<p>Programador</p>`;
+					break;
+				
+				default:
+				AOfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
+					break;
+			}
+
+			adireccion.empty();
+			adireccion.append(ADfirmaCorrespondiente);
+
+			alogisica.empty();
+			alogisica.append(ALfirmaCorrespondiente);
+
+			aoperaciones.empty();
+			aoperaciones.append(AOfirmaCorrespondiente);
+
+			toastr.success(data['message']);
+		},
+		error: function(xhr, textStatus, jqXHR){
+			renewtoken(xhr.newtoken);
+			console.log(xhr);
+			console.log(textStatus);
+			console.log(jqXHR);
+			console.log(xhr['responseJSON']['status']);
+			let buttonsubmit = $('#buttonfirmarDoc'+CertSlug);
+			switch (xhr['status']) {
+				case 400:
+					buttonsubmit.each(function() {
+						$(this).on('click', function(event) {
+							event.preventDefault();
+						});
+						$(this).disabled = true;
+						$(this).prop('disabled', true);
+					});
+					buttonsubmit.prop('class', 'btn btn-default');
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
+					break;
+				case 404:
+					buttonsubmit.each(function() {
+						$(this).on('click', function(event) {
+							event.preventDefault();
+						});
+						$(this).disabled = true;
+						$(this).prop('disabled', true);
+					});
+					buttonsubmit.prop('class', 'btn btn-danger');
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
+					break;
+			
+				default:
+					buttonsubmit.each(function() {
+						$(this).on('click', function(event) {
+							event.preventDefault();
+						});
+						$(this).disabled = false;
+						$(this).prop('disabled', false);
+					});
+					buttonsubmit.prop('class', 'btn btn-default');
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
+					break;
+			}
+			toastr.error(xhr['responseJSON']['message']);
+		},
+		complete: function(){
+
+			//
+		}
 	});
 }
 </script>
