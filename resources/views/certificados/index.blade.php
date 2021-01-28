@@ -395,7 +395,7 @@ Lista de Certificados
 		}
 	}
 </script>
-@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
 <script>
 function renewtoken(token) {
 	$('meta[name="csrf-token"]').attr('content', token);
@@ -429,7 +429,6 @@ function firmarDocumento(CertSlug){
 		},
 		success: function(data, textStatus, jqXHR){
 			renewtoken(data.newtoken);
-			console.log(data);
 			let buttonsubmit = $('#buttonfirmarDoc'+CertSlug);
 			buttonsubmit.each(function() {
 				$(this).on('click', function(event) {
@@ -597,10 +596,6 @@ function firmarDocumento(CertSlug){
 		},
 		error: function(xhr, textStatus, jqXHR){
 			renewtoken(xhr.newtoken);
-			console.log(xhr);
-			console.log(textStatus);
-			console.log(jqXHR);
-			console.log(xhr['responseJSON']['status']);
 			let buttonsubmit = $('#buttonfirmarDoc'+CertSlug);
 			switch (xhr['status']) {
 				case 400:
