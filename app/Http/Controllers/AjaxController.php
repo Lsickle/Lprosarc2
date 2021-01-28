@@ -15,15 +15,14 @@ use App\Pretratamientos;
 use App\GenerSede;
 use App\Certificado;
 use App\SolicitudServicio;
-use App\Permisos;
-use App\audit;
+use App\Cliente;
 use App\Personal;
+use App\Permisos;
+use App\Audit;
 use App\Observacion;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
-
-
-
+use App\Mail\CertUpdatedComercial;
 
 
 class AjaxController extends Controller
@@ -290,7 +289,7 @@ class AjaxController extends Controller
 						$Solicitud->SolSerDescript = $request->input('solserdescript');
 						$Solicitud->save();
 
-						$log = new audit();
+						$log = new Audit();
 						$log->AuditTabla="solicitud_servicios";
 						$log->AuditType="Modificado Status";
 						$log->AuditRegistro=$Solicitud->ID_SolSer;
@@ -409,7 +408,7 @@ class AjaxController extends Controller
         $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
         $Observacion->save();
 
-        $log = new audit();
+        $log = new Audit();
 		$log->AuditTabla="observaciones";
 		$log->AuditType="Add observacion";
 		$log->AuditRegistro=$Observacion->ID_Obs;
@@ -453,5 +452,251 @@ class AjaxController extends Controller
 
 		return response()->json($Response);
 
-    }
+	}
+	
+		/*Funcion para certtificacion de servicios via ajax*/
+	public function firmarCertificado(Request $request, $slug)
+	{
+		if ($request->ajax()) {
+			/*indice de firmas */
+			// 0:Pendiente
+			// 1:Director Planta
+			// 2:Jefe de Logistica
+			// 3:Jefe de Operaciones
+			// 4:Supervisor de Turno
+			// 5:Ingeniero HSEQ
+			// 6:Asistente de Logistica
+			// 7:Programador
+			$certificado = Certificado::with('SolicitudServicio')->where('CertSlug', $slug)->first();
+			if ($certificado==null) {
+				abort(404, 'Certificado no encontrado.');
+			}
+			if ($certificado->SolicitudServicio->SolSerStatus == 'Certificacion') {
+				switch (Auth::user()->UsRol) {
+					case 'Hseq':
+						$certificado->CertAuthHseq = 5;
+						break;
+
+					case 'JefeOperaciones':
+						$certificado->CertAuthJo = 3;
+						break;
+
+					case 'JefeLogistica':
+						$certificado->CertAuthJl = 2;
+						break;
+
+					case 'AdministradorPlanta':
+						($certificado->CertAuthDp == 0) ? $certificado->CertAuthDp = 1 : $certificado->CertAuthDp = 0;
+						break;
+
+					case 'Supervisor':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthJo == 4)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 4;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 4;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 4;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+
+					case 'AsistenteLogistica':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthJo == 6)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 6;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 6;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 6;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+
+						
+					case 'Programador':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthJo == 7)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 7;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 7;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 7;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+			}else{
+				switch (Auth::user()->UsRol) {
+					case 'Hseq':
+						($certificado->CertAuthHseq == 0) ? $certificado->CertAuthHseq = 5 : $certificado->CertAuthHseq = 0;
+						break;
+
+					case 'JefeOperaciones':
+						($certificado->CertAuthJo == 0) ? $certificado->CertAuthJo = 3 : $certificado->CertAuthJo = 0;
+						break;
+
+					case 'JefeLogistica':
+						($certificado->CertAuthJl == 0) ? $certificado->CertAuthJl = 2 : $certificado->CertAuthJl = 0;
+						break;
+
+					case 'AdministradorPlanta':
+						($certificado->CertAuthDp == 0) ? $certificado->CertAuthDp = 1 : $certificado->CertAuthDp = 0;
+						break;
+
+					case 'Supervisor':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 4)||($certificado->CertAuthJl == 4)||($certificado->CertAuthJo == 4)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 4;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 4;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 4;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+
+					case 'AsistenteLogistica':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 6)||($certificado->CertAuthJl == 6)||($certificado->CertAuthJo == 6)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 6;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 6;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 6;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+
+						
+					case 'Programador':
+						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
+							# code...
+						}else{
+							if (($certificado->CertAuthDp == 7)||($certificado->CertAuthJl == 7)||($certificado->CertAuthJo == 7)) {
+								$c=1;
+							}else{
+								$c=0;
+							}
+							if (($certificado->CertAuthDp == 0)&&($c<1)) {
+								$certificado->CertAuthDp = 7;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJl == 0)&&($c<1)) {
+								$certificado->CertAuthJl = 7;
+								$c=$c+1;
+							}
+							if (($certificado->CertAuthJo == 0)&&($c<1)) {
+								$certificado->CertAuthJo = 7;
+								$c=$c+1;
+							}
+						}
+						
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+			}
+
+			$certificado->save();
+
+			$log = new Audit();
+			$log->AuditTabla="certificado";
+			$log->AuditType="firmado";
+			$log->AuditRegistro=$certificado->ID_Cert;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($slug);
+			$log->save();
+
+			if ($certificado->CertAuthJo != 0 && $certificado->CertAuthJl != 0 && $certificado->CertAuthDp != 0 ) {
+				$servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+				$cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+				// se verifica si el cliente tiene comercial asignado
+				if ($cliente->CliComercial <> null) {
+					$comercial = Personal::where('ID_Pers', $cliente->CliComercial)->first();
+					// se establece la lista de destinatarios
+					$destinatariosComercial = [$comercial->PersEmail];
+					Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
+				}
+			}
+
+			$Response['newtoken'] = csrf_token();
+			$Response['Solicitud'] = $certificado->SolicitudServicio;
+			$Response['Documento'] = $certificado;
+			$Response['message'] = 'Documento aprobado por '.Auth::user()->email;
+
+			return response()->json($Response);
+		}
+	}
 }
