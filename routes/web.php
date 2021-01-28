@@ -189,6 +189,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
 	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
 	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
+	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
