@@ -2009,7 +2009,7 @@ class SolicitudServicioController extends Controller
 				abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
 			}
 		}
-		if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion') {
+		if (!($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion')) {
 			$certificadosDelete = Certificado::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
 			foreach ($certificadosDelete as $key => $value) {
 				foreach ($value->certdato as $key2 => $value2) {
