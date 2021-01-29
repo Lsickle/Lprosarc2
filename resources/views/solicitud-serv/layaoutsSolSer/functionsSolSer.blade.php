@@ -1,16 +1,38 @@
 <script>
 function TransportadorProsarc() {
+	checkSolServRequirements(); 
+	$("#transportador").attr('hidden', true);
+	inputsize('typeaditable', '6');
+	// $("#SolSerDevolucion").bootstrapSwitch('disabled',false);
+	$("#SolSerTransportador").removeAttr('required');
+	$("#typecollect").attr('hidden', false);
+	inputsize('typecollect', '12');
+	// $("#SolSerNameTrans").val(null);
+	// $("#SolSerNitTrans").val(null);
+	// $("#SolSerAdressTrans").val(null);
+	// $("#SolSerConductor").val(null);
+	// $("#SolSerVehiculo").val(null);
+	// $("#AddressCollect").val(null);
+	$("#SolSerTypeCollect").val(null).trigger("change");
+	$("#SolSerTypeCollect").attr('required', true);
+	$("#SolSerTransportador").val(null).trigger("change");
+	$("#departamento").val(null).trigger("change");
+	$("#municipio").empty();
+	$("#municipio2").empty();
+	$("#municipio2").attr('required', false);
+	$("#departamento2").val(null).trigger("change");
+	$("#SedeCollect").val(null).trigger("change");
+	// HiddenTypeCollect();
+	hideconductorInputs();
+	hideTransportExternalInputs();
+}
+function checkSolServRequirements() {
 	var SolSerBascula = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "true" : "false"}};
 	var SolSerCapacitacion = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliCapacitacion'] === 1) ? "true" : "false"}};
 	var SolSerMasPerson = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "true" : "false"}};
 	var SolSerVehicExclusive = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "true" : "false"}};
 	var SolSerPlatform = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "true" : "false"}};
 	
-	$("#transportador").attr('hidden', true);
-	$("#Conductor").attr('hidden', true);
-	$("#Vehiculo").attr('hidden', true);
-	$("#typeaditable").removeClass('col-md-12');
-	$("#typeaditable").addClass('col-md-6');
 	if (SolSerBascula) {
 		$("#SolSerBascula").bootstrapSwitch('disabled',false);
 	}else{
@@ -36,28 +58,18 @@ function TransportadorProsarc() {
 	}else{
 		$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	}
-	// $("#SolSerDevolucion").bootstrapSwitch('disabled',false);
-	$("#SolSerTransportador").removeAttr('required');
-	$("#typecollect").attr('hidden', false);
-	$("#typecollect").removeClass('col-md-6');
-	$("#typecollect").addClass('col-md-12');
-	$("#SolSerNameTrans").val(null);
-	$("#SolSerNitTrans").val(null);
-	$("#SolSerAdressTrans").val(null);
-	$("#SolSerConductor").val(null);
-	$("#SolSerVehiculo").val(null);
-	$("#AddressCollect").val(null);
-	$("#SolSerTypeCollect").val(null).trigger("change");
-	$("#SolSerTypeCollect").attr('required', true);
-	$("#SolSerTransportador").val(null).trigger("change");
-	$("#departamento").val(null).trigger("change");
-	$("#municipio").empty();
-	$("#municipio2").empty();
-	$("#municipio2").attr('required', false);
-	$("#departamento2").val(null).trigger("change");
-	$("#SedeCollect").val(null).trigger("change");
-	TransportadorCliente();
-	HiddenTypeCollect();
+}
+function disableSolServRequirements() {
+	$("#SolSerBascula").bootstrapSwitch('state',false);
+	$("#SolSerBascula").bootstrapSwitch('disabled',true);
+	$("#SolSerCapacitacion").bootstrapSwitch('state',false);
+	$("#SolSerCapacitacion").bootstrapSwitch('disabled',true);
+	$("#SolSerMasPerson").bootstrapSwitch('state',false);
+	$("#SolSerMasPerson").bootstrapSwitch('disabled',true);
+	$("#SolSerVehicExclusive").bootstrapSwitch('state',false);
+	$("#SolSerVehicExclusive").bootstrapSwitch('disabled',true);
+	$("#SolSerPlatform").bootstrapSwitch('state',false);
+	$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 }
 function HiddenTypeCollect(){
 	$("#sedecollect").attr('hidden', true);
@@ -69,8 +81,8 @@ function HiddenTypeCollect(){
 	$("#municipio2").empty();
 	$("#municipio2").attr('required', false);
 	$("#departamento2").val(null).trigger("change");
-	$("#typecollect").removeClass('col-md-6');
-	$("#typecollect").addClass('col-md-12');
+	inputsize('typecollect', '12');
+	
 }
 function TypeCollectSede(){
 	$("#sedecollect").attr('hidden', false);
@@ -81,8 +93,7 @@ function TypeCollectSede(){
 	$("#municipio2").empty();
 	$("#municipio2").attr('required', false);
 	$("#departamento2").val(null).trigger("change");
-	$("#typecollect").removeClass('col-md-12');
-	$("#typecollect").addClass('col-md-6');
+	inputsize('typecollect', '6');
 }
 function TypeCollectOther(){
 	$("#sedecollect").attr('hidden', true);
@@ -94,15 +105,18 @@ function TypeCollectOther(){
 	$("#municipio2").empty();
 	$("#municipio2").attr('required', true);
 	$("#departamento2").val(null).trigger("change");
-	$("#typecollect").removeClass('col-md-12');
-	$("#typecollect").addClass('col-md-6');
+	inputsize('typecollect', '6');
+}
+function inputsize(id, size){
+	$("#"+id).removeClass('col-md-12');
+	$("#"+id).removeClass('col-md-6');
+	$("#"+id).addClass('col-md-'+size);
 }
 function TransportadorExtr() {
 	$("#transportador").attr('hidden', false);
 	$("#Conductor").attr('hidden', false);
 	$("#Vehiculo").attr('hidden', false);
-	$("#typeaditable").removeClass('col-md-6');
-	$("#typeaditable").addClass('col-md-12');
+	inputsize('typeaditable', '12');
 	$("#SolSerBascula").bootstrapSwitch('state',false);
 	$("#SolSerBascula").bootstrapSwitch('disabled',true);
 	$("#SolSerCapacitacion").bootstrapSwitch('state',false);
@@ -131,27 +145,101 @@ function TransportadorExtr() {
 	$("#municipio2").empty();
 	$("#departamento2").val(null).trigger("change");
 	$("#SedeCollect").val(null).trigger("change");
-	TransportadorCliente();
-	HiddenTypeCollect();
+	TypeCollectOther();
 }
 
 function TransportadorCliente() {
+	$("#transportadorLabel").empty();
+	$("#transportadorLabel").append(`<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Sede del Cliente`);
+	$("#SolSerTransportador").empty();
+	$("#SolSerTransportador").append(`
+	<option value="">Seleccione...</option>
+	@foreach ($Sedes as $Sede)
+	<option onclick="selectSede()" value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
+	@endforeach
+	`);
+	$("#transportador").attr('hidden', false);
 	$("#nametransportadora").attr('hidden', true);
 	$("#nittransportadora").attr('hidden', true);
 	$("#addresstransportadora").attr('hidden', true);
 	$(".citytransportadora").attr('hidden', true);
+	$("#SolSerNameTrans").attr('hidden', true);
 	$("#SolSerNameTrans").removeAttr('required');
-	$("#SolSerNitTrans").removeAttr('required');
-	$("#SolSerAdressTrans").removeAttr('required');
-	$("#municipio").removeAttr('required');
 	$("#SolSerNameTrans").val(null);
-	$("#SolSerNitTrans").val(null);
+	$("#SolSerAdressTrans").attr('hidden', true);
+	$("#SolSerAdressTrans").removeAttr('required');
 	$("#SolSerAdressTrans").val(null);
+	$("#SolSerNitTrans").attr('hidden', true);
+	$("#SolSerNitTrans").removeAttr('required');
+	$("#SolSerNitTrans").val(null);
+	$("#municipio").removeAttr('required');
 	$("#municipio").empty();
 	$("#departamento").val(null).trigger("change");
+	disableSolServRequirements();
+	hideconductorInputs();
+	inputsize('typeaditable', '12');
+	$("#typecollect").attr('hidden', true);
+}
+
+function TransportadorGeneradores() {
+	$("#transportadorLabel").empty();
+	$("#transportadorLabel").append(`<i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Sede del Generador`);
+	$("#transportador").attr('hidden', false);
+	$("#nametransportadora").attr('hidden', true);
+	$("#nittransportadora").attr('hidden', true);
+	$("#addresstransportadora").attr('hidden', true);
+	$(".citytransportadora").attr('hidden', true);
+	$("#SolSerNameTrans").attr('hidden', true);
+	$("#SolSerNameTrans").removeAttr('required');
+	$("#SolSerNameTrans").val(null);
+	$("#SolSerAdressTrans").attr('hidden', true);
+	$("#SolSerAdressTrans").removeAttr('required');
+	$("#SolSerAdressTrans").val(null);
+	$("#SolSerNitTrans").attr('hidden', true);
+	$("#SolSerNitTrans").removeAttr('required');
+	$("#SolSerNitTrans").val(null);
+	$("#municipio").removeAttr('required');
+	$("#municipio").empty();
+	$("#departamento").val(null).trigger("change");
+	disableSolServRequirements();
+	hideconductorInputs();
+	inputsize('typeaditable', '12');
+	$("#typecollect").attr('hidden', true);
+	
+	$("#SolSerTransportador").val(null).trigger("change");
+	$("#SolSerTransportador").attr('required', true);
+	$("#SolSerTransportador").empty();
+	$("#SolSerTransportador").append(`
+	<option value="">Seleccione...</option>
+	@foreach ($SGeneradors as $SGenerador)
+	<option onclick="selectGenerSede()" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerName}} ({{$SGenerador->GSedeName}})</option>
+	@endforeach
+	`);
+	disableSolServRequirements();
+	hideconductorInputs();
+	inputsize('typeaditable', '12');
+	$("#typecollect").attr('hidden', true);
 }
 
 function OtraTransportadora() {
+	$("#transportador").attr('hidden', true);
+	showTransportExternalInputs();
+	showconductorInputs();
+	$("#typecollect").attr('hidden', true);
+	inputsize('typeaditable', '12');
+}
+
+function selectSede() {
+	hideTransportExternalInputs();
+	showconductorInputs();
+}
+
+function selectGenerSede() {
+	hideTransportExternalInputs();
+	showconductorInputs();
+}
+
+function showTransportExternalInputs() {
 	$("#nametransportadora").attr('hidden', false);
 	$("#nittransportadora").attr('hidden', false);
 	$("#addresstransportadora").attr('hidden', false);
@@ -159,13 +247,30 @@ function OtraTransportadora() {
 	$("#SolSerNameTrans").attr('required', true);
 	$("#SolSerNitTrans").attr('required', true);
 	$("#SolSerAdressTrans").attr('required', true);
-	$("#SolSerNameTrans").val(null);
-	$("#SolSerNitTrans").val(null);
-	$("#SolSerAdressTrans").val(null);
+	// $("#SolSerNameTrans").val(null);
+	// $("#SolSerNitTrans").val(null);
+	// $("#SolSerAdressTrans").val(null);
 	$("#municipio").empty();
 	$("#municipio").attr('required', true);
 	$("#departamento").val(null).trigger("change");
 }
+
+function hideTransportExternalInputs() {
+	$("#nametransportadora").attr('hidden', true);
+	$("#nittransportadora").attr('hidden', true);
+	$("#addresstransportadora").attr('hidden', true);
+	$(".citytransportadora").attr('hidden', true);
+	$("#SolSerNameTrans").attr('required', false);
+	$("#SolSerNitTrans").attr('required', false);
+	$("#SolSerAdressTrans").attr('required', false);
+	// $("#SolSerNameTrans").val(null);
+	// $("#SolSerNitTrans").val(null);
+	// $("#SolSerAdressTrans").val(null);
+	$("#municipio").empty();
+	$("#municipio").attr('required', false);
+	$("#departamento").val(null).trigger("change");
+}
+
 var contadorGenerador = 1;
 var contadorRespel = [];
 var icon = '';
@@ -480,6 +585,16 @@ function RemoveGenerador(id) {
 	$("#Generador"+id).prev().remove();
 	$("#Generador"+id).remove();
 	$('form[data-toggle="validator"]').validator('update');
+}
+
+function showconductorInputs() {
+	$("#Conductor").attr('hidden', false);
+	$("#Vehiculo").attr('hidden', false);
+}
+
+function hideconductorInputs() {
+	$("#Conductor").attr('hidden', true);
+	$("#Vehiculo").attr('hidden', true);
 }
 
 $("#departamento2").change(function(e){
