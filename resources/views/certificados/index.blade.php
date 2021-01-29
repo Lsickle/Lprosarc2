@@ -247,14 +247,16 @@ Lista de Certificados
 									@php
 										$Status = ['Conciliado', 'Tratado'];
 									@endphp
-									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT)&&in_array($certificado->SolicitudServicio->SolSerStatus, $Status))
-										<td class="text-center">
-											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
-										</td>
-									@else
-										<td class="text-center">
-											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
-										</td>
+									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
+										@if (in_array($certificado->SolicitudServicio->SolSerStatus, $Status))
+											<td class="text-center">
+												<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
+											</td>
+										@else
+											<td class="text-center">
+												<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
+											</td>
+										@endif
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 										<td>
