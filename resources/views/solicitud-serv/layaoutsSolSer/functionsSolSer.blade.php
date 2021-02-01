@@ -6,6 +6,7 @@ function TransportadorProsarc() {
 	// $("#SolSerDevolucion").bootstrapSwitch('disabled',false);
 	$("#SolSerTransportador").removeAttr('required');
 	$("#typecollect").attr('hidden', false);
+	$("#typecollect").attr('required', true);
 	inputsize('typecollect', '12');
 	// $("#SolSerNameTrans").val(null);
 	// $("#SolSerNitTrans").val(null);
@@ -159,6 +160,7 @@ function TransportadorCliente() {
 	<option onclick="selectSede()" value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
 	@endforeach
 	`);
+	$("#SolSerTransportador").attr('required', true);
 	$("#transportador").attr('hidden', false);
 	$("#nametransportadora").attr('hidden', true);
 	$("#nittransportadora").attr('hidden', true);
@@ -180,6 +182,7 @@ function TransportadorCliente() {
 	hideconductorInputs();
 	inputsize('typeaditable', '12');
 	$("#typecollect").attr('hidden', true);
+	$("#SolSerTypeCollect").attr('required', false);
 	$("#sedecollect").attr('hidden', true);
 	$(".addresscollect").attr('hidden', true);
 	$("#transportadorContainer").css("background-color", "#dff0d8");
@@ -217,6 +220,7 @@ function TransportadorGeneradores() {
 	`);
 	inputsize('typeaditable', '12');
 	$("#typecollect").attr('hidden', true);
+	$("#SolSerTypeCollect").attr('required', false);
 	$("#sedecollect").attr('hidden', true);
 	$(".addresscollect").attr('hidden', true);
 	disableSolServRequirements();
@@ -226,10 +230,12 @@ function TransportadorGeneradores() {
 
 function OtraTransportadora() {
 	$("#transportador").attr('hidden', true);
+	$("#SolSerTransportador").attr('required', false);
 	showTransportExternalInputs();
 	showconductorInputs();
-	$("#typecollect").attr('hidden', true);
+	$("#SolSerTypeCollect").attr('required', false);
 	inputsize('typeaditable', '12');
+	$("#typecollect").attr('hidden', true);
 	$("#sedecollect").attr('hidden', true);
 	$(".addresscollect").attr('hidden', true);
 	$("#transportadorContainer").css("background-color", "#dff0d8");
@@ -606,33 +612,36 @@ function hideconductorInputs() {
 $("#departamento2").change(function(e){
 	id=$("#departamento2").val();
 	e.preventDefault();
-	$.ajaxSetup({
-	  headers: {
-		  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-	  }
-	});
-	$.ajax({
-		url: "{{url('/muni-depart')}}/"+id,
-		method: 'GET',
-		data:{},
-		beforeSend: function(){
-			$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
-			$("#municipio2").prop('disabled', true);
-		},
-		success: function(res){
-			$("#municipio2").empty();
-			var municipio2 = new Array();
-			for(var i = res.length -1; i >= 0; i--){
-				if ($.inArray(res[i].ID_Mun, municipio2) < 0) {
-					$("#municipio2").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
-					municipio2.push(res[i].ID_Mun);
-				}
-			}
-		},
-		complete: function(){
-			$(".load").empty();
-			$("#municipio2").prop('disabled', false);
+	if (id) {
+		$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 		}
-	})
+		});
+		$.ajax({
+			url: "{{url('/muni-depart')}}/"+id,
+			method: 'GET',
+			data:{},
+			beforeSend: function(){
+				$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+				$("#municipio2").prop('disabled', true);
+			},
+			success: function(res){
+				$("#municipio2").empty();
+				var municipio2 = new Array();
+				for(var i = res.length -1; i >= 0; i--){
+					if ($.inArray(res[i].ID_Mun, municipio2) < 0) {
+						$("#municipio2").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+						municipio2.push(res[i].ID_Mun);
+					}
+				}
+			},
+			complete: function(){
+				$(".load").empty();
+				$("#municipio2").prop('disabled', false);
+			}
+		})
+	}
+	
 });
 </script>

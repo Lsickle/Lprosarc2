@@ -169,6 +169,10 @@ button:disabled {
 	margin: 0px 0px 0px -30px;
 	padding: 6px 18px 6px 18px;
 }
+.select-multiple-contenedor > .select2-container--classic {
+    height: auto !important;
+    padding: 0;
+}
 /*Stilos del Loading con el logo de Prosarc*/
 #contenedor_carga{
 	background-color: #ecf0f5;
@@ -323,8 +327,4 @@ button:disabled {
 		margin-top: 20%;
 		margin-right: 15%;
 	}
-}
-.select-multiple-contenedor > .select2-container--classic {
-    height: auto !important;
-    padding: 0;
 }

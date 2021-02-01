@@ -119,8 +119,8 @@
 										<small class="help-block with-errors">*</small>
 										<select class="form-control" id="SolSerTypeCollect" name="SolSerTypeCollect" required="">
 											<option onclick="HiddenTypeCollect()" value="">{{ trans('adminlte_lang::message.select') }}</option>
-											<option onclick="HiddenTypeCollect()" value="99">{{ trans('adminlte_lang::message.solsertypecollect1') }}</option>
 											<option onclick="TypeCollectSede()" value="98">{{ trans('adminlte_lang::message.solsertypecollect2') }}</option>
+											<option onclick="HiddenTypeCollect()" value="99">{{ trans('adminlte_lang::message.solsertypecollect1') }}</option>
 											<option onclick="TypeCollectOther()" value="97">{{ trans('adminlte_lang::message.solsertypecollect3') }}</option>
 										</select>
 									</div>

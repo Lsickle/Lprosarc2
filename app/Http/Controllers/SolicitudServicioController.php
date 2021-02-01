@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
@@ -222,7 +221,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
-		return $request;
+		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
@@ -240,58 +239,85 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
 				break;
 		}
-		if($request->input('SolSerTipo') == 99){
-			$cliente = DB::table('clientes')
-				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-				->where('ID_Cli', 1)
-				->first();
-			$tipo = "Interno";
-			$transportadorname = $cliente->CliName;
-			$transportadornit = $cliente->CliNit;
-			$transportadoradress = $cliente->SedeAddress;
-			$transportadorcity = $cliente->ID_Mun;
-			$conductor = null;
-			$vehiculo = null;
-		}
-		else{
-			if($request->input('SolSerTransportador') <> 98){
+		$direccioncollect = 'No aplica';
+
+		switch ($request->input('SolSerTipo')) {
+			case '96':
+				$transportadorname = $request->input('SolSerNameTrans');
+				$transportadornit = $request->input('SolSerNitTrans');
+				$transportadoradress = $request->input('SolSerAdressTrans');
+				$transportadorcity = $request->input('SolSerCityTrans');
+				$tipo = "Externo";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '97':
+				$generador = DB::table('generadors')
+					->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+					->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+					->select('generadors.ID_Gener', 'generadors.GenerNit', 'generadors.GenerName', 'gener_sedes.GSedeAddress', 'municipios.ID_Mun')
+					->where('GSedeSlug', $request->input('SolSerTransportador'))
+					->first();
+				$transportadorname = $generador->GenerName;
+				$transportadornit = $generador->GenerNit;
+				$transportadoradress = $generador->GSedeAddress;
+				$transportadorcity = $generador->ID_Mun;
+				$tipo = "Externo";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '98':
 				$cliente = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-					->where('ID_Cli', userController::IDClienteSegunUsuario())
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedeSlug', 'municipios.ID_Mun')
+					->where('SedeSlug', $request->input('SolSerTransportador'))
 					->first();
 				$transportadorname = $cliente->CliName;
 				$transportadornit = $cliente->CliNit;
 				$transportadoradress = $cliente->SedeAddress;
 				$transportadorcity = $cliente->ID_Mun;
-			}
-			else{
-				$transportadorname = $request->input('SolSerNameTrans');
-				$transportadornit = $request->input('SolSerNitTrans');
-				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $request->input('SolSerCityTrans');
-			}
-			$tipo = "Externo";
-			$conductor = $request->input('SolSerConductor');
-			$vehiculo = $request->input('SolSerVehiculo');
+				$tipo = "Externo";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '99':
+				$cliente = DB::table('clientes')
+					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
+					->where('ID_Cli', 1)
+					->first();
+				$tipo = "Interno";
+				$transportadorname = $cliente->CliName;
+				$transportadornit = $cliente->CliNit;
+				$transportadoradress = $cliente->SedeAddress;
+				$transportadorcity = $cliente->ID_Mun;
+				$conductor = null;
+				$vehiculo = null;
+				switch ($request->input('SolSerTypeCollect')) {
+					case 99:
+						$direccioncollect = "Recolección en la sede de cada generador";
+						break;
+					case 98:
+						$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
+						$direccioncollect = $sede->ID_Sede;
+						break;
+					case 97:
+						$direccioncollect = $request->input('AddressCollect');
+						$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
+						break;
+				}
+				break;
+			
+			default:
+				# code...
+				break;
 		}
-		$direccioncollect = 'No aplica';
-		switch ($request->input('SolSerTypeCollect')) {
-			case 99:
-				$direccioncollect = "Recolección en la sede de cada generador";
-				break;
-			case 98:
-				$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
-				$direccioncollect = $sede->ID_Sede;
-				break;
-			case 97:
-				$direccioncollect = $request->input('AddressCollect');
-				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
-				break;
-		}
+		
 		if(isset($request['SupportPay'])){
 			$fileSupport = $request['SupportPay'];
 			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
