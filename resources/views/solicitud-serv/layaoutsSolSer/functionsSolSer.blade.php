@@ -25,6 +25,7 @@ function TransportadorProsarc() {
 	// HiddenTypeCollect();
 	hideconductorInputs();
 	hideTransportExternalInputs();
+	$("#transportadorContainer").css("background-color", "#d9edf7");
 }
 function checkSolServRequirements() {
 	var SolSerBascula = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliBascula'] === 1) ? "true" : "false"}};
@@ -179,6 +180,10 @@ function TransportadorCliente() {
 	hideconductorInputs();
 	inputsize('typeaditable', '12');
 	$("#typecollect").attr('hidden', true);
+	$("#sedecollect").attr('hidden', true);
+	$(".addresscollect").attr('hidden', true);
+	$("#transportadorContainer").css("background-color", "#dff0d8");
+	
 }
 
 function TransportadorGeneradores() {
@@ -201,11 +206,6 @@ function TransportadorGeneradores() {
 	$("#municipio").removeAttr('required');
 	$("#municipio").empty();
 	$("#departamento").val(null).trigger("change");
-	disableSolServRequirements();
-	hideconductorInputs();
-	inputsize('typeaditable', '12');
-	$("#typecollect").attr('hidden', true);
-	
 	$("#SolSerTransportador").val(null).trigger("change");
 	$("#SolSerTransportador").attr('required', true);
 	$("#SolSerTransportador").empty();
@@ -215,10 +215,13 @@ function TransportadorGeneradores() {
 	<option onclick="selectGenerSede()" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerName}} ({{$SGenerador->GSedeName}})</option>
 	@endforeach
 	`);
-	disableSolServRequirements();
-	hideconductorInputs();
 	inputsize('typeaditable', '12');
 	$("#typecollect").attr('hidden', true);
+	$("#sedecollect").attr('hidden', true);
+	$(".addresscollect").attr('hidden', true);
+	disableSolServRequirements();
+	hideconductorInputs();
+	$("#transportadorContainer").css("background-color", "#dff0d8");
 }
 
 function OtraTransportadora() {
@@ -227,6 +230,9 @@ function OtraTransportadora() {
 	showconductorInputs();
 	$("#typecollect").attr('hidden', true);
 	inputsize('typeaditable', '12');
+	$("#sedecollect").attr('hidden', true);
+	$(".addresscollect").attr('hidden', true);
+	$("#transportadorContainer").css("background-color", "#dff0d8");
 }
 
 function selectSede() {

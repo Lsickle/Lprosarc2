@@ -222,7 +222,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
-		// return $request;
+		return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
