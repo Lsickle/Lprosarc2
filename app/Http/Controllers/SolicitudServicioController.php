@@ -263,7 +263,7 @@ class SolicitudServicioController extends Controller
 				$transportadornit = $generador->GenerNit;
 				$transportadoradress = $generador->GSedeAddress;
 				$transportadorcity = $generador->ID_Mun;
-				$tipo = "Externo";
+				$tipo = "Generador";
 				$conductor = $request->input('SolSerConductor');
 				$vehiculo = $request->input('SolSerVehiculo');
 				break;
@@ -279,7 +279,7 @@ class SolicitudServicioController extends Controller
 				$transportadornit = $cliente->CliNit;
 				$transportadoradress = $cliente->SedeAddress;
 				$transportadorcity = $cliente->ID_Mun;
-				$tipo = "Externo";
+				$tipo = "Cliente";
 				$conductor = $request->input('SolSerConductor');
 				$vehiculo = $request->input('SolSerVehiculo');
 				break;
@@ -1244,7 +1244,7 @@ class SolicitudServicioController extends Controller
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName', 'generadors.GenerNit')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
 			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
@@ -1267,7 +1267,7 @@ class SolicitudServicioController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos', 'tipo'));
 		}
 		else{
 			abort(403);

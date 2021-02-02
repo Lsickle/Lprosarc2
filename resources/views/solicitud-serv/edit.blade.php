@@ -72,23 +72,17 @@
 									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@if(true)
-											<option onclick="TransportadorProsarc()" value="99" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
-											<option onclick="TransportadorExtr()" value="98" {{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertranspro') }}</option>
-										@else
-											<option onclick="TransportadorProsarc()" value="99" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
-											<option onclick="TransportadorExtr()" value="98" {{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertranspro') }}</option>
-										@endif
+										<option onclick="TransportadorProsarc()" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}} value="99">Prosarc S.A. ESP.</option>
+										<option onclick="TransportadorCliente()" {{$Solicitud->SolSerTipo == 'Cliente' ? 'selected' : ''}} value="98">{{$Cliente->CliName}}</option>
+										<option onclick="TransportadorGeneradores()" {{$Solicitud->SolSerTipo == 'Generador' ? 'selected' : ''}} value="97">Generador</option>
+										<option onclick="OtraTransportadora()"{{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}} value="96">Otra Empresa Transportadora</option>
 									</select>
 								</div>
-								<div id="transportador" class="form-group col-md-6">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertranspro') }}</label>
+								<div id="transportador" class="form-group col-md-6" hidden="true">
+									<label id="transportadorLabel" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Sede del Transportador</label>
 									<small class="help-block with-errors">*</small>
 									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99" {{$Cliente->CliName == $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{$Cliente->CliName}}</option>
-										<option onclick="OtraTransportadora()" value="98" {{$Cliente->CliName <> $Solicitud->SolSerNameTrans ? 'selected' : ''}}>{{ trans('adminlte_lang::message.solsertransother') }}</option>
+										{{-- espacio para sedes del cliente o de los generadores --}}
 									</select>
 								</div>
 								<div id="nametransportadora" class="form-group col-md-6">
@@ -487,4 +481,30 @@ function submitverify(){
 }
 </script>
 @include('solicitud-serv.layaoutsSolSer.functionsSolSer')
+<script>
+$(document).ready(function(){
+	@php
+		switch ($Solicitud->SolSerTipo) {
+			case 'Interno':
+				echo ('TransportadorProsarc();');
+			break;
+
+			case 'Cliente':
+				echo ('TransportadorCliente();');
+			break;
+
+			case 'Generador':
+				echo ('TransportadorGeneradores();');
+			break;
+
+			case 'Externo':
+				echo ('OtraTransportadora();');
+			break;
+		
+			default:
+			break;
+		}
+	@endphp
+})
+</script>
 @endsection
