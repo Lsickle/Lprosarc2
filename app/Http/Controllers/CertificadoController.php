@@ -866,10 +866,16 @@ class CertificadoController extends Controller
         }
 
         // return $certificado;
-        if ($certificado->tratamiento->TratName == 'TermoDestrucción') {
-            return view('certificados.imprimible', compact('certificado')); 
-        }else{
-            return view('certificados.manifiesto', compact('certificado')); 
+        switch ($certificado->tratamiento->TratName) {
+            case 'TermoDestrucción':
+                return view('certificados.imprimible', compact('certificado')); 
+                break;
+            case 'Posconsumo luminarias':
+                return view('certificados.luminarias', compact('certificado')); 
+                break;
+            default:
+                return view('certificados.manifiesto', compact('certificado')); 
+                break;
         }
     }
 
