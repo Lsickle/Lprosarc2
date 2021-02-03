@@ -169,16 +169,64 @@ información:</span></p>
   <td width=373 colspan=3 style='width:280.05pt;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-  color:#0D0D0D'>@php 
+  color:#0D0D0D'>@php
   if($certificado->recepcion != ""){
-    $año=date('Y', strtotime($certificado->recepcion));
-    $mes=date('m', strtotime($certificado->recepcion));
-    $dia=date('d', strtotime($certificado->recepcion));
-    $miFecha= gmmktime(12,0,0,$mes,$dia,$año);
-    setlocale(LC_TIME, "Spanish_Colombia.1252" ); 
-    echo strftime("%d de %B del %Y", $miFecha);
+  $añorecepcion=date('Y', strtotime($certificado->recepcion));
+  $mesrecepcion=date('m', strtotime($certificado->recepcion));
+  $diarecepcion=date('d', strtotime($certificado->recepcion));
+  $mesrecepciontexto = "";
+  switch ($mesrecepcion) {
+  case 1:
+  $mesrecepciontexto = 'Enero';
+  break;
+  
+  case 2:
+  $mesrecepciontexto = 'Febrero';
+  break;
+  
+  case 3:
+  $mesrecepciontexto = 'Marzo';
+  break;
+  
+  case 4:
+  $mesrecepciontexto = 'Abril';
+  break;
+  
+  case 5:
+  $mesrecepciontexto = 'Mayo';
+  break;
+  
+  case 6:
+  $mesrecepciontexto = 'Junio';
+  break;
+  
+  case 7:
+  $mesrecepciontexto = 'Julio';
+  break;
+  
+  case 8:
+  $mesrecepciontexto = 'Agosto';
+  break;
+  
+  case 9:
+  $mesrecepciontexto = 'Setiembre';
+  break;
+  
+  case 10:
+  $mesrecepciontexto = 'Octubre';
+  break;
+  
+  case 11:
+  $mesrecepciontexto = 'Noviembre';
+  break;
+  
+  case 12:
+  $mesrecepciontexto = 'Diciembre';
+  break;
   }
-  @endphp</span></p>
+  }
+  @endphp
+  {{$diarecepcion}} de {{$mesrecepciontexto}} del {{$añorecepcion}}</span></p>
   </td>
  </tr>
  @php
@@ -321,16 +369,64 @@ $totalKg = 0;
   none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-  color:#0D0D0D'>@php 
+  color:#0D0D0D'>@php
   if($certificado->recepcion != ""){
-    $año=date('Y', strtotime($certificado->recepcion));
-    $mes=date('m', strtotime($certificado->recepcion));
-    $dia=date('d', strtotime($certificado->recepcion));
-    $miFecha= gmmktime(12,0,0,$mes,$dia,$año);
-    setlocale(LC_TIME, "Spanish_Colombia.1252" ); 
-    echo strftime("%B del %Y", $miFecha);
+  $añorecepcion=date('Y', strtotime($certificado->recepcion));
+  $mesrecepcion=date('m', strtotime($certificado->recepcion));
+  $diarecepcion=date('d', strtotime($certificado->recepcion));
+  $mesrecepciontexto = "";
+  switch ($mesrecepcion) {
+  case 1:
+  $mesrecepciontexto = 'Enero';
+  break;
+  
+  case 2:
+  $mesrecepciontexto = 'Febrero';
+  break;
+  
+  case 3:
+  $mesrecepciontexto = 'Marzo';
+  break;
+  
+  case 4:
+  $mesrecepciontexto = 'Abril';
+  break;
+  
+  case 5:
+  $mesrecepciontexto = 'Mayo';
+  break;
+  
+  case 6:
+  $mesrecepciontexto = 'Junio';
+  break;
+  
+  case 7:
+  $mesrecepciontexto = 'Julio';
+  break;
+  
+  case 8:
+  $mesrecepciontexto = 'Agosto';
+  break;
+  
+  case 9:
+  $mesrecepciontexto = 'Setiembre';
+  break;
+  
+  case 10:
+  $mesrecepciontexto = 'Octubre';
+  break;
+  
+  case 11:
+  $mesrecepciontexto = 'Noviembre';
+  break;
+  
+  case 12:
+  $mesrecepciontexto = 'Diciembre';
+  break;
   }
-  @endphp</span></p>
+  }
+  @endphp
+  {{$mesrecepciontexto}} del {{$añorecepcion}}</span></p>
   </td>
  </tr>
  <tr>
@@ -360,18 +456,64 @@ El material será entregado al gestor (<b>NOMBRE DEL GESTOR</b>), empresa autori
 
 <p class=MsoNormal style='text-align:justify'><b><span lang=ES
 style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></b></p>
-@php
-if($certificado->recepcion != ""){
-  $año=date('Y', strtotime(now()));
-  $mes=date('m', strtotime(now()));
-  $dia=date('d', strtotime(now()));
-  $fechafirma= gmmktime(12,0,0,$mes,$dia,$año);
-  setlocale(LC_TIME, "Spanish_Colombia.1252" );
-}
+@php 
+$añofirma=date('Y', strtotime(now()));
+$mesfirma=date('m', strtotime(now()));
+$diafirma=date('d', strtotime(now()));
+$mesTexto = "";
+switch ($mesfirma) {
+    case 1:
+    $mesTexto = 'Enero';
+    break;
+
+    case 2:
+    $mesTexto = 'Febrero';
+    break;
+
+    case 3:
+    $mesTexto = 'Marzo';
+    break;
+
+    case 4:
+    $mesTexto = 'Abril';
+    break;
+
+    case 5:
+    $mesTexto = 'Mayo';
+    break;
+
+    case 6:
+    $mesTexto = 'Junio';
+    break;
+
+    case 7:
+    $mesTexto = 'Julio';
+    break;
+
+    case 8:
+    $mesTexto = 'Agosto';
+    break;
+
+    case 9:
+    $mesTexto = 'Setiembre';
+    break;
+
+    case 10:
+    $mesTexto = 'Octubre';
+    break;
+
+    case 11:
+    $mesTexto = 'Noviembre';
+    break;
+
+    case 12:
+    $mesTexto = 'Diciembre';
+    break;
+    }
 @endphp
 <p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-indent:
 -35.4pt'><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-color:#0D0D0D'>Para constancia se firma en Mosquera, el día {{strftime("%d de %B del %Y", $fechafirma)
+color:#0D0D0D'>Para constancia se firma en Mosquera, el día el día {{$diafirma}} de {{$mesTexto}} del {{$añofirma
 }}.</span></b></p>
 
 </div>
