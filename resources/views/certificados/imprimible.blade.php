@@ -329,7 +329,13 @@ $totalKg = 0;
   none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.05pt'>
   <p class=MsoNormal align=center style='text-align:center'><span lang=ES
-  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#333333'>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</span></p>
+  style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#333333'>
+  @if($Residuo->generespel->respels->RespelIgrosidad == 'No peligroso')
+  N/A
+  @else
+  {{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}
+  @endif
+  </span></p>
   </td>
   <td width=66 valign=top style='width:49.8pt;border-top:none;border-left:none;
   border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt;

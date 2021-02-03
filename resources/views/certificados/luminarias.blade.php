@@ -314,6 +314,7 @@ $totalfilas=++$totalfilas;
  </tr>
  @php
 $totalKg = 0;
+$totalUnid = 0;
 @endphp
 @foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
 @foreach ($certificado->certdato as $certdato)
@@ -346,11 +347,26 @@ $totalKg = 0;
 @if($Residuo->SolResKgConciliado !== null)
 @php
     $totalKg = $totalKg+$Residuo->SolResKgConciliado;
+    $totalUnid = $totalUnid+$Residuo->SolResCantiUnidadConciliada;
 @endphp
 @endif
 @endif
 @endforeach
 @endforeach
+<tr>
+    <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+        <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:#0D0D0D'>Total (Unidades)</span></p>
+    </td>
+    <td width=373 colspan=3 style='width:280.05pt;border-top:none;border-left:
+  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+        <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:black'>{{$totalUnid}}</span></b><b><span lang=ES style='font-size:7.5pt;
+  font-family:"Arial",sans-serif;color:#0D0D0D'> UND</span></b></p>
+    </td>
+</tr>
  <tr>
   <td width=162 style='width:121.65pt;border:solid gray 0.5pt;border-top:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
