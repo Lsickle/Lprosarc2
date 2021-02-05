@@ -972,7 +972,6 @@ class VehicProgController extends Controller
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
@@ -1065,7 +1064,6 @@ class VehicProgController extends Controller
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												$emailCliente->PersEmail,
@@ -1075,7 +1073,6 @@ class VehicProgController extends Controller
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
@@ -1214,10 +1211,8 @@ class VehicProgController extends Controller
 			->first();
 		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
 		$destinatarios = ['asistentelogistica@prosarc.com.co',
-							'auxiliarlogistico@prosarc.com.co',
 							'auxiliarpda@prosarc.com.co',
 							'recepcionpda@prosarc.com.co',
-							'conciliaciones@prosarc.com.co',
 							$comercial->PersEmail
 						];
 		if ($cantidadDeResiduosControlados > 0) {
