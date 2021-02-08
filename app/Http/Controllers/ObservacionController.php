@@ -253,11 +253,19 @@ class ObservacionController extends Controller
             $comercial->PersEmail = 'subgerencia@prosarc.com.co';
         }
 
-        $copy = ['recepcionpda@prosarc.com.co',
+        if ($Observacion->ObsRepeat > 2) {
+            $copy = ['recepcionpda@prosarc.com.co',
+                    'asistentelogistica@prosarc.com.co',
+                    'logistica@prosarc.com.co',
+                    $comercial->PersEmail
+                ];
+        }else{
+            $copy = ['recepcionpda@prosarc.com.co',
                     'asistentelogistica@prosarc.com.co',
                     $comercial->PersEmail
                 ];
-
+        }
+        
         $recipient = [$email->PersEmail];
 
         if ($Solicitud->SolServMailCopia !== "null") {
