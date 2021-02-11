@@ -53,8 +53,7 @@ class EmailController extends Controller
                             ->first();
 
                         $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-                        $destinatarios = ['asistentelogistica@prosarc.com.co',
-                                            'auxiliarlogistico@prosarc.com.co',
+                        $destinatarios = ['auxiliarlogistico@prosarc.com.co',
                                             $comercial->PersEmail
                                         ];
                         $destinatarioscc = ['auxiliarpda@prosarc.com.co',
@@ -79,8 +78,7 @@ class EmailController extends Controller
                                 ->first();
 
                             $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-                            $destinatarios = ['asistentelogistica@prosarc.com.co',
-                                                'auxiliarlogistico@prosarc.com.co',
+                            $destinatarios = ['auxiliarlogistico@prosarc.com.co',
                                                 $comercial->PersEmail
                                             ];
                             $destinatarioscc = ['auxiliarpda@prosarc.com.co',
