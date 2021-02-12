@@ -136,7 +136,7 @@
                                     @endphp
                                     <td>
                                         <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}"
-                                            onclick="ModalFacturación('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')"
+                                            onclick="ModalFacturacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Facturada', 'facturar')"
                                             {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}}
                                             style="text-align: center;"
                                             class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i
@@ -294,9 +294,9 @@
             }
         </script>
     @endif
-    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+    @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
     <script>
-        function ModalFacturación(slug, id, boolean, value, text){
+        function ModalFacturacion(slug, id, boolean, value, text){
                     if(boolean == 1){
                         $('#ModalFacturar').empty();
                         $('#ModalFacturar').append(`
