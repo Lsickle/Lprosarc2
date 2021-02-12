@@ -477,7 +477,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 													<td style="text-align: center;">
-														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado' || || $SolicitudServicio->SolSerStatus === 'Facturado' || || $SolicitudServicio->SolSerStatus === 'Certificacion')
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado' || $SolicitudServicio->SolSerStatus === 'Facturado' || $SolicitudServicio->SolSerStatus === 'Certificacion')
 														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
 														@else
 															<a style="color: black">
@@ -547,7 +547,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
-															@if($SolicitudServicio->SolSerStatus === 'Conciliado' || ($SolicitudServicio->SolSerStatus === 'Certificacion' || ($SolicitudServicio->SolSerStatus === 'Facturado' && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado))
+															@if(($SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Facturado') && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado)
 																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">  --}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">
@@ -2026,6 +2026,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Facturado')" href="#">Facturado</a></li>
 						</ul>
 					</div>
 				`);
@@ -2063,7 +2064,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							<li role="separator" class="divider"></li>
 							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
 							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
 						</ul>
 					</div>
