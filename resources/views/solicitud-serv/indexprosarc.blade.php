@@ -97,6 +97,10 @@
                                         <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}
                                         </td>
                                         @break
+                                        @case('Facturado')
+                                        <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        </td>
+                                        @break
                                         @case('Certificacion')
                                         <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}
                                         </td>
@@ -124,7 +128,7 @@
                                     </td>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                     @php
-                                    $Status = ['Conciliado', 'Tratado'];
+                                    $Status = ['Conciliado', 'Tratado', 'Facturado'];
                                     @endphp
                                     <td>
                                         <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}"

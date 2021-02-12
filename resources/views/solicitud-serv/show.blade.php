@@ -194,6 +194,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								    @case('Conciliado')
 								    @case('Certificacion')
 								    @case('Tratado')
+								    @case('Facturado')
 								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
 								        @break
 
@@ -248,6 +249,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							@case('Programado')
 							@case('No Conciliado')
 							@case('Tratado')
+							@case('Facturado')
 							<a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}'
 								title="<b>Certificaciones/Manifiestos</b>"
 								data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria"
@@ -445,30 +447,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														@switch($SolicitudServicio->SolSerStatus)
 															@case('Aprobado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-																@break
 															@case('Aceptado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-																@break
 															@case('Notificado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-																@break
 															@case('Completado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-																@break
 															@case('No Conciliado')
 																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
 																@break
 															@case('Conciliado')
-																<a style="color: black">
-																@break
 															@case('Certificacion')
-																<a style="color: black">
-																@break
 															@case('Certificado')
-																<a style="color: black">
-																@break
 															@case('Tratado')
+															@case('Facturado')
 																<a style="color: black">
 																@break
 															@default
@@ -488,7 +477,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 													<td style="text-align: center;">
-														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado')
+														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado' || || $SolicitudServicio->SolSerStatus === 'Facturado' || || $SolicitudServicio->SolSerStatus === 'Certificacion')
 														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
 														@else
 															<a style="color: black">
@@ -538,7 +527,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															<i class="fas fa-marker"></i></a>
 														@endif
 														@if(in_array(Auth::user()->UsRol, Permisos::UpdateCantConciliada) || in_array(Auth::user()->UsRol2, Permisos::UpdateCantConciliada))
-															@if($SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Conciliado')
+															@if($SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Facturado')
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
 																@else
@@ -558,7 +547,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													</td>
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 														<td style="text-align: center;">
-															@if($SolicitudServicio->SolSerStatus === 'Conciliado' || ($SolicitudServicio->SolSerStatus === 'Certificacion' && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado))
+															@if($SolicitudServicio->SolSerStatus === 'Conciliado' || ($SolicitudServicio->SolSerStatus === 'Certificacion' || ($SolicitudServicio->SolSerStatus === 'Facturado' && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado))
 																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">  --}}
 																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">
@@ -1293,6 +1282,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@break
 											@case('Conciliado')
 											@case('Certificacion')
+											@case('Facturado')
 											<div class="form-group col-md-12">	
 												<label for="SolResKgTratado">Cantidad Tratada (kg)</label>
 												<small class="help-block with-errors">*</small>
@@ -1451,6 +1441,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									@switch($SolicitudServicio->SolSerStatus)
 										@case('Certificacion')
 										@case('Conciliado')
+										@case('Facturado')
 										<div class="form-group col-md-12">	
 											<label for="SolResKgConciliado">Cantidad Conciliada (kg)</label><small class="help-block with-errors">*</small><input type="number" step=".01" min="0" class="form-control" id="SolResKgConciliado" name="SolResKg" maxlength="5" value="`+cantidadKG+`" required>
 										</div>
@@ -1477,6 +1468,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		switch('{{$SolicitudServicio->SolSerStatus}}'){
 			case('Conciliado'):
 			case('Certificacion'):
+			case('Facturado'):
 					$('.cantidadmax').inputmask({ alias: 'numeric', max:cantidadmax, rightAlign:false});
 				break;
 		};
@@ -2040,6 +2032,45 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>
+			`);
+			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
+				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
+				@else
+					@if ($SolicitudServicio->SolServCertStatus == 0)
+					$('#titulo').append(`
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+					`);
+					@else
+					$('#titulo').append(`
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Certificados/Manifiestos Enviados</b>" data-content="<p style='width: 50%'>Toda la documentación correspondiente a los certificados y/o manifiestos ya esta disponible para facturación... Aun puede modificar los archivos cargados en el sistema, sin ambargo, es conveniente que notifique los cambios al área encargada de facturación</p>" class="btn btn-default pull-right"><i class="fas fa-file-invoice-dollar"></i><b>Certificados/Manifiestos Enviados</b></a>
+					`);
+					@endif
+				@endif
+			@endif
+		@break
+		@case('Facturado')
+			$('#titulo').empty();
+			@if(in_array(Auth::user()->UsRol, Permisos::REVERSARADMIN) || in_array(Auth::user()->UsRol2, Permisos::REVERSARADMIN))
+				$('#titulo').append(`
+					<div class="btn-group" style="float: left;">
+						<button type="button" style="margin-right:1em;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Reversar <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
+						</ul>
+					</div>
+				`);
+			@endif
+			$('#titulo').append(`
+				<b>{{'Se han emitido los facturas correspondientes de la solicitud'}}</b>
 			`);
 			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
 				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))

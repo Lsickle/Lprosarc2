@@ -92,6 +92,9 @@
 												@case('Tratado')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Tratado</b>" data-content="<p style='width: 50%'>Todos los residuos de esta solicitud de servicio han sido tratados satisfactoriamente y en breve se cargarán en el sistema <b>SisPRO</b> los archivos de Certificados/Manifiestos Según Corresponda... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
+												@case('Facturado')
+													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Facturado</b>" data-content="<p style='width: 50%'>El Servicio ya fue facturado... proximamente podra disponer de los certificados/manifiestos en la aplicación <b>SisPRO</b> <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													@break
 												@case('Certificacion')
 													<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Status Certificación</b>" data-content="<p style='width: 50%'>Los archivos correspondientes a Certificados ya se encuentran disponibles para su visualización y descarga... se le enviara una notificación por correo en el momento que los Manifiestos ya estén disponibles para su descarga desde el sistema <b>SisPRO</b>... <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
@@ -136,6 +139,9 @@
 													@break
 												@case('Tratado')
 													<td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+													@break
+												@case('Facturado')
+													<td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class="fas fa-receipt"></i></a><br>{{$Servicio->SolSerStatus}}</td>
 													@break
 												@case('Certificacion')
 													<td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}</td>

@@ -829,6 +829,11 @@ class SolicitudServicioController extends Controller
 
 						}
 						break;
+					case 'Facturada':
+						if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+							$Solicitud->SolSerStatus = 'Facturado';
+						}
+						break;
 				}
 			}
 		}else{
@@ -899,6 +904,10 @@ class SolicitudServicioController extends Controller
 				$Observacion->ObsTipo = 'prosarc';
 				break;
 
+			case 'Facturado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
 			default:
 			$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -912,6 +921,7 @@ class SolicitudServicioController extends Controller
 		
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
+			case 'Facturado':
 				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 				break;
 			case 'Aceptado':
