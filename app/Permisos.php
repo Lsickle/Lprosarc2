@@ -197,7 +197,7 @@ class Permisos{
 		clientcontoller::index
 	*/
 
-	const COMERCIALES = ['Programador', 'Comercial'];
+	const COMERCIALES = ['Programador', 'AdministradorBogota', 'Comercial'];
 	/* Using ->
 		clientcontoller::index
 	*/

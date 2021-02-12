@@ -81,6 +81,7 @@ class CertificadoController extends Controller
                 $certificado->recepcion = "";
             }
             $certificado->cliente = $certificado->SolicitudServicio->cliente()->first('CliName')->CliName;
+            $certificado->SolSerStatus = $certificado->SolicitudServicio()->first('SolSerStatus')->SolSerStatus;
             return $certificado ;
         });
         // return $certificados;

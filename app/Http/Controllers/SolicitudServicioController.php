@@ -81,6 +81,7 @@ class SolicitudServicioController extends Controller
 			'personals.PersSlug',
 			'personals.PersEmail',
 			'personals.PersCellphone',
+			'Comercial.ID_Pers as ComercialID_Pers',
 			'Comercial.PersFirstName as ComercialPersFirstName',
 			'Comercial.PersLastName as ComercialPersLastName',
 			'Comercial.PersSlug as ComercialPersSlug',
@@ -94,6 +95,11 @@ class SolicitudServicioController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
+					}
+				}
+				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+					if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)){
+						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
 					}
 				}
 			})

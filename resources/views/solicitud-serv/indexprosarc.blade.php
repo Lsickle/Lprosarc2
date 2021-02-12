@@ -22,6 +22,7 @@
                 <div class="box box-info">
                     <div class="box-body">
                         <div id="ModalStatus"></div>
+                        <div id="ModalFacturar"></div>
                         <table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped d-none">
                             <thead>
                                 <tr>
@@ -37,6 +38,9 @@
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                         <th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
+                                    @endif
+                                    @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+                                        <th>{{'Facturar'}}</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -126,6 +130,20 @@
                                             title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
                                                 class="fas fa-search"></i></a>
                                     </td>
+                                    @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+                                    @php
+                                    $Status = ['Conciliado', 'Tratado'];
+                                    @endphp
+                                    <td>
+                                        <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}"
+                                            onclick="ModalFacturación('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')"
+                                            {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}}
+                                            style="text-align: center;"
+                                            class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i
+                                                class="fas fa-certificate"></i>
+                                            {{'Facturar'}}</button>
+                                    </td>
+                                    @endif
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                     @php
                                     $Status = ['Conciliado', 'Tratado', 'Facturado'];
@@ -275,5 +293,129 @@
                 }
             }
         </script>
+    @endif
+    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+    <script>
+        function ModalFacturación(slug, id, boolean, value, text){
+                    if(boolean == 1){
+                        $('#ModalFacturar').empty();
+                        $('#ModalFacturar').append(`
+                            <div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
+                                            </div> 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+                                            <button type="button" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                        envsubmit();
+                        $('#myModal').modal();
+                        $('#buttonFacturarStatusOK'+slug).on( "click", function() {
+                            $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                            });
+                            $.ajax({
+                            url: "{{url('/facturarservicio')}}/"+slug,
+                            method: 'GET',
+                            data:{},
+                            beforeSend: function(){
+                                let buttonsubmit = $('.classFacturarStatus'+slug);
+                                buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = true;
+                                            $(this).prop('disabled', true);
+                                        });
+                                buttonsubmit.empty();
+                                buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
+                            },
+                            success: function(res){
+                                let buttonsubmit = $('.classFacturarStatus'+slug);
+                                switch (res['code']) {
+                                    case 200:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = true;
+                                            $(this).prop('disabled', true);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-default');
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
+    
+                                        toastr.success(res['message']);
+                                        break;
+                                
+                                    default:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = false;
+                                            $(this).prop('disabled', false);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+    
+                                        toastr.error(res['error']);
+                                        break;
+                                }
+                            },
+                            error: function(error){
+                                let buttonsubmit = $('.classFacturarStatus'+slug);
+                                switch (error['responseJSON']['code']) {
+                                    case 400:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = true;
+                                            $(this).prop('disabled', true);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-default');
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+                                        
+                                        break;
+                                
+                                    default:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = false;
+                                            $(this).prop('disabled', false);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+    
+                                        break;
+                                }
+                                toastr.error(error['responseJSON']['message']);
+                            },
+                            complete: function(){
+                                //
+                            }
+                            })
+                        });;
+                    }
+                }
+    </script>
     @endif
 @endsection

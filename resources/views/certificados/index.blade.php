@@ -44,6 +44,9 @@ Lista de Certificados
 								@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
 									<th>Aprobar</th>
 								@endif
+								@if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+									<th>{{'Facturar'}}</th>
+								@endif
 								@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 									<th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
 								@endif
@@ -57,7 +60,9 @@ Lista de Certificados
 										<td class="text-center"><b>{{$certificado->cliente}}</b></td>
 										<td class="text-center">{{$certificado->CertNumRm}}</td>
 									@endif
-									<td class="text-center">#{{$certificado->FK_CertSolser}}</td>
+									<td class="text-center">#{{$certificado->FK_CertSolser}}</br>
+									({{$certificado->SolSerStatus}})
+									</td>
 									<td class="text-center">{{$certificado->tratamiento->TratName}}</td>
 									<td class="text-center">
 									@switch($certificado->CertType)
@@ -245,7 +250,8 @@ Lista de Certificados
 									<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
 									@endif
 									@php
-										$Status = ['Conciliado', 'Tratado'];
+										$Status = ['Conciliado', 'Tratado', 'Facturado'];
+										$Status2 = ['Conciliado', 'Tratado'];
 									@endphp
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT))
 										@if (in_array($certificado->SolicitudServicio->SolSerStatus, $Status))
@@ -258,11 +264,17 @@ Lista de Certificados
 											</td>
 										@endif
 									@endif
+									@if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+										<td>
+											<button id="{{'buttonCertStatus'.$certificado->SolicitudServicio->SolSerSlug}}" onclick="ModalFacturar('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status2)}}', 'Facturado', 'Facturar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status2) ? '' :  'disabled'}} style="text-align: center;" class="{{'classFacturarStatus'.$certificado->SolicitudServicio->SolSerSlug}} btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status2) ? 'info' : 'default'}}"><i class="fas fa-receipt"></i> {{'Facturar'}}</button>
+										</td>
+									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 										<td>
 											<button id="{{'buttonCertStatus'.$certificado->SolicitudServicio->SolSerSlug}}" onclick="ModalStatus('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="{{'classCertStatus'.$certificado->SolicitudServicio->SolSerSlug}} btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
 										</td>
 									@endif
+									
 									<td>{{$certificado->updated_at}}</td>
 								</tr>
 								@endforeach
@@ -384,6 +396,126 @@ Lista de Certificados
 							buttonsubmit.prop('class', 'btn btn-success classCertStatus'+slug);
 							buttonsubmit.empty();
 							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificar`);
+
+							break;
+					}
+					toastr.error(error['responseJSON']['message']);
+				},
+				complete: function(){
+					//
+				}
+				})
+			});;
+		}
+	}
+	function ModalFacturar(slug, id, boolean, value, text){
+		if(boolean == 1){
+			$('#ModalStatus').empty();
+			$('#ModalStatus').append(`
+				<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
+								</div> 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+								<button type="button" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			`);
+			envsubmit();
+			$('#myModal').modal();
+			$('#buttonFacturarStatusOK'+slug).on( "click", function() {
+				$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+				});
+				$.ajax({
+				url: "{{url('/facturarservicio')}}/"+slug,
+				method: 'GET',
+				data:{},
+				beforeSend: function(){
+					let buttonsubmit = $('.classFacturarStatus'+slug);
+					buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
+				},
+				success: function(res){
+					let buttonsubmit = $('.classFacturarStatus'+slug);
+					switch (res['code']) {
+						case 200:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+							buttonsubmit.prop('class', 'btn btn-default');
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+
+							toastr.success(res['message']);
+							break;
+					
+						default:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = false;
+								$(this).prop('disabled', false);
+							});
+							buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+
+							toastr.error(res['error']);
+							break;
+					}
+				},
+				error: function(error){
+					let buttonsubmit = $('.classFacturarStatus'+slug);
+					switch (error['responseJSON']['code']) {
+						case 400:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = true;
+								$(this).prop('disabled', true);
+							});
+							buttonsubmit.prop('class', 'btn btn-default');
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+							
+							break;
+					
+						default:
+							buttonsubmit.each(function() {
+								$(this).on('click', function(event) {
+									event.preventDefault();
+								});
+								$(this).disabled = false;
+								$(this).prop('disabled', false);
+							});
+							buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+							buttonsubmit.empty();
+							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
 
 							break;
 					}
