@@ -1491,15 +1491,16 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 
+		if (!$SolicitudServicio) {
+			abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
+		}
+
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Pendiente':
 			case 'Aceptado':
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				if (!$SolicitudServicio) {
-					abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
-				}
 				
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
 				
