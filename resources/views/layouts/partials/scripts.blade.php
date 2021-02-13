@@ -69,7 +69,7 @@ $('form[data-toggle="validator"]').validator({
 		$('select').select2({
 			placeholder: "Seleccione...",
 			allowClear: true,
-			tags: false,
+			tags: true,
 			width: 'resolve',
 			width: '100%',
 			theme: "classic"
@@ -85,6 +85,7 @@ function SelectsMultiple(){
 		allowClear: true,
 		width: 'resolve',
 		width: '100%',
+		tags: true,
 		theme: "classic"
 	});
 }

@@ -276,6 +276,11 @@ class Permisos{
 	/* Using ->
 		solserv/show
 	*/
+	
+	const EXPRESS = ['Programador','AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','JefeComercial','Tesorería','Comercial','AsistenteComercial'];
+	/* Using ->
+		solserv/show
+	*/
 
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/
 	const AREAS = ['Programador','AdministradorPlanta','AdministradorBogota'];
