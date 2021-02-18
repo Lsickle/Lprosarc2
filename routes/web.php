@@ -42,6 +42,14 @@ Route::get('qr-code', function ()
 	echo "<img src='".$qrCode->writeDataUri()."'>";
 });
 
+/* REGISTRO EXPRESS*/
+Route::middleware(['web'])->group(function () {
+	Route::get('/registroexpress', 'registroexpressController@create')->name('registroexpress');
+	Route::post('/sendregisterexpress', 'registroexpressController@store');
+});
+
+
+
 Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
@@ -175,7 +183,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::resource('/contratos', 'ContratoController');
 	Route::resource('/requeri-client', 'RequerimientosClienteController');
 	/*Rutas de peticiones de Ajax*/
-	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
+	// Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/doc-number/{id}', 'AjaxController@DocNumber');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
@@ -199,3 +207,4 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/email-respel/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 
+Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');

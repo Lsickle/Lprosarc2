@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	Servicios-Solicitudes
+	Solicitudes Express
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -50,16 +50,6 @@
 									@endforeach
 								</select>
 							</div>
-							<div class="form-group col-md-12 select-multiple-contenedor" style="padding: 0px;">
-								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
-								<small class="help-block with-errors"></small>
-								<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">
-									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-									@foreach ($Personals as $Personal)
-									<option value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
-									@endforeach
-								</select>
-							</div>
 							<div class="form-group col-md-6" style="padding: 0px;">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 								<small class="help-block with-errors">*</small>
@@ -69,7 +59,7 @@
 									<option onclick="TransportadorExtr()" value="98">{{ trans('adminlte_lang::message.solsertranspro') }}</option>
 								</select>
 							</div>
-							<div id="transportador" class="form-group col-md-6" hidden="true" style="padding: 0px;">
+							<div id="transportador" class="form-group col-md-6" style="padding: 0px;">
 								<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertranspro') }}</label>
 								<small class="help-block with-errors">*</small>
 								<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
@@ -78,22 +68,22 @@
 									<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
 								</select>
 							</div>
-							<div id="nametransportadora" class="form-group col-md-6" hidden="true" style="padding: 0px;">
+							<div id="nametransportadora" class="form-group col-md-6" style="padding: 0px;">
 								<label for="SolSerNameTrans">{{ trans('adminlte_lang::message.solsertransname') }}</label>
 								<small class="help-block with-errors">*</small>
 								<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{old('SolSerNameTrans')}}">
 							</div>
-							<div id="nittransportadora" class="form-group col-md-6" hidden="true" style="padding: 0px;">
+							<div id="nittransportadora" class="form-group col-md-6" style="padding: 0px;">
 								<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
 								<small class="help-block with-errors">*</small>
 								<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="{{old('SolSerNitTrans')}}">
 							</div>
-							<div id="addresstransportadora" class="form-group col-md-12" hidden="true" style="padding: 0px;">
+							<div id="addresstransportadora" class="form-group col-md-12" style="padding: 0px;">
 								<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
 								<small class="help-block with-errors">*</small>
 								<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
 							</div>
-							<div class="form-group col-md-6 citytransportadora" hidden style="padding: 0px;">
+							<div class="form-group col-md-6 citytransportadora" style="padding: 0px;">
 								<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
 								<select class="form-control select" id="departamento">
 									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
@@ -102,7 +92,7 @@
 									@endforeach
 								</select>
 							</div>
-							<div class="form-group col-md-6 citytransportadora" hidden style="padding: 0px;">
+							<div class="form-group col-md-6 citytransportadora" style="padding: 0px;">
 								<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
 								<small class="help-block with-errors">*</small>
 								<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
