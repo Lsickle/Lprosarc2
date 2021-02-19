@@ -75,6 +75,7 @@ class ServiceExpressController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -102,6 +103,7 @@ class ServiceExpressController extends Controller
 					}
 				}
 			})
+			->where('CliCategoria', 'ClientePrepago')
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
@@ -133,38 +135,11 @@ class ServiceExpressController extends Controller
      */
     public function create()
     {
-        if(in_array(Auth::user()->UsRol, Permisos::EXPRESS) || in_array(Auth::user()->UsRol, Permisos::EXPRESS)){
-			$Departamentos = Departamento::all();
-            $Cliente = Cliente::select('CliName', 'CliName','ID_Cli', 'CliStatus', 'TipoFacturacion')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
-            $Clientes = Cliente::all();
-			$Sedes = Sede::select('SedeSlug','SedeName')->where('FK_SedeCli', $Cliente->ID_Cli)
-			->where('sedes.SedeDelete', 0)
-			->get();
-			$SGeneradors = DB::table('gener_sedes')
-				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
-				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-				->where('generadors.GenerDelete', 0)
-				->where('gener_sedes.GSedeDelete', 0)
-				->get();
-			$Personals = DB::table('personals')
-				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
-				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-				->where('personals.PersDelete', 0)
-				->get();
-            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
-            // return $Requerimientos;
-			if ($Cliente->CliStatus=="Bloqueado") {
-				abort(403, 'Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio... Para mas detalles comuníquese con su Asesor Comercial');
-			}else{
-				return view('serviciosexpress.create', compact('Personals', 'Clientes', 'Cliente', 'SGeneradors', 'Departamentos', 'Sedes', 'Requerimientos'));
-			}
+        if(in_array(Auth::user()->UsRol, Permisos::EXPRESS) || in_array(Auth::user()->UsRol, Permisos::EXPRESS)){			
+
+			$Clientes = Cliente::where('CliCategoria', 'ClientePrepago')->orderBy('created_at', 'desc')->get();
+
+			return view('serviciosexpress.create', compact('Clientes'));
 		}
 		else{
 			abort(403, 'Solo los Roles autorizados pueden realizar nuevas solicitudes de servicio Express');

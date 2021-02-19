@@ -200,6 +200,8 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
 	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
+	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
+	
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */

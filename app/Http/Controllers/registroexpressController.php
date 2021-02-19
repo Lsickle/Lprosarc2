@@ -80,13 +80,13 @@ class registroexpressController extends Controller
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
-        $Cliente->CliCategoria = 'Cliente';
+        $Cliente->CliCategoria = 'ClientePrepago';
         $Cliente->CliSlug = hash('sha256', rand().time().$Cliente->CliName);
         $Cliente->CliDelete = 0;
         $Cliente->CliComercial = $request->input('CliComercial');
         $Cliente->CliShortname = $request->input('CliName');
         $Cliente->CliStatus = 'Autorizado';
-        $Cliente->TipoFacturacion = 'Credito';
+        $Cliente->TipoFacturacion = 'Contado';
         $Cliente->save();
 
         $Sede = new Sede();
@@ -196,6 +196,7 @@ class registroexpressController extends Controller
             $newRespel->RespelPublic = 0;
             $newRespel->RespelStatus = 'Aprobado';
             $newRespel->FK_RespelCoti = $Cotizacion->ID_Coti;
+            $newRespel->RespelStatusDescription = 'Residuo copiado automaticamente en la base de datos de SisPRO para servicios express';
             $newRespel->save();
 
             foreach($PublicRespel->requerimientos as $requerimiento)

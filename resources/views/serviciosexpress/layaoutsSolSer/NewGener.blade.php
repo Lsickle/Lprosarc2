@@ -8,9 +8,6 @@
 		<button type="button" class="btn btn-box-tool boton" style="color: #00a65a;" data-toggle="collapse" data-target=".Respel`+contadorGenerador+`" onclick="AnimationMenusForm('.Respel`+contadorGenerador+`')" title="Reducir/Ampliar"> <i class="fa fa-plus"></i></button>
 		<select name="SGenerador[`+contadorGenerador+`]" id="SGenerador" class="form-control" required="">
 			<option onclick="HiddenResiduosGener(`+contadorGenerador+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>
-			@foreach($SGeneradors as $SGenerador)
-			<option onclick="ResiduosGener(`+contadorGenerador+`,'{{$SGenerador->GSedeSlug}}')" value="{{$SGenerador->GSedeSlug}}">{{$SGenerador->GenerName.' ('.$SGenerador->GSedeName.')'}}</option>
-			@endforeach
 		</select>
 		<br>
 	</div>
