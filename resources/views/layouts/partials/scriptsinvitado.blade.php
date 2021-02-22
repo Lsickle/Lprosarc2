@@ -11,7 +11,7 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 @if(Route::currentRouteName()=='vehicle-programacion.create')
 	{{-- fullcalendar --}}
-	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+	{{-- <script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script> --}}
 @endif
 {{-- Chart --}}
 @if(Route::currentRouteName()=='home')

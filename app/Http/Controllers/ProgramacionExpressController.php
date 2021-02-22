@@ -2,7 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
+use App\Mail\VehiculoRecibidoEmail;
+use App\Mail\CancelSolServEmail;
+use App\Mail\SolSerEmail;
+use App\Mail\ProgramacionParafiscales;
+use App\Mail\SustanciaControladaProgramada;
+use App\audit;
+use App\ProgramacionVehiculo;
+use App\Vehiculo;
+use App\Personal;
+use App\SolicitudServicio;
+use App\GenerSede;
+use App\SolicitudResiduo;
+use App\Documento;
+use App\Docdato;
+use App\Recolect;
+use App\Cliente;
+use App\Sede;
+use App\Requerimiento;
+use App\Observacion;
+use Permisos;
 
 class ProgramacionExpressController extends Controller
 {
@@ -17,7 +45,7 @@ class ProgramacionExpressController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName', 'clientes.CliCategoria')
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
@@ -29,7 +57,8 @@ class ProgramacionExpressController extends Controller
 					if(in_array(Auth::user()->UsRol, Permisos::TESORERIA)||in_array(Auth::user()->UsRol2, Permisos::TESORERIA)){
 						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
 					}
-				})
+                })
+                ->where('CliCategoria', 'ClientePrepago')
 				->get();
 			$personals = DB::table('personals')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
@@ -48,7 +77,7 @@ class ProgramacionExpressController extends Controller
 			  	return $item;
 			});
 			// return $programacions;
-			return view('ProgramacionVehicle.index', compact('programacions', 'personals', 'vehiculos'));
+			return view('ProgramacionExpress.index', compact('programacions', 'personals', 'vehiculos'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -68,8 +97,9 @@ class ProgramacionExpressController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName')
-				->where('progvehiculos.ProgVehDelete', 0)
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName', 'clientes.CliCategoria')
+                ->where('progvehiculos.ProgVehDelete', 0)
+                ->where('CliCategoria', 'ClientePrepago')
 				->get();
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
@@ -110,13 +140,14 @@ class ProgramacionExpressController extends Controller
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName')
+				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName', 'clientes.CliCategoria')
 				->where('SolSerDelete', 0)
-				->where('SolSerStatus', 'Aprobado')
+                ->where('SolSerStatus', 'Aprobado')
+                ->where('CliCategoria', 'ClientePrepago')
 				->orderBy('solicitud_servicios.updated_at', 'asc')
 				->get();
 				/*return $programacions;*/
-			return view('ProgramacionVehicle.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
+			return view('ProgramacionExpress.create', compact('programacions', 'conductors', 'ayudantes', 'vehiculos', 'serviciosnoprogramados', 'mantenimientos', 'transportadores'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
@@ -754,7 +785,7 @@ class ProgramacionExpressController extends Controller
 
 			/*return $programacion*/;
 
-			return view('ProgramacionVehicle.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg', 'personalconparafiscales'));
+			return view('ProgramacionExpress.edit', compact('programacion', 'vehiculos', 'conductors', 'ayudantes', 'Vehiculos2', 'transportadores', 'recolectPointsService', 'recolectPointsProg', 'personalconparafiscales'));
 		}
 		 /*Validacion para usuarios no permitidos en esta vista*/
 		else{
