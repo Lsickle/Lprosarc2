@@ -116,8 +116,11 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::resource('/personal', 'PersonalController');
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');
-	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::resource('/programacion-express','ProgramacionExpressController');
+	Route::post('/programacion-express/{id}/añadirVehiculo','ProgramacionExpressController@añadirVehiculo');
+	Route::put('/programacion-express/{id}/updateStatus','ProgramacionExpressController@updateStatus');
+
+	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::put('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
 	Route::post('/vehicle-programacion/{id}/añadirVehiculo','VehicProgController@añadirVehiculo');
 	Route::post('/vehicle-programacion/{id}/sendParafiscales','VehicProgController@sendParafiscales');
