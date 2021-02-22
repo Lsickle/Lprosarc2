@@ -3,7 +3,7 @@
 {{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
 	Solicitudes Express
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
@@ -17,7 +17,7 @@
 					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitlecreate') }}</h3>
 				</div>
 				
-				<form role="form" id="CreateSolSer" action="/solicitud-servicio" method="POST" enctype="multipart/form-data" data-toggle="validator">
+				<form role="form" id="CreateSolSer" action="/serviciosexpress" method="POST" enctype="multipart/form-data" data-toggle="validator">
 					@csrf
 					@if ($errors->any())
 						<div class="alert alert-danger" role="alert">
@@ -59,7 +59,7 @@
 									<option value="Anual">Anual</option>
 									<option value="semestral">semestral</option>
 									<option value="trimestral">trimestral</option>
-									<option value="bimencial">bimencial</option>
+									<option value="bimensual">bimensual</option>
 									<option value="mensual">mensual</option>
 								</select>
 							</div>
@@ -79,6 +79,7 @@
 							<b><a class="load"></a>{{ trans('adminlte_lang::message.solserrespelsend') }}<a class="load"></a></b>
 						</div>
 						<div id="Respels" class="col-md-12">
+							<input type="text" hidden name="SGenerador[0]" id="SGenerador">
 							<div id="DivRepel0" class="form-group col-md-16">
 							</div>
 						</div>

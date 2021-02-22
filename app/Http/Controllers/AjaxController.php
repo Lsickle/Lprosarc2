@@ -816,7 +816,7 @@ class AjaxController extends Controller
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
 				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
-				->select('residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->select('gener_sedes.*', 'residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
 				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
 				->where('respels.RespelDelete', 0)
 				->where('gener_sedes.GSedeSlug', $sGener->GSedeSlug)

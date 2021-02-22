@@ -22,11 +22,11 @@ $("#FK_SolSerCliente").change(function(e){
 		},
 		success: function(res){
 			id_div = 0;
-			ID_Gener = res.GSedeSlug;
+			ID_Gener = res[0].GSedeSlug;
 			contadorRespel[id_div] = 0;
+			$("#SGenerador").val(ID_Gener);
 			$("#DivRepel"+id_div).empty();
 			$("#DivRepel"+id_div).append(`@include('serviciosexpress.layaoutsSolSer.OneRespel')`);
-			console.log(id);
 			$('form[data-toggle="validator"]').validator('update');
 			numeroKg();
 			popover();
@@ -36,10 +36,9 @@ $("#FK_SolSerCliente").change(function(e){
 			icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 			$(icon).removeClass('fa-plus');
 			$(icon).addClass('fa-minus');
-			console.log(res);
 			
 			var residuos = new Array();
-			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+			// $("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
 			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 			for(var i = res.length -1; i >= 0; i--){
 				if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
@@ -135,91 +134,6 @@ function RequeRespel(id_div, contador, Id_Respel){
 		},
 		success: function(res){
 			if(res != ''){
-				// console.log(res);
-				if(res.ReqFotoDescargue === 1){
-					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqFotoDescargue === 1){
-						$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
-					}
-				}
-				else{
-					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);
-					$('#SolResFotoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
-				}
-				if(res.ReqFotoDestruccion === 1){
-					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqFotoDestruccion === 1){
-						$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
-					}
-				}
-				else{
-					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('state',false);
-					$('#SolResFotoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
-				}
-				if(res.ReqVideoDescargue === 1){
-					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqVideoDescargue === 1){
-						$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);	
-					}
-				}
-				else{
-					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('state',false);	
-					$('#SolResVideoDescargue_Pesaje'+id_div+contador).bootstrapSwitch('disabled',true);
-				}
-				if(res.ReqVideoDestruccion === 1){
-					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqVideoDestruccion === 1){
-						$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);	
-					}
-				}
-				else{
-					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('state',false);	
-					$('#SolResVideoTratamiento'+id_div+contador).bootstrapSwitch('disabled',true);
-				}
-				if(res.ReqDevolucion === 1){
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqDevolucion === 1){
-						$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);	
-					}
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
-				}
-				else{
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('state',false);
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('disabled',true);
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-trash"></i>');
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
-					$('#SolResDevolucion'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
-				}
-				if(res.ReqAuditoria === 1){
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',false);
-					if(res.auto_ReqAuditoria === 1){
-						$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',true);
-					}else{
-						$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);	
-					}
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-eye"></i>');
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
-				}
-				else{
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('state',false);
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('disabled',true);
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('labelText','<i class="fas fa-eye"></i>');
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('onText','<i class="fas fa-check"></i>');
-					$('#SolResAuditoria'+id_div+contador).bootstrapSwitch('offText','<i class="fas fa-times"></i>');
-				}
 				switch (res.Tarifatipo) { 
 					case 'Kg':
 						$('#SolResTypeUnidad'+id_div+contador).prop('required',false);
@@ -283,6 +197,7 @@ function AgregarGenerador() {
 
 function AgregarResPel(id_div,ID_Gener) {
 	contadorRespel[id_div] = contadorRespel[id_div]+1;
+	console.log(contadorRespel[id_div]);
 	$("#AddRespel"+id_div).before(`@include('serviciosexpress.layaoutsSolSer.NewRespel')`);
 	Switch2();
 	Switch3();
@@ -292,7 +207,7 @@ function AgregarResPel(id_div,ID_Gener) {
 	popover();
 	ChangeSelect();
 	Selects();
-	HiddenRequeRespel(id_div, contadorRespel[id_div]);
+	// HiddenRequeRespel(id_div, contadorRespel[id_div]);
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -309,7 +224,7 @@ function AgregarResPel(id_div,ID_Gener) {
 		success: function(res){
 			if(res != ''){
 				var residuos = new Array();
-				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+				// $("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
 				$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
 				for(var i = res.length -1; i >= 0; i--){
 					if ($.inArray(res[i].SlugSGenerRes, residuos) < 0) {
@@ -319,7 +234,7 @@ function AgregarResPel(id_div,ID_Gener) {
 				}
 			}
 			else{
-				$("#DivRepel"+id_div).empty();
+				// $("#DivRepel"+id_div).empty();
 				NotifiFalse("Lo sentimos esta sede de generador no tiene residuos asignados");
 			}
 		},
