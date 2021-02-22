@@ -5,16 +5,7 @@
 
             <!-- Sidebar user panel (optional) -->
             @if (! Auth::guest())
-                <div class="user-panel container">
-                    <div class="pull-left image" style="max-width: 3.2em; max-height: 3.2em;">
-                        <img class="img-circle" src="../../../img/robot400x400.gif" alt="User Image">
-                    </div>
-                    <div class="pull-left info" style="overflow:hidden; max-width: 10em; max-height: 3.1em; height: auto; width: auto; position: absolute; top: 0.5em;">
-                        <p style=" overflow:hidden; text-overflow: ellipsis;" data-toggle="tooltip" title="{{ Auth::user()->name }}"><span>{{ Auth::user()->name }}</span></p>
-                        <!-- Status -->
-                        <a href="#"><i class="fa fa-circle text-success" class="treeview-menu"></i><span> {{ Auth::user()->UsRol }}</span></a>
-                    </div>
-                </div>         
+
             @endif
 
             <!-- search form (Optional) -->
