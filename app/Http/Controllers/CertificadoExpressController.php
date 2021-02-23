@@ -3,6 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CertUpdated;
+use App\Mail\CertUpdatedComercial;
+use App\Certificado;
+use App\CertificadoExpress;
+use App\CertExpressdato;
+use App\Cliente;
+use App\Personal;
+use App\Generador;
+use App\Tratamiento;
+use App\Audit;
+use App\Certdato;
+use App\Permisos;
+use App\SolicitudServicio;
+use App\SolicitudResiduo;
+use App\Http\Requests\CertificadoUpdateRequest;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\LabelAlignment;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Response\QrCodeResponse;
 
 class CertificadoExpressController extends Controller
 {
@@ -14,7 +36,7 @@ class CertificadoExpressController extends Controller
     public function index()
     {
             
-        $certificados = Certificado::where(function($query){
+        $certificados = CertificadoExpress::where(function($query){
             switch (Auth::user()->UsRol) {
                 case 'Cliente':
                     /*se define la sede del usuario actual*/
@@ -39,7 +61,7 @@ class CertificadoExpressController extends Controller
 
                 case 'Comercial':
                     /*se define la sede del usuario actual*/
-                    $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get('ID_Cli');
+                    $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'ClientePrepago')->where('CliComercial', Auth::user()->FK_UserPers)->get('ID_Cli');
 
                     // return $clientes;
                     $query->whereIn('FK_CertCliente', $clientes);
@@ -122,7 +144,7 @@ class CertificadoExpressController extends Controller
      */
     public function show($id)
     {
-        $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+        $certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
             $query->with(['SolicitudResiduo' => function ($query){
                 $query->where('SolResKgConciliado', '>', 0);
                 $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
@@ -153,7 +175,7 @@ class CertificadoExpressController extends Controller
     public function edit($id)
     {
         if (in_array(Auth::user()->UsRol, Permisos::EDITMANIFCERT)||in_array(Auth::user()->UsRol2, Permisos::EDITMANIFCERT)) {
-            $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+            $certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
                 $query->with(['SolicitudResiduo' => function ($query){
                     $query->where('SolResKgConciliado', '>', 0);
                     $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
@@ -165,10 +187,10 @@ class CertificadoExpressController extends Controller
             ->where('CertSlug', $id)
             ->first();
 
-            $ultimoCertificado = Certificado::where('CertNumero', '!=', NULL)->orderBy('CertNumero', 'desc')->first('CertNumero');
+            $ultimoCertificado = CertificadoExpress::where('CertNumero', '!=', NULL)->orderBy('CertNumero', 'desc')->first('CertNumero');
             $proximoCertificado = ($ultimoCertificado->CertNumero == NULL) ? 1 : $ultimoCertificado->CertNumero+1 ;
             
-            $ultimoManif = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
+            $ultimoManif = CertificadoExpress::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
 			$proximoManif = ($ultimoManif == NULL) ? 1 : ($ultimoManif->CertManifNumero+1);
             $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
                 $rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
@@ -201,7 +223,7 @@ class CertificadoExpressController extends Controller
     public function update(CertificadoUpdateRequest $request, $id)
     {
         // return $request;
-        $certificado = Certificado::where('CertSlug', $id)->first();
+        $certificado = CertificadoExpress::where('CertSlug', $id)->first();
         $certificado->CertType = $request->input('CertType');
         $certificado->CertiEspName = $request->input('CertiEspName');
         $certificado->CertiEspValue = $request->input('CertiEspValue');
@@ -322,7 +344,7 @@ class CertificadoExpressController extends Controller
         }
         
         $log = new audit();
-        $log->AuditTabla="certificados";
+        $log->AuditTabla="certificadosexpress";
         $log->AuditType="actualizado";
         $log->AuditRegistro=$certificado->ID_Cert;
         $log->AuditUser=Auth::user()->email;
@@ -357,7 +379,7 @@ class CertificadoExpressController extends Controller
         // 5:Ingeniero HSEQ
         // 6:Asistente de Logistica
         // 7:Programador
-        $certificado = Certificado::where('CertSlug', $id)->first();
+        $certificado = CertificadoExpress::where('CertSlug', $id)->first();
         if ($certificado->SolicitudServicio->SolSerStatus == 'Certificacion') {
             switch (Auth::user()->UsRol) {
                 case 'Hseq':
@@ -558,7 +580,7 @@ class CertificadoExpressController extends Controller
         $certificado->save();
 
         $log = new audit();
-        $log->AuditTabla="certificado";
+        $log->AuditTabla="certificadosexpress";
         $log->AuditType="firmado";
         $log->AuditRegistro=$certificado->ID_Cert;
         $log->AuditUser=Auth::user()->email;
@@ -593,7 +615,7 @@ class CertificadoExpressController extends Controller
         // 5:Ingeniero HSEQ
         // 6:Asistente de Logistica
         // 7:Programador
-        $certificado = Certificado::where('CertSlug', $id)->first();
+        $certificado = CertificadoExpress::where('CertSlug', $id)->first();
         if ($certificado->SolicitudServicio->SolSerStatus == 'Certificacion') {
             switch (Auth::user()->UsRol) {
                 case 'Hseq':
@@ -795,7 +817,7 @@ class CertificadoExpressController extends Controller
         $certificado->save();
 
         $log = new Audit();
-        $log->AuditTabla="certificado";
+        $log->AuditTabla="certificadosexpress";
         $log->AuditType="firmado";
         $log->AuditRegistro=$certificado->ID_Cert;
         $log->AuditUser=Auth::user()->email;
@@ -826,7 +848,7 @@ class CertificadoExpressController extends Controller
      */
     public function wordtemplate($id)
     {
-        $certificado = Certificado::with(['SolicitudServicio' => function ($query){
+        $certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
             $query->with(['SolicitudResiduo' => function ($query){
                 $query->where('SolResKgConciliado', '>', 0);
                 $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
@@ -862,7 +884,7 @@ class CertificadoExpressController extends Controller
 
     public function independiente(Request $request, $id)
 	{        
-        $certificadoOld = Certificado::where('ID_Cert', $id)->first();
+        $certificadoOld = CertificadoExpress::where('ID_Cert', $id)->first();
 
         $certificadoNew = $certificadoOld->replicate()->fill([
             'CertSlug' => hash('sha256', rand().time()),
@@ -879,14 +901,14 @@ class CertificadoExpressController extends Controller
         $certificadoNew->save();
         
         foreach ($request->input('residuos') as $key => $value) {
-            $certdato = Certdato::where('ID_CertDato', $value)->first();
+            $certdato = CertExpressdato::where('ID_CertDato', $value)->first();
             $certdato->FK_DatoCert = $certificadoNew->ID_Cert;
             $certdato->save();
         }
 
         $log = new audit();
-        $log->AuditTabla="certificados";
-        $log->AuditType="generado Cert independiente";
+        $log->AuditTabla="certificadosexpress";
+        $log->AuditType="generado Cert express independiente";
         $log->AuditRegistro=$certificadoOld->ID_Cert;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request);

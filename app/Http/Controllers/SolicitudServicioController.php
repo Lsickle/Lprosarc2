@@ -31,6 +31,8 @@ use App\Tarifa;
 use App\Rango;
 use App\Certificado;
 use App\Certdato;
+use App\CertificadoExpress;
+use App\CertExpressdato;
 use App\Manifiesto;
 use App\Manifdato;
 use App\Requerimiento;
@@ -1592,10 +1594,16 @@ class SolicitudServicioController extends Controller
 
 			$SolicitudServicio->cliente = Cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
-			$certificados = Certificado::with(['certdato.solres'])
-			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
-			->get();
+			if ($SolicitudServicio->cliente->CliCategoria == 'ClientePrepago') {
+				$certificados = CertificadoExpress::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
 
+			} else {
+				$certificados = Certificado::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
+			}
 		}
 		/* validacion para encontrar la fecha de recepción en planta del servicio */
 		$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();

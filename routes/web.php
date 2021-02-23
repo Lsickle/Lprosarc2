@@ -156,6 +156,15 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/serviciosexpress', 'ServiceExpressController');
+	Route::post('/serviciosexpress/changestatus', 'ServiceExpressController@changestatus');
+	Route::post('/serviciosexpress/reversarStatus', 'ServiceExpressController@reversarStatus');
+	Route::post('/serviciosexpress/cancelarServicio', 'ServiceExpressController@cancelarServicio');
+	Route::put('/serviciosexpress/{id}/updateRms', 'ServiceExpressController@updateRms');
+	Route::get('/serviciosexpress/{id}/sendtobilling', 'ServiceExpressController@sendtobilling');
+	Route::get('/serviciosexpress/{id}/add-respel', 'ServiceExpressController@addRespel');
+	Route::put('/serviciosexpress/{id}/update-respel', 'ServiceExpressController@updateRespel');
+	Route::put('/serviciosexpress/repeat/{id}', 'ServiceExpressController@repeat');
+	Route::get('/serviciosexpress/{id}/documentos', 'ServiceExpressController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
 	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');
 	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');

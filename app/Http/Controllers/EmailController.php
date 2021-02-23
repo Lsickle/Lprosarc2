@@ -69,7 +69,7 @@ class EmailController extends Controller
                         ->cc($destinatarioscc)
                         ->send(new SolSerEmailClient($email));
                     }else{
-                        if (Auth::user()->UsRol === 'AdministradorPlanta') {
+                        if (Auth::user()->UsRol === 'AdministradorPlanta'||(Auth::user()->UsRol === 'Conductor'||Auth::user()->UsRol2 === 'Conductor')) {
                             $email = DB::table('solicitud_servicios')
                                 ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
                                 ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')

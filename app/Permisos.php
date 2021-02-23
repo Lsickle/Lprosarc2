@@ -197,6 +197,11 @@ class Permisos{
 		clientcontoller::index
 	*/
 
+	const COMERCIALEXPRESS = ['Programador', 'Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+
 	const COMERCIALES = ['Programador', 'AdministradorBogota', 'Comercial'];
 	/* Using ->
 		clientcontoller::index
@@ -243,6 +248,11 @@ class Permisos{
 		pretratamientocontoller::destroy
 	*/
 	const CONDUCTOR = ['Conductor'];
+	/* Using->
+		VehicProgController::index
+	 */
+
+	const CONDUCTOREXPRESS = ['Programador','Conductor'];
 	/* Using->
 		VehicProgController::index
 	 */
