@@ -284,6 +284,7 @@ class AjaxController extends Controller
 				switch ($Solicitud->SolSerStatus) {
 					case 'Conciliado':
 					case 'Tratado':
+					case 'Facturado':
 						$Solicitud->SolSerStatus = 'Certificacion';
 						$Solicitud->SolServCertStatus = 2;
 						$Solicitud->SolSerDescript = $request->input('solserdescript');
@@ -358,6 +359,108 @@ class AjaxController extends Controller
                         ->cc($destinatarios)
                         ->send(new SolSerEmail($email));
                     }
+				}
+				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
+
+			}else{
+				return response()->json(['error' => 'Usuario no autorizado'], 401);
+			}
+			
+
+		}
+	}
+
+	/*Funcion para certtificacion de servicios via ajax*/
+	public function facturarServicio(Request $request, $servicio)
+	{
+		if ($request->ajax()) {
+			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
+				$Solicitud = SolicitudServicio::where('SolSerSlug', $servicio)->first();
+				if (!$Solicitud) {
+					abort(404);
+				}
+				switch ($Solicitud->SolSerStatus) {
+					case 'Conciliado':
+					case 'Tratado':
+						$Solicitud->SolSerStatus = 'Facturado';
+						$Solicitud->SolServCertStatus = 1;
+						$Solicitud->SolSerDescript = $request->input('solserdescript');
+						$Solicitud->save();
+
+						$log = new Audit();
+						$log->AuditTabla="solicitud_servicios";
+						$log->AuditType="Modificado Status";
+						$log->AuditRegistro=$Solicitud->ID_SolSer;
+						$log->AuditUser=Auth::user()->email;
+						$log->Auditlog=$Solicitud->SolSerStatus;
+						$log->save();
+
+						$resCode = 200;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente facturada con exito';
+						break;
+						
+					case 'Facturado':
+						$resCode = 400;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra Facturada';
+						break;
+
+					case 'Certificacion':
+						$resCode = 400;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada y no admite cambios de status';
+						break;
+					
+					default:
+						$resCode = 403;
+						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede facturar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
+						break;
+				}
+				if ($resCode == 200) {
+
+					/*se guarda la observacion inicial de la creación del servicio*/
+					$Observacion = new Observacion();
+					$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+					if ($Solicitud->SolSerDescript == "" || $Solicitud->SolSerDescript == null) {
+						$Observacion->ObsMensaje = 'Servicio enviado a Facturación';
+					}else{
+						$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+					}
+					$Observacion->ObsTipo = 'prosarc';
+					$Observacion->ObsRepeat = 1;
+					$Observacion->ObsDate = now();
+					$Observacion->ObsUser = Auth::user()->email;
+					$Observacion->ObsRol = Auth::user()->UsRol;
+					$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+					$Observacion->save();
+
+					// $email = DB::table('solicitud_servicios')
+					// 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                	// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+					// 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+					// 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+					// 	->first();
+					
+					// $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+					
+					// if ($comercial) {
+					// 	$destinatarios = [$comercial->PersEmail];
+					// } else {
+					// 	$destinatarios = [];
+					// }
+					
+
+					// $destinatarios = [$comercial->PersEmail];
+					// if ($Solicitud->SolServMailCopia == "null") {
+                    //     Mail::to($email->PersEmail)
+                    //     ->cc($destinatarios)
+                    //     ->send(new SolSerEmail($email));
+                    // }else{
+                    //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                    //         array_push($destinatarios, $value);
+                    //     }
+                    //     Mail::to($email->PersEmail)
+                    //     ->cc($destinatarios)
+                    //     ->send(new SolSerEmail($email));
+                    // }
 				}
 				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
 

@@ -81,6 +81,7 @@ class SolicitudServicioController extends Controller
 			'personals.PersSlug',
 			'personals.PersEmail',
 			'personals.PersCellphone',
+			'Comercial.ID_Pers as ComercialID_Pers',
 			'Comercial.PersFirstName as ComercialPersFirstName',
 			'Comercial.PersLastName as ComercialPersLastName',
 			'Comercial.PersSlug as ComercialPersSlug',
@@ -94,6 +95,11 @@ class SolicitudServicioController extends Controller
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
+					}
+				}
+				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+					if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)){
+						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
 					}
 				}
 			})
@@ -829,6 +835,11 @@ class SolicitudServicioController extends Controller
 
 						}
 						break;
+					case 'Facturada':
+						if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+							$Solicitud->SolSerStatus = 'Facturado';
+						}
+						break;
 				}
 			}
 		}else{
@@ -899,6 +910,10 @@ class SolicitudServicioController extends Controller
 				$Observacion->ObsTipo = 'prosarc';
 				break;
 
+			case 'Facturado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
 			default:
 			$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -912,6 +927,7 @@ class SolicitudServicioController extends Controller
 		
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
+			case 'Facturado':
 				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 				break;
 			case 'Aceptado':
@@ -1481,15 +1497,16 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 
+		if (!$SolicitudServicio) {
+			abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
+		}
+
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Pendiente':
 			case 'Aceptado':
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				if (!$SolicitudServicio) {
-					abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
-				}
 				
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
 				
