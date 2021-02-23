@@ -76,6 +76,7 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -103,6 +104,7 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			})
+			->where('CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
@@ -228,7 +230,7 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
-		return $request;
+		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
@@ -1981,6 +1983,7 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -1992,6 +1995,7 @@ class SolicitudServicioController extends Controller
 			'Comercial.PersEmail as ComercialPersEmail',
 			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where('solicitud_servicios.SolSerStatus', 'Completado')
+			->where('clientes.CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 

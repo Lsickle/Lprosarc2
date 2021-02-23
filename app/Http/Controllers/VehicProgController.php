@@ -45,7 +45,7 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName', 'clientes.CliCategoria')
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
@@ -58,6 +58,7 @@ class VehicProgController extends Controller
 						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
 					}
 				})
+				->where('clientes.CliCategoria', 'Cliente')
 				->get();
 			$personals = DB::table('personals')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
@@ -96,8 +97,9 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName', 'clientes.CliCategoria')
 				->where('progvehiculos.ProgVehDelete', 0)
+				->where('clientes.CliCategoria', 'Cliente')
 				->get();
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
@@ -138,9 +140,10 @@ class VehicProgController extends Controller
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName')
+				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName', 'clientes.CliCategoria')
 				->where('SolSerDelete', 0)
 				->where('SolSerStatus', 'Aprobado')
+				->where('clientes.CliCategoria', 'Cliente')
 				->orderBy('solicitud_servicios.updated_at', 'asc')
 				->get();
 				/*return $programacions;*/
