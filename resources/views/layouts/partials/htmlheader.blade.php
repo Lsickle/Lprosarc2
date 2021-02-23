@@ -14,7 +14,7 @@
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
 
-    @if(Route::currentRouteName()=='vehicle-programacion.create')
+    @if(Route::currentRouteName()=='vehicle-programacion.create'||Route::currentRouteName()=='programacion-express.create')
         {{-- Full Calendar --}}
          <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
     @endif

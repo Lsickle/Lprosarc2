@@ -29,7 +29,7 @@
 						@endphp
 						<p style="background-color: #001f3f; color: #fff; padding-top: 15px !important; padding-bottom: 0 !important; text-align: center;" class="external-event ui-draggable ui-draggable-handle servicionoprogramado col-md-12 form-group col-xs-12" data-tipo="{{$servicionoprogramado->SolSerTipo}}" data-id="{{$servicionoprogramado->ID_SolSer}}">
 							<span class="col-md-12 form-group col-xs-12">N° {{$servicionoprogramado->ID_SolSer.' - '.$servicionoprogramado->CliName}}</span>
-							<a href="/solicitud-servicio/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='{{$color}} col-md-12 form-group col-xs-12' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
+							<a href="/programacion-express/{{$servicionoprogramado->SolSerSlug}}" target="_blank" class='{{$color}} col-md-12 form-group col-xs-12' style="border-radius: 4px;">{{ trans('adminlte_lang::message.see') }}</a>
 						</p>
 					@endforeach
 				</div>
