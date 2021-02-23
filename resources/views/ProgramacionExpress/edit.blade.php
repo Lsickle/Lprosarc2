@@ -3,8 +3,8 @@
 {{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	{{'Servicios-Programación'}}
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+	{{'Programación-Express'}}
 	<div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -148,7 +148,7 @@
 			<div class="box box-info">
 				<div class="modal-body">
 					<div style="margin: auto;" id="descripModalCreate">
-						<form action="/vehicle-programacion/{{$programacion->FK_ProgServi}}/añadirVehiculo" method="POST" id="formularioCreate" data-toggle="validator">
+						<form action="/programacion-express/{{$programacion->FK_ProgServi}}/añadirVehiculo" method="POST" id="formularioCreate" data-toggle="validator">
 							@csrf
 							@if ($errors->create->any())
 							<div class="alert alert-danger" role="alert">
@@ -948,7 +948,7 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<div text-align: center; margin: auto;">
 									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
-									<form action="/vehicle-programacion/`+idvehiprog+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+									<form action="/programacion-express/`+idvehiprog+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
 										@csrf
 										@method('PUT')
 										<div class="form-group col-md-12">
@@ -988,7 +988,7 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<div text-align: center; margin: auto;">
 									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
-									<form action="/vehicle-programacion/`+idvehiprog+`/sendParafiscales" method="POST" data-toggle="validator" id="SolSer">
+									<form action="/programacion-express/`+idvehiprog+`/sendParafiscales" method="POST" data-toggle="validator" id="SolSer">
 										@csrf
 										<div class="form-group col-md-12">
 											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>

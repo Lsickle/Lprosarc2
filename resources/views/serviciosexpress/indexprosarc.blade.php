@@ -129,7 +129,7 @@
                                     <td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}
                                     </td>
                                     <td style="text-align: center;"><a
-                                            href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"
+                                            href='/serviciosexpress/{{$Servicio->SolSerSlug}}' class="btn btn-info"
                                             title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
                                                 class="fas fa-search"></i></a>
                                     </td>

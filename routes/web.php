@@ -69,6 +69,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
 	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
 	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
+	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientesExpress');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
@@ -95,6 +96,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::put('/respels/{id}/makePublicRespel', 'RespelController@makePublicRespel');
 	Route::put('/respels/{id}/updateTDE', 'RespelController@updateTDE');
+	Route::get('/respelsexpress', 'RespelController@indexExpress');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
@@ -119,6 +121,8 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::resource('/programacion-express','ProgramacionExpressController');
 	Route::post('/programacion-express/{id}/añadirVehiculo','ProgramacionExpressController@añadirVehiculo');
 	Route::put('/programacion-express/{id}/updateStatus','ProgramacionExpressController@updateStatus');
+	Route::post('/programacion-express/{id}/sendParafiscales','ProgramacionExpressController@sendParafiscales');
+
 
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::put('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
@@ -158,6 +162,11 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');
 	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
+	Route::resource('/certificadosexpress', 'CertificadoExpressController');
+	Route::get('/certificadosexpress/{id}/firmar/{servicio}', 'CertificadoController@firmar');
+	Route::get('/certificadosexpress/{id}/firmar', 'CertificadoController@firmarindex');
+	Route::get('/certificadosexpress/{id}/wordtemplate', 'CertificadoController@wordtemplate');
+	Route::post('/certificadosexpress/{id}/independiente', 'CertificadoController@independiente');
 	Route::resource('/certificados', 'CertificadoController');
 	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
 	Route::get('/certificados/{id}/firmar', 'CertificadoController@firmarindex');

@@ -3,7 +3,7 @@
 {{ trans('adminlte_lang::message.progvehictitle') }}
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
 	{{'Manifiesto de carga'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
@@ -22,7 +22,7 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-					<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+					<form action='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
 						@method('DELETE')
 						@csrf
 						<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
