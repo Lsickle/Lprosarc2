@@ -310,7 +310,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									@endphp
 									<thead>
 										<tr>
-											@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
+												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
+											@else
 												<th>#RM</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
@@ -322,8 +324,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												<th>Tarifa</th>
 											@endif
 											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
-											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
-												<th>{{trans('adminlte_lang::message.address')}}</th>
+											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
+												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
 											@else
 												@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
 													<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
@@ -360,7 +362,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													}
 												@endphp
 											<tr>
-												@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
+												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
+												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
+												@else
 													<td>
 														@if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
 															@foreach ($Residuo->SolResRM2 as $rm => $value)
@@ -445,7 +449,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														{{$TypeUnidad}}
 												</td>
 												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
-													<td>{{$GenerResiduo->GSedeAddress}}</td>
+													{{-- <td>{{$GenerResiduo->GSedeAddress}}</td> --}}
 												@else
 												
 													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
