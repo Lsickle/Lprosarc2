@@ -40,13 +40,13 @@
 					@endcomponent
 					@if($programacion->ProgVehDelete == 0)
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$programacion->ID_ProgVeh}}' class='btn btn-danger pull-right'><i class="fas fa-trash-alt"></i><b> {{ trans('adminlte_lang::message.delete') }}</b></a>
-					<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST'>
+					<form action='/programacion-express/{{$programacion->ID_ProgVeh}}' method='POST'>
 						@method('DELETE')
 						@csrf
 						<input type="submit" id="Eliminar{{$programacion->ID_ProgVeh}}" style="display: none;">
 					</form>
 					@else
-					<form action='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' method='POST' class="pull-right">
+					<form action='/programacion-express/{{$programacion->ID_ProgVeh}}' method='POST' class="pull-right">
 						@method('DELETE')
 						@csrf
 						<button type="submit" class='btn btn-success btn-block'>{{ trans('adminlte_lang::message.add') }}</button>
@@ -64,7 +64,7 @@
 			</div>
 			<div class="modal-body">
 				<div style="text-align: center; margin: auto;" id="descripModalCreate">
-					<form action="/vehicle-programacion" method="POST" id="formularioCreate">
+					<form action="/programacion-express" method="POST" id="formularioCreate">
 						@csrf
 						@if ($errors->create->any())
 						<div class="alert alert-danger" role="alert">
@@ -275,7 +275,7 @@
 {{-- formulario para vehiculos internos prosarc --}}
 
 <div class="box box-info">
-	<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+	<form role="form" action="/programacion-express/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 		@csrf
 		@method('PUT')
 		@if ($errors->edit->any())
@@ -439,7 +439,7 @@
 				<input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled="">
 				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				{{-- <br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a> --}}
-				<br><a href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Manifiesto de carga'}}</a>
+				<br><a href='/programacion-express/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Manifiesto de carga'}}</a>
 				@endif
 			</div>
 		</div>
@@ -469,7 +469,7 @@
 {{-- formulario para vehiculos externos --}}
 
 <div class="box box-info">
-	<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+	<form role="form" action="/programacion-express/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 		@csrf
 		@method('PUT')
 		<div class="box-body">
@@ -505,7 +505,7 @@
 @else
 {{-- formulario para vehiculos alquilados --}}
 <div class="box box-info">
-	<form role="form" action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+	<form role="form" action="/programacion-express/{{$programacion->ID_ProgVeh}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 		@csrf
 		@method('PUT')
 		<div class="box-body">
@@ -645,7 +645,7 @@
 				{{-- <input type="color" class="form-control" id="ProgVehColor" name="ProgVehColor" style="width: 30%; height: 34px;" value="{{$programacion->ProgVehColor}}" disabled=""> --}}
 				@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2))
 				{{-- <br><a href='/PdfManiCarg/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{trans('adminlte_lang::message.generatemanicargpdf')}}</a> --}}
-				<br><a href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Manifiesto de carga'}}</a>
+				<br><a href='/programacion-express/{{$programacion->ID_ProgVeh}}' class="btn btn-primary"><i class="fas fa-file-pdf fa-lg"></i> {{'Manifiesto de carga'}}</a>
 				@endif
 			</div>
 			<div class="col-md-12 col-xs-12 box box-info"></div>

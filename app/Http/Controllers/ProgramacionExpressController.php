@@ -552,8 +552,8 @@ class ProgramacionExpressController extends Controller
 		}
 		$SolicitudServicio->save();
 		
-		// return redirect()->route('vehicle-programacion.create');
-		return redirect()->route('vehicle-programacion.edit' , ['id' => $programacion->ID_ProgVeh]);
+		return redirect()->route('programacion-express.create');
+		// return redirect()->route('programacion-express.edit' , ['id' => $programacion->ID_ProgVeh]);
 	}
 
 	/**
@@ -909,7 +909,7 @@ class ProgramacionExpressController extends Controller
 		$log->AuditUser=Auth::user()->email;
 		$log->Auditlog=$request->all();
 		$log->save();
-		return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehceditsuccess'));
+		return redirect()->route('programacion-express.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehceditsuccess'));
 	}
 
 	/**
@@ -1004,7 +1004,7 @@ class ProgramacionExpressController extends Controller
 					$log->AuditUser = Auth::user()->email;
 					$log->Auditlog = $programacion->ProgVehDelete;
 					$log->save();
-					return redirect()->route('vehicle-programacion.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
+					return redirect()->route('programacion-express.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
 				}
 				else{
 					$programacion->ProgVehDelete = 0;
@@ -1025,7 +1025,7 @@ class ProgramacionExpressController extends Controller
 					$log->Auditlog = $programacion->ProgVehDelete;
 					$log->save();
 					$programacion->save();
-					return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
+					return redirect()->route('programacion-express.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 				}
 			break;
 			
@@ -1118,7 +1118,7 @@ class ProgramacionExpressController extends Controller
 					$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 					$Observacion->save();
 
-					return redirect()->route('vehicle-programacion.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
+					return redirect()->route('programacion-express.create')->with('Delete', trans('adminlte_lang::message.progvehcdeletesuccess'));
 				}
 				else{
 					$programacion->ProgVehDelete = 0;
@@ -1138,7 +1138,7 @@ class ProgramacionExpressController extends Controller
 					$log->Auditlog = $programacion->ProgVehDelete;
 					$log->save();
 					
-					return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
+					return redirect()->route('programacion-express.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 				}
 			break;
 
@@ -1239,9 +1239,9 @@ class ProgramacionExpressController extends Controller
 		}
 
 		if($request->input('destino') == 'vehiprog-edit'){
-			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
+			return redirect()->route('programacion-express.edit', ['id' => $id]);
 		}else{
-			return redirect()->route('vehicle-programacion.index');
+			return redirect()->route('programacion-express.index');
 		}
 
 		
@@ -1337,7 +1337,7 @@ class ProgramacionExpressController extends Controller
 		// }
 		// $SolicitudServicio->save();
 		
-		return redirect()->route('vehicle-programacion.index');
+		return redirect()->route('programacion-express.index');
 		
 	}
 
@@ -1415,7 +1415,7 @@ class ProgramacionExpressController extends Controller
 				->send(new ProgramacionParafiscales($email, $Observacion, $programacion, $Parafiscales));
 			}
 
-			return redirect()->route('vehicle-programacion.edit', ['id' => $id]);
+			return redirect()->route('programacion-express.edit', ['id' => $id]);
 		}else{
 			return redirect()->route('email-solser', ['slug' => $SolicitudServicio->SolSerSlug]);
 		}

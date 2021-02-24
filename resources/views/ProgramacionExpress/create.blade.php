@@ -12,7 +12,7 @@
 <div class="row">
 	@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 	<div class="col-md-3">
-		<div class="box box-info" style="overflow-y: auto; max-height: 560px;">
+		<div class="box box-success" style="overflow-y: auto; max-height: 560px;">
 			<div class="box-header with-border">
 				<h4 class="box-title">Servicios Por Programar</h4>
 			</div>
@@ -40,7 +40,7 @@
 	@else
 	<div class="col-md-12">
 	@endif
-		<div class="box box-info">
+		<div class="box box-success">
 			<div class="box-body no-padding">
 				<div id='calendar'></div>
 			</div>
@@ -176,7 +176,7 @@
 								</div>
 								<div class="form-group col-xs-12 col-md-12 vehiculoProsarc" hidden="true">
 									<label for="ProgVehColor">{{ trans('adminlte_lang::message.progvehiccolor') }}</label>
-									<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#0000f6' : old('ProgVehColor')}}">
+									<input class="form-control" type="color" style="height: 34px;" id="ProgVehColor" name="ProgVehColor" value="{{old('ProgVehColor') == null ? '#66b032' : old('ProgVehColor')}}">
 								</div>
 								<input type="submit" hidden="true" id="submit1" name="submit1">
 							</div>
@@ -360,6 +360,7 @@
 		});
 		@endif
 		var calendar = new FullCalendar.Calendar(calendarEl, {
+			themeSystem: 'standard',
 			plugins: ['interaction', 'dayGrid', 'timeGrid'],
 			locale: 'es',
 			timeZone: 'UTC',

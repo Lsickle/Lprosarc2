@@ -1184,6 +1184,6 @@ class RespelController extends Controller
             }
             // return $Respels->pluck('TratName');
  
-        return view('respels.index', compact('Respels')); 
+        return view('respels.indexExpress', compact('Respels')); 
     }
 }

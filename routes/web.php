@@ -69,7 +69,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
 	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
 	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
-	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientesExpress');
+	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientes.clientesExpress');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
@@ -96,7 +96,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::put('/respels/{id}/makePublicRespel', 'RespelController@makePublicRespel');
 	Route::put('/respels/{id}/updateTDE', 'RespelController@updateTDE');
-	Route::get('/respelsexpress', 'RespelController@indexExpress');
+	Route::get('/respelsexpress', 'RespelController@indexExpress')->name('respels.indexExpress');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');

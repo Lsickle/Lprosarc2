@@ -479,7 +479,7 @@ class ClientController extends Controller
                         ->where('users.UsRol', 'Comercial')
                         ->orWhere('users.UsRol2', 'Comercial')
                         ->get();
-                return view('clientes.index', compact('clientes', 'personals'));
+                return view('clientes.indexExpress', compact('clientes', 'personals'));
                 break;
             
             case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
@@ -505,7 +505,7 @@ class ClientController extends Controller
                         ->where('users.UsRol', 'Comercial')
                         ->get();
                 }
-                return view('clientes.index', compact('clientes', 'personals'));
+                return view('clientes.indexExpress', compact('clientes', 'personals'));
                 break;
             default:
                 abort(403);
