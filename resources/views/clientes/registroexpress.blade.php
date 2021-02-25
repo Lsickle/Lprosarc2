@@ -88,8 +88,8 @@
                                                 <div class="col-md-12 form-group">
                                                     <label for="sedeinputaddress">Detalles de la dirección</label><small class="help-block with-errors">*</small>
                                                     <p>Dirección: <input type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
-                                                    <p>Latitud: <input type="number" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
-                                                    <p>Longitud: <input type="number" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
+                                                    <p>Latitud: <input type="text" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
+                                                    <p>Longitud: <input type="text" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
                                                 </div>
                                             </div>
                                         </div>
