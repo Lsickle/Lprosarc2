@@ -45,8 +45,8 @@
                                                     <input type="text" name="CliName" class="form-control" id="ClienteInputRazon"  maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="departamento">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
-                                                    <select class="form-control select" id="departamento" name="departamento" required data-dependent="FK_SedeMun">
+                                                    <label for="departamentoExpress">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
+                                                    <select class="form-control select" id="departamentoExpress" name="departamento" required data-dependent="FK_SedeMun">
                                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                         @foreach ($Departamentos as $Departamento)
                                                             <option value="{{$Departamento->ID_Depart}}" {{ old('departamento') == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
@@ -64,18 +64,43 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-12 form-group">
+                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer">
+                                                    <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
+                                                    <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
+                                                            <option value="Engativá" {{ old('SedeMapLocalidad') == 'Engativá'? 'selected' : '' }}>Engativá</option>
+                                                            <option value="Kennedy" {{ old('SedeMapLocalidad') == 'Kennedy'? 'selected' : '' }}>Kennedy</option>
+                                                            <option value="Suba" {{ old('SedeMapLocalidad') == 'Suba'? 'selected' : '' }}>Suba</option>
+                                                            <option value="Usaquén" {{ old('SedeMapLocalidad') == 'Usaquén'? 'selected' : '' }}>Usaquén</option>
+                                                            <option value="Fontibón" {{ old('SedeMapLocalidad') == 'Fontibón'? 'selected' : '' }}>Fontibón</option>
+                                                            <option value="Puente Aranda" {{ old('SedeMapLocalidad') == 'Puente Aranda'? 'selected' : '' }}>Puente Aranda</option>
+                                                            <option value="Rafael Uribe Uribe" {{ old('SedeMapLocalidad') == 'Rafael Uribe Uribe'? 'selected' : '' }}>Rafael Uribe Uribe</option>
+                                                            <option value="Antonio Nariño" {{ old('SedeMapLocalidad') == 'Antonio Nariño'? 'selected' : '' }}>Antonio Nariño</option>
+                                                            <option value="Santa Fe" {{ old('SedeMapLocalidad') == 'Santa Fe'? 'selected' : '' }}>Santa Fe</option>
+                                                            <option value="Chapinero" {{ old('SedeMapLocalidad') == 'Chapinero'? 'selected' : '' }}>Chapinero</option>
+                                                            <option value="Teusaquillo" {{ old('SedeMapLocalidad') == 'Teusaquillo'? 'selected' : '' }}>Teusaquillo</option>
+                                                            <option value="Tunjuelito" {{ old('SedeMapLocalidad') == 'Tunjuelito'? 'selected' : '' }}>Tunjuelito</option>
+                                                            <option value="Barrios Unidos" {{ old('SedeMapLocalidad') == 'Barrios Unidos'? 'selected' : '' }}>Barrios Unidos</option>
+                                                            <option value="San Cristóbal" {{ old('SedeMapLocalidad') == 'San Cristóbal'? 'selected' : '' }}>San Cristóbal</option>
+                                                            <option value="Bosa" {{ old('SedeMapLocalidad') == 'Bosa'? 'selected' : '' }}>Bosa</option>
+                                                            <option value="Usme" {{ old('SedeMapLocalidad') == 'Usme'? 'selected' : '' }}>Usme</option>
+                                                            <option value="Ciudad Bolívar" {{ old('SedeMapLocalidad') == 'Ciudad Bolívar'? 'selected' : '' }}>Ciudad Bolívar</option>
+                                                            <option value="Los Mártires" {{ old('SedeMapLocalidad') == 'Los Mártires'? 'selected' : '' }}>Los Mártires</option>
+                                                            <option value="La Candelaria" {{ old('SedeMapLocalidad') == 'La Candelaria'? 'selected' : '' }}>La Candelaria</option>
+                                                            <option value="Sumapaz" {{ old('SedeMapLocalidad') == 'Sumapaz'? 'selected' : '' }}>Sumapaz</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 form-group">
                                                     <label for="sedeinputaddress">Dirección de certificación</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <!-- search input box -->
-                                                <div class="form-group">
+                                                <div class="form-group col-md-12" id="SedeMapAddressContainer">
                                                     <label for="sedeinputaddress">Dirección de recolección (Mapa)</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <input type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-default get_map" type="submit">
-                                                                Locate
+                                                                <i class="fas fa-map-marker-alt"></i> Ubicar
                                                             </button>
                                                         </div>
                                                     </div>
@@ -269,5 +294,55 @@ $(document).ready(function () {
         });
     });
 });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+		$("#departamentoExpress").change(function(e){
+            id=$("#departamentoExpress").val();
+            
+			e.preventDefault();
+			$.ajaxSetup({
+			  headers: {
+				  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+			  }
+			});
+			$.ajax({
+				url: "{{url('/muni-depart')}}/"+id,
+				method: 'GET',
+				data:{},
+				beforeSend: function(){
+					$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+					$("#municipio").prop('disabled', true);
+				},
+				success: function(res){
+					$("#municipio").empty();
+					var municipio = new Array();
+					for(var i = res.length -1; i >= 0; i--){
+						if ($.inArray(res[i].ID_Mun, municipio) < 0) {
+							$("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+							municipio.push(res[i].ID_Mun);
+						}
+                    }
+				},
+				complete: function(){
+					$(".load").empty();
+                    $("#municipio").prop('disabled', false);
+                    if (id == 6) {
+                        $("#SedeMapLocalidadContainer").attr('hidden', false);
+                        $("#SedeMapLocalidad").attr('required', true);
+                        $("#SedeMapAddressContainer").removeClass('col-md-6');
+                        $("#SedeMapAddressContainer").addClass('col-md-12');
+                    }else{
+                        $("#SedeMapLocalidadContainer").attr('hidden', true);
+                        $("#SedeMapLocalidad").attr('required', false);
+                        $("#SedeMapLocalidad").val('No Definida');
+                        $("#SedeMapAddressContainer").removeClass('col-md-12');
+                        $("#SedeMapAddressContainer").addClass('col-md-6');
+                    }
+                    $('form[data-toggle="validator"]').validator('update');
+				}
+			})
+		});
+	});
 </script>
 @endsection
