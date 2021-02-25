@@ -151,7 +151,7 @@
 @section('NewScript')
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'API_KEY_NOT_PROVIDED')}}"></script>
 <script>
 var geocoder;
 var map;
@@ -163,8 +163,8 @@ var marker;
 function initialize() {
     var initialLat = $('.search_latitude').val();
     var initialLong = $('.search_longitude').val();
-    initialLat = initialLat?initialLat:36.169648;
-    initialLong = initialLong?initialLong:-115.141000;
+    initialLat = initialLat?initialLat:4.6831679;
+    initialLong = initialLong?initialLong:-74.2717208;
 
     var latlng = new google.maps.LatLng(initialLat, initialLong);
     var options = {

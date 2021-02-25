@@ -76,7 +76,7 @@ class registroexpressController extends Controller
      */
     public function store(ClienteExpressStoreRequest $request)
     {
-        
+        return $request;
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
