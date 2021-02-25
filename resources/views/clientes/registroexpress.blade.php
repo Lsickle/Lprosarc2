@@ -65,29 +65,32 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12 form-group">
-                                                    <label for="sedeinputaddress">{{ trans('adminlte_lang::message.address') }}</label><small class="help-block with-errors">*</small>
+                                                    <label for="sedeinputaddress">Dirección de certificación</label><small class="help-block with-errors">*</small>
                                                     <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <!-- search input box -->
-                                                <form>
-                                                    <div class="form-group input-group">
-                                                        <input type="text" id="search_location" class="form-control" placeholder="Search location">
+                                                <div class="form-group">
+                                                    <label for="sedeinputaddress">Dirección de recolección (Mapa)</label><small class="help-block with-errors">*</small>
+                                                    <div class="input-group">
+                                                        <input type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-default get_map" type="submit">
                                                                 Locate
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
                                                 
                                                 <!-- display google map -->
-                                                <div id="geomap" style="width: 100%;height: 400px;"></div>
+                                                <div id="geomap" style="width: 100%;height: 400px;" ></div>
                                                 
                                                 <!-- display selected location information -->
-                                                <h4>Location Details</h4>
-                                                <p>Address: <input type="text" class="search_addr" size="45"></p>
-                                                <p>Latitude: <input type="text" class="search_latitude" size="30"></p>
-                                                <p>Longitude: <input type="text" class="search_longitude" size="30"></p>
+                                                <div class="col-md-12 form-group">
+                                                    <label for="sedeinputaddress">Detalles de la dirección</label><small class="help-block with-errors">*</small>
+                                                    <p>Dirección: <input type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
+                                                    <p>Latitud: <input type="number" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
+                                                    <p>Longitud: <input type="number" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div id="step-2">
