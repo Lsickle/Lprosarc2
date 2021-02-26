@@ -22,7 +22,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-					<form action='/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
+					<form action='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}' method='POST'>
 						@method('DELETE')
 						@csrf
 						<input type="submit" id="Eliminar{{$SolicitudServicio->SolSerSlug}}" style="display: none;">
@@ -42,7 +42,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							</div>
 						@endif
 						<div class="box box-info">
-							<div class="col-md-12" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
+							<div class="col-md-12 collapse Transportadora" style="text-align: center; margin-top: 20px; border-bottom:#f4f4f4 solid 2px;">
 								<div class="col-md-2">
 									<label>{{trans('adminlte_lang::message.solsershowdate')}}:</label>
 									<span>{{date('Y-m-d',strtotime($SolicitudServicio->created_at))}}</span>
@@ -88,30 +88,30 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								</div>
 								<hr>
 							</div>
-							@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
-								<div class="col-md-12 border-gray">
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowempre') }}</label><br>
-										<a>{{$Cliente->CliName}}</a>
-									</div>
-									<div class="col-md-6">
-										<button type="button" class="btn btn-box-tool boton" style="color: black; float: right;" data-toggle="collapse" data-target=".Transportadora" onclick="AnimationMenusForm('.Transportadora')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
-										<label>{{ trans('adminlte_lang::message.solsershowempreaddress') }}</label><br>
-										<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsershowempreaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->SedeAddress}}</p>">{{$Cliente->SedeAddress}}</a>
-									</div>
-								</div>
-								<div class="col-md-12 border-gray collapse Transportadora">
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowemprenit') }}</label><br>
-										<a>{{$Cliente->CliNit}}</a>
-									</div>
-									<div class="col-md-6">
-										<label>{{ trans('adminlte_lang::message.solsershowemprecity') }}</label><br>
-										<a>{{$Cliente->MunName}}</a>
-									</div>
-								</div>
-							@endif
 							<div class="col-md-12 border-gray">
+								<div class="col-md-6">
+									<label>{{ trans('adminlte_lang::message.solsershowempre') }}</label><br>
+									<a>{{$Cliente->CliName}}</a>
+								</div>
+								<div class="col-md-6">
+									<button type="button" class="btn btn-box-tool boton" style="color: black; float: right; padding:0px; margin:0px;" data-toggle="collapse" data-target=".Transportadora" onclick="AnimationMenusForm('.Transportadora')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
+									<label>
+										{{ trans('adminlte_lang::message.solsershowempreaddress') }}
+									</label><br>
+									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solsershowempreaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->SedeAddress}}</p>">{{$Cliente->SedeAddress}}</a>
+								</div>
+							</div>
+							<div class="col-md-12 border-gray collapse Transportadora">
+								<div class="col-md-6">
+									<label>{{ trans('adminlte_lang::message.solsershowemprenit') }}</label><br>
+									<a>{{$Cliente->CliNit}}</a>
+								</div>
+								<div class="col-md-6">
+									<label>{{ trans('adminlte_lang::message.solsershowemprecity') }}</label><br>
+									<a>{{$Cliente->MunName}}</a>
+								</div>
+							</div>
+							<div class="col-md-12 border-gray collapse Transportadora">
 								<div class="col-md-6">
 									<label>{{ trans('adminlte_lang::message.solserpersonal') }}:</label><br>
 									<a>{{$SolicitudServicio->PersFirstName.' '.$SolicitudServicio->PersLastName}}</a>
@@ -164,7 +164,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									@endif
 								</div>
 							</div>
-							<div class="col-md-12 border-gray">
+							<div class="col-md-12 border-gray collapse Transportadora">
 								<div class="col-md-6" {{$SolicitudServicio->SolSerDescript == null ? 'hidden' : ''}}>
 									<label>Observaciones:</label><br>
 									<a href="#" style="overflow: hidden;
@@ -178,163 +178,57 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<a href="#" class="textpopover popover-left" title="{{ trans('adminlte_lang::message.solseraddrescollect') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$SolicitudServicio->PersCellphone}}</p>">{{$SolicitudServicio->PersCellphone}}</a>
 								</div>
 							</div>
-							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
-								@switch($SolicitudServicio->SolSerStatus)
-								    @case('Pendiente')
-								    @case('Aceptado')
-								    @case('Aprobado')
-								    @case('Programado')
-								    @case('Notificado')
-								    @case('Completado')
-								    @case('Recibida')
-								    @case('No Conciliado')
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="La página de certificados y manifiestos, de este servicio, estara disponible a partir de que el <b>Cliente</b> acepte la conciliación de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @case('Conciliado')
-								    @case('Certificacion')
-								    @case('Tratado')
-								    @case('Facturado')
-								        <a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								        @break
-
-								    @default
-								        <a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Certificaciones/Manifiestos</b>" data-content="la documentación relativa a certificados y manifiestos estara disponible a partir de que el <b>Cliente</b> acepte la conciliacion de pesos en la Solicitud de servicio" style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-								@endswitch
-								
-							@endif
-							@if (in_array(Auth::user()->UsRol, Permisos::SolSer2) || in_array(Auth::user()->UsRol2, Permisos::SolSer2))
-							@php
-							$alertaRequerimientos = 0;
-							foreach ($Residuos as $key => $Residuo) {
-								if ($Residuo->SolResFotoDescargue_Pesaje == 1||$Residuo->SolResVideoDescargue_Pesaje == 1||$Residuo->SolResFotoTratamiento == 1||$Residuo->SolResVideoTratamiento == 1||$Residuo->SolResDevolucion == 1||$Residuo->SolResAuditoria == 1) {
-									$alertaRequerimientos = $alertaRequerimientos + 1;
-								}
-							}
-							@endphp
-								<a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalRequerimientos' class='btn {{$alertaRequerimientos > 0 ? 'btn-warning' : 'btn-default'}} pull-right'><i class="fas fa-list-ol"></i> <b>Requerimientos de Residuos</b></a>
-							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
-								@if($SolicitudServicio->SolSerSupport <> null)
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Haga click para visualizar el PDF del soporte de pago, que adjuntó, para esta solicitud de servicio' : 'Haga click para visualizar el PDF del soporte de pago, adjuntado por el cliente, para esta solicitud de servicio'}}"><a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info pull-left" target="_blank" style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
-									
-								@else
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}"><a href="#" class="btn btn-default pull-left"  style="margin: 10px 30px;">Soporte <i class="fas fa-file-pdf fa-lg"></i></a></label>
-								@endif
-								
-							@endif
-							@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::ProgVehic1))
-							@if ($SolicitudServicio->Repetible == 0)
-							<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover"
-								data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>"
-								data-content="al hacer click en este botón podrá crear una nueva solicitud de servicio usando como base los datos de esta solicitud"><a
-									href='#' data-toggle='modal' style="margin: 10px  30px;" data-target='#ModalRepeat' class="btn btn-info">Repetir
-									<i class="fas fa-redo-alt"></i></a></label>
-							@else
-							<label class="pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover"
-								data-delay='{"show": 200}' title="<b>Repetir Solicitud de Servicio</b>"
-								data-content="alguno de los residuos de este servicio no tiene un tratamiento ofertado por lo cual no puede repetir esta solicitud"><a
-									disabled href='#' data-toggle='' style="margin: 10px  30px;" data-target='' class="btn btn-default">Repetir <i
-										class="fas fa-redo-alt"></i></a></label>
-							@endif
-							@switch($SolicitudServicio->SolSerStatus)
-							@case('Completado')
-							@case('Recibida')
-							@case('Notificado')
-							@case('Aceptado')
-							@case('Aprobado')
-							@case('Conciliado')
-							@case('Pendiente')
-							@case('Notificado')
-							@case('Programado')
-							@case('No Conciliado')
-							@case('Tratado')
-							@case('Facturado')
-							<a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}'
-								title="<b>Certificaciones/Manifiestos</b>"
-								data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria"
-								style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i>
-								<b>Certificaciones/Manifiestos</b></a>
-							@break
-							
-							@case('Certificacion')
-							<a style="margin: 10px 10px;" href='{{$SolicitudServicio->SolSerSlug}}/documentos/' class='btn btn-info pull-right'><i
-									class="fas fa-file-pdf"></i> <b>Certificaciones/Manifiestos</b></a>
-							@break
-							
-							
-							@default
-							<a disabled data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}'
-								title="<b>Certificaciones/Manifiestos</b>"
-								data-content="La documentación relativa a certificados y manifiestos estará disponible a partir de que <b>Prosarc S.A. ESP</b> cargue en el sistema la información necesaria"
-								style="margin: 10px 10px;" class='btn btn-default pull-right'><i class="fas fa-file-pdf"></i>
-								<b>Certificaciones/Manifiestos</b></a>
-							@endswitch
-							@endif
-							
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a style="margin: 10px 10px;" href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
-							<label>
-								<div class="btn-group pull-right" style="margin: 10px 10px;">
-									<a type=button href='#' data-toggle='modal' data-target='#ModalObservaciones' class='btn btn-info'><i class="fas fa-comments fa-1x"></i> <b>Historial</b></a>
-									<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">
-										<span class="caret"></span>
-										<span class="sr-only">Toggle Dropdown</span>
-									</button>
-									<ul class="dropdown-menu" style="left:0">
-										<li class="dropdown-header">Observaciones</li>
-										<li role="separator" class="divider"></li>
-										<li><a data-toggle='modal' data-target='#ModalNewObserv'>Añadir Observación</a></li>
-										@if ($SolicitudServicio->SolSerStatus == 'Completado' && in_array(Auth::user()->UsRol, Permisos::ProgVehic2))
-										<li>
-											<a data-toggle='modal' data-target='#ModalSendRecordatorio'>Enviar Recordatorio {{$ultimoRecordatorio->ObsRepeat + 1 }} <br>Ultimo: {{date('d-m-Y',strtotime($ultimoRecordatorio->ObsDate))}}</a>										
-										</li>
-										@endif
-										@if ($SolicitudServicio->SolSerStatus !== 'Aprobado' && in_array(Auth::user()->UsRol, Permisos::SolSer2))
-										<li>
-											<a data-toggle='modal' data-target='#ModalRecepcionErrada'>Recepcion Errada</a>										
-										</li>
-										@endif
-									</ul>
+							<div class="row">
+								<div class="col-xs-6">
+									<label style="margin-left: 10px; margin-right:10px; margin-top:10px;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Cantidades Totales</b>" data-content="Haga click para visualizar los totales por tratamiento de la solicitud de servicio"><a href='#' data-toggle='modal' data-target='#ModalTotales' class='btn btn-info pull-right'><i class="fas fa-list-ol"></i> <b>Totales</b></a></label>
 								</div>
-							</label>
-							<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>RMs</b>" data-content="Haga click para visualizar los Números de Recibo de Materiales (<b>RM</b>) relacionados con esta Solicitud de Servicio"><a onclick="updateRMs(`{{$SolicitudServicio->SolSerSlug}}`)" style="margin: 10px 10px;" class='btn btn-info pull-right'><i class="fas fa-list-ol"></i><b> RMs</b></a></label>
-
-							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
-								<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
-									@php 
-										// $TotalEnv = 0;
-										// $TotalRec = 0;
-										// $TotalCons = 0;
-										// $TotalTrat = 0;
-									@endphp
+								<div class="col-xs-6">
+									<label class="pull-right" style="margin-left: 10px; margin-right:10px; margin-top:10px;">
+										<div class="btn-group">
+											<a type=button href='#' data-toggle='modal' data-target='#ModalObservaciones' class='btn btn-info'><i class="fas fa-comments fa-1x"></i> <b>Historial</b></a>
+											<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<span class="caret"></span>
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<ul class="dropdown-menu" style="left:0">
+												<li class="dropdown-header">Observaciones</li>
+												<li role="separator" class="divider"></li>
+												<li><a data-toggle='modal' data-target='#ModalNewObserv'>Añadir Observación</a></li>
+											</ul>
+										</div>
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6">
+									@if(in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL))
+										@if($SolicitudServicio->SolSerSupport <> null)
+											<label style="margin-left: 10px; margin-right:10px" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Haga click para visualizar el PDF del soporte de pago, que adjuntó, para esta solicitud de servicio' : 'Haga click para visualizar el PDF del soporte de pago, adjuntado por el cliente, para esta solicitud de servicio'}}" class="pull-left"><a href="/img/SupportPay/{{$SolicitudServicio->SolSerSupport}}" class="btn btn-info" target="_blank"><i class="fas fa-file-pdf fa-lg"></i> Soporte</a></label>
+										@else
+											<label style="margin-left: 10px; margin-right:10px" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Soporte de Pago</b>" data-content="{{in_array(Auth::user()->UsRol, Permisos::CLIENTE) ? 'Aun no ha adjuntado un soporte de pago para esta solicitud de servicio' : 'El cliente no ha adjuntado un soporte de pago para esta solicitud de servicio'}}" class="pull-left"><a href="#" class="btn btn-default"><i class="fas fa-file-pdf fa-lg"></i> Soporte</a></label>
+										@endif
+									@endif
+								</div>
+								<div class="col-xs-6">
+								
+								</div>
+							</div>
+							
+							
+							
+							
+							<div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 10px; margin-top: 0px;">
+								<table id="SolserGenerTableExpress" class="table-express table-compact table-bordered table-striped" style="margin-bottom:10px; padding-bottom: 10px; position: relative !important; width: 100% !important;">
 									<thead>
 										<tr>
-											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
-												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
-											@else
-												<th>#RM</th>
-											@endif
 											<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
+											<th>{{trans('adminlte_lang::message.solsercantidad')}}</th>
 											<th>Tratamiento</th>
-											{{-- <th>Pretratamientos</th> --}}
-											<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
-											<th>{{trans('adminlte_lang::message.gener')}}</th>
-											@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
-												<th>Tarifa</th>
-											@endif
-											<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantiresi')}}</th>
-											@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
-												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
-											@else
-												@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-													<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
-												@endif
-												<th>{{trans('adminlte_lang::message.seedetails')}}</th>
-											@endif
-											@if(($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Aprobado'|| $SolicitudServicio->SolSerStatus == 'Residuo Faltante') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+											<th>{{trans('adminlte_lang::message.solserembaja')}}</th>
+											@if(($SolicitudServicio->SolSerStatus == 'Notificado' || $SolicitudServicio->SolSerStatus == 'Programado' || $SolicitudServicio->SolSerStatus == 'Aprobado'|| $SolicitudServicio->SolSerStatus == 'Residuo Faltante') && (in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALEXPRESS)))
 												<th>{{trans('adminlte_lang::message.delete')}}</th>
-											@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+											@endif
+											@if($SolicitudServicio->SolSerStatus == 'Certificacion')
 												<th>Certificado</th>
 											@endif
 											
@@ -345,10 +239,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										@foreach($Residuos as $Residuo)
 											@if($Residuo->FK_SGener == $GenerResiduo->FK_SGener)
 												@php
-													// $TotalEnv = $Residuo->SolResKgEnviado+$TotalEnv;
-													// $TotalRec = $Residuo->SolResKgRecibido+$TotalRec;
-													// $TotalCons = $Residuo->SolResKgConciliado+$TotalCons;
-													// $TotalTrat = $Residuo->SolResKgTratado+$TotalTrat;
 													switch ($Residuo->SolResTypeUnidad) {
 														case 'Unidad':
 															$TypeUnidad = 'Unidades';
@@ -362,70 +252,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 													}
 												@endphp
 											<tr>
-												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOREXPRESS))
-												{{-- <th>{{trans('adminlte_lang::message.address')}}</th> --}}
-												@else
-													<td>
-														@if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
-															@foreach ($Residuo->SolResRM2 as $rm => $value)
-																{{$value}}<br>
-															@endforeach
-														@else
-															{{'RM Invalido -> '}} {{$Residuo->SolResRM}}
-														@endif
-													</td>
-												@endif
-												<td><a title="Ver Residuo" href="/respels/{{$Residuo->RespelSlug}}" target="_blank" {{(in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->RespelStatus != "Revisado") ? 'style=color:red;' : ""}} >
-													<i class="fas fa-external-link-alt"></i>
-													</a>
-													@if((in_array(Auth::user()->UsRol, Permisos::AREALOGISTICA))&&($Residuo->SustanciaControladaTipo == 0)&&($Residuo->SustanciaControlada != Null))
-														<a><i class="fas fa-flask" style="color: green"></i></a>
-													@endif
-													 {{$Residuo->RespelName}}</td>
-												<td>
-													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-														@switch($SolicitudServicio->SolSerStatus)
-															@case('Aprobado')
-															@case('Aceptado')
-															@case('Notificado')
-															@case('Completado')
-															@case('No Conciliado')
-																<a onclick="changeTratamiento(`{{$Residuo->SolResSlug}}`, `{{$Residuo->ID_Trat}}`, `{{$Residuo->TratName}}`, `{{$Residuo->FK_SolResRequerimiento}}`, `{{$SolicitudServicio->SolSerSlug}}`)">
-																@break
-															@case('Conciliado')
-															@case('Certificacion')
-															@case('Certificado')
-															@case('Tratado')
-															@case('Facturado')
-																<a style="color: black">
-																@break
-															@default
-																<a style="color: black">
-														@endswitch
-														<i class="fas fa-marker"></i></a>
-													@endif
-													{{$Residuo->TratName}} {{in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ? '- '.$Residuo->CliShortName : ''}}</td>
-												{{-- <td>
-													<ul>
-													@foreach($Residuo->pretratamientosSelected as $pretratamientoSelected)
-													    <li>{{$pretratamientoSelected->PreTratName}}</li>
-													@endforeach
-													</ul>
-												</td> --}}
-												<td>{{$Residuo->SolResEmbalaje}}</td>
-												<td><a title="Ver Generador" href="/sgeneradores/{{$GenerResiduo->GSedeSlug}}" target="_blank"><i class="fas fa-external-link-alt"></i></a> {{$GenerResiduo->GenerName.' ('.$GenerResiduo->GSedeName.')'}}</td>
-												@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
-													<td style="text-align: center;">
-														@if($SolicitudServicio->SolSerStatus === 'Completado' || $SolicitudServicio->SolSerStatus === 'No Conciliado' || $SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Tratado' || $SolicitudServicio->SolSerStatus === 'Facturado' || $SolicitudServicio->SolSerStatus === 'Certificacion')
-														<a href="#" onclick="addprice(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResPrecio}}`)">
-														@else
-															<a style="color: black">
-														@endif
-														<i class="fas fa-marker"></i></a>
-														{{$Residuo->SolResPrecio}}
-														 Pesos
-													</td>
-												@endif
+												<td>{{$Residuo->RespelName}}</td>
 												<td style="text-align: center;">
 													@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
 														@if(($SolicitudServicio->SolSerStatus === 'Programado'||$SolicitudServicio->SolSerStatus === 'Notificado') && (count($Programaciones)>$ProgramacionesActivas))
@@ -440,44 +267,19 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<i class="fas fa-marker"></i></a>
 													@endif
 													@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-														{{-- {{' '.$Residuo->SolResCantiUnidadRecibida}} --}}
 														{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
-
 													@else
 														{{' '.number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
 													@endif
 														{{$TypeUnidad}}
 												</td>
-												@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR))
-													{{-- <td>{{$GenerResiduo->GSedeAddress}}</td> --}}
-												@else
+												<td>{{$Residuo->TratName}}</td>
+												<td>{{$Residuo->SolResEmbalaje}}</td>
 												
-													@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-														<td style="text-align: center;">
-															@if(($SolicitudServicio->SolSerStatus === 'Conciliado' || $SolicitudServicio->SolSerStatus === 'Certificacion' || $SolicitudServicio->SolSerStatus === 'Facturado') && $Residuo->SolResKgTratado != $Residuo->SolResKgConciliado)
-																{{-- <a class="kg" onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">  --}}
-																@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)">
-																@else
-																	<a onclick="addkg(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`)"> 
-																@endif
-															@else
-																<a style="color: black">
-															@endif
-															<i class="fas fa-marker"></i></a>
-															@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
-																{{$Residuo->SolResCantiUnidadTratada === null ? 'N/A' : $Residuo->SolResCantiUnidadTratada }}
-															@else
-																{{$Residuo->SolResKgTratado === null ? 'N/A' : number_format($Residuo->SolResKgTratado, $decimals = 2, $dec_point = ',', $thousands_sep = '.') }}
-															@endif
-															 {{$TypeUnidad}}
-														</td>
-													@endif
-													<td style="text-align: center;"><a href='/recurso/{{$Residuo->SolResSlug}}' target="_blank" class='btn btn-info btn-block'> <i class="fas fa-search"></i> </a></td>
-												@endif
-												@if(($SolicitudServicio->SolSerStatus == 'Pendiente' || $SolicitudServicio->SolSerStatus == 'Aceptado' || $SolicitudServicio->SolSerStatus == 'Aprobado' || $SolicitudServicio->SolSerStatus == 'Residuo Faltante') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+												@if(($SolicitudServicio->SolSerStatus == 'Notificado' || $SolicitudServicio->SolSerStatus == 'Programado' || $SolicitudServicio->SolSerStatus == 'Aprobado'|| $SolicitudServicio->SolSerStatus == 'Residuo Faltante') && (in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALEXPRESS)))
 													<td style="text-align: center;"><a href='#' onclick="ModalDeleteRespel(`{{$Residuo->SolResSlug}}`, `{{$Residuo->RespelName}}`, `{{$GenerResiduo->GenerName}}`)" class='btn btn-danger'><i class="fas fa-trash-alt"></i></a></td>
-												@elseif(($SolicitudServicio->SolSerStatus == 'Certificacion') && (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol2, Permisos::CLIENTE)))
+												@endif
+												@if($SolicitudServicio->SolSerStatus == 'Certificacion')
 													<td style="text-align: center;"><a href="#" class="btn btn-info"> <i class="fas fa-file-pdf fa-lg"></i></a></td>
 												@endif
 											</tr>
@@ -491,34 +293,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<div id="ModalStatus"></div>
 								<div id="ModalReversar"></div>
 								<div id="ModalCancelar"></div>
-							{{--  Modal --}}
-								<div class="modal modal-default fade in" id="ModalRepeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<form action="/serviciosexpress/repeat/{{$SolicitudServicio->SolSerSlug}}" method="POST" id="SolSerRepeat">
-											@csrf
-											@method('PUT')
-											<div class="modal-body">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-													<i class="fas fa-exclamation-triangle"></i>
-													<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) desea repetir la solicitud <b>N° {{$SolicitudServicio->ID_SolSer}}</b>?</p></span>
-												</div> 
-												<div class="form-group col-md-12">
-													<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>(Opcional)</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones <b>Opcional</b></label>
-													<small id="caracteresrestantesrepetir" class="help-block with-errors"></small>
-													<textarea onchange="updatecaracteresrepetir()" id="textDescriptionrepetir" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-													<button form="SolSerRepeat" type="submit" class="btn btn-success">Si, repetir</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							{{-- END Modal --}}
 							{{--  Modal --}}
 							<div class="modal modal-default fade in" id="ModalNewObserv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 								<div class="modal-dialog" role="document">
@@ -556,133 +330,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								</div>
 							</div>
 							{{-- END Modal --}}
-							{{--  Modal --}}
-							@if ($SolicitudServicio->SolSerStatus == 'Completado' && in_array(Auth::user()->UsRol, Permisos::ProgVehic2))
-								<div class="modal modal-default fade in" id="ModalSendRecordatorio" tabindex="-1" role="dialog"
-									aria-labelledby="myModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<form action="/recordatorio" method="POST" id="SendRecordatorioForm">
-												@csrf
-												<input type='hidden' name='solserslug' value="{{$SolicitudServicio->SolSerSlug}}">
-												<div class="modal-body">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-															aria-hidden="true">&times;</span></button>
-													<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-														<i class="fas fa-exclamation-triangle"></i>
-														<span style="font-size: 0.3em; color: black;">
-															<p>Enviar recordatorio de conciliación para el servicio <b>N°
-																	{{$SolicitudServicio->ID_SolSer}}</b>?</p>
-														</span>
-													</div>
-													<div class="form-group col-md-12">
-														<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover"
-															data-html="true" data-toggle="popover" title="Observaciones"
-															data-content="En este campo puede redactar sus observaciones con relación al recordatorio de conciliación para esta solicitud de servicio"><i
-																style="font-size: 1.8rem; color: Dodgerblue;"
-																class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
-														<small id="caracteresrestantesrepetirSR" class="help-block with-errors"></small>
-														<textarea onchange="updatecaracteresrepetirObs()" id="textDescriptionrepetirSR" rows="5"
-															style="resize: vertical;" maxlength="4000" class="form-control col-xs-12"
-															required name="solserdescript"></textarea>
-													</div>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-													<button form="SendRecordatorioForm" type="submit" class="btn btn-success">enviar</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							@endif
-							{{-- END Modal --}}
-							{{--  Modal --}}
-							@if ($SolicitudServicio->SolSerStatus !== 'Aprobado' && in_array(Auth::user()->UsRol, Permisos::SolSer2))
-							<div class="modal modal-default fade in" id="ModalRecepcionErrada" tabindex="-1" role="dialog"
-								aria-labelledby="myModalLabel">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<form action="/recepcionerrada" method="POST" id="recepcionerradaForm">
-											@csrf
-											<input type='hidden' name='solserslug' value="{{$SolicitudServicio->SolSerSlug}}">
-											<div class="modal-body">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-														aria-hidden="true">&times;</span></button>
-												<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-													<i class="fas fa-exclamation-triangle"></i>
-													<span style="font-size: 0.3em; color: black;">
-														<p>Enviar notificación de fecha de recepción errada para el servicio <b>N°
-																{{$SolicitudServicio->ID_SolSer}}</b>?</p>
-													</span>
-												</div>
-												<div class="form-group col-md-12">
-													<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover"
-														data-html="true" data-toggle="popover" title="Observaciones"
-														data-content="En este campo puede redactar sus observaciones con relación al recordatorio de conciliación para esta solicitud de servicio"><i
-															style="font-size: 1.8rem; color: Dodgerblue;"
-															class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
-													<small id="caracteresrestantesrepetirSR" class="help-block with-errors"></small>
-													<textarea onchange="updatecaracteresrepetirObs()" id="textDescriptionrepetirSR" rows="5"
-														style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required
-														name="solserdescript"></textarea>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-												<button form="recepcionerradaForm" type="submit" class="btn btn-success">enviar</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							@endif
-							{{-- END Modal --}}
-							{{--  Modal --}}
-								<div class="modal modal-default fade in" id="ModalRequerimientos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-body">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<span style="font-size: 1.5em;"><p>Requerimientos de los residuos</p></span>
-												<div class="box box-info col-md-16" style="text-align: center;">
-													@foreach($Residuos as $Residuo)
-														<div class="col-md-12 col-xs-12" style="margin-top: 5px;">
-															<label>{{$Residuo->RespelName.' - '.$Residuo->SolResEmbalaje}}</label>
-														</div>
-														<div class="col-md-12 col-xs-12">
-															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-right: 1px solid black;">
-																<label style="text-align: center;"	>Descargue</label>
-																<div style="width: 100%;">
-																	<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
-																	<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoDescargue_Pesaje == 1 ? 'checked' : '' }}/>
-																</div>
-															</div>
-															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;border-right: 1px solid black;">
-																<label style="text-align: center;">{{trans('adminlte_lang::message.requeretratamiento')}}</label>
-																<div style="width: 100%;">
-																	<input type="checkbox" class="fotoswitch" data-size="small" {{ $Residuo->SolResFotoTratamiento == 1 ? 'checked' : '' }}/>
-																	<input type="checkbox" class="videoswitch" data-size="small" {{ $Residuo->SolResVideoTratamiento == 1 ? 'checked' : '' }}/>
-																</div>
-															</div>
-															<div class="col-md-4 col-xs-4" style="border-bottom: 2px solid black; border-left: 1px solid black;">
-																<label style="text-align: center;">Devolución/Auditoria</label>
-																<div style="width: 100%;">
-																	<input type="checkbox" class="embalajeswitch" data-size="small" {{ $Residuo->SolResDevolucion == 1 ? 'checked' : '' }} disabled/>
-																	<input type="checkbox" class="auditoriaswitch" data-size="small" {{ $Residuo->SolResAuditoria == 1 ? 'checked' : '' }} disabled/>
-																</div>
-															</div>
-														</div>
-													@endforeach 
-												</div><br><br><br>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-primary" data-dismiss="modal">Salir</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							{{-- END Modal --}}
+
 							{{-- Modal --}}
 								<div id="addkgmodal"></div>
 							{{-- END Modal --}}
@@ -746,7 +394,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								</div>
 							{{-- END Modal --}}
 							{{--  Modal --}}
-								<div id="addRMsmodal"></div>
+							<div id="addRMsmodal"></div>
 							{{-- END Modal --}}
 							{{--  Modal --}}
 							<div class="modal modal-default fade in" id="ModalObservaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -839,274 +487,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	})
 </script>
 
-{{-- funciones para el modal de RMs --}}
-@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
-	<script>
-		function updateRMs(slug){
-			var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
-			$('#addRMsmodal').empty();
-			$('#addRMsmodal').append(`
-				<form role="form" action="/serviciosexpress/`+slug+`/updateRms" method="POST" data-toggle="validator" id="FormRMs">
-					@method('PUT')
-					@csrf
-					<div class="modal modal-default fade in" id="editRMs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<div style="font-size: 5em; color: lightblue; text-align: center; margin: auto;">
-										<i class="fas fa-clipboard-list"></i>
-										<span style="font-size: 0.3em; color: black;"><p>
-											Números de Recibo de material
-										</p></span>
-									</div>
-								</div>
-								<div class="modal-header">
-									@if ($errors->any())
-										<div class="alert alert-danger" role="alert">
-											<ul>
-												@foreach ($errors->all() as $error)
-													<p>{{$error}}</p>
-												@endforeach
-											</ul>
-										</div>
-									@endif
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[0]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[1]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[2]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[3]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[4]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[5]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[6]+`">
-										</div>
-										<div class="form-group col-md-3">
-											<label for="SolResRM"># RM</label>
-											<small class="help-block with-errors">*</small>
-											<input type="number" class="form-control" id="SolResRM" name="SolServRM[]" min="9999" max="99999" value="`+arrayRMs[7]+`">
-										</div>
-										
-										<input type="text" hidden name="SolServ" value="`+slug+`">
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			`);
-			$('#editRMs').modal();
-			$('#FormRMs').validator('update');
-		};
-	</script>
-@else
-	<script>
-		function updateRMs(slug){
-			var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
-			$('#addRMsmodal').empty();
-			$('#addRMsmodal').append(`
-				<div class="modal modal-default fade in" id="showRMs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<div style="font-size: 5em; color: lightblue; text-align: center; margin: auto;">
-									<i class="fas fa-clipboard-list"></i>
-									<span style="font-size: 0.3em; color: black;"><p>
-										Números de Recibo de material
-									</p></span>
-								</div>
-							</div>
-							<div class="modal-header">
-									<table class="table table-bordered">
-										<thead class="thead-dark">
-											<tr id="listadeRM" ></tr>
-										</thead>
-									</table>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			`);
-			for (let index = 0; index < arrayRMs.length; index++) {
-				if (arrayRMs[index] !== null) {
-					$('#listadeRM').append(`<th class="text-center">`+`RM-`+arrayRMs[index]+`</th>`);
-				}
-			}
-			$('#showRMs').modal();
-			$('#FormRMs').validator('update');
-		};
-	</script>
-@endif
-
-
-{{-- funciones para el modal de precio --}}
-@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
-	<script>
-		function addprice(slug, precio){
-			var inputprice =  '<label for="SolResPrice">Tarifa del Residuo</label><small class="help-block with-errors">*</small><input type="number" min="0" class="form-control numberKg" id="SolResPrice" name="SolResPrecio" value="'+precio+'" required>';
-			$('#addprice').empty();
-			$('#addprice').append(`
-				<form role="form" action="/solicitud-residuo/`+slug+`/UpdatePrice" method="POST" enctype="multipart/form-data" data-toggle="validator" id="Formprice">
-					@method('PUT')
-					@csrf
-					<div class="modal modal-default fade in" id="asignarPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
-										<i class="fas fa-plus-circle"></i>
-										<span style="font-size: 0.3em; color: black;"><p>
-											Precio
-										</p></span>
-									</div>
-								</div>
-								<div class="modal-header">
-									@if ($errors->any())
-										<div class="alert alert-danger" role="alert">
-											<ul>
-												@foreach ($errors->all() as $error)
-													<p>{{$error}}</p>
-												@endforeach
-											</ul>
-										</div>
-									@endif
-									<div class="form-group col-md-12">
-										`+inputprice+`
-									</div>
-									<input type="text" hidden name="SolRes" value="`+slug+`">
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			`);
-			$('#asignarPrecio').modal();
-			$('#Formprice').validator('update');
-		};
-	</script>
-	@if ($errors->any())
-		<script>
-			$(document).ready(function() {
-				$("#Formprice").modal("show");
-			});
-		</script>
-	@endif
-@endif
-
-{{-- funciones para el modal de cambio de trtamiento --}}
-@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-	<script>
-		function changeTratamiento(slug, idTrat, tratName, idReq, solServicio){
-			$('#changetratmodal').empty();
-			$('#changetratmodal').append(`
-				<form role="form" action="../requerimientos/`+idReq+`/updateTrat/`+solServicio+`" method="POST" data-toggle="validator" id="FormChangeTrat">
-					@method('PUT')
-					@csrf
-					<div class="modal modal-default fade in" id="ChangeTrat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<div style="font-size: 5em; color: orange; text-align: center; margin: auto;">
-										<i class="fas fa-paste"></i>
-										<span style="font-size: 0.3em; color: black;"><p>
-											Tratamiento Aplicado
-										</p></span>
-									</div>
-								</div>
-								<div class="modal-header">
-									@if ($errors->any())
-										<div class="alert alert-danger" role="alert">
-											<ul>
-												@foreach ($errors->all() as $error)
-													<p>{{$error}}</p>
-												@endforeach
-											</ul>
-										</div>
-									@endif
-										@switch($SolicitudServicio->SolSerStatus)
-											@case('Pendiente')
-											@case('Aprobado')
-											@case('Programado')
-											@case('Notificado')
-											@case('No Conciliado')
-											@case('Completado')
-											@case('Conciliado')
-											@case('Tratado')
-											<div class="form-group col-md-12">	
-												<label for="FK_ReqTrata">Tratamiento Aplicado</label><small class="help-block with-errors">*</small>
-												<select id="selectTratamiento" name="FK_ReqTrata" class="form-control" required>
-													<option value="">Seleccione un Tratamiento</option>
-													@if($tratamientos == 'NoAutorizado')
-														<option value="`+idTrat+`">`+tratName+`</option>
-													@else
-														@foreach ($tratamientos as $tratamiento)
-															<option value="{{$tratamiento->ID_Trat}}">{{$tratamiento->TratName}}</option>
-														@endforeach
-													@endif
-												</select>
-											</div>
-												@break
-										@endswitch
-										<input type="text" hidden name="SolRes" value="`+slug+`">
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary pull-right">{{trans('adminlte_lang::message.save')}}</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			`);
-			$('#ChangeTrat').modal();
-			$('#FormChangeTrat').validator('update');
-			// $('#selectTratamiento').select2();
-		};
-	</script>
-	@if ($errors->any())
-		<script>
-			$(document).ready(function() {
-				$("#FormChangeTrat").modal("show");
-			});
-		</script>
-	@endif
-@endif
-
 {{-- funciones para el modal de kg --}}
 @if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
 	<script>
@@ -1167,11 +547,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											<div class="form-group col-md-12">	
 												 `+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadRecibida">Cantidad Recibida '+tipo+'</label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control numberKg" id="SolResCantiUnidadRecibida" name="SolResCantiUnidadRecibida" maxlength="5" value="'+cantidad+'" required>' : '')+`
 											</div>
-											<div class="col-md-12 form-group has-feedback">
-												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
-												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
-												</select>
-											</div>
 												@break
 											@case('No Conciliado')
 											@case('Completado')
@@ -1180,11 +555,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 											<div class="form-group col-md-12">	
 													`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
-											</div>
-											<div class="col-md-12 form-group has-feedback">
-												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
-												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
-												</select>
 											</div>
 												@break
 											@case('Conciliado')
@@ -1203,11 +573,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 											</div>
 											<div class="form-group col-md-12">	
 												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadTratada">Cantidad Tratada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadTratada" name="SolResCantiUnidadTratada" maxlength="5" max="'+cantidadmax+'" value="'+cantidad+'" required>' : '')+`
-											</div>
-											<div class="col-md-12 form-group has-feedback">
-												<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
-												<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
-												</select>
 											</div>
 												@break
 										@endswitch
@@ -1355,11 +720,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 										<div class="form-group col-md-12">	
 												`+(tipo != 'Kilogramos' ? '<label for="SolResCantiUnidadConciliada">Cantidad Conciliada '+tipo+' </label><small class="help-block with-errors">*</small><input type="number" step=".1" min="0" class="form-control" id="SolResCantiUnidadConciliada" name="SolResCantiUnidadConciliada" maxlength="5" value="'+cantidad+'" required>' : '')+`
 										</div>
-										<div class="col-md-12 form-group has-feedback">
-											<label for="SolResRM"># RM</label><small class="help-block with-errors">*</small>
-											<select id="SolResRMselect" class="form-control select-multiple" name="SolResRM[]" multiple required>
-											</select>
-										</div>
 											@break
 									@endswitch
 									<input type="text" hidden name="SolRes" value="`+slug+`">
@@ -1380,43 +740,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				break;
 		};
 		$('#editkgRecibido').modal();
-
-		var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
-
-		/*se verifica si todos los valores son nulos*/
-		var nulos = 0;
-		for (let indexnulos = 0; indexnulos < arrayRMs.length; indexnulos++) {
-			if (arrayRMs[indexnulos] == null) {
-				nulos++;
-			}
-		}
-
-		if (nulos == 4) {
-			$('#SolResRMselect').empty();
-			$('#SolResRMselect').append(`<option disabled value="">debe cargar un numero de RM en el boton azul "RMs" para poder luego elegirlo en este formulario...</option>`);
-		}else{
-			$('#SolResRMselect').append(`<option disabled value="">seleccione un número de recibo de materiales...</option>`);
-			for (let index = 0; index < arrayRMs.length; index++) {
-				if (arrayRMs[index] !== null) {
-					let estaono = false;
-					if (rmSelected !== null) {
-						for (let indexselected = 0; indexselected < rmSelected.length; indexselected++) {
-							if (rmSelected[indexselected] == arrayRMs[index]) {
-								estaono = true;
-							}
-						}
-					}
-					
-					if(estaono==true){
-						console.log('Key is exist in Object!');
-						$('#SolResRMselect').append(`<option selected value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
-					}else{
-						$('#SolResRMselect').append(`<option value="`+arrayRMs[index]+`">`+arrayRMs[index]+`</option>`);
-					}
-				}
-			}
-		}
-		SelectsMultiple();
 		$('#FormKg').validator('update');
 	};
 
@@ -1560,7 +883,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
@@ -1593,7 +915,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
@@ -1626,7 +947,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 					<a method='get' href='#' data-toggle='modal' data-target='#myModal{{$SolicitudServicio->SolSerSlug}}' class='btn btn-danger pull-left'><i class="fas fa-trash-alt"></i> <b>{{trans('adminlte_lang::message.delete')}}</b></a>
 				`);
 			@endif
@@ -1654,7 +974,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
@@ -1708,7 +1028,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
+				
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
@@ -1756,7 +1076,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/add-respel" class="btn btn-primary pull-right"><i class="fas fa-plus"></i><b> Añadir Residuo</b></a>
+					<a href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/add-respel" class="btn btn-primary pull-right"><i class="fas fa-plus"></i><b> Añadir Residuo</b></a>
 				`);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || Auth::user()->email == 'logistica@prosarc.com.co')
@@ -1879,7 +1199,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				@else
 				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
-					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);
 				@else
 				$('#titulo').append(`
@@ -1917,7 +1237,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				@else
 				@if ($SolicitudServicio->SolServCertStatus == 0)
 				$('#titulo').append(`
-					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+					<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 				`);
 				@else
 				$('#titulo').append(`
@@ -1956,7 +1276,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				@else
 					@if ($SolicitudServicio->SolServCertStatus == 0)
 					$('#titulo').append(`
-						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 					`);
 					@else
 					$('#titulo').append(`
@@ -1994,7 +1314,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				@else
 					@if ($SolicitudServicio->SolServCertStatus == 0)
 					$('#titulo').append(`
-						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
+						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
 					`);
 					@else
 					$('#titulo').append(`
@@ -2109,4 +1429,5 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	$('#myModalCancelar').modal();
 	}
 </script>
+
 @endsection

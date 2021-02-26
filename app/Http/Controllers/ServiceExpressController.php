@@ -989,7 +989,7 @@ class ServiceExpressController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+			return view('serviciosexpress.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
 		}
 		else{
 			abort(403);

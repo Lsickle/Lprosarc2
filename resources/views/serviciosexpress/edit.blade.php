@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #d4fc79, #00C851);; padding-right:30vw; position:relative; overflow:hidden;">
-	Express-edicion
+	Express-edición
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -14,10 +14,10 @@
 		<div class="col-md-16 col-md-offset-0">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitleedit') }}</h3>
+					<h3 class="box-title">Edición de Servicio Express</h3>
 				</div>
 				<div class="box box-info">
-					<form role="form" id="EditSolSer" action="/solicitud-servicio/{{$Solicitud->SolSerSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
+					<form role="form" id="EditSolSer" action="/serviciosexpress/{{$Solicitud->SolSerSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
 						@method('PATCH')
 						@csrf
 						<div class="box-body">
