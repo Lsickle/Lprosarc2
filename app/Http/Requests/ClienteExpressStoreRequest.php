@@ -55,6 +55,11 @@ class ClienteExpressStoreRequest extends FormRequest
             'PersLastName'  => 'required|max:64|min:1',
             'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail|unique:users,email',
             'PersCellphone' => 'required|max:12|min:12',
+            'SedeMapLocalidad' => 'sometimes|max:50',
+            'SedeMapAddressSearch' => 'required',
+            'SedeMapAddressResult' => 'required',
+            'SedeMapLat' => 'required|numeric',
+            'SedeMapLong' => 'required|numeric',
         ];
     }
     public function messages()

@@ -76,7 +76,7 @@ class registroexpressController extends Controller
      */
     public function store(ClienteExpressStoreRequest $request)
     {
-        return $request;
+        // return $request;
         $Cliente = new Cliente();
         $Cliente->CliNit = $request->input('CliNit');
         $Cliente->CliName = $request->input('CliName');
@@ -95,6 +95,11 @@ class registroexpressController extends Controller
         $Sede->SedePhone1 = $request->input('SedePhone1');
         $Sede->SedeEmail = $request->input("PersEmail");
         $Sede->SedeCelular = $request->input("PersCellphone");
+        $Sede->SedeMapLocalidad = $request->input("SedeMapLocalidad");
+        $Sede->SedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $Sede->SedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $Sede->SedeMapLat = $request->input("SedeMapLat");
+        $Sede->SedeMapLong = $request->input("SedeMapLong");
         $Sede->SedeSlug = hash('sha256', rand().time().$Sede->SedeName);
         $Sede->FK_SedeCli = $Cliente->ID_Cli;
         $Sede->FK_SedeMun = $request->input('FK_SedeMun');
@@ -167,6 +172,11 @@ class registroexpressController extends Controller
         $SGener->GSedePhone1 = $Sede->SedePhone1;
         $SGener->GSedeEmail = $Personal->PersEmail;
         $SGener->GSedeCelular = $Personal->PersCellphone;
+        $SGener->GSedeMapLocalidad = $request->input("SedeMapLocalidad");
+        $SGener->GSedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $SGener->GSedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $SGener->GSedeMapLat = $request->input("SedeMapLat");
+        $SGener->GSedeMapLong = $request->input("SedeMapLong");
         $SGener->GSedeSlug = hash('sha256', rand().time().$SGener->GSedeName);
         $SGener->FK_GSede = $Gener->ID_Gener;
         $SGener->FK_GSedeMun = $Sede->FK_SedeMun;

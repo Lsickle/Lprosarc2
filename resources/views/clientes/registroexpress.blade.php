@@ -64,9 +64,10 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer">
+                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" hidden>
                                                     <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
                                                     <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
+                                                            <option value="">Seleccione...</option> 
                                                             <option value="Engativá" {{ old('SedeMapLocalidad') == 'Engativá'? 'selected' : '' }}>Engativá</option>
                                                             <option value="Kennedy" {{ old('SedeMapLocalidad') == 'Kennedy'? 'selected' : '' }}>Kennedy</option>
                                                             <option value="Suba" {{ old('SedeMapLocalidad') == 'Suba'? 'selected' : '' }}>Suba</option>
@@ -94,7 +95,7 @@
                                                     <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <!-- search input box -->
-                                                <div class="form-group col-md-12" id="SedeMapAddressContainer">
+                                                <div class="form-group col-md-6 " id="SedeMapAddressContainer">
                                                     <label for="sedeinputaddress">Dirección de recolección (Mapa)</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <input type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
