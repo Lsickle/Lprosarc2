@@ -73,6 +73,7 @@ class ServiceExpressController extends Controller
 			'solicitud_servicios.SolSerTypeCollect',
 			'solicitud_servicios.SolSerCollectAddress',
 			'solicitud_servicios.SolServCertStatus',
+			'clientes.ID_Cli',
 			'clientes.CliName',
 			'clientes.CliSlug',
 			'clientes.CliStatus',
@@ -90,17 +91,8 @@ class ServiceExpressController extends Controller
 			'Comercial.PersEmail as ComercialPersEmail',
 			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
-				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
-				}
-				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
-					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
-						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
-					}
-				}
 				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
-					if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)){
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
 					}
 				}
@@ -108,12 +100,14 @@ class ServiceExpressController extends Controller
 			->where('CliCategoria', 'ClientePrepago')
 			->orderBy('created_at', 'desc')
 			->get();
-		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
 		foreach ($Servicios as $servicio) {
-			if($servicio->SolSerTypeCollect == 98){
-				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
-				$servicio->SolSerCollectAddress = $Address->SedeAddress;
-			}
+			$sedeExpress = Sede::where('FK_SedeCli',$servicio->ID_Cli)->first();
+			$servicio->SolSerCollectAddress = $sedeExpress->SedeAddress;
+			$servicio->FK_SedeMun = $sedeExpress->FK_SedeMun;
+			$servicio->SedeMapLocalidad = $sedeExpress->SedeMapLocalidad;
+			$servicio->SedeMapLat = $sedeExpress->SedeMapLat;
+			$servicio->SedeMapLong = $sedeExpress->SedeMapLong;
+				
 
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
@@ -123,11 +117,7 @@ class ServiceExpressController extends Controller
 				$servicio->recepcion = null;
 			}
 		}
-		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-			return view('serviciosexpress.index', compact('Servicios', 'Residuos', 'Cliente'));
-		}else{
-			return view('serviciosexpress.indexprosarc', compact('Servicios', 'Residuos', 'Cliente'));
-		}
+		return view('serviciosexpress.indexprosarc', compact('Servicios', 'Residuos'));
     }
 
     /**
@@ -169,7 +159,7 @@ class ServiceExpressController extends Controller
 				->where('clientes.ID_Cli', $Cliente->ID_Cli)
 				->where('personals.PersDelete', 0)
 				->first();
-
+		$direccionderecoleccion = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first('SedeAddress');
 
 		for ($i=0; $i < $request->input('SolServCantidad'); $i++) { 
 			$SolicitudServicio = new SolicitudServicio();
@@ -193,7 +183,7 @@ class ServiceExpressController extends Controller
 			$SolicitudServicio->SolSerVehiculo = null;
 			$SolicitudServicio->SolSerDescript = 'Frecuencia:'.$request->input('SolServFrecuencia').'  '.$request->input('SolSerDescript');
 			$SolicitudServicio->SolSerTypeCollect = 99;
-			$SolicitudServicio->SolSerCollectAddress = "Recolección Express en la sede de cada generador";
+			$SolicitudServicio->SolSerCollectAddress = $direccionderecoleccion->SedeAddress;
 			$SolicitudServicio->SolSerBascula = 0;
 			$SolicitudServicio->SolSerCapacitacion = 0;
 			$SolicitudServicio->SolSerMasPerson = 0;

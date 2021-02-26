@@ -29,14 +29,11 @@
                         <table id="SolicitudservicioTable" class="table table-compact table-bordered table-striped d-none">
                             <thead>
                                 <tr>
-                                    <th>{{trans('adminlte_lang::message.solsershowdate')}}</th>
                                     <th>{{trans('adminlte_lang::message.solsershowdateRPDA')}}</th>
                                     <th>N°</th>
                                     <th nowrap>Status</th>
                                     <th>{{trans('adminlte_lang::message.clientcliente')}}</th>
                                     <th>Contacto</th>
-                                    <th>Comercial Asignado</th>
-                                    <th>{{trans('adminlte_lang::message.solserindextrans')}}</th>
                                     <th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
@@ -50,8 +47,6 @@
                             <tbody>
                                 @foreach ($Servicios as $Servicio)
                                 <tr style="{{$Servicio->SolSerDelete == 1 ? 'color: red' : ''}}">
-                                    <td style="text-align: center;">{{date('Y/m/d', strtotime($Servicio->created_at))}}
-                                    </td>
                                     <td style="text-align: center;">
                                         @if($Servicio->recepcion == null)
                                         {{null}}
@@ -124,9 +119,12 @@
                                             <li>{{$Servicio->PersCellphone}}</li>
                                         </ul>
                                     </td>
-                                    <td>{{$Servicio->ComercialPersFirstName.' '.$Servicio->ComercialPersLastName}}</td>
-                                    <td>{{$Servicio->SolSerNameTrans}}</td>
-                                    <td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}
+                                    <td>
+                                        {{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}
+                                        @if ($Servicio->FK_SedeMun == 169)
+                                        <br>
+                                        Localidad: <b>{{$Servicio->SedeMapLocalidad}}</b>
+                                        @endif
                                     </td>
                                     <td style="text-align: center;"><a
                                             href='/serviciosexpress/{{$Servicio->SolSerSlug}}' class="btn btn-info"
@@ -142,8 +140,7 @@
                                             onclick="ModalFacturacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Facturada', 'facturar')"
                                             {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}}
                                             style="text-align: center;"
-                                            class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i
-                                                class="fas fa-certificate"></i>
+                                            class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i class="fas fa-certificate"></i>
                                             {{'Facturar'}}</button>
                                     </td>
                                     @endif
