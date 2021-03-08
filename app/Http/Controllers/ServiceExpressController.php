@@ -1996,4 +1996,83 @@ class ServiceExpressController extends Controller
 		$Observacion->save();
 		return redirect()->route('serviciosexpress.index');
 	}
+
+	    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rutadeldia()
+    {
+        $ServiciosDelDia = DB::table('solicitud_servicios')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
+			->select('solicitud_servicios.ID_SolSer',
+			'solicitud_servicios.SolSerStatus',
+			'solicitud_servicios.SolSerTipo',
+			'solicitud_servicios.SolSerAuditable',
+			'solicitud_servicios.SolSerConductor',
+			'solicitud_servicios.SolSerVehiculo',
+			'solicitud_servicios.SolSerSlug',
+			'solicitud_servicios.created_at',
+			'solicitud_servicios.updated_at',
+			'solicitud_servicios.SolSerDelete',
+			'solicitud_servicios.SolResAuditoriaTipo',
+			'solicitud_servicios.SolSerNameTrans',
+			'solicitud_servicios.SolSerNitTrans',
+			'solicitud_servicios.SolSerAdressTrans',
+			'solicitud_servicios.SolSerTypeCollect',
+			'solicitud_servicios.SolSerCollectAddress',
+			'solicitud_servicios.SolServCertStatus',
+			'clientes.ID_Cli',
+			'clientes.CliName',
+			'clientes.CliSlug',
+			'clientes.CliStatus',
+			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
+			'personals.PersFirstName',
+			'personals.PersLastName',
+			'personals.PersSlug',
+			'personals.PersEmail',
+			'personals.PersCellphone',
+			'Comercial.ID_Pers as ComercialID_Pers',
+			'Comercial.PersFirstName as ComercialPersFirstName',
+			'Comercial.PersLastName as ComercialPersLastName',
+			'Comercial.PersSlug as ComercialPersSlug',
+			'Comercial.PersEmail as ComercialPersEmail',
+			'Comercial.PersCellphone as ComercialPersCellphone')
+			->where(function($query){
+				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
+					}
+				}
+			})
+			->where('CliCategoria', 'ClientePrepago')
+			->orderBy('created_at', 'desc')
+			->get();
+		foreach ($ServiciosDelDia as $servicio) {
+			$sedeExpress = Sede::where('FK_SedeCli',$servicio->ID_Cli)->first();
+			$servicio->SolSerCollectAddress = $sedeExpress->SedeAddress;
+			$servicio->FK_SedeMun = $sedeExpress->FK_SedeMun;
+			$servicio->SedeMapLocalidad = $sedeExpress->SedeMapLocalidad;
+			$servicio->SedeMapLat = $sedeExpress->SedeMapLat;
+			$servicio->SedeMapLong = $sedeExpress->SedeMapLong;
+				
+
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
+			}else{
+				$servicio->recepcion = null;
+			}
+		}
+
+		$Servicios = $ServiciosDelDia->filter(function ($value, $key) {
+			return date('Y/m/d', strtotime($value->recepcion))  == date('Y/m/d', strtotime(today()));
+		});
+		return view('serviciosexpress.indexprosarc', compact('Servicios'));
+    }
 }

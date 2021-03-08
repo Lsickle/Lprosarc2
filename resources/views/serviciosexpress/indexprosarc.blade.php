@@ -42,6 +42,7 @@
                                     @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
                                         <th>{{'Facturar'}}</th>
                                     @endif
+                                    <th>Ubicación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,6 +159,9 @@
                                             {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
                                     </td>
                                     @endif
+                                    <td>
+                                        <a class="btn btn-primary" href="https://maps.google.com/?ll={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&z=14&t=m"><i class="fas fa-map-marker-alt"></i></a>
+									</td>
                                 </tr>
                                 @endforeach
                             </tbody>

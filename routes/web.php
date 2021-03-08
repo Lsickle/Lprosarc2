@@ -160,6 +160,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::post('/serviciosexpress/reversarStatus', 'ServiceExpressController@reversarStatus');
 	Route::post('/serviciosexpress/cancelarServicio', 'ServiceExpressController@cancelarServicio');
 	Route::put('/serviciosexpress/{id}/updateRms', 'ServiceExpressController@updateRms');
+	Route::get('/rutadeldia', 'ServiceExpressController@rutadeldia');
 	Route::get('/serviciosexpress/{id}/sendtobilling', 'ServiceExpressController@sendtobilling');
 	Route::get('/serviciosexpress/{id}/add-respel', 'ServiceExpressController@addRespel');
 	Route::put('/serviciosexpress/{id}/update-respel', 'ServiceExpressController@updateRespel');
