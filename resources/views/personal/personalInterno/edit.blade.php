@@ -318,7 +318,7 @@
 								$("#FK_PersCargo").append(`<option onclick="HiddenNewInputA()" value="">Seleccione...</option>`);
 								for(var i = res.length -1; i >= 0; i--){
 									if ($.inArray(res[i].CargSlug, cargos) < 0) {
-										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].ID_Carg}">${res[i].CargName}</option>`);
+										$("#FK_PersCargo").append(`<option onclick="HiddenNewInputC()" value="${res[i].CargSlug}">${res[i].CargName}</option>`);
 										cargos.push(res[i].CargSlug);
 									}
 								}
