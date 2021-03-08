@@ -85,7 +85,7 @@ class AjaxController extends Controller
 		if ($request->ajax()) {
 			$Area = Area::where('AreaSlug', $id)->first();
 			$Cargos = DB::table('cargos')
-				->select('CargSlug', 'CargName')
+				->select('CargSlug', 'CargName', 'ID_Carg')
 				->where('CargArea', $Area->ID_Area)
 				->where('CargDelete', '=', 0)
 				->get();
