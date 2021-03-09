@@ -238,7 +238,7 @@
 										<td class="text-center"><a method='get' href='/certificados/{{$certificado->CertSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Información Adicional</b>" data-content="<p style='width: 50%'>Puede ver la información adicional relevante para la generación del certificado </p>" class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-search'></i></a></td>
 									@endif
 									@php
-										$Status = ['Conciliado', 'Tratado'];
+										$Status = ['Conciliado', 'Tratado', 'Facturado'];
 									@endphp
 									@if(in_array(Auth::user()->UsRol, Permisos::SIGNMANIFCERT)&&in_array($certificado->SolicitudServicio->SolSerStatus, $Status))
 										<td class="text-center">
