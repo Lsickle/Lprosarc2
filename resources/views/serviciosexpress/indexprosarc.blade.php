@@ -160,7 +160,8 @@
                                     </td>
                                     @endif
                                     <td>
-                                        <a class="btn btn-primary" href="https://maps.google.com/?ll={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&z=14&t=m"><i class="fas fa-map-marker-alt"></i></a>
+                                        {{-- <a class="btn btn-primary" href="https://www.google.com/maps/dir/?daddr={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&z=14&t=m" target="_blank"><i class="fas fa-map-marker-alt"></i></a> --}}
+                                        <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class="fas fa-map-marker-alt"></i></a>
 									</td>
                                 </tr>
                                 @endforeach

@@ -56,11 +56,11 @@
 								<label>Frecuencia</label>
 								<small class="help-block with-errors">*</small>
 								<select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required="">
-									<option value="Anual">Anual</option>
-									<option value="semestral">semestral</option>
-									<option value="trimestral">trimestral</option>
-									<option value="bimensual">bimensual</option>
 									<option value="mensual">mensual</option>
+									<option value="bimensual">bimensual</option>
+									<option value="trimestral">trimestral</option>
+									<option value="semestral">semestral</option>
+									<option value="anual">anual</option>
 								</select>
 							</div>
 							<div class="col-md-12">
