@@ -263,7 +263,7 @@ class EmailController extends Controller
                         ->cc($destinatarios)
                         ->send(new SolSerEmail($email));
                     }
-                    return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
+                    return redirect()->route('solicitud-servicio.index');
                     break;
                 default:
                     $email = DB::table('solicitud_servicios')
