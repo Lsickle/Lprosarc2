@@ -165,6 +165,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/serviciosexpress/{id}/add-respel', 'ServiceExpressController@addRespel');
 	Route::put('/serviciosexpress/{id}/update-respel', 'ServiceExpressController@updateRespel');
 	Route::put('/serviciosexpress/repeat/{id}', 'ServiceExpressController@repeat');
+	Route::post('/serviciosexpress/certificarExpress', 'ServiceExpressController@certificarExpress');
 	Route::get('/serviciosexpress/{id}/documentos', 'ServiceExpressController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
 	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');

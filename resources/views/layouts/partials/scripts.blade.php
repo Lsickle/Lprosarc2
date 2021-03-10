@@ -16,6 +16,11 @@
 	{{-- fullcalendar --}}
 	{{-- <script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script> --}}
 @endif
+
+@if(Route::currentRouteName()=='serviciosexpress.show')
+{{-- signature_pad --}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+@endif
 {{-- Chart --}}
 @if(Route::currentRouteName()=='home')
 	{{-- fullcalendar --}}

@@ -42,7 +42,6 @@
                                     @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
                                         <th>{{'Facturar'}}</th>
                                     @endif
-                                    <th>Ubicación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,59 +57,93 @@
                                     <td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
                                     @switch($Servicio->SolSerStatus)
                                         @case('Pendiente')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-default' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-hourglass-start'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Aceptado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-info' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Aprobado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-tasks'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-info' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-tasks'></i></a><br>{{$Servicio->SolSerStatus}}
+
+                                        </td>
+
                                         @break
                                         @case('Programado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-success' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Notificado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-primary' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Cancelado')
                                         @case('Recibido')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-danger' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Completado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-truck-loading'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-success' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-truck-loading'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Conciliado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-balance-scale'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-success' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-balance-scale'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('No Conciliado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-warning' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Corregido')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-success' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}
+
+                                        </td>
+
                                         @break
                                         @case('Tratado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-primary' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Facturado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-default' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         @case('Certificacion')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-success' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}
+
                                         </td>
                                         @break
                                         <b></b>
                                         @default
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                        <td class="text-center">
+                                        <a class='btn fixed_widthbtn btn-primary' href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}
+
+                                        </td>
+
                                     @endswitch
                                     <td>{{$Servicio->CliName}}</td>
                                     <td>
@@ -159,10 +192,6 @@
                                             {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
                                     </td>
                                     @endif
-                                    <td>
-                                        {{-- <a class="btn btn-primary" href="https://www.google.com/maps/dir/?daddr={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&z=14&t=m" target="_blank"><i class="fas fa-map-marker-alt"></i></a> --}}
-                                        <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination={{$Servicio->SedeMapLat}},{{$Servicio->SedeMapLong}}&travelmode=car" target="_blank"><i class="fas fa-map-marker-alt"></i></a>
-									</td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -819,11 +819,10 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-								<i class="fas fa-exclamation-triangle"></i>
 								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
 							</div>
 						</div>
-						<form action="/serviciosexpress/changestatus" method="POST" data-toggle="validator" id="SolSer">
+						<form action="/serviciosexpress/certificarExpress" method="POST" enctype="multipart/form-data" data-toggle="validator" id="SolSer">
 							<div class="modal-header">
 								@csrf
 								<div class="form-group col-md-12">
@@ -831,6 +830,28 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
 									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
 								</div>
+								<div class="signature-container col-md-12">
+									<div id="signature-pad" class="signature-pad">
+										<div class="signature-pad--body">
+											<canvas width="540" height="180"></canvas>
+										</div>
+										<div class="signature-pad--footer">
+											<div class="description">Firma del Cliente</div>
+									
+											<div class="signature-pad--actions">
+												<div>
+													<button type="button" class="button clear" data-action="clear">Nuevo</button>
+													<button type="button" class="button" data-action="undo">Borrar</button>
+												</div>
+												<div>
+													<button type="button" class="button save" data-action="save-png">PNG</button>
+													<button type="button" class="button save" data-action="save-svg">SVG</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" id="signature-data" name="solserFirma" />
 								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
 								<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
@@ -844,6 +865,84 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				</div>
 			</div>
 		`);
+		var wrapper = document.getElementById("signature-pad");
+		var clearButton = wrapper.querySelector("[data-action=clear]");
+		var undoButton = wrapper.querySelector("[data-action=undo]");
+		var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+		var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+		var canvas = wrapper.querySelector("canvas");
+		var signaturePad = new SignaturePad(canvas);
+		function resizeCanvas() {
+			var ratio = Math.max(window.devicePixelRatio || 1, 1);
+			canvas.width = canvas.offsetWidth * ratio;
+			canvas.height = canvas.offsetHeight * ratio;
+			canvas.getContext("2d").scale(ratio, ratio);
+			signaturePad.clear();
+		}
+		window.onresize = resizeCanvas;
+		resizeCanvas();
+
+		function download(dataURL, filename) {
+			if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1) {
+				window.open(dataURL);
+			} else {
+				var blob = dataURLToBlob(dataURL);
+				var url = window.URL.createObjectURL(blob);
+
+				var a = document.createElement("a");
+				a.style = "display: none";
+				a.href = url;
+				a.download = filename;
+
+				document.body.appendChild(a);
+				a.click();
+
+				window.URL.revokeObjectURL(url);
+			}
+		}
+		function dataURLToBlob(dataURL) {
+			var parts = dataURL.split(';base64,');
+			var contentType = parts[0].split(":")[1];
+			var raw = window.atob(parts[1]);
+			var rawLength = raw.length;
+			var uInt8Array = new Uint8Array(rawLength);
+			for (var i = 0; i < rawLength; ++i) {
+				uInt8Array[i] = raw.charCodeAt(i);
+			}
+			return new Blob([uInt8Array], { type: contentType });
+		}
+
+		clearButton.addEventListener("click", function (event) {
+			resizeCanvas();
+		});
+
+		undoButton.addEventListener("click", function (event) {
+			var data = signaturePad.toData();
+
+			if (data) {
+				data.pop(); // remove the last dot or line
+				signaturePad.fromData(data);
+			}
+		});
+
+		savePNGButton.addEventListener("click", function (event) {
+			if (signaturePad.isEmpty()) {
+				alert("Please provide a signature first.");
+			} else {
+				var dataURL = signaturePad.toDataURL();
+				download(dataURL, "signature.png");
+			}
+		});
+
+		saveSVGButton.addEventListener("click", function (event) {
+			if (signaturePad.isEmpty()) {
+				alert("Please provide a signature first.");
+			} else {
+				var dataURL = signaturePad.toDataURL('image/svg+xml');
+				download(dataURL, "signature.svg");
+			}
+		});
+		
 		$('#SolSer').validator('update');
 		popover();
 		var area = document.getElementById("textDescription");
@@ -853,7 +952,36 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 			observacion = area.value;
 		});
-		envsubmit();
+
+		function envsubmitcertificarExpress(){
+			$('form').on('submit', function(){
+				var data = signaturePad.toDataURL('image/png');
+  				var input = document.getElementById('signature-data');
+  				input.value = data;
+
+				var buttonsubmit = $(this).find('[type="submit"]');
+				var idbutton = buttonsubmit[0].id;
+				if(buttonsubmit.hasClass('disabled')){
+					return false;
+				}
+				else{
+					if(idbutton != ''){
+						var label = $('label[for="'+idbutton+'"]');
+						$(label).empty();
+						$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+						$(label).attr('disabled', true);
+					}
+					buttonsubmit.prop('disabled', true);
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$(this).submit(function(){
+						return false;
+					});
+					return true;
+				}
+			});
+		}
+		envsubmitcertificarExpress();
 		$('#myModal').modal();
 	}
 	$('.testswitch').bootstrapSwitch('disabled',true);
@@ -971,6 +1099,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 		@break
 		@case('Programado')
+		@case('Certificacion')
 			$('#titulo').empty();
 			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
@@ -42,6 +43,7 @@ use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use App\Observacion;
 use Permisos;
+use PDF;
 
 class ServiceExpressController extends Controller
 {
@@ -2075,4 +2077,272 @@ class ServiceExpressController extends Controller
 		});
 		return view('serviciosexpress.indexprosarc', compact('Servicios'));
     }
+
+	public function certificarExpress(Request $request)
+	{
+		
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+
+		/* se guarda la firma del cliente */
+		$data_uri = $request->input('solserFirma');
+		$encoded_image = explode(",", $data_uri)[1];
+		$decoded_image = base64_decode($encoded_image);
+		$nombreDeFirma = $request->input('solserslug');
+		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image);
+		// return Storage::download('firmasClientes/'.$nombreDeFirma.'.png');
+
+		if ($Solicitud->SolSerStatus == 'Certificacion') {
+			$certificadosDelete = CertificadoExpress::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
+			foreach ($certificadosDelete as $key => $value) {
+				foreach ($value->certdato as $key2 => $value2) {
+					$value2->delete();
+				}
+				$value->delete();
+			}
+		}
+
+		/* se generan los registros para certificados y manifiestos */
+
+		$this->solservdocstoreExpress($Solicitud->ID_SolSer);
+
+		/**se cambia el status del servicio a certificado */
+
+		$Solicitud->SolSerStatus = 'Certificacion';
+		$Solicitud->SolServCertStatus = 2;
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		/** se guarda log en la tabla de auditoria */
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="certificar Express";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+
+		/* se generan los pdf con los certificados correspondientes */
+		/*
+			espacio para el codigo de generacion de los pdf de los certificados / manifiestos
+		*/
+		$certificados = CertificadoExpress::with(['certdato.solres'])
+				->where('FK_CertSolser', $Solicitud->ID_SolSer)
+				->get();
+
+		$certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
+            $query->with(['SolicitudResiduo' => function ($query){
+                $query->where('SolResKgConciliado', '>', 0);
+                $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                $query->with('generespel.respels');
+                $query->with('requerimiento');
+            }]);
+            
+        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
+        ->where('CertSlug', $certificados[0]->CertSlug)
+        ->first();
+
+        $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
+        if ($fecharecepcionenplanta != null) {
+            $certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
+        }else{
+            $certificado->recepcion = "";
+        }
+
+        // return $certificado;
+        switch ($certificado->tratamiento->TratName) {
+            case 'TermoDestrucción':
+			$pdf = PDF::loadView('certificadosExpress.imprimible', compact('certificado'));
+
+                break;
+            case 'Posconsumo luminarias':
+			$pdf = PDF::loadView('certificadosExpress.luminarias', compact('certificado'));
+
+                break;
+            default:
+			$pdf = PDF::loadView('certificadosExpress.manifiesto', compact('certificado'));
+
+                break;
+        }
+		return $pdf->stream();
+
+		/**se envia notificacion con los archivos en formato pdf de los certificados */
+		/*
+			espacio para codigo de envio de notificacion por correo de los pdf con los certificados
+		*/
+		
+		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
+
+	}
+
+	public function solservdocstoreExpress($id)
+	{
+			
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
+		$serviciovalidado = $id;
+		/*cuenta los diferentes generadores*/
+		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
+		    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+		})
+		->with(['resgener' => function ($query) use ($serviciovalidado){
+		    $query->with(['solres' => function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    	$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
+		    }]);
+		    $query->whereHas('solres', function ($query) use ($serviciovalidado){
+		    	$query->where('FK_SolResSolSer', $serviciovalidado);
+		    });
+		}])
+		->get();
+		// return $generadoresdelasolicitud;
+		/*consulta para el cliente de esta solicitud*/
+		$cliente = Cliente::whereHas('sedes.generador', function ($query) use ($generadoresdelasolicitud) {
+		    $query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
+		})->first();
+		foreach ($generadoresdelasolicitud as $genersede) {
+			foreach ($genersede->resgener as $resgener) {
+				foreach ($resgener->solres as $key) {
+					if ($key->SolResKgConciliado > 0) {
+						switch ($key->requerimiento->tratamiento->TratTipo) {
+							case '0':
+								// "tratamiento tipo: interno; Certificado";
+
+								$certificadoprevio = CertificadoExpress::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_CertSolser', $id)
+								->where('FK_CertGenerSede', $genersede->ID_GSede)
+								->first();
+
+								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
+								->first();
+
+								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)&&($certificadoprevio->FK_CertGenerSede == $genersede->ID_GSede)) {
+
+									$dato = new CertExpressdato;
+									$dato->FK_DatoCert = $certificadoprevio->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+
+									$certificado = new CertificadoExpress;
+									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
+										$certificado->CertType = 0;
+										$certificado->CertObservacion = "certificado Express con observacion generica";
+									}else{
+										$certificado->CertType = 1;
+										$certificado->CertObservacion = "manifiesto Express con observacion generica";
+									}
+									$certificado->CertNumero = "";
+									$certificado->CertManifNumero = "";
+									$certificado->CertManifPrepend = "";
+									$certificado->CertiEspName = "";
+									$certificado->CertiEspValue = "";
+									$certificado->CertSlug = hash('sha256', rand().time());
+									$certificado->CertSrc = 'CertificadoDefault.pdf';
+									// $certificado->CertNumRm = "C-130";
+									$certificado->CertAuthHseq = 0;
+									$certificado->CertAuthDp = 1;
+									$certificado->CertAuthJl = 2;
+									$certificado->CertAuthJo = 3;
+									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$certificado->FK_CertSolser = $id;
+									$certificado->FK_CertCliente = $cliente->ID_Cli;
+									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
+									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$certificado->FK_CertTransp = $cliente->ID_Cli;
+									}else{
+										$certificado->FK_CertTransp = 1;
+									}
+
+									$certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
+										$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+										$item->SolResRM2 = $rm->SolResRM;
+										return $item;
+									});
+									$certificado->save();
+
+									$dato = new CertExpressdato;
+									$dato->FK_DatoCert = $certificado->ID_Cert;
+									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
+									$dato->save();
+									
+								}
+
+								break;
+
+							case '1':
+								// "tratamiento tipo: externo ; manifiesto";
+								/*se verifica si ya existe un documento con ese tratamiento para esa solicitud de servicio*/
+								$manifiestoprevio = Manifiesto::where('FK_ManifTrat', $key->requerimiento->tratamiento->ID_Trat)
+								->where('FK_ManifSolser', $id)
+								->first();
+
+								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
+									
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+
+								}else{
+									
+									$manifiesto = new Manifiesto;
+									$manifiesto->ManifNumero = "";
+									$manifiesto->ManifiEspName = "";
+									$manifiesto->ManifiEspValue = "";
+									$manifiesto->ManifObservacion = "manifiesto con observacion generica";
+									$manifiesto->ManifSlug = hash('sha256', rand().time());
+									$manifiesto->ManifSrc = 'ManifiestoDefault.pdf';
+									$manifiesto->ManifNumRm = "M-16";
+									$manifiesto->ManifAuthHseq = 0;
+									$manifiesto->ManifAuthDp = 1;
+									$manifiesto->ManifAuthJl = 2;
+									$manifiesto->ManifAuthJo = 3;
+									$manifiesto->ManifAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+									$manifiesto->FK_ManifSolser = $id;
+									$manifiesto->FK_ManifCliente = $cliente->ID_Cli;
+									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
+									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
+									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
+									if ($SolicitudServicio->SolSerTipo == 'Externo') {
+										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+									}else{
+										$manifiesto->FK_ManifTransp = 1;
+									}
+									$manifiesto->save();
+
+									$dato = new Manifdato;
+									$dato->FK_DatoManif = $manifiesto->ID_Manif;
+									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
+									$dato->save();
+								}
+
+								break;
+
+							default:
+								return back()->withErrors(['msg' => ['alguno de los residuos no posee tratamiento asignado favor verifica que su asesor comercial la evaluacion de los residuos.']]);
+								break;
+						}
+					}
+				}
+			}
+		}
+	}
 }
