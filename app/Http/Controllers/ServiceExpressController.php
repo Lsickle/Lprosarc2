@@ -2167,7 +2167,7 @@ class ServiceExpressController extends Controller
         // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-			$pdf = PDF::loadView('certificadosExpress.imprimible', compact('certificado'));
+			$pdf = PDF::loadView('certificadosExpress.topdf', compact('certificado'));
 
                 break;
             case 'Posconsumo luminarias':
