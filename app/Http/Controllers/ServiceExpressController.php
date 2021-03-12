@@ -2345,4 +2345,14 @@ class ServiceExpressController extends Controller
 			}
 		}
 	}
+
+
+	public function pdftest(){
+
+		return view('certificadosExpress.topdf', compact('certificado'));	
+		// return $certificado;
+		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
+
+		return $pdf->stream();
+	}
 }
