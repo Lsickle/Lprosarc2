@@ -38,9 +38,16 @@ class RespelPublicController extends Controller
     public function index()
     {
          /*se accede a la lista de residuos comunes unicamente para prosarc*/
-        $PublicRespels = Respel::with('SubcategoryRespelpublic.CategoryRP')
-        ->where('RespelPublic', 1)
-        ->get();
+        if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+            $PublicRespels = Respel::with('SubcategoryRespelpublic.CategoryRP')
+            ->where('RespelPublic', 1)
+            ->get();
+        }else{
+            $PublicRespels = Respel::with('SubcategoryRespelpublic.CategoryRP')
+            ->where('RespelPublic', 1)
+            ->where('RespelDelete', 0)
+            ->get();
+        }
         // return $PublicRespels[0]->SubcategoryRespelpublic->CategoryRP->CategoryRpName;
         // return $PublicRespels;
         return view('publicrespel.index', compact('PublicRespels')); 
