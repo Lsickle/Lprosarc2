@@ -2081,6 +2081,7 @@ class ServiceExpressController extends Controller
 
 	public function certificarExpress(Request $request)
 	{
+		// return $request;
 		
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
@@ -2092,7 +2093,7 @@ class ServiceExpressController extends Controller
 		$encoded_image = explode(",", $data_uri)[1];
 		$decoded_image = base64_decode($encoded_image);
 		$nombreDeFirma = $request->input('solserslug');
-		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image);
+		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
 		// return Storage::download('firmasClientes/'.$nombreDeFirma.'.png');
 
 		if ($Solicitud->SolSerStatus == 'Certificacion') {
@@ -2115,7 +2116,6 @@ class ServiceExpressController extends Controller
 		$Solicitud->SolServCertStatus = 2;
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
-
 		/** se guarda log en la tabla de auditoria */
 
 		$log = new audit();
@@ -2165,10 +2165,22 @@ class ServiceExpressController extends Controller
             $certificado->recepcion = "";
         }
 
+		$Solicitud->nombreDeFirma = 'firmasClientes/'.$nombreDeFirma.'.png';
+
+		// Storage::setVisibility('firmasClientes/'.$nombreDeFirma.'.png', 'public');
+
+		// return Storage::getVisibility('firmasClientes/'.$nombreDeFirma.'.png');
+
+		// return view('certificadosExpress.topdf', compact(['certificado','Solicitud']));	
+		// return $certificado;
+		// $pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
+
+
+		// return $Solicitud->nombreDeFirma;
         // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
+			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
 
                 break;
             case 'Posconsumo luminarias':
@@ -2183,8 +2195,9 @@ class ServiceExpressController extends Controller
 
                 break;
         }
-		// return $pdf->stream();
 
+
+		return $pdf->stream();
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$email = DB::table('solicitud_servicios')
 			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')

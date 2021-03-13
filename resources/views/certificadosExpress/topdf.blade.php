@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
-  <title>Certificado E-0000001</title>
+  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+  <title>Certificado E-{{sprintf("%07s", $certificado->ID_Cert)}}</title>
 
   <style>
 	@page {
@@ -158,7 +158,7 @@
 								</td>
 		
 								<td style="font-size: 16px; text-align: right;">
-									<b>N°:</b> <b style="color:red;">E-0000001</b><br>
+									<b>N°:</b> <b style="color:red;">E-{{sprintf("%07s", $certificado->ID_Cert)}}</b><br>
 									Fecha: 01/01/2021<br>
 								</td>
 							</tr>
@@ -415,7 +415,8 @@
 										<b>Director de Planta</b>
 									</td>
 									<td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
-										<img src="{{asset('img/VictorVelasco2.png')}}" style="width: 100px;"><br>
+										<img src="{{asset('storage/firmasClientes/'.$Solicitud->SolSerSlug.'.png')}}" style="width: 100px;"><br>
+										{{-- <img src="{{asset($Solicitud->nombreDeFirma)}}" style="width: 100px;"><br> --}}
 										<b>Cliente</b>
 									</td>
 								</tr>
