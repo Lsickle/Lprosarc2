@@ -15,6 +15,7 @@ use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
+use App\Mail\SolSerEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -2167,24 +2168,64 @@ class ServiceExpressController extends Controller
         // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-			$pdf = PDF::loadView('certificadosExpress.topdf', compact('certificado'));
+			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
                 break;
             case 'Posconsumo luminarias':
+				abort(403, 'Solo se pueden generar certificados express para el tratamiento termodestrucción, de ser necesario valide la información e intente nuevamente');
 			$pdf = PDF::loadView('certificadosExpress.luminarias', compact('certificado'));
 
                 break;
             default:
+				abort(403, 'Solo se pueden generar certificados express para el tratamiento termodestrucción, de ser necesario valide la información e intente nuevamente');
+
 			$pdf = PDF::loadView('certificadosExpress.manifiesto', compact('certificado'));
 
                 break;
         }
-		return $pdf->stream();
+		// return $pdf->stream();
 
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
-		/*
-			espacio para codigo de envio de notificacion por correo de los pdf con los certificados
-		*/
+		$email = DB::table('solicitud_servicios')
+			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+			->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+			->where('progvehiculos.FK_ProgServi', '=', $Solicitud->ID_SolSer)
+			->where('progvehiculos.ProgVehDelete', 0)
+			->first();
+			
+		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+		
+		if ($comercial) {
+			$destinatarios = [$comercial->PersEmail];
+		} else {
+			$destinatarios = [];
+		}
+		
+
+		$destinatarios = [$comercial->PersEmail];
+		if ($Solicitud->SolServMailCopia == "null") {
+			Mail::to($email->PersEmail)
+			->cc($destinatarios)
+			->send(new SolSerEmail($email))
+			->attach($pdf, [
+                    'as' => $certificado->ID_Cert.'.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+		}else{
+			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+				array_push($destinatarios, $value);
+			}
+			Mail::to($email->PersEmail)
+			->cc($destinatarios)
+			->send(new SolSerEmail($email))
+			->attach($pdf, [
+                    'as' => $certificado->ID_Cert.'.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+		}
 		
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
 
@@ -2349,7 +2390,7 @@ class ServiceExpressController extends Controller
 
 	public function pdftest(){
 
-		return view('certificadosExpress.topdf', compact('certificado'));	
+		// return view('certificadosExpress.topdf', compact('certificado'));	
 		// return $certificado;
 		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
