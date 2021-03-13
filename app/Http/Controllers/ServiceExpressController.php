@@ -15,7 +15,7 @@ use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
-use App\Mail\SolSerEmail;
+use App\Mail\SolSerExpressEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -2203,28 +2203,22 @@ class ServiceExpressController extends Controller
 		} else {
 			$destinatarios = [];
 		}
-		
 
 		$destinatarios = [$comercial->PersEmail];
+
 		if ($Solicitud->SolServMailCopia == "null") {
 			Mail::to($email->PersEmail)
 			->cc($destinatarios)
-			->send(new SolSerEmail($email))
-			->attach($pdf, [
-                    'as' => $certificado->ID_Cert.'.pdf',
-                    'mime' => 'application/pdf',
-                ]);
+			->send(new SolSerExpressEmail($email, $pdf, $certificado));
+
 		}else{
 			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
 				array_push($destinatarios, $value);
 			}
 			Mail::to($email->PersEmail)
 			->cc($destinatarios)
-			->send(new SolSerEmail($email))
-			->attach($pdf, [
-                    'as' => $certificado->ID_Cert.'.pdf',
-                    'mime' => 'application/pdf',
-                ]);
+			->send(new SolSerExpressEmail($email, $pdf, $certificado));
+
 		}
 		
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
