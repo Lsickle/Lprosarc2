@@ -45,6 +45,10 @@ use App\RequerimientosCliente;
 use App\Observacion;
 use Permisos;
 use PDF;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\LabelAlignment;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Response\QrCodeResponse;
 
 class ServiceExpressController extends Controller
 {
@@ -2167,6 +2171,13 @@ class ServiceExpressController extends Controller
 
 		$Solicitud->nombreDeFirma = 'firmasClientes/'.$nombreDeFirma.'.png';
 
+		$qrCode = new QrCode(route('certificadosexpress.show', ['certificado' => $certificado->CertSlug]));
+		$qrCode->setLogoPath(asset('img/LogoQR.png'));
+		$qrCode->setLogoSize(60, 60);
+		$qrCode->setSize(300);
+		$qrCode->setMargin(0);
+		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
+
 		// Storage::setVisibility('firmasClientes/'.$nombreDeFirma.'.png', 'public');
 
 		// return Storage::getVisibility('firmasClientes/'.$nombreDeFirma.'.png');
@@ -2177,10 +2188,10 @@ class ServiceExpressController extends Controller
 
 
 		// return $Solicitud->nombreDeFirma;
-        // return $certificado;
+        return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
+			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
 
                 break;
             case 'Posconsumo luminarias':

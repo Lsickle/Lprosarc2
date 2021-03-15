@@ -12,7 +12,7 @@
 	}
 
 	body{
-		background-image: url('{{asset("img/75BigLogo3.png")}}');
+		background-image: url('{{asset("img/LogoFondo3x.png")}}');
 		-webkit-background-size: contain; 
 		-moz-background-size: contain; 
 		-o-background-size: contain; 
@@ -154,12 +154,12 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img src="{{asset('img/logosinborde.png')}}" style="width:100%; max-width:300px;">
+									<img src="{{asset('img/logocompletosinbordes.png')}}" style="width:100%; max-width:300px;">
 								</td>
 		
 								<td style="font-size: 16px; text-align: right;">
 									<b>N°:</b> <b style="color:red;">E-{{sprintf("%07s", $certificado->ID_Cert)}}</b><br>
-									Fecha: 01/01/2021<br>
+									Fecha: {{date('Y-m-d',today())}}<br>
 								</td>
 							</tr>
 						</table>
@@ -177,7 +177,8 @@
 						<table>
 							<tr>
 								<td style="text-align: left; font-size: 8px;">
-									<img src="{{asset('img/QrCode.png')}}" style="width: 120px;"><br>
+									{{-- <img src="{{asset('img/QrCode.png')}}" style="width: 120px;"><br> --}}
+									<img src="{{$qrCode->writeDataUri()}}"style="width: 120px;"  alt="" id="inputQrImg"><br>
 								</td>
 							</tr>
 						</table>
@@ -202,7 +203,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="text-align: center; font-size: 10px;">
-						q65fsd65gf2y1f6u45gihgfbnv31mv65j465ds6<br>
+						{{$certificado->CertSlug}}<br>
 						Certificado generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
 						¡Protejamos el medio ambiente; así aseguramos la vida y bienestar de nuestros hijos, nietos y generaciones futuras!
 					
@@ -257,9 +258,9 @@
 								<tr>
 									<td style="text-align: left; line-height: 14px;">
 										<b style="color: grey;">GENERADOR:</b><br>
-										<b>Hospital Engativa S.A.</b><br>
-										801.801.801-9<br>
-										Tv. 100a #80a-50 - Localidad:<b>Engativá</b><br>
+										<b>{{$certificado->sedegenerador->generadors->GenerName}}</b><br>
+										{{$certificado->sedegenerador->generadors->GenerNit}}<br>
+										{{$certificado->sedegenerador->GSedeAddress}}<b>{{ $certificado->sedegenerador->GSedeMapLocalidad != null ? $certificado->sedegenerador->GSedeMapLocalidad : ''  }}</b><br>
 										<b style="color: grey;">CONTACTO:</b><br>
 										Nombre Apellido<br>
 										correo@clienteexpress.com<br>
@@ -283,7 +284,7 @@
 							<table>
 								<tr>
 									<td style="text-align: justify; font-size: 12px; line-height: 14px;">
-										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>01/02/2021</b>, de acuerdo con la siguiente información:
+										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>01/02/2021</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
 									</td>
 								</tr>
 							</table>

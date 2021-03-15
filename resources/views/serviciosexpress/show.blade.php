@@ -871,7 +871,11 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		var savePNGButton = wrapper.querySelector("[data-action=save-png]");
 		var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
 		var canvas = wrapper.querySelector("canvas");
-		var signaturePad = new SignaturePad(canvas);
+		var signaturePad = new SignaturePad(canvas, {
+			minWidth: 2,
+			maxWidth: 2,
+			penColor: "rgb(0, 0, 0)",
+		});
 		function resizeCanvas() {
 			var ratio = Math.max(window.devicePixelRatio || 1, 1);
 			canvas.width = canvas.offsetWidth * ratio;
