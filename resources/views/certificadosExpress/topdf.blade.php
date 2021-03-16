@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+  {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
   <title>Certificado E-{{sprintf("%07s", $certificado->ID_Cert)}}</title>
 
   <style>
@@ -16,7 +16,7 @@
 		-webkit-background-size: contain; 
 		-moz-background-size: contain; 
 		-o-background-size: contain; 
-		background-size: contain; 
+		background-size: 600px; 
 		background-repeat: no-repeat;
 		background-position: center;
 	}
@@ -159,7 +159,7 @@
 		
 								<td style="font-size: 16px; text-align: right;">
 									<b>N°:</b> <b style="color:red;">E-{{sprintf("%07s", $certificado->ID_Cert)}}</b><br>
-									Fecha: {{date('Y-m-d',today())}}<br>
+									Fecha: {{date('Y-m-d', strtotime(today()))}}<br>
 								</td>
 							</tr>
 						</table>
@@ -262,9 +262,8 @@
 										{{$certificado->sedegenerador->generadors->GenerNit}}<br>
 										{{$certificado->sedegenerador->GSedeAddress}}<b>{{ $certificado->sedegenerador->GSedeMapLocalidad != null ? $certificado->sedegenerador->GSedeMapLocalidad : ''  }}</b><br>
 										<b style="color: grey;">CONTACTO:</b><br>
-										Nombre Apellido<br>
-										correo@clienteexpress.com<br>
-										301 23456789<br>
+										{{$certificado->sedegenerador->GSedeEmail}}<br>
+										{{$certificado->sedegenerador->GSedeCelular}}<br>
 									</td>
 									<td style="text-align: right; line-height: 14px;">
 										<b style="color: grey;">TRANSPORTADOR:</b><br>
@@ -284,7 +283,7 @@
 							<table>
 								<tr>
 									<td style="text-align: justify; font-size: 12px; line-height: 14px;">
-										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>01/02/2021</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
+										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>{{date('Y-m-d', strtotime($certificado->created_at))}}</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
 									</td>
 								</tr>
 							</table>
@@ -305,90 +304,56 @@
 							PESO
 						</td>
 					</tr>
-			
-					<tr class="item">
-						<td colspan="2">
-							Residuos Hospitalarios con descripcion corta
-						</td>
-			
-						<td style="text-align: center;">
-							A1010
-						</td>
-			
-						<td>
-							2.5 Kg.
-						</td>
-					</tr>
-			
-					<tr class="item">
-						<td colspan="2">
-							Residuos Hospitalarios con nombre y descripcion un poco mas larga de lo común
-						</td>
-			
-						<td style="text-align: center;">
-							A1010
-						</td>
-			
-						<td>
-							2.5 Kg.
-						</td>
-					</tr>
-			
-					<tr class="item">
-						<td colspan="2">
-							Residuos Hospitalarios
-						</td>
-			
-						<td style="text-align: center;">
-							A1010
-						</td>
-			
-						<td>
-							0.5 Kg.
-						</td>
-					</tr>
-			
-					<tr class="item">
-						<td colspan="2">
-							Elementos de protección personal
-						</td>
-			
-						<td style="text-align: center;">
-							Y12
-						</td>
-			
-						<td>
-							1.5 Kg.
-						</td>
-					</tr>
-			
+					@php
+					$totalKg = 0;
+					@endphp
+					@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
+					@foreach ($certificado->certdato as $certdato)
+
+					@if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
+					@if ($loop->parent->last)
 					<tr class="item last">
+					@else
+					<tr class="item">
+					@endif
 						<td colspan="2">
-							Residuos Hospitalarios
+							{{$Residuo->generespel->respels->RespelName}}
 						</td>
-			
+					
 						<td style="text-align: center;">
-							A1010
+							@if($Residuo->generespel->respels->RespelIgrosidad == 'No peligroso')
+							N/A
+							@else
+							{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}
+							@endif
 						</td>
-			
+					
 						<td>
-							4.5 Kg.
+							{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }} Kg.
 						</td>
 					</tr>
-			
+					@if($Residuo->SolResKgConciliado !== null)
+					@php
+					$totalKg = $totalKg+$Residuo->SolResKgConciliado;
+					@endphp
+					@endif
+					@endif
+					@endforeach
+					@endforeach
+
 					<tr class="total">
 						<td></td>
 						<td></td>
 						<td></td>
 			
 						<td>
-							Total: 11.5 Kg.
+							Total: {{$totalKg}} Kg.
 						</td>
 					</tr>
 					<tr class="total">
 						<td><b>Observaciones:</b></td>
 						<td colspan="3">
-							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt a iusto vitae unde qui? Repellendus nulla optio illum, ex saepe tenetur provident omnis quidem voluptate fuga voluptatibus perferendis sint dolores.
+							{{$Solicitud->SolSerDescript}}	
 						</td>
 					</tr>
 					<tr class="details">

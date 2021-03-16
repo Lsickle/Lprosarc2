@@ -6,6 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Auth;
+use App\SolicitudServicio;
+use App\Personal;
+use App\Certificado;
 
 class SolSerExpressEmail extends Mailable
 {
@@ -62,7 +66,7 @@ class SolSerExpressEmail extends Mailable
         }
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                     ->subject($asuntoStatus)
-                    ->attachData($this->pdf->output(), 'E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', ['mime' => 'application/pdf'])
+                    ->attachData($this->pdf->output(), 'E-'.sprintf("%07s", $this->certificado->ID_Cert).'.pdf', ['mime' => 'application/pdf'])
                     ->markdown('emails.SolSer.email');
     }
 }

@@ -2182,13 +2182,13 @@ class ServiceExpressController extends Controller
 
 		// return Storage::getVisibility('firmasClientes/'.$nombreDeFirma.'.png');
 
-		// return view('certificadosExpress.topdf', compact(['certificado','Solicitud']));	
+		// return view('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));	
 		// return $certificado;
 		// $pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
 
 
 		// return $Solicitud->nombreDeFirma;
-        return $certificado;
+        // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
 			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
@@ -2208,7 +2208,7 @@ class ServiceExpressController extends Controller
         }
 
 
-		return $pdf->stream();
+		// return $pdf->stream();
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$email = DB::table('solicitud_servicios')
 			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
