@@ -95,10 +95,10 @@ class LoginController extends Controller
         $rule = [
             $this->username() => 'required', 
             'password' => 'required',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
         ];
         $messages = [
-            'g-recaptcha-response.required' => 'Este campo es requerido.',
+            // 'g-recaptcha-response.required' => 'Este campo es requerido.',
         ];
         $this->validate($request, $rule, $messages);
     }

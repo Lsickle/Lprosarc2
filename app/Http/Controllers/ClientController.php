@@ -455,4 +455,60 @@ class ClientController extends Controller
         //     abort(403);
         // }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexExpress()
+    {
+        switch (true) {
+            case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
+                // $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
+                $clientes = DB::table('clientes')
+                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+                    ->where('CliDelete', 0)
+                    ->where('CliCategoria', 'ClientePrepago')
+                    ->get();
+                 $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->orWhere('users.UsRol2', 'Comercial')
+                        ->get();
+                return view('clientes.indexExpress', compact('clientes', 'personals'));
+                break;
+            
+            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
+                return redirect()->route('home');
+                break;
+            case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
+                return view('clientes.index', compact('clientes'));
+                break;
+            case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
+                $clientes = DB::table('clientes')
+                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+                    ->where('CliDelete', 0)
+                    ->where('CliCategoria', 'ClientePrepago')
+                    ->get();
+                $personals = '';
+                if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial)){
+                    $personals = DB::table('personals')
+                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                        ->select('personals.*')
+                        ->where('personals.PersDelete', 0)
+                        ->where('users.UsRol', 'Comercial')
+                        ->get();
+                }
+                return view('clientes.indexExpress', compact('clientes', 'personals'));
+                break;
+            default:
+                abort(403);
+        }
+    }
 }

@@ -11,10 +11,7 @@
      <!-- Dependencias -->
     <link href="{{ mix('/css/dependencias.css') }}" rel="stylesheet" type="text/css">
 
-    {{-- Stilos Personalizados --}}
-    <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
-
-    @if(Route::currentRouteName()=='vehicle-programacion.create')
+    @if(Route::currentRouteName()=='vehicle-programacion.create'||Route::currentRouteName()=='programacion-express.create')
         {{-- Full Calendar --}}
          <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
     @endif
@@ -31,6 +28,13 @@
 
     {{-- plugins de datatables --}}
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
+
+    {{-- Stilos Personalizados --}}
+    <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
+    @if(Route::currentRouteName()=='programacion-express.create')
+    {{-- Full Calendar VERDE --}}
+    <link href="{{ mix('/css/calendarioPersonalizado.css') }}" rel="stylesheet" type="text/css" />
+    @endif
 
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

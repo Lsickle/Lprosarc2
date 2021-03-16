@@ -12,6 +12,7 @@ use App\Area;
 use App\Requerimiento;
 use App\Tratamiento;
 use App\Pretratamientos;
+use App\Generador;
 use App\GenerSede;
 use App\Certificado;
 use App\SolicitudServicio;
@@ -801,6 +802,43 @@ class AjaxController extends Controller
 			$Response['message'] = 'Documento aprobado por '.Auth::user()->email;
 
 			return response()->json($Response);
+		}
+	}
+
+	/*Funcion para ver los residuos de una sede de generador segun el cliente*/
+	public function clienteExpressResiduos(Request $request, $slug){
+		if ($request->ajax()){
+			$Cliente = Cliente::where('CliSlug', $slug)->first();
+			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
+			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
+
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('gener_sedes.*', 'residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
+				->where('respels.RespelDelete', 0)
+				->where('gener_sedes.GSedeSlug', $sGener->GSedeSlug)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
+				->where('requerimientos.forevaluation', 1)
+				->where('requerimientos.ofertado', 1)
+				->get();
+
+			foreach ($Respels as $key => $value) {
+				if (isset($Respels[$key]->FK_ReqTrata) && $Respels[$key]->ofertado == 1) {
+					$tratamiento = Tratamiento::where('ID_Trat', $Respels[$key]->FK_ReqTrata)->first('TratName');
+					if (isset($tratamiento->TratName)) {
+						$Respels[$key]->TratName = $tratamiento->TratName;
+					}else{
+						$Respels[$key]->TratName = '';
+					}
+				}else{
+					$Respels[$key]->TratName = '';
+				}
+			}
+				return response()->json($Respels);
 		}
 	}
 }
