@@ -23,7 +23,7 @@ class Cliente extends Model
 
 	public function sedes()
 	{
-		return $this->hasMany('App\sede', 'FK_SedeCli', 'ID_Cli');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
+		return $this->hasMany('App\Sede', 'FK_SedeCli', 'ID_Cli');//como cliente tiene muchas sedes el busca automaticamente el campo negocios_id
 	}
 	public function contratos()
 	{

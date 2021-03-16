@@ -31,6 +31,8 @@ use App\Tarifa;
 use App\Rango;
 use App\Certificado;
 use App\Certdato;
+use App\CertificadoExpress;
+use App\CertExpressdato;
 use App\Manifiesto;
 use App\Manifdato;
 use App\Requerimiento;
@@ -76,6 +78,7 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -103,6 +106,7 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			})
+			->where('CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
@@ -1590,10 +1594,16 @@ class SolicitudServicioController extends Controller
 
 			$SolicitudServicio->cliente = Cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
-			$certificados = Certificado::with(['certdato.solres'])
-			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
-			->get();
+			if ($SolicitudServicio->cliente->CliCategoria == 'ClientePrepago') {
+				$certificados = CertificadoExpress::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
 
+			} else {
+				$certificados = Certificado::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
+			}
 		}
 		/* validacion para encontrar la fecha de recepción en planta del servicio */
 		$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
@@ -1981,6 +1991,7 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -1992,6 +2003,7 @@ class SolicitudServicioController extends Controller
 			'Comercial.PersEmail as ComercialPersEmail',
 			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where('solicitud_servicios.SolSerStatus', 'Completado')
+			->where('clientes.CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 

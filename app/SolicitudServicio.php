@@ -40,6 +40,9 @@ class SolicitudServicio extends Model
 	public function Certificado(){
 		return $this->hasMany('App\Certificado', 'ID_Cert','id');//como solicitud de servicio tiene muchos certificados
 	}
+	public function CertificadoExpress(){
+		return $this->hasMany('App\CertificadoExpress', 'ID_Cert','id');//como solicitud de servicio tiene muchos certificados
+	}
 	public function Manifiesto(){
 		return $this->hasMany('App\Manifiesto', 'ID_Manif', 'id');//como solicitud de servicio tiene muchos manifiestos
 	}
