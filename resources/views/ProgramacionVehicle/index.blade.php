@@ -86,6 +86,9 @@
 										$conductor = $programacion->SolSerConductor;
 										$vehiculoPlaca = $programacion->SolSerVehiculo;
 									}
+									if (!isset($ayudante)) {
+										$ayudante = 'No definido';
+									}
 								@endphp
 								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$programacion->CliName}}</td>
