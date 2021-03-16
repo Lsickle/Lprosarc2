@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>SisPro - @yield('htmlheader_title', 'Your title here') </title>
+    <title>@yield('htmlheader_title', 'Your title here')</title>
     <link rel="shortcut icon" href="/img/LogoProsarc.ico">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->

@@ -535,6 +535,7 @@ class AjaxController extends Controller
 
         $copy = ['recepcionpda@prosarc.com.co',
                     'asistentelogistica@prosarc.com.co',
+                    'conciliaciones@prosarc.com.co',
                     $comercial->PersEmail
                 ];
 
