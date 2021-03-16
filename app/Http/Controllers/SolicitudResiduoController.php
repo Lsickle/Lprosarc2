@@ -570,9 +570,10 @@ class SolicitudResiduoController extends Controller
 	{
 		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
 
-			$mainreport = SolicitudResiduo::all();
+			// $mainreport = SolicitudResiduo::all();
 
-			return $mainreport;
+        	// return view('reportes.index', compact('Respels')); 
+        	return view('reportes.index'); 
 		}else{
 			abort(503, "no tiene permisos para acceder a la pagina de reportes");
 		}
