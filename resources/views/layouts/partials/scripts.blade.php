@@ -14,7 +14,12 @@
 <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
 @if(Route::currentRouteName()=='vehicle-programacion.create')
 	{{-- fullcalendar --}}
-	<script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script>
+	{{-- <script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script> --}}
+@endif
+
+@if(Route::currentRouteName()=='serviciosexpress.show')
+{{-- signature_pad --}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 @endif
 {{-- Chart --}}
 @if(Route::currentRouteName()=='home')
@@ -69,7 +74,7 @@ $('form[data-toggle="validator"]').validator({
 		$('select').select2({
 			placeholder: "Seleccione...",
 			allowClear: true,
-			tags: false,
+			tags: true,
 			width: 'resolve',
 			width: '100%',
 			theme: "classic"
@@ -85,6 +90,7 @@ function SelectsMultiple(){
 		allowClear: true,
 		width: 'resolve',
 		width: '100%',
+		tags: true,
 		theme: "classic"
 	});
 }
@@ -877,6 +883,80 @@ var currentScrollPos = window.pageYOffset;
 					}
 				})
 			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			/*var rol defino el rol del usuario*/
+			var rol = "<?php echo Auth::user()->UsRol; ?>";
+			/*var botoncito define los botones que se usaran si el usuario es programador*/
+			var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
+						extend: 'collection',
+						text: 'Selector',
+						buttons: ['selectRows', 'selectCells']
+					}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
+			/*inicializacion de datatable general*/      
+			$('.table-express').DataTable({
+				"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
+					"<'row'<'col-md-12'tr>>",
+				"scrollX": false,
+				"autoWidth": true,
+				// "select": true,
+				"colReorder": true,
+				"ordering": true,
+				"order": [0, 'desc'],
+				"searchHighlight": true,
+				"responsive": true,
+				"keys": true,
+				"lengthChange": false,
+				"searching": false,
+				"buttons": [
+					// botoncito,
+				],
+				// "columns": [
+				//     { "type": "date-uk" },
+				//     ],
+				"language": {
+					"sProcessing":     "Procesando...",
+					"sLengthMenu":     "Mostrar _MENU_ registros",
+					"sZeroRecords":    "No se encontraron resultados",
+					"sEmptyTable":     "Ningún dato disponible en esta tabla",
+					"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+					"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+					"sInfoFiltered":   "",
+					"sInfoPostFix":    "",
+					"sSearch":         "Buscar:",
+					"sUrl":            "",
+					"sInfoThousands":  ",",
+					"sLoadingRecords": "Cargando...",
+					"oPaginate": {
+						"sFirst":    "Primero",
+						"sLast":     "Último",
+						"sNext":     "Siguiente",
+						"sPrevious": "Anterior"
+					},
+					"oAria": {
+						"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+						"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+					},
+					"colvis": 'Ajouté au presse-papiers'
+				}
+			});
+		});
+		/*funcion para actualizar elplugin responsive in chrome*/
+		function recalcularwitdthExpress() {
+		table = $('.table-express').DataTable();
+		table.columns.adjust();
+		table.responsive.recalc();
+		// console.log('tabla recalculada');
+		}
+		$(document).ready(function () {
+			var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+			// la funcion se ejecuta unicaente en chrome
+			if(is_chrome)
+			{
+				setTimeout(recalcularwitdthExpress, 100);
+			}
 		});
 	</script>
 @yield('NewScript')

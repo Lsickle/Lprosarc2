@@ -15,15 +15,17 @@ class SolSerEmail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $email;
+    public $pdf;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email)
+    public function __construct($email, $pdf)
     {   
         $this->email = $email;
+        $this->pdf = $pdf;
     }
 
     /**
@@ -61,6 +63,9 @@ class SolSerEmail extends Mailable implements ShouldQueue
         }
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                         ->subject($asuntoStatus)
-                        ->markdown('emails.SolSer.email');
+                        ->markdown('emails.SolSer.email')
+                        ->attachData($this->pdf, 'name.pdf', [
+                            'mime' => 'application/pdf',
+                        ]);
     }
 }

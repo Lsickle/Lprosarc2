@@ -67,6 +67,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'resources/assets/css/stilosPersonalizados.css',
 				'resources/assets/css/stilosloading.css'
 		], 'public/css/stilosPersonalizados.css')
+	 .combine([
+				'resources/assets/css/calendarioPersonalizado.css'
+		], 'public/css/calendarioPersonalizado.css')
 	 .scripts([
 				'node_modules/@fortawesome/fontawesome-free/js/all.js',
 				'resources/assets/js/bootstrap-switch.js',
