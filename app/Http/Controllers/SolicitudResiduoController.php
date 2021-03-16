@@ -560,4 +560,21 @@ class SolicitudResiduoController extends Controller
 
 		return redirect()->route('solicitud-servicio.show', compact('id'));
 	}
+
+		/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function reportes()
+	{
+		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
+
+			$mainreport = SolicitudResiduo::all();
+
+			return $mainreport;
+		}else{
+			abort(503, "no tiene permisos para acceder a la pagina de reportes");
+		}
+	}
 }
